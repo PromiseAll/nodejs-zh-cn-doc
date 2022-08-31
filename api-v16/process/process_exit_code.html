@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.exit([code]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.exit([code])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_exit_code" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_exit_code.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_exit_code.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processexitcode.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.13</span>
+</div><ul class="">
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 退出码。 <strong>默认值:</strong> <code>0</code>。</li>
+</ul><p><code>process.exit()</code> 方法指示 Node.js 以 <code>code</code> 的退出状态同步终止进程。
+如果省略 <code>code</code>，则退出将使用“成功”代码 <code>0</code> 或 <code>process.exitCode</code> 的值（如果已设置）。
+直到所有 <a href="../process.html#event-exit"><code>'exit'</code></a> 事件监听器都被调用，Node.js 才会终止。</p><p class="">以“失败”代码退出：</p><pre class="with-36-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { exit } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { exit } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);</code></pre><p class="">执行 Node.js 的 shell 应该看到退出码为 <code>1</code>。</p><p class="">调用 <code>process.exit()</code> 将强制进程尽快退出，即使仍有未完全完成的异步操作挂起，包括对 <code>process.stdout</code> 和 <code>process.stderr</code> 的 I/O 操作。</p><p class="">在大多数情况下，实际上没有必要显式调用 <code>process.exit()</code>。
+如果事件循环中没有其他待处理的工作，则 Node.js 进程将自行退出。
+可以设置 <code>process.exitCode</code> 属性来告诉进程在进程正常退出时使用哪个退出码。</p><p class="">例如，以下示例说明了 <code>process.exit()</code> 方法的误用，其可能导致打印到标准输出的数据被截断和丢失：</p><pre class="with-36-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { exit } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// 这是不该做的示例：</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  <span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { exit } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// 这是不该做的示例：</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  <span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);
+}</code></pre><p class="">这是有问题的原因是因为在 Node.js 中写入 <code>process.stdout</code> 有时是异步的，并且可能发生在 Node.js 事件循环的多个滴答上。
+但是，调用 <code>process.exit()</code> 会强制进程在执行对 <code>stdout</code> 的其他写入之前退出。</p><p class="">代码应该设置 <code>process.exitCode</code> 并通过避免为事件循环安排任何额外工作来允许进程自然退出，而不是直接调用 <code>process.exit()</code>：</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// 如何正确设置退出码，同时让进程正常退出。</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// 如何正确设置退出码，同时让进程正常退出。</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+}</code></pre><p class="">如果由于错误情况需要终止 Node.js 进程，则抛出未捕获的错误并允许进程相应地终止比调用 <code>process.exit()</code> 更安全。</p><p class="">在 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 线程中，该函数停止当前线程而不是当前进程。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.13</span>
+</div><ul>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The exit code. <strong>Default:</strong> <code>0</code>.</li>
+</ul><p>The <code>process.exit()</code> method instructs Node.js to terminate the process
+synchronously with an exit status of <code>code</code>. If <code>code</code> is omitted, exit uses
+either the 'success' code <code>0</code> or the value of <code>process.exitCode</code> if it has been
+set. Node.js will not terminate until all the <a href="../process.html#event-exit"><code>'exit'</code></a> event listeners are
+called.</p><p>To exit with a 'failure' code:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { exit } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { exit } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);</code></pre><p>The shell that executed Node.js should see the exit code as <code>1</code>.</p><p>Calling <code>process.exit()</code> will force the process to exit as quickly as possible
+even if there are still asynchronous operations pending that have not yet
+completed fully, including I/O operations to <code>process.stdout</code> and
+<code>process.stderr</code>.</p><p>In most situations, it is not actually necessary to call <code>process.exit()</code>
+explicitly. The Node.js process will exit on its own <em>if there is no additional
+work pending</em> in the event loop. The <code>process.exitCode</code> property can be set to
+tell the process which exit code to use when the process exits gracefully.</p><p>For instance, the following example illustrates a <em>misuse</em> of the
+<code>process.exit()</code> method that could lead to data printed to stdout being
+truncated and lost:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { exit } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// This is an example of what *not* to do:</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  <span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { exit } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// This is an example of what *not* to do:</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  <span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);
+}</code></pre><p>The reason this is problematic is because writes to <code>process.stdout</code> in Node.js
+are sometimes <em>asynchronous</em> and may occur over multiple ticks of the Node.js
+event loop. Calling <code>process.exit()</code>, however, forces the process to exit
+<em>before</em> those additional writes to <code>stdout</code> can be performed.</p><p>Rather than calling <code>process.exit()</code> directly, the code <em>should</em> set the
+<code>process.exitCode</code> and allow the process to exit naturally by avoiding
+scheduling any additional work for the event loop:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// How to properly set the exit code while letting</span>
+<span class="hljs-comment">// the process exit gracefully.</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// How to properly set the exit code while letting</span>
+<span class="hljs-comment">// the process exit gracefully.</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">someConditionNotMet</span>()) {
+  <span class="hljs-title function_">printUsageToStdout</span>();
+  process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+}</code></pre><p>If it is necessary to terminate the Node.js process due to an error condition,
+throwing an <em>uncaught</em> error and allowing the process to terminate accordingly
+is safer than calling <code>process.exit()</code>.</p><p>In <a href="../worker_threads.html#class-worker"><code>Worker</code></a> threads, this function stops the current thread rather
+than the current process.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

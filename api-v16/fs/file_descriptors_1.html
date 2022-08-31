@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>文件描述符 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>文件描述符</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_file_descriptors_1" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/file_descriptors_1.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/file_descriptors_1.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#file-descriptors_1.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在 POSIX 系统上，对于每个进程，内核维护一个当前打开的文件和资源表。
+每个打开的文件都分配了一个简单的数字标识符，称为_文件描述符_。
+在系统级，所有文件系统操作都使用这些文件描述符来识别和跟踪每个特定文件。
+Windows 系统使用不同但概念上相似的机制来跟踪资源。
+为了方便用户，Node.js 抽象了操作系统之间的差异，并为所有打开的文件分配了一个数字文件描述符。</p><p class="">基于回调的 <code>fs.open()</code> 和同步 <code>fs.openSync()</code> 方法打开一个文件并分配一个新的文件描述符。
+分配后，文件描述符可用于从文件读取数据、向文件写入数据或请求有关文件的信息。</p><p class="">操作系统限制在任何给定时间可能打开的文件描述符的数量，因此在操作完成时关闭描述符至关重要。
+否则将导致内存泄漏，最终导致应用程序崩溃。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { open, close, fstat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">closeFd</span>(<span class="hljs-params">fd</span>) {
+  <span class="hljs-title function_">close</span>(fd, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  });
+}
+
+<span class="hljs-title function_">open</span>(<span class="hljs-string">'/open/some/file.txt'</span>, <span class="hljs-string">'r'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-title function_">fstat</span>(fd, <span class="hljs-function">(<span class="hljs-params">err, stat</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-title function_">closeFd</span>(fd);
+        <span class="hljs-keyword">throw</span> err;
+      }
+
+      <span class="hljs-comment">// 使用统计</span>
+
+      <span class="hljs-title function_">closeFd</span>(fd);
+    });
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-title function_">closeFd</span>(fd);
+    <span class="hljs-keyword">throw</span> err;
+  }
+});</code></pre><p class="">基于 promise 的 API 使用 <a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a> 对象代替数字文件描述符。
+这些对象由系统更好地管理，以确保资源不泄漏。
+但是，仍然需要在操作完成时关闭它们：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">let</span> file;
+<span class="hljs-keyword">try</span> {
+  file = <span class="hljs-keyword">await</span> <span class="hljs-title function_">open</span>(<span class="hljs-string">'/open/some/file.txt'</span>, <span class="hljs-string">'r'</span>);
+  <span class="hljs-keyword">const</span> stat = <span class="hljs-keyword">await</span> file.<span class="hljs-title function_">stat</span>();
+  <span class="hljs-comment">// 使用统计</span>
+} <span class="hljs-keyword">finally</span> {
+  <span class="hljs-keyword">await</span> file.<span class="hljs-title function_">close</span>();
+}</code></pre></div>
+          <div id="content_right"><p>On POSIX systems, for every process, the kernel maintains a table of currently
+open files and resources. Each open file is assigned a simple numeric
+identifier called a <em>file descriptor</em>. At the system-level, all file system
+operations use these file descriptors to identify and track each specific
+file. Windows systems use a different but conceptually similar mechanism for
+tracking resources. To simplify things for users, Node.js abstracts away the
+differences between operating systems and assigns all open files a numeric file
+descriptor.</p><p>The callback-based <code>fs.open()</code>, and synchronous <code>fs.openSync()</code> methods open a
+file and allocate a new file descriptor. Once allocated, the file descriptor may
+be used to read data from, write data to, or request information about the file.</p><p>Operating systems limit the number of file descriptors that may be open
+at any given time so it is critical to close the descriptor when operations
+are completed. Failure to do so will result in a memory leak that will
+eventually cause an application to crash.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { open, close, fstat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">closeFd</span>(<span class="hljs-params">fd</span>) {
+  <span class="hljs-title function_">close</span>(fd, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  });
+}
+
+<span class="hljs-title function_">open</span>(<span class="hljs-string">'/open/some/file.txt'</span>, <span class="hljs-string">'r'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-title function_">fstat</span>(fd, <span class="hljs-function">(<span class="hljs-params">err, stat</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-title function_">closeFd</span>(fd);
+        <span class="hljs-keyword">throw</span> err;
+      }
+
+      <span class="hljs-comment">// use stat</span>
+
+      <span class="hljs-title function_">closeFd</span>(fd);
+    });
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-title function_">closeFd</span>(fd);
+    <span class="hljs-keyword">throw</span> err;
+  }
+});</code></pre><p>The promise-based APIs use a <a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a> object in place of the numeric
+file descriptor. These objects are better managed by the system to ensure
+that resources are not leaked. However, it is still required that they are
+closed when operations are completed:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">let</span> file;
+<span class="hljs-keyword">try</span> {
+  file = <span class="hljs-keyword">await</span> <span class="hljs-title function_">open</span>(<span class="hljs-string">'/open/some/file.txt'</span>, <span class="hljs-string">'r'</span>);
+  <span class="hljs-keyword">const</span> stat = <span class="hljs-keyword">await</span> file.<span class="hljs-title function_">stat</span>();
+  <span class="hljs-comment">// use stat</span>
+} <span class="hljs-keyword">finally</span> {
+  <span class="hljs-keyword">await</span> file.<span class="hljs-title function_">close</span>();
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

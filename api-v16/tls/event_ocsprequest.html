@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'OCSPRequest' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'OCSPRequest' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_event_ocsprequest" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/event_ocsprequest.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/event_ocsprequest.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#event-ocsprequest.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.11.13</span>
+</div><p>当客户端发送证书状态请求时会触发 <code>'OCSPRequest'</code> 事件。
+监听器回调在调用时传入三个参数：</p><ul class="">
+<li><code>certificate</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 服务器证书</li>
+<li><code>issuer</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 发行人证书</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 必须调用的回调函数来提供 OCSP 请求的结果。</li>
+</ul><p class="">可以解析服务器当前的证书，获取 OCSP URL 和证书 ID；获取 OCSP 响应后，再调用 <code>callback(null, resp)</code>，其中 <code>resp</code> 是包含 OCSP 响应的 <code>Buffer</code> 实例。
+<code>certificate</code> 和 <code>issuer</code> 都是主证书和颁发者证书的 <code>Buffer</code> DER 表示。
+这些可用于获取 OCSP 证书 ID 和 OCSP 端点 URL。</p><p class="">或者，可以调用 <code>callback(null, null)</code>，表示没有 OCSP 响应。</p><p class="">调用 <code>callback(err)</code> 将导致调用 <code>socket.destroy(err)</code>。</p><p class="">OCSP 请求的典型流程如下：</p><ol class="">
+<li>客户端连接到服务器并发送 <code>'OCSPRequest'</code>（通过 ClientHello 中的状态信息扩展）。</li>
+<li>服务器收到请求并触发 <code>'OCSPRequest'</code> 事件，如果已注册则调用监听器。</li>
+<li>服务器从 <code>certificate</code> 或 <code>issuer</code> 中提取 OCSP URL，并向 CA 执行 <a href="https://en.wikipedia.org/wiki/OCSP_stapling" rel="nofollow">OCSP 请求</a>。</li>
+<li>服务器从 CA 接收 <code>'OCSPResponse'</code> 并通过 <code>callback</code> 参数将其发送回客户端</li>
+<li>客户端验证响应并销毁套接字或执行握手。</li>
+</ol><p class="">如果证书是自签名证书或颁发者不在根证书列表中，则 <code>issuer</code> 可以是 <code>null</code>。
+（在建立 TLS 连接时可以通过 <code>ca</code> 选项提供颁发者。）</p><p class="">监听此事件只会对添加事件监听器后建立的连接有影响。</p><p class="">像 <a href="https://www.npmjs.com/package/asn1.js" rel="nofollow">asn1.js</a> 这样的 npm 模块可用于解析证书。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.11.13</span>
+</div><p>The <code>'OCSPRequest'</code> event is emitted when the client sends a certificate status
+request. The listener callback is passed three arguments when called:</p><ul>
+<li><code>certificate</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The server certificate</li>
+<li><code>issuer</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The issuer's certificate</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> A callback function that must be invoked to provide
+the results of the OCSP request.</li>
+</ul><p>The server's current certificate can be parsed to obtain the OCSP URL
+and certificate ID; after obtaining an OCSP response, <code>callback(null, resp)</code> is
+then invoked, where <code>resp</code> is a <code>Buffer</code> instance containing the OCSP response.
+Both <code>certificate</code> and <code>issuer</code> are <code>Buffer</code> DER-representations of the
+primary and issuer's certificates. These can be used to obtain the OCSP
+certificate ID and OCSP endpoint URL.</p><p>Alternatively, <code>callback(null, null)</code> may be called, indicating that there was
+no OCSP response.</p><p>Calling <code>callback(err)</code> will result in a <code>socket.destroy(err)</code> call.</p><p>The typical flow of an OCSP Request is as follows:</p><ol>
+<li>Client connects to the server and sends an <code>'OCSPRequest'</code> (via the status
+info extension in ClientHello).</li>
+<li>Server receives the request and emits the <code>'OCSPRequest'</code> event, calling the
+listener if registered.</li>
+<li>Server extracts the OCSP URL from either the <code>certificate</code> or <code>issuer</code> and
+performs an <a href="https://en.wikipedia.org/wiki/OCSP_stapling" rel="nofollow">OCSP request</a> to the CA.</li>
+<li>Server receives <code>'OCSPResponse'</code> from the CA and sends it back to the client
+via the <code>callback</code> argument</li>
+<li>Client validates the response and either destroys the socket or performs a
+handshake.</li>
+</ol><p>The <code>issuer</code> can be <code>null</code> if the certificate is either self-signed or the
+issuer is not in the root certificates list. (An issuer may be provided
+via the <code>ca</code> option when establishing the TLS connection.)</p><p>Listening for this event will have an effect only on connections established
+after the addition of the event listener.</p><p>An npm module like <a href="https://www.npmjs.com/package/asn1.js" rel="nofollow">asn1.js</a> may be used to parse the certificates.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

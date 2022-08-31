@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.unpipe([destination]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.unpipe([destination])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_unpipe_destination" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_unpipe_destination.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/readable_unpipe_destination.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readableunpipedestination.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.4</span>
+</div><ul class="">
+<li><code>destination</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> 可选的要取消管道的特定流</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p><code>readable.unpipe()</code> 方法分离先前使用 <a href="../stream.html#readablepipedestination-options"><code>stream.pipe()</code></a> 方法绑定的 <code>Writable</code> 流。</p><p class="">如果未指定 <code>destination</code>，则所有管道都将分离。</p><p class="">如果指定了 <code>destination</code>，但没有为其设置管道，则该方法不执行任何操作。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+<span class="hljs-keyword">const</span> writable = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-comment">// 可读流的所有数据进入 'file.txt'，</span>
+<span class="hljs-comment">// 但只有第一秒。</span>
+readable.<span class="hljs-title function_">pipe</span>(writable);
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Stop writing to file.txt.'</span>);
+  readable.<span class="hljs-title function_">unpipe</span>(writable);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Manually close the file stream.'</span>);
+  writable.<span class="hljs-title function_">end</span>();
+}, <span class="hljs-number">1000</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.4</span>
+</div><ul>
+<li><code>destination</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> Optional specific stream to unpipe</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p>The <code>readable.unpipe()</code> method detaches a <code>Writable</code> stream previously attached
+using the <a href="../stream.html#readablepipedestination-options"><code>stream.pipe()</code></a> method.</p><p>If the <code>destination</code> is not specified, then <em>all</em> pipes are detached.</p><p>If the <code>destination</code> is specified, but no pipe is set up for it, then
+the method does nothing.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+<span class="hljs-keyword">const</span> writable = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-comment">// All the data from readable goes into 'file.txt',</span>
+<span class="hljs-comment">// but only for the first second.</span>
+readable.<span class="hljs-title function_">pipe</span>(writable);
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Stop writing to file.txt.'</span>);
+  readable.<span class="hljs-title function_">unpipe</span>(writable);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Manually close the file stream.'</span>);
+  writable.<span class="hljs-title function_">end</span>();
+}, <span class="hljs-number">1000</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.flatMap(fn[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.flatMap(fn[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_flatmap_fn_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_flatmap_fn_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readableflatmapfn-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/proposal-async-iteration/#sec-asyncgeneratorfunction-constructor" rel="nofollow" class="type">&lt;AsyncGeneratorFunction&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> 映射流中每个条目的函数。
+<ul>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 来自流的数据块。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 如果流被销毁则中止，允许提前中止 <code>fn</code> 调用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>concurrency</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 一次调用流的最大并发调用 <code>fn</code>。 <strong>默认值:</strong> <code>1</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 如果信号被中止，则允许销毁流。</li>
+</ul>
+</li>
+<li>返回: <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;Readable&gt;</a> 使用函数 <code>fn</code> 展平映射的流。</li>
+</ul><p>此方法通过将给定的回调应用到流的每个块然后展平结果来返回新的流。</p><p class="">可以从 <code>fn</code> 返回流或另一个迭代或异步迭代，结果流将被合并（展平）到返回的流中。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+<span class="hljs-keyword">import</span> { createReadStream } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-comment">// 使用同步映射器。</span>
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> item <span class="hljs-keyword">of</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">flatMap</span>(<span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> [x, x])) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(item); <span class="hljs-comment">// 1, 1, 2, 2, 3, 3, 4, 4</span>
+}
+<span class="hljs-comment">// 使用异步的映射器，合并 4 个文件的内容</span>
+<span class="hljs-keyword">const</span> concatResult = <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([
+  <span class="hljs-string">'./1.mjs'</span>,
+  <span class="hljs-string">'./2.mjs'</span>,
+  <span class="hljs-string">'./3.mjs'</span>,
+  <span class="hljs-string">'./4.mjs'</span>,
+]).<span class="hljs-title function_">flatMap</span>(<span class="hljs-function">(<span class="hljs-params">fileName</span>) =&gt;</span> <span class="hljs-title function_">createReadStream</span>(fileName));
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> result <span class="hljs-keyword">of</span> concatResult) {
+  <span class="hljs-comment">// 这将包含所有 4 个文件的内容（所有块）</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><ul>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/proposal-async-iteration/#sec-asyncgeneratorfunction-constructor" rel="nofollow" class="type">&lt;AsyncGeneratorFunction&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> a function to map over
+every item in the stream.
+<ul>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> a chunk of data from the stream.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> aborted if the stream is destroyed allowing to
+abort the <code>fn</code> call early.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>concurrency</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> the maximum concurrent invocation of <code>fn</code> to call
+on the stream at once. <strong>Default:</strong> <code>1</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> allows destroying the stream if the signal is
+aborted.</li>
+</ul>
+</li>
+<li>Returns: <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;Readable&gt;</a> a stream flat-mapped with the function <code>fn</code>.</li>
+</ul><p>This method returns a new stream by applying the given callback to each
+chunk of the stream and then flattening the result.</p><p>It is possible to return a stream or another iterable or async iterable from
+<code>fn</code> and the result streams will be merged (flattened) into the returned
+stream.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+<span class="hljs-keyword">import</span> { createReadStream } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-comment">// With a synchronous mapper.</span>
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> item <span class="hljs-keyword">of</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">flatMap</span>(<span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> [x, x])) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(item); <span class="hljs-comment">// 1, 1, 2, 2, 3, 3, 4, 4</span>
+}
+<span class="hljs-comment">// With an asynchronous mapper, combine the contents of 4 files</span>
+<span class="hljs-keyword">const</span> concatResult = <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([
+  <span class="hljs-string">'./1.mjs'</span>,
+  <span class="hljs-string">'./2.mjs'</span>,
+  <span class="hljs-string">'./3.mjs'</span>,
+  <span class="hljs-string">'./4.mjs'</span>,
+]).<span class="hljs-title function_">flatMap</span>(<span class="hljs-function">(<span class="hljs-params">fileName</span>) =&gt;</span> <span class="hljs-title function_">createReadStream</span>(fileName));
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> result <span class="hljs-keyword">of</span> concatResult) {
+  <span class="hljs-comment">// This will contain the contents (all chunks) of all 4 files</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

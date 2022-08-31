@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>确定模块系统 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>确定模块系统</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_determining_module_system" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/determining_module_system.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/determining_module_system.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#determining-module-system.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当作为初始输入传入、或者当被 <code>import</code> 语句或 <code>import()</code> 表达式引用时，Node.js 会将以下视为<a href="../esm.html">ES 模块</a>：</p><ul class="">
+<li>
+<p>扩展名为 <code>.mjs</code> 的文件。</p>
+</li>
+<li>
+<p>当最近的父 <code>package.json</code> 文件包含值为 <code>"module"</code> 的顶层 <a href="../packages.html#type"><code>"type"</code></a> 字段时，扩展名为 <code>.js</code> 的文件。</p>
+</li>
+<li>
+<p>字符串作为参数传入 <code>--eval</code>，或通过 <code>STDIN</code> 管道传输到 <code>node</code>，带有标志 <code>--input-type=module</code>。</p>
+</li>
+</ul><p class="">Node.js 会将所有其他形式的输入视为 <a href="../modules.html">CommonJS</a>，例如 <code>.js</code> 文件，其中最近的父 <code>package.json</code> 文件不包含顶层 <code>"type"</code> 字段，或者没有标志 <code>--input-type</code> 的字符串输入。
+此行为是为了保持向后兼容性。
+但是，现在 Node.js 同时支持 CommonJS 和 ES 模块，最好尽可能明确。
+当作为初始输入传给 <code>node</code>、或者当被 <code>import</code> 语句或 <code>import()</code> 表达式或 <code>require()</code> 表达式引用时，Node.js 会将以下视为 CommonJS：</p><ul class="">
+<li>
+<p>扩展名为 <code>.cjs</code> 的文件。</p>
+</li>
+<li>
+<p>当最近的父 <code>package.json</code> 文件包含值为 <code>"commonjs"</code> 的顶层字段 <a href="../packages.html#type"><code>"type"</code></a> 时，则扩展名为 <code>.js</code> 的文件。</p>
+</li>
+<li>
+<p>字符串作为参数传入 <code>--eval</code> 或 <code>--print</code>，或通过 <code>STDIN</code> 管道传输到 <code>node</code>，带有标志 <code>--input-type=commonjs</code>。</p>
+</li>
+</ul><p class="">包作者应该包括 <a href="../packages.html#type"><code>"type"</code></a> 字段，即使在所有源都是 CommonJS 的包中也是如此。
+如果 Node.js 的默认类型发生变化，显式说明包的 <code>type</code> 将使包面向未来，它还将使构建工具和加载器更容易确定应如何解释包中的文件。</p></div>
+          <div id="content_right"><p>Node.js will treat the following as <a href="../esm.html">ES modules</a> when passed to <code>node</code> as the
+initial input, or when referenced by <code>import</code> statements or <code>import()</code>
+expressions:</p><ul>
+<li>
+<p>Files with an <code>.mjs</code> extension.</p>
+</li>
+<li>
+<p>Files with a <code>.js</code> extension when the nearest parent <code>package.json</code> file
+contains a top-level <a href="../packages.html#type"><code>"type"</code></a> field with a value of <code>"module"</code>.</p>
+</li>
+<li>
+<p>Strings passed in as an argument to <code>--eval</code>, or piped to <code>node</code> via <code>STDIN</code>,
+with the flag <code>--input-type=module</code>.</p>
+</li>
+</ul><p>Node.js will treat as <a href="../modules.html">CommonJS</a> all other forms of input, such as <code>.js</code> files
+where the nearest parent <code>package.json</code> file contains no top-level <code>"type"</code>
+field, or string input without the flag <code>--input-type</code>. This behavior is to
+preserve backward compatibility. However, now that Node.js supports both
+CommonJS and ES modules, it is best to be explicit whenever possible. Node.js
+will treat the following as CommonJS when passed to <code>node</code> as the initial input,
+or when referenced by <code>import</code> statements, <code>import()</code> expressions, or
+<code>require()</code> expressions:</p><ul>
+<li>
+<p>Files with a <code>.cjs</code> extension.</p>
+</li>
+<li>
+<p>Files with a <code>.js</code> extension when the nearest parent <code>package.json</code> file
+contains a top-level field <a href="../packages.html#type"><code>"type"</code></a> with a value of <code>"commonjs"</code>.</p>
+</li>
+<li>
+<p>Strings passed in as an argument to <code>--eval</code> or <code>--print</code>, or piped to <code>node</code>
+via <code>STDIN</code>, with the flag <code>--input-type=commonjs</code>.</p>
+</li>
+</ul><p>Package authors should include the <a href="../packages.html#type"><code>"type"</code></a> field, even in packages where
+all sources are CommonJS. Being explicit about the <code>type</code> of the package will
+future-proof the package in case the default type of Node.js ever changes, and
+it will also make things easier for build tools and loaders to determine how the
+files in the package should be interpreted.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

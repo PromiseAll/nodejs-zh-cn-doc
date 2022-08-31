@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http2.connect(authority[, options][, listener]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http2.connect(authority[, options][, listener])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_http2_connect_authority_options_listener" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/http2_connect_authority_options_listener.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/http2_connect_authority_options_listener.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#http2connectauthority-options-listener.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.0.0</td>
+<td><p><code>PADDING_STRATEGY_CALLBACK</code> 已经等同于提供 <code>PADDING_STRATEGY_ALIGNED</code>，并且 <code>selectPadding</code> 已被删除。</p></td></tr>
+<tr><td>v15.10.0, v14.16.0, v12.21.0, v10.24.0</td>
+<td><p>添加了 <code>unknownProtocolTimeout</code> 选项，默认值为 10000。</p></td></tr>
+<tr><td>v14.4.0, v12.18.0, v10.21.0</td>
+<td><p>添加 <code>maxSettings</code> 选项，默认值为 32。</p></td></tr>
+<tr><td>v8.9.3</td>
+<td><p>添加了 <code>maxOutstandingPings</code> 选项，默认限制为 10。</p></td></tr>
+<tr><td>v8.9.3</td>
+<td><p>添加了 <code>maxHeaderListPairs</code> 选项，默认限制为 128 个标头对。</p></td></tr>
+<tr><td>v8.4.0</td>
+<td><p><span>新增于: v8.4.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>authority</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 要连接的远程 HTTP/2 服务器。
+这必须是带有 <code>http://</code> 或 <code>https://</code> 前缀、主机名和 IP 端口（如果使用非默认端口）的最小有效 URL 的形式。
+URL 中的用户信息（用户 ID 和密码）、路径、查询字符串和片段详细信息将被忽略。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>maxDeflateDynamicTableSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置用于压缩标头字段的最大动态表大小。 <strong>默认值:</strong> <code>4Kib</code>。</li>
+<li><code>maxSettings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置每 <code>SETTINGS</code> 帧的最大设置条目数。
+允许的最小值为 <code>1</code>。 <strong>默认值:</strong> <code>32</code>。</li>
+<li><code>maxSessionMemory</code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置 <code>Http2Session</code> 允许使用的最大内存。
+该值以兆字节数表示，例如 <code>1</code> 等于 1 兆字节。
+允许的最小值为 <code>1</code>。
+这是一个基于信用的限制，现有的 <code>Http2Stream</code> 可能会导致超出此限制，但超过此限制时，新的 <code>Http2Stream</code> 实例将被拒绝。
+当前 <code>Http2Stream</code> 会话数、标头压缩表的当前内存使用、当前排队等待发送的数据以及未确认的 <code>PING</code> 和 <code>SETTINGS</code> 帧都计入当前限制。 <strong>默认值:</strong> <code>10</code>。</li>
+<li><code>maxHeaderListPairs</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置标头条目的最大数量。
+这类似于 <a href="../http.html#servermaxheaderscount"><code>http.Server#maxHeadersCount</code></a> 或 <a href="../http.html#requestmaxheaderscount"><code>http.ClientRequest#maxHeadersCount</code></a>。
+最小值为 <code>1</code>。
+<strong>默认值:</strong> <code>128</code>。</li>
+<li><code>maxOutstandingPings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置未确认的未确认 ping 的最大数量。 <strong>默认值:</strong> <code>10</code>。</li>
+<li><code>maxReservedRemoteStreams</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置客户端在任何给定时间将接受的最大保留推送流数。
+一旦当前预留的推送流数量超过此限制，则服务器发送的新推送流将被自动拒绝。
+最小允许值为 0。
+最大允许值为 22<sup>32</sup>-1。
+负值将此选项设置为最大允许值。 <strong>默认值:</strong> <code>200</code>。</li>
+<li><code>maxSendHeaderBlockLength</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置序列化的、压缩的标头块的最大允许大小。
+尝试发送超出此限制的标头将导致触发 <code>'frameError'</code> 事件并且流被关闭和销毁。</li>
+<li><code>paddingStrategy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 用于确定用于 <code>HEADERS</code> 和 <code>DATA</code> 帧的填充量的策略。 <strong>默认值:</strong> <code>http2.constants.PADDING_STRATEGY_NONE</code>。 值可能是以下之一：
+<ul>
+<li><code>http2.constants.PADDING_STRATEGY_NONE</code>: 没有应用填充。</li>
+<li><code>http2.constants.PADDING_STRATEGY_MAX</code>: 应用由内部实现决定的最大填充量。</li>
+<li><code>http2.constants.PADDING_STRATEGY_ALIGNED</code>: 尝试应用足够的填充以确保包括 9 字节标头在内的总帧长度是 8 的倍数。
+对于每一帧，有一个由当前流控制状态和设置决定的最大允许填充字节数。
+如果此最大值小于确保对齐所需的计算量，则使用最大值，并且总帧长度不一定按 8 字节对齐。</li>
+</ul>
+</li>
+<li><code>peerMaxConcurrentStreams</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置远程对等方的最大并发流数，就好像已收到 <code>SETTINGS</code> 帧一样。
+如果远程对等方为 <code>maxConcurrentStreams</code> 设置了自己的值，则将被覆盖。 <strong>默认值:</strong> <code>100</code>。</li>
+<li><code>protocol</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要连接的协议，如果在 <code>authority</code> 中没有设置。
+值可以是 <code>'http:'</code> 或 <code>'https:'</code>。 <strong>默认值:</strong>
+<code>'https:'</code></li>
+<li><code>settings</code> <a href="../http2.html#settings-object" rel="nofollow" class="type">&lt;HTTP/2 Settings Object&gt;</a> 连接时发送到远程对等方的初始设置。</li>
+<li><code>createConnection</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 可选的回调，它接收传给 <code>connect</code> 和 <code>options</code> 对象的 <code>URL</code> 实例，并返回将用作此会话连接的任何 <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> 流。</li>
+<li>...: 可以提供任何 <a href="../net.html#netconnect"><code>net.connect()</code></a> 或 <a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a> 选项。</li>
+<li><code>unknownProtocolTimeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定在触发 <a href="../http2.html#event-unknownprotocol"><code>'unknownProtocol'</code></a> 事件时服务器应等待的超时（以毫秒为单位）。
+如果到那时套接字还没有被销毁，则服务器将销毁它。
+<strong>默认值:</strong> <code>10000</code>。</li>
+</ul>
+</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 将注册为 <a href="../http2.html#event-connect"><code>'connect'</code></a> 事件的单次监听器。</li>
+<li>返回: <a href="../http2.html#class-clienthttp2session" rel="nofollow" class="type">&lt;ClientHttp2Session&gt;</a></li>
+</ul><p>返回 <code>ClientHttp2Session</code> 实例。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> client = http2.<span class="hljs-title function_">connect</span>(<span class="hljs-string">'https://localhost:1234'</span>);
+
+<span class="hljs-comment">/* 使用客户端 */</span>
+
+client.<span class="hljs-title function_">close</span>();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v13.0.0</td>
+<td><p>The <code>PADDING_STRATEGY_CALLBACK</code> has been made equivalent to providing <code>PADDING_STRATEGY_ALIGNED</code> and <code>selectPadding</code> has been removed.</p></td></tr>
+<tr><td>v15.10.0, v14.16.0, v12.21.0, v10.24.0</td>
+<td><p>Added <code>unknownProtocolTimeout</code> option with a default of 10000.</p></td></tr>
+<tr><td>v14.4.0, v12.18.0, v10.21.0</td>
+<td><p>Added <code>maxSettings</code> option with a default of 32.</p></td></tr>
+<tr><td>v8.9.3</td>
+<td><p>Added the <code>maxOutstandingPings</code> option with a default limit of 10.</p></td></tr>
+<tr><td>v8.9.3</td>
+<td><p>Added the <code>maxHeaderListPairs</code> option with a default limit of 128 header pairs.</p></td></tr>
+<tr><td>v8.4.0</td>
+<td><p><span>Added in: v8.4.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>authority</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> The remote HTTP/2 server to connect to. This must
+be in the form of a minimal, valid URL with the <code>http://</code> or <code>https://</code>
+prefix, host name, and IP port (if a non-default port is used). Userinfo
+(user ID and password), path, querystring, and fragment details in the
+URL will be ignored.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>maxDeflateDynamicTableSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum dynamic table size
+for deflating header fields. <strong>Default:</strong> <code>4Kib</code>.</li>
+<li><code>maxSettings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum number of settings entries per
+<code>SETTINGS</code> frame. The minimum value allowed is <code>1</code>. <strong>Default:</strong> <code>32</code>.</li>
+<li><code>maxSessionMemory</code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum memory that the <code>Http2Session</code>
+is permitted to use. The value is expressed in terms of number of megabytes,
+e.g. <code>1</code> equal 1 megabyte. The minimum value allowed is <code>1</code>.
+This is a credit based limit, existing <code>Http2Stream</code>s may cause this
+limit to be exceeded, but new <code>Http2Stream</code> instances will be rejected
+while this limit is exceeded. The current number of <code>Http2Stream</code> sessions,
+the current memory use of the header compression tables, current data
+queued to be sent, and unacknowledged <code>PING</code> and <code>SETTINGS</code> frames are all
+counted towards the current limit. <strong>Default:</strong> <code>10</code>.</li>
+<li><code>maxHeaderListPairs</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum number of header entries.
+This is similar to <a href="../http.html#servermaxheaderscount"><code>http.Server#maxHeadersCount</code></a> or
+<a href="../http.html#requestmaxheaderscount"><code>http.ClientRequest#maxHeadersCount</code></a>. The minimum value is <code>1</code>.
+<strong>Default:</strong> <code>128</code>.</li>
+<li><code>maxOutstandingPings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum number of outstanding,
+unacknowledged pings. <strong>Default:</strong> <code>10</code>.</li>
+<li><code>maxReservedRemoteStreams</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum number of reserved push
+streams the client will accept at any given time. Once the current number of
+currently reserved push streams exceeds reaches this limit, new push streams
+sent by the server will be automatically rejected. The minimum allowed value
+is 0. The maximum allowed value is 22<sup>32</sup>-1. A negative value sets
+this option to the maximum allowed value. <strong>Default:</strong> <code>200</code>.</li>
+<li><code>maxSendHeaderBlockLength</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum allowed size for a
+serialized, compressed block of headers. Attempts to send headers that
+exceed this limit will result in a <code>'frameError'</code> event being emitted
+and the stream being closed and destroyed.</li>
+<li><code>paddingStrategy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Strategy used for determining the amount of
+padding to use for <code>HEADERS</code> and <code>DATA</code> frames. <strong>Default:</strong>
+<code>http2.constants.PADDING_STRATEGY_NONE</code>. Value may be one of:
+<ul>
+<li><code>http2.constants.PADDING_STRATEGY_NONE</code>: No padding is applied.</li>
+<li><code>http2.constants.PADDING_STRATEGY_MAX</code>: The maximum amount of padding,
+determined by the internal implementation, is applied.</li>
+<li><code>http2.constants.PADDING_STRATEGY_ALIGNED</code>: Attempts to apply enough
+padding to ensure that the total frame length, including the
+9-byte header, is a multiple of 8. For each frame, there is a maximum
+allowed number of padding bytes that is determined by current flow control
+state and settings. If this maximum is less than the calculated amount
+needed to ensure alignment, the maximum is used and the total frame length
+is not necessarily aligned at 8 bytes.</li>
+</ul>
+</li>
+<li><code>peerMaxConcurrentStreams</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the maximum number of concurrent
+streams for the remote peer as if a <code>SETTINGS</code> frame had been received. Will
+be overridden if the remote peer sets its own value for
+<code>maxConcurrentStreams</code>. <strong>Default:</strong> <code>100</code>.</li>
+<li><code>protocol</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The protocol to connect with, if not set in the
+<code>authority</code>. Value may be either <code>'http:'</code> or <code>'https:'</code>. <strong>Default:</strong>
+<code>'https:'</code></li>
+<li><code>settings</code> <a href="../http2.html#settings-object" rel="nofollow" class="type">&lt;HTTP/2 Settings Object&gt;</a> The initial settings to send to the
+remote peer upon connection.</li>
+<li><code>createConnection</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> An optional callback that receives the <code>URL</code>
+instance passed to <code>connect</code> and the <code>options</code> object, and returns any
+<a href="../stream.html#class-streamduplex"><code>Duplex</code></a> stream that is to be used as the connection for this session.</li>
+<li>...: Any <a href="../net.html#netconnect"><code>net.connect()</code></a> or <a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a> options can be provided.</li>
+<li><code>unknownProtocolTimeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies a timeout in milliseconds that
+a server should wait when an <a href="../http2.html#event-unknownprotocol"><code>'unknownProtocol'</code></a> event is emitted. If
+the socket has not been destroyed by that time the server will destroy it.
+<strong>Default:</strong> <code>10000</code>.</li>
+</ul>
+</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Will be registered as a one-time listener of the
+<a href="../http2.html#event-connect"><code>'connect'</code></a> event.</li>
+<li>Returns: <a href="../http2.html#class-clienthttp2session" rel="nofollow" class="type">&lt;ClientHttp2Session&gt;</a></li>
+</ul><p>Returns a <code>ClientHttp2Session</code> instance.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> client = http2.<span class="hljs-title function_">connect</span>(<span class="hljs-string">'https://localhost:1234'</span>);
+
+<span class="hljs-comment">/* Use the client */</span>
+
+client.<span class="hljs-title function_">close</span>();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

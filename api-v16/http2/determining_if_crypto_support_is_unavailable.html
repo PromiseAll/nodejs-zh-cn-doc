@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>确定加密支持是否不可用 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>确定加密支持是否不可用</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_determining_if_crypto_support_is_unavailable" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/determining_if_crypto_support_is_unavailable.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#determining-if-crypto-support-is-unavailable.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>可以在不支持 <code>crypto</code> 模块的情况下构建 Node.js。
+在这种情况下，尝试 <code>import</code> <code>http2</code> 或调用 <code>require('http2')</code> 将导致抛出错误。</p><p class="">使用 CommonJS 时，可以使用 try/catch 捕获抛出的错误：</p><pre class=""><code class="language-js cjs"><span class="hljs-keyword">let</span> http2;
+<span class="hljs-keyword">try</span> {
+  http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'http2 support is disabled!'</span>);
+}</code></pre><p class="">当使用词法 ESM <code>import</code> 关键字时，只有在尝试加载模块（例如，使用预加载模块）之前注册 <code>process.on('uncaughtException')</code> 的句柄时，才能捕获错误。</p><p class="">使用 ESM 时，如果有可能在未启用加密支持的 Node.js 版本上运行代码，则考虑使用 <code>import()</code> 函数而不是 <code>import</code> 关键字：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">let</span> http2;
+<span class="hljs-keyword">try</span> {
+  http2 = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'http2'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'http2 support is disabled!'</span>);
+}</code></pre></div>
+          <div id="content_right"><p>It is possible for Node.js to be built without including support for the
+<code>crypto</code> module. In such cases, attempting to <code>import</code> from <code>http2</code> or
+calling <code>require('http2')</code> will result in an error being thrown.</p><p>When using CommonJS, the error thrown can be caught using try/catch:</p><pre><code class="language-js cjs"><span class="hljs-keyword">let</span> http2;
+<span class="hljs-keyword">try</span> {
+  http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'http2 support is disabled!'</span>);
+}</code></pre><p>When using the lexical ESM <code>import</code> keyword, the error can only be
+caught if a handler for <code>process.on('uncaughtException')</code> is registered
+<em>before</em> any attempt to load the module is made (using, for instance,
+a preload module).</p><p>When using ESM, if there is a chance that the code may be run on a build
+of Node.js where crypto support is not enabled, consider using the
+<code>import()</code> function instead of the lexical <code>import</code> keyword:</p><pre><code class="language-js mjs"><span class="hljs-keyword">let</span> http2;
+<span class="hljs-keyword">try</span> {
+  http2 = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'http2'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'http2 support is disabled!'</span>);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

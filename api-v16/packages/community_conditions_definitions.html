@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>社区条件定义 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>社区条件定义</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_community_conditions_definitions" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/community_conditions_definitions.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#community-conditions-definitions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>除了<a href="../packages.html#conditional-exports">在 Node.js 核心中实现的</a> <code>"import"</code>、<code>"require"</code>、<code>"node"</code>、<code>"node-addons"</code> 和 <code>"default"</code> 条件之外的条件字符串默认被忽略。</p><p class="">其他平台可能实现其他条件，用户条件可以通过<a href="../packages.html#resolving-user-conditions"><code>--conditions</code> / <code>-C</code> 标识</a>在 Node.js 中启用。</p><p class="">由于自定义的包条件需要明确定义以确保正确使用，因此下面提供了常见的已知包条件及其严格定义的列表，以协助生态系统协调。</p><ul class="">
+<li><code>"types"</code> - 类型系统可以使用它来解析给定导出的类型文件。
+<em>此条件应始终首先包含在内。</em></li>
+<li><code>"deno"</code> - 表示 Deno 平台的变体。</li>
+<li><code>"browser"</code> - 任何网络浏览器环境。</li>
+<li><code>"development"</code> - 可用于定义仅开发环境入口点，例如提供额外的调试上下文（例如在开发模式下运行时更好的错误消息）。
+<em>必须始终与 <code>"production"</code> 互斥。</em></li>
+<li><code>"production"</code> - 可用于定义生产环境入口点。
+<em>必须始终与 <code>"development"</code> 互斥。</em></li>
+</ul><p class="">可以通过向<a href="https://github.com/nodejs/node/blob/HEAD/doc/api/packages.md#conditions-definitions" rel="nofollow">本节的 Node.js 文档</a>创建拉取请求，将新的条件定义添加到此列表中。
+在此处列出新条件定义的要求是：</p><ul class="">
+<li>对于所有实现者来说，定义应该是清晰明确的。</li>
+<li>为什么需要条件的用例应该清楚地证明。</li>
+<li>应该存在足够的现有实现用法。</li>
+<li>条件名称不应与另一个条件定义或广泛使用的条件冲突。</li>
+<li>条件定义的列表应该为生态系统提供协调效益，否则这是不可能的。
+例如，对于特定于公司或特定于应用程序的条件，情况不一定如此。</li>
+</ul><p class="">上述定义可能会在适当的时候移到专门的条件仓库中。</p></div>
+          <div id="content_right"><p>Condition strings other than the <code>"import"</code>, <code>"require"</code>, <code>"node"</code>,
+<code>"node-addons"</code> and <code>"default"</code> conditions
+<a href="../packages.html#conditional-exports">implemented in Node.js core</a> are ignored by default.</p><p>Other platforms may implement other conditions and user conditions can be
+enabled in Node.js via the <a href="../packages.html#resolving-user-conditions"><code>--conditions</code> / <code>-C</code> flag</a>.</p><p>Since custom package conditions require clear definitions to ensure correct
+usage, a list of common known package conditions and their strict definitions
+is provided below to assist with ecosystem coordination.</p><ul>
+<li><code>"types"</code> - can be used by typing systems to resolve the typing file for
+the given export. <em>This condition should always be included first.</em></li>
+<li><code>"deno"</code> - indicates a variation for the Deno platform.</li>
+<li><code>"browser"</code> - any web browser environment.</li>
+<li><code>"development"</code> - can be used to define a development-only environment
+entry point, for example to provide additional debugging context such as
+better error messages when running in a development mode. <em>Must always be
+mutually exclusive with <code>"production"</code>.</em></li>
+<li><code>"production"</code> - can be used to define a production environment entry
+point. <em>Must always be mutually exclusive with <code>"development"</code>.</em></li>
+</ul><p>New conditions definitions may be added to this list by creating a pull request
+to the <a href="https://github.com/nodejs/node/blob/HEAD/doc/api/packages.md#conditions-definitions" rel="nofollow">Node.js documentation for this section</a>. The requirements for listing
+a new condition definition here are that:</p><ul>
+<li>The definition should be clear and unambiguous for all implementers.</li>
+<li>The use case for why the condition is needed should be clearly justified.</li>
+<li>There should exist sufficient existing implementation usage.</li>
+<li>The condition name should not conflict with another condition definition or
+condition in wide usage.</li>
+<li>The listing of the condition definition should provide a coordination
+benefit to the ecosystem that wouldn't otherwise be possible. For example,
+this would not necessarily be the case for company-specific or
+application-specific conditions.</li>
+</ul><p>The above definitions may be moved to a dedicated conditions registry in due
+course.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

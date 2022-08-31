@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new URL(input[, base]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-url">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>new URL(input[, base])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../url.html#url_new_url_input_base" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/url/new_url_input_base.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/url/new_url_input_base.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/url/#new-urlinput-base.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><code>input</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要解析的绝对或相对的输入网址。
+如果 <code>input</code> 是相对的，则需要 <code>base</code>。
+如果 <code>input</code> 是绝对的，则忽略 <code>base</code>。
+如果 <code>input</code> 不是字符串，则先<a href="https://tc39.es/ecma262/#sec-tostring">转换成字符串</a>。</li>
+<li><code>base</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果 <code>input</code> 不是绝对的，则为要解析的基本网址。
+如果 <code>base</code> 不是字符串，则先<a href="https://tc39.es/ecma262/#sec-tostring">转换成字符串</a>。</li>
+</ul><p>通过相对于 <code>base</code> 解析 <code>input</code> 来创建新的 <code>URL</code> 对象。
+如果 <code>base</code> 作为字符串传入，则其将被解析为等效于 <code>new URL(base)</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/foo'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// https://example.org/foo</span></code></pre><p class="">网址构造函数可作为全局对象的属性访问。
+也可以从内置的 url 模块中导入：</p><pre class="with-54-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">URL</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'url'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable constant_">URL</span> === globalThis.<span class="hljs-property">URL</span>); <span class="hljs-comment">// 打印 'true'.</span></code><code class="language-js cjs"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable constant_">URL</span> === <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>).<span class="hljs-property">URL</span>); <span class="hljs-comment">// 打印 'true'.</span></code></pre><p class="">如果 <code>input</code> 或 <code>base</code> 不是有效的网址，则将抛出 <code>TypeError</code>。
+注意，会将给定的值强制转换为字符串。
+例如：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>({ <span class="hljs-attr">toString</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-string">'https://example.org/'</span> });
+<span class="hljs-comment">// https://example.org/</span></code></pre><p class="">出现在 <code>input</code> 的主机名中的 Unicode 字符将使用 <a href="https://tools.ietf.org/html/rfc5891#section-4.4" rel="nofollow">Punycode</a> 算法自动转换为 ASCII。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://測試'</span>);
+<span class="hljs-comment">// https://xn--g6w251d/</span></code></pre><p class="">只有在启用 <a href="../intl.html#options-for-building-nodejs">ICU</a> 的情况下编译 <code>node</code> 可执行文件时，此功能才可用。
+如果不是，则域名将原封不动地传入。</p><p class="">如果事先不知道 <code>input</code> 是否是绝对的网址并且提供了 <code>base</code>，则建议验证 <code>URL</code> 对象的 <code>origin</code> 是否符合预期。</p><pre class=""><code class="language-js"><span class="hljs-keyword">let</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'http://Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// http://example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// https://example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'foo://Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// foo://Example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'http:Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// http://example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https:Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// https://example.org/Example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'foo:Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// foo:Example.com/</span></code></pre></div>
+          <div id="content_right"><ul>
+<li><code>input</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The absolute or relative input URL to parse. If <code>input</code>
+is relative, then <code>base</code> is required. If <code>input</code> is absolute, the <code>base</code>
+is ignored. If <code>input</code> is not a string, it is <a href="https://tc39.es/ecma262/#sec-tostring">converted to a string</a> first.</li>
+<li><code>base</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The base URL to resolve against if the <code>input</code> is not
+absolute. If <code>base</code> is not a string, it is <a href="https://tc39.es/ecma262/#sec-tostring">converted to a string</a> first.</li>
+</ul><p>Creates a new <code>URL</code> object by parsing the <code>input</code> relative to the <code>base</code>. If
+<code>base</code> is passed as a string, it will be parsed equivalent to <code>new URL(base)</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/foo'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// https://example.org/foo</span></code></pre><p>The URL constructor is accessible as a property on the global object.
+It can also be imported from the built-in url module:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">URL</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'url'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable constant_">URL</span> === globalThis.<span class="hljs-property">URL</span>); <span class="hljs-comment">// Prints 'true'.</span></code><code class="language-js cjs"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable constant_">URL</span> === <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>).<span class="hljs-property">URL</span>); <span class="hljs-comment">// Prints 'true'.</span></code></pre><p>A <code>TypeError</code> will be thrown if the <code>input</code> or <code>base</code> are not valid URLs. Note
+that an effort will be made to coerce the given values into strings. For
+instance:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>({ <span class="hljs-attr">toString</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-string">'https://example.org/'</span> });
+<span class="hljs-comment">// https://example.org/</span></code></pre><p>Unicode characters appearing within the host name of <code>input</code> will be
+automatically converted to ASCII using the <a href="https://tools.ietf.org/html/rfc5891#section-4.4" rel="nofollow">Punycode</a> algorithm.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://測試'</span>);
+<span class="hljs-comment">// https://xn--g6w251d/</span></code></pre><p>This feature is only available if the <code>node</code> executable was compiled with
+<a href="../intl.html#options-for-building-nodejs">ICU</a> enabled. If not, the domain names are passed through unchanged.</p><p>In cases where it is not known in advance if <code>input</code> is an absolute URL
+and a <code>base</code> is provided, it is advised to validate that the <code>origin</code> of
+the <code>URL</code> object is what is expected.</p><pre><code class="language-js"><span class="hljs-keyword">let</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'http://Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// http://example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// https://example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'foo://Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// foo://Example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'http:Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// http://example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https:Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// https://example.org/Example.com/</span>
+
+myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'foo:Example.com/'</span>, <span class="hljs-string">'https://example.org/'</span>);
+<span class="hljs-comment">// foo:Example.com/</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

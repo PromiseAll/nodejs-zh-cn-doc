@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>net.createServer([options][, connectionListener]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-net">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>net.createServer([options][, connectionListener])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../net.html#net_net_createserver_options_connectionlistener" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/net/net_createserver_options_connectionlistener.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/net/net_createserver_options_connectionlistener.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/net/#netcreateserveroptions-connectionlistener.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.5.0</span>
+</div><ul class="">
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>allowHalfOpen</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>false</code>，则当可读端结束时，套接字将自动结束可写端。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>pauseOnConnect</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示是否应在传入连接上暂停套接字。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>noDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在收到新的传入连接后立即禁用 Nagle 算法。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAlive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在接收到新的传入连接后立即在套接字上启用保持活动功能，类似于在 <a href="../net.html#socketsetkeepaliveenable-initialdelay"><code>socket.setKeepAlive([enable][, initialDelay])</code></a> 中所做的。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAliveInitialDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果设置为正数，则它会设置在空闲套接字上发送第一个保持活跃探测之前的初始延迟。<strong>默认值:</strong> <code>0</code>。</li>
+</ul>
+</li>
+<li>
+<p><code>connectionListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 自动设置为 <a href="../net.html#event-connection"><code>'connection'</code></a> 事件的监听器。</p>
+</li>
+<li>
+<p>返回: <a href="../net.html#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></p>
+</li>
+</ul><p>创建新的 TCP 或 <a href="../net.html#ipc-support">IPC</a> 服务器。</p><p class="">如果 <code>allowHalfOpen</code> 设置为 <code>true</code>，则当套接字的另一端发出传输结束信号时，服务器仅在显式调用 <a href="../net.html#socketenddata-encoding-callback"><code>socket.end()</code></a> 时才发回传输结束。
+例如，在 TCP 上下文中，当接收到 FIN 数据包时，只有在显式调用 <a href="../net.html#socketenddata-encoding-callback"><code>socket.end()</code></a> 时才会发送回 FIN 数据包。
+在此之前，连接是半关闭的（不可读但仍可写）。
+有关更多信息，请参阅 <a href="../net.html#event-end"><code>'end'</code></a> 事件和 <a href="https://tools.ietf.org/html/rfc1122" rel="nofollow">RFC 1122</a>（第 4.2.2.13 章节）。</p><p class="">如果 <code>pauseOnConnect</code> 设置为 <code>true</code>，则与每个传入连接关联的套接字将被暂停，并且不会从其句柄读取数据。
+这允许在进程之间传递连接，而原始进程不会读取任何数据。
+要开始从暂停的套接字读取数据，则调用 <a href="../net.html#socketresume"><code>socket.resume()</code></a>。</p><p class="">服务器可以是 TCP 服务器或 <a href="../net.html#ipc-support">IPC</a> 服务器，这取决于其 <a href="../net.html#serverlisten"><code>listen()</code></a> 什么。</p><p class="">这是一个 TCP 回显服务器的示例，它监听端口 8124 上的连接：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> {
+  <span class="hljs-comment">// 'connection' 监听器。</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'client connected'</span>);
+  c.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'client disconnected'</span>);
+  });
+  c.<span class="hljs-title function_">write</span>(<span class="hljs-string">'hello\r\n'</span>);
+  c.<span class="hljs-title function_">pipe</span>(c);
+});
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">throw</span> err;
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8124</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'server bound'</span>);
+});</code></pre><p class="">使用 <code>telnet</code> 对此进行测试：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">telnet localhost 8124</span></code></pre><p class="">要监听套接字 <code>/tmp/echo.sock</code>：</p><pre class=""><code class="language-js">server.<span class="hljs-title function_">listen</span>(<span class="hljs-string">'/tmp/echo.sock'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'server bound'</span>);
+});</code></pre><p class="">使用 <code>nc</code> 连接到 Unix 域套接字服务器：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">nc -U /tmp/echo.sock</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.5.0</span>
+</div><ul>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>allowHalfOpen</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to <code>false</code>, then the socket will
+automatically end the writable side when the readable side ends.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>pauseOnConnect</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Indicates whether the socket should be
+paused on incoming connections. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>noDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to <code>true</code>, it disables the use of Nagle's algorithm immediately
+after a new incoming connection is received. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>keepAlive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to <code>true</code>, it enables keep-alive functionality on the socket
+immediately after a new incoming connection is received, similarly on what is done in
+<a href="../net.html#socketsetkeepaliveenable-initialdelay"><code>socket.setKeepAlive([enable][, initialDelay])</code></a>.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>keepAliveInitialDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> If set to a positive number, it sets the initial delay before
+the first keepalive probe is sent on an idle socket.<strong>Default:</strong> <code>0</code>.</li>
+</ul>
+</li>
+<li>
+<p><code>connectionListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Automatically set as a listener for the
+<a href="../net.html#event-connection"><code>'connection'</code></a> event.</p>
+</li>
+<li>
+<p>Returns: <a href="../net.html#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></p>
+</li>
+</ul><p>Creates a new TCP or <a href="../net.html#ipc-support">IPC</a> server.</p><p>If <code>allowHalfOpen</code> is set to <code>true</code>, when the other end of the socket
+signals the end of transmission, the server will only send back the end of
+transmission when <a href="../net.html#socketenddata-encoding-callback"><code>socket.end()</code></a> is explicitly called. For example, in the
+context of TCP, when a FIN packed is received, a FIN packed is sent
+back only when <a href="../net.html#socketenddata-encoding-callback"><code>socket.end()</code></a> is explicitly called. Until then the
+connection is half-closed (non-readable but still writable). See <a href="../net.html#event-end"><code>'end'</code></a>
+event and <a href="https://tools.ietf.org/html/rfc1122" rel="nofollow">RFC 1122</a> (section 4.2.2.13) for more information.</p><p>If <code>pauseOnConnect</code> is set to <code>true</code>, then the socket associated with each
+incoming connection will be paused, and no data will be read from its handle.
+This allows connections to be passed between processes without any data being
+read by the original process. To begin reading data from a paused socket, call
+<a href="../net.html#socketresume"><code>socket.resume()</code></a>.</p><p>The server can be a TCP server or an <a href="../net.html#ipc-support">IPC</a> server, depending on what it
+<a href="../net.html#serverlisten"><code>listen()</code></a> to.</p><p>Here is an example of a TCP echo server which listens for connections
+on port 8124:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> {
+  <span class="hljs-comment">// 'connection' listener.</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'client connected'</span>);
+  c.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'client disconnected'</span>);
+  });
+  c.<span class="hljs-title function_">write</span>(<span class="hljs-string">'hello\r\n'</span>);
+  c.<span class="hljs-title function_">pipe</span>(c);
+});
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">throw</span> err;
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8124</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'server bound'</span>);
+});</code></pre><p>Test this by using <code>telnet</code>:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">telnet localhost 8124</span></code></pre><p>To listen on the socket <code>/tmp/echo.sock</code>:</p><pre><code class="language-js">server.<span class="hljs-title function_">listen</span>(<span class="hljs-string">'/tmp/echo.sock'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'server bound'</span>);
+});</code></pre><p>Use <code>nc</code> to connect to a Unix domain socket server:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">nc -U /tmp/echo.sock</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

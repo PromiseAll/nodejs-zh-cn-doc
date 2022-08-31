@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>双包的危害 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>双包的危害</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_dual_package_hazard" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/dual_package_hazard.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/dual_package_hazard.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#dual-package-hazard.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当应用程序使用提供 CommonJS 和 ES 模块源的包时，如果包的两个版本都被加载，则存在某些错误的风险。
+此潜力来自于 <code>const pkgInstance = require('pkg')</code> 创建的 <code>pkgInstance</code> 与 <code>import pkgInstance from 'pkg'</code> 创建的 <code>pkgInstance</code>（或像 <code>'pkg/module'</code> 这样的替代主路径）不同的事实。
+这是“双包风险”，同一包的两个版本可以在同一个运行时环境中加载。
+虽然应用程序或包不太可能有意直接加载两个版本，但应用程序加载一个版本而应用程序的依赖项加载另一个版本是很常见的。
+这种危险可能发生，因为 Node.js 支持混合 CommonJS 和 ES 模块，并可能导致意外行为。</p><p class="">如果包主导出是一个构造函数，两个版本创建的实例的 <code>instanceof</code> 比较返回 <code>false</code>，如果导出是一个对象，添加到一个的属性（如 <code>pkgInstance.foo = 3</code>）在另一个上不存在。
+这与 <code>import</code> 和 <code>require</code> 语句分别在全 CommonJS 或全 ES 模块环境中的工作方式不同，因此令用户感到惊讶。
+它也不同于用户在通过 <a href="https://babeljs.io/" rel="nofollow">Babel</a> 或 <a href="https://github.com/standard-things/esm#readme" rel="nofollow"><code>esm</code></a> 等工具使用转译时所熟悉的行为。</p></div>
+          <div id="content_right"><p>When an application is using a package that provides both CommonJS and ES module
+sources, there is a risk of certain bugs if both versions of the package get
+loaded. This potential comes from the fact that the <code>pkgInstance</code> created by
+<code>const pkgInstance = require('pkg')</code> is not the same as the <code>pkgInstance</code>
+created by <code>import pkgInstance from 'pkg'</code> (or an alternative main path like
+<code>'pkg/module'</code>). This is the “dual package hazard,” where two versions of the
+same package can be loaded within the same runtime environment. While it is
+unlikely that an application or package would intentionally load both versions
+directly, it is common for an application to load one version while a dependency
+of the application loads the other version. This hazard can happen because
+Node.js supports intermixing CommonJS and ES modules, and can lead to unexpected
+behavior.</p><p>If the package main export is a constructor, an <code>instanceof</code> comparison of
+instances created by the two versions returns <code>false</code>, and if the export is an
+object, properties added to one (like <code>pkgInstance.foo = 3</code>) are not present on
+the other. This differs from how <code>import</code> and <code>require</code> statements work in
+all-CommonJS or all-ES module environments, respectively, and therefore is
+surprising to users. It also differs from the behavior users are familiar with
+when using transpilation via tools like <a href="https://babeljs.io/" rel="nofollow">Babel</a> or <a href="https://github.com/standard-things/esm#readme" rel="nofollow"><code>esm</code></a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

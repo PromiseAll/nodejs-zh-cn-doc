@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>port.postMessage(value[, transferList]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-worker_threads">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>port.postMessage(value[, transferList])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../worker_threads.html#worker_threads_port_postmessage_value_transferlist" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/worker_threads/port_postmessage_value_transferlist.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/worker_threads/port_postmessage_value_transferlist.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/worker_threads/#portpostmessagevalue-transferlist.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.14.0</td>
+<td><p>将 'BlockList' 添加到可克隆类型列表中。</p></td></tr>
+<tr><td>v15.9.0</td>
+<td><p>将 'Histogram' 类型添加到可克隆类型列表中。</p></td></tr>
+<tr><td>v15.6.0</td>
+<td><p>已将 <code>X509Certificate</code> 添加到可克隆类型列表中。</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p>已将 <code>CryptoKey</code> 添加到可克隆类型列表中。</p></td></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>已将 <code>KeyObject</code> 添加到可克隆类型列表中。</p></td></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>已将 <code>FileHandle</code> 添加到可传输类型列表中。</p></td></tr>
+<tr><td>v10.5.0</td>
+<td><p><span>新增于: v10.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>transferList</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a></li>
+</ul><p>向该通道的接收端发送 JavaScript 值。
+<code>value</code> 的传输方式与 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm" rel="nofollow">HTML 结构化克隆算法</a>兼容。</p><p class="">特别是与 <code>JSON</code> 的显着区别是：</p><ul class="">
+<li><code>value</code> 可能包含循环引用。</li>
+<li><code>value</code> 可能包含内置 JS 类型的实例，例如 <code>RegExp</code>、<code>BigInt</code>、<code>Map</code>、<code>Set</code> 等。</li>
+<li><code>value</code> 可能包含类型化数组，都使用 <code>ArrayBuffer</code> 和 <code>SharedArrayBuffer</code>。</li>
+<li><code>value</code> 可能包含 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module" rel="nofollow"><code>WebAssembly.Module</code></a> 实例。</li>
+<li><code>value</code> 可能不包含原生 (C++ 支持) 对象，除了:
+<ul>
+<li><a href="../webcrypto.html#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a>，</li>
+<li><a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a>，</li>
+<li><a href="../perf_hooks.html#class-histogram" rel="nofollow" class="type">&lt;Histogram&gt;</a>，</li>
+<li><a href="../crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a>，</li>
+<li><a href="../worker_threads.html#class-messageport" rel="nofollow" class="type">&lt;MessagePort&gt;</a>，</li>
+<li><a href="../net.html#class-netblocklist" rel="nofollow" class="type">&lt;net.BlockList&gt;</a>，</li>
+<li><a href="../net.html#class-netsocketaddress" rel="nofollow" class="type">&lt;net.SocketAddress&gt;</a>，</li>
+<li><a href="../crypto.html#class-x509certificate" rel="nofollow" class="type">&lt;X509Certificate&gt;</a>。</li>
+</ul>
+</li>
+</ul><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+<span class="hljs-keyword">const</span> { port1, port2 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+
+port1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message));
+
+<span class="hljs-keyword">const</span> circularData = {};
+circularData.<span class="hljs-property">foo</span> = circularData;
+<span class="hljs-comment">// 打印: { foo: [Circular] }</span>
+port2.<span class="hljs-title function_">postMessage</span>(circularData);</code></pre><p class=""><code>transferList</code> 可能是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>、<a href="../worker_threads.html#class-messageport"><code>MessagePort</code></a> 和 <a href="../fs.html#class-filehandle"><code>FileHandle</code></a> 对象的列表。
+传输后，它们在通道的发送端不再可用（即使它们不包含在 <code>value</code> 中）。
+与<a href="../child_process.html">子进程</a>不同，当前不支持传输句柄，例如网络套接字。</p><p class="">如果 <code>value</code> 包含 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a> 实例，则可以从任一线程访问它们。
+它们不能在 <code>transferList</code> 中列出。</p><p class=""><code>value</code> 可能仍然包含不在 <code>transferList</code> 中的 <code>ArrayBuffer</code> 实例；在这种情况下，底层内存被复制而不是移动。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+<span class="hljs-keyword">const</span> { port1, port2 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+
+port1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message));
+
+<span class="hljs-keyword">const</span> uint8Array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>([ <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> ]);
+<span class="hljs-comment">// 此发送 `uint8Array` 的副本：</span>
+port2.<span class="hljs-title function_">postMessage</span>(uint8Array);
+<span class="hljs-comment">// 这不会复制数据，但会使 `uint8Array` 无法使用：</span>
+port2.<span class="hljs-title function_">postMessage</span>(uint8Array, [ uint8Array.<span class="hljs-property">buffer</span> ]);
+
+<span class="hljs-comment">// `sharedUint8Array` 的内存</span>
+<span class="hljs-comment">// 可以从 `.on('message')` 收到的原件和副本中访问：</span>
+<span class="hljs-keyword">const</span> sharedUint8Array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SharedArrayBuffer</span>(<span class="hljs-number">4</span>));
+port2.<span class="hljs-title function_">postMessage</span>(sharedUint8Array);
+
+<span class="hljs-comment">// 这会将新创建的消息端口传输到接收器。</span>
+<span class="hljs-comment">// 例如，这可用于在作为同一父线程的子线程的多个 `Worker` 线程之间</span>
+<span class="hljs-comment">// 创建通信通道。</span>
+<span class="hljs-keyword">const</span> otherChannel = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+port2.<span class="hljs-title function_">postMessage</span>({ <span class="hljs-attr">port</span>: otherChannel.<span class="hljs-property">port1</span> }, [ otherChannel.<span class="hljs-property">port1</span> ]);</code></pre><p class="">消息对象立即克隆，发布后可修改，无副作用。</p><p class="">关于此 API 背后的序列化和反序列化机制的更多信息，请参见 <a href="../v8.html#serialization-api"><code>v8</code> 模块的序列化 API</a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.14.0</td>
+<td><p>Add 'BlockList' to the list of cloneable types.</p></td></tr>
+<tr><td>v15.9.0</td>
+<td><p>Add 'Histogram' types to the list of cloneable types.</p></td></tr>
+<tr><td>v15.6.0</td>
+<td><p>Added <code>X509Certificate</code> to the list of cloneable types.</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p>Added <code>CryptoKey</code> to the list of cloneable types.</p></td></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>Added <code>KeyObject</code> to the list of cloneable types.</p></td></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>Added <code>FileHandle</code> to the list of transferable types.</p></td></tr>
+<tr><td>v10.5.0</td>
+<td><p><span>Added in: v10.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>transferList</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a></li>
+</ul><p>Sends a JavaScript value to the receiving side of this channel.
+<code>value</code> is transferred in a way which is compatible with
+the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm" rel="nofollow">HTML structured clone algorithm</a>.</p><p>In particular, the significant differences to <code>JSON</code> are:</p><ul>
+<li><code>value</code> may contain circular references.</li>
+<li><code>value</code> may contain instances of builtin JS types such as <code>RegExp</code>s,
+<code>BigInt</code>s, <code>Map</code>s, <code>Set</code>s, etc.</li>
+<li><code>value</code> may contain typed arrays, both using <code>ArrayBuffer</code>s
+and <code>SharedArrayBuffer</code>s.</li>
+<li><code>value</code> may contain <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module" rel="nofollow"><code>WebAssembly.Module</code></a> instances.</li>
+<li><code>value</code> may not contain native (C++-backed) objects other than:
+<ul>
+<li><a href="../webcrypto.html#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a>s,</li>
+<li><a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a>s,</li>
+<li><a href="../perf_hooks.html#class-histogram" rel="nofollow" class="type">&lt;Histogram&gt;</a>s,</li>
+<li><a href="../crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a>s,</li>
+<li><a href="../worker_threads.html#class-messageport" rel="nofollow" class="type">&lt;MessagePort&gt;</a>s,</li>
+<li><a href="../net.html#class-netblocklist" rel="nofollow" class="type">&lt;net.BlockList&gt;</a>s,</li>
+<li><a href="../net.html#class-netsocketaddress" rel="nofollow" class="type">&lt;net.SocketAddress&gt;</a>es,</li>
+<li><a href="../crypto.html#class-x509certificate" rel="nofollow" class="type">&lt;X509Certificate&gt;</a>s.</li>
+</ul>
+</li>
+</ul><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+<span class="hljs-keyword">const</span> { port1, port2 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+
+port1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message));
+
+<span class="hljs-keyword">const</span> circularData = {};
+circularData.<span class="hljs-property">foo</span> = circularData;
+<span class="hljs-comment">// Prints: { foo: [Circular] }</span>
+port2.<span class="hljs-title function_">postMessage</span>(circularData);</code></pre><p><code>transferList</code> may be a list of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>, <a href="../worker_threads.html#class-messageport"><code>MessagePort</code></a> and
+<a href="../fs.html#class-filehandle"><code>FileHandle</code></a> objects.
+After transferring, they are not usable on the sending side of the channel
+anymore (even if they are not contained in <code>value</code>). Unlike with
+<a href="../child_process.html">child processes</a>, transferring handles such as network sockets is currently
+not supported.</p><p>If <code>value</code> contains <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a> instances, those are accessible
+from either thread. They cannot be listed in <code>transferList</code>.</p><p><code>value</code> may still contain <code>ArrayBuffer</code> instances that are not in
+<code>transferList</code>; in that case, the underlying memory is copied rather than moved.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+<span class="hljs-keyword">const</span> { port1, port2 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+
+port1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message));
+
+<span class="hljs-keyword">const</span> uint8Array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>([ <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> ]);
+<span class="hljs-comment">// This posts a copy of `uint8Array`:</span>
+port2.<span class="hljs-title function_">postMessage</span>(uint8Array);
+<span class="hljs-comment">// This does not copy data, but renders `uint8Array` unusable:</span>
+port2.<span class="hljs-title function_">postMessage</span>(uint8Array, [ uint8Array.<span class="hljs-property">buffer</span> ]);
+
+<span class="hljs-comment">// The memory for the `sharedUint8Array` is accessible from both the</span>
+<span class="hljs-comment">// original and the copy received by `.on('message')`:</span>
+<span class="hljs-keyword">const</span> sharedUint8Array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SharedArrayBuffer</span>(<span class="hljs-number">4</span>));
+port2.<span class="hljs-title function_">postMessage</span>(sharedUint8Array);
+
+<span class="hljs-comment">// This transfers a freshly created message port to the receiver.</span>
+<span class="hljs-comment">// This can be used, for example, to create communication channels between</span>
+<span class="hljs-comment">// multiple `Worker` threads that are children of the same parent thread.</span>
+<span class="hljs-keyword">const</span> otherChannel = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+port2.<span class="hljs-title function_">postMessage</span>({ <span class="hljs-attr">port</span>: otherChannel.<span class="hljs-property">port1</span> }, [ otherChannel.<span class="hljs-property">port1</span> ]);</code></pre><p>The message object is cloned immediately, and can be modified after
+posting without having side effects.</p><p>For more information on the serialization and deserialization mechanisms
+behind this API, see the <a href="../v8.html#serialization-api">serialization API of the <code>v8</code> module</a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

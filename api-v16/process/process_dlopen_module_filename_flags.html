@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.dlopen(module, filename[, flags]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.dlopen(module, filename[, flags])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_dlopen_module_filename_flags" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_dlopen_module_filename_flags.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_dlopen_module_filename_flags.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processdlopenmodule-filename-flags.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>添加了对 <code>flags</code> 参数的支持。</p></td></tr>
+<tr><td>v0.1.16</td>
+<td><p><span>新增于: v0.1.16</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>module</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>flags</code> <a href="../os.html#dlopen-constants" rel="nofollow" class="type">&lt;os.constants.dlopen&gt;</a> <strong>默认值:</strong> <code>os.constants.dlopen.RTLD_LAZY</code></li>
+</ul><p><code>process.dlopen()</code> 方法允许动态加载共享对象。
+<code>require()</code> 主要用于加载 C++ 插件，除非特殊情况，否则不应直接使用。
+换句话说，<a href="../globals.html#require"><code>require()</code></a> 应该优先于 <code>process.dlopen()</code>，除非有特定的原因，例如自定义 dlopen 标志或从 ES 模块加载。</p><p class=""><code>flags</code> 参数是整数，允许指定 dlopen 行为。
+有关详细信息，请参阅 <a href="../os.html#dlopen-constants"><code>os.constants.dlopen</code></a> 文档。</p><p class="">调用 <code>process.dlopen()</code> 时的一个重要要求是必须传入 <code>module</code> 实例。
+然后可以通过 <code>module.exports</code> 访问由 C++ 插件导出的函数。</p><p class="">下面的示例显示了如何加载名为 <code>local.node</code> 的 C++ 插件，该插件导出 <code>foo</code> 函数。
+通过传入 <code>RTLD_NOW</code> 常量，在调用返回之前加载所有符号。
+在此示例中，假定常量可用。</p><pre class="with-38-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { dlopen } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+<span class="hljs-keyword">import</span> { constants } <span class="hljs-keyword">from</span> <span class="hljs-string">'os'</span>;
+<span class="hljs-keyword">import</span> { fileURLToPath } <span class="hljs-keyword">from</span> <span class="hljs-string">'url'</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = { <span class="hljs-attr">exports</span>: {} };
+<span class="hljs-title function_">dlopen</span>(<span class="hljs-variable language_">module</span>, <span class="hljs-title function_">fileURLToPath</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'local.node'</span>, <span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">url</span>)),
+       constants.<span class="hljs-property">dlopen</span>.<span class="hljs-property">RTLD_NOW</span>);
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-title function_">foo</span>();</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { dlopen } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+<span class="hljs-keyword">const</span> { constants } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'os'</span>);
+<span class="hljs-keyword">const</span> { join } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = { <span class="hljs-attr">exports</span>: {} };
+<span class="hljs-title function_">dlopen</span>(<span class="hljs-variable language_">module</span>, <span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">'local.node'</span>), constants.<span class="hljs-property">dlopen</span>.<span class="hljs-property">RTLD_NOW</span>);
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-title function_">foo</span>();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>Added support for the <code>flags</code> argument.</p></td></tr>
+<tr><td>v0.1.16</td>
+<td><p><span>Added in: v0.1.16</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>module</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>flags</code> <a href="../os.html#dlopen-constants" rel="nofollow" class="type">&lt;os.constants.dlopen&gt;</a> <strong>Default:</strong> <code>os.constants.dlopen.RTLD_LAZY</code></li>
+</ul><p>The <code>process.dlopen()</code> method allows dynamically loading shared objects. It is
+primarily used by <code>require()</code> to load C++ Addons, and should not be used
+directly, except in special cases. In other words, <a href="../globals.html#require"><code>require()</code></a> should be
+preferred over <code>process.dlopen()</code> unless there are specific reasons such as
+custom dlopen flags or loading from ES modules.</p><p>The <code>flags</code> argument is an integer that allows to specify dlopen
+behavior. See the <a href="../os.html#dlopen-constants"><code>os.constants.dlopen</code></a> documentation for details.</p><p>An important requirement when calling <code>process.dlopen()</code> is that the <code>module</code>
+instance must be passed. Functions exported by the C++ Addon are then
+accessible via <code>module.exports</code>.</p><p>The example below shows how to load a C++ Addon, named <code>local.node</code>,
+that exports a <code>foo</code> function. All the symbols are loaded before
+the call returns, by passing the <code>RTLD_NOW</code> constant. In this example
+the constant is assumed to be available.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { dlopen } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+<span class="hljs-keyword">import</span> { constants } <span class="hljs-keyword">from</span> <span class="hljs-string">'os'</span>;
+<span class="hljs-keyword">import</span> { fileURLToPath } <span class="hljs-keyword">from</span> <span class="hljs-string">'url'</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = { <span class="hljs-attr">exports</span>: {} };
+<span class="hljs-title function_">dlopen</span>(<span class="hljs-variable language_">module</span>, <span class="hljs-title function_">fileURLToPath</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'local.node'</span>, <span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">url</span>)),
+       constants.<span class="hljs-property">dlopen</span>.<span class="hljs-property">RTLD_NOW</span>);
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-title function_">foo</span>();</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { dlopen } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+<span class="hljs-keyword">const</span> { constants } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'os'</span>);
+<span class="hljs-keyword">const</span> { join } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = { <span class="hljs-attr">exports</span>: {} };
+<span class="hljs-title function_">dlopen</span>(<span class="hljs-variable language_">module</span>, <span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">'local.node'</span>), constants.<span class="hljs-property">dlopen</span>.<span class="hljs-property">RTLD_NOW</span>);
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-title function_">foo</span>();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>双工流的例子 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>双工流的例子</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_an_example_duplex_stream" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/an_example_duplex_stream.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/an_example_duplex_stream.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#an-example-duplex-stream.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>下面说明了一个简单的 <code>Duplex</code> 流的示例，它封装了一个假设的低层源对象，可以向其中写入数据，也可以从中读取数据，尽管使用的 API 与 Node.js 流不兼容。
+下面说明了一个简单的 <code>Duplex</code> 流的示例，它缓冲通过 <a href="../stream.html#class-streamwritable"><code>Writable</code></a> 接口传入的写入数据，然后通过 <a href="../stream.html#class-streamreadable"><code>Readable</code></a> 接口读回。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> kSource = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">'source'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDuplex</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Duplex</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">source, options</span>) {
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-variable language_">this</span>[kSource] = source;
+  }
+
+  <span class="hljs-title function_">_write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// 底层源代码只处理字符串。</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">isBuffer</span>(chunk))
+      chunk = chunk.<span class="hljs-title function_">toString</span>();
+    <span class="hljs-variable language_">this</span>[kSource].<span class="hljs-title function_">writeSomeData</span>(chunk);
+    <span class="hljs-title function_">callback</span>();
+  }
+
+  <span class="hljs-title function_">_read</span>(<span class="hljs-params">size</span>) {
+    <span class="hljs-variable language_">this</span>[kSource].<span class="hljs-title function_">fetchSomeData</span>(size, <span class="hljs-function">(<span class="hljs-params">data, encoding</span>) =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(data, encoding));
+    });
+  }
+}</code></pre><p class=""><code>Duplex</code> 流最重要的方面是 <code>Readable</code> 和 <code>Writable</code> 端彼此独立运行，尽管它们共存于单个对象实例中。</p></div>
+          <div id="content_right"><p>The following illustrates a simple example of a <code>Duplex</code> stream that wraps a
+hypothetical lower-level source object to which data can be written, and
+from which data can be read, albeit using an API that is not compatible with
+Node.js streams.
+The following illustrates a simple example of a <code>Duplex</code> stream that buffers
+incoming written data via the <a href="../stream.html#class-streamwritable"><code>Writable</code></a> interface that is read back out
+via the <a href="../stream.html#class-streamreadable"><code>Readable</code></a> interface.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> kSource = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">'source'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDuplex</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Duplex</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">source, options</span>) {
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-variable language_">this</span>[kSource] = source;
+  }
+
+  <span class="hljs-title function_">_write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// The underlying source only deals with strings.</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">isBuffer</span>(chunk))
+      chunk = chunk.<span class="hljs-title function_">toString</span>();
+    <span class="hljs-variable language_">this</span>[kSource].<span class="hljs-title function_">writeSomeData</span>(chunk);
+    <span class="hljs-title function_">callback</span>();
+  }
+
+  <span class="hljs-title function_">_read</span>(<span class="hljs-params">size</span>) {
+    <span class="hljs-variable language_">this</span>[kSource].<span class="hljs-title function_">fetchSomeData</span>(size, <span class="hljs-function">(<span class="hljs-params">data, encoding</span>) =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(data, encoding));
+    });
+  }
+}</code></pre><p>The most important aspect of a <code>Duplex</code> stream is that the <code>Readable</code> and
+<code>Writable</code> sides operate independently of one another despite co-existing within
+a single object instance.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

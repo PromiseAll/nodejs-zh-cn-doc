@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>crypto.sign(algorithm, data, key[, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>crypto.sign(algorithm, data, key[, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_crypto_sign_algorithm_data_key_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/crypto_sign_algorithm_data_key_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#cryptosignalgorithm-data-key-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.12.0</td>
+<td><p>添加了可选的回调参数。</p></td></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>此函数现在支持 IEEE-P1363 DSA 和 ECDSA 签名。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p><span>新增于: v12.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>algorithm</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a></li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+<li><code>key</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="../crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a> | <a href="../webcrypto.html#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>signature</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+</li>
+<li>返回: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 如果未提供 <code>callback</code> 函数。</li>
+</ul><p>使用给定的私钥和算法计算并返回 <code>data</code> 的签名。
+如果 <code>algorithm</code> 是 <code>null</code> 或 <code>undefined</code>，则算法取决于密钥类型（尤其是 Ed25519 和 Ed448）。</p><p class="">如果 <code>key</code> 不是 <a href="../crypto.html#class-keyobject"><code>KeyObject</code></a>，则此函数的行为就像将 <code>key</code> 传给 <a href="../crypto.html#cryptocreateprivatekeykey"><code>crypto.createPrivateKey()</code></a> 一样。
+如果是对象，则可以传入以下额外属性：</p><ul class="">
+<li>
+<p><code>dsaEncoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 对于 DSA 和 ECDSA，此选项指定生成签名的格式。
+它可以是以下之一：</p>
+<ul>
+<li><code>'der'</code>（默认）：DER 编码的 ASN.1 签名结构编码 <code>(r, s)</code>。</li>
+<li><code>'ieee-p1363'</code>: IEEE-P1363 中提议的签名格式 <code>r || s</code>。</li>
+</ul>
+</li>
+<li>
+<p><code>padding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> RSA 的可选填充值，以下之一：</p>
+<ul>
+<li><code>crypto.constants.RSA_PKCS1_PADDING</code>（默认）</li>
+<li><code>crypto.constants.RSA_PKCS1_PSS_PADDING</code></li>
+</ul>
+<p><code>RSA_PKCS1_PSS_PADDING</code> 将使用 MGF1 与用于签署消息的相同散列函数，如 <a href="https://www.rfc-editor.org/rfc/rfc4055.txt" rel="nofollow">RFC 4055</a> 的第 3.1 节中指定的那样。</p>
+</li>
+<li>
+<p><code>saltLength</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 填充为 <code>RSA_PKCS1_PSS_PADDING</code> 时的盐长度。
+特殊值 <code>crypto.constants.RSA_PSS_SALTLEN_DIGEST</code> 将盐长度设置为摘要大小，<code>crypto.constants.RSA_PSS_SALTLEN_MAX_SIGN</code>（默认值）将其设置为最大允许值。</p>
+</li>
+</ul><p class="">如果提供了 <code>callback</code> 函数，则该函数使用 libuv 的线程池。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.12.0</td>
+<td><p>Optional callback argument added.</p></td></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>This function now supports IEEE-P1363 DSA and ECDSA signatures.</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p><span>Added in: v12.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>algorithm</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a></li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+<li><code>key</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="../crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a> | <a href="../webcrypto.html#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>signature</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+</li>
+<li>Returns: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> if the <code>callback</code> function is not provided.</li>
+</ul><p>Calculates and returns the signature for <code>data</code> using the given private key and
+algorithm. If <code>algorithm</code> is <code>null</code> or <code>undefined</code>, then the algorithm is
+dependent upon the key type (especially Ed25519 and Ed448).</p><p>If <code>key</code> is not a <a href="../crypto.html#class-keyobject"><code>KeyObject</code></a>, this function behaves as if <code>key</code> had been
+passed to <a href="../crypto.html#cryptocreateprivatekeykey"><code>crypto.createPrivateKey()</code></a>. If it is an object, the following
+additional properties can be passed:</p><ul>
+<li>
+<p><code>dsaEncoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> For DSA and ECDSA, this option specifies the
+format of the generated signature. It can be one of the following:</p>
+<ul>
+<li><code>'der'</code> (default): DER-encoded ASN.1 signature structure encoding <code>(r, s)</code>.</li>
+<li><code>'ieee-p1363'</code>: Signature format <code>r || s</code> as proposed in IEEE-P1363.</li>
+</ul>
+</li>
+<li>
+<p><code>padding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Optional padding value for RSA, one of the following:</p>
+<ul>
+<li><code>crypto.constants.RSA_PKCS1_PADDING</code> (default)</li>
+<li><code>crypto.constants.RSA_PKCS1_PSS_PADDING</code></li>
+</ul>
+<p><code>RSA_PKCS1_PSS_PADDING</code> will use MGF1 with the same hash function
+used to sign the message as specified in section 3.1 of <a href="https://www.rfc-editor.org/rfc/rfc4055.txt" rel="nofollow">RFC 4055</a>.</p>
+</li>
+<li>
+<p><code>saltLength</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Salt length for when padding is
+<code>RSA_PKCS1_PSS_PADDING</code>. The special value
+<code>crypto.constants.RSA_PSS_SALTLEN_DIGEST</code> sets the salt length to the digest
+size, <code>crypto.constants.RSA_PSS_SALTLEN_MAX_SIGN</code> (default) sets it to the
+maximum permissible value.</p>
+</li>
+</ul><p>If the <code>callback</code> function is provided this function uses libuv's threadpool.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

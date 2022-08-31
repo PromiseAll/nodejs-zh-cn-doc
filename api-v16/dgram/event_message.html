@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'message' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dgram">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'message' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dgram.html#dgram_event_message" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dgram/event_message.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dgram/event_message.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dgram/#event-message.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div><p>当套接字上有新的数据报可用时，则会触发 <code>'message'</code> 事件。
+事件句柄传入了两个参数：<code>msg</code> 和 <code>rinfo</code>。</p><ul class="">
+<li><code>msg</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 消息。</li>
+<li><code>rinfo</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 远程地址信息。
+<ul>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 发送者地址。</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 地址族（<code>'IPv4'</code> 或 <code>'IPv6'</code>）。</li>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 发送者端口。</li>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 消息大小。</li>
+</ul>
+</li>
+</ul><p class="">如果传入数据包的源地址是 IPv6 链路本地地址，则将接口名称添加到 <code>address</code>。
+例如，在 <code>en0</code> 接口上接收的数据包可能将地址字段设置为 <code>'fe80::2618:1234:ab11:3b9c%en0'</code>，其中 <code>'%en0'</code> 是作为区域 ID 后缀的接口名称。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.99</span>
+</div><p>The <code>'message'</code> event is emitted when a new datagram is available on a socket.
+The event handler function is passed two arguments: <code>msg</code> and <code>rinfo</code>.</p><ul>
+<li><code>msg</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The message.</li>
+<li><code>rinfo</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Remote address information.
+<ul>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The sender address.</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The address family (<code>'IPv4'</code> or <code>'IPv6'</code>).</li>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The sender port.</li>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The message size.</li>
+</ul>
+</li>
+</ul><p>If the source address of the incoming packet is an IPv6 link-local
+address, the interface name is added to the <code>address</code>. For
+example, a packet received on the <code>en0</code> interface might have the
+address field set to <code>'fe80::2618:1234:ab11:3b9c%en0'</code>, where <code>'%en0'</code>
+is the interface name as a zone ID suffix.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

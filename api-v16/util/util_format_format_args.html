@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>util.format(format[, ...args]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-util">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>util.format(format[, ...args])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../util.html#util_util_format_format_args" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/util/util_format_format_args.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/util/util_format_format_args.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/util/#utilformatformat-args.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v12.11.0</td>
+<td><p>说明符 <code>%c</code> 现在被忽略。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>参数 <code>format</code> 现在仅在其实际包含格式说明符时才被采用。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>如果 <code>format</code> 参数不是格式字符串，则输出字符串的格式不再依赖于第一个参数的类型。 当第一个参数不是字符串时，则此更改从正在输出的字符串中删除以前存在的引号。</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>说明符 <code>%d</code>、<code>%f</code> 和 <code>%i</code> 现在正确地支持符号。</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>说明符 <code>%o</code> 的 <code>depth</code> 再次具有默认的深度 4。</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>说明符 <code>%o</code> 的 <code>depth</code> 选项现在将回退到默认的深度。</p></td></tr>
+<tr><td>v10.12.0</td>
+<td><p>说明符 <code>%d</code> 和 <code>%i</code> 现在支持长整数。</p></td></tr>
+<tr><td>v8.4.0</td>
+<td><p>现在支持 <code>%o</code> 和 <code>%O</code> 说明符。</p></td></tr>
+<tr><td>v0.5.3</td>
+<td><p><span>新增于: v0.5.3</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>format</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 类似 <code>printf</code> 的格式字符串。</li>
+</ul><p><code>util.format()</code> 方法使用第一个参数作为类似 <code>printf</code> 的格式字符串（其可以包含零个或多个格式说明符）来返回格式化的字符串。
+每个说明符都替换为来自相应参数的转换后的值。
+支持的说明符有：</p><ul class="">
+<li><code>%s</code>: <code>String</code> 将用于转换除 <code>BigInt</code>、<code>Object</code> 和 <code>-0</code> 之外的所有值。
+<code>BigInt</code> 值将用 <code>n</code> 表示，没有用户定义的 <code>toString</code> 函数的对象使用具有选项 <code>{ depth: 0, colors: false, compact: 3 }</code> 的 <code>util.inspect()</code> 进行检查。</li>
+<li><code>%d</code>: <code>Number</code> 将用于转换除 <code>BigInt</code> 和 <code>Symbol</code> 之外的所有值。</li>
+<li><code>%i</code>: <code>parseInt(value, 10)</code> 用于除 <code>BigInt</code> 和 <code>Symbol</code> 之外的所有值。</li>
+<li><code>%f</code>: <code>parseFloat(value)</code> 用于除 <code>Symbol</code> 之外的所有值。</li>
+<li><code>%j</code>: JSON。
+如果参数包含循环引用，则替换为字符串 <code>'[Circular]'</code>。</li>
+<li><code>%o</code>: <code>Object</code>.
+具有通用 JavaScript 对象格式的对象的字符串表示形式。
+类似于具有选项 <code>{ showHidden: true, showProxy: true }</code> 的 <code>util.inspect()</code>。
+这将显示完整的对象，包括不可枚举的属性和代理。</li>
+<li><code>%O</code>: <code>Object</code>.
+具有通用 JavaScript 对象格式的对象的字符串表示形式。
+类似于没有选项的 <code>util.inspect()</code>。
+这将显示完整的对象，但不包括不可枚举的属性和代理。</li>
+<li><code>%c</code>: <code>CSS</code>.
+此说明符被忽略，将跳过任何传入的 CSS。</li>
+<li><code>%%</code>: 单个百分号 (<code>'%'</code>)。
+这不消费参数。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 格式化的字符串</li>
+</ul><p class="">如果说明符没有相应的参数，则不会替换它：</p><pre class=""><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-string">'%s:%s'</span>, <span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// 返回: 'foo:%s'</span></code></pre><p class="">如果其类型不是 <code>string</code>，则不属于格式字符串的值将使用 <code>util.inspect()</code> 进行格式化。</p><p class="">如果传给 <code>util.format()</code> 方法的参数多于说明符的数量，则额外的参数将以空格分隔串联到返回的字符串：</p><pre class=""><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-string">'%s:%s'</span>, <span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>, <span class="hljs-string">'baz'</span>);
+<span class="hljs-comment">// 返回: 'foo:bar baz'</span></code></pre><p class="">如果第一个参数不包含有效的格式说明符，则 <code>util.format()</code> 返回以空格分隔的所有参数的串联的字符串：</p><pre class=""><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);
+<span class="hljs-comment">// 返回: '1 2 3'</span></code></pre><p class="">如果只有一个参数传给 <code>util.format()</code>，则它会按原样返回，不进行任何格式化：</p><pre class=""><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-string">'%% %s'</span>);
+<span class="hljs-comment">// 返回: '%% %s'</span></code></pre><p class=""><code>util.format()</code> 是同步的方法，旨在用作调试工具。
+某些输入值可能会产生显着的性能开销，从而阻塞事件循环。
+小心使用此函数，切勿在热代码路径中使用。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v12.11.0</td>
+<td><p>The <code>%c</code> specifier is ignored now.</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>The <code>format</code> argument is now only taken as such if it actually contains format specifiers.</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>If the <code>format</code> argument is not a format string, the output string's formatting is no longer dependent on the type of the first argument. This change removes previously present quotes from strings that were being output when the first argument was not a string.</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>The <code>%d</code>, <code>%f</code> and <code>%i</code> specifiers now support Symbols properly.</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>The <code>%o</code> specifier's <code>depth</code> has default depth of 4 again.</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>The <code>%o</code> specifier's <code>depth</code> option will now fall back to the default depth.</p></td></tr>
+<tr><td>v10.12.0</td>
+<td><p>The <code>%d</code> and <code>%i</code> specifiers now support BigInt.</p></td></tr>
+<tr><td>v8.4.0</td>
+<td><p>The <code>%o</code> and <code>%O</code> specifiers are supported now.</p></td></tr>
+<tr><td>v0.5.3</td>
+<td><p><span>Added in: v0.5.3</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>format</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A <code>printf</code>-like format string.</li>
+</ul><p>The <code>util.format()</code> method returns a formatted string using the first argument
+as a <code>printf</code>-like format string which can contain zero or more format
+specifiers. Each specifier is replaced with the converted value from the
+corresponding argument. Supported specifiers are:</p><ul>
+<li><code>%s</code>: <code>String</code> will be used to convert all values except <code>BigInt</code>, <code>Object</code>
+and <code>-0</code>. <code>BigInt</code> values will be represented with an <code>n</code> and Objects that
+have no user defined <code>toString</code> function are inspected using <code>util.inspect()</code>
+with options <code>{ depth: 0, colors: false, compact: 3 }</code>.</li>
+<li><code>%d</code>: <code>Number</code> will be used to convert all values except <code>BigInt</code> and
+<code>Symbol</code>.</li>
+<li><code>%i</code>: <code>parseInt(value, 10)</code> is used for all values except <code>BigInt</code> and
+<code>Symbol</code>.</li>
+<li><code>%f</code>: <code>parseFloat(value)</code> is used for all values expect <code>Symbol</code>.</li>
+<li><code>%j</code>: JSON. Replaced with the string <code>'[Circular]'</code> if the argument contains
+circular references.</li>
+<li><code>%o</code>: <code>Object</code>. A string representation of an object with generic JavaScript
+object formatting. Similar to <code>util.inspect()</code> with options
+<code>{ showHidden: true, showProxy: true }</code>. This will show the full object
+including non-enumerable properties and proxies.</li>
+<li><code>%O</code>: <code>Object</code>. A string representation of an object with generic JavaScript
+object formatting. Similar to <code>util.inspect()</code> without options. This will show
+the full object not including non-enumerable properties and proxies.</li>
+<li><code>%c</code>: <code>CSS</code>. This specifier is ignored and will skip any CSS passed in.</li>
+<li><code>%%</code>: single percent sign (<code>'%'</code>). This does not consume an argument.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The formatted string</li>
+</ul><p>If a specifier does not have a corresponding argument, it is not replaced:</p><pre><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-string">'%s:%s'</span>, <span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// Returns: 'foo:%s'</span></code></pre><p>Values that are not part of the format string are formatted using
+<code>util.inspect()</code> if their type is not <code>string</code>.</p><p>If there are more arguments passed to the <code>util.format()</code> method than the
+number of specifiers, the extra arguments are concatenated to the returned
+string, separated by spaces:</p><pre><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-string">'%s:%s'</span>, <span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>, <span class="hljs-string">'baz'</span>);
+<span class="hljs-comment">// Returns: 'foo:bar baz'</span></code></pre><p>If the first argument does not contain a valid format specifier, <code>util.format()</code>
+returns a string that is the concatenation of all arguments separated by spaces:</p><pre><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);
+<span class="hljs-comment">// Returns: '1 2 3'</span></code></pre><p>If only one argument is passed to <code>util.format()</code>, it is returned as it is
+without any formatting:</p><pre><code class="language-js">util.<span class="hljs-title function_">format</span>(<span class="hljs-string">'%% %s'</span>);
+<span class="hljs-comment">// Returns: '%% %s'</span></code></pre><p><code>util.format()</code> is a synchronous method that is intended as a debugging tool.
+Some input values can have a significant performance overhead that can block the
+event loop. Use this function with care and never in a hot code path.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

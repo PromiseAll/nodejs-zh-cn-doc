@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>worker.kill([signal]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cluster">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>worker.kill([signal])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cluster.html#cluster_worker_kill_signal" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cluster/worker_kill_signal.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/cluster/worker_kill_signal.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cluster/#workerkillsignal.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.12</span>
+</div><ul class="">
+<li><code>signal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 发送给工作进程的终止信号的名称。 <strong>默认值:</strong> <code>'SIGTERM'</code></li>
+</ul><p>此函数会杀死工作进程。
+在主进程中，它通过断开 <code>worker.process</code> 来实现这一点，一旦断开连接，就使用 <code>signal</code> 杀死。
+在工作进程中，它通过断开通道来完成，然后以代码 <code>0</code> 退出。</p><p class="">由于 <code>kill()</code> 尝试正常断开工作进程，因此很容易无限期地等待断开连接完成。
+例如，如果工作进程进入无限循环，则永远不会发生正常的断开连接。
+如果不需要正常的断开连接行为，则使用 <code>worker.process.kill()</code>。</p><p class="">使 <code>.exitedAfterDisconnect</code> 被设置。</p><p class="">为了向后兼容，此方法别名为 <code>worker.destroy()</code>。</p><p class="">在工作进程中，<code>process.kill()</code> 是存在的，但不是这个函数；它是 <a href="../process.html#processkillpid-signal"><code>kill()</code></a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.12</span>
+</div><ul>
+<li><code>signal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Name of the kill signal to send to the worker
+process. <strong>Default:</strong> <code>'SIGTERM'</code></li>
+</ul><p>This function will kill the worker. In the primary, it does this
+by disconnecting the <code>worker.process</code>, and once disconnected, killing
+with <code>signal</code>. In the worker, it does it by disconnecting the channel,
+and then exiting with code <code>0</code>.</p><p>Because <code>kill()</code> attempts to gracefully disconnect the worker process, it is
+susceptible to waiting indefinitely for the disconnect to complete. For example,
+if the worker enters an infinite loop, a graceful disconnect will never occur.
+If the graceful disconnect behavior is not needed, use <code>worker.process.kill()</code>.</p><p>Causes <code>.exitedAfterDisconnect</code> to be set.</p><p>This method is aliased as <code>worker.destroy()</code> for backward compatibility.</p><p>In a worker, <code>process.kill()</code> exists, but it is not this function;
+it is <a href="../process.html#processkillpid-signal"><code>kill()</code></a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

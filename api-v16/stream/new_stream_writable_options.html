@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new stream.Writable([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>new stream.Writable([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_new_stream_writable_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/new_stream_writable_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/new_stream_writable_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#new-streamwritableoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.5.0</td>
+<td><p>支持传入中止信号。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>将 <code>autoDestroy</code> 选项默认更改为 <code>true</code>。</p></td></tr>
+<tr><td>v11.2.0, v10.16.0</td>
+<td><p>添加 <code>autoDestroy</code> 选项以在流触发 <code>'finish'</code> 或错误时自动对流进行 <code>destroy()</code>。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>添加 <code>emitClose</code> 选项以指定是否在销毁时触发 <code>'close'</code>。</p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>highWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> 开始返回 <code>false</code> 时的缓冲级别。 <strong>默认值:</strong>
+<code>16384</code> (16 KB) 或 <code>16</code> 表示 <code>objectMode</code> 流。</li>
+<li><code>decodeStrings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 是否将传给 <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> 的 <code>string</code> 编码为 <code>Buffer</code>（使用 <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> 调用中指定的编码），然后再将它们传给 <a href="../stream.html#writable_writechunk-encoding-callback"><code>stream._write()</code></a>。
+其他类型的数据不会被转换（即 <code>Buffer</code> 不会被解码为 <code>string</code>）。
+设置为 false 将阻止 <code>string</code> 被转换。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>defaultEncoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 当没有将编码指定为 <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> 的参数时使用的默认编码。
+<strong>默认值:</strong> <code>'utf8'</code>。</li>
+<li><code>objectMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write(anyObj)</code></a> 是否为有效操作。
+当设置后，如果流实现支持，则可以写入字符串、<code>Buffer</code> 或 <code>Uint8Array</code> 以外的 JavaScript 值。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>emitClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 流被销毁后是否应该触发 <code>'close'</code>。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>write</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../stream.html#writable_writechunk-encoding-callback"><code>stream._write()</code></a> 方法的实现。</li>
+<li><code>writev</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../stream.html#writable_writevchunks-callback"><code>stream._writev()</code></a> 方法的实现。</li>
+<li><code>destroy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../stream.html#writable_destroyerr-callback"><code>stream._destroy()</code></a> 方法的实现。</li>
+<li><code>final</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../stream.html#writable_finalcallback"><code>stream._final()</code></a> 方法的实现。</li>
+<li><code>construct</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../stream.html#writable_constructcallback"><code>stream._construct()</code></a> 方法的实现。</li>
+<li><code>autoDestroy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 此流是否应在结束后自动调用自身的 <code>.destroy()</code>。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 表示可能取消的信号。</li>
+</ul>
+</li>
+</ul><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyWritable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Writable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">options</span>) {
+    <span class="hljs-comment">// 调用 stream.Writable() 构造函数。</span>
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre><p>或者，当使用 ES6 之前的风格构造函数时：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyWritable</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">MyWritable</span>))
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyWritable</span>(options);
+  <span class="hljs-title class_">Writable</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, options);
+}
+util.<span class="hljs-title function_">inherits</span>(<span class="hljs-title class_">MyWritable</span>, <span class="hljs-title class_">Writable</span>);</code></pre><p class="">或者，使用简化的构造函数方法：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> myWritable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Writable</span>({
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-title function_">writev</span>(<span class="hljs-params">chunks, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  }
+});</code></pre><p class="">在与传入的 <code>AbortSignal</code> 对应的 <code>AbortController</code> 上调用 <code>abort</code> 的行为与在可写流上调用 <code>.destroy(new AbortError())</code> 的行为相同。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> myWritable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Writable</span>({
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-title function_">writev</span>(<span class="hljs-params">chunks, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-attr">signal</span>: controller.<span class="hljs-property">signal</span>
+});
+<span class="hljs-comment">// 稍后，中止关闭流的操作</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.5.0</td>
+<td><p>support passing in an AbortSignal.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>Change <code>autoDestroy</code> option default to <code>true</code>.</p></td></tr>
+<tr><td>v11.2.0, v10.16.0</td>
+<td><p>Add <code>autoDestroy</code> option to automatically <code>destroy()</code> the stream when it emits <code>'finish'</code> or errors.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>Add <code>emitClose</code> option to specify if <code>'close'</code> is emitted on destroy.</p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>highWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Buffer level when
+<a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> starts returning <code>false</code>. <strong>Default:</strong>
+<code>16384</code> (16 KB), or <code>16</code> for <code>objectMode</code> streams.</li>
+<li><code>decodeStrings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether to encode <code>string</code>s passed to
+<a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> to <code>Buffer</code>s (with the encoding
+specified in the <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> call) before passing
+them to <a href="../stream.html#writable_writechunk-encoding-callback"><code>stream._write()</code></a>. Other types of data are not
+converted (i.e. <code>Buffer</code>s are not decoded into <code>string</code>s). Setting to
+false will prevent <code>string</code>s from being converted. <strong>Default:</strong> <code>true</code>.</li>
+<li><code>defaultEncoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The default encoding that is used when no
+encoding is specified as an argument to <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a>.
+<strong>Default:</strong> <code>'utf8'</code>.</li>
+<li><code>objectMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether or not the
+<a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write(anyObj)</code></a> is a valid operation. When set,
+it becomes possible to write JavaScript values other than string,
+<code>Buffer</code> or <code>Uint8Array</code> if supported by the stream implementation.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>emitClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether or not the stream should emit <code>'close'</code>
+after it has been destroyed. <strong>Default:</strong> <code>true</code>.</li>
+<li><code>write</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Implementation for the
+<a href="../stream.html#writable_writechunk-encoding-callback"><code>stream._write()</code></a> method.</li>
+<li><code>writev</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Implementation for the
+<a href="../stream.html#writable_writevchunks-callback"><code>stream._writev()</code></a> method.</li>
+<li><code>destroy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Implementation for the
+<a href="../stream.html#writable_destroyerr-callback"><code>stream._destroy()</code></a> method.</li>
+<li><code>final</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Implementation for the
+<a href="../stream.html#writable_finalcallback"><code>stream._final()</code></a> method.</li>
+<li><code>construct</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Implementation for the
+<a href="../stream.html#writable_constructcallback"><code>stream._construct()</code></a> method.</li>
+<li><code>autoDestroy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether this stream should automatically call
+<code>.destroy()</code> on itself after ending. <strong>Default:</strong> <code>true</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> A signal representing possible cancellation.</li>
+</ul>
+</li>
+</ul><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyWritable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Writable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">options</span>) {
+    <span class="hljs-comment">// Calls the stream.Writable() constructor.</span>
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre><p>Or, when using pre-ES6 style constructors:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyWritable</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">MyWritable</span>))
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyWritable</span>(options);
+  <span class="hljs-title class_">Writable</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, options);
+}
+util.<span class="hljs-title function_">inherits</span>(<span class="hljs-title class_">MyWritable</span>, <span class="hljs-title class_">Writable</span>);</code></pre><p>Or, using the simplified constructor approach:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> myWritable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Writable</span>({
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-title function_">writev</span>(<span class="hljs-params">chunks, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  }
+});</code></pre><p>Calling <code>abort</code> on the <code>AbortController</code> corresponding to the passed
+<code>AbortSignal</code> will behave the same way as calling <code>.destroy(new AbortError())</code>
+on the writeable stream.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> myWritable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Writable</span>({
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-title function_">writev</span>(<span class="hljs-params">chunks, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-attr">signal</span>: controller.<span class="hljs-property">signal</span>
+});
+<span class="hljs-comment">// Later, abort the operation closing the stream</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

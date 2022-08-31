@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>crypto.randomInt([min, ]max[, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>crypto.randomInt([min, ]max[, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_crypto_randomint_min_max_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/crypto_randomint_min_max_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/crypto/crypto_randomint_min_max_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#cryptorandomintmin-max-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v14.10.0, v12.19.0</span>
+</div><ul class="">
+<li><code>min</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 随机范围的开始（包括）。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>max</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 随机范围的结束（不包括）。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <code>function(err, n) {}</code>.</li>
+</ul><p>返回随机整数 <code>n</code>，使得 <code>min &lt;= n &lt; max</code>。
+这种实现避免了<a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modulo_bias" rel="nofollow">模偏差</a>。</p><p class="">范围 (<code>max - min</code>) 必须小于 2<sup>48</sup>。
+<code>min</code> 和 <code>max</code> 必须是<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger" rel="nofollow">安全整数</a>。</p><p class="">如果不提供 <code>callback</code> 函数，则同步生成随机整数。</p><pre class="with-7-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-comment">// 异步的</span>
+<span class="hljs-keyword">const</span> {
+  randomInt
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>, <span class="hljs-function">(<span class="hljs-params">err, n</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);
+});</code><code class="language-js cjs"><span class="hljs-comment">// 异步的</span>
+<span class="hljs-keyword">const</span> {
+  randomInt,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>, <span class="hljs-function">(<span class="hljs-params">err, n</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);
+});</code></pre><pre class="with-7-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-comment">// 同步的</span>
+<span class="hljs-keyword">const</span> {
+  randomInt
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);</code><code class="language-js cjs"><span class="hljs-comment">// 同步的</span>
+<span class="hljs-keyword">const</span> {
+  randomInt,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);</code></pre><pre class="with-14-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-comment">// 带有 `min` 参数</span>
+<span class="hljs-keyword">const</span> {
+  randomInt
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">1</span>, <span class="hljs-number">7</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`The dice rolled: <span class="hljs-subst">${n}</span>`</span>);</code><code class="language-js cjs"><span class="hljs-comment">// 带有 `min` 参数</span>
+<span class="hljs-keyword">const</span> {
+  randomInt,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">1</span>, <span class="hljs-number">7</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`The dice rolled: <span class="hljs-subst">${n}</span>`</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v14.10.0, v12.19.0</span>
+</div><ul>
+<li><code>min</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Start of random range (inclusive). <strong>Default:</strong> <code>0</code>.</li>
+<li><code>max</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> End of random range (exclusive).</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <code>function(err, n) {}</code>.</li>
+</ul><p>Return a random integer <code>n</code> such that <code>min &lt;= n &lt; max</code>.  This
+implementation avoids <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modulo_bias" rel="nofollow">modulo bias</a>.</p><p>The range (<code>max - min</code>) must be less than 2<sup>48</sup>. <code>min</code> and <code>max</code> must
+be <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger" rel="nofollow">safe integers</a>.</p><p>If the <code>callback</code> function is not provided, the random integer is
+generated synchronously.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-comment">// Asynchronous</span>
+<span class="hljs-keyword">const</span> {
+  randomInt
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>, <span class="hljs-function">(<span class="hljs-params">err, n</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);
+});</code><code class="language-js cjs"><span class="hljs-comment">// Asynchronous</span>
+<span class="hljs-keyword">const</span> {
+  randomInt,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>, <span class="hljs-function">(<span class="hljs-params">err, n</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);
+});</code></pre><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-comment">// Synchronous</span>
+<span class="hljs-keyword">const</span> {
+  randomInt
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);</code><code class="language-js cjs"><span class="hljs-comment">// Synchronous</span>
+<span class="hljs-keyword">const</span> {
+  randomInt,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">3</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Random number chosen from (0, 1, 2): <span class="hljs-subst">${n}</span>`</span>);</code></pre><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-comment">// With `min` argument</span>
+<span class="hljs-keyword">const</span> {
+  randomInt
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">1</span>, <span class="hljs-number">7</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`The dice rolled: <span class="hljs-subst">${n}</span>`</span>);</code><code class="language-js cjs"><span class="hljs-comment">// With `min` argument</span>
+<span class="hljs-keyword">const</span> {
+  randomInt,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> n = <span class="hljs-title function_">randomInt</span>(<span class="hljs-number">1</span>, <span class="hljs-number">7</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`The dice rolled: <span class="hljs-subst">${n}</span>`</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

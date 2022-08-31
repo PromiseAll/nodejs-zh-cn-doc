@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>对于基于 zlib 的流 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-zlib">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>对于基于 zlib 的流</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../zlib.html#zlib_for_zlib_based_streams" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/zlib/for_zlib_based_streams.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/zlib/for_zlib_based_streams.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/zlib/#for-zlib-based-streams.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>从 <code>zlib/zconf.h</code> 开始，针对 Node.js 使用进行了修改：</p><p class="">deflate 的内存要求是（以字节为单位）：</p><pre class=""><code class="language-js">(<span class="hljs-number">1</span> &lt;&lt; (windowBits + <span class="hljs-number">2</span>)) + (<span class="hljs-number">1</span> &lt;&lt; (memLevel + <span class="hljs-number">9</span>))</code></pre><p class="">即：<code>windowBits</code> 的 128K = 15 + <code>memLevel</code> 的 128K = 8（默认值）加上小对象的几千字节。</p><p class="">例如，要将默认内存要求从 256K 减少到 128K，应将选项设置为：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> options = { <span class="hljs-attr">windowBits</span>: <span class="hljs-number">14</span>, <span class="hljs-attr">memLevel</span>: <span class="hljs-number">7</span> };</code></pre><p class="">然而，这通常会降低压缩性能。</p><p class="">inflate 的内存要求是（以字节为单位）<code>1 &lt;&lt; windowBits</code>。
+也就是说，<code>windowBits</code> 的 32K = 15（默认值）加上小对象的几千字节。</p><p class="">这是对大小为 <code>chunkSize</code> 的单个内部输出平板缓冲区的补充，默认为 16K。</p><p class=""><code>zlib</code> 压缩的速度受 <code>level</code> 设置的影响最大。
+更高的级别将导致更好的压缩，但需要更长的时间才能完成。
+较低的级别将导致较少的压缩，但会更快。</p><p class="">一般来说，更大的内存使用选项意味着 Node.js 必须对 <code>zlib</code> 进行更少的调用，因为它能够在每个 <code>write</code> 操作上处理更多的数据。
+所以，这是影响速度的另一个因素，以内存使用为代价。</p></div>
+          <div id="content_right"><p>From <code>zlib/zconf.h</code>, modified for Node.js usage:</p><p>The memory requirements for deflate are (in bytes):</p><pre><code class="language-js">(<span class="hljs-number">1</span> &lt;&lt; (windowBits + <span class="hljs-number">2</span>)) + (<span class="hljs-number">1</span> &lt;&lt; (memLevel + <span class="hljs-number">9</span>))</code></pre><p>That is: 128K for <code>windowBits</code> = 15 + 128K for <code>memLevel</code> = 8
+(default values) plus a few kilobytes for small objects.</p><p>For example, to reduce the default memory requirements from 256K to 128K, the
+options should be set to:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> options = { <span class="hljs-attr">windowBits</span>: <span class="hljs-number">14</span>, <span class="hljs-attr">memLevel</span>: <span class="hljs-number">7</span> };</code></pre><p>This will, however, generally degrade compression.</p><p>The memory requirements for inflate are (in bytes) <code>1 &lt;&lt; windowBits</code>.
+That is, 32K for <code>windowBits</code> = 15 (default value) plus a few kilobytes
+for small objects.</p><p>This is in addition to a single internal output slab buffer of size
+<code>chunkSize</code>, which defaults to 16K.</p><p>The speed of <code>zlib</code> compression is affected most dramatically by the
+<code>level</code> setting. A higher level will result in better compression, but
+will take longer to complete. A lower level will result in less
+compression, but will be much faster.</p><p>In general, greater memory usage options will mean that Node.js has to make
+fewer calls to <code>zlib</code> because it will be able to process more data on
+each <code>write</code> operation. So, this is another factor that affects the
+speed, at the cost of memory usage.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

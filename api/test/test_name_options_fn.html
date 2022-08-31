@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>test([name][, options][, fn]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-test">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>test([name][, options][, fn])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../test.html#test_test_name_options_fn" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/test/#testname-options-fn.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v18.0.0</span>
+</div><ul class="">
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 测试的名称，报告测试结果时显示。 <strong>默认值:</strong> The <code>name</code> <code>fn</code> 的属性，如果 <code>fn</code> 没有名称，则为 <code>'&lt;anonymous&gt;'</code>。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 测试的配置选项。
+支持以下属性：
+<ul>
+<li><code>concurrency</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 可同时运行的测试数。
+如果未指定，则子测试从其父测试继承此值。
+<strong>默认值:</strong> <code>1</code>。</li>
+<li><code>only</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为真，并且测试上下文配置为运行 <code>only</code> 测试，则将运行此测试。
+否则跳过测试。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>skip</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果为真，则跳过测试。
+如果提供了字符串，则该字符串将作为跳过测试的原因显示在测试结果中。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>todo</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果为真，则测试标记为 <code>TODO</code>。
+如果提供了字符串，则该字符串会显示在测试结果中作为测试为 <code>TODO</code> 的原因。 <strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+</li>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> 被测试的函数。
+此函数的第一个参数是 <a href="../test.html#class-testcontext"><code>TestContext</code></a> 对象。
+如果测试使用回调，则回调函数作为第二个参数传入。
+<strong>默认值:</strong> 无操作的函数。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 测试完成后使用 <code>undefined</code> 解决。</li>
+</ul><p><code>test()</code> 函数是从 <code>test</code> 模块导入的值。
+每次调用此函数都会在 TAP 输出中创建一个测试点。</p><p class="">传给 <code>fn</code> 参数的 <code>TestContext</code> 对象可用于执行与当前测试相关的操作。
+示例包括跳过测试、添加额外的 TAP 诊断信息、或创建子测试。</p><p class=""><code>test()</code> 返回 <code>Promise</code>，一旦测试完成就解决。
+返回值通常可以被顶层测试丢弃。
+但是，应该使用子测试的返回值来防止父测试先完成并取消子测试，如下例所示。</p><pre class=""><code class="language-js"><span class="hljs-title function_">test</span>(<span class="hljs-string">'top level test'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+  <span class="hljs-comment">// 如果在下一行删除了 'await'，</span>
+  <span class="hljs-comment">// 则以下子测试中的 setTimeout() 将导致它的父测试寿命超过其父测试。</span>
+  <span class="hljs-comment">// 一旦父测试完成，则它将取消所有未完成的子测试。</span>
+  <span class="hljs-keyword">await</span> t.<span class="hljs-title function_">test</span>(<span class="hljs-string">'longer running subtest'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-built_in">setTimeout</span>(resolve, <span class="hljs-number">1000</span>);
+    });
+  });
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v18.0.0</span>
+</div><ul>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The name of the test, which is displayed when reporting test
+results. <strong>Default:</strong> The <code>name</code> property of <code>fn</code>, or <code>'&lt;anonymous&gt;'</code> if <code>fn</code>
+does not have a name.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Configuration options for the test. The following
+properties are supported:
+<ul>
+<li><code>concurrency</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The number of tests that can be run at the same time.
+If unspecified, subtests inherit this value from their parent.
+<strong>Default:</strong> <code>1</code>.</li>
+<li><code>only</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If truthy, and the test context is configured to run
+<code>only</code> tests, then this test will be run. Otherwise, the test is skipped.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>skip</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If truthy, the test is skipped. If a string is
+provided, that string is displayed in the test results as the reason for
+skipping the test. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>todo</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If truthy, the test marked as <code>TODO</code>. If a string
+is provided, that string is displayed in the test results as the reason why
+the test is <code>TODO</code>. <strong>Default:</strong> <code>false</code>.</li>
+</ul>
+</li>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> The function under test. The first argument
+to this function is a <a href="../test.html#class-testcontext"><code>TestContext</code></a> object. If the test uses callbacks,
+the callback function is passed as the second argument. <strong>Default:</strong> A no-op
+function.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> Resolved with <code>undefined</code> once the test completes.</li>
+</ul><p>The <code>test()</code> function is the value imported from the <code>test</code> module. Each
+invocation of this function results in the creation of a test point in the TAP
+output.</p><p>The <code>TestContext</code> object passed to the <code>fn</code> argument can be used to perform
+actions related to the current test. Examples include skipping the test, adding
+additional TAP diagnostic information, or creating subtests.</p><p><code>test()</code> returns a <code>Promise</code> that resolves once the test completes. The return
+value can usually be discarded for top level tests. However, the return value
+from subtests should be used to prevent the parent test from finishing first
+and cancelling the subtest as shown in the following example.</p><pre><code class="language-js"><span class="hljs-title function_">test</span>(<span class="hljs-string">'top level test'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+  <span class="hljs-comment">// The setTimeout() in the following subtest would cause it to outlive its</span>
+  <span class="hljs-comment">// parent test if 'await' is removed on the next line. Once the parent test</span>
+  <span class="hljs-comment">// completes, it will cancel any outstanding subtests.</span>
+  <span class="hljs-keyword">await</span> t.<span class="hljs-title function_">test</span>(<span class="hljs-string">'longer running subtest'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-built_in">setTimeout</span>(resolve, <span class="hljs-number">1000</span>);
+    });
+  });
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

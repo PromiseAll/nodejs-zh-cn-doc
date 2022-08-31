@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.write(fd, buffer[, offset[, length[, position]]], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.write(fd, buffer[, offset[, length[, position]]], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_write_fd_buffer_offset_length_position_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_write_fd_buffer_offset_length_position_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_write_fd_buffer_offset_length_position_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fswritefd-buffer-offset-length-position-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.12.0</td>
+<td><p>参数 <code>buffer</code> 将使用显式 <code>toString</code> 函数对对象进行字符串化。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>参数 <code>buffer</code> 不会再将不支持的输入强制转换为字符串。</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它会在运行时抛出 <code>TypeError</code>。</p></td></tr>
+<tr><td>v7.4.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v7.2.0</td>
+<td><p>参数 <code>offset</code> 和 <code>length</code> 现在是可选的。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它将触发 ID 为 DEP0013 的弃用警告。</p></td></tr>
+<tr><td>v0.0.2</td>
+<td><p><span>新增于: v0.0.2</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>buffer</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>length</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>position</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>bytesWritten</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>buffer</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+</ul>
+</li>
+</ul><p>将 <code>buffer</code> 写入 <code>fd</code> 指定的文件。
+如果 <code>buffer</code> 是普通对象，则它必须具有自有的 <code>toString</code> 函数属性。</p><p class=""><code>offset</code> 确定要写入的缓冲区部分，<code>length</code> 是整数，指定要写入的字节数。</p><p class=""><code>position</code> 指从文件开头数据应被写入的偏移量。
+如果 <code>typeof position !== 'number'</code>，则数据将写入当前位置。
+参见 <a href="http://man7.org/linux/man-pages/man2/pwrite.2.html" rel="nofollow"><code>pwrite(2)</code></a>。</p><p class="">回调将提供三个参数 <code>(err, bytesWritten, buffer)</code>，其中 <code>bytesWritten</code> 指定从 <code>buffer</code> 写入的字节数。</p><p class="">如果此方法作为其 <a href="../util.html#utilpromisifyoriginal"><code>util.promisify()</code></a> 版本被调用，则返回具有 <code>bytesWritten</code> 和 <code>buffer</code> 属性的 <code>Object</code> 的 promise。</p><p class="">在同一个文件上多次使用 <code>fs.write()</code> 而不等待回调是不安全的。
+对于这种情况，建议使用 <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a>。</p><p class="">在 Linux 上，以追加模式打开文件时，位置写入不起作用。
+内核会忽略位置参数，并始终将数据追加到文件末尾。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.12.0</td>
+<td><p>The <code>buffer</code> parameter will stringify an object with an explicit <code>toString</code> function.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>The <code>buffer</code> parameter won't coerce unsupported input to strings anymore.</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p>The <code>buffer</code> parameter can now be any <code>TypedArray</code> or a <code>DataView</code>.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will throw a <code>TypeError</code> at runtime.</p></td></tr>
+<tr><td>v7.4.0</td>
+<td><p>The <code>buffer</code> parameter can now be a <code>Uint8Array</code>.</p></td></tr>
+<tr><td>v7.2.0</td>
+<td><p>The <code>offset</code> and <code>length</code> parameters are optional now.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will emit a deprecation warning with id DEP0013.</p></td></tr>
+<tr><td>v0.0.2</td>
+<td><p><span>Added in: v0.0.2</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>buffer</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>length</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>position</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>bytesWritten</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>buffer</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+</ul>
+</li>
+</ul><p>Write <code>buffer</code> to the file specified by <code>fd</code>. If <code>buffer</code> is a normal object, it
+must have an own <code>toString</code> function property.</p><p><code>offset</code> determines the part of the buffer to be written, and <code>length</code> is
+an integer specifying the number of bytes to write.</p><p><code>position</code> refers to the offset from the beginning of the file where this data
+should be written. If <code>typeof position !== 'number'</code>, the data will be written
+at the current position. See <a href="http://man7.org/linux/man-pages/man2/pwrite.2.html" rel="nofollow"><code>pwrite(2)</code></a>.</p><p>The callback will be given three arguments <code>(err, bytesWritten, buffer)</code> where
+<code>bytesWritten</code> specifies how many <em>bytes</em> were written from <code>buffer</code>.</p><p>If this method is invoked as its <a href="../util.html#utilpromisifyoriginal"><code>util.promisify()</code></a>ed version, it returns
+a promise for an <code>Object</code> with <code>bytesWritten</code> and <code>buffer</code> properties.</p><p>It is unsafe to use <code>fs.write()</code> multiple times on the same file without waiting
+for the callback. For this scenario, <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a> is
+recommended.</p><p>On Linux, positional writes don't work when the file is opened in append mode.
+The kernel ignores the position argument and always appends the data to
+the end of the file.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

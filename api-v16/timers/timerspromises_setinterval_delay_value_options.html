@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>timersPromises.setInterval([delay[, value[, options]]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-timers">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>timersPromises.setInterval([delay[, value[, options]]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../timers.html#timers_timerspromises_setinterval_delay_value_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/timers/timerspromises_setinterval_delay_value_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/timers/#timerspromisessetintervaldelay-value-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v15.9.0</span>
+</div><p>返回异步迭代器，以 <code>delay</code> 毫秒的间隔生成值。</p><ul class="">
+<li><code>delay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 迭代之间等待的毫秒数。
+<strong>默认值:</strong> <code>1</code>。</li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 迭代器返回的值。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>ref</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 设置为 <code>false</code> 以指示迭代之间的调度的 <code>Timeout</code> 不应要求 Node.js 事件循环保持活动状态。
+<strong>默认值:</strong> <code>true</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可选的 <code>AbortSignal</code>，可用于在操作之间取消调度的 <code>Timeout</code>。</li>
+</ul>
+</li>
+</ul><pre class="with-14-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> {
+  <span class="hljs-built_in">setInterval</span>,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'timers/promises'</span>;
+
+<span class="hljs-keyword">const</span> interval = <span class="hljs-number">100</span>;
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> startTime <span class="hljs-keyword">of</span> <span class="hljs-built_in">setInterval</span>(interval, <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>())) {
+  <span class="hljs-keyword">const</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);
+  <span class="hljs-keyword">if</span> ((now - startTime) &gt; <span class="hljs-number">1000</span>)
+    <span class="hljs-keyword">break</span>;
+}
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());</code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  <span class="hljs-built_in">setInterval</span>,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'timers/promises'</span>);
+<span class="hljs-keyword">const</span> interval = <span class="hljs-number">100</span>;
+
+(<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> startTime <span class="hljs-keyword">of</span> <span class="hljs-built_in">setInterval</span>(interval, <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>())) {
+    <span class="hljs-keyword">const</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);
+    <span class="hljs-keyword">if</span> ((now - startTime) &gt; <span class="hljs-number">1000</span>)
+      <span class="hljs-keyword">break</span>;
+  }
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());
+})();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v15.9.0</span>
+</div><p>Returns an async iterator that generates values in an interval of <code>delay</code> ms.</p><ul>
+<li><code>delay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The number of milliseconds to wait between iterations.
+<strong>Default:</strong> <code>1</code>.</li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> A value with which the iterator returns.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>ref</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Set to <code>false</code> to indicate that the scheduled <code>Timeout</code>
+between iterations should not require the Node.js event loop to
+remain active.
+<strong>Default:</strong> <code>true</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> An optional <code>AbortSignal</code> that can be used to
+cancel the scheduled <code>Timeout</code> between operations.</li>
+</ul>
+</li>
+</ul><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> {
+  <span class="hljs-built_in">setInterval</span>,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'timers/promises'</span>;
+
+<span class="hljs-keyword">const</span> interval = <span class="hljs-number">100</span>;
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> startTime <span class="hljs-keyword">of</span> <span class="hljs-built_in">setInterval</span>(interval, <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>())) {
+  <span class="hljs-keyword">const</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);
+  <span class="hljs-keyword">if</span> ((now - startTime) &gt; <span class="hljs-number">1000</span>)
+    <span class="hljs-keyword">break</span>;
+}
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());</code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  <span class="hljs-built_in">setInterval</span>,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'timers/promises'</span>);
+<span class="hljs-keyword">const</span> interval = <span class="hljs-number">100</span>;
+
+(<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> startTime <span class="hljs-keyword">of</span> <span class="hljs-built_in">setInterval</span>(interval, <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>())) {
+    <span class="hljs-keyword">const</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);
+    <span class="hljs-keyword">if</span> ((now - startTime) &gt; <span class="hljs-number">1000</span>)
+      <span class="hljs-keyword">break</span>;
+  }
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());
+})();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

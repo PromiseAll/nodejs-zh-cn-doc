@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>CommonJS 命名空间 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-esm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>CommonJS 命名空间</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../esm.html#esm_commonjs_namespaces" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/esm/commonjs_namespaces.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/esm/commonjs_namespaces.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/esm/#commonjs-namespaces.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>CommonJS 模块由可以是任何类型的 <code>module.exports</code> 对象组成。</p><p class="">当导入 CommonJS 模块时，可以使用 ES 模块默认导入或其对应的语法糖可靠地导入：</p><pre class=""><code class="language-js"><span class="hljs-keyword">import</span> { <span class="hljs-keyword">default</span> <span class="hljs-keyword">as</span> cjs } <span class="hljs-keyword">from</span> <span class="hljs-string">'cjs'</span>;
+
+<span class="hljs-comment">// 下面的导入语句是上面的导入语句中</span>
+<span class="hljs-comment">// `{ default as cjsSugar }` 的 "语法糖"（等价但更甜）：</span>
+<span class="hljs-keyword">import</span> cjsSugar <span class="hljs-keyword">from</span> <span class="hljs-string">'cjs'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cjs);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cjs === cjsSugar);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   &lt;module.exports&gt;</span>
+<span class="hljs-comment">//   true</span></code></pre><p class="">CommonJS 模块的 ECMAScript 模块命名空间表示始终是使用 <code>default</code> 导出键指向 CommonJS <code>module.exports</code> 值的命名空间。</p><p class="">当使用 <code>import * as m from 'cjs'</code> 或动态导入时，可以直接观察到此模块命名空间外来对象：</p><pre class=""><code class="language-js"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">'cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(m);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(m === <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'cjs'</span>));
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   [Module] { default: &lt;module.exports&gt; }</span>
+<span class="hljs-comment">//   true</span></code></pre><p class="">为了更好地兼容 JS 生态系统中的现有用法，Node.js 还尝试确定每个导入的 CommonJS 模块的 CommonJS 命名导出，以使用静态分析过程将它们作为单独的 ES 模块导出提供。</p><p class="">例如，考虑编写的 CommonJS 模块：</p><pre class=""><code class="language-js cjs"><span class="hljs-comment">// cjs.cjs</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">name</span> = <span class="hljs-string">'exported'</span>;</code></pre><p class="">前面的模块支持 ES 模块中的命名导入：</p><pre class=""><code class="language-js"><span class="hljs-keyword">import</span> { name } <span class="hljs-keyword">from</span> <span class="hljs-string">'./cjs.cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(name);
+<span class="hljs-comment">// 打印: 'exported'</span>
+
+<span class="hljs-keyword">import</span> cjs <span class="hljs-keyword">from</span> <span class="hljs-string">'./cjs.cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cjs);
+<span class="hljs-comment">// 打印: { name: 'exported' }</span>
+
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">'./cjs.cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(m);
+<span class="hljs-comment">// 打印: [Module] { default: { name: 'exported' }, name: 'exported' }</span></code></pre><p class="">从上一个记录模块命名空间外来对象的示例中可以看出，<code>name</code> 导出是从 <code>module.exports</code> 对象复制出来的，并在导入模块时直接设置在 ES 模块命名空间上。</p><p class="">未检测到这些命名导出的实时绑定更新或添加到 <code>module.exports</code> 的新导出。</p><p class="">命名导出的检测基于通用语法模式，但并不总是正确地检测命名导出。
+在这些情况下，使用上述默认导入形式可能是更好的选择。</p><p class="">命名导出检测涵盖了许多常见的导出模式、再导出模式、以及构建工具和转译器输出。
+参阅 <a href="https://github.com/nodejs/cjs-module-lexer/tree/1.2.2">cjs-module-lexer</a> 以了解实现的确切语义。</p></div>
+          <div id="content_right"><p>CommonJS modules consist of a <code>module.exports</code> object which can be of any type.</p><p>When importing a CommonJS module, it can be reliably imported using the ES
+module default import or its corresponding sugar syntax:</p><pre><code class="language-js"><span class="hljs-keyword">import</span> { <span class="hljs-keyword">default</span> <span class="hljs-keyword">as</span> cjs } <span class="hljs-keyword">from</span> <span class="hljs-string">'cjs'</span>;
+
+<span class="hljs-comment">// The following import statement is "syntax sugar" (equivalent but sweeter)</span>
+<span class="hljs-comment">// for `{ default as cjsSugar }` in the above import statement:</span>
+<span class="hljs-keyword">import</span> cjsSugar <span class="hljs-keyword">from</span> <span class="hljs-string">'cjs'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cjs);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cjs === cjsSugar);
+<span class="hljs-comment">// Prints:</span>
+<span class="hljs-comment">//   &lt;module.exports&gt;</span>
+<span class="hljs-comment">//   true</span></code></pre><p>The ECMAScript Module Namespace representation of a CommonJS module is always
+a namespace with a <code>default</code> export key pointing to the CommonJS
+<code>module.exports</code> value.</p><p>This Module Namespace Exotic Object can be directly observed either when using
+<code>import * as m from 'cjs'</code> or a dynamic import:</p><pre><code class="language-js"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">'cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(m);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(m === <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'cjs'</span>));
+<span class="hljs-comment">// Prints:</span>
+<span class="hljs-comment">//   [Module] { default: &lt;module.exports&gt; }</span>
+<span class="hljs-comment">//   true</span></code></pre><p>For better compatibility with existing usage in the JS ecosystem, Node.js
+in addition attempts to determine the CommonJS named exports of every imported
+CommonJS module to provide them as separate ES module exports using a static
+analysis process.</p><p>For example, consider a CommonJS module written:</p><pre><code class="language-js cjs"><span class="hljs-comment">// cjs.cjs</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">name</span> = <span class="hljs-string">'exported'</span>;</code></pre><p>The preceding module supports named imports in ES modules:</p><pre><code class="language-js"><span class="hljs-keyword">import</span> { name } <span class="hljs-keyword">from</span> <span class="hljs-string">'./cjs.cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(name);
+<span class="hljs-comment">// Prints: 'exported'</span>
+
+<span class="hljs-keyword">import</span> cjs <span class="hljs-keyword">from</span> <span class="hljs-string">'./cjs.cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cjs);
+<span class="hljs-comment">// Prints: { name: 'exported' }</span>
+
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">'./cjs.cjs'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(m);
+<span class="hljs-comment">// Prints: [Module] { default: { name: 'exported' }, name: 'exported' }</span></code></pre><p>As can be seen from the last example of the Module Namespace Exotic Object being
+logged, the <code>name</code> export is copied off of the <code>module.exports</code> object and set
+directly on the ES module namespace when the module is imported.</p><p>Live binding updates or new exports added to <code>module.exports</code> are not detected
+for these named exports.</p><p>The detection of named exports is based on common syntax patterns but does not
+always correctly detect named exports. In these cases, using the default
+import form described above can be a better option.</p><p>Named exports detection covers many common export patterns, reexport patterns
+and build tool and transpiler outputs. See <a href="https://github.com/nodejs/cjs-module-lexer/tree/1.2.2">cjs-module-lexer</a> for the exact
+semantics implemented.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

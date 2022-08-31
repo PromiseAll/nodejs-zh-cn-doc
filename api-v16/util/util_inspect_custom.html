@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>util.inspect.custom | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-util">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>util.inspect.custom</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../util.html#util_util_inspect_custom" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/util/util_inspect_custom.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/util/util_inspect_custom.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/util/#utilinspectcustom.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.12.0</td>
+<td><p>这现在被定义为共享的符号。</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p><span>新增于: v6.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 可用于声明自定义的检查函数。</li>
+</ul><p>除了可以通过 <code>util.inspect.custom</code> 访问之外，此符号是<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/for" rel="nofollow">全局地注册</a>，可以在任何环境中作为 <code>Symbol.for('nodejs.util.inspect.custom')</code> 访问。</p><p class="">使用此允许以可移植方式编写代码，以便在 Node.js 环境中使用自定义检查功能并在浏览器中忽略。
+<code>util.inspect()</code> 函数本身作为第三个参数传给自定义检查函数以允许进一步的可移植性。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> customInspectSymbol = <span class="hljs-title class_">Symbol</span>.<span class="hljs-title function_">for</span>(<span class="hljs-string">'nodejs.util.inspect.custom'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Password</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">value</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span> = value;
+  }
+
+  <span class="hljs-title function_">toString</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'xxxxxxxx'</span>;
+  }
+
+  [customInspectSymbol](depth, inspectOptions, inspect) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`Password &lt;<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.toString()}</span>&gt;`</span>;
+  }
+}
+
+<span class="hljs-keyword">const</span> password = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Password</span>(<span class="hljs-string">'r0sebud'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(password);
+<span class="hljs-comment">// 打印 Password &lt;xxxxxxxx&gt;</span></code></pre><p class="">有关更多详细信息，请参阅<a href="../util.html#custom-inspection-functions-on-objects">对象上的自定义检查函数</a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.12.0</td>
+<td><p>This is now defined as a shared symbol.</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p><span>Added in: v6.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> that can be used to declare custom inspect functions.</li>
+</ul><p>In addition to being accessible through <code>util.inspect.custom</code>, this
+symbol is <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/for" rel="nofollow">registered globally</a> and can be
+accessed in any environment as <code>Symbol.for('nodejs.util.inspect.custom')</code>.</p><p>Using this allows code to be written in a portable fashion, so that the custom
+inspect function is used in an Node.js environment and ignored in the browser.
+The <code>util.inspect()</code> function itself is passed as third argument to the custom
+inspect function to allow further portability.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> customInspectSymbol = <span class="hljs-title class_">Symbol</span>.<span class="hljs-title function_">for</span>(<span class="hljs-string">'nodejs.util.inspect.custom'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Password</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">value</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span> = value;
+  }
+
+  <span class="hljs-title function_">toString</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'xxxxxxxx'</span>;
+  }
+
+  [customInspectSymbol](depth, inspectOptions, inspect) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`Password &lt;<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.toString()}</span>&gt;`</span>;
+  }
+}
+
+<span class="hljs-keyword">const</span> password = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Password</span>(<span class="hljs-string">'r0sebud'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(password);
+<span class="hljs-comment">// Prints Password &lt;xxxxxxxx&gt;</span></code></pre><p>See <a href="../util.html#custom-inspection-functions-on-objects">Custom inspection functions on Objects</a> for more details.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

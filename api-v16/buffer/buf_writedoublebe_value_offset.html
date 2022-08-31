@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>buf.writeDoubleBE(value[, offset]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>buf.writeDoubleBE(value[, offset])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buf_writedoublebe_value_offset" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buf_writedoublebe_value_offset.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buf_writedoublebe_value_offset.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#bufwritedoublebevalue-offset.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>删除了 <code>noAssert</code> 并且不再隐式强制将偏移量强制转换为 <code>uint32</code>。</p></td></tr>
+<tr><td>v0.11.15</td>
+<td><p><span>新增于: v0.11.15</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 要写入 <code>buf</code> 的数字。</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 开始写入之前要跳过的字节数。
+必须满足 <code>0 &lt;= offset &lt;= buf.length - 8</code>。 <strong>默认值:</strong> <code>0</code>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <code>offset</code> 加上写入的字节数。</li>
+</ul><p>将 <code>value</code> 作为大端序写入 <code>buf</code> 中指定的 <code>offset</code>。
+<code>value</code> 必须是 JavaScript 数字
+当 <code>value</code> 不是 JavaScript 数字时，则行为未定义。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">8</span>);
+
+buf.<span class="hljs-title function_">writeDoubleBE</span>(<span class="hljs-number">123.456</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf);
+<span class="hljs-comment">// 打印: &lt;Buffer 40 5e dd 2f 1a 9f be 77&gt;</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">8</span>);
+
+buf.<span class="hljs-title function_">writeDoubleBE</span>(<span class="hljs-number">123.456</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf);
+<span class="hljs-comment">// 打印: &lt;Buffer 40 5e dd 2f 1a 9f be 77&gt;</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>Removed <code>noAssert</code> and no implicit coercion of the offset to <code>uint32</code> anymore.</p></td></tr>
+<tr><td>v0.11.15</td>
+<td><p><span>Added in: v0.11.15</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Number to be written to <code>buf</code>.</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Number of bytes to skip before starting to write. Must
+satisfy <code>0 &lt;= offset &lt;= buf.length - 8</code>. <strong>Default:</strong> <code>0</code>.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <code>offset</code> plus the number of bytes written.</li>
+</ul><p>Writes <code>value</code> to <code>buf</code> at the specified <code>offset</code> as big-endian. The <code>value</code>
+must be a JavaScript number. Behavior is undefined when <code>value</code> is anything
+other than a JavaScript number.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">8</span>);
+
+buf.<span class="hljs-title function_">writeDoubleBE</span>(<span class="hljs-number">123.456</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf);
+<span class="hljs-comment">// Prints: &lt;Buffer 40 5e dd 2f 1a 9f be 77&gt;</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">8</span>);
+
+buf.<span class="hljs-title function_">writeDoubleBE</span>(<span class="hljs-number">123.456</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf);
+<span class="hljs-comment">// Prints: &lt;Buffer 40 5e dd 2f 1a 9f be 77&gt;</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

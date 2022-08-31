@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>构建 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>构建</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_building" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/building.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/building.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#building.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>编写源代码后，必须将其编译为二进制 <code>addon.node</code> 文件。
+为此，请在项目的顶层创建名为 <code>binding.gyp</code> 的文件，使用类似 JSON 的格式描述模块的构建配置。
+该文件由 <a href="https://github.com/nodejs/node-gyp" rel="nofollow">node-gyp</a> 使用，这是一个专门为编译 Node.js 插件而编写的工具。</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"targets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"target_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"addon"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"sources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">"hello.cc"</span> <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span></code></pre><p class=""><code>node-gyp</code> 实用工具的一个版本作为 <code>npm</code> 的一部分与 Node.js 捆绑和分发。
+此版本不直接提供给开发人员使用，仅旨在支持使用 <code>npm install</code> 命令编译和安装插件的能力。
+希望直接使用 <code>node-gyp</code> 的开发人员可以使用命令 <code>npm install -g node-gyp</code> 安装它。
+有关更多信息，包括特定于平台的要求，请参阅 <code>node-gyp</code> <a href="https://github.com/nodejs/node-gyp#installation" rel="nofollow">安装说明</a>。</p><p class="">创建 <code>binding.gyp</code> 文件后，使用 <code>node-gyp configure</code> 为当前平台生成适当的项目构建文件。
+这将在 <code>build/</code> 目录中生成 <code>Makefile</code>（在 Unix 平台上）或 <code>vcxproj</code> 文件（在 Windows 上）。</p><p class="">接下来，调用 <code>node-gyp build</code> 命令生成编译后的 <code>addon.node</code> 文件。
+这将被放入 <code>build/Release/</code> 目录。</p><p class="">当使用 <code>npm install</code> 安装 Node.js 插件时，npm 使用它自己的 <code>node-gyp</code> 捆绑版本来执行相同的一组操作，按需为用户平台生成插件的编译版本。</p><p class="">构建完成后，可以通过将 <a href="../modules.html#requireid"><code>require()</code></a> 指向构建的 <code>addon.node</code> 模块在 Node.js 中使用二进制插件：</p><pre class=""><code class="language-js"><span class="hljs-comment">// hello.js</span>
+<span class="hljs-keyword">const</span> addon = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(addon.<span class="hljs-title function_">hello</span>());
+<span class="hljs-comment">// 打印: 'world'</span></code></pre><p class="">因为编译的插件二进制文件的确切路径可能会因编译方式而异（即有时它可能在 <code>./build/Debug/</code> 中），插件可以使用<a href="https://github.com/TooTallNate/node-bindings" rel="nofollow">绑定</a>包来加载已编译的模块。</p><p class="">虽然 <code>bindings</code> 包实现在如何定位插件模块方面更为复杂，但它本质上使用了类似于以下内容的 <code>try…catch</code> 模式：</p><pre class=""><code class="language-js"><span class="hljs-keyword">try</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon.node'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Debug/addon.node'</span>);
+}</code></pre></div>
+          <div id="content_right"><p>Once the source code has been written, it must be compiled into the binary
+<code>addon.node</code> file. To do so, create a file called <code>binding.gyp</code> in the
+top-level of the project describing the build configuration of the module
+using a JSON-like format. This file is used by <a href="https://github.com/nodejs/node-gyp" rel="nofollow">node-gyp</a>, a tool written
+specifically to compile Node.js addons.</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"targets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"target_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"addon"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"sources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">"hello.cc"</span> <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span></code></pre><p>A version of the <code>node-gyp</code> utility is bundled and distributed with
+Node.js as part of <code>npm</code>. This version is not made directly available for
+developers to use and is intended only to support the ability to use the
+<code>npm install</code> command to compile and install addons. Developers who wish to
+use <code>node-gyp</code> directly can install it using the command
+<code>npm install -g node-gyp</code>. See the <code>node-gyp</code> <a href="https://github.com/nodejs/node-gyp#installation" rel="nofollow">installation instructions</a> for
+more information, including platform-specific requirements.</p><p>Once the <code>binding.gyp</code> file has been created, use <code>node-gyp configure</code> to
+generate the appropriate project build files for the current platform. This
+will generate either a <code>Makefile</code> (on Unix platforms) or a <code>vcxproj</code> file
+(on Windows) in the <code>build/</code> directory.</p><p>Next, invoke the <code>node-gyp build</code> command to generate the compiled <code>addon.node</code>
+file. This will be put into the <code>build/Release/</code> directory.</p><p>When using <code>npm install</code> to install a Node.js addon, npm uses its own bundled
+version of <code>node-gyp</code> to perform this same set of actions, generating a
+compiled version of the addon for the user's platform on demand.</p><p>Once built, the binary addon can be used from within Node.js by pointing
+<a href="../modules.html#requireid"><code>require()</code></a> to the built <code>addon.node</code> module:</p><pre><code class="language-js"><span class="hljs-comment">// hello.js</span>
+<span class="hljs-keyword">const</span> addon = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(addon.<span class="hljs-title function_">hello</span>());
+<span class="hljs-comment">// Prints: 'world'</span></code></pre><p>Because the exact path to the compiled addon binary can vary depending on how
+it is compiled (i.e. sometimes it may be in <code>./build/Debug/</code>), addons can use
+the <a href="https://github.com/TooTallNate/node-bindings" rel="nofollow">bindings</a> package to load the compiled module.</p><p>While the <code>bindings</code> package implementation is more sophisticated in how it
+locates addon modules, it is essentially using a <code>try…catch</code> pattern similar to:</p><pre><code class="language-js"><span class="hljs-keyword">try</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon.node'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Debug/addon.node'</span>);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

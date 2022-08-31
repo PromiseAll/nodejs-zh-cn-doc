@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>示例 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-policy">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>示例</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../policy.html#policy_example" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/policy/example.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/policy/example.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/policy/#example.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"scopes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"file:///C:/app/"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"file:"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">""</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>给定一个位于 <code>file:///C:/app/bin/main.js</code> 的文件，将按顺序检查以下范围：</p><ol class="">
+<li><code>"file:///C:/app/bin/"</code></li>
+</ol><p class="">这决定了 <code>"file:///C:/app/bin/"</code> 中所有基于文件的资源的策略。
+这不在策略的 <code>"scopes"</code> 字段中，将被跳过。
+将此范围添加到策略将导致它在 <code>"file:///C:/app/"</code> 范围之前使用。</p><ol start="2" class="">
+<li><code>"file:///C:/app/"</code></li>
+</ol><p class="">这决定了 <code>"file:///C:/app/"</code> 中所有基于文件的资源的策略。
+这是在策略的 <code>"scopes"</code> 字段中，它将确定 <code>file:///C:/app/bin/main.js</code> 资源的策略。
+如果范围有 <code>"cascade": true</code>，则任何关于资源的不满意查询都将委托给 <code>file:///C:/app/bin/main.js</code>、<code>"file:"</code> 的下一个相关范围。</p><ol start="3" class="">
+<li><code>"file:///C:/"</code></li>
+</ol><p class="">这决定了 <code>"file:///C:/"</code> 中所有基于文件的资源的策略。
+这不在策略的 <code>"scopes"</code> 字段中，将被跳过。
+除非 <code>"file:///"</code> 设置为级联或不在策略的 <code>"scopes"</code> 中，否则它不会用于 <code>file:///C:/app/bin/main.js</code>。</p><ol start="4" class="">
+<li><code>"file:///"</code></li>
+</ol><p class="">这决定了 <code>localhost</code> 上所有基于文件的资源的策略。
+这不在策略的 <code>"scopes"</code> 字段中，将被跳过。
+除非 <code>"file:///"</code> 设置为级联或不在策略的 <code>"scopes"</code> 中，否则它不会用于 <code>file:///C:/app/bin/main.js</code>。</p><ol start="5" class="">
+<li><code>"file:"</code></li>
+</ol><p class="">这决定了所有基于文件的资源的策略。
+除非 <code>"file:///"</code> 设置为级联或不在策略的 <code>"scopes"</code> 中，否则它不会用于 <code>file:///C:/app/bin/main.js</code>。</p><ol start="6" class="">
+<li><code>""</code></li>
+</ol><p class="">这决定了所有资源的策略。
+除非 <code>"file:"</code> 设置为级联，否则它不会用于 <code>file:///C:/app/bin/main.js</code>。</p></div>
+          <div id="content_right"><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"scopes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"file:///C:/app/"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"file:"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">""</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Given a file located at <code>file:///C:/app/bin/main.js</code>, the following scopes would
+be checked in order:</p><ol>
+<li><code>"file:///C:/app/bin/"</code></li>
+</ol><p>This determines the policy for all file based resources within
+<code>"file:///C:/app/bin/"</code>. This is not in the <code>"scopes"</code> field of the policy and
+would be skipped. Adding this scope to the policy would cause it to be used
+prior to the <code>"file:///C:/app/"</code> scope.</p><ol start="2">
+<li><code>"file:///C:/app/"</code></li>
+</ol><p>This determines the policy for all file based resources within
+<code>"file:///C:/app/"</code>. This is in the <code>"scopes"</code> field of the policy and it would
+determine the policy for the resource at <code>file:///C:/app/bin/main.js</code>. If the
+scope has <code>"cascade": true</code>, any unsatisfied queries about the resource would
+delegate to the next relevant scope for <code>file:///C:/app/bin/main.js</code>, <code>"file:"</code>.</p><ol start="3">
+<li><code>"file:///C:/"</code></li>
+</ol><p>This determines the policy for all file based resources within <code>"file:///C:/"</code>.
+This is not in the <code>"scopes"</code> field of the policy and would be skipped. It would
+not be used for <code>file:///C:/app/bin/main.js</code> unless <code>"file:///"</code> is set to
+cascade or is not in the <code>"scopes"</code> of the policy.</p><ol start="4">
+<li><code>"file:///"</code></li>
+</ol><p>This determines the policy for all file based resources on the <code>localhost</code>. This
+is not in the <code>"scopes"</code> field of the policy and would be skipped. It would not
+be used for <code>file:///C:/app/bin/main.js</code> unless <code>"file:///"</code> is set to cascade
+or is not in the <code>"scopes"</code> of the policy.</p><ol start="5">
+<li><code>"file:"</code></li>
+</ol><p>This determines the policy for all file based resources. It would not be used
+for <code>file:///C:/app/bin/main.js</code> unless <code>"file:///"</code> is set to cascade or is not
+in the <code>"scopes"</code> of the policy.</p><ol start="6">
+<li><code>""</code></li>
+</ol><p>This determines the policy for all resources. It would not be used for
+<code>file:///C:/app/bin/main.js</code> unless <code>"file:"</code> is set to cascade.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

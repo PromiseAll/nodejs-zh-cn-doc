@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http2session.settings([settings][, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http2session.settings([settings][, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_http2session_settings_settings_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/http2session_settings_settings_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/http2session_settings_settings_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#http2sessionsettingssettings-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v8.4.0</span>
+</div><ul class="">
+<li><code>settings</code> <a href="../http2.html#settings-object" rel="nofollow" class="type">&lt;HTTP/2 Settings Object&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 一旦会话连接或会话已连接时立即调用的回调。
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a></li>
+<li><code>settings</code> <a href="../http2.html#settings-object" rel="nofollow" class="type">&lt;HTTP/2 Settings Object&gt;</a> 更新后的 <code>settings</code> 对象。</li>
+<li><code>duration</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+</li>
+</ul><p>更新此 <code>Http2Session</code> 的当前本地设置并向连接的 HTTP/2 对等方发送新的 <code>SETTINGS</code> 帧。</p><p class="">一旦调用，当会话等待远程对等方确认新设置时，<code>http2session.pendingSettingsAck</code> 属性将为 <code>true</code>。</p><p class="">在收到 <code>SETTINGS</code> 确认并触发 <code>'localSettings'</code> 事件之前，新设置不会生效。
+可以在确认未决时发送多个 <code>SETTINGS</code> 帧。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v8.4.0</span>
+</div><ul>
+<li><code>settings</code> <a href="../http2.html#settings-object" rel="nofollow" class="type">&lt;HTTP/2 Settings Object&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Callback that is called once the session is connected or
+right away if the session is already connected.
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a></li>
+<li><code>settings</code> <a href="../http2.html#settings-object" rel="nofollow" class="type">&lt;HTTP/2 Settings Object&gt;</a> The updated <code>settings</code> object.</li>
+<li><code>duration</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+</li>
+</ul><p>Updates the current local settings for this <code>Http2Session</code> and sends a new
+<code>SETTINGS</code> frame to the connected HTTP/2 peer.</p><p>Once called, the <code>http2session.pendingSettingsAck</code> property will be <code>true</code>
+while the session is waiting for the remote peer to acknowledge the new
+settings.</p><p>The new settings will not become effective until the <code>SETTINGS</code> acknowledgment
+is received and the <code>'localSettings'</code> event is emitted. It is possible to send
+multiple <code>SETTINGS</code> frames while acknowledgment is still pending.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

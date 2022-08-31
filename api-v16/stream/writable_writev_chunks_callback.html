@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>writable._writev(chunks, callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>writable._writev(chunks, callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_writable_writev_chunks_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/writable_writev_chunks_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/writable_writev_chunks_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#writable_writevchunks-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><code>chunks</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> 要写入的数据。
+该值是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 数组，每个数组表示要写入的离散数据块。
+这些对象的属性是：
+<ul>
+<li><code>chunk</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 包含要写入的数据的缓冲区实例或字符串。
+如果 <code>Writable</code> 是在 <code>decodeStrings</code> 选项设置为 <code>false</code> 的情况下创建的，并且字符串已传给 <code>write()</code>，则 <code>chunk</code> 将是字符串。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>chunk</code> 的字符编码。
+如果 <code>chunk</code> 是 <code>Buffer</code>，则 <code>encoding</code> 将是 <code>'buffer'</code>。</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当对提供的块的处理完成时要调用的回调函数（可选地带有错误参数）。</li>
+</ul><p>此函数不得由应用程序代码直接调用。
+它应该由子类实现，并且只能由内部 <code>Writable</code> 类方法调用。</p><p class=""><code>writable._writev()</code> 方法可以在能够同时处理多个数据块的流实现中作为 <code>writable._write()</code> 的补充或替代来实现。
+如果实现并且有来自先前写入的缓冲数据，则将调用 <code>_writev()</code> 而不是 <code>_write()</code>。</p><p class=""><code>writable._writev()</code> 方法以下划线为前缀，因为它是定义它的类的内部方法，不应由用户程序直接调用。</p></div>
+          <div id="content_right"><ul>
+<li><code>chunks</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> The data to be written. The value is an array of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+that each represent a discrete chunk of data to write. The properties of
+these objects are:
+<ul>
+<li><code>chunk</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A buffer instance or string containing the data to
+be written. The <code>chunk</code> will be a string if the <code>Writable</code> was created with
+the <code>decodeStrings</code> option set to <code>false</code> and a string was passed to <code>write()</code>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The character encoding of the <code>chunk</code>. If <code>chunk</code> is
+a <code>Buffer</code>, the <code>encoding</code> will be <code>'buffer'</code>.</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> A callback function (optionally with an error
+argument) to be invoked when processing is complete for the supplied chunks.</li>
+</ul><p>This function MUST NOT be called by application code directly. It should be
+implemented by child classes, and called by the internal <code>Writable</code> class
+methods only.</p><p>The <code>writable._writev()</code> method may be implemented in addition or alternatively
+to <code>writable._write()</code> in stream implementations that are capable of processing
+multiple chunks of data at once. If implemented and if there is buffered data
+from previous writes, <code>_writev()</code> will be called instead of <code>_write()</code>.</p><p>The <code>writable._writev()</code> method is prefixed with an underscore because it is
+internal to the class that defines it, and should never be called directly by
+user programs.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

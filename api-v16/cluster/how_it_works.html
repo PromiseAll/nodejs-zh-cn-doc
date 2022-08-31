@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>工作原理 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cluster">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>工作原理</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cluster.html#cluster_how_it_works" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cluster/how_it_works.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/cluster/how_it_works.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cluster/#how-it-works.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>工作进程使用 <a href="../child_process.html#child_processforkmodulepath-args-options"><code>child_process.fork()</code></a> 方法衍生，因此它们可以通过 IPC 与父进程通信并且来回传递服务器句柄。</p><p class="">集群模块支持两种分发传入连接的方法。</p><p class="">第一种方法（也是除 Windows 之外的所有平台上的默认方法）是循环法，其中主进程监听端口，接受新连接并以循环方式将它们分发给工作进程，其中使用一些内置智能以避免工作进程过载。</p><p class="">第二种方法是，主进程创建监听套接字并将其发送给感兴趣的工作进程。
+然后工作进程直接接受传入的连接。</p><p class="">理论上，第二种方法具有最好的性能。
+但是，在实践中，由于操作系统调度机制难以捉摸，分发往往非常不平衡。
+可能会出现八个进程中的两个进程分担了所有连接超过 70% 的负载。</p><p class="">由于 <code>server.listen()</code> 将大部分工作交给了主进程，因此普通的 Node.js 进程和集群工作进程之间的行为在三种情况下会有所不同：</p><ol class="">
+<li><code>server.listen({fd: 7})</code> 因为消息传给主进程，所以父进程中的文件描述符 7 将被监听，并将句柄传给工作进程，而不是监听文件描述符 7 引用的工作进程。</li>
+<li><code>server.listen(handle)</code> 显式地监听句柄，将使工作进程使用提供的句柄，而不是与主进程对话。</li>
+<li><code>server.listen(0)</code> 通常，这会使服务器监听随机端口。
+但是，在集群中，每个工作进程每次执行 <code>listen(0)</code> 时都会接收到相同的"随机"端口。
+实质上，端口第一次是随机的，但之后是可预测的。
+要监听唯一的端口，则根据集群工作进程 ID 生成端口号。</li>
+</ol><p class="">Node.js 不提供路由逻辑。
+因此，重要的是设计一个应用程序，使其在会话和登录等方面不会过于依赖内存中的数据对象。</p><p class="">因为工作进程都是独立的进程，所以它们可以根据程序的需要被杀死或重新衍生，而不会影响其他工作进程。
+只要还有工作进程仍然活动，服务器就会继续接受连接。
+如果没有工作进程活动，则现有的连接将被丢弃，且新的连接将被拒绝。
+但是，Node.js 不会自动管理工作进程的数量。
+应用程序有责任根据自己的需要管理工作进程池。</p><p class="">尽管 <code>cluster</code> 模块的主要使用场景是网络，但它也可用于需要工作进程的其他使用场景。</p></div>
+          <div id="content_right"><p>The worker processes are spawned using the <a href="../child_process.html#child_processforkmodulepath-args-options"><code>child_process.fork()</code></a> method,
+so that they can communicate with the parent via IPC and pass server
+handles back and forth.</p><p>The cluster module supports two methods of distributing incoming
+connections.</p><p>The first one (and the default one on all platforms except Windows)
+is the round-robin approach, where the primary process listens on a
+port, accepts new connections and distributes them across the workers
+in a round-robin fashion, with some built-in smarts to avoid
+overloading a worker process.</p><p>The second approach is where the primary process creates the listen
+socket and sends it to interested workers. The workers then accept
+incoming connections directly.</p><p>The second approach should, in theory, give the best performance.
+In practice however, distribution tends to be very unbalanced due
+to operating system scheduler vagaries. Loads have been observed
+where over 70% of all connections ended up in just two processes,
+out of a total of eight.</p><p>Because <code>server.listen()</code> hands off most of the work to the primary
+process, there are three cases where the behavior between a normal
+Node.js process and a cluster worker differs:</p><ol>
+<li><code>server.listen({fd: 7})</code> Because the message is passed to the primary,
+file descriptor 7 <strong>in the parent</strong> will be listened on, and the
+handle passed to the worker, rather than listening to the worker's
+idea of what the number 7 file descriptor references.</li>
+<li><code>server.listen(handle)</code> Listening on handles explicitly will cause
+the worker to use the supplied handle, rather than talk to the primary
+process.</li>
+<li><code>server.listen(0)</code> Normally, this will cause servers to listen on a
+random port. However, in a cluster, each worker will receive the
+same "random" port each time they do <code>listen(0)</code>. In essence, the
+port is random the first time, but predictable thereafter. To listen
+on a unique port, generate a port number based on the cluster worker ID.</li>
+</ol><p>Node.js does not provide routing logic. It is, therefore important to design an
+application such that it does not rely too heavily on in-memory data objects for
+things like sessions and login.</p><p>Because workers are all separate processes, they can be killed or
+re-spawned depending on a program's needs, without affecting other
+workers. As long as there are some workers still alive, the server will
+continue to accept connections. If no workers are alive, existing connections
+will be dropped and new connections will be refused. Node.js does not
+automatically manage the number of workers, however. It is the application's
+responsibility to manage the worker pool based on its own needs.</p><p>Although a primary use case for the <code>cluster</code> module is networking, it can
+also be used for other use cases requiring worker processes.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

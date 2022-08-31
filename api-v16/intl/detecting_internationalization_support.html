@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>检测国际化支持 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-intl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>检测国际化支持</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../intl.html#intl_detecting_internationalization_support" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/intl/detecting_internationalization_support.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/intl/detecting_internationalization_support.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/intl/#detecting-internationalization-support.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>要验证是否启用了 ICU（<code>system-icu</code>、<code>small-icu</code> 或 <code>full-icu</code>），只需检查 <code>Intl</code> 是否存在就足够了：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> hasICU = <span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Intl</span> === <span class="hljs-string">'object'</span>;</code></pre><p class="">或者，检查 <code>process.versions.icu</code>，一个仅在启用 ICU 时定义的属性，也可以工作：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> hasICU = <span class="hljs-keyword">typeof</span> process.<span class="hljs-property">versions</span>.<span class="hljs-property">icu</span> === <span class="hljs-string">'string'</span>;</code></pre><p class="">要检查对非英语语言环境（即 <code>full-icu</code> 或 <code>system-icu</code>）的支持，<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat" rel="nofollow"><code>Intl.DateTimeFormat</code></a> 可能是一个很好的区分因素：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> hasFullICU = (<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> january = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">9e8</span>);
+    <span class="hljs-keyword">const</span> spanish = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intl</span>.<span class="hljs-title class_">DateTimeFormat</span>(<span class="hljs-string">'es'</span>, { <span class="hljs-attr">month</span>: <span class="hljs-string">'long'</span> });
+    <span class="hljs-keyword">return</span> spanish.<span class="hljs-title function_">format</span>(january) === <span class="hljs-string">'enero'</span>;
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+})();</code></pre><p class="">有关 <code>Intl</code> 支持的更详细的测试，以下资源可能会有所帮助：</p><ul class="">
+<li><a href="https://github.com/srl295/btest402" rel="nofollow">btest402</a>: 一般用于检查是否正确地构建了支持 <code>Intl</code> 的 Node.js。</li>
+<li><a href="https://github.com/tc39/test262/tree/HEAD/test/intl402" rel="nofollow">Test262</a>: ECMAScript 的官方一致性测试套件包括一个专门针对 ECMA-402 的部分。</li>
+</ul></div>
+          <div id="content_right"><p>To verify that ICU is enabled at all (<code>system-icu</code>, <code>small-icu</code>, or
+<code>full-icu</code>), simply checking the existence of <code>Intl</code> should suffice:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> hasICU = <span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Intl</span> === <span class="hljs-string">'object'</span>;</code></pre><p>Alternatively, checking for <code>process.versions.icu</code>, a property defined only
+when ICU is enabled, works too:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> hasICU = <span class="hljs-keyword">typeof</span> process.<span class="hljs-property">versions</span>.<span class="hljs-property">icu</span> === <span class="hljs-string">'string'</span>;</code></pre><p>To check for support for a non-English locale (i.e. <code>full-icu</code> or
+<code>system-icu</code>), <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat" rel="nofollow"><code>Intl.DateTimeFormat</code></a> can be a good distinguishing factor:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> hasFullICU = (<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> january = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">9e8</span>);
+    <span class="hljs-keyword">const</span> spanish = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intl</span>.<span class="hljs-title class_">DateTimeFormat</span>(<span class="hljs-string">'es'</span>, { <span class="hljs-attr">month</span>: <span class="hljs-string">'long'</span> });
+    <span class="hljs-keyword">return</span> spanish.<span class="hljs-title function_">format</span>(january) === <span class="hljs-string">'enero'</span>;
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+})();</code></pre><p>For more verbose tests for <code>Intl</code> support, the following resources may be found
+to be helpful:</p><ul>
+<li><a href="https://github.com/srl295/btest402" rel="nofollow">btest402</a>: Generally used to check whether Node.js with <code>Intl</code> support is
+built correctly.</li>
+<li><a href="https://github.com/tc39/test262/tree/HEAD/test/intl402" rel="nofollow">Test262</a>: ECMAScript's official conformance test suite includes a section
+dedicated to ECMA-402.</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

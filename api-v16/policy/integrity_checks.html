@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>完整性检查 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-policy">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>完整性检查</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../policy.html#policy_integrity_checks" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/policy/integrity_checks.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/policy/integrity_checks.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/policy/#integrity-checks.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>策略文件必须使用与绝对 URL 关联的浏览器<a href="https://www.w3.org/TR/SRI/#the-integrity-attribute" rel="nofollow">完整性属性</a>兼容的子资源完整性字符串的完整性检查。</p><p class="">当使用 <code>require()</code> 或 <code>import</code> 时，如果已指定策略清单，则检查加载中涉及的所有资源的完整性。
+如果资源与清单中列出的完整性不匹配，则会抛出错误。</p><p class="">允许加载文件 <code>checked.js</code> 的示例策略文件：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"resources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"./app/checked.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"integrity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"sha384-SggXRQHwCG8g+DktYYzxkXRIkTiEYWBHqev0xnpCxYlqMBufKZHAHQM3/boDaI/0"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">策略清单中列出的每个资源都可以采用以下格式之一来确定其位置：</p><ol class="">
+<li>指向清单中资源的<a href="https://url.spec.whatwg.org/#relative-url-with-fragment-string" rel="nofollow">相对 URL 字符串</a>，例如 <code>./resource.js</code>、<code>../resource.js</code> 或 <code>/resource.js</code>。</li>
+<li>资源的完整 URL 字符串，例如 <code>file:///resource.js</code>。</li>
+</ol><p class="">当加载资源时，整个 URL 必须匹配，包括搜索参数和哈希片段。
+尝试加载 <code>./a.js</code> 时不会使用 <code>./a.js?b</code>，反之亦然。</p><p class="">要生成完整性字符串，则可以使用 <code>node -e 'process.stdout.write("sha256-");process.stdin.pipe(crypto.createHash("sha256").setEncoding("base64")).pipe(process.stdout)' &lt; FILE</code> 等脚本。</p><p class="">完整性可以指定为布尔值 <code>true</code>，以接受任何对本地开发有用的资源主体。
+不建议在生产中这样做，因为它会允许资源的意外更改被认为是有效的。</p></div>
+          <div id="content_right"><p>Policy files must use integrity checks with Subresource Integrity strings
+compatible with the browser
+<a href="https://www.w3.org/TR/SRI/#the-integrity-attribute" rel="nofollow">integrity attribute</a>
+associated with absolute URLs.</p><p>When using <code>require()</code> or <code>import</code> all resources involved in loading are checked
+for integrity if a policy manifest has been specified. If a resource does not
+match the integrity listed in the manifest, an error will be thrown.</p><p>An example policy file that would allow loading a file <code>checked.js</code>:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"resources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"./app/checked.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"integrity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"sha384-SggXRQHwCG8g+DktYYzxkXRIkTiEYWBHqev0xnpCxYlqMBufKZHAHQM3/boDaI/0"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Each resource listed in the policy manifest can be of one the following
+formats to determine its location:</p><ol>
+<li>A <a href="https://url.spec.whatwg.org/#relative-url-with-fragment-string" rel="nofollow">relative-URL string</a> to a resource from the manifest such as <code>./resource.js</code>, <code>../resource.js</code>, or <code>/resource.js</code>.</li>
+<li>A complete URL string to a resource such as <code>file:///resource.js</code>.</li>
+</ol><p>When loading resources the entire URL must match including search parameters
+and hash fragment. <code>./a.js?b</code> will not be used when attempting to load
+<code>./a.js</code> and vice versa.</p><p>To generate integrity strings, a script such as
+<code>node -e 'process.stdout.write("sha256-");process.stdin.pipe(crypto.createHash("sha256").setEncoding("base64")).pipe(process.stdout)' &lt; FILE</code>
+can be used.</p><p>Integrity can be specified as the boolean value <code>true</code> to accept any
+body for the resource which can be useful for local development. It is not
+recommended in production since it would allow unexpected alteration of
+resources to be considered valid.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

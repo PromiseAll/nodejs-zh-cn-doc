@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>v8.getHeapSpaceStatistics() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-v8">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>v8.getHeapSpaceStatistics()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../v8.html#v8_v8_getheapspacestatistics" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/v8/v8_getheapspacestatistics.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/v8/v8_getheapspacestatistics.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/v8/#v8getheapspacestatistics.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.5.0</td>
+<td><p>支持超过 32 位无符号整数范围的值。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p><span>新增于: v6.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a></li>
+</ul><p>返回有关 V8 堆空间的统计信息，即构成 V8 堆的片段。
+堆空间的排序和堆空间的可用性都无法保证，因为统计信息是通过 V8 <a href="https://v8docs.nodesource.com/node-13.2/d5/dda/classv8_1_1_isolate.html#ac673576f24fdc7a33378f8f57e1d13a4" rel="nofollow"><code>GetHeapSpaceStatistics</code></a> 函数提供的，并且可能会从一个 V8 版本更改为下一个版本。</p><p class="">返回的值是包含以下属性的对象数组</p><ul class="">
+<li><code>space_name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>space_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>space_used_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>space_available_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>physical_space_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul><pre class=""><code class="language-json"><span class="hljs-punctuation">[</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"new_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2063872</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">951112</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">80824</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2063872</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"old_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3090560</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2493792</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3090560</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"code_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1260160</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">644256</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">960</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1260160</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"map_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1094160</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">201608</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1094160</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"large_object_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1490980608</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">]</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v7.5.0</td>
+<td><p>Support values exceeding the 32-bit unsigned integer range.</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p><span>Added in: v6.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a></li>
+</ul><p>Returns statistics about the V8 heap spaces, i.e. the segments which make up
+the V8 heap. Neither the ordering of heap spaces, nor the availability of a
+heap space can be guaranteed as the statistics are provided via the V8
+<a href="https://v8docs.nodesource.com/node-13.2/d5/dda/classv8_1_1_isolate.html#ac673576f24fdc7a33378f8f57e1d13a4" rel="nofollow"><code>GetHeapSpaceStatistics</code></a> function and may change from one V8 version to the
+next.</p><p>The value returned is an array of objects containing the following properties:</p><ul>
+<li><code>space_name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>space_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>space_used_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>space_available_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>physical_space_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul><pre><code class="language-json"><span class="hljs-punctuation">[</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"new_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2063872</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">951112</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">80824</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2063872</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"old_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3090560</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2493792</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3090560</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"code_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1260160</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">644256</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">960</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1260160</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"map_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1094160</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">201608</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1094160</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"large_object_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1490980608</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">]</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

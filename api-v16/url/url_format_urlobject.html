@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>url.format(urlObject) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-url">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>url.format(urlObject)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../url.html#url_url_format_urlobject" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/url/url_format_urlobject.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/url/url_format_urlobject.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/url/#urlformaturlobject.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.13.0</td>
+<td><p>弃用已撤销。 状态更改为“旧版”。</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>旧版的网址 API 已弃用。 使用 WHATWG 网址 API。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>无论 <code>slashes</code> 选项如何，具有 <code>file:</code> 方案的网址现在将始终使用正确数量的斜杠。 现在也始终遵守没有协议的非真的 <code>slashes</code> 选项。</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>新增于: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 WHATWG URL API 。</div><p></p><ul class="">
+<li><code>urlObject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 网址对象（由 <code>url.parse()</code> 返回或以其他方式构造）。
+如果是字符串，则通过将其传给 <code>url.parse()</code> 将其转换为对象。</li>
+</ul><p><code>url.format()</code> 方法返回从 <code>urlObject</code> 派生的格式化网址字符串。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+url.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">protocol</span>: <span class="hljs-string">'https'</span>,
+  <span class="hljs-attr">hostname</span>: <span class="hljs-string">'example.com'</span>,
+  <span class="hljs-attr">pathname</span>: <span class="hljs-string">'/some/path'</span>,
+  <span class="hljs-attr">query</span>: {
+    <span class="hljs-attr">page</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">format</span>: <span class="hljs-string">'json'</span>
+  }
+});
+
+<span class="hljs-comment">// =&gt; 'https://example.com/some/path?page=1&amp;format=json'</span></code></pre><p class="">如果 <code>urlObject</code> 不是对象或字符串，则 <code>url.format()</code> 将抛出 <a href="../errors.html#class-typeerror"><code>TypeError</code></a>。</p><p class="">格式化过程如下：</p><ul class="">
+<li>创建新的空字符串 <code>result</code>。</li>
+<li>如果 <code>urlObject.protocol</code> 是字符串，则按原样附加到 <code>result</code>。</li>
+<li>否则，如果 <code>urlObject.protocol</code> 不是 <code>undefined</code> 并且不是字符串，则抛出 <a href="../errors.html#class-error"><code>Error</code></a>。</li>
+<li>对于所有不以 ASCII 冒号（<code>:</code>）字符结尾的 <code>urlObject.protocol</code> 字符串值，文字字符串 <code>:</code> 将附加到 <code>result</code>。</li>
+<li>如果以下任一条件为真，则文字串 <code>//</code> 将附加到 <code>result</code>:
+<ul>
+<li><code>urlObject.slashes</code> 属性为真；</li>
+<li><code>urlObject.protocol</code> 以 <code>http</code>、<code>https</code>、<code>ftp</code>、<code>gopher</code> 或 <code>file</code> 开头；</li>
+</ul>
+</li>
+<li>如果 <code>urlObject.auth</code> 属性的值为真，并且 <code>urlObject.host</code> 或 <code>urlObject.hostname</code> 不是 <code>undefined</code>，则 <code>urlObject.auth</code> 的值将被强制转换为字符串并附加到 <code>result</code> 后跟文字串 <code>@</code>。</li>
+<li>如果 <code>urlObject.host</code> 属性为 <code>undefined</code>，则：
+<ul>
+<li>如果 <code>urlObject.hostname</code> 是字符串，则将其附加到 <code>result</code>。</li>
+<li>否则，如果 <code>urlObject.hostname</code> 不是 <code>undefined</code> 并且不是字符串，则抛出 <a href="../errors.html#class-error"><code>Error</code></a>。</li>
+<li>如果 <code>urlObject.port</code> 属性值为真，而 <code>urlObject.hostname</code> 不是 <code>undefined</code>:
+<ul>
+<li>字面量字符串 <code>:</code> 附加到 <code>result</code>，并且</li>
+<li><code>urlObject.port</code> 的值被强制转换为字符串并附加到 <code>result</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.host</code> 属性值为真，则将 <code>urlObject.host</code> 的值强制转换为字符串并附加到 <code>result</code>。</li>
+<li>如果 <code>urlObject.pathname</code> 属性是非空的字符串：
+<ul>
+<li>如果 <code>urlObject.pathname</code> 不以 ASCII 正斜杠 (<code>/</code>) 开头，则文本字符串 <code>'/'</code> 将附加到 <code>result</code>。</li>
+<li><code>urlObject.pathname</code> 的值附加到 <code>result</code>。</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.pathname</code> 不是 <code>undefined</code> 并且不是字符串，则抛出 <a href="../errors.html#class-error"><code>Error</code></a>。</li>
+<li>如果 <code>urlObject.search</code> 属性是 <code>undefined</code> 并且如果 <code>urlObject.query</code> 属性是 <code>Object</code>，则文字串 <code>?</code> 附加到 <code>result</code>，然后是调用 <a href="../querystring.html"><code>querystring</code></a> 模块的 <code>stringify()</code> 方法的输出，并传入 <code>urlObject.query</code> 的值。</li>
+<li>否则，如果 <code>urlObject.search</code> 是一个字符串：
+<ul>
+<li>如果 <code>urlObject.search</code> 的值不以 ASCII 问号 (<code>?</code>) 字符开头，则文本字符串 <code>?</code> 附加到 <code>result</code>。</li>
+<li><code>urlObject.search</code> 的值附加到 <code>result</code>。</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.search</code> 不是 <code>undefined</code> 并且不是字符串，则抛出 <a href="../errors.html#class-error"><code>Error</code></a>。</li>
+<li>如果 <code>urlObject.hash</code> 属性是字符串：
+<ul>
+<li>如果 <code>urlObject.hash</code> 的值不以 ASCII 散列 (<code>#</code>) 字符开头，则文本字符串 <code>#</code> 将附加到 <code>result</code>。</li>
+<li><code>urlObject.hash</code> 的值附加到 <code>result</code>。</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.hash</code> 属性不是 <code>undefined</code> 并且不是字符串，则抛出 <a href="../errors.html#class-error"><code>Error</code></a>。</li>
+<li><code>result</code> 返回。</li>
+</ul></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.13.0</td>
+<td><p>Deprecation revoked. Status changed to "Legacy".</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>The Legacy URL API is deprecated. Use the WHATWG URL API.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>URLs with a <code>file:</code> scheme will now always use the correct number of slashes regardless of <code>slashes</code> option. A falsy <code>slashes</code> option with no protocol is now also respected at all times.</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>Added in: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">Stability: 3</a> - Legacy: Use the WHATWG URL API instead.</div><p></p><ul>
+<li><code>urlObject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A URL object (as returned by <code>url.parse()</code> or
+constructed otherwise). If a string, it is converted to an object by passing
+it to <code>url.parse()</code>.</li>
+</ul><p>The <code>url.format()</code> method returns a formatted URL string derived from
+<code>urlObject</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+url.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">protocol</span>: <span class="hljs-string">'https'</span>,
+  <span class="hljs-attr">hostname</span>: <span class="hljs-string">'example.com'</span>,
+  <span class="hljs-attr">pathname</span>: <span class="hljs-string">'/some/path'</span>,
+  <span class="hljs-attr">query</span>: {
+    <span class="hljs-attr">page</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">format</span>: <span class="hljs-string">'json'</span>
+  }
+});
+
+<span class="hljs-comment">// =&gt; 'https://example.com/some/path?page=1&amp;format=json'</span></code></pre><p>If <code>urlObject</code> is not an object or a string, <code>url.format()</code> will throw a
+<a href="../errors.html#class-typeerror"><code>TypeError</code></a>.</p><p>The formatting process operates as follows:</p><ul>
+<li>A new empty string <code>result</code> is created.</li>
+<li>If <code>urlObject.protocol</code> is a string, it is appended as-is to <code>result</code>.</li>
+<li>Otherwise, if <code>urlObject.protocol</code> is not <code>undefined</code> and is not a string, an
+<a href="../errors.html#class-error"><code>Error</code></a> is thrown.</li>
+<li>For all string values of <code>urlObject.protocol</code> that <em>do not end</em> with an ASCII
+colon (<code>:</code>) character, the literal string <code>:</code> will be appended to <code>result</code>.</li>
+<li>If either of the following conditions is true, then the literal string <code>//</code>
+will be appended to <code>result</code>:
+<ul>
+<li><code>urlObject.slashes</code> property is true;</li>
+<li><code>urlObject.protocol</code> begins with <code>http</code>, <code>https</code>, <code>ftp</code>, <code>gopher</code>, or
+<code>file</code>;</li>
+</ul>
+</li>
+<li>If the value of the <code>urlObject.auth</code> property is truthy, and either
+<code>urlObject.host</code> or <code>urlObject.hostname</code> are not <code>undefined</code>, the value of
+<code>urlObject.auth</code> will be coerced into a string and appended to <code>result</code>
+followed by the literal string <code>@</code>.</li>
+<li>If the <code>urlObject.host</code> property is <code>undefined</code> then:
+<ul>
+<li>If the <code>urlObject.hostname</code> is a string, it is appended to <code>result</code>.</li>
+<li>Otherwise, if <code>urlObject.hostname</code> is not <code>undefined</code> and is not a string,
+an <a href="../errors.html#class-error"><code>Error</code></a> is thrown.</li>
+<li>If the <code>urlObject.port</code> property value is truthy, and <code>urlObject.hostname</code>
+is not <code>undefined</code>:
+<ul>
+<li>The literal string <code>:</code> is appended to <code>result</code>, and</li>
+<li>The value of <code>urlObject.port</code> is coerced to a string and appended to
+<code>result</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Otherwise, if the <code>urlObject.host</code> property value is truthy, the value of
+<code>urlObject.host</code> is coerced to a string and appended to <code>result</code>.</li>
+<li>If the <code>urlObject.pathname</code> property is a string that is not an empty string:
+<ul>
+<li>If the <code>urlObject.pathname</code> <em>does not start</em> with an ASCII forward slash
+(<code>/</code>), then the literal string <code>'/'</code> is appended to <code>result</code>.</li>
+<li>The value of <code>urlObject.pathname</code> is appended to <code>result</code>.</li>
+</ul>
+</li>
+<li>Otherwise, if <code>urlObject.pathname</code> is not <code>undefined</code> and is not a string, an
+<a href="../errors.html#class-error"><code>Error</code></a> is thrown.</li>
+<li>If the <code>urlObject.search</code> property is <code>undefined</code> and if the <code>urlObject.query</code>
+property is an <code>Object</code>, the literal string <code>?</code> is appended to <code>result</code>
+followed by the output of calling the <a href="../querystring.html"><code>querystring</code></a> module's <code>stringify()</code>
+method passing the value of <code>urlObject.query</code>.</li>
+<li>Otherwise, if <code>urlObject.search</code> is a string:
+<ul>
+<li>If the value of <code>urlObject.search</code> <em>does not start</em> with the ASCII question
+mark (<code>?</code>) character, the literal string <code>?</code> is appended to <code>result</code>.</li>
+<li>The value of <code>urlObject.search</code> is appended to <code>result</code>.</li>
+</ul>
+</li>
+<li>Otherwise, if <code>urlObject.search</code> is not <code>undefined</code> and is not a string, an
+<a href="../errors.html#class-error"><code>Error</code></a> is thrown.</li>
+<li>If the <code>urlObject.hash</code> property is a string:
+<ul>
+<li>If the value of <code>urlObject.hash</code> <em>does not start</em> with the ASCII hash (<code>#</code>)
+character, the literal string <code>#</code> is appended to <code>result</code>.</li>
+<li>The value of <code>urlObject.hash</code> is appended to <code>result</code>.</li>
+</ul>
+</li>
+<li>Otherwise, if the <code>urlObject.hash</code> property is not <code>undefined</code> and is not a
+string, an <a href="../errors.html#class-error"><code>Error</code></a> is thrown.</li>
+<li><code>result</code> is returned.</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

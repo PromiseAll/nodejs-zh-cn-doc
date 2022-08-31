@@ -1,0 +1,1095 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>dgram 数据报 | Node.js API 文档</title>
+  
+  
+  <style>@media(max-width:558px){.with-42-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}@media(max-width:502px){.with-35-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}@media(max-width:518px){.with-37-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}</style>
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_dgram" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="" class="nav-dgram active" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="dgram" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_2"><a href="#udpdatagram-sockets">dgram 数据报</a></span>
+<ul>
+<li><a href="#class-dgramsocket"><code>dgram.Socket</code> 类</a>
+<ul>
+<li><a href="#event-close"><code>'close'</code> 事件</a></li>
+<li><a href="#event-connect"><code>'connect'</code> 事件</a></li>
+<li><a href="#event-error"><code>'error'</code> 事件</a></li>
+<li><a href="#event-listening"><code>'listening'</code> 事件</a></li>
+<li><a href="#event-message"><code>'message'</code> 事件</a></li>
+<li><a href="#socketaddmembershipmulticastaddress-multicastinterface"><code>socket.addMembership(multicastAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketaddsourcespecificmembershipsourceaddress-groupaddress-multicastinterface"><code>socket.addSourceSpecificMembership(sourceAddress, groupAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketaddress"><code>socket.address()</code></a></li>
+<li><a href="#socketbindport-address-callback"><code>socket.bind([port][, address][, callback])</code></a></li>
+<li><a href="#socketbindoptions-callback"><code>socket.bind(options[, callback])</code></a></li>
+<li><a href="#socketclosecallback"><code>socket.close([callback])</code></a></li>
+<li><a href="#socketconnectport-address-callback"><code>socket.connect(port[, address][, callback])</code></a></li>
+<li><a href="#socketdisconnect"><code>socket.disconnect()</code></a></li>
+<li><a href="#socketdropmembershipmulticastaddress-multicastinterface"><code>socket.dropMembership(multicastAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketdropsourcespecificmembershipsourceaddress-groupaddress-multicastinterface"><code>socket.dropSourceSpecificMembership(sourceAddress, groupAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketgetrecvbuffersize"><code>socket.getRecvBufferSize()</code></a></li>
+<li><a href="#socketgetsendbuffersize"><code>socket.getSendBufferSize()</code></a></li>
+<li><a href="#socketref"><code>socket.ref()</code></a></li>
+<li><a href="#socketremoteaddress"><code>socket.remoteAddress()</code></a></li>
+<li><a href="#socketsendmsg-offset-length-port-address-callback"><code>socket.send(msg[, offset, length][, port][, address][, callback])</code></a>
+<ul>
+<li><a href="#note-about-udp-datagram-size">关于 UDP 数据报大小的说明</a></li>
+</ul>
+</li>
+<li><a href="#socketsetbroadcastflag"><code>socket.setBroadcast(flag)</code></a></li>
+<li><a href="#socketsetmulticastinterfacemulticastinterface"><code>socket.setMulticastInterface(multicastInterface)</code></a>
+<ul>
+<li><a href="#example-ipv6-outgoing-multicast-interface">IPv6 发送多播数据包</a></li>
+<li><a href="#example-ipv4-outgoing-multicast-interface">IPv4 发送多播数据包</a></li>
+<li><a href="#call-results">调用的结果</a></li>
+</ul>
+</li>
+<li><a href="#socketsetmulticastloopbackflag"><code>socket.setMulticastLoopback(flag)</code></a></li>
+<li><a href="#socketsetmulticastttlttl"><code>socket.setMulticastTTL(ttl)</code></a></li>
+<li><a href="#socketsetrecvbuffersizesize"><code>socket.setRecvBufferSize(size)</code></a></li>
+<li><a href="#socketsetsendbuffersizesize"><code>socket.setSendBufferSize(size)</code></a></li>
+<li><a href="#socketsetttlttl"><code>socket.setTTL(ttl)</code></a></li>
+<li><a href="#socketunref"><code>socket.unref()</code></a></li>
+</ul>
+</li>
+<li><a href="#dgram-module-functions">dgram 模块的函数</a>
+<ul>
+<li><a href="#dgramcreatesocketoptions-callback"><code>dgram.createSocket(options[, callback])</code></a></li>
+<li><a href="#dgramcreatesockettype-callback"><code>dgram.createSocket(type[, callback])</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="" class="nav-dgram active">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/dgram.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/dgram.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_2"><a href="#udpdatagram-sockets">dgram 数据报</a></span>
+<ul>
+<li><a href="#class-dgramsocket"><code>dgram.Socket</code> 类</a>
+<ul>
+<li><a href="#event-close"><code>'close'</code> 事件</a></li>
+<li><a href="#event-connect"><code>'connect'</code> 事件</a></li>
+<li><a href="#event-error"><code>'error'</code> 事件</a></li>
+<li><a href="#event-listening"><code>'listening'</code> 事件</a></li>
+<li><a href="#event-message"><code>'message'</code> 事件</a></li>
+<li><a href="#socketaddmembershipmulticastaddress-multicastinterface"><code>socket.addMembership(multicastAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketaddsourcespecificmembershipsourceaddress-groupaddress-multicastinterface"><code>socket.addSourceSpecificMembership(sourceAddress, groupAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketaddress"><code>socket.address()</code></a></li>
+<li><a href="#socketbindport-address-callback"><code>socket.bind([port][, address][, callback])</code></a></li>
+<li><a href="#socketbindoptions-callback"><code>socket.bind(options[, callback])</code></a></li>
+<li><a href="#socketclosecallback"><code>socket.close([callback])</code></a></li>
+<li><a href="#socketconnectport-address-callback"><code>socket.connect(port[, address][, callback])</code></a></li>
+<li><a href="#socketdisconnect"><code>socket.disconnect()</code></a></li>
+<li><a href="#socketdropmembershipmulticastaddress-multicastinterface"><code>socket.dropMembership(multicastAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketdropsourcespecificmembershipsourceaddress-groupaddress-multicastinterface"><code>socket.dropSourceSpecificMembership(sourceAddress, groupAddress[, multicastInterface])</code></a></li>
+<li><a href="#socketgetrecvbuffersize"><code>socket.getRecvBufferSize()</code></a></li>
+<li><a href="#socketgetsendbuffersize"><code>socket.getSendBufferSize()</code></a></li>
+<li><a href="#socketref"><code>socket.ref()</code></a></li>
+<li><a href="#socketremoteaddress"><code>socket.remoteAddress()</code></a></li>
+<li><a href="#socketsendmsg-offset-length-port-address-callback"><code>socket.send(msg[, offset, length][, port][, address][, callback])</code></a>
+<ul>
+<li><a href="#note-about-udp-datagram-size">关于 UDP 数据报大小的说明</a></li>
+</ul>
+</li>
+<li><a href="#socketsetbroadcastflag"><code>socket.setBroadcast(flag)</code></a></li>
+<li><a href="#socketsetmulticastinterfacemulticastinterface"><code>socket.setMulticastInterface(multicastInterface)</code></a>
+<ul>
+<li><a href="#example-ipv6-outgoing-multicast-interface">IPv6 发送多播数据包</a></li>
+<li><a href="#example-ipv4-outgoing-multicast-interface">IPv4 发送多播数据包</a></li>
+<li><a href="#call-results">调用的结果</a></li>
+</ul>
+</li>
+<li><a href="#socketsetmulticastloopbackflag"><code>socket.setMulticastLoopback(flag)</code></a></li>
+<li><a href="#socketsetmulticastttlttl"><code>socket.setMulticastTTL(ttl)</code></a></li>
+<li><a href="#socketsetrecvbuffersizesize"><code>socket.setRecvBufferSize(size)</code></a></li>
+<li><a href="#socketsetsendbuffersizesize"><code>socket.setSendBufferSize(size)</code></a></li>
+<li><a href="#socketsetttlttl"><code>socket.setTTL(ttl)</code></a></li>
+<li><a href="#socketunref"><code>socket.unref()</code></a></li>
+</ul>
+</li>
+<li><a href="#dgram-module-functions">dgram 模块的函数</a>
+<ul>
+<li><a href="#dgramcreatesocketoptions-callback"><code>dgram.createSocket(options[, callback])</code></a></li>
+<li><a href="#dgramcreatesockettype-callback"><code>dgram.createSocket(type[, callback])</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>dgram 数据报<span><a class="mark" href="#udpdatagram-sockets" id="udpdatagram-sockets">#</a></span><a aria-hidden="true" class="legacy" id="dgram_udp_datagram_sockets"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="#udpdatagram-sockets">
+                <a href="dgram/udp_datagram_sockets.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v0.10.0-->
+<p></p><div class="api_stability api_stability_2"><a href="documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p>
+<!-- name=dgram -->
+<p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/dgram.js">lib/dgram.js</a></p>
+<p><code>dgram</code> 模块提供了 UDP 数据报套接字的实现。</p>
+
+<pre class="with-42-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// 打印: server listening 0.0.0.0:41234</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// 打印: server listening 0.0.0.0:41234</span></code></pre>
+<section><h3><code>dgram.Socket</code> 类<span><a class="mark" href="#class-dgramsocket" id="class-dgramsocket">#</a></span><a aria-hidden="true" class="legacy" id="dgram_class_dgram_socket"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-dgramsocket">
+                <a href="dgram/class_dgram_socket.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<ul class="">
+<li>继承自: <a href="events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>封装数据报功能。</p>
+<p class=""><code>dgram.Socket</code> 的新实例是使用 <a href="#dgramcreatesocketoptions-callback"><code>dgram.createSocket()</code></a> 创建的。
+<code>new</code> 关键字不能用于创建 <code>dgram.Socket</code> 实例。</p>
+<h4><code>'close'</code> 事件<span><a class="mark" href="#event-close" id="event-close">#</a></span><a aria-hidden="true" class="legacy" id="dgram_event_close"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-close">
+                <a href="dgram/event_close.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<p>在使用 <a href="#socketclosecallback"><code>close()</code></a> 关闭套接字后会触发 <code>'close'</code> 事件。
+一旦触发，则此套接字上将不会触发新的 <code>'message'</code> 事件。</p>
+<h4><code>'connect'</code> 事件<span><a class="mark" href="#event-connect" id="event-connect">#</a></span><a aria-hidden="true" class="legacy" id="dgram_event_connect"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-connect">
+                <a href="dgram/event_connect.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p><code>'connect'</code> 事件在套接字关联到远程地址作为成功的 <a href="#socketconnectport-address-callback"><code>connect()</code></a> 调用的结果之后触发。</p>
+<h4><code>'error'</code> 事件<span><a class="mark" href="#event-error" id="event-error">#</a></span><a aria-hidden="true" class="legacy" id="dgram_event_error"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-error">
+                <a href="dgram/event_error.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<ul class="">
+<li><code>exception</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>每当发生任何错误时都会触发 <code>'error'</code> 事件。
+事件句柄被传入单一的 <code>Error</code> 对象。</p>
+<h4><code>'listening'</code> 事件<span><a class="mark" href="#event-listening" id="event-listening">#</a></span><a aria-hidden="true" class="legacy" id="dgram_event_listening"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-listening">
+                <a href="dgram/event_listening.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<p>一旦 <code>dgram.Socket</code> 可寻址并且可以接收数据，则会触发 <code>'listening'</code> 事件。
+这会在 <code>socket.bind()</code> 中显式地发生，或者在第一次使用 <code>socket.send()</code> 发送数据时隐式地发生。
+直到 <code>dgram.Socket</code> 正在监听，底层系统资源不存在，则调用 <code>socket.address()</code> 和 <code>socket.setTTL()</code> 等将失败。</p>
+<h4><code>'message'</code> 事件<span><a class="mark" href="#event-message" id="event-message">#</a></span><a aria-hidden="true" class="legacy" id="dgram_event_message"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-message">
+                <a href="dgram/event_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<p>当套接字上有新的数据报可用时，则会触发 <code>'message'</code> 事件。
+事件句柄传入了两个参数：<code>msg</code> 和 <code>rinfo</code>。</p>
+<ul class="">
+<li><code>msg</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 消息。</li>
+<li><code>rinfo</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 远程地址信息。
+<ul>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 发送者地址。</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 地址族（<code>'IPv4'</code> 或 <code>'IPv6'</code>）。</li>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 发送者端口。</li>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 消息大小。</li>
+</ul>
+</li>
+</ul>
+<p class="">如果传入数据包的源地址是 IPv6 链路本地地址，则将接口名称添加到 <code>address</code>。
+例如，在 <code>en0</code> 接口上接收的数据包可能将地址字段设置为 <code>'fe80::2618:1234:ab11:3b9c%en0'</code>，其中 <code>'%en0'</code> 是作为区域 ID 后缀的接口名称。</p>
+<h4><code>socket.addMembership(multicastAddress[, multicastInterface])</code><span><a class="mark" href="#socketaddmembershipmulticastaddress-multicastinterface" id="socketaddmembershipmulticastaddress-multicastinterface">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_addmembership_multicastaddress_multicastinterface"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddmembershipmulticastaddress-multicastinterface">
+                <a href="dgram/socket_addmembership_multicastaddress_multicastinterface.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.6.9</span>
+</div>
+<ul class="">
+<li><code>multicastAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>multicastInterface</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>使用 <code>IP_ADD_MEMBERSHIP</code> 套接字选项告诉内核在给定的 <code>multicastAddress</code> 和 <code>multicastInterface</code> 上加入多播组。
+如果未指定 <code>multicastInterface</code> 参数，则操作系统将选择一个接口并为其添加成员资格。
+要为每个可用接口添加成员资格，则多次调用 <code>addMembership</code>，每个接口一次。</p>
+<p class="">当在未绑定的套接字上调用时，则此方法将隐式地绑定到随机端口，监听所有接口。</p>
+<p class="">当在多个 <code>cluster</code> 工作进程共享 UDP 套接字时，则必须只调用一次 <code>socket.addMembership()</code> 函数，否则会发生 <code>EADDRINUSE</code> 错误：</p>
+
+<pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> cluster <span class="hljs-keyword">from</span> <span class="hljs-string">'cluster'</span>;
+<span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+
+<span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// 工作正常。</span>
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// EADDRINUSE 失败。</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> s = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+  s.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+    s.<span class="hljs-title function_">addMembership</span>(<span class="hljs-string">'224.0.0.114'</span>);
+  });
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> cluster = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cluster'</span>);
+<span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+
+<span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// 工作正常。</span>
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// EADDRINUSE 失败。</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> s = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+  s.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+    s.<span class="hljs-title function_">addMembership</span>(<span class="hljs-string">'224.0.0.114'</span>);
+  });
+}</code></pre>
+<h4><code>socket.addSourceSpecificMembership(sourceAddress, groupAddress[, multicastInterface])</code><span><a class="mark" href="#socketaddsourcespecificmembershipsourceaddress-groupaddress-multicastinterface" id="socketaddsourcespecificmembershipsourceaddress-groupaddress-multicastinterface">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_addsourcespecificmembership_sourceaddress_groupaddress_multicastinterface"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddsourcespecificmembershipsourceaddress-groupaddress-multicastinterface">
+                <a href="dgram/socket_addsourcespecificmembership_sourceaddress_groupaddress_multicastinterface.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.1.0, v12.16.0</span>
+</div>
+<ul class="">
+<li><code>sourceAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>groupAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>multicastInterface</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>告诉内核在给定的 <code>sourceAddress</code> 和 <code>groupAddress</code> 上加入特定于源的多播频道，使用 <code>multicastInterface</code> 和 <code>IP_ADD_SOURCE_MEMBERSHIP</code> 套接字选项。
+如果未指定 <code>multicastInterface</code> 参数，则操作系统将选择一个接口并为其添加成员资格。
+要为每个可用接口添加成员资格，则多次调用 <code>socket.addSourceSpecificMembership()</code>，每个接口一次。</p>
+<p class="">当在未绑定的套接字上调用时，则此方法将隐式地绑定到随机端口，监听所有接口。</p>
+<h4><code>socket.address()</code><span><a class="mark" href="#socketaddress" id="socketaddress">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_address"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddress">
+                <a href="dgram/socket_address.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>返回包含套接字地址信息的对象。
+对于 UDP 套接字，此对象将包含 <code>address</code>、<code>family</code> 和 <code>port</code> 属性。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <code>EBADF</code>。</p>
+<h4><code>socket.bind([port][, address][, callback])</code><span><a class="mark" href="#socketbindport-address-callback" id="socketbindport-address-callback">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_bind_port_address_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketbindport-address-callback">
+                <a href="dgram/socket_bind_port_address_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v0.9.1</td>
+<td><p>该方法已更改为异步执行模型。 需要更改旧代码才能将回调函数传给方法调用。</p></td></tr>
+<tr><td>v0.1.99</td>
+<td><p><span>新增于: v0.1.99</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 没有参数。
+当绑定完成时调用。</li>
+</ul>
+<p>对于 UDP 套接字，使 <code>dgram.Socket</code> 在命名的 <code>port</code> 和可选的 <code>address</code> 上监听数据报消息。
+如果未指定 <code>port</code> 或 <code>0</code>，则操作系统将尝试绑定到随机端口。
+如果未指定 <code>address</code>，则操作系统将尝试监听所有地址。
+一旦绑定完成，则会触发 <code>'listening'</code> 事件并调用可选的 <code>callback</code> 函数。</p>
+<p class="">同时指定 <code>'listening'</code> 事件监听器并将 <code>callback</code> 传给 <code>socket.bind()</code> 方法无害但不是很有用。</p>
+<p class="">绑定的数据报套接字使 Node.js 进程保持运行以接收数据报消息。</p>
+<p class="">如果绑定失败，则生成 <code>'error'</code> 事件。
+在极少数情况下（例如，尝试与关闭的套接字绑定），可能会抛出 <a href="errors.html#class-error"><code>Error</code></a>。</p>
+<p class="">UDP 服务器监听端口 41234 的示例：</p>
+
+<pre class="with-42-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// 打印: server listening 0.0.0.0:41234</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// 打印: server listening 0.0.0.0:41234</span></code></pre>
+<h4><code>socket.bind(options[, callback])</code><span><a class="mark" href="#socketbindoptions-callback" id="socketbindoptions-callback">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_bind_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketbindoptions-callback">
+                <a href="dgram/socket_bind_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.11.14</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 必需的。
+支持以下属性：
+<ul>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<p>对于 UDP 套接字，使 <code>dgram.Socket</code> 监听命名 <code>port</code> 和可选 <code>address</code> 上的数据报消息，这些消息作为作为第一个参数传入的 <code>options</code> 对象的属性传入。
+如果未指定 <code>port</code> 或 <code>0</code>，则操作系统将尝试绑定到随机端口。
+如果未指定 <code>address</code>，则操作系统将尝试监听所有地址。
+一旦绑定完成，则会触发 <code>'listening'</code> 事件并调用可选的 <code>callback</code> 函数。</p>
+<p class=""><code>options</code> 对象可能包含 <code>fd</code> 属性。
+当设置了大于 <code>0</code> 的 <code>fd</code> 时，则将使用给定的文件描述符环绕现有的套接字。
+在这种情况下，<code>port</code> 和 <code>address</code> 的属性将被忽略。</p>
+<p class="">同时指定 <code>'listening'</code> 事件监听器并将 <code>callback</code> 传给 <code>socket.bind()</code> 方法无害但不是很有用。</p>
+<p class=""><code>options</code> 对象可能包含额外的 <code>exclusive</code> 属性，当将 <code>dgram.Socket</code> 对象与 <a href="cluster.html"><code>cluster</code></a> 模块一起使用时会使用该属性。
+当 <code>exclusive</code> 设置为 <code>false</code>（默认）时，集群工作进程将使用相同的底层套接字句柄，允许共享连接处理职责。
+但是，当 <code>exclusive</code> 为 <code>true</code> 时，则句柄未共享，尝试共享端口会导致错误。</p>
+<p class="">绑定的数据报套接字使 Node.js 进程保持运行以接收数据报消息。</p>
+<p class="">如果绑定失败，则生成 <code>'error'</code> 事件。
+在极少数情况下（例如，尝试与关闭的套接字绑定），可能会抛出 <a href="errors.html#class-error"><code>Error</code></a>。</p>
+<p class="">监听独占端口的套接字示例如下所示。</p>
+<pre class=""><code class="language-js">socket.<span class="hljs-title function_">bind</span>({
+  <span class="hljs-attr">address</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">8000</span>,
+  <span class="hljs-attr">exclusive</span>: <span class="hljs-literal">true</span>
+});</code></pre>
+<h4><code>socket.close([callback])</code><span><a class="mark" href="#socketclosecallback" id="socketclosecallback">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_close_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketclosecallback">
+                <a href="dgram/socket_close_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当套接字关闭时调用。</li>
+</ul>
+<p>关闭底层套接字并停止监听其上的数据。
+如果提供回调，则将其添加为 <a href="#event-close"><code>'close'</code></a> 事件的监听器。</p>
+<h4><code>socket.connect(port[, address][, callback])</code><span><a class="mark" href="#socketconnectport-address-callback" id="socketconnectport-address-callback">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_connect_port_address_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketconnectport-address-callback">
+                <a href="dgram/socket_connect_port_address_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当连接完成或出错时调用。</li>
+</ul>
+<p>将 <code>dgram.Socket</code> 关联到远程地址和端口。
+此句柄发送的每条消息都会自动发送到该目标。
+此外，套接字将只接收来自该远程对等方的消息。
+尝试在已连接的套接字上调用 <code>connect()</code> 将导致 <a href="errors.html#err_socket_dgram_is_connected"><code>ERR_SOCKET_DGRAM_IS_CONNECTED</code></a> 异常。
+如果未提供 <code>address</code>，则默认使用 <code>'127.0.0.1'</code>（适用于 <code>udp4</code> 套接字）或 <code>'::1'</code>（适用于 <code>udp6</code> 套接字）。
+一旦连接完成，就会触发 <code>'connect'</code> 事件并调用可选的 <code>callback</code> 函数。
+如果失败，则调用 <code>callback</code>，或者触发 <code>'error'</code> 事件。</p>
+<h4><code>socket.disconnect()</code><span><a class="mark" href="#socketdisconnect" id="socketdisconnect">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_disconnect"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketdisconnect">
+                <a href="dgram/socket_disconnect.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p>将连接的 <code>dgram.Socket</code> 与其远程地址分离的同步函数。
+尝试在未绑定或已断开连接的套接字上调用 <code>disconnect()</code> 将导致 <a href="errors.html#err_socket_dgram_not_connected"><code>ERR_SOCKET_DGRAM_NOT_CONNECTED</code></a> 异常。</p>
+<h4><code>socket.dropMembership(multicastAddress[, multicastInterface])</code><span><a class="mark" href="#socketdropmembershipmulticastaddress-multicastinterface" id="socketdropmembershipmulticastaddress-multicastinterface">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_dropmembership_multicastaddress_multicastinterface"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketdropmembershipmulticastaddress-multicastinterface">
+                <a href="dgram/socket_dropmembership_multicastaddress_multicastinterface.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.6.9</span>
+</div>
+<ul class="">
+<li><code>multicastAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>multicastInterface</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>指示内核使用 <code>IP_DROP_MEMBERSHIP</code> 套接字选项离开 <code>multicastAddress</code> 处的多播组。
+当套接字关闭或进程终止时，内核会自动调用此方法，因此大多数应用程序永远没有理由调用此方法。</p>
+<p class="">如果未指定 <code>multicastInterface</code>，则操作系统将尝试删除所有有效接口上的成员资格。</p>
+<h4><code>socket.dropSourceSpecificMembership(sourceAddress, groupAddress[, multicastInterface])</code><span><a class="mark" href="#socketdropsourcespecificmembershipsourceaddress-groupaddress-multicastinterface" id="socketdropsourcespecificmembershipsourceaddress-groupaddress-multicastinterface">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_dropsourcespecificmembership_sourceaddress_groupaddress_multicastinterface"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketdropsourcespecificmembershipsourceaddress-groupaddress-multicastinterface">
+                <a href="dgram/socket_dropsourcespecificmembership_sourceaddress_groupaddress_multicastinterface.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.1.0, v12.16.0</span>
+</div>
+<ul class="">
+<li><code>sourceAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>groupAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>multicastInterface</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>指示内核使用 <code>IP_DROP_SOURCE_MEMBERSHIP</code> 套接字选项在给定的 <code>sourceAddress</code> 和 <code>groupAddress</code> 处保留特定于源的多播通道。
+当套接字关闭或进程终止时，内核会自动调用此方法，因此大多数应用程序永远没有理由调用此方法。</p>
+<p class="">如果未指定 <code>multicastInterface</code>，则操作系统将尝试删除所有有效接口上的成员资格。</p>
+<h4><code>socket.getRecvBufferSize()</code><span><a class="mark" href="#socketgetrecvbuffersize" id="socketgetrecvbuffersize">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_getrecvbuffersize"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketgetrecvbuffersize">
+                <a href="dgram/socket_getrecvbuffersize.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.7.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <code>SO_RCVBUF</code> 套接字接收缓冲区大小（以字节为单位）。</li>
+</ul>
+<p>如果在未绑定的套接字上调用此方法将抛出 <a href="errors.html#err_socket_buffer_size"><code>ERR_SOCKET_BUFFER_SIZE</code></a>。</p>
+<h4><code>socket.getSendBufferSize()</code><span><a class="mark" href="#socketgetsendbuffersize" id="socketgetsendbuffersize">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_getsendbuffersize"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketgetsendbuffersize">
+                <a href="dgram/socket_getsendbuffersize.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.7.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <code>SO_SNDBUF</code> 套接字发送缓冲区大小（以字节为单位）。</li>
+</ul>
+<p>如果在未绑定的套接字上调用此方法将抛出 <a href="errors.html#err_socket_buffer_size"><code>ERR_SOCKET_BUFFER_SIZE</code></a>。</p>
+<h4><code>socket.ref()</code><span><a class="mark" href="#socketref" id="socketref">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_ref"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketref">
+                <a href="dgram/socket_ref.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<ul class="">
+<li>返回: <a href="#class-dgramsocket" rel="nofollow" class="type">&lt;dgram.Socket&gt;</a></li>
+</ul>
+<p>默认情况下，只要套接字处于打开状态，则绑定套接字将导致它阻止 Node.js 进程退出。
+<code>socket.unref()</code> 方法可用于从保持 Node.js 进程处于活动状态的引用计数中排除套接字。
+<code>socket.ref()</code> 方法将套接字添加回引用计数并恢复默认行为。</p>
+<p class="">多次调用 <code>socket.ref()</code> 不会有额外的效果。</p>
+<p class=""><code>socket.ref()</code> 方法返回对套接字的引用，因此可以链接调用。</p>
+<h4><code>socket.remoteAddress()</code><span><a class="mark" href="#socketremoteaddress" id="socketremoteaddress">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_remoteaddress"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketremoteaddress">
+                <a href="dgram/socket_remoteaddress.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>返回包含远程端点的 <code>address</code>、<code>family</code> 和 <code>port</code> 的对象。
+如果套接字未连接，则此方法将抛出 <a href="errors.html#err_socket_dgram_not_connected"><code>ERR_SOCKET_DGRAM_NOT_CONNECTED</code></a> 异常。</p>
+<h4><code>socket.send(msg[, offset, length][, port][, address][, callback])</code><span><a class="mark" href="#socketsendmsg-offset-length-port-address-callback" id="socketsendmsg-offset-length-port-address-callback">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_send_msg_offset_length_port_address_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsendmsg-offset-length-port-address-callback">
+                <a href="dgram/socket_send_msg_offset_length_port_address_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>参数 <code>msg</code> 现在可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>添加了在连接的套接字上发送数据的支持。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>msg</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>address</code> 现在总是可选的。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>当成功后，现在将使用 <code>error</code> 参数 <code>null</code> 而不是 <code>0</code> 调用 <code>callback</code>。</p></td></tr>
+<tr><td>v5.7.0</td>
+<td><p>参数 <code>msg</code> 现在可以是数组。 另外，<code>offset</code> 和 <code>length</code> 参数现在是可选的。</p></td></tr>
+<tr><td>v0.1.99</td>
+<td><p><span>新增于: v0.1.99</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>msg</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> 要发送的消息。</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 消息开始的缓冲区中的偏移量。</li>
+<li><code>length</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 消息中的字节数。</li>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 目标端口。</li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 目标主机名或 IP 地址。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当消息发送后调用。</li>
+</ul>
+<p>在套接字上广播数据报。
+对于无连接套接字，则必须指定目标 <code>port</code> 和 <code>address</code>。
+另一方面，已连接的套接字将使用其关联的远程端点，因此不得设置 <code>port</code> 和 <code>address</code> 参数。</p>
+<p class=""><code>msg</code> 参数包含要发送的消息。
+根据其类型，可以应用不同的行为。
+如果 <code>msg</code> 是 <code>Buffer</code>、任何 <code>TypedArray</code> 或 <code>DataView</code>，则 <code>offset</code> 和 <code>length</code> 分别指定消息开始的 <code>Buffer</code> 中的偏移量和消息中的字节数。
+如果 <code>msg</code> 是 <code>String</code>，则会自动转换为 <code>'utf8'</code> 编码的 <code>Buffer</code>。
+对于包含多字节字符的消息，<code>offset</code> 和 <code>length</code> 将根据<a href="buffer.html#static-method-bufferbytelengthstring-encoding">字节长度</a>而不是字符位置进行计算。
+如果 <code>msg</code> 是数组，则不能指定 <code>offset</code> 和 <code>length</code>。</p>
+<p class=""><code>address</code> 参数是字符串。
+如果 <code>address</code> 的值是主机名，则会使用 DNS 解析主机地址。
+如果未提供 <code>address</code> 或其他错误，则默认情况下将使用 <code>'127.0.0.1'</code>（用于 <code>udp4</code> 套接字）或 <code>'::1'</code>（用于 <code>udp6</code> 套接字）。</p>
+<p class="">如果套接字之前没有绑定过对 <code>bind</code> 的调用，则该套接字会被分配随机端口号并绑定到“所有接口”地址（<code>'0.0.0.0'</code> 用于 <code>udp4</code> 套接字，<code>'::0'</code> 用于 <code>udp6</code> 套接字。）</p>
+<p class="">可以指定可选的 <code>callback</code> 函数作为报告 DNS 错误或确定何时可以安全地重用 <code>buf</code> 对象的一种方式。
+DNS 查找延迟了 Node.js 事件循环的至少一滴答的发送时间。</p>
+<p class="">确定数据报已发送的唯一方法是使用 <code>callback</code>。
+如果发生错误并给出 <code>callback</code>，则错误将作为第一个参数传给 <code>callback</code>。
+如果未给出 <code>callback</code>，则错误将作为 <code>socket</code> 对象上的 <code>'error'</code> 事件触发。</p>
+<p class="">偏移量和长度是可选的，但如果使用任何一个，则必须都设置。
+仅当第一个参数是 <code>Buffer</code>、<code>TypedArray</code> 或 <code>DataView</code> 时才支持它们。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <a href="errors.html#err_socket_bad_port"><code>ERR_SOCKET_BAD_PORT</code></a>。</p>
+<p class="">发送 UDP 包到 <code>localhost</code> 端口的示例；</p>
+
+<pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> message = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Some bytes'</span>);
+<span class="hljs-keyword">const</span> client = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+client.<span class="hljs-title function_">send</span>(message, <span class="hljs-number">41234</span>, <span class="hljs-string">'localhost'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  client.<span class="hljs-title function_">close</span>();
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> message = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Some bytes'</span>);
+<span class="hljs-keyword">const</span> client = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+client.<span class="hljs-title function_">send</span>(message, <span class="hljs-number">41234</span>, <span class="hljs-string">'localhost'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  client.<span class="hljs-title function_">close</span>();
+});</code></pre>
+<p class="">发送由多个缓冲区组成的 UDP 数据包到 <code>127.0.0.1</code> 上的端口的示例；</p>
+
+<pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Some '</span>);
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'bytes'</span>);
+<span class="hljs-keyword">const</span> client = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+client.<span class="hljs-title function_">send</span>([buf1, buf2], <span class="hljs-number">41234</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  client.<span class="hljs-title function_">close</span>();
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Some '</span>);
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'bytes'</span>);
+<span class="hljs-keyword">const</span> client = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+client.<span class="hljs-title function_">send</span>([buf1, buf2], <span class="hljs-number">41234</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  client.<span class="hljs-title function_">close</span>();
+});</code></pre>
+<p class="">发送多个缓冲区可能更快或更慢，这取决于应用程序和操作系统。
+运行基准测试以根据具体情况确定最佳策略。
+但是，一般来说，发送多个缓冲区会更快。</p>
+<p class="">使用连接到 <code>localhost</code> 端口的套接字发送 UDP 数据包的示例：</p>
+
+<pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> message = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Some bytes'</span>);
+<span class="hljs-keyword">const</span> client = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+client.<span class="hljs-title function_">connect</span>(<span class="hljs-number">41234</span>, <span class="hljs-string">'localhost'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  client.<span class="hljs-title function_">send</span>(message, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    client.<span class="hljs-title function_">close</span>();
+  });
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> message = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Some bytes'</span>);
+<span class="hljs-keyword">const</span> client = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+client.<span class="hljs-title function_">connect</span>(<span class="hljs-number">41234</span>, <span class="hljs-string">'localhost'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  client.<span class="hljs-title function_">send</span>(message, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    client.<span class="hljs-title function_">close</span>();
+  });
+});</code></pre>
+<h5>关于 UDP 数据报大小的说明<span><a class="mark" href="#note-about-udp-datagram-size" id="note-about-udp-datagram-size">#</a></span><a aria-hidden="true" class="legacy" id="dgram_note_about_udp_datagram_size"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#note-about-udp-datagram-size">
+                <a href="dgram/note_about_udp_datagram_size.html" class="tip_trans">中英对照</a>
+                </p>
+<p>IPv4/v6 数据报的最大大小取决于 <code>MTU</code>（最大传输单元）和 <code>Payload Length</code> 字段大小。</p>
+<ul class="">
+<li>
+<p><code>Payload Length</code> 字段是 16 位宽，这意味着正常的有效载荷不能超过 64K 八位字节，包括互联网标头和数据（65,507 字节 = 65,535 − 8 字节 UDP 标头 − 20 字节 IP 标头）；这对于环回接口通常是正确的，但是如此长的数据报消息对于大多数主机和网络来说是不切实际的。</p>
+</li>
+<li>
+<p><code>MTU</code> 是给定链路层技术可以支持数据报消息的最大尺寸。
+对于任何链接，IPv4 要求至少 <code>MTU</code> 为 68 个八位字节，而建议 IPv4 的 <code>MTU</code> 为 576（通常建议为拨号类型应用程序的 <code>MTU</code>），无论它们是完整的还是分段的。</p>
+<p>对于 IPv6，最小 <code>MTU</code> 是 1280 个八位字节。
+但是，强制的最小片段重组缓冲区大小是 1500 个八位字节。
+68 个八位字节的值非常小，因为大多数当前的链路层技术，如以太网，最小 <code>MTU</code> 为 1500。</p>
+</li>
+</ul>
+<p class="">不可能事先知道数据包可能通过的每个链路的 MTU。
+发送大于接收方 <code>MTU</code> 的数据报将不起作用，因为数据包将被悄悄丢弃，而不会通知源数据未到达其预期接收方。</p>
+<h4><code>socket.setBroadcast(flag)</code><span><a class="mark" href="#socketsetbroadcastflag" id="socketsetbroadcastflag">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_setbroadcast_flag"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetbroadcastflag">
+                <a href="dgram/socket_setbroadcast_flag.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.6.9</span>
+</div>
+<ul class="">
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>设置或清除 <code>SO_BROADCAST</code> 套接字选项。
+当设置为 <code>true</code> 时，UDP 数据包可能会被发送到本地接口的广播地址。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <code>EBADF</code>。</p>
+<h4><code>socket.setMulticastInterface(multicastInterface)</code><span><a class="mark" href="#socketsetmulticastinterfacemulticastinterface" id="socketsetmulticastinterfacemulticastinterface">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_setmulticastinterface_multicastinterface"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetmulticastinterfacemulticastinterface">
+                <a href="dgram/socket_setmulticastinterface_multicastinterface.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.6.0</span>
+</div>
+<ul class="">
+<li><code>multicastInterface</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p><em>本节中对范围的所有引用均指 <a href="https://en.wikipedia.org/wiki/IPv6_address#Scoped_literal_IPv6_addresses" rel="nofollow">IPv6 区域索引</a>，由 <a href="https://tools.ietf.org/html/rfc4007" rel="nofollow">RFC 4007</a> 定义。
+以字符串形式，具有作用域索引的 IP 写成 <code>'IP%scope'</code>，其中作用域是接口名称或接口编号。</em></p>
+<p class="">将套接字的默认传出多播接口设置为选定接口或返回系统接口选择。
+<code>multicastInterface</code> 必须是来自套接字家族的 IP 的有效字符串表示形式。</p>
+<p class="">对于 IPv4 套接字，这应该是为所需物理接口配置的 IP。
+在套接字上发送到多播的所有数据包都将在最近成功使用此调用确定的接口上发送。</p>
+<p class="">对于 IPv6 套接字，<code>multicastInterface</code> 应包括范围来指示接口，如以下示例中所示。
+在 IPv6 中，单个 <code>send</code> 调用也可以在地址中使用显式范围，因此只有发送到多播地址而未指定显式范围的数据包才会受到最近成功使用此调用的影响。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <code>EBADF</code>。</p>
+<h5>IPv6 发送多播数据包<span><a class="mark" href="#example-ipv6-outgoing-multicast-interface" id="example-ipv6-outgoing-multicast-interface">#</a></span><a aria-hidden="true" class="legacy" id="dgram_example_ipv6_outgoing_multicast_interface"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#example-ipv6-outgoing-multicast-interface">
+                <a href="dgram/example_ipv6_outgoing_multicast_interface.html" class="tip_trans">中英对照</a>
+                </p>
+<p>在大多数系统上，范围格式使用接口名称：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> socket = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp6'</span>);
+
+socket.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+  socket.<span class="hljs-title function_">setMulticastInterface</span>(<span class="hljs-string">'::%eth1'</span>);
+});</code></pre>
+<p class="">在 Windows 上，范围格式使用接口编号：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> socket = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp6'</span>);
+
+socket.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+  socket.<span class="hljs-title function_">setMulticastInterface</span>(<span class="hljs-string">'::%2'</span>);
+});</code></pre>
+<h5>IPv4 发送多播数据包<span><a class="mark" href="#example-ipv4-outgoing-multicast-interface" id="example-ipv4-outgoing-multicast-interface">#</a></span><a aria-hidden="true" class="legacy" id="dgram_example_ipv4_outgoing_multicast_interface"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#example-ipv4-outgoing-multicast-interface">
+                <a href="dgram/example_ipv4_outgoing_multicast_interface.html" class="tip_trans">中英对照</a>
+                </p>
+<p>所有系统都在所需的物理接口上使用主机的 IP：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> socket = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+socket.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+  socket.<span class="hljs-title function_">setMulticastInterface</span>(<span class="hljs-string">'10.0.0.2'</span>);
+});</code></pre>
+<h5>调用的结果<span><a class="mark" href="#call-results" id="call-results">#</a></span><a aria-hidden="true" class="legacy" id="dgram_call_results"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#call-results">
+                <a href="dgram/call_results.html" class="tip_trans">中英对照</a>
+                </p>
+<p>对未准备好发送或不再打开的套接字的调用可能会抛出 <em>Not running</em> <a href="errors.html#class-error"><code>Error</code></a>。</p>
+<p class="">如果无法将 <code>multicastInterface</code> 解析为 IP，则抛出 <em>EINVAL</em> <a href="errors.html#class-systemerror"><code>System Error</code></a>。</p>
+<p class="">在 IPv4 上，如果 <code>multicastInterface</code> 是有效地址但与任何接口都不匹配，或者如果地址与系列不匹配，则抛出 <a href="errors.html#class-systemerror"><code>System Error</code></a>，例如 <code>EADDRNOTAVAIL</code> 或 <code>EPROTONOSUP</code>。</p>
+<p class="">在 IPv6 上，大多数指定或省略范围的错误将导致套接字继续使用（或返回）系统的默认接口选择。</p>
+<p class="">套接字地址族的任何地址（IPv4 <code>'0.0.0.0'</code> 或 IPv6 <code>'::'</code>）可用于将套接字默认传出接口的控制权返回给系统，以便将来使用多播数据包。</p>
+<h4><code>socket.setMulticastLoopback(flag)</code><span><a class="mark" href="#socketsetmulticastloopbackflag" id="socketsetmulticastloopbackflag">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_setmulticastloopback_flag"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetmulticastloopbackflag">
+                <a href="dgram/socket_setmulticastloopback_flag.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.8</span>
+</div>
+<ul class="">
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>设置或清除 <code>IP_MULTICAST_LOOP</code> 套接字选项。
+当设置为 <code>true</code> 时，本地接口也会收到多播数据包。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <code>EBADF</code>。</p>
+<h4><code>socket.setMulticastTTL(ttl)</code><span><a class="mark" href="#socketsetmulticastttlttl" id="socketsetmulticastttlttl">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_setmulticastttl_ttl"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetmulticastttlttl">
+                <a href="dgram/socket_setmulticastttl_ttl.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.8</span>
+</div>
+<ul class="">
+<li><code>ttl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>设置 <code>IP_MULTICAST_TTL</code> 套接字选项。
+虽然 TTL 通常代表 "生存时间"，但在此上下文中，它指定了允许数据包通过的 IP 跃点数，特别是对于多播流量。
+转发数据包的每个路由器或网关都会递减 TTL。
+如果 TTL 被路由器递减为 0，则不会转发。</p>
+<p class=""><code>ttl</code> 参数可以是 0 到 255 之间。
+大多数系统上的默认值为 <code>1</code>。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <code>EBADF</code>。</p>
+<h4><code>socket.setRecvBufferSize(size)</code><span><a class="mark" href="#socketsetrecvbuffersizesize" id="socketsetrecvbuffersizesize">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_setrecvbuffersize_size"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetrecvbuffersizesize">
+                <a href="dgram/socket_setrecvbuffersize_size.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.7.0</span>
+</div>
+<ul class="">
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>设置 <code>SO_RCVBUF</code> 套接字选项。
+设置最大套接字接收缓冲区（以字节为单位）。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <a href="errors.html#err_socket_buffer_size"><code>ERR_SOCKET_BUFFER_SIZE</code></a>。</p>
+<h4><code>socket.setSendBufferSize(size)</code><span><a class="mark" href="#socketsetsendbuffersizesize" id="socketsetsendbuffersizesize">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_setsendbuffersize_size"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetsendbuffersizesize">
+                <a href="dgram/socket_setsendbuffersize_size.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.7.0</span>
+</div>
+<ul class="">
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>设置 <code>SO_SNDBUF</code> 套接字选项。
+设置最大套接字发送缓冲区（以字节为单位）。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <a href="errors.html#err_socket_buffer_size"><code>ERR_SOCKET_BUFFER_SIZE</code></a>。</p>
+<h4><code>socket.setTTL(ttl)</code><span><a class="mark" href="#socketsetttlttl" id="socketsetttlttl">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_setttl_ttl"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetttlttl">
+                <a href="dgram/socket_setttl_ttl.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.101</span>
+</div>
+<ul class="">
+<li><code>ttl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>设置 <code>IP_TTL</code> 套接字选项。
+虽然 TTL 通常代表"生存时间"，但在此上下文中，它指定了允许数据包通过的 IP 跃点数。
+转发数据包的每个路由器或网关都会递减 TTL。
+如果 TTL 被路由器递减为 0，则不会转发。
+更改 TTL 值通常用于网络探测或多播。</p>
+<p class=""><code>ttl</code> 参数可能在 1 到 255 之间。
+大多数系统的默认值为 64。</p>
+<p class="">如果在未绑定的套接字上调用此方法将抛出 <code>EBADF</code>。</p>
+<h4><code>socket.unref()</code><span><a class="mark" href="#socketunref" id="socketunref">#</a></span><a aria-hidden="true" class="legacy" id="dgram_socket_unref"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketunref">
+                <a href="dgram/socket_unref.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<ul class="">
+<li>返回: <a href="#class-dgramsocket" rel="nofollow" class="type">&lt;dgram.Socket&gt;</a></li>
+</ul>
+<p>默认情况下，只要套接字处于打开状态，则绑定套接字将导致它阻止 Node.js 进程退出。
+<code>socket.unref()</code> 方法可用于将套接字从保持 Node.js 进程处于活动状态的引用计数中排除，即使套接字仍在监听，也允许进程退出。</p>
+<p class="">多次调用 <code>socket.unref()</code> 没有附加效果。</p>
+<p class=""><code>socket.unref()</code> 方法返回对套接字的引用，因此可以链接调用。</p>
+</section><section><h3>dgram 模块的函数<span><a class="mark" href="#dgram-module-functions" id="dgram-module-functions">#</a></span><a aria-hidden="true" class="legacy" id="dgram_dgram_module_functions"></a></h3>
+<h4><code>dgram.createSocket(options[, callback])</code><span><a class="mark" href="#dgramcreatesocketoptions-callback" id="dgramcreatesocketoptions-callback">#</a></span><a aria-hidden="true" class="legacy" id="dgram_dgram_createsocket_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#dgramcreatesocketoptions-callback">
+                <a href="dgram/dgram_createsocket_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.8.0</td>
+<td><p>添加了中止信号支持。</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>支持 <code>ipv6Only</code> 选项。</p></td></tr>
+<tr><td>v8.7.0</td>
+<td><p>现在支持 <code>recvBufferSize</code> 和 <code>sendBufferSize</code> 选项。</p></td></tr>
+<tr><td>v8.6.0</td>
+<td><p>支持 <code>lookup</code> 选项。</p></td></tr>
+<tr><td>v0.11.13</td>
+<td><p><span>新增于: v0.11.13</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 可用的选项有：
+<ul>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 套接字家族。
+必须是 <code>'udp4'</code> 或 <code>'udp6'</code>。
+必需的。</li>
+<li><code>reuseAddr</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当 <code>true</code> <a href="#socketbindport-address-callback"><code>socket.bind()</code></a> 将重用该地址时，即使另一个进程已经在其上绑定了套接字。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>ipv6Only</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 将 <code>ipv6Only</code> 设置为 <code>true</code> 将禁用双栈支持，即绑定到地址 <code>::</code> 不会使 <code>0.0.0.0</code> 被绑定。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>recvBufferSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置 <code>SO_RCVBUF</code> 套接字值。</li>
+<li><code>sendBufferSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置 <code>SO_SNDBUF</code> 套接字值。</li>
+<li><code>lookup</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 自定义查找函数。 <strong>默认值:</strong> <a href="dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a>.</li>
+<li><code>signal</code> <a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于关闭套接字的中止信号。</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 绑定作为 <code>'message'</code> 事件的监听器。
+可选的。</li>
+<li>返回: <a href="#class-dgramsocket" rel="nofollow" class="type">&lt;dgram.Socket&gt;</a></li>
+</ul>
+<p>创建 <code>dgram.Socket</code> 对象。
+一旦创建了套接字，则调用 <a href="#socketbindport-address-callback"><code>socket.bind()</code></a> 将指示套接字开始监听数据报消息。
+当 <code>address</code> 和 <code>port</code> 没有传给 <a href="#socketbindport-address-callback"><code>socket.bind()</code></a> 时，则该方法会将套接字绑定到随机端口上的“所有接口”地址（它对 <code>udp4</code> 和 <code>udp6</code> 套接字都做正确的事情）。
+可以使用 <a href="#socketaddress"><code>socket.address().address</code></a> 和 <a href="#socketaddress"><code>socket.address().port</code></a> 检索绑定的地址和端口。</p>
+<p class="">如果启用了 <code>signal</code> 选项，则在对应的 <code>AbortController</code> 上调用 <code>.abort()</code> 与在套接字上调用 <code>.close()</code> 类似：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> { signal } = controller;
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>({ <span class="hljs-attr">type</span>: <span class="hljs-string">'udp4'</span>, signal });
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+<span class="hljs-comment">// 稍后，当要关闭服务器时。</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre>
+<h4><code>dgram.createSocket(type[, callback])</code><span><a class="mark" href="#dgramcreatesockettype-callback" id="dgramcreatesockettype-callback">#</a></span><a aria-hidden="true" class="legacy" id="dgram_dgram_createsocket_type_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#dgramcreatesockettype-callback">
+                <a href="dgram/dgram_createsocket_type_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.99</span>
+</div>
+<ul class="">
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'udp4'</code> 或 <code>'udp6'</code>。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 绑定作为 <code>'message'</code> 事件的监听器。</li>
+<li>返回: <a href="#class-dgramsocket" rel="nofollow" class="type">&lt;dgram.Socket&gt;</a></li>
+</ul>
+<p>创建指定 <code>type</code> 的 <code>dgram.Socket</code> 对象。</p>
+<p class="">一旦创建了套接字，则调用 <a href="#socketbindport-address-callback"><code>socket.bind()</code></a> 将指示套接字开始监听数据报消息。
+当 <code>address</code> 和 <code>port</code> 没有传给 <a href="#socketbindport-address-callback"><code>socket.bind()</code></a> 时，则该方法会将套接字绑定到随机端口上的“所有接口”地址（它对 <code>udp4</code> 和 <code>udp6</code> 套接字都做正确的事情）。
+可以使用 <a href="#socketaddress"><code>socket.address().address</code></a> 和 <a href="#socketaddress"><code>socket.address().port</code></a> 检索绑定的地址和端口。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

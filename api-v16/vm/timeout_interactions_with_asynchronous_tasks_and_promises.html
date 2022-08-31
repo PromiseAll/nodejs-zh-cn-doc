@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>与异步任务和 Promise 的超时交互 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>与异步任务和 Promise 的超时交互</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_timeout_interactions_with_asynchronous_tasks_and_promises" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/timeout_interactions_with_asynchronous_tasks_and_promises.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/timeout_interactions_with_asynchronous_tasks_and_promises.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#timeout-interactions-with-asynchronous-tasks-and-promises.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>Promise</code> 和 <code>async function</code> 可以异步地调度 JavaScript 引擎运行的任务。
+默认情况下，这些任务在当前堆栈上的所有 JavaScript 函数执行完毕后运行。
+这允许转义 <code>timeout</code> 和 <code>breakOnSigint</code> 选项的功能。</p><p class="">例如，以下代码由 <code>vm.runInNewContext()</code> 执行，超时时间为 5 毫秒，它安排了一个无限循环在 promise 解决后运行。
+计划的循环永远不会被超时中断：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">loop</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'entering loop'</span>);
+  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());
+}
+
+vm.<span class="hljs-title function_">runInNewContext</span>(
+  <span class="hljs-string">'Promise.resolve().then(() =&gt; loop());'</span>,
+  { loop, <span class="hljs-variable language_">console</span> },
+  { <span class="hljs-attr">timeout</span>: <span class="hljs-number">5</span> }
+);
+<span class="hljs-comment">// 这是在 'entering loop' 之前打印 (!)</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done executing'</span>);</code></pre><p class="">这可以通过将 <code>microtaskMode: 'afterEvaluate'</code> 传给创建 <code>Context</code> 的代码来解决：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">loop</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());
+}
+
+vm.<span class="hljs-title function_">runInNewContext</span>(
+  <span class="hljs-string">'Promise.resolve().then(() =&gt; loop());'</span>,
+  { loop, <span class="hljs-variable language_">console</span> },
+  { <span class="hljs-attr">timeout</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">microtaskMode</span>: <span class="hljs-string">'afterEvaluate'</span> }
+);</code></pre><p class="">在这种情况下，通过 <code>promise.then()</code> 调度的微任务将在从 <code>vm.runInNewContext()</code> 返回之前运行，并会被 <code>timeout</code> 功能中断。
+这仅适用于在 <code>vm.Context</code> 中运行的代码，因此例如 <a href="../vm.html#vmruninthiscontextcode-options"><code>vm.runInThisContext()</code></a> 不采用此选项。</p><p class="">Promise 回调被输入到创建它们的上下文的微任务队列中。
+例如，如果在上面的例子中 <code>() =&gt; loop()</code> 只被 <code>loop</code> 替换，那么 <code>loop</code> 将被推入全局微任务队列，因为它是来自外部（主）上下文的函数，因此也将能够逃脱超时。</p><p class="">如 <code>process.nextTick()</code>、<code>queueMicrotask()</code>、<code>setTimeout()</code>、<code>setImmediate()</code> 等异步调度函数。
+在 <code>vm.Context</code> 中可用，传给它们的函数将被添加到全局队列中，由所有上下文共享。
+因此，传给这些函数的回调也无法通过超时控制。</p></div>
+          <div id="content_right"><p><code>Promise</code>s and <code>async function</code>s can schedule tasks run by the JavaScript
+engine asynchronously. By default, these tasks are run after all JavaScript
+functions on the current stack are done executing.
+This allows escaping the functionality of the <code>timeout</code> and
+<code>breakOnSigint</code> options.</p><p>For example, the following code executed by <code>vm.runInNewContext()</code> with a
+timeout of 5 milliseconds schedules an infinite loop to run after a promise
+resolves. The scheduled loop is never interrupted by the timeout:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">loop</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'entering loop'</span>);
+  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());
+}
+
+vm.<span class="hljs-title function_">runInNewContext</span>(
+  <span class="hljs-string">'Promise.resolve().then(() =&gt; loop());'</span>,
+  { loop, <span class="hljs-variable language_">console</span> },
+  { <span class="hljs-attr">timeout</span>: <span class="hljs-number">5</span> }
+);
+<span class="hljs-comment">// This is printed *before* 'entering loop' (!)</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done executing'</span>);</code></pre><p>This can be addressed by passing <code>microtaskMode: 'afterEvaluate'</code> to the code
+that creates the <code>Context</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">loop</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>());
+}
+
+vm.<span class="hljs-title function_">runInNewContext</span>(
+  <span class="hljs-string">'Promise.resolve().then(() =&gt; loop());'</span>,
+  { loop, <span class="hljs-variable language_">console</span> },
+  { <span class="hljs-attr">timeout</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">microtaskMode</span>: <span class="hljs-string">'afterEvaluate'</span> }
+);</code></pre><p>In this case, the microtask scheduled through <code>promise.then()</code> will be run
+before returning from <code>vm.runInNewContext()</code>, and will be interrupted
+by the <code>timeout</code> functionality. This applies only to code running in a
+<code>vm.Context</code>, so e.g. <a href="../vm.html#vmruninthiscontextcode-options"><code>vm.runInThisContext()</code></a> does not take this option.</p><p>Promise callbacks are entered into the microtask queue of the context in which
+they were created. For example, if <code>() =&gt; loop()</code> is replaced with just <code>loop</code>
+in the above example, then <code>loop</code> will be pushed into the global microtask
+queue, because it is a function from the outer (main) context, and thus will
+also be able to escape the timeout.</p><p>If asynchronous scheduling functions such as <code>process.nextTick()</code>,
+<code>queueMicrotask()</code>, <code>setTimeout()</code>, <code>setImmediate()</code>, etc. are made available
+inside a <code>vm.Context</code>, functions passed to them will be added to global queues,
+which are shared by all contexts. Therefore, callbacks passed to those functions
+are not controllable through the timeout either.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

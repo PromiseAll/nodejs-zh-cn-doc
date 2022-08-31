@@ -1,0 +1,831 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>console 控制台 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_console" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="" class="nav-console active" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="console" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_2"><a href="#console">console 控制台</a></span>
+<ul>
+<li><a href="#class-console"><code>Console</code> 类</a>
+<ul>
+<li><a href="#new-consolestdout-stderr-ignoreerrors"><code>new Console(stdout[, stderr][, ignoreErrors])</code></a></li>
+<li><a href="#new-consoleoptions"><code>new Console(options)</code></a></li>
+<li><a href="#consoleassertvalue-message"><code>console.assert(value[, ...message])</code></a></li>
+<li><a href="#consoleclear"><code>console.clear()</code></a></li>
+<li><a href="#consolecountlabel"><code>console.count([label])</code></a></li>
+<li><a href="#consolecountresetlabel"><code>console.countReset([label])</code></a></li>
+<li><a href="#consoledebugdata-args"><code>console.debug(data[, ...args])</code></a></li>
+<li><a href="#consoledirobj-options"><code>console.dir(obj[, options])</code></a></li>
+<li><a href="#consoledirxmldata"><code>console.dirxml(...data)</code></a></li>
+<li><a href="#consoleerrordata-args"><code>console.error([data][, ...args])</code></a></li>
+<li><a href="#consolegrouplabel"><code>console.group([...label])</code></a></li>
+<li><a href="#consolegroupcollapsed"><code>console.groupCollapsed()</code></a></li>
+<li><a href="#consolegroupend"><code>console.groupEnd()</code></a></li>
+<li><a href="#consoleinfodata-args"><code>console.info([data][, ...args])</code></a></li>
+<li><a href="#consolelogdata-args"><code>console.log([data][, ...args])</code></a></li>
+<li><a href="#consoletabletabulardata-properties"><code>console.table(tabularData[, properties])</code></a></li>
+<li><a href="#consoletimelabel"><code>console.time([label])</code></a></li>
+<li><a href="#consoletimeendlabel"><code>console.timeEnd([label])</code></a></li>
+<li><a href="#consoletimeloglabel-data"><code>console.timeLog([label][, ...data])</code></a></li>
+<li><a href="#consoletracemessage-args"><code>console.trace([message][, ...args])</code></a></li>
+<li><a href="#consolewarndata-args"><code>console.warn([data][, ...args])</code></a></li>
+</ul>
+</li>
+<li><a href="#inspector-only-methods">仅用于检查器的方法</a>
+<ul>
+<li><a href="#consoleprofilelabel"><code>console.profile([label])</code></a></li>
+<li><a href="#consoleprofileendlabel"><code>console.profileEnd([label])</code></a></li>
+<li><a href="#consoletimestamplabel"><code>console.timeStamp([label])</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="" class="nav-console active">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/console.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/console.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_2"><a href="#console">console 控制台</a></span>
+<ul>
+<li><a href="#class-console"><code>Console</code> 类</a>
+<ul>
+<li><a href="#new-consolestdout-stderr-ignoreerrors"><code>new Console(stdout[, stderr][, ignoreErrors])</code></a></li>
+<li><a href="#new-consoleoptions"><code>new Console(options)</code></a></li>
+<li><a href="#consoleassertvalue-message"><code>console.assert(value[, ...message])</code></a></li>
+<li><a href="#consoleclear"><code>console.clear()</code></a></li>
+<li><a href="#consolecountlabel"><code>console.count([label])</code></a></li>
+<li><a href="#consolecountresetlabel"><code>console.countReset([label])</code></a></li>
+<li><a href="#consoledebugdata-args"><code>console.debug(data[, ...args])</code></a></li>
+<li><a href="#consoledirobj-options"><code>console.dir(obj[, options])</code></a></li>
+<li><a href="#consoledirxmldata"><code>console.dirxml(...data)</code></a></li>
+<li><a href="#consoleerrordata-args"><code>console.error([data][, ...args])</code></a></li>
+<li><a href="#consolegrouplabel"><code>console.group([...label])</code></a></li>
+<li><a href="#consolegroupcollapsed"><code>console.groupCollapsed()</code></a></li>
+<li><a href="#consolegroupend"><code>console.groupEnd()</code></a></li>
+<li><a href="#consoleinfodata-args"><code>console.info([data][, ...args])</code></a></li>
+<li><a href="#consolelogdata-args"><code>console.log([data][, ...args])</code></a></li>
+<li><a href="#consoletabletabulardata-properties"><code>console.table(tabularData[, properties])</code></a></li>
+<li><a href="#consoletimelabel"><code>console.time([label])</code></a></li>
+<li><a href="#consoletimeendlabel"><code>console.timeEnd([label])</code></a></li>
+<li><a href="#consoletimeloglabel-data"><code>console.timeLog([label][, ...data])</code></a></li>
+<li><a href="#consoletracemessage-args"><code>console.trace([message][, ...args])</code></a></li>
+<li><a href="#consolewarndata-args"><code>console.warn([data][, ...args])</code></a></li>
+</ul>
+</li>
+<li><a href="#inspector-only-methods">仅用于检查器的方法</a>
+<ul>
+<li><a href="#consoleprofilelabel"><code>console.profile([label])</code></a></li>
+<li><a href="#consoleprofileendlabel"><code>console.profileEnd([label])</code></a></li>
+<li><a href="#consoletimestamplabel"><code>console.timeStamp([label])</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>console 控制台<span><a class="mark" href="#console" id="console">#</a></span><a aria-hidden="true" class="legacy" id="console_console"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="">
+                <a href="console/console.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v0.10.13-->
+<p></p><div class="api_stability api_stability_2"><a href="documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p>
+<p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/console.js">lib/console.js</a></p>
+<p><code>console</code> 模块提供了一个简单的调试控制台，类似于网络浏览器提供的 JavaScript 控制台机制。</p>
+<p class="">该模块导出两个特定组件：</p>
+<ul class="">
+<li><code>Console</code> 类，具有 <code>console.log()</code>、<code>console.error()</code> 和 <code>console.warn()</code> 等方法，可用于写入任何 Node.js 流。</li>
+<li>全局的 <code>console</code> 实例，配置为写入 <a href="process.html#processstdout"><code>process.stdout</code></a> 和 <a href="process.html#processstderr"><code>process.stderr</code></a>。
+全局的 <code>console</code> 无需调用 <code>require('console')</code> 就可以使用。</li>
+</ul>
+<p class=""><em><strong>警告</strong></em>：全局的控制台对象的方法既不像与其相似的浏览器 API 那样始终同步，也不像所有其他 Node.js 流那样始终异步。
+有关更多信息，请参阅<a href="process.html#a-note-on-process-io">进程 I/O 的注意事项</a>。</p>
+<p class="">使用全局的 <code>console</code> 的示例：</p>
+<pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'hello world'</span>);
+<span class="hljs-comment">// 打印: hello world 到标准输出</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'hello %s'</span>, <span class="hljs-string">'world'</span>);
+<span class="hljs-comment">// 打印: hello world 到标准输出</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Whoops, something bad happened'</span>));
+<span class="hljs-comment">// 打印错误消息和堆栈跟踪到标准错误：</span>
+<span class="hljs-comment">//   Error: Whoops, something bad happened</span>
+<span class="hljs-comment">//     at [eval]:5:15</span>
+<span class="hljs-comment">//     at Script.runInThisContext (node:vm:132:18)</span>
+<span class="hljs-comment">//     at Object.runInThisContext (node:vm:309:38)</span>
+<span class="hljs-comment">//     at node:internal/process/execution:77:19</span>
+<span class="hljs-comment">//     at [eval]-wrapper:6:22</span>
+<span class="hljs-comment">//     at evalScript (node:internal/process/execution:76:60)</span>
+<span class="hljs-comment">//     at node:internal/main/eval_string:23:3</span>
+
+<span class="hljs-keyword">const</span> name = <span class="hljs-string">'Will Robinson'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`Danger <span class="hljs-subst">${name}</span>! Danger!`</span>);
+<span class="hljs-comment">// 打印: Danger Will Robinson! Danger! 到标准错误</span></code></pre>
+<p class="">使用 <code>Console</code> 类的示例：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> out = <span class="hljs-title function_">getStreamSomehow</span>();
+<span class="hljs-keyword">const</span> err = <span class="hljs-title function_">getStreamSomehow</span>();
+<span class="hljs-keyword">const</span> myConsole = <span class="hljs-keyword">new</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title class_">Console</span>(out, err);
+
+myConsole.<span class="hljs-title function_">log</span>(<span class="hljs-string">'hello world'</span>);
+<span class="hljs-comment">// 打印: hello world 到输出</span>
+myConsole.<span class="hljs-title function_">log</span>(<span class="hljs-string">'hello %s'</span>, <span class="hljs-string">'world'</span>);
+<span class="hljs-comment">// 打印: hello world 到输出</span>
+myConsole.<span class="hljs-title function_">error</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Whoops, something bad happened'</span>));
+<span class="hljs-comment">// 打印: [Error: Whoops, something bad happened] 到错误</span>
+
+<span class="hljs-keyword">const</span> name = <span class="hljs-string">'Will Robinson'</span>;
+myConsole.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`Danger <span class="hljs-subst">${name}</span>! Danger!`</span>);
+<span class="hljs-comment">// 打印: Danger Will Robinson! Danger! 到错误</span></code></pre>
+<section><h3><code>Console</code> 类<span><a class="mark" href="#class-console" id="class-console">#</a></span><a aria-hidden="true" class="legacy" id="console_class_console"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-console">
+                <a href="console/class_console.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v8.0.0</td>
+<td><p>现在默认情况下将忽略写入底层流时发生的错误。</p></td></tr>
+</tbody></table>
+</details>
+</div>
+<!--type=class-->
+<p><code>Console</code> 类可用于创建具有可配置输出流的简单记录器，并可使用 <code>require('console').Console</code> 或 <code>console.Console</code>（或它们的解构对应物）访问：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Console</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'console'</span>);</code></pre>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Console</span> } = <span class="hljs-variable language_">console</span>;</code></pre>
+<h4><code>new Console(stdout[, stderr][, ignoreErrors])</code><span><a class="mark" href="#new-consolestdout-stderr-ignoreerrors" id="new-consolestdout-stderr-ignoreerrors">#</a></span><a aria-hidden="true" class="legacy" id="console_new_console_stdout_stderr_ignoreerrors"></a></h4>
+<h4><code>new Console(options)</code><span><a class="mark" href="#new-consoleoptions" id="new-consoleoptions">#</a></span><a aria-hidden="true" class="legacy" id="console_new_console_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#new-consoleoptions">
+                <a href="console/new_console_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.2.0, v12.17.0</td>
+<td><p>引入了 <code>groupIndentation</code> 选项。</p></td></tr>
+<tr><td>v11.7.0</td>
+<td><p>引入了 <code>inspectOptions</code> 选项。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>构造函数 <code>Console</code> 现在支持 <code>options</code> 参数，并引入了 <code>colorMode</code> 选项。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>引入了 <code>ignoreErrors</code> 选项。</p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>stdout</code> <a href="stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a></li>
+<li><code>stderr</code> <a href="stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a></li>
+<li><code>ignoreErrors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 写入底层流时忽略错误。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>colorMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 为此 <code>Console</code> 实例设置颜色支持。
+设置为 <code>true</code> 可在检查值时进行着色。
+设置为 <code>false</code> 会在检查值时禁用着色。
+设置为 <code>'auto'</code> 使颜色支持取决于 <code>isTTY</code> 属性的值和 <code>getColorDepth()</code> 在相应流上返回的值。
+如果同时设置了 <code>inspectOptions.colors</code>，则无法使用此选项。
+<strong>默认值:</strong> <code>'auto'</code>。</li>
+<li><code>inspectOptions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 指定传给 <a href="util.html#utilinspectobject-options"><code>util.inspect()</code></a> 的选项。</li>
+<li><code>groupIndentation</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置组缩进。
+<strong>默认值:</strong> <code>2</code>。</li>
+</ul>
+</li>
+</ul>
+<p>使用一个或两个可写流实例创建新的 <code>Console</code>。
+<code>stdout</code> 是用于打印日志或信息输出的可写流。
+<code>stderr</code> 用于警告或错误输出。
+如果未提供 <code>stderr</code>，则 <code>stdout</code> 用于 <code>stderr</code>。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> output = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'./stdout.log'</span>);
+<span class="hljs-keyword">const</span> errorOutput = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'./stderr.log'</span>);
+<span class="hljs-comment">// 自定义的简单记录器</span>
+<span class="hljs-keyword">const</span> logger = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Console</span>({ <span class="hljs-attr">stdout</span>: output, <span class="hljs-attr">stderr</span>: errorOutput });
+<span class="hljs-comment">// 像控制台一样使用它</span>
+<span class="hljs-keyword">const</span> count = <span class="hljs-number">5</span>;
+logger.<span class="hljs-title function_">log</span>(<span class="hljs-string">'count: %d'</span>, count);
+<span class="hljs-comment">// 在 stdout.log 中：count 5</span></code></pre>
+<p class="">全局的 <code>console</code> 是特殊的 <code>Console</code>，它的输出被发送到 <a href="process.html#processstdout"><code>process.stdout</code></a> 和 <a href="process.html#processstderr"><code>process.stderr</code></a>。
+它相当于调用：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Console</span>({ <span class="hljs-attr">stdout</span>: process.<span class="hljs-property">stdout</span>, <span class="hljs-attr">stderr</span>: process.<span class="hljs-property">stderr</span> });</code></pre>
+<h4><code>console.assert(value[, ...message])</code><span><a class="mark" href="#consoleassertvalue-message" id="consoleassertvalue-message">#</a></span><a aria-hidden="true" class="legacy" id="console_console_assert_value_message"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoleassertvalue-message">
+                <a href="console/console_assert_value_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>该实现现在符合规范并且不再抛出错误。</p></td></tr>
+<tr><td>v0.1.101</td>
+<td><p><span>新增于: v0.1.101</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 测试为真的值。</li>
+<li><code>...message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 除了 <code>value</code> 之外的所有参数都用作错误消息。</li>
+</ul>
+<p>如果 <code>value</code> 为<a href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy" rel="nofollow">假值</a>或省略，则 <code>console.assert()</code> 写入一条消息。
+它只写入一条消息，不会影响执行。
+输出始终以 <code>"Assertion failed"</code> 开头。
+如果提供，则使用 <a href="util.html#utilformatformat-args"><code>util.format()</code></a> 格式化 <code>message</code>。</p>
+<p class="">如果 <code>value</code> 为<a href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy" rel="nofollow">真值</a>，则什么也不会发生。</p>
+<pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">assert</span>(<span class="hljs-literal">true</span>, <span class="hljs-string">'does nothing'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">assert</span>(<span class="hljs-literal">false</span>, <span class="hljs-string">'Whoops %s work'</span>, <span class="hljs-string">'didn\'t'</span>);
+<span class="hljs-comment">// Assertion failed: Whoops didn't work</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">assert</span>();
+<span class="hljs-comment">// Assertion failed</span></code></pre>
+<h4><code>console.clear()</code><span><a class="mark" href="#consoleclear" id="consoleclear">#</a></span><a aria-hidden="true" class="legacy" id="console_console_clear"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoleclear">
+                <a href="console/console_clear.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.3.0</span>
+</div>
+<p>当 <code>stdout</code> 是终端时，调用 <code>console.clear()</code> 将尝试清除终端。
+当 <code>stdout</code> 不是终端时，此方法不执行任何操作。</p>
+<p class=""><code>console.clear()</code> 的具体操作可能因操作系统和终端类型而异。
+对于大多数 Linux 操作系统，<code>console.clear()</code> 的操作类似于 <code>clear</code> shell 命令。
+在 Windows 上，<code>console.clear()</code> 将仅清除 Node.js 二进制文件的当前终端视口中的输出。</p>
+<h4><code>console.count([label])</code><span><a class="mark" href="#consolecountlabel" id="consolecountlabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_count_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consolecountlabel">
+                <a href="console/console_count_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.3.0</span>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 计数器的显示标签。 <strong>默认值:</strong> <code>'default'</code>。</li>
+</ul>
+<p>维护一个特定于 <code>label</code> 的内部计数器，并向 <code>stdout</code> 输出使用给定 <code>label</code> 调用 <code>console.count()</code> 的次数。</p>
+<!-- eslint-skip -->
+<pre class=""><code class="language-js">&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>()
+<span class="hljs-attr">default</span>: <span class="hljs-number">1</span>
+<span class="hljs-literal">undefined</span>
+&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>(<span class="hljs-string">'default'</span>)
+<span class="hljs-attr">default</span>: <span class="hljs-number">2</span>
+<span class="hljs-literal">undefined</span>
+&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>(<span class="hljs-string">'abc'</span>)
+<span class="hljs-attr">abc</span>: <span class="hljs-number">1</span>
+<span class="hljs-literal">undefined</span>
+&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>(<span class="hljs-string">'xyz'</span>)
+<span class="hljs-attr">xyz</span>: <span class="hljs-number">1</span>
+<span class="hljs-literal">undefined</span>
+&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>(<span class="hljs-string">'abc'</span>)
+<span class="hljs-attr">abc</span>: <span class="hljs-number">2</span>
+<span class="hljs-literal">undefined</span>
+&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>()
+<span class="hljs-attr">default</span>: <span class="hljs-number">3</span>
+<span class="hljs-literal">undefined</span>
+&gt;</code></pre>
+<h4><code>console.countReset([label])</code><span><a class="mark" href="#consolecountresetlabel" id="consolecountresetlabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_countreset_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consolecountresetlabel">
+                <a href="console/console_countreset_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.3.0</span>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 计数器的显示标签。 <strong>默认值:</strong> <code>'default'</code>。</li>
+</ul>
+<p>重置特定于 <code>label</code> 的内部计数器。</p>
+<!-- eslint-skip -->
+<pre class=""><code class="language-js">&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>(<span class="hljs-string">'abc'</span>);
+<span class="hljs-attr">abc</span>: <span class="hljs-number">1</span>
+<span class="hljs-literal">undefined</span>
+&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">countReset</span>(<span class="hljs-string">'abc'</span>);
+<span class="hljs-literal">undefined</span>
+&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">count</span>(<span class="hljs-string">'abc'</span>);
+<span class="hljs-attr">abc</span>: <span class="hljs-number">1</span>
+<span class="hljs-literal">undefined</span>
+&gt;</code></pre>
+<h4><code>console.debug(data[, ...args])</code><span><a class="mark" href="#consoledebugdata-args" id="consoledebugdata-args">#</a></span><a aria-hidden="true" class="legacy" id="console_console_debug_data_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoledebugdata-args">
+                <a href="console/console_debug_data_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v8.10.0</td>
+<td><p><code>console.debug</code> 现在是 <code>console.log</code> 的别名。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p><span>新增于: v8.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p><code>console.debug()</code> 函数是 <a href="#consolelogdata-args"><code>console.log()</code></a> 的别名。</p>
+<h4><code>console.dir(obj[, options])</code><span><a class="mark" href="#consoledirobj-options" id="consoledirobj-options">#</a></span><a aria-hidden="true" class="legacy" id="console_console_dir_obj_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoledirobj-options">
+                <a href="console/console_dir_obj_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.101</span>
+</div>
+<ul class="">
+<li><code>obj</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>showHidden</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则对象的不可枚举和符号属性也将显示。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>depth</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 告诉 <a href="util.html#utilinspectobject-options"><code>util.inspect()</code></a> 在格式化对象时递归多少次。
+这对于检查大型复杂对象很有用。
+要使其无限递归，则传入 <code>null</code>。 <strong>默认值:</strong> <code>2</code>。</li>
+<li><code>colors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则输出将使用 ANSI 颜色代码进行样式设置。
+颜色可自定义；请参阅<a href="util.html#customizing-utilinspect-colors">自定义 <code>util.inspect()</code> 颜色</a>。 <strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+</li>
+</ul>
+<p>在 <code>obj</code> 上使用 <a href="util.html#utilinspectobject-options"><code>util.inspect()</code></a> 并将结果字符串打印到 <code>stdout</code>。
+此函数绕过在 <code>obj</code> 上定义的任何自定义 <code>inspect()</code> 函数。</p>
+<h4><code>console.dirxml(...data)</code><span><a class="mark" href="#consoledirxmldata" id="consoledirxmldata">#</a></span><a aria-hidden="true" class="legacy" id="console_console_dirxml_data"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoledirxmldata">
+                <a href="console/console_dirxml_data.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.3.0</td>
+<td><p><code>console.dirxml</code> 现在调用 <code>console.log</code> 作为它的参数。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p><span>新增于: v8.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>...data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>此方法调用 <code>console.log()</code> 将接收到的参数传给它。
+此方法不会产生任何 XML 格式。</p>
+<h4><code>console.error([data][, ...args])</code><span><a class="mark" href="#consoleerrordata-args" id="consoleerrordata-args">#</a></span><a aria-hidden="true" class="legacy" id="console_console_error_data_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoleerrordata-args">
+                <a href="console/console_error_data_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.100</span>
+</div>
+<ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>使用换行符打印到 <code>stderr</code>。
+可以传入多个参数，其中第一个用作主要消息，所有其他参数用作类似于 <a href="http://man7.org/linux/man-pages/man3/printf.3.html" rel="nofollow"><code>printf(3)</code></a> 的替换值（所有参数都传给 <a href="util.html#utilformatformat-args"><code>util.format()</code></a>）。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> code = <span class="hljs-number">5</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'error #%d'</span>, code);
+<span class="hljs-comment">// 打印: error #5 到标准错误</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'error'</span>, code);
+<span class="hljs-comment">// 打印: error 5 到标准错误</span></code></pre>
+<p class="">如果在第一个字符串中找不到格式化元素（例如 <code>%d</code>），则在每个参数上调用 <a href="util.html#utilinspectobject-options"><code>util.inspect()</code></a> 并将结果字符串值连接起来。
+有关详细信息，请参阅 <a href="util.html#utilformatformat-args"><code>util.format()</code></a>。</p>
+<h4><code>console.group([...label])</code><span><a class="mark" href="#consolegrouplabel" id="consolegrouplabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_group_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consolegrouplabel">
+                <a href="console/console_group_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.5.0</span>
+</div>
+<ul class="">
+<li><code>...label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>将后续行的缩进增加 <code>groupIndentation</code> 长度的空格。</p>
+<p class="">如果提供了一个或多个 <code>label</code>，则首先打印这些 <code>label</code>，没有额外的缩进。</p>
+<h4><code>console.groupCollapsed()</code><span><a class="mark" href="#consolegroupcollapsed" id="consolegroupcollapsed">#</a></span><a aria-hidden="true" class="legacy" id="console_console_groupcollapsed"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consolegroupcollapsed">
+                <a href="console/console_groupcollapsed.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.5.0</span>
+</div>
+<p><a href="#consolegrouplabel"><code>console.group()</code></a> 的别名。</p>
+<h4><code>console.groupEnd()</code><span><a class="mark" href="#consolegroupend" id="consolegroupend">#</a></span><a aria-hidden="true" class="legacy" id="console_console_groupend"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consolegroupend">
+                <a href="console/console_groupend.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.5.0</span>
+</div>
+<p>将后续行的缩进减少 <code>groupIndentation</code> 长度的空格。</p>
+<h4><code>console.info([data][, ...args])</code><span><a class="mark" href="#consoleinfodata-args" id="consoleinfodata-args">#</a></span><a aria-hidden="true" class="legacy" id="console_console_info_data_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoleinfodata-args">
+                <a href="console/console_info_data_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.100</span>
+</div>
+<ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p><code>console.info()</code> 函数是 <a href="#consolelogdata-args"><code>console.log()</code></a> 的别名。</p>
+<h4><code>console.log([data][, ...args])</code><span><a class="mark" href="#consolelogdata-args" id="consolelogdata-args">#</a></span><a aria-hidden="true" class="legacy" id="console_console_log_data_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consolelogdata-args">
+                <a href="console/console_log_data_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.100</span>
+</div>
+<ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>使用换行符打印到 <code>stdout</code>。
+可以传入多个参数，其中第一个用作主要消息，所有其他参数用作类似于 <a href="http://man7.org/linux/man-pages/man3/printf.3.html" rel="nofollow"><code>printf(3)</code></a> 的替换值（所有参数都传给 <a href="util.html#utilformatformat-args"><code>util.format()</code></a>）。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> count = <span class="hljs-number">5</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'count: %d'</span>, count);
+<span class="hljs-comment">// 打印: count: 5 到标准输出</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'count:'</span>, count);
+<span class="hljs-comment">// 打印: count: 5 到标准输出</span></code></pre>
+<p class="">有关详细信息，请参阅 <a href="util.html#utilformatformat-args"><code>util.format()</code></a>。</p>
+<h4><code>console.table(tabularData[, properties])</code><span><a class="mark" href="#consoletabletabulardata-properties" id="consoletabletabulardata-properties">#</a></span><a aria-hidden="true" class="legacy" id="console_console_table_tabulardata_properties"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoletabletabulardata-properties">
+                <a href="console/console_table_tabulardata_properties.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div>
+<ul class="">
+<li><code>tabularData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>properties</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 用于构造表格的替代属性。</li>
+</ul>
+<p>尝试用 <code>tabularData</code> 的属性的列（或使用 <code>properties</code>）和 <code>tabularData</code> 的行构建表格并记录它。
+如果无法将其解析为表格，则回退到仅记录参数。</p>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 这些无法解析为表格数据</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>(<span class="hljs-title class_">Symbol</span>());
+<span class="hljs-comment">// Symbol()</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>(<span class="hljs-literal">undefined</span>);
+<span class="hljs-comment">// undefined</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>([{ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">'Y'</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'Z'</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }]);
+<span class="hljs-comment">// ┌─────────┬─────┬─────┐</span>
+<span class="hljs-comment">// │ (index) │  a  │  b  │</span>
+<span class="hljs-comment">// ├─────────┼─────┼─────┤</span>
+<span class="hljs-comment">// │    0    │  1  │ 'Y' │</span>
+<span class="hljs-comment">// │    1    │ 'Z' │  2  │</span>
+<span class="hljs-comment">// └─────────┴─────┴─────┘</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>([{ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">'Y'</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'Z'</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }], [<span class="hljs-string">'a'</span>]);
+<span class="hljs-comment">// ┌─────────┬─────┐</span>
+<span class="hljs-comment">// │ (index) │  a  │</span>
+<span class="hljs-comment">// ├─────────┼─────┤</span>
+<span class="hljs-comment">// │    0    │  1  │</span>
+<span class="hljs-comment">// │    1    │ 'Z' │</span>
+<span class="hljs-comment">// └─────────┴─────┘</span></code></pre>
+<h4><code>console.time([label])</code><span><a class="mark" href="#consoletimelabel" id="consoletimelabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_time_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoletimelabel">
+                <a href="console/console_time_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.104</span>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>'default'</code></li>
+</ul>
+<p>启动可用于计算操作持续时间的计时器。
+计时器由唯一的 <code>label</code> 标识。
+调用 <a href="#consoletimeendlabel"><code>console.timeEnd()</code></a> 时使用相同的 <code>label</code> 停止计时器并将经过的时间以合适的时间单位输出到 <code>stdout</code>。
+例如，如果经过的时间是 3869 毫秒，则 <code>console.timeEnd()</code> 显示“3.869s”。</p>
+<h4><code>console.timeEnd([label])</code><span><a class="mark" href="#consoletimeendlabel" id="consoletimeendlabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_timeend_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoletimeendlabel">
+                <a href="console/console_timeend_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.0.0</td>
+<td><p>已用时间以合适的时间单位显示。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>此方法不再支持未映射到单个 <code>console.time()</code> 调用的多个调用；详情见下文。</p></td></tr>
+<tr><td>v0.1.104</td>
+<td><p><span>新增于: v0.1.104</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>'default'</code></li>
+</ul>
+<p>停止之前通过调用 <a href="#consoletimelabel"><code>console.time()</code></a> 启动的计时器并将结果打印到 <code>stdout</code>：</p>
+<pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">time</span>(<span class="hljs-string">'bunch-of-stuff'</span>);
+<span class="hljs-comment">// 做一些事。</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">timeEnd</span>(<span class="hljs-string">'bunch-of-stuff'</span>);
+<span class="hljs-comment">// 打印: bunch-of-stuff: 225.438ms</span></code></pre>
+<h4><code>console.timeLog([label][, ...data])</code><span><a class="mark" href="#consoletimeloglabel-data" id="consoletimeloglabel-data">#</a></span><a aria-hidden="true" class="legacy" id="console_console_timelog_label_data"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoletimeloglabel-data">
+                <a href="console/console_timelog_label_data.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.7.0</span>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>'default'</code></li>
+<li><code>...data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>对于先前通过调用 <a href="#consoletimelabel"><code>console.time()</code></a> 启动的计时器，将经过时间和其他 <code>data</code> 参数打印到 <code>stdout</code>：</p>
+<pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">time</span>(<span class="hljs-string">'process'</span>);
+<span class="hljs-keyword">const</span> value = <span class="hljs-title function_">expensiveProcess1</span>(); <span class="hljs-comment">// 返回 42</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">timeLog</span>(<span class="hljs-string">'process'</span>, value);
+<span class="hljs-comment">// 打印 "process: 365.227ms 42"</span>
+<span class="hljs-title function_">doExpensiveProcess2</span>(value);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">timeEnd</span>(<span class="hljs-string">'process'</span>);</code></pre>
+<h4><code>console.trace([message][, ...args])</code><span><a class="mark" href="#consoletracemessage-args" id="consoletracemessage-args">#</a></span><a aria-hidden="true" class="legacy" id="console_console_trace_message_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoletracemessage-args">
+                <a href="console/console_trace_message_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.104</span>
+</div>
+<ul class="">
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>将字符串 <code>'Trace: '</code> 打印到 <code>stderr</code>，然后是 <a href="util.html#utilformatformat-args"><code>util.format()</code></a> 格式的消息和到代码中当前位置的堆栈跟踪。</p>
+<pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">trace</span>(<span class="hljs-string">'Show me'</span>);
+<span class="hljs-comment">// 打印: (（堆栈跟踪将根据调用跟踪的位置而有所不同）)</span>
+<span class="hljs-comment">//  Trace: Show me</span>
+<span class="hljs-comment">//    at repl:2:9</span>
+<span class="hljs-comment">//    at REPLServer.defaultEval (repl.js:248:27)</span>
+<span class="hljs-comment">//    at bound (domain.js:287:14)</span>
+<span class="hljs-comment">//    at REPLServer.runBound [as eval] (domain.js:300:12)</span>
+<span class="hljs-comment">//    at REPLServer.&lt;anonymous&gt; (repl.js:412:12)</span>
+<span class="hljs-comment">//    at emitOne (events.js:82:20)</span>
+<span class="hljs-comment">//    at REPLServer.emit (events.js:169:7)</span>
+<span class="hljs-comment">//    at REPLServer.Interface._onLine (readline.js:210:10)</span>
+<span class="hljs-comment">//    at REPLServer.Interface._line (readline.js:549:8)</span>
+<span class="hljs-comment">//    at REPLServer.Interface._ttyWrite (readline.js:826:14)</span></code></pre>
+<h4><code>console.warn([data][, ...args])</code><span><a class="mark" href="#consolewarndata-args" id="consolewarndata-args">#</a></span><a aria-hidden="true" class="legacy" id="console_console_warn_data_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consolewarndata-args">
+                <a href="console/console_warn_data_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.100</span>
+</div>
+<ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p><code>console.warn()</code> 函数是 <a href="#consoleerrordata-args"><code>console.error()</code></a> 的别名。</p>
+</section><section><h3>仅用于检查器的方法<span><a class="mark" href="#inspector-only-methods" id="inspector-only-methods">#</a></span><a aria-hidden="true" class="legacy" id="console_inspector_only_methods"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#inspector-only-methods">
+                <a href="console/inspector_only_methods.html" class="tip_trans">中英对照</a>
+                </p>
+<p>以下方法由 V8 引擎在通用 API 中公开，但不显示任何内容，除非与<a href="debugger.html">检查器</a>结合使用（<code>--inspect</code> 标志）。</p>
+<h4><code>console.profile([label])</code><span><a class="mark" href="#consoleprofilelabel" id="consoleprofilelabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_profile_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoleprofilelabel">
+                <a href="console/console_profile_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>除非在检查器中使用，否则此方法不会显示任何内容。
+<code>console.profile()</code> 方法启动带有可选标签的 JavaScript CPU 配置文件，直到调用 <a href="#consoleprofileendlabel"><code>console.profileEnd()</code></a>。
+然后将配置文件添加到检查器的<strong>配置文件</strong>面板中。</p>
+<pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">profile</span>(<span class="hljs-string">'MyLabel'</span>);
+<span class="hljs-comment">// 一些代码</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">profileEnd</span>(<span class="hljs-string">'MyLabel'</span>);
+<span class="hljs-comment">// 将配置文件“MyLabel”添加到检查器的配置文件面板。</span></code></pre>
+<h4><code>console.profileEnd([label])</code><span><a class="mark" href="#consoleprofileendlabel" id="consoleprofileendlabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_profileend_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoleprofileendlabel">
+                <a href="console/console_profileend_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>除非在检查器中使用，否则此方法不会显示任何内容。
+如果已启动，则停止当前的 JavaScript CPU 分析会话并将报告打印到检查器的<strong>配置文件</strong>面板。
+有关示例，请参见 <a href="#consoleprofilelabel"><code>console.profile()</code></a>。</p>
+<p class="">如果在没有标签的情况下调用此方法，则会停止最近启动的配置文件。</p>
+<h4><code>console.timeStamp([label])</code><span><a class="mark" href="#consoletimestamplabel" id="consoletimestamplabel">#</a></span><a aria-hidden="true" class="legacy" id="console_console_timestamp_label"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#consoletimestamplabel">
+                <a href="console/console_timestamp_label.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<ul class="">
+<li><code>label</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>除非在检查器中使用，否则此方法不会显示任何内容。
+<code>console.timeStamp()</code> 方法将带有标签 <code>'label'</code> 的事件添加到检查器的<strong>时间轴</strong>面板。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

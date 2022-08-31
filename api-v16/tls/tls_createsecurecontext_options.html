@@ -1,0 +1,356 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>tls.createSecureContext([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>tls.createSecureContext([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_tls_createsecurecontext_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/tls_createsecurecontext_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/tls_createsecurecontext_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#tlscreatesecurecontextoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v12.12.0</td>
+<td><p>添加了 <code>privateKeyIdentifier</code> 和 <code>privateKeyEngine</code> 选项以从 OpenSSL 引擎获取私钥。</p></td></tr>
+<tr><td>v12.11.0</td>
+<td><p>添加了 <code>sigalgs</code> 选项来覆盖支持的签名算法。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>添加了 TLSv1.3 支持。</p></td></tr>
+<tr><td>v11.5.0</td>
+<td><p>选项 <code>ca:</code> 现在支持 <code>BEGIN TRUSTED CERTIFICATE</code>。</p></td></tr>
+<tr><td>v11.4.0, v10.16.0</td>
+<td><p><code>minVersion</code> 和 <code>maxVersion</code> 可用于限制允许的 TLS 协议版本。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>由于 OpenSSL 的变化，<code>ecdhCurve</code> 不能再设置为 <code>false</code>。</p></td></tr>
+<tr><td>v9.3.0</td>
+<td><p>参数 <code>options</code> 现在可以包含 <code>clientCertEngine</code>。</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>选项 <code>ecdhCurve</code> 现在可以是多个 <code>':'</code> 分隔的曲线名称或 <code>'auto'</code>。</p></td></tr>
+<tr><td>v7.3.0</td>
+<td><p>如果 <code>key</code> 选项是数组，则单个条目不再需要 <code>passphrase</code> 属性。 <code>Array</code> 条目现在也可以是 <code>string</code> 或 <code>Buffer</code>。</p></td></tr>
+<tr><td>v5.2.0</td>
+<td><p>选项 <code>ca</code> 现在可以是包含多个 CA 证书的单个字符串。</p></td></tr>
+<tr><td>v0.11.13</td>
+<td><p><span>新增于: v0.11.13</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>ca</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> 可选择覆盖受信任的 CA 证书。
+默认是信任 Mozilla 策划的知名 CA。
+当使用此选项明确指定 CA 时，Mozilla 的 CA 将被完全替换。
+该值可以是字符串、或 <code>Buffer</code>、或 <code>Array</code> 的字符串和/或 <code>Buffer</code>。
+任何字符串或 <code>Buffer</code> 都可以包含多个连接在一起的 PEM CA。
+对等方的证书必须可链接到服务器信任的 CA 才能对连接进行身份验证。
+当使用不可链接到知名 CA 的证书时，必须明确指定证书的 CA 为受信任的 CA，否则连接将无法通过身份验证。
+如果对等方使用的证书不匹配或链接到默认 CA 之一，则使用 <code>ca</code> 选项提供对等方证书可以匹配或链接到的 CA 证书。
+对于自签名证书，证书是自己的CA，必须提供。
+对于 PEM 编码的证书，支持的类型是 "TRUSTED CERTIFICATE"、"X509 CERTIFICATE"、以及 "CERTIFICATE"。
+另见 <a href="../tls.html#tlsrootcertificates"><code>tls.rootCertificates</code></a>。</li>
+<li><code>cert</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> PEM 格式的证书链。
+每个私钥应提供证书链。
+每个证书链都应包含提供的私有 <code>key</code> 的 PEM 格式证书，然后是 PEM 格式的中间证书（如果有），按顺序排列，并且不包括根 CA（根 CA 必须是对等方预先知道的，参见 <code>ca</code>）。
+在提供多个证书链时，它们不必与 <code>key</code> 中的私钥顺序相同。
+如果不提供中间证书，则对端将无法验证证书，握手将失败。</li>
+<li><code>sigalgs</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 支持的签名算法的冒号分隔列表。
+该列表可以包含摘要算法（<code>SHA256</code>、<code>MD5</code> 等）、公钥算法（<code>RSA-PSS</code>、<code>ECDSA</code> 等）、两者的组合（例如 'RSA+SHA384'）或 TLS v1.3 方案名称（例如 <code>rsa_pss_pss_sha512</code>）。
+请参阅 <a href="https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_set1_sigalgs_list.html">OpenSSL 手册页</a> 了解更多信息。</li>
+<li><code>ciphers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 密码套件规范，替换默认值。
+有关详细信息，请参阅<a href="../tls.html#modifying-the-default-tls-cipher-suite">修改默认的 TLS 密码套件</a>。
+可以通过 <a href="../tls.html#tlsgetciphers"><code>tls.getCiphers()</code></a> 获得允许的密码。
+密码名称必须大写，OpenSSL 才能接受它们。</li>
+<li><code>clientCertEngine</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 可以提供客户端证书的 OpenSSL 引擎的名称。</li>
+<li><code>crl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> PEM 格式的 CRL（证书吊销列表）。</li>
+<li><code>dhparam</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> Diffie-Hellman 参数，<a href="../tls.html#perfect-forward-secrecy">完美前向保密</a>所需。
+使用 <code>openssl dhparam</code> 创建参数。
+密钥长度必须大于等于 1024 位，否则会报错。
+虽然 1024 位是允许的，但为了更强的安全性，请使用 2048 位或更大的位。
+如果省略或无效，参数将被静默丢弃，DHE 密码将不可用。</li>
+<li><code>ecdhCurve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 描述命名曲线或以冒号分隔的曲线 NID 或名称列表的字符串，例如 <code>P-521:P-384:P-256</code>，用于 ECDH 密钥协议。
+设置为 <code>auto</code> 自动选择曲线。
+使用 <a href="../crypto.html#cryptogetcurves"><code>crypto.getCurves()</code></a> 获取可用曲线名称的列表。
+在最近的版本中，<code>openssl ecparam -list_curves</code> 还将显示每个可用椭圆曲线的名称和描述。
+<strong>默认值:</strong> <a href="../tls.html#tlsdefault_ecdh_curve"><code>tls.DEFAULT_ECDH_CURVE</code></a>.</li>
+<li><code>honorCipherOrder</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 尝试使用服务器的密码套件首选项而不是客户端的。
+当为 <code>true</code> 时，导致 <code>SSL_OP_CIPHER_SERVER_PREFERENCE</code> 在 <code>secureOptions</code> 中被设置，请参阅 <a href="../crypto.html#openssl-options">OpenSSL 选项</a>了解更多信息。</li>
+<li><code>key</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> PEM 格式的私钥。
+PEM 允许选择加密私钥。
+加密的密钥将用 <code>options.passphrase</code> 解密。
+使用不同算法的多个密钥可以作为未加密密钥字符串或缓冲区的数组提供，也可以作为 <code>{pem: &lt;string|buffer&gt;[, passphrase: &lt;string&gt;]}</code> 形式的对象数组提供。
+对象形式只能出现在数组中。
+<code>object.passphrase</code> 是可选的。
+如果提供了加密的密钥，则将使用 <code>object.passphrase</code> 解密，否则使用 <code>options.passphrase</code> 解密。</li>
+<li><code>privateKeyEngine</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 从中获取私钥的 OpenSSL 引擎的名称。
+应与 <code>privateKeyIdentifier</code> 一起使用。</li>
+<li><code>privateKeyIdentifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 由 OpenSSL 引擎管理的私钥的标识符。
+应与 <code>privateKeyEngine</code> 一起使用。
+不应与 <code>key</code> 一起设置，因为这两个选项定义的私钥的方式不同。</li>
+<li><code>maxVersion</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 可选择设置允许的最大 TLS 版本。
+<code>'TLSv1.3'</code>、<code>'TLSv1.2'</code>、<code>'TLSv1.1'</code> 或 <code>'TLSv1'</code> 之一。
+不能与 <code>secureProtocol</code> 选项一起指定；使用其中之一。
+<strong>默认值:</strong> <a href="../tls.html#tlsdefault_max_version"><code>tls.DEFAULT_MAX_VERSION</code></a>.</li>
+<li><code>minVersion</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 可选择设置允许的最低 TLS 版本。
+<code>'TLSv1.3'</code>、<code>'TLSv1.2'</code>、<code>'TLSv1.1'</code> 或 <code>'TLSv1'</code> 之一。
+不能与 <code>secureProtocol</code> 选项一起指定；使用其中之一。
+避免设置为低于 TLSv1.2，但可能需要互操作性。
+<strong>默认值:</strong> <a href="../tls.html#tlsdefault_min_version"><code>tls.DEFAULT_MIN_VERSION</code></a>.</li>
+<li><code>passphrase</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 用于单个私钥和/或 PFX 的共享密码。</li>
+<li><code>pfx</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> PFX 或 PKCS12 编码的私钥和证书链。
+<code>pfx</code> 是单独提供 <code>key</code> 和 <code>cert</code> 的替代方案。
+PFX 通常是加密的，如果是的话，会用 <code>passphrase</code> 来解密。
+多个 PFX 可以作为未加密的 PFX 缓冲区数组或 <code>{buf: &lt;string|buffer&gt;[, passphrase: &lt;string&gt;]}</code> 形式的对象数组提供。
+对象形式只能出现在数组中。
+<code>object.passphrase</code> 是可选的。
+如果提供加密的 PFX 将使用 <code>object.passphrase</code> 解密，否则将使用 <code>options.passphrase</code> 解密。</li>
+<li><code>secureOptions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 可选地影响 OpenSSL 协议行为，这通常不是必需的。
+如果有的话应该小心使用！
+值是 <a href="../crypto.html#openssl-options">OpenSSL 选项</a>中 <code>SSL_OP_*</code> 选项的数字位掩码。</li>
+<li><code>secureProtocol</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 旧的机制选择使用的 TLS 协议版本，不支持独立控制最小和最大版本，也不支持将协议限制为 TLSv1.3。改用 <code>minVersion</code> 和 <code>maxVersion</code>。
+可能的值被列为 <a href="https://www.openssl.org/docs/man1.1.1/man7/ssl.html#Dealing-with-Protocol-Methods" rel="nofollow">SSL_METHODS</a>，使用函数名称作为字符串。
+例如，使用 <code>'TLSv1_1_method'</code> 强制使用 TLS 版本 1.1，或使用 <code>'TLS_method'</code> 允许任何 TLS 协议版本最高为 TLSv1.3。不建议使用低于 1.2 的 TLS 版本，但可能需要互操作性。
+**默认:**无，见 <code>minVersion</code>。</li>
+<li><code>sessionIdContext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 服务器使用不透明标识符来确保应用程序之间不共享会话状态。
+客户端未使用。</li>
+<li><code>ticketKeys</code>: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 48 字节的加密强伪随机数据。
+请参阅<a href="../tls.html#session-resumption">会话恢复</a>了解更多信息。</li>
+<li><code>sessionTimeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 服务器创建的 TLS 会话将无法恢复之前的秒数。
+请参阅<a href="../tls.html#session-resumption">会话恢复</a>了解更多信息。 <strong>默认值:</strong> <code>300</code>。</li>
+</ul>
+</li>
+</ul><p><a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a> 将 <code>honorCipherOrder</code> 选项的默认值设置为 <code>true</code>，创建安全上下文的其他 API 未设置。</p><p class=""><a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a> 使用从 <code>process.argv</code> 生成的 128 位截断 SHA1 哈希值作为 <code>sessionIdContext</code> 选项的默认值，其他创建安全上下文的 API 没有默认值。</p><p class=""><code>tls.createSecureContext()</code> 方法创建了 <code>SecureContext</code> 对象。
+它可用作几个 <code>tls</code> API 的参数，例如 <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a> 和 <a href="../tls.html#serveraddcontexthostname-context"><code>server.addContext()</code></a>，但没有公共方法。</p><p class="">使用证书的密码需要密钥。
+<code>key</code> 或 <code>pfx</code> 都可以提供。</p><p class="">如果没有给出 <code>ca</code> 选项，则 Node.js 将默认使用 <a href="https://hg.mozilla.org/mozilla-central/raw-file/tip/security/nss/lib/ckfw/builtins/certdata.txt" rel="nofollow">Mozilla 的公开信任的 CA 列表</a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v12.12.0</td>
+<td><p>Added <code>privateKeyIdentifier</code> and <code>privateKeyEngine</code> options to get private key from an OpenSSL engine.</p></td></tr>
+<tr><td>v12.11.0</td>
+<td><p>Added <code>sigalgs</code> option to override supported signature algorithms.</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>TLSv1.3 support added.</p></td></tr>
+<tr><td>v11.5.0</td>
+<td><p>The <code>ca:</code> option now supports <code>BEGIN TRUSTED CERTIFICATE</code>.</p></td></tr>
+<tr><td>v11.4.0, v10.16.0</td>
+<td><p>The <code>minVersion</code> and <code>maxVersion</code> can be used to restrict the allowed TLS protocol versions.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>ecdhCurve</code> cannot be set to <code>false</code> anymore due to a change in OpenSSL.</p></td></tr>
+<tr><td>v9.3.0</td>
+<td><p>The <code>options</code> parameter can now include <code>clientCertEngine</code>.</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>The <code>ecdhCurve</code> option can now be multiple <code>':'</code> separated curve names or <code>'auto'</code>.</p></td></tr>
+<tr><td>v7.3.0</td>
+<td><p>If the <code>key</code> option is an array, individual entries do not need a <code>passphrase</code> property anymore. <code>Array</code> entries can also just be <code>string</code>s or <code>Buffer</code>s now.</p></td></tr>
+<tr><td>v5.2.0</td>
+<td><p>The <code>ca</code> option can now be a single string containing multiple CA certificates.</p></td></tr>
+<tr><td>v0.11.13</td>
+<td><p><span>Added in: v0.11.13</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>ca</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> Optionally override the trusted CA
+certificates. Default is to trust the well-known CAs curated by Mozilla.
+Mozilla's CAs are completely replaced when CAs are explicitly specified
+using this option. The value can be a string or <code>Buffer</code>, or an <code>Array</code> of
+strings and/or <code>Buffer</code>s. Any string or <code>Buffer</code> can contain multiple PEM
+CAs concatenated together. The peer's certificate must be chainable to a CA
+trusted by the server for the connection to be authenticated. When using
+certificates that are not chainable to a well-known CA, the certificate's CA
+must be explicitly specified as a trusted or the connection will fail to
+authenticate.
+If the peer uses a certificate that doesn't match or chain to one of the
+default CAs, use the <code>ca</code> option to provide a CA certificate that the peer's
+certificate can match or chain to.
+For self-signed certificates, the certificate is its own CA, and must be
+provided.
+For PEM encoded certificates, supported types are "TRUSTED CERTIFICATE",
+"X509 CERTIFICATE", and "CERTIFICATE".
+See also <a href="../tls.html#tlsrootcertificates"><code>tls.rootCertificates</code></a>.</li>
+<li><code>cert</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> Cert chains in PEM format. One
+cert chain should be provided per private key. Each cert chain should
+consist of the PEM formatted certificate for a provided private <code>key</code>,
+followed by the PEM formatted intermediate certificates (if any), in order,
+and not including the root CA (the root CA must be pre-known to the peer,
+see <code>ca</code>). When providing multiple cert chains, they do not have to be in
+the same order as their private keys in <code>key</code>. If the intermediate
+certificates are not provided, the peer will not be able to validate the
+certificate, and the handshake will fail.</li>
+<li><code>sigalgs</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Colon-separated list of supported signature algorithms.
+The list can contain digest algorithms (<code>SHA256</code>, <code>MD5</code> etc.), public key
+algorithms (<code>RSA-PSS</code>, <code>ECDSA</code> etc.), combination of both (e.g
+'RSA+SHA384') or TLS v1.3 scheme names (e.g. <code>rsa_pss_pss_sha512</code>).
+See <a href="https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_set1_sigalgs_list.html">OpenSSL man pages</a>
+for more info.</li>
+<li><code>ciphers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Cipher suite specification, replacing the default. For
+more information, see <a href="../tls.html#modifying-the-default-tls-cipher-suite">Modifying the default TLS cipher suite</a>. Permitted
+ciphers can be obtained via <a href="../tls.html#tlsgetciphers"><code>tls.getCiphers()</code></a>. Cipher names must be
+uppercased in order for OpenSSL to accept them.</li>
+<li><code>clientCertEngine</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Name of an OpenSSL engine which can provide the
+client certificate.</li>
+<li><code>crl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> PEM formatted CRLs (Certificate
+Revocation Lists).</li>
+<li><code>dhparam</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> Diffie-Hellman parameters, required for
+<a href="../tls.html#perfect-forward-secrecy">perfect forward secrecy</a>. Use <code>openssl dhparam</code> to create the parameters.
+The key length must be greater than or equal to 1024 bits or else an error
+will be thrown. Although 1024 bits is permissible, use 2048 bits or larger
+for stronger security. If omitted or invalid, the parameters are silently
+discarded and DHE ciphers will not be available.</li>
+<li><code>ecdhCurve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A string describing a named curve or a colon separated
+list of curve NIDs or names, for example <code>P-521:P-384:P-256</code>, to use for
+ECDH key agreement. Set to <code>auto</code> to select the
+curve automatically. Use <a href="../crypto.html#cryptogetcurves"><code>crypto.getCurves()</code></a> to obtain a list of
+available curve names. On recent releases, <code>openssl ecparam -list_curves</code>
+will also display the name and description of each available elliptic curve.
+<strong>Default:</strong> <a href="../tls.html#tlsdefault_ecdh_curve"><code>tls.DEFAULT_ECDH_CURVE</code></a>.</li>
+<li><code>honorCipherOrder</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Attempt to use the server's cipher suite
+preferences instead of the client's. When <code>true</code>, causes
+<code>SSL_OP_CIPHER_SERVER_PREFERENCE</code> to be set in <code>secureOptions</code>, see
+<a href="../crypto.html#openssl-options">OpenSSL Options</a> for more information.</li>
+<li><code>key</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> Private keys in PEM
+format. PEM allows the option of private keys being encrypted. Encrypted
+keys will be decrypted with <code>options.passphrase</code>. Multiple keys using
+different algorithms can be provided either as an array of unencrypted key
+strings or buffers, or an array of objects in the form
+<code>{pem: &lt;string|buffer&gt;[, passphrase: &lt;string&gt;]}</code>. The object form can only
+occur in an array. <code>object.passphrase</code> is optional. Encrypted keys will be
+decrypted with <code>object.passphrase</code> if provided, or <code>options.passphrase</code> if
+it is not.</li>
+<li><code>privateKeyEngine</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Name of an OpenSSL engine to get private key
+from. Should be used together with <code>privateKeyIdentifier</code>.</li>
+<li><code>privateKeyIdentifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Identifier of a private key managed by
+an OpenSSL engine. Should be used together with <code>privateKeyEngine</code>.
+Should not be set together with <code>key</code>, because both options define a
+private key in different ways.</li>
+<li><code>maxVersion</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Optionally set the maximum TLS version to allow. One
+of <code>'TLSv1.3'</code>, <code>'TLSv1.2'</code>, <code>'TLSv1.1'</code>, or <code>'TLSv1'</code>. Cannot be specified
+along with the <code>secureProtocol</code> option; use one or the other.
+<strong>Default:</strong> <a href="../tls.html#tlsdefault_max_version"><code>tls.DEFAULT_MAX_VERSION</code></a>.</li>
+<li><code>minVersion</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Optionally set the minimum TLS version to allow. One
+of <code>'TLSv1.3'</code>, <code>'TLSv1.2'</code>, <code>'TLSv1.1'</code>, or <code>'TLSv1'</code>. Cannot be specified
+along with the <code>secureProtocol</code> option; use one or the other. Avoid
+setting to less than TLSv1.2, but it may be required for
+interoperability.
+<strong>Default:</strong> <a href="../tls.html#tlsdefault_min_version"><code>tls.DEFAULT_MIN_VERSION</code></a>.</li>
+<li><code>passphrase</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Shared passphrase used for a single private key and/or
+a PFX.</li>
+<li><code>pfx</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> PFX or PKCS12 encoded
+private key and certificate chain. <code>pfx</code> is an alternative to providing
+<code>key</code> and <code>cert</code> individually. PFX is usually encrypted, if it is,
+<code>passphrase</code> will be used to decrypt it. Multiple PFX can be provided either
+as an array of unencrypted PFX buffers, or an array of objects in the form
+<code>{buf: &lt;string|buffer&gt;[, passphrase: &lt;string&gt;]}</code>. The object form can only
+occur in an array. <code>object.passphrase</code> is optional. Encrypted PFX will be
+decrypted with <code>object.passphrase</code> if provided, or <code>options.passphrase</code> if
+it is not.</li>
+<li><code>secureOptions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Optionally affect the OpenSSL protocol behavior,
+which is not usually necessary. This should be used carefully if at all!
+Value is a numeric bitmask of the <code>SSL_OP_*</code> options from
+<a href="../crypto.html#openssl-options">OpenSSL Options</a>.</li>
+<li><code>secureProtocol</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Legacy mechanism to select the TLS protocol
+version to use, it does not support independent control of the minimum and
+maximum version, and does not support limiting the protocol to TLSv1.3. Use
+<code>minVersion</code> and <code>maxVersion</code> instead. The possible values are listed as
+<a href="https://www.openssl.org/docs/man1.1.1/man7/ssl.html#Dealing-with-Protocol-Methods" rel="nofollow">SSL_METHODS</a>, use the function names as strings. For example,
+use <code>'TLSv1_1_method'</code> to force TLS version 1.1, or <code>'TLS_method'</code> to allow
+any TLS protocol version up to TLSv1.3. It is not recommended to use TLS
+versions less than 1.2, but it may be required for interoperability.
+<strong>Default:</strong> none, see <code>minVersion</code>.</li>
+<li><code>sessionIdContext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Opaque identifier used by servers to ensure
+session state is not shared between applications. Unused by clients.</li>
+<li><code>ticketKeys</code>: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 48-bytes of cryptographically strong pseudorandom
+data. See <a href="../tls.html#session-resumption">Session Resumption</a> for more information.</li>
+<li><code>sessionTimeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The number of seconds after which a TLS session
+created by the server will no longer be resumable. See
+<a href="../tls.html#session-resumption">Session Resumption</a> for more information. <strong>Default:</strong> <code>300</code>.</li>
+</ul>
+</li>
+</ul><p><a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a> sets the default value of the <code>honorCipherOrder</code> option
+to <code>true</code>, other APIs that create secure contexts leave it unset.</p><p><a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a> uses a 128 bit truncated SHA1 hash value generated
+from <code>process.argv</code> as the default value of the <code>sessionIdContext</code> option, other
+APIs that create secure contexts have no default value.</p><p>The <code>tls.createSecureContext()</code> method creates a <code>SecureContext</code> object. It is
+usable as an argument to several <code>tls</code> APIs, such as <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a>
+and <a href="../tls.html#serveraddcontexthostname-context"><code>server.addContext()</code></a>, but has no public methods.</p><p>A key is <em>required</em> for ciphers that use certificates. Either <code>key</code> or
+<code>pfx</code> can be used to provide it.</p><p>If the <code>ca</code> option is not given, then Node.js will default to using
+<a href="https://hg.mozilla.org/mozilla-central/raw-file/tip/security/nss/lib/ckfw/builtins/certdata.txt" rel="nofollow">Mozilla's publicly trusted list of CAs</a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

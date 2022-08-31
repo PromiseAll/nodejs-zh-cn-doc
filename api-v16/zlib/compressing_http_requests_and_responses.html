@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>压缩 HTTP 的请求和响应 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-zlib">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>压缩 HTTP 的请求和响应</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../zlib.html#zlib_compressing_http_requests_and_responses" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/zlib/compressing_http_requests_and_responses.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/zlib/compressing_http_requests_and_responses.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/zlib/#compressing-http-requests-and-responses.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>zlib</code> 模块可用于实现对 <a href="https://tools.ietf.org/html/rfc7230#section-4.2" rel="nofollow">HTTP</a> 定义的 <code>gzip</code>、<code>deflate</code> 和 <code>br</code> 内容编码机制的支持。</p><p class="">HTTP <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3" rel="nofollow"><code>Accept-Encoding</code></a> 标头在 HTTP 请求中用于识别客户端接受的压缩编码。
+<a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11" rel="nofollow"><code>Content-Encoding</code></a> 标头用于标识实际应用于消息的压缩编码。</p><p class="">下面给出的示例经过彻底简化以显示基本概念。
+使用 <code>zlib</code> 编码可能很昂贵，结果应该被缓存。
+有关 <code>zlib</code> 使用中涉及的速度/内存/压缩权衡的更多信息，请参阅<a href="../zlib.html#memory-usage-tuning">内存使用调整</a>。</p><pre class=""><code class="language-js"><span class="hljs-comment">// 客户端请求示例</span>
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> request = http.<span class="hljs-title function_">get</span>({ <span class="hljs-attr">host</span>: <span class="hljs-string">'example.com'</span>,
+                           <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+                           <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+                           <span class="hljs-attr">headers</span>: { <span class="hljs-string">'Accept-Encoding'</span>: <span class="hljs-string">'br,gzip,deflate'</span> } });
+request.<span class="hljs-title function_">on</span>(<span class="hljs-string">'response'</span>, <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> output = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'example.com_index.html'</span>);
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onError</span> = (<span class="hljs-params">err</span>) =&gt; {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+      process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+    }
+  };
+
+  <span class="hljs-keyword">switch</span> (response.<span class="hljs-property">headers</span>[<span class="hljs-string">'content-encoding'</span>]) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'br'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createBrotliDecompress</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-comment">// 或者，只需使用 zlib.createUnzip() 来处理以下两种情况：</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'gzip'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createGunzip</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'deflate'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createInflate</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-attr">default</span>:
+      <span class="hljs-title function_">pipeline</span>(response, output, onError);
+      <span class="hljs-keyword">break</span>;
+  }
+});</code></pre><pre class=""><code class="language-js"><span class="hljs-comment">// 服务器示例</span>
+<span class="hljs-comment">// 对每个请求运行 gzip 操作是非常昂贵的。</span>
+<span class="hljs-comment">// 缓存压缩的缓冲区会更有效率。</span>
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> raw = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'index.html'</span>);
+  <span class="hljs-comment">// 存储资源的压缩版本和未压缩版本。</span>
+  response.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Vary'</span>, <span class="hljs-string">'Accept-Encoding'</span>);
+  <span class="hljs-keyword">let</span> acceptEncoding = request.<span class="hljs-property">headers</span>[<span class="hljs-string">'accept-encoding'</span>];
+  <span class="hljs-keyword">if</span> (!acceptEncoding) {
+    acceptEncoding = <span class="hljs-string">''</span>;
+  }
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onError</span> = (<span class="hljs-params">err</span>) =&gt; {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-comment">// 如果发生错误，则无能为力，</span>
+      <span class="hljs-comment">// 因为服务器已经发送了 200 响应代码，</span>
+      <span class="hljs-comment">// 并且已经向客户端发送了一些数据。</span>
+      <span class="hljs-comment">// 能做的最好的事情</span>
+      <span class="hljs-comment">// 就是立即终止响应并记录错误。</span>
+      response.<span class="hljs-title function_">end</span>();
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    }
+  };
+
+  <span class="hljs-comment">// 注意：这不是一个符合标准的接受编码解析器。</span>
+  <span class="hljs-comment">// 参见 https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bdeflate\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'deflate'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createDeflate</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bgzip\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'gzip'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createGzip</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bbr\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'br'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createBrotliCompress</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, {});
+    <span class="hljs-title function_">pipeline</span>(raw, response, onError);
+  }
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p class="">默认情况下，<code>zlib</code> 方法在解压缩截断数据时会抛出错误。
+但是，如果已知数据不完整，或者希望仅检查压缩文件的开头，则可以通过更改用于解压缩输入的最后一个块的刷新方法来抑制默认错误处理数据：</p><pre class=""><code class="language-js"><span class="hljs-comment">// 这是上述示例中缓冲区的截断版本</span>
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'eJzT0yMA'</span>, <span class="hljs-string">'base64'</span>);
+
+zlib.<span class="hljs-title function_">unzip</span>(
+  buffer,
+  <span class="hljs-comment">// 对于 Brotli，相当于 zlib.constants.BROTLI_OPERATION_FLUSH</span>
+  { <span class="hljs-attr">finishFlush</span>: zlib.<span class="hljs-property">constants</span>.<span class="hljs-property">Z_SYNC_FLUSH</span> },
+  <span class="hljs-function">(<span class="hljs-params">err, buffer</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+      process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buffer.<span class="hljs-title function_">toString</span>());
+  });</code></pre><p class="">这不会改变其他错误抛出情况下的行为，例如当输入数据的格式无效时。
+使用此方法，将无法确定输入是否提前结束或缺少完整性检查，因此需要手动检查解压结果是否有效。</p></div>
+          <div id="content_right"><p>The <code>zlib</code> module can be used to implement support for the <code>gzip</code>, <code>deflate</code>
+and <code>br</code> content-encoding mechanisms defined by
+<a href="https://tools.ietf.org/html/rfc7230#section-4.2" rel="nofollow">HTTP</a>.</p><p>The HTTP <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3" rel="nofollow"><code>Accept-Encoding</code></a> header is used within an HTTP request to identify
+the compression encodings accepted by the client. The <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11" rel="nofollow"><code>Content-Encoding</code></a>
+header is used to identify the compression encodings actually applied to a
+message.</p><p>The examples given below are drastically simplified to show the basic concept.
+Using <code>zlib</code> encoding can be expensive, and the results ought to be cached.
+See <a href="../zlib.html#memory-usage-tuning">Memory usage tuning</a> for more information on the speed/memory/compression
+tradeoffs involved in <code>zlib</code> usage.</p><pre><code class="language-js"><span class="hljs-comment">// Client request example</span>
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> request = http.<span class="hljs-title function_">get</span>({ <span class="hljs-attr">host</span>: <span class="hljs-string">'example.com'</span>,
+                           <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+                           <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+                           <span class="hljs-attr">headers</span>: { <span class="hljs-string">'Accept-Encoding'</span>: <span class="hljs-string">'br,gzip,deflate'</span> } });
+request.<span class="hljs-title function_">on</span>(<span class="hljs-string">'response'</span>, <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> output = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'example.com_index.html'</span>);
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onError</span> = (<span class="hljs-params">err</span>) =&gt; {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+      process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+    }
+  };
+
+  <span class="hljs-keyword">switch</span> (response.<span class="hljs-property">headers</span>[<span class="hljs-string">'content-encoding'</span>]) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'br'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createBrotliDecompress</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-comment">// Or, just use zlib.createUnzip() to handle both of the following cases:</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'gzip'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createGunzip</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'deflate'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createInflate</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-attr">default</span>:
+      <span class="hljs-title function_">pipeline</span>(response, output, onError);
+      <span class="hljs-keyword">break</span>;
+  }
+});</code></pre><pre><code class="language-js"><span class="hljs-comment">// server example</span>
+<span class="hljs-comment">// Running a gzip operation on every request is quite expensive.</span>
+<span class="hljs-comment">// It would be much more efficient to cache the compressed buffer.</span>
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> raw = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'index.html'</span>);
+  <span class="hljs-comment">// Store both a compressed and an uncompressed version of the resource.</span>
+  response.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Vary'</span>, <span class="hljs-string">'Accept-Encoding'</span>);
+  <span class="hljs-keyword">let</span> acceptEncoding = request.<span class="hljs-property">headers</span>[<span class="hljs-string">'accept-encoding'</span>];
+  <span class="hljs-keyword">if</span> (!acceptEncoding) {
+    acceptEncoding = <span class="hljs-string">''</span>;
+  }
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onError</span> = (<span class="hljs-params">err</span>) =&gt; {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-comment">// If an error occurs, there's not much we can do because</span>
+      <span class="hljs-comment">// the server has already sent the 200 response code and</span>
+      <span class="hljs-comment">// some amount of data has already been sent to the client.</span>
+      <span class="hljs-comment">// The best we can do is terminate the response immediately</span>
+      <span class="hljs-comment">// and log the error.</span>
+      response.<span class="hljs-title function_">end</span>();
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    }
+  };
+
+  <span class="hljs-comment">// Note: This is not a conformant accept-encoding parser.</span>
+  <span class="hljs-comment">// See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bdeflate\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'deflate'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createDeflate</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bgzip\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'gzip'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createGzip</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bbr\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'br'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createBrotliCompress</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, {});
+    <span class="hljs-title function_">pipeline</span>(raw, response, onError);
+  }
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p>By default, the <code>zlib</code> methods will throw an error when decompressing
+truncated data. However, if it is known that the data is incomplete, or
+the desire is to inspect only the beginning of a compressed file, it is
+possible to suppress the default error handling by changing the flushing
+method that is used to decompress the last chunk of input data:</p><pre><code class="language-js"><span class="hljs-comment">// This is a truncated version of the buffer from the above examples</span>
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'eJzT0yMA'</span>, <span class="hljs-string">'base64'</span>);
+
+zlib.<span class="hljs-title function_">unzip</span>(
+  buffer,
+  <span class="hljs-comment">// For Brotli, the equivalent is zlib.constants.BROTLI_OPERATION_FLUSH.</span>
+  { <span class="hljs-attr">finishFlush</span>: zlib.<span class="hljs-property">constants</span>.<span class="hljs-property">Z_SYNC_FLUSH</span> },
+  <span class="hljs-function">(<span class="hljs-params">err, buffer</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+      process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buffer.<span class="hljs-title function_">toString</span>());
+  });</code></pre><p>This will not change the behavior in other error-throwing situations, e.g.
+when the input data has an invalid format. Using this method, it will not be
+possible to determine whether the input ended prematurely or lacks the
+integrity checks, making it necessary to manually check that the
+decompressed result is valid.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>DEP0076: tls.parseCertString() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-deprecations">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>DEP0076: tls.parseCertString()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../deprecations.html#deprecations_dep0076_tls_parsecertstring" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/deprecations/dep0076_tls_parsecertstring.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/deprecations/dep0076_tls_parsecertstring.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/deprecations/#dep0076-tlsparsecertstring.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>运行时弃用。</p></td></tr>
+<tr><td>v8.6.0</td>
+<td><p>仅文档弃用。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>类型: 运行时</p><p class=""><code>tls.parseCertString()</code> 是简单的解析助手，被错误地公开了。
+此函数通常可以替换为：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> querystring = <span class="hljs-built_in">require</span>(<span class="hljs-string">'querystring'</span>);
+querystring.<span class="hljs-title function_">parse</span>(str, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'='</span>);</code></pre><p class="">此函数不完全等同于 <code>querystring.parse()</code>。
+一个区别是 <code>querystring.parse()</code> 做 url 解码：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">querystring.parse(<span class="hljs-string">'%E5%A5%BD=1'</span>, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'='</span>);</span>
+{ '好': '1' }
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">tls.parseCertString(<span class="hljs-string">'%E5%A5%BD=1'</span>);</span>
+{ '%E5%A5%BD': '1' }</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>Runtime deprecation.</p></td></tr>
+<tr><td>v8.6.0</td>
+<td><p>Documentation-only deprecation.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>Type: Runtime</p><p><code>tls.parseCertString()</code> is a trivial parsing helper that was made public by
+mistake. This function can usually be replaced with:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> querystring = <span class="hljs-built_in">require</span>(<span class="hljs-string">'querystring'</span>);
+querystring.<span class="hljs-title function_">parse</span>(str, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'='</span>);</code></pre><p>This function is not completely equivalent to <code>querystring.parse()</code>. One
+difference is that <code>querystring.parse()</code> does url decoding:</p><pre><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">querystring.parse(<span class="hljs-string">'%E5%A5%BD=1'</span>, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'='</span>);</span>
+{ '好': '1' }
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">tls.parseCertString(<span class="hljs-string">'%E5%A5%BD=1'</span>);</span>
+{ '%E5%A5%BD': '1' }</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

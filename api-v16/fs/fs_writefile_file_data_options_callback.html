@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.writeFile(file, data[, options], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.writeFile(file, data[, options], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_writefile_file_data_options_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_writefile_file_data_options_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_writefile_file_data_options_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fswritefilefile-data-options-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>如果返回多个错误，则返回的错误可能是 <code>AggregateError</code>。</p></td></tr>
+<tr><td>v15.2.0</td>
+<td><p>选项参数可以包含中止信号，以中止正在进行的写入文件请求。</p></td></tr>
+<tr><td>v14.12.0</td>
+<td><p>参数 <code>data</code> 将使用显式 <code>toString</code> 函数对对象进行字符串化。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>参数 <code>data</code> 不会再将不支持的输入强制转换为字符串。</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p>参数 <code>data</code> 现在可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它会在运行时抛出 <code>TypeError</code>。</p></td></tr>
+<tr><td>v7.4.0</td>
+<td><p>参数 <code>data</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它将触发 ID 为 DEP0013 的弃用警告。</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>参数 <code>file</code> 现在可以是文件描述符。</p></td></tr>
+<tr><td>v0.1.29</td>
+<td><p><span>新增于: v0.1.29</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>file</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 文件名或文件描述符</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> <strong>默认值:</strong> <code>'utf8'</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>0o666</code></li>
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 请参阅<a href="../fs.html#file-system-flags">对文件系统 <code>flags</code> 的支持</a>。 <strong>默认值:</strong> <code>'w'</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 允许中止正在进行的写入文件</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AggregateError" rel="nofollow" class="type">&lt;AggregateError&gt;</a></li>
+</ul>
+</li>
+</ul><p>当 <code>file</code> 是文件名时，将数据异步地写入文件，如果文件已存在则替换该文件。
+<code>data</code> 可以是字符串或缓冲区。</p><p class="">当 <code>file</code> 是文件描述符时，其行为类似于直接调用 <code>fs.write()</code>（推荐）。
+请参阅以下有关使用文件描述符的说明。</p><p class="">如果 <code>data</code> 是缓冲区，则忽略 <code>encoding</code> 选项。</p><p class=""><code>mode</code> 选项仅影响新创建的文件。
+有关详细信息，请参阅 <a href="../fs.html#fsopenpath-flags-mode-callback"><code>fs.open()</code></a>。</p><p class="">如果 <code>data</code> 是普通的对象，则它必须具有自有的（不是继承的）<code>toString</code> 函数属性。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Hello Node.js'</span>));
+<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">'message.txt'</span>, data, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'The file has been saved!'</span>);
+});</code></pre><p class="">如果 <code>options</code> 是字符串，则它指定编码：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'Hello Node.js'</span>, <span class="hljs-string">'utf8'</span>, callback);</code></pre><p class="">在同一个文件上多次使用 <code>fs.writeFile()</code> 而不等待回调是不安全的。
+对于这种情况，建议使用 <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a>。</p><p class="">与 <code>fs.readFile</code> 类似，<code>fs.writeFile</code> 是一个便捷的方法，其在内部执行多次 <code>write</code> 调用以写入传给它的缓冲区。
+对于性能敏感的代码，则考虑使用 <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a>。</p><p class="">可以使用 <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 取消 <code>fs.writeFile()</code>。
+取消是"尽力而为"的，并且可能仍会写入一些数据。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> { signal } = controller;
+<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Hello Node.js'</span>));
+<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">'message.txt'</span>, data, { signal }, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-comment">// 当请求中止时 - 使用 AbortError 调用回调</span>
+});
+<span class="hljs-comment">// 当应该中止请求时</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre><p class="">中止正在进行的请求不会中止单个操作系统请求，而是中止内部缓冲的 <code>fs.writeFile</code> 执行。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>The error returned may be an <code>AggregateError</code> if more than one error is returned.</p></td></tr>
+<tr><td>v15.2.0</td>
+<td><p>The options argument may include an AbortSignal to abort an ongoing writeFile request.</p></td></tr>
+<tr><td>v14.12.0</td>
+<td><p>The <code>data</code> parameter will stringify an object with an explicit <code>toString</code> function.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>The <code>data</code> parameter won't coerce unsupported input to strings anymore.</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p>The <code>data</code> parameter can now be any <code>TypedArray</code> or a <code>DataView</code>.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will throw a <code>TypeError</code> at runtime.</p></td></tr>
+<tr><td>v7.4.0</td>
+<td><p>The <code>data</code> parameter can now be a <code>Uint8Array</code>.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will emit a deprecation warning with id DEP0013.</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>The <code>file</code> parameter can be a file descriptor now.</p></td></tr>
+<tr><td>v0.1.29</td>
+<td><p><span>Added in: v0.1.29</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>file</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> filename or file descriptor</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> <strong>Default:</strong> <code>'utf8'</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>Default:</strong> <code>0o666</code></li>
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> See <a href="../fs.html#file-system-flags">support of file system <code>flags</code></a>. <strong>Default:</strong> <code>'w'</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> allows aborting an in-progress writeFile</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AggregateError" rel="nofollow" class="type">&lt;AggregateError&gt;</a></li>
+</ul>
+</li>
+</ul><p>When <code>file</code> is a filename, asynchronously writes data to the file, replacing the
+file if it already exists. <code>data</code> can be a string or a buffer.</p><p>When <code>file</code> is a file descriptor, the behavior is similar to calling
+<code>fs.write()</code> directly (which is recommended). See the notes below on using
+a file descriptor.</p><p>The <code>encoding</code> option is ignored if <code>data</code> is a buffer.</p><p>The <code>mode</code> option only affects the newly created file. See <a href="../fs.html#fsopenpath-flags-mode-callback"><code>fs.open()</code></a>
+for more details.</p><p>If <code>data</code> is a plain object, it must have an own (not inherited) <code>toString</code>
+function property.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Hello Node.js'</span>));
+<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">'message.txt'</span>, data, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'The file has been saved!'</span>);
+});</code></pre><p>If <code>options</code> is a string, then it specifies the encoding:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'Hello Node.js'</span>, <span class="hljs-string">'utf8'</span>, callback);</code></pre><p>It is unsafe to use <code>fs.writeFile()</code> multiple times on the same file without
+waiting for the callback. For this scenario, <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a> is
+recommended.</p><p>Similarly to <code>fs.readFile</code> - <code>fs.writeFile</code> is a convenience method that
+performs multiple <code>write</code> calls internally to write the buffer passed to it.
+For performance sensitive code consider using <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a>.</p><p>It is possible to use an <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> to cancel an <code>fs.writeFile()</code>.
+Cancelation is "best effort", and some amount of data is likely still
+to be written.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> { signal } = controller;
+<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'Hello Node.js'</span>));
+<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">'message.txt'</span>, data, { signal }, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-comment">// When a request is aborted - the callback is called with an AbortError</span>
+});
+<span class="hljs-comment">// When the request should be aborted</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre><p>Aborting an ongoing request does not abort individual operating
+system requests but rather the internal buffering <code>fs.writeFile</code> performs.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

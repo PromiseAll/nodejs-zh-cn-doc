@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new assert.AssertionError(options) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-assert">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>new assert.AssertionError(options)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../assert.html#assert_new_assert_assertionerror_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/assert/new_assert_assertionerror_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/assert/new_assert_assertionerror_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/assert/#new-assertassertionerroroptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.21</span>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果提供，则错误消息将设置为此值。</li>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 错误实例上的 <code>actual</code> 属性。</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 错误实例上的 <code>expected</code> 属性。</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 错误实例上的 <code>operator</code> 属性。</li>
+<li><code>stackStartFn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 如果提供，则生成的堆栈跟踪将省略此函数之前的帧。</li>
+</ul>
+</li>
+</ul><p><code>Error</code> 的子类，表示断言的失败。</p><p class="">所有实例都包含内置的 <code>Error</code> 属性（<code>message</code> 和 <code>name</code>），以及：</p><ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 对于 <a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 等方法，设置为 <code>actual</code> 参数。</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 对于 <a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 等方法，设置为 <code>expected</code> 值。</li>
+<li><code>generatedMessage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示消息是否是自动生成的 (<code>true</code>)。</li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 值始终为 <code>ERR_ASSERTION</code>，以表明该错误是断言错误。</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 设置为传入的运算符值。</li>
+</ul><pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// 生成 AssertionError，以便稍后比较错误信息：</span>
+<span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">AssertionError</span>({
+  <span class="hljs-attr">actual</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">expected</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">operator</span>: <span class="hljs-string">'strictEqual'</span>
+});
+
+<span class="hljs-comment">// 验证错误的输出：</span>
+<span class="hljs-keyword">try</span> {
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> assert.<span class="hljs-property">AssertionError</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, message);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'AssertionError'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">actual</span>, <span class="hljs-number">1</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">expected</span>, <span class="hljs-number">2</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">code</span>, <span class="hljs-string">'ERR_ASSERTION'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">operator</span>, <span class="hljs-string">'strictEqual'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">generatedMessage</span>, <span class="hljs-literal">true</span>);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// 生成 AssertionError，以便稍后比较错误信息：</span>
+<span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">AssertionError</span>({
+  <span class="hljs-attr">actual</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">expected</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">operator</span>: <span class="hljs-string">'strictEqual'</span>
+});
+
+<span class="hljs-comment">// 验证错误的输出：</span>
+<span class="hljs-keyword">try</span> {
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> assert.<span class="hljs-property">AssertionError</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, message);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'AssertionError'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">actual</span>, <span class="hljs-number">1</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">expected</span>, <span class="hljs-number">2</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">code</span>, <span class="hljs-string">'ERR_ASSERTION'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">operator</span>, <span class="hljs-string">'strictEqual'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">generatedMessage</span>, <span class="hljs-literal">true</span>);
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.21</span>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If provided, the error message is set to this value.</li>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> The <code>actual</code> property on the error instance.</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> The <code>expected</code> property on the error instance.</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The <code>operator</code> property on the error instance.</li>
+<li><code>stackStartFn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> If provided, the generated stack trace omits
+frames before this function.</li>
+</ul>
+</li>
+</ul><p>A subclass of <code>Error</code> that indicates the failure of an assertion.</p><p>All instances contain the built-in <code>Error</code> properties (<code>message</code> and <code>name</code>)
+and:</p><ul>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> Set to the <code>actual</code> argument for methods such as
+<a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a>.</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> Set to the <code>expected</code> value for methods such as
+<a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a>.</li>
+<li><code>generatedMessage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Indicates if the message was auto-generated
+(<code>true</code>) or not.</li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Value is always <code>ERR_ASSERTION</code> to show that the error is an
+assertion error.</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Set to the passed in operator value.</li>
+</ul><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// Generate an AssertionError to compare the error message later:</span>
+<span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">AssertionError</span>({
+  <span class="hljs-attr">actual</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">expected</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">operator</span>: <span class="hljs-string">'strictEqual'</span>
+});
+
+<span class="hljs-comment">// Verify error output:</span>
+<span class="hljs-keyword">try</span> {
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> assert.<span class="hljs-property">AssertionError</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, message);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'AssertionError'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">actual</span>, <span class="hljs-number">1</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">expected</span>, <span class="hljs-number">2</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">code</span>, <span class="hljs-string">'ERR_ASSERTION'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">operator</span>, <span class="hljs-string">'strictEqual'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">generatedMessage</span>, <span class="hljs-literal">true</span>);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// Generate an AssertionError to compare the error message later:</span>
+<span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">AssertionError</span>({
+  <span class="hljs-attr">actual</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">expected</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">operator</span>: <span class="hljs-string">'strictEqual'</span>
+});
+
+<span class="hljs-comment">// Verify error output:</span>
+<span class="hljs-keyword">try</span> {
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> assert.<span class="hljs-property">AssertionError</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, message);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'AssertionError'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">actual</span>, <span class="hljs-number">1</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">expected</span>, <span class="hljs-number">2</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">code</span>, <span class="hljs-string">'ERR_ASSERTION'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">operator</span>, <span class="hljs-string">'strictEqual'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">generatedMessage</span>, <span class="hljs-literal">true</span>);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

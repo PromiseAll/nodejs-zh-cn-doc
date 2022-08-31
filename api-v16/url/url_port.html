@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>url.port | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-url">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>url.port</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../url.html#url_url_port" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/url/url_port.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/url/url_port.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/url/#urlport.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>“gopher” 协议不再是特殊的。</p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>获取和设置网址的端口部分。</p><p class="">端口值可以是数字，也可以是包含 <code>0</code> 到 <code>65535</code>（含）范围内的数字的字符串。
+将值设置为给定 <code>protocol</code> 的 <code>URL</code> 对象的默认端口将导致 <code>port</code> 值成为空字符串 (<code>''</code>)。</p><p class="">端口值可以是空字符串，在这种情况下端口取决于协议/方案：</p><table class=""><thead><tr><th>协议</th><th>端口</th></tr></thead><tbody><tr><td>"ftp"</td><td>21</td></tr><tr><td>"file"</td><td></td></tr><tr><td>"http"</td><td>80</td></tr><tr><td>"https"</td><td>443</td></tr><tr><td>"ws"</td><td>80</td></tr><tr><td>"wss"</td><td>443</td></tr></tbody></table><p class="">为端口分配值后，该值将首先使用 <code>.toString()</code> 转换为字符串。</p><p class="">如果该字符串无效但以数字开头，则将前导数字分配给 <code>port</code>。
+如果数字在上述范围之外，则将其忽略。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://example.org:8888'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印 8888</span>
+
+<span class="hljs-comment">// 默认端口自动转换为空字符串</span>
+<span class="hljs-comment">//（HTTPS 协议的默认端口是 443）</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-string">'443'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印空字符串</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// 打印 https://example.org/</span>
+
+myURL.<span class="hljs-property">port</span> = <span class="hljs-number">1234</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印 1234</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// 打印 https://example.org:1234/</span>
+
+<span class="hljs-comment">// 完全无效的端口字符串被忽略</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-string">'abcd'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印 1234</span>
+
+<span class="hljs-comment">// 前导数字被视为端口号</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-string">'5678abcd'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印 5678</span>
+
+<span class="hljs-comment">// 非整数被截断</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-number">1234.5678</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印 1234</span>
+
+<span class="hljs-comment">// 未用科学计数法表示的超出范围的数字将被忽略。</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-number">1e10</span>; <span class="hljs-comment">// 10000000000，将按如下所述进行范围检查</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印 1234</span></code></pre><p class="">包含小数点的数字，例如浮点数或科学记数法中的数字，也不例外。
+小数点前的前导数字将被设置为网址的端口，假设它们是有效的：</p><pre class=""><code class="language-js">myURL.<span class="hljs-property">port</span> = <span class="hljs-number">4.567e21</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// 打印 4（因为它是字符串 '4.567e21' 中的前导数字）</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>The scheme "gopher" is no longer special.</p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>Gets and sets the port portion of the URL.</p><p>The port value may be a number or a string containing a number in the range
+<code>0</code> to <code>65535</code> (inclusive). Setting the value to the default port of the
+<code>URL</code> objects given <code>protocol</code> will result in the <code>port</code> value becoming
+the empty string (<code>''</code>).</p><p>The port value can be an empty string in which case the port depends on
+the protocol/scheme:</p><table><thead><tr><th>protocol</th><th>port</th></tr></thead><tbody><tr><td>"ftp"</td><td>21</td></tr><tr><td>"file"</td><td></td></tr><tr><td>"http"</td><td>80</td></tr><tr><td>"https"</td><td>443</td></tr><tr><td>"ws"</td><td>80</td></tr><tr><td>"wss"</td><td>443</td></tr></tbody></table><p>Upon assigning a value to the port, the value will first be converted to a
+string using <code>.toString()</code>.</p><p>If that string is invalid but it begins with a number, the leading number is
+assigned to <code>port</code>.
+If the number lies outside the range denoted above, it is ignored.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://example.org:8888'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints 8888</span>
+
+<span class="hljs-comment">// Default ports are automatically transformed to the empty string</span>
+<span class="hljs-comment">// (HTTPS protocol's default port is 443)</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-string">'443'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints the empty string</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// Prints https://example.org/</span>
+
+myURL.<span class="hljs-property">port</span> = <span class="hljs-number">1234</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints 1234</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// Prints https://example.org:1234/</span>
+
+<span class="hljs-comment">// Completely invalid port strings are ignored</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-string">'abcd'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints 1234</span>
+
+<span class="hljs-comment">// Leading numbers are treated as a port number</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-string">'5678abcd'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints 5678</span>
+
+<span class="hljs-comment">// Non-integers are truncated</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-number">1234.5678</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints 1234</span>
+
+<span class="hljs-comment">// Out-of-range numbers which are not represented in scientific notation</span>
+<span class="hljs-comment">// will be ignored.</span>
+myURL.<span class="hljs-property">port</span> = <span class="hljs-number">1e10</span>; <span class="hljs-comment">// 10000000000, will be range-checked as described below</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints 1234</span></code></pre><p>Numbers which contain a decimal point,
+such as floating-point numbers or numbers in scientific notation,
+are not an exception to this rule.
+Leading numbers up to the decimal point will be set as the URL's port,
+assuming they are valid:</p><pre><code class="language-js">myURL.<span class="hljs-property">port</span> = <span class="hljs-number">4.567e21</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">port</span>);
+<span class="hljs-comment">// Prints 4 (because it is the leading number in the string '4.567e21')</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

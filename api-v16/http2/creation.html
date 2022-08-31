@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>创建 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>创建</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_creation" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/creation.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/creation.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#creation.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在服务器端，<a href="../http2.html#class-serverhttp2stream"><code>ServerHttp2Stream</code></a> 的实例是在以下任一情况下创建的：</p><ul class="">
+<li>接收到新的 HTTP/2 <code>HEADERS</code> 帧，其中包含以前未使用的流 ID；</li>
+<li>调用了 <code>http2stream.pushStream()</code> 方法。</li>
+</ul><p class="">在客户端，<a href="../http2.html#class-clienthttp2stream"><code>ClientHttp2Stream</code></a> 的实例是在调用 <code>http2session.request()</code> 方法时创建的。</p><p class="">在客户端，如果父 <code>Http2Session</code> 尚未完全建立，则 <code>http2session.request()</code> 返回的 <code>Http2Stream</code> 实例可能不会立即准备好使用。
+在这种情况下，在 <code>Http2Stream</code> 上调用的操作将被缓冲，直到触发 <code>'ready'</code> 事件。
+用户代码应该很少，如果有的话，需要直接处理 <code>'ready'</code> 事件。
+<code>Http2Stream</code> 的就绪状态可以通过检查 <code>http2stream.id</code> 的值来确定。
+如果值为 <code>undefined</code>，则流尚未准备好使用。</p></div>
+          <div id="content_right"><p>On the server side, instances of <a href="../http2.html#class-serverhttp2stream"><code>ServerHttp2Stream</code></a> are created either
+when:</p><ul>
+<li>A new HTTP/2 <code>HEADERS</code> frame with a previously unused stream ID is received;</li>
+<li>The <code>http2stream.pushStream()</code> method is called.</li>
+</ul><p>On the client side, instances of <a href="../http2.html#class-clienthttp2stream"><code>ClientHttp2Stream</code></a> are created when the
+<code>http2session.request()</code> method is called.</p><p>On the client, the <code>Http2Stream</code> instance returned by <code>http2session.request()</code>
+may not be immediately ready for use if the parent <code>Http2Session</code> has not yet
+been fully established. In such cases, operations called on the <code>Http2Stream</code>
+will be buffered until the <code>'ready'</code> event is emitted. User code should rarely,
+if ever, need to handle the <code>'ready'</code> event directly. The ready status of an
+<code>Http2Stream</code> can be determined by checking the value of <code>http2stream.id</code>. If
+the value is <code>undefined</code>, the stream is not yet ready for use.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>child_process.spawn(command[, args][, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>child_process.spawn(command[, args][, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_child_process_spawn_command_args_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/child_process_spawn_command_args_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/child_process_spawn_command_args_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#child_processspawncommand-args-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.4.0</td>
+<td><p>选项 <code>cwd</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v15.13.0</td>
+<td><p>添加了超时。</p></td></tr>
+<tr><td>v15.11.0</td>
+<td><p>添加了中止信号的杀死信号。</p></td></tr>
+<tr><td>v15.5.0</td>
+<td><p>添加了中止信号支持。</p></td></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>现在支持 <code>serialization</code> 选项。</p></td></tr>
+<tr><td>v8.8.0</td>
+<td><p>现在支持 <code>windowsHide</code> 选项。</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>现在支持 <code>argv0</code> 选项。</p></td></tr>
+<tr><td>v5.7.0</td>
+<td><p>现在支持 <code>shell</code> 选项。</p></td></tr>
+<tr><td>v0.1.90</td>
+<td><p><span>新增于: v0.1.90</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>command</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要运行的命令。</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 字符串参数列表。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 子进程的当前工作目录。</li>
+<li><code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 环境变量键值对。 <strong>默认值:</strong> <code>process.env</code>。</li>
+<li><code>argv0</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 显式设置发送给子进程的 <code>argv[0]</code> 的值。
+如果未指定，这将设置为 <code>command</code>。</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 子进程的标准输入输出配置（参见 <a href="../child_process.html#optionsstdio"><code>options.stdio</code></a>）。</li>
+<li><code>detached</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 准备子进程独立于其父进程运行。
+具体行为取决于平台，参见 <a href="../child_process.html#optionsdetached"><code>options.detached</code></a>。</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的用户标识（参见 <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>）。</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的群组标识（参见 <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>）。</li>
+<li><code>serialization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指定用于在进程之间发送消息的序列化类型。
+可能的值为 <code>'json'</code> 和 <code>'advanced'</code>。
+有关更多详细信息，请参阅<a href="../child_process.html#advanced-serialization">高级序列化</a>。 <strong>默认值:</strong> <code>'json'</code>。</li>
+<li><code>shell</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果是 <code>true</code>，则在 shell 内运行 <code>command</code>。
+在 Unix 上使用 <code>'/bin/sh'</code>，在 Windows 上使用 <code>process.env.ComSpec</code>。
+可以将不同的 shell 指定为字符串。
+请参阅 <a href="../child_process.html#shell-requirements">shell 的要求</a>和<a href="../child_process.html#default-windows-shell">默认的 Windows shell</a>。 <strong>默认值:</strong> <code>false</code> （没有 shell）</li>
+<li><code>windowsVerbatimArguments</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 在 Windows 上不为参数加上引号或转义。
+在 Unix 上被忽略。
+当指定了 <code>shell</code> 并且是 CMD 时，则自动设置为 <code>true</code>。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>windowsHide</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 隐藏通常在 Windows 系统上创建的子进程控制台窗口。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 允许使用中止信号中止子进程。</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 允许进程运行的最长时间（以毫秒为单位）。 <strong>默认值:</strong> <code>undefined</code>。</li>
+<li><code>killSignal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 当衍生的进程将被超时或中止信号杀死时要使用的信号值。 <strong>默认值:</strong> <code>'SIGTERM'</code>。</li>
+</ul>
+</li>
+<li>返回: <a href="../child_process.html#class-childprocess" rel="nofollow" class="type">&lt;ChildProcess&gt;</a></li>
+</ul><p><code>child_process.spawn()</code> 方法使用给定的 <code>command</code> 和 <code>args</code> 中的命令行参数衍生新进程。
+如果省略，<code>args</code> 默认为空数组。</p><p class=""><strong>如果启用了 <code>shell</code> 选项，则请勿将未经处理的用户输入传递给此函数。
+任何包含 shell 元字符的输入都可用于触发任意命令执行。</strong></p><p class="">第三个参数可用于指定其他选项，具有以下默认值：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> defaults = {
+  <span class="hljs-attr">cwd</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">env</span>: process.<span class="hljs-property">env</span>
+};</code></pre><p class="">使用 <code>cwd</code> 指定从中衍生进程的工作目录。
+如果没有给定，则默认是继承当前工作目录。
+如果给定，但路径不存在，则子进程会触发 <code>ENOENT</code> 错误并立即退出。
+当命令不存在时，也会触发 <code>ENOENT</code>。</p><p class="">使用 <code>env</code> 指定对新进程可见的环境变量，默认为 <a href="../process.html#processenv"><code>process.env</code></a>。</p><p class=""><code>env</code> 中的 <code>undefined</code> 值将被忽略。</p><p class="">运行 <code>ls -lh /usr</code>、捕获 <code>stdout</code>、<code>stderr</code> 和退出码的示例：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> ls = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ls'</span>, [<span class="hljs-string">'-lh'</span>, <span class="hljs-string">'/usr'</span>]);
+
+ls.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stdout: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`child process exited with code <span class="hljs-subst">${code}</span>`</span>);
+});</code></pre><p class="">示例：一种非常精细的运行 <code>ps ax | grep ssh</code> 的方式</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> ps = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ps'</span>, [<span class="hljs-string">'ax'</span>]);
+<span class="hljs-keyword">const</span> grep = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'grep'</span>, [<span class="hljs-string">'ssh'</span>]);
+
+ps.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  grep.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">write</span>(data);
+});
+
+ps.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`ps stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ps.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (code !== <span class="hljs-number">0</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`ps process exited with code <span class="hljs-subst">${code}</span>`</span>);
+  }
+  grep.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">end</span>();
+});
+
+grep.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-title function_">toString</span>());
+});
+
+grep.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`grep stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+grep.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (code !== <span class="hljs-number">0</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`grep process exited with code <span class="hljs-subst">${code}</span>`</span>);
+  }
+});</code></pre><p class="">检查失败 <code>spawn</code> 的示例：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> subprocess = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'bad_command'</span>);
+
+subprocess.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'Failed to start subprocess.'</span>);
+});</code></pre><p class="">某些平台（macOS、Linux）将使用 <code>argv[0]</code> 的值作为进程标题，而其他平台（Windows、SunOS）将使用 <code>command</code>。</p><p class="">Node.js 当前在启动时用 <code>process.execPath</code> 覆盖 <code>argv[0]</code>，因此 Node.js 子进程中的 <code>process.argv[0]</code> 将不匹配从父进程传给 <code>spawn</code> 的 <code>argv0</code> 参数，而是使用 <code>process.argv0</code> 属性检索它。</p><p class="">如果启用了 <code>signal</code> 选项，则在相应的 <code>AbortController</code> 上调用 <code>.abort()</code> 与在子进程上调用 <code>.kill()</code> 类似，只是传给回调的错误将是 <code>AbortError</code>：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> { signal } = controller;
+<span class="hljs-keyword">const</span> grep = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'grep'</span>, [<span class="hljs-string">'ssh'</span>], { signal });
+grep.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-comment">// 如果控制器中止，则这将在 err 为 AbortError 的情况下被调用</span>
+});
+controller.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// 停止子进程</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.4.0</td>
+<td><p>The <code>cwd</code> option can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v15.13.0</td>
+<td><p>timeout was added.</p></td></tr>
+<tr><td>v15.11.0</td>
+<td><p>killSignal for AbortSignal was added.</p></td></tr>
+<tr><td>v15.5.0</td>
+<td><p>AbortSignal support was added.</p></td></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>The <code>serialization</code> option is supported now.</p></td></tr>
+<tr><td>v8.8.0</td>
+<td><p>The <code>windowsHide</code> option is supported now.</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>The <code>argv0</code> option is supported now.</p></td></tr>
+<tr><td>v5.7.0</td>
+<td><p>The <code>shell</code> option is supported now.</p></td></tr>
+<tr><td>v0.1.90</td>
+<td><p><span>Added in: v0.1.90</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>command</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The command to run.</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> List of string arguments.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> Current working directory of the child process.</li>
+<li><code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Environment key-value pairs. <strong>Default:</strong> <code>process.env</code>.</li>
+<li><code>argv0</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Explicitly set the value of <code>argv[0]</code> sent to the child
+process. This will be set to <code>command</code> if not specified.</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Child's stdio configuration (see
+<a href="../child_process.html#optionsstdio"><code>options.stdio</code></a>).</li>
+<li><code>detached</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Prepare child to run independently of its parent
+process. Specific behavior depends on the platform, see
+<a href="../child_process.html#optionsdetached"><code>options.detached</code></a>).</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the user identity of the process (see <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>).</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the group identity of the process (see <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>).</li>
+<li><code>serialization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Specify the kind of serialization used for sending
+messages between processes. Possible values are <code>'json'</code> and <code>'advanced'</code>.
+See <a href="../child_process.html#advanced-serialization">Advanced serialization</a> for more details. <strong>Default:</strong> <code>'json'</code>.</li>
+<li><code>shell</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If <code>true</code>, runs <code>command</code> inside of a shell. Uses
+<code>'/bin/sh'</code> on Unix, and <code>process.env.ComSpec</code> on Windows. A different
+shell can be specified as a string. See <a href="../child_process.html#shell-requirements">Shell requirements</a> and
+<a href="../child_process.html#default-windows-shell">Default Windows shell</a>. <strong>Default:</strong> <code>false</code> (no shell).</li>
+<li><code>windowsVerbatimArguments</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> No quoting or escaping of arguments is
+done on Windows. Ignored on Unix. This is set to <code>true</code> automatically
+when <code>shell</code> is specified and is CMD. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>windowsHide</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Hide the subprocess console window that would
+normally be created on Windows systems. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> allows aborting the child process using an
+AbortSignal.</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> In milliseconds the maximum amount of time the process
+is allowed to run. <strong>Default:</strong> <code>undefined</code>.</li>
+<li><code>killSignal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The signal value to be used when the spawned
+process will be killed by timeout or abort signal. <strong>Default:</strong> <code>'SIGTERM'</code>.</li>
+</ul>
+</li>
+<li>Returns: <a href="../child_process.html#class-childprocess" rel="nofollow" class="type">&lt;ChildProcess&gt;</a></li>
+</ul><p>The <code>child_process.spawn()</code> method spawns a new process using the given
+<code>command</code>, with command-line arguments in <code>args</code>. If omitted, <code>args</code> defaults
+to an empty array.</p><p><strong>If the <code>shell</code> option is enabled, do not pass unsanitized user input to this
+function. Any input containing shell metacharacters may be used to trigger
+arbitrary command execution.</strong></p><p>A third argument may be used to specify additional options, with these defaults:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> defaults = {
+  <span class="hljs-attr">cwd</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">env</span>: process.<span class="hljs-property">env</span>
+};</code></pre><p>Use <code>cwd</code> to specify the working directory from which the process is spawned.
+If not given, the default is to inherit the current working directory. If given,
+but the path does not exist, the child process emits an <code>ENOENT</code> error
+and exits immediately. <code>ENOENT</code> is also emitted when the command
+does not exist.</p><p>Use <code>env</code> to specify environment variables that will be visible to the new
+process, the default is <a href="../process.html#processenv"><code>process.env</code></a>.</p><p><code>undefined</code> values in <code>env</code> will be ignored.</p><p>Example of running <code>ls -lh /usr</code>, capturing <code>stdout</code>, <code>stderr</code>, and the
+exit code:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> ls = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ls'</span>, [<span class="hljs-string">'-lh'</span>, <span class="hljs-string">'/usr'</span>]);
+
+ls.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stdout: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`child process exited with code <span class="hljs-subst">${code}</span>`</span>);
+});</code></pre><p>Example: A very elaborate way to run <code>ps ax | grep ssh</code></p><pre><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> ps = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ps'</span>, [<span class="hljs-string">'ax'</span>]);
+<span class="hljs-keyword">const</span> grep = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'grep'</span>, [<span class="hljs-string">'ssh'</span>]);
+
+ps.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  grep.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">write</span>(data);
+});
+
+ps.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`ps stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ps.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (code !== <span class="hljs-number">0</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`ps process exited with code <span class="hljs-subst">${code}</span>`</span>);
+  }
+  grep.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">end</span>();
+});
+
+grep.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-title function_">toString</span>());
+});
+
+grep.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`grep stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+grep.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (code !== <span class="hljs-number">0</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`grep process exited with code <span class="hljs-subst">${code}</span>`</span>);
+  }
+});</code></pre><p>Example of checking for failed <code>spawn</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> subprocess = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'bad_command'</span>);
+
+subprocess.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'Failed to start subprocess.'</span>);
+});</code></pre><p>Certain platforms (macOS, Linux) will use the value of <code>argv[0]</code> for the process
+title while others (Windows, SunOS) will use <code>command</code>.</p><p>Node.js currently overwrites <code>argv[0]</code> with <code>process.execPath</code> on startup, so
+<code>process.argv[0]</code> in a Node.js child process will not match the <code>argv0</code>
+parameter passed to <code>spawn</code> from the parent, retrieve it with the
+<code>process.argv0</code> property instead.</p><p>If the <code>signal</code> option is enabled, calling <code>.abort()</code> on the corresponding
+<code>AbortController</code> is similar to calling <code>.kill()</code> on the child process except
+the error passed to the callback will be an <code>AbortError</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> { signal } = controller;
+<span class="hljs-keyword">const</span> grep = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'grep'</span>, [<span class="hljs-string">'ssh'</span>], { signal });
+grep.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-comment">// This will be called with err being an AbortError if the controller aborts</span>
+});
+controller.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// Stops the child process</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

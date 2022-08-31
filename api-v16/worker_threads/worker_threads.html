@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>worker_threads 工作线程 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-worker_threads">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>worker_threads 工作线程</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../worker_threads.html#worker_threads_worker_threads" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/worker_threads/worker_threads.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/worker_threads/worker_threads.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/worker_threads/#worker-threads.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p><p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/worker_threads.js">lib/worker_threads.js</a></p><p><code>worker_threads</code> 模块允许使用并行执行 JavaScript 的线程。
+要访问它：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> worker = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);</code></pre><p class="">工作线程对于执行 CPU 密集型的 JavaScript 操作很有用。
+它们对 I/O 密集型的工作帮助不大。
+Node.js 内置的异步 I/O 操作比工作线程更高效。</p><p class="">与 <code>child_process</code> 或 <code>cluster</code> 不同，<code>worker_threads</code> 可以共享内存。
+它们通过传输 <code>ArrayBuffer</code> 实例或共享 <code>SharedArrayBuffer</code> 实例来实现。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> {
+  <span class="hljs-title class_">Worker</span>, isMainThread, parentPort, workerData
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+
+<span class="hljs-keyword">if</span> (isMainThread) {
+  <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseJSAsync</span>(<span class="hljs-params">script</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> worker = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Worker</span>(__filename, {
+        <span class="hljs-attr">workerData</span>: script
+      });
+      worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, resolve);
+      worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, reject);
+      worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'exit'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+        <span class="hljs-keyword">if</span> (code !== <span class="hljs-number">0</span>)
+          <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">`Worker stopped with exit code <span class="hljs-subst">${code}</span>`</span>));
+      });
+    });
+  };
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> { parse } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'some-js-parsing-library'</span>);
+  <span class="hljs-keyword">const</span> script = workerData;
+  parentPort.<span class="hljs-title function_">postMessage</span>(<span class="hljs-title function_">parse</span>(script));
+}</code></pre><p class="">上面的示例为每个 <code>parseJSAsync()</code> 调用衍生工作线程。
+在实践中，为这些类型的任务使用工作线程池。
+否则，创建工作线程的开销可能会超过其收益。</p><p class="">当实现工作线程池时，使用 <a href="../async_hooks.html#class-asyncresource"><code>AsyncResource</code></a> API 通知诊断工具（例如提供异步的堆栈跟踪）有关任务与其结果之间的相关性。
+有关示例实现，请参阅 <code>async_hooks</code> 文档中的<a href="../async_context.html#using-asyncresource-for-a-worker-thread-pool">“将 <code>AsyncResource</code> 用于 <code>Worker</code> 线程池”</a></p><p class="">默认情况下，工作线程继承非进程特定的选项。
+参考 <a href="../worker_threads.html#new-workerfilename-options"><code>Worker</code> 构造函数选项</a> 了解如何自定义工作线程选项，特别是 <code>argv</code> 和 <code>execArgv</code> 选项。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">Stability: 2</a> - Stable</div><p></p><p><strong>Source Code:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.15.0/lib/worker_threads.js">lib/worker_threads.js</a></p><p>The <code>worker_threads</code> module enables the use of threads that execute JavaScript
+in parallel. To access it:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> worker = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);</code></pre><p>Workers (threads) are useful for performing CPU-intensive JavaScript operations.
+They do not help much with I/O-intensive work. The Node.js built-in
+asynchronous I/O operations are more efficient than Workers can be.</p><p>Unlike <code>child_process</code> or <code>cluster</code>, <code>worker_threads</code> can share memory. They do
+so by transferring <code>ArrayBuffer</code> instances or sharing <code>SharedArrayBuffer</code>
+instances.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> {
+  <span class="hljs-title class_">Worker</span>, isMainThread, parentPort, workerData
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+
+<span class="hljs-keyword">if</span> (isMainThread) {
+  <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseJSAsync</span>(<span class="hljs-params">script</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> worker = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Worker</span>(__filename, {
+        <span class="hljs-attr">workerData</span>: script
+      });
+      worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, resolve);
+      worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, reject);
+      worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'exit'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+        <span class="hljs-keyword">if</span> (code !== <span class="hljs-number">0</span>)
+          <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">`Worker stopped with exit code <span class="hljs-subst">${code}</span>`</span>));
+      });
+    });
+  };
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> { parse } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'some-js-parsing-library'</span>);
+  <span class="hljs-keyword">const</span> script = workerData;
+  parentPort.<span class="hljs-title function_">postMessage</span>(<span class="hljs-title function_">parse</span>(script));
+}</code></pre><p>The above example spawns a Worker thread for each <code>parseJSAsync()</code> call. In
+practice, use a pool of Workers for these kinds of tasks. Otherwise, the
+overhead of creating Workers would likely exceed their benefit.</p><p>When implementing a worker pool, use the <a href="../async_hooks.html#class-asyncresource"><code>AsyncResource</code></a> API to inform
+diagnostic tools (e.g. to provide asynchronous stack traces) about the
+correlation between tasks and their outcomes. See
+<a href="../async_context.html#using-asyncresource-for-a-worker-thread-pool">"Using <code>AsyncResource</code> for a <code>Worker</code> thread pool"</a>
+in the <code>async_hooks</code> documentation for an example implementation.</p><p>Worker threads inherit non-process-specific options by default. Refer to
+<a href="../worker_threads.html#new-workerfilename-options"><code>Worker constructor options</code></a> to know how to customize worker thread options,
+specifically <code>argv</code> and <code>execArgv</code> options.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

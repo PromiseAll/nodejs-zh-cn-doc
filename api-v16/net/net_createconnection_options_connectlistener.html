@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>net.createConnection(options[, connectListener]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-net">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>net.createConnection(options[, connectListener])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../net.html#net_net_createconnection_options_connectlistener" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/net/net_createconnection_options_connectlistener.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/net/net_createconnection_options_connectlistener.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/net/#netcreateconnectionoptions-connectlistener.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 必需的。
+将传给 <a href="../net.html#new-netsocketoptions"><code>new net.Socket([options])</code></a> 调用和 <a href="../net.html#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a> 方法。</li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../net.html#netcreateconnection"><code>net.createConnection()</code></a> 函数的通用参数。
+如果提供，则将被添加为返回套接字上的 <a href="../net.html#event-connect"><code>'connect'</code></a> 事件的监听器一次。</li>
+<li>返回: <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 用于启动连接的新创建的套接字。</li>
+</ul><p>有关可用的选项，请参阅 <a href="../net.html#new-netsocketoptions"><code>new net.Socket([options])</code></a> 和 <a href="../net.html#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a>。</p><p class="">其他选项：</p><ul class="">
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果设置，则将用于在创建套接字之后但在开始连接之前调用 <a href="../net.html#socketsettimeouttimeout-callback"><code>socket.setTimeout(timeout)</code></a>。</li>
+</ul><p class="">以下是 <a href="../net.html#netcreateserveroptions-connectionlistener"><code>net.createServer()</code></a> 部分中描述的回显服务器的客户端示例：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> client = net.<span class="hljs-title function_">createConnection</span>({ <span class="hljs-attr">port</span>: <span class="hljs-number">8124</span> }, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 'connect' 监听器。</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'connected to server!'</span>);
+  client.<span class="hljs-title function_">write</span>(<span class="hljs-string">'world!\r\n'</span>);
+});
+client.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-title function_">toString</span>());
+  client.<span class="hljs-title function_">end</span>();
+});
+client.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'disconnected from server'</span>);
+});</code></pre><p class="">连接套接字 <code>/tmp/echo.sock</code>：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> client = net.<span class="hljs-title function_">createConnection</span>({ <span class="hljs-attr">path</span>: <span class="hljs-string">'/tmp/echo.sock'</span> });</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.90</span>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Required. Will be passed to both the
+<a href="../net.html#new-netsocketoptions"><code>new net.Socket([options])</code></a> call and the
+<a href="../net.html#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a>
+method.</li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Common parameter of the
+<a href="../net.html#netcreateconnection"><code>net.createConnection()</code></a> functions. If supplied, will be added as
+a listener for the <a href="../net.html#event-connect"><code>'connect'</code></a> event on the returned socket once.</li>
+<li>Returns: <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> The newly created socket used to start the connection.</li>
+</ul><p>For available options, see
+<a href="../net.html#new-netsocketoptions"><code>new net.Socket([options])</code></a>
+and <a href="../net.html#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a>.</p><p>Additional options:</p><ul>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> If set, will be used to call
+<a href="../net.html#socketsettimeouttimeout-callback"><code>socket.setTimeout(timeout)</code></a> after the socket is created, but before
+it starts the connection.</li>
+</ul><p>Following is an example of a client of the echo server described
+in the <a href="../net.html#netcreateserveroptions-connectionlistener"><code>net.createServer()</code></a> section:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> client = net.<span class="hljs-title function_">createConnection</span>({ <span class="hljs-attr">port</span>: <span class="hljs-number">8124</span> }, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 'connect' listener.</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'connected to server!'</span>);
+  client.<span class="hljs-title function_">write</span>(<span class="hljs-string">'world!\r\n'</span>);
+});
+client.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-title function_">toString</span>());
+  client.<span class="hljs-title function_">end</span>();
+});
+client.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'disconnected from server'</span>);
+});</code></pre><p>To connect on the socket <code>/tmp/echo.sock</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> client = net.<span class="hljs-title function_">createConnection</span>({ <span class="hljs-attr">path</span>: <span class="hljs-string">'/tmp/echo.sock'</span> });</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

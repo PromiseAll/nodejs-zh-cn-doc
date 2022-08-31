@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>隐式的绑定 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-domain">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>隐式的绑定</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../domain.html#domain_implicit_binding" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/domain/implicit_binding.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/domain/implicit_binding.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/domain/#implicit-binding.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>如果域正在使用中，则所有<strong>新的</strong> <code>EventEmitter</code> 对象（包括流对象、请求、响应等）将在创建时隐式地绑定到活动域。</p><p class="">此外，传给低层事件循环请求的回调（例如 <code>fs.open()</code>、或其他回调接受的方法）将自动绑定到活动域。
+如果它们抛出，则域将捕获错误。</p><p class="">为了防止过多的内存使用，<code>Domain</code> 对象本身没有被隐式地添加为活动域的子域。
+如果是这样，则阻止请求和响应对象被正确地垃圾收集就太容易了。</p><p class="">要将 <code>Domain</code> 对象嵌套为父 <code>Domain</code> 的子对象，则必须显式地添加它们。</p><p class="">隐式的绑定路由向 <code>Domain</code> 的 <code>'error'</code> 事件抛出错误和 <code>'error'</code> 事件，但没有在 <code>Domain</code> 上注册 <code>EventEmitter</code>。
+隐式的绑定只处理抛出的错误和 <code>'error'</code> 事件。</p></div>
+          <div id="content_right"><p>If domains are in use, then all <strong>new</strong> <code>EventEmitter</code> objects (including
+Stream objects, requests, responses, etc.) will be implicitly bound to
+the active domain at the time of their creation.</p><p>Additionally, callbacks passed to lowlevel event loop requests (such as
+to <code>fs.open()</code>, or other callback-taking methods) will automatically be
+bound to the active domain. If they throw, then the domain will catch
+the error.</p><p>In order to prevent excessive memory usage, <code>Domain</code> objects themselves
+are not implicitly added as children of the active domain. If they
+were, then it would be too easy to prevent request and response objects
+from being properly garbage collected.</p><p>To nest <code>Domain</code> objects as children of a parent <code>Domain</code> they must be
+explicitly added.</p><p>Implicit binding routes thrown errors and <code>'error'</code> events to the
+<code>Domain</code>'s <code>'error'</code> event, but does not register the <code>EventEmitter</code> on the
+<code>Domain</code>.
+Implicit binding only takes care of thrown errors and <code>'error'</code> events.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

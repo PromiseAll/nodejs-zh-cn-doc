@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http2stream.respond([headers[, options]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http2stream.respond([headers[, options]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_http2stream_respond_headers_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/http2stream_respond_headers_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/http2stream_respond_headers_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#http2streamrespondheaders-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>允许显式地设置日期标头。</p></td></tr>
+<tr><td>v8.4.0</td>
+<td><p><span>新增于: v8.4.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>endStream</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 设置为 <code>true</code> 表示响应将不包含有效负载数据。</li>
+<li><code>waitForTrailers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，<code>Http2Stream</code> 将在发送完最后的 <code>DATA</code> 帧后触发 <code>'wantTrailers'</code> 事件。</li>
+</ul>
+</li>
+</ul><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  stream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> });
+  stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some data'</span>);
+});</code></pre><p>当设置了 <code>options.waitForTrailers</code> 选项时，<code>'wantTrailers'</code> 事件将在将要发送的最后一块有效负载数据排队后立即发出。
+然后可以使用 <code>http2stream.sendTrailers()</code> 方法将尾随标头字段发送到对等方。</p><p class="">当设置了 <code>options.waitForTrailers</code>，则传输完最后的 <code>DATA</code> 帧时，<code>Http2Stream</code> 不会自动关闭。
+用户代码必须调用 <code>http2stream.sendTrailers()</code> 或 <code>http2stream.close()</code> 来关闭 <code>Http2Stream</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  stream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> }, { <span class="hljs-attr">waitForTrailers</span>: <span class="hljs-literal">true</span> });
+  stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'wantTrailers'</span>, <span class="hljs-function">() =&gt;</span> {
+    stream.<span class="hljs-title function_">sendTrailers</span>({ <span class="hljs-attr">ABC</span>: <span class="hljs-string">'some value to send'</span> });
+  });
+  stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some data'</span>);
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>Allow explicitly setting date headers.</p></td></tr>
+<tr><td>v8.4.0</td>
+<td><p><span>Added in: v8.4.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>endStream</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Set to <code>true</code> to indicate that the response will not
+include payload data.</li>
+<li><code>waitForTrailers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code>, the <code>Http2Stream</code> will emit the
+<code>'wantTrailers'</code> event after the final <code>DATA</code> frame has been sent.</li>
+</ul>
+</li>
+</ul><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  stream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> });
+  stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some data'</span>);
+});</code></pre><p>When the <code>options.waitForTrailers</code> option is set, the <code>'wantTrailers'</code> event
+will be emitted immediately after queuing the last chunk of payload data to be
+sent. The <code>http2stream.sendTrailers()</code> method can then be used to sent trailing
+header fields to the peer.</p><p>When <code>options.waitForTrailers</code> is set, the <code>Http2Stream</code> will not automatically
+close when the final <code>DATA</code> frame is transmitted. User code must call either
+<code>http2stream.sendTrailers()</code> or <code>http2stream.close()</code> to close the
+<code>Http2Stream</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  stream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> }, { <span class="hljs-attr">waitForTrailers</span>: <span class="hljs-literal">true</span> });
+  stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'wantTrailers'</span>, <span class="hljs-function">() =&gt;</span> {
+    stream.<span class="hljs-title function_">sendTrailers</span>({ <span class="hljs-attr">ABC</span>: <span class="hljs-string">'some value to send'</span> });
+  });
+  stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some data'</span>);
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

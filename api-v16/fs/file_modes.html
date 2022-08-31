@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>文件的模式 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>文件的模式</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_file_modes" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/file_modes.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/file_modes.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#file-modes.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>fs.chmod()</code> 和 <code>fs.chmodSync()</code> 方法中使用的 <code>mode</code> 参数是使用以下常量的逻辑或创建的数字位掩码：</p><table class=""><thead><tr><th>常量</th><th>八进制</th><th>描述</th></tr></thead><tbody><tr><td><code>fs.constants.S_IRUSR</code></td><td><code>0o400</code></td><td>所有者可读取</td></tr><tr><td><code>fs.constants.S_IWUSR</code></td><td><code>0o200</code></td><td>所有者可写入</td></tr><tr><td><code>fs.constants.S_IXUSR</code></td><td><code>0o100</code></td><td>所有者可执行/搜索</td></tr><tr><td><code>fs.constants.S_IRGRP</code></td><td><code>0o40</code></td><td>群组可读取</td></tr><tr><td><code>fs.constants.S_IWGRP</code></td><td><code>0o20</code></td><td>群组可写入</td></tr><tr><td><code>fs.constants.S_IXGRP</code></td><td><code>0o10</code></td><td>群组可执行/搜索</td></tr><tr><td><code>fs.constants.S_IROTH</code></td><td><code>0o4</code></td><td>其他人可读取</td></tr><tr><td><code>fs.constants.S_IWOTH</code></td><td><code>0o2</code></td><td>其他人可写入</td></tr><tr><td><code>fs.constants.S_IXOTH</code></td><td><code>0o1</code></td><td>其他人可执行/搜索</td></tr></tbody></table><p class="">构建 <code>mode</code> 的一种更简单的方法是使用三个八进制数字的序列（例如 <code>765</code>）。
+最左边的数字（示例中的 <code>7</code>）指定文件所有者的权限。
+中间的数字（示例中的 <code>6</code>）指定群组的权限。
+最右边的数字（示例中的 <code>5</code>）指定其他人的权限。</p><table class=""><thead><tr><th>数值</th><th>描述</th></tr></thead><tbody><tr><td><code>7</code></td><td>可读、可写和可执行</td></tr><tr><td><code>6</code></td><td>可读和可写</td></tr><tr><td><code>5</code></td><td>可读和可执行</td></tr><tr><td><code>4</code></td><td>只读</td></tr><tr><td><code>3</code></td><td>可写和可执行</td></tr><tr><td><code>2</code></td><td>只写</td></tr><tr><td><code>1</code></td><td>只可执行</td></tr><tr><td><code>0</code></td><td>无权限</td></tr></tbody></table><p class="">例如，八进制值 <code>0o765</code> 表示：</p><ul class="">
+<li>所有者可以读取、写入和执行文件。</li>
+<li>群组可以读取和写入文件。</li>
+<li>其他人可以读取和执行文件。</li>
+</ul><p class="">在需要文件模式的地方使用原始数字时，任何大于 <code>0o777</code> 的值都可能导致特定于平台的行为不支持一致工作。
+因此，像 <code>S_ISVTX</code>、<code>S_ISGID</code> 或 <code>S_ISUID</code> 这样的常量不会在 <code>fs.constants</code> 中暴露。</p><p class="">注意事项：在 Windows 上只能更改写入权限，并没有实现群组、所有者或其他人权限之间的区别。</p></div>
+          <div id="content_right"><p>The <code>mode</code> argument used in both the <code>fs.chmod()</code> and <code>fs.chmodSync()</code>
+methods is a numeric bitmask created using a logical OR of the following
+constants:</p><table><thead><tr><th>Constant</th><th>Octal</th><th>Description</th></tr></thead><tbody><tr><td><code>fs.constants.S_IRUSR</code></td><td><code>0o400</code></td><td>read by owner</td></tr><tr><td><code>fs.constants.S_IWUSR</code></td><td><code>0o200</code></td><td>write by owner</td></tr><tr><td><code>fs.constants.S_IXUSR</code></td><td><code>0o100</code></td><td>execute/search by owner</td></tr><tr><td><code>fs.constants.S_IRGRP</code></td><td><code>0o40</code></td><td>read by group</td></tr><tr><td><code>fs.constants.S_IWGRP</code></td><td><code>0o20</code></td><td>write by group</td></tr><tr><td><code>fs.constants.S_IXGRP</code></td><td><code>0o10</code></td><td>execute/search by group</td></tr><tr><td><code>fs.constants.S_IROTH</code></td><td><code>0o4</code></td><td>read by others</td></tr><tr><td><code>fs.constants.S_IWOTH</code></td><td><code>0o2</code></td><td>write by others</td></tr><tr><td><code>fs.constants.S_IXOTH</code></td><td><code>0o1</code></td><td>execute/search by others</td></tr></tbody></table><p>An easier method of constructing the <code>mode</code> is to use a sequence of three
+octal digits (e.g. <code>765</code>). The left-most digit (<code>7</code> in the example), specifies
+the permissions for the file owner. The middle digit (<code>6</code> in the example),
+specifies permissions for the group. The right-most digit (<code>5</code> in the example),
+specifies the permissions for others.</p><table><thead><tr><th>Number</th><th>Description</th></tr></thead><tbody><tr><td><code>7</code></td><td>read, write, and execute</td></tr><tr><td><code>6</code></td><td>read and write</td></tr><tr><td><code>5</code></td><td>read and execute</td></tr><tr><td><code>4</code></td><td>read only</td></tr><tr><td><code>3</code></td><td>write and execute</td></tr><tr><td><code>2</code></td><td>write only</td></tr><tr><td><code>1</code></td><td>execute only</td></tr><tr><td><code>0</code></td><td>no permission</td></tr></tbody></table><p>For example, the octal value <code>0o765</code> means:</p><ul>
+<li>The owner may read, write and execute the file.</li>
+<li>The group may read and write the file.</li>
+<li>Others may read and execute the file.</li>
+</ul><p>When using raw numbers where file modes are expected, any value larger than
+<code>0o777</code> may result in platform-specific behaviors that are not supported to work
+consistently. Therefore constants like <code>S_ISVTX</code>, <code>S_ISGID</code> or <code>S_ISUID</code> are not
+exposed in <code>fs.constants</code>.</p><p>Caveats: on Windows only the write permission can be changed, and the
+distinction among the permissions of group, owner or others is not
+implemented.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

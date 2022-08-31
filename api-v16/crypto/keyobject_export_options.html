@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>keyObject.export([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>keyObject.export([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_keyobject_export_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/keyobject_export_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/crypto/keyobject_export_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#keyobjectexportoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.9.0</td>
+<td><p>添加了对 <code>'jwk'</code> 格式的支持。</p></td></tr>
+<tr><td>v11.6.0</td>
+<td><p><span>新增于: v11.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>对于对称密钥，可以使用以下编码选项：</p><ul class="">
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 必须是 <code>'buffer'</code>（默认）或 <code>'jwk'</code>。</li>
+</ul><p class="">对于公钥，可以使用以下编码选项：</p><ul class="">
+<li><code>type</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 必须是 <code>'pkcs1'</code>（仅限 RSA）或 <code>'spki'</code> 之一。</li>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 必须是 <code>'pem'</code>、<code>'der'</code> 或 <code>'jwk'</code>。</li>
+</ul><p class="">对于私钥，可以使用以下编码选项：</p><ul class="">
+<li><code>type</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 必须是 <code>'pkcs1'</code>（仅限 RSA）、<code>'pkcs8'</code> 或 <code>'sec1'</code>（仅限 EC）之一。</li>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 必须是 <code>'pem'</code>、<code>'der'</code> 或 <code>'jwk'</code>。</li>
+<li><code>cipher</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果指定，则私钥将使用给定的 <code>cipher</code> 和 <code>passphrase</code> 使用基于 PKCS#5 v2.0 密码的加密进行加密。</li>
+<li><code>passphrase</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 用于加密的密码，参见 <code>cipher</code>。</li>
+</ul><p class="">结果类型取决于选择的编码格式，当 PEM 结果是字符串时，当 DER 将是包含编码为 DER 的数据的缓冲区，当 <a href="https://tools.ietf.org/html/rfc7517" rel="nofollow">JWK</a> 时它将是对象。</p><p class="">选择 <a href="https://tools.ietf.org/html/rfc7517" rel="nofollow">JWK</a> 编码格式时，将忽略所有其他编码选项。</p><p class="">PKCS#1、SEC1 和 PKCS#8 类型的密钥可以通过使用 <code>cipher</code> 和 <code>format</code> 选项的组合进行加密。
+PKCS#8 <code>type</code> 可以与任何 <code>format</code> 一起使用，通过指定 <code>cipher</code> 来加密任何密钥算法（RSA、EC 或 DH）。
+当使用 PEM <code>format</code> 时，PKCS#1 和 SEC1 只能通过指定 <code>cipher</code> 来加密。
+为了获得最大的兼容性，对加密的私钥使用 PKCS#8。
+由于 PKCS#8 定义了自己的加密机制，因此在加密 PKCS#8 密钥时不支持 PEM 级加密。
+PKCS#8 加密参见 <a href="https://www.rfc-editor.org/rfc/rfc5208.txt" rel="nofollow">RFC 5208</a>，PKCS#1 和 SEC1 加密参见 <a href="https://www.rfc-editor.org/rfc/rfc1421.txt" rel="nofollow">RFC 1421</a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.9.0</td>
+<td><p>Added support for <code>'jwk'</code> format.</p></td></tr>
+<tr><td>v11.6.0</td>
+<td><p><span>Added in: v11.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>For symmetric keys, the following encoding options can be used:</p><ul>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'buffer'</code> (default) or <code>'jwk'</code>.</li>
+</ul><p>For public keys, the following encoding options can be used:</p><ul>
+<li><code>type</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'pkcs1'</code> (RSA only) or <code>'spki'</code>.</li>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'pem'</code>, <code>'der'</code>, or <code>'jwk'</code>.</li>
+</ul><p>For private keys, the following encoding options can be used:</p><ul>
+<li><code>type</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'pkcs1'</code> (RSA only), <code>'pkcs8'</code> or
+<code>'sec1'</code> (EC only).</li>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'pem'</code>, <code>'der'</code>, or <code>'jwk'</code>.</li>
+<li><code>cipher</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If specified, the private key will be encrypted with
+the given <code>cipher</code> and <code>passphrase</code> using PKCS#5 v2.0 password based
+encryption.</li>
+<li><code>passphrase</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The passphrase to use for encryption, see
+<code>cipher</code>.</li>
+</ul><p>The result type depends on the selected encoding format, when PEM the
+result is a string, when DER it will be a buffer containing the data
+encoded as DER, when <a href="https://tools.ietf.org/html/rfc7517" rel="nofollow">JWK</a> it will be an object.</p><p>When <a href="https://tools.ietf.org/html/rfc7517" rel="nofollow">JWK</a> encoding format was selected, all other encoding options are
+ignored.</p><p>PKCS#1, SEC1, and PKCS#8 type keys can be encrypted by using a combination of
+the <code>cipher</code> and <code>format</code> options. The PKCS#8 <code>type</code> can be used with any
+<code>format</code> to encrypt any key algorithm (RSA, EC, or DH) by specifying a
+<code>cipher</code>. PKCS#1 and SEC1 can only be encrypted by specifying a <code>cipher</code>
+when the PEM <code>format</code> is used. For maximum compatibility, use PKCS#8 for
+encrypted private keys. Since PKCS#8 defines its own
+encryption mechanism, PEM-level encryption is not supported when encrypting
+a PKCS#8 key. See <a href="https://www.rfc-editor.org/rfc/rfc5208.txt" rel="nofollow">RFC 5208</a> for PKCS#8 encryption and <a href="https://www.rfc-editor.org/rfc/rfc1421.txt" rel="nofollow">RFC 1421</a> for
+PKCS#1 and SEC1 encryption.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

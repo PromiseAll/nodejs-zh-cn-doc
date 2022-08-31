@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>writable.end([chunk[, encoding]][, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>writable.end([chunk[, encoding]][, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_writable_end_chunk_encoding_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/writable_end_chunk_encoding_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/writable_end_chunk_encoding_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#writableendchunk-encoding-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p><code>callback</code> 在 'finish' 事件之前或出错时被调用。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>如果触发 'finish' 或 'error' 事件，则调用 <code>callback</code>。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>此方法现在返回对 <code>writable</code> 的引用。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>chunk</code> 现在可以是 <code>Uint8Array</code> 实例。</p></td></tr>
+<tr><td>v0.9.4</td>
+<td><p><span>新增于: v0.9.4</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>chunk</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 可选的要写入的数据。
+对于不在对象模式下操作的流，<code>chunk</code> 必须是字符串、<code>Buffer</code> 或 <code>Uint8Array</code>。
+对于对象模式的流，<code>chunk</code> 可以是除 <code>null</code> 之外的任何 JavaScript 值。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>chunk</code> 为字符串时的编码</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 流结束时的回调。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p>调用 <code>writable.end()</code> 方法表示不再有数据写入 <a href="../stream.html#class-streamwritable"><code>Writable</code></a>。
+可选的 <code>chunk</code> 和 <code>encoding</code> 参数允许在关闭流之前立即写入最后一个额外的数据块。</p><p class="">在调用 <a href="../stream.html#writableendchunk-encoding-callback"><code>stream.end()</code></a> 之后调用 <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> 方法将引发错误。</p><pre class=""><code class="language-js"><span class="hljs-comment">// 写入 'hello, ' 然后以 'world!' 结尾。</span>
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> file = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'example.txt'</span>);
+file.<span class="hljs-title function_">write</span>(<span class="hljs-string">'hello, '</span>);
+file.<span class="hljs-title function_">end</span>(<span class="hljs-string">'world!'</span>);
+<span class="hljs-comment">// 现在不允许写入更多！</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>The <code>callback</code> is invoked before 'finish' or on error.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>The <code>callback</code> is invoked if 'finish' or 'error' is emitted.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>This method now returns a reference to <code>writable</code>.</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>The <code>chunk</code> argument can now be a <code>Uint8Array</code> instance.</p></td></tr>
+<tr><td>v0.9.4</td>
+<td><p><span>Added in: v0.9.4</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>chunk</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> Optional data to write. For streams
+not operating in object mode, <code>chunk</code> must be a string, <code>Buffer</code> or
+<code>Uint8Array</code>. For object mode streams, <code>chunk</code> may be any JavaScript value
+other than <code>null</code>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The encoding if <code>chunk</code> is a string</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Callback for when the stream is finished.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p>Calling the <code>writable.end()</code> method signals that no more data will be written
+to the <a href="../stream.html#class-streamwritable"><code>Writable</code></a>. The optional <code>chunk</code> and <code>encoding</code> arguments allow one
+final additional chunk of data to be written immediately before closing the
+stream.</p><p>Calling the <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> method after calling
+<a href="../stream.html#writableendchunk-encoding-callback"><code>stream.end()</code></a> will raise an error.</p><pre><code class="language-js"><span class="hljs-comment">// Write 'hello, ' and then end with 'world!'.</span>
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> file = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'example.txt'</span>);
+file.<span class="hljs-title function_">write</span>(<span class="hljs-string">'hello, '</span>);
+file.<span class="hljs-title function_">end</span>(<span class="hljs-string">'world!'</span>);
+<span class="hljs-comment">// Writing more now is not allowed!</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

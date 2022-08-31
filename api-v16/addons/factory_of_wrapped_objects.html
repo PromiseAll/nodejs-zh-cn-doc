@@ -1,0 +1,433 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>封装对象的工厂 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>封装对象的工厂</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_factory_of_wrapped_objects" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/factory_of_wrapped_objects.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/factory_of_wrapped_objects.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#factory-of-wrapped-objects.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>另外，可以使用工厂模式来避免使用 JavaScript <code>new</code> 运算符显式创建对象实例：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> obj = addon.<span class="hljs-title function_">createObject</span>();
+<span class="hljs-comment">// 而不是：</span>
+<span class="hljs-comment">// const obj = new addon.Object();</span></code></pre><p class="">首先，<code>createObject()</code> 方法在 <code>addon.cc</code> 中实现：</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"myobject.h"</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">CreateObject</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  MyObject::<span class="hljs-built_in">NewInstance</span>(args);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">InitAll</span><span class="hljs-params">(Local&lt;Object&gt; exports, Local&lt;Object&gt; <span class="hljs-keyword">module</span>)</span> </span>{
+  MyObject::<span class="hljs-built_in">Init</span>(exports-&gt;<span class="hljs-built_in">GetIsolate</span>());
+
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(<span class="hljs-keyword">module</span>, <span class="hljs-string">"exports"</span>, CreateObject);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, InitAll)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p class="">在 <code>myobject.h</code> 中，添加了静态方法 <code>NewInstance()</code> 来处理对象的实例化。
+这个方法代替了 JavaScript 中的 <code>new</code> ：</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// myobject.h</span>
+<span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> MYOBJECT_H</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MYOBJECT_H</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node_object_wrap.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyObject</span> : <span class="hljs-keyword">public</span> node::ObjectWrap {
+ <span class="hljs-keyword">public</span>:
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">Init</span><span class="hljs-params">(v8::Isolate* isolate)</span></span>;
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">NewInstance</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; args)</span></span>;
+
+ <span class="hljs-keyword">private</span>:
+  <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">MyObject</span><span class="hljs-params">(<span class="hljs-type">double</span> value = <span class="hljs-number">0</span>)</span></span>;
+  ~<span class="hljs-built_in">MyObject</span>();
+
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">New</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; args)</span></span>;
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">PlusOne</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; args)</span></span>;
+  <span class="hljs-type">static</span> v8::Global&lt;v8::Function&gt; constructor;
+  <span class="hljs-type">double</span> value_;
+};
+
+}  <span class="hljs-comment">// namespace demo</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">endif</span></span></code></pre><p class=""><code>myobject.cc</code> 中的实现类似于前面的例子：</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// myobject.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"myobject.h"</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> node::AddEnvironmentCleanupHook;
+<span class="hljs-keyword">using</span> v8::Context;
+<span class="hljs-keyword">using</span> v8::Function;
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::FunctionTemplate;
+<span class="hljs-keyword">using</span> v8::Global;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Number;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-comment">// 警告！这不是线程安全的，</span>
+<span class="hljs-comment">// 这个插件不能用于工作线程。</span>
+Global&lt;Function&gt; MyObject::constructor;
+
+MyObject::<span class="hljs-built_in">MyObject</span>(<span class="hljs-type">double</span> value) : <span class="hljs-built_in">value_</span>(value) {
+}
+
+MyObject::~<span class="hljs-built_in">MyObject</span>() {
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::Init</span><span class="hljs-params">(Isolate* isolate)</span> </span>{
+  <span class="hljs-comment">// 准备构造函数模板</span>
+  Local&lt;FunctionTemplate&gt; tpl = FunctionTemplate::<span class="hljs-built_in">New</span>(isolate, New);
+  tpl-&gt;<span class="hljs-built_in">SetClassName</span>(String::<span class="hljs-built_in">NewFromUtf8</span>(isolate, <span class="hljs-string">"MyObject"</span>).<span class="hljs-built_in">ToLocalChecked</span>());
+  tpl-&gt;<span class="hljs-built_in">InstanceTemplate</span>()-&gt;<span class="hljs-built_in">SetInternalFieldCount</span>(<span class="hljs-number">1</span>);
+
+  <span class="hljs-comment">// 原型</span>
+  <span class="hljs-built_in">NODE_SET_PROTOTYPE_METHOD</span>(tpl, <span class="hljs-string">"plusOne"</span>, PlusOne);
+
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+  constructor.<span class="hljs-built_in">Reset</span>(isolate, tpl-&gt;<span class="hljs-built_in">GetFunction</span>(context).<span class="hljs-built_in">ToLocalChecked</span>());
+
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, [](<span class="hljs-type">void</span>*) {
+    constructor.<span class="hljs-built_in">Reset</span>();
+  }, <span class="hljs-literal">nullptr</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::New</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+
+  <span class="hljs-keyword">if</span> (args.<span class="hljs-built_in">IsConstructCall</span>()) {
+    <span class="hljs-comment">// 作为构造函数调用：`new MyObject(...)`</span>
+    <span class="hljs-type">double</span> value = args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">IsUndefined</span>() ?
+        <span class="hljs-number">0</span> : args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">NumberValue</span>(context).<span class="hljs-built_in">FromMaybe</span>(<span class="hljs-number">0</span>);
+    MyObject* obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">MyObject</span>(value);
+    obj-&gt;<span class="hljs-built_in">Wrap</span>(args.<span class="hljs-built_in">This</span>());
+    args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(args.<span class="hljs-built_in">This</span>());
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// 作为普通函数 `MyObject(...)` 调用，变成构造调用。</span>
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> argc = <span class="hljs-number">1</span>;
+    Local&lt;Value&gt; argv[argc] = { args[<span class="hljs-number">0</span>] };
+    Local&lt;Function&gt; cons = Local&lt;Function&gt;::<span class="hljs-built_in">New</span>(isolate, constructor);
+    Local&lt;Object&gt; instance =
+        cons-&gt;<span class="hljs-built_in">NewInstance</span>(context, argc, argv).<span class="hljs-built_in">ToLocalChecked</span>();
+    args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(instance);
+  }
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::NewInstance</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-type">const</span> <span class="hljs-type">unsigned</span> argc = <span class="hljs-number">1</span>;
+  Local&lt;Value&gt; argv[argc] = { args[<span class="hljs-number">0</span>] };
+  Local&lt;Function&gt; cons = Local&lt;Function&gt;::<span class="hljs-built_in">New</span>(isolate, constructor);
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+  Local&lt;Object&gt; instance =
+      cons-&gt;<span class="hljs-built_in">NewInstance</span>(context, argc, argv).<span class="hljs-built_in">ToLocalChecked</span>();
+
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(instance);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::PlusOne</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+
+  MyObject* obj = ObjectWrap::<span class="hljs-built_in">Unwrap</span>&lt;MyObject&gt;(args.<span class="hljs-built_in">Holder</span>());
+  obj-&gt;value_ += <span class="hljs-number">1</span>;
+
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(Number::<span class="hljs-built_in">New</span>(isolate, obj-&gt;value_));
+}
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p class="">再一次，要构建此示例，必须将 <code>myobject.cc</code> 文件添加到 <code>binding.gyp</code>：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"targets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"target_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"addon"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"sources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-string">"addon.cc"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"myobject.cc"</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">测试它：</p><pre class=""><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-keyword">const</span> createObject = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-keyword">const</span> obj = <span class="hljs-title function_">createObject</span>(<span class="hljs-number">10</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// 打印: 11</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// 打印: 12</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// 打印: 13</span>
+
+<span class="hljs-keyword">const</span> obj2 = <span class="hljs-title function_">createObject</span>(<span class="hljs-number">20</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj2.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// 打印: 21</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj2.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// 打印: 22</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj2.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// 打印: 23</span></code></pre></div>
+          <div id="content_right"><p>Alternatively, it is possible to use a factory pattern to avoid explicitly
+creating object instances using the JavaScript <code>new</code> operator:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> obj = addon.<span class="hljs-title function_">createObject</span>();
+<span class="hljs-comment">// instead of:</span>
+<span class="hljs-comment">// const obj = new addon.Object();</span></code></pre><p>First, the <code>createObject()</code> method is implemented in <code>addon.cc</code>:</p><pre><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"myobject.h"</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">CreateObject</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  MyObject::<span class="hljs-built_in">NewInstance</span>(args);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">InitAll</span><span class="hljs-params">(Local&lt;Object&gt; exports, Local&lt;Object&gt; <span class="hljs-keyword">module</span>)</span> </span>{
+  MyObject::<span class="hljs-built_in">Init</span>(exports-&gt;<span class="hljs-built_in">GetIsolate</span>());
+
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(<span class="hljs-keyword">module</span>, <span class="hljs-string">"exports"</span>, CreateObject);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, InitAll)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p>In <code>myobject.h</code>, the static method <code>NewInstance()</code> is added to handle
+instantiating the object. This method takes the place of using <code>new</code> in
+JavaScript:</p><pre><code class="language-cpp"><span class="hljs-comment">// myobject.h</span>
+<span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> MYOBJECT_H</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MYOBJECT_H</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node_object_wrap.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyObject</span> : <span class="hljs-keyword">public</span> node::ObjectWrap {
+ <span class="hljs-keyword">public</span>:
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">Init</span><span class="hljs-params">(v8::Isolate* isolate)</span></span>;
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">NewInstance</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; args)</span></span>;
+
+ <span class="hljs-keyword">private</span>:
+  <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">MyObject</span><span class="hljs-params">(<span class="hljs-type">double</span> value = <span class="hljs-number">0</span>)</span></span>;
+  ~<span class="hljs-built_in">MyObject</span>();
+
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">New</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; args)</span></span>;
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">PlusOne</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; args)</span></span>;
+  <span class="hljs-type">static</span> v8::Global&lt;v8::Function&gt; constructor;
+  <span class="hljs-type">double</span> value_;
+};
+
+}  <span class="hljs-comment">// namespace demo</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">endif</span></span></code></pre><p>The implementation in <code>myobject.cc</code> is similar to the previous example:</p><pre><code class="language-cpp"><span class="hljs-comment">// myobject.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"myobject.h"</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> node::AddEnvironmentCleanupHook;
+<span class="hljs-keyword">using</span> v8::Context;
+<span class="hljs-keyword">using</span> v8::Function;
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::FunctionTemplate;
+<span class="hljs-keyword">using</span> v8::Global;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Number;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-comment">// Warning! This is not thread-safe, this addon cannot be used for worker</span>
+<span class="hljs-comment">// threads.</span>
+Global&lt;Function&gt; MyObject::constructor;
+
+MyObject::<span class="hljs-built_in">MyObject</span>(<span class="hljs-type">double</span> value) : <span class="hljs-built_in">value_</span>(value) {
+}
+
+MyObject::~<span class="hljs-built_in">MyObject</span>() {
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::Init</span><span class="hljs-params">(Isolate* isolate)</span> </span>{
+  <span class="hljs-comment">// Prepare constructor template</span>
+  Local&lt;FunctionTemplate&gt; tpl = FunctionTemplate::<span class="hljs-built_in">New</span>(isolate, New);
+  tpl-&gt;<span class="hljs-built_in">SetClassName</span>(String::<span class="hljs-built_in">NewFromUtf8</span>(isolate, <span class="hljs-string">"MyObject"</span>).<span class="hljs-built_in">ToLocalChecked</span>());
+  tpl-&gt;<span class="hljs-built_in">InstanceTemplate</span>()-&gt;<span class="hljs-built_in">SetInternalFieldCount</span>(<span class="hljs-number">1</span>);
+
+  <span class="hljs-comment">// Prototype</span>
+  <span class="hljs-built_in">NODE_SET_PROTOTYPE_METHOD</span>(tpl, <span class="hljs-string">"plusOne"</span>, PlusOne);
+
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+  constructor.<span class="hljs-built_in">Reset</span>(isolate, tpl-&gt;<span class="hljs-built_in">GetFunction</span>(context).<span class="hljs-built_in">ToLocalChecked</span>());
+
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, [](<span class="hljs-type">void</span>*) {
+    constructor.<span class="hljs-built_in">Reset</span>();
+  }, <span class="hljs-literal">nullptr</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::New</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+
+  <span class="hljs-keyword">if</span> (args.<span class="hljs-built_in">IsConstructCall</span>()) {
+    <span class="hljs-comment">// Invoked as constructor: `new MyObject(...)`</span>
+    <span class="hljs-type">double</span> value = args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">IsUndefined</span>() ?
+        <span class="hljs-number">0</span> : args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">NumberValue</span>(context).<span class="hljs-built_in">FromMaybe</span>(<span class="hljs-number">0</span>);
+    MyObject* obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">MyObject</span>(value);
+    obj-&gt;<span class="hljs-built_in">Wrap</span>(args.<span class="hljs-built_in">This</span>());
+    args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(args.<span class="hljs-built_in">This</span>());
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Invoked as plain function `MyObject(...)`, turn into construct call.</span>
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> argc = <span class="hljs-number">1</span>;
+    Local&lt;Value&gt; argv[argc] = { args[<span class="hljs-number">0</span>] };
+    Local&lt;Function&gt; cons = Local&lt;Function&gt;::<span class="hljs-built_in">New</span>(isolate, constructor);
+    Local&lt;Object&gt; instance =
+        cons-&gt;<span class="hljs-built_in">NewInstance</span>(context, argc, argv).<span class="hljs-built_in">ToLocalChecked</span>();
+    args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(instance);
+  }
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::NewInstance</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-type">const</span> <span class="hljs-type">unsigned</span> argc = <span class="hljs-number">1</span>;
+  Local&lt;Value&gt; argv[argc] = { args[<span class="hljs-number">0</span>] };
+  Local&lt;Function&gt; cons = Local&lt;Function&gt;::<span class="hljs-built_in">New</span>(isolate, constructor);
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+  Local&lt;Object&gt; instance =
+      cons-&gt;<span class="hljs-built_in">NewInstance</span>(context, argc, argv).<span class="hljs-built_in">ToLocalChecked</span>();
+
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(instance);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::PlusOne</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+
+  MyObject* obj = ObjectWrap::<span class="hljs-built_in">Unwrap</span>&lt;MyObject&gt;(args.<span class="hljs-built_in">Holder</span>());
+  obj-&gt;value_ += <span class="hljs-number">1</span>;
+
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(Number::<span class="hljs-built_in">New</span>(isolate, obj-&gt;value_));
+}
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p>Once again, to build this example, the <code>myobject.cc</code> file must be added to the
+<code>binding.gyp</code>:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"targets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"target_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"addon"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"sources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-string">"addon.cc"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">"myobject.cc"</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Test it with:</p><pre><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-keyword">const</span> createObject = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-keyword">const</span> obj = <span class="hljs-title function_">createObject</span>(<span class="hljs-number">10</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// Prints: 11</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// Prints: 12</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// Prints: 13</span>
+
+<span class="hljs-keyword">const</span> obj2 = <span class="hljs-title function_">createObject</span>(<span class="hljs-number">20</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj2.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// Prints: 21</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj2.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// Prints: 22</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj2.<span class="hljs-title function_">plusOne</span>());
+<span class="hljs-comment">// Prints: 23</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

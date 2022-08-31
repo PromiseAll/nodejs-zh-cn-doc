@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.write(fd, string[, position[, encoding]], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.write(fd, string[, position[, encoding]], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_write_fd_string_position_encoding_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_write_fd_string_position_encoding_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_write_fd_string_position_encoding_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fswritefd-string-position-encoding-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.12.0</td>
+<td><p>参数 <code>string</code> 将使用显式 <code>toString</code> 函数对对象进行字符串化。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>参数 <code>string</code> 不会再将不支持的输入强制转换为字符串。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它会在运行时抛出 <code>TypeError</code>。</p></td></tr>
+<tr><td>v7.2.0</td>
+<td><p>参数 <code>position</code> 现在是可选的。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它将触发 ID 为 DEP0013 的弃用警告。</p></td></tr>
+<tr><td>v0.11.5</td>
+<td><p><span>新增于: v0.11.5</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>position</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>'utf8'</code></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>written</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+</li>
+</ul><p>将 <code>string</code> 写入 <code>fd</code> 指定的文件。
+如果 <code>string</code> 不是字符串，或者不是具有自有的 <code>toString</code> 函数属性的对象，则会抛出异常。</p><p class=""><code>position</code> 指从文件开头数据应被写入的偏移量。
+如果 <code>typeof position !== 'number'</code>，则数据将写入当前位置。
+参见 <a href="http://man7.org/linux/man-pages/man2/pwrite.2.html" rel="nofollow"><code>pwrite(2)</code></a>。</p><p class=""><code>encoding</code> 是预期的字符串编码。</p><p class="">回调将接收参数 <code>(err, written, string)</code>，其中 <code>written</code> 指定传入的字符串需要被写入的字节数。
+写入的字节数不一定与写入的字符串字符数相同。
+参见 <a href="../buffer.html#static-method-bufferbytelengthstring-encoding"><code>Buffer.byteLength</code></a>。</p><p class="">在同一个文件上多次使用 <code>fs.write()</code> 而不等待回调是不安全的。
+对于这种情况，建议使用 <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a>。</p><p class="">在 Linux 上，以追加模式打开文件时，位置写入不起作用。
+内核会忽略位置参数，并始终将数据追加到文件末尾。</p><p class="">在 Windows 上，如果文件描述符连接到控制台（例如 <code>fd == 1</code> 或 <code>stdout</code>），则默认情况下无论使用何种编码，都无法正确呈现包含非 ASCII 字符的字符串。
+通过使用 <code>chcp 65001</code> 命令更改激活的代码页，可以将控制台配置为可正确呈现 UTF-8。
+有关更多详细信息，请参阅 <a href="https://ss64.com/nt/chcp.html" rel="nofollow">chcp</a> 文档。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.12.0</td>
+<td><p>The <code>string</code> parameter will stringify an object with an explicit <code>toString</code> function.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>The <code>string</code> parameter won't coerce unsupported input to strings anymore.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will throw a <code>TypeError</code> at runtime.</p></td></tr>
+<tr><td>v7.2.0</td>
+<td><p>The <code>position</code> parameter is optional now.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will emit a deprecation warning with id DEP0013.</p></td></tr>
+<tr><td>v0.11.5</td>
+<td><p><span>Added in: v0.11.5</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>position</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>Default:</strong> <code>'utf8'</code></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>written</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+</li>
+</ul><p>Write <code>string</code> to the file specified by <code>fd</code>. If <code>string</code> is not a string, or an
+object with an own <code>toString</code> function property, then an exception is thrown.</p><p><code>position</code> refers to the offset from the beginning of the file where this data
+should be written. If <code>typeof position !== 'number'</code> the data will be written at
+the current position. See <a href="http://man7.org/linux/man-pages/man2/pwrite.2.html" rel="nofollow"><code>pwrite(2)</code></a>.</p><p><code>encoding</code> is the expected string encoding.</p><p>The callback will receive the arguments <code>(err, written, string)</code> where <code>written</code>
+specifies how many <em>bytes</em> the passed string required to be written. Bytes
+written is not necessarily the same as string characters written. See
+<a href="../buffer.html#static-method-bufferbytelengthstring-encoding"><code>Buffer.byteLength</code></a>.</p><p>It is unsafe to use <code>fs.write()</code> multiple times on the same file without waiting
+for the callback. For this scenario, <a href="../fs.html#fscreatewritestreampath-options"><code>fs.createWriteStream()</code></a> is
+recommended.</p><p>On Linux, positional writes don't work when the file is opened in append mode.
+The kernel ignores the position argument and always appends the data to
+the end of the file.</p><p>On Windows, if the file descriptor is connected to the console (e.g. <code>fd == 1</code>
+or <code>stdout</code>) a string containing non-ASCII characters will not be rendered
+properly by default, regardless of the encoding used.
+It is possible to configure the console to render UTF-8 properly by changing the
+active codepage with the <code>chcp 65001</code> command. See the <a href="https://ss64.com/nt/chcp.html" rel="nofollow">chcp</a> docs for more
+details.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

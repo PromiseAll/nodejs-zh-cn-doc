@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>tracker.report() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-assert">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>tracker.report()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../assert.html#assert_tracker_report" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/assert/tracker_report.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/assert/tracker_report.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/assert/#trackerreport.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v14.2.0, v12.19.0</span>
+</div><ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> 包含有关 <a href="../assert.html#trackercallsfn-exact"><code>tracker.calls()</code></a> 返回的封装函数的信息的对象的数组。</li>
+<li>对象 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 函数被调用的实际次数。</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 函数预期被调用的次数。</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 被封装的函数的名称。</li>
+<li><code>stack</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 函数的堆栈跟踪。</li>
+</ul>
+</li>
+</ul><p>数组包含有关未调用预期次数的函数的预期和实际调用次数的信息。</p><pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-comment">// 返回包含 callfunc() 信息的数组()</span>
+tracker.<span class="hljs-title function_">report</span>();
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//    message: 'Expected the func function to be executed 2 time(s) but was</span>
+<span class="hljs-comment">//    executed 0 time(s).',</span>
+<span class="hljs-comment">//    actual: 0,</span>
+<span class="hljs-comment">//    expected: 2,</span>
+<span class="hljs-comment">//    operator: 'func',</span>
+<span class="hljs-comment">//    stack: stack trace</span>
+<span class="hljs-comment">//  }</span>
+<span class="hljs-comment">// ]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-comment">// 返回包含 callfunc() 信息的数组()</span>
+tracker.<span class="hljs-title function_">report</span>();
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//    message: 'Expected the func function to be executed 2 time(s) but was</span>
+<span class="hljs-comment">//    executed 0 time(s).',</span>
+<span class="hljs-comment">//    actual: 0,</span>
+<span class="hljs-comment">//    expected: 2,</span>
+<span class="hljs-comment">//    operator: 'func',</span>
+<span class="hljs-comment">//    stack: stack trace</span>
+<span class="hljs-comment">//  }</span>
+<span class="hljs-comment">// ]</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v14.2.0, v12.19.0</span>
+</div><ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> of objects containing information about the wrapper functions
+returned by <a href="../assert.html#trackercallsfn-exact"><code>tracker.calls()</code></a>.</li>
+<li>Object <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The actual number of times the function was called.</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The number of times the function was expected to be
+called.</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The name of the function that is wrapped.</li>
+<li><code>stack</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> A stack trace of the function.</li>
+</ul>
+</li>
+</ul><p>The arrays contains information about the expected and actual number of calls of
+the functions that have not been called the expected number of times.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// Creates call tracker.</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// Returns a function that wraps func() that must be called exact times</span>
+<span class="hljs-comment">// before tracker.verify().</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-comment">// Returns an array containing information on callsfunc()</span>
+tracker.<span class="hljs-title function_">report</span>();
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//    message: 'Expected the func function to be executed 2 time(s) but was</span>
+<span class="hljs-comment">//    executed 0 time(s).',</span>
+<span class="hljs-comment">//    actual: 0,</span>
+<span class="hljs-comment">//    expected: 2,</span>
+<span class="hljs-comment">//    operator: 'func',</span>
+<span class="hljs-comment">//    stack: stack trace</span>
+<span class="hljs-comment">//  }</span>
+<span class="hljs-comment">// ]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// Creates call tracker.</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// Returns a function that wraps func() that must be called exact times</span>
+<span class="hljs-comment">// before tracker.verify().</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-comment">// Returns an array containing information on callsfunc()</span>
+tracker.<span class="hljs-title function_">report</span>();
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//    message: 'Expected the func function to be executed 2 time(s) but was</span>
+<span class="hljs-comment">//    executed 0 time(s).',</span>
+<span class="hljs-comment">//    actual: 0,</span>
+<span class="hljs-comment">//    expected: 2,</span>
+<span class="hljs-comment">//    operator: 'func',</span>
+<span class="hljs-comment">//    stack: stack trace</span>
+<span class="hljs-comment">//  }</span>
+<span class="hljs-comment">// ]</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

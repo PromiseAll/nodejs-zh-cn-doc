@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.appendFile(path, data[, options], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.appendFile(path, data[, options], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_appendfile_path_data_options_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_appendfile_path_data_options_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_appendfile_path_data_options_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fsappendfilepath-data-options-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它会在运行时抛出 <code>TypeError</code>。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它将触发 ID 为 DEP0013 的弃用警告。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>传入的 <code>options</code> 对象永远不会被修改。</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>参数 <code>file</code> 现在可以是文件描述符。</p></td></tr>
+<tr><td>v0.6.7</td>
+<td><p><span>新增于: v0.6.7</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 文件名或文件描述符</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> <strong>默认值:</strong> <code>'utf8'</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>0o666</code></li>
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 请参阅<a href="../fs.html#file-system-flags">对文件系统 <code>flags</code> 的支持</a>。 <strong>默认值:</strong> <code>'a'</code>。</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+</li>
+</ul><p>异步地将数据追加到文件，如果该文件尚不存在，则创建该文件。
+<code>data</code> 可以是字符串或 <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a>。</p><p class=""><code>mode</code> 选项仅影响新创建的文件。
+有关详细信息，请参阅 <a href="../fs.html#fsopenpath-flags-mode-callback"><code>fs.open()</code></a>。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { appendFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">appendFile</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'data to append'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'The "data to append" was appended to file!'</span>);
+});</code></pre><p class="">如果 <code>options</code> 是字符串，则它指定编码：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { appendFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">appendFile</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'data to append'</span>, <span class="hljs-string">'utf8'</span>, callback);</code></pre><p class="">可以将 <code>path</code> 指定为已打开用于追加（使用 <code>fs.open()</code> 或 <code>fs.openSync()</code>）的数字文件描述符。
+文件描述符不会自动关闭。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { open, close, appendFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">closeFd</span>(<span class="hljs-params">fd</span>) {
+  <span class="hljs-title function_">close</span>(fd, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  });
+}
+
+<span class="hljs-title function_">open</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-title function_">appendFile</span>(fd, <span class="hljs-string">'data to append'</span>, <span class="hljs-string">'utf8'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      <span class="hljs-title function_">closeFd</span>(fd);
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    });
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-title function_">closeFd</span>(fd);
+    <span class="hljs-keyword">throw</span> err;
+  }
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will throw a <code>TypeError</code> at runtime.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will emit a deprecation warning with id DEP0013.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>The passed <code>options</code> object will never be modified.</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>The <code>file</code> parameter can be a file descriptor now.</p></td></tr>
+<tr><td>v0.6.7</td>
+<td><p><span>Added in: v0.6.7</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> filename or file descriptor</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> <strong>Default:</strong> <code>'utf8'</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>Default:</strong> <code>0o666</code></li>
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> See <a href="../fs.html#file-system-flags">support of file system <code>flags</code></a>. <strong>Default:</strong> <code>'a'</code>.</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+</li>
+</ul><p>Asynchronously append data to a file, creating the file if it does not yet
+exist. <code>data</code> can be a string or a <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a>.</p><p>The <code>mode</code> option only affects the newly created file. See <a href="../fs.html#fsopenpath-flags-mode-callback"><code>fs.open()</code></a>
+for more details.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { appendFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">appendFile</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'data to append'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'The "data to append" was appended to file!'</span>);
+});</code></pre><p>If <code>options</code> is a string, then it specifies the encoding:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { appendFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">appendFile</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'data to append'</span>, <span class="hljs-string">'utf8'</span>, callback);</code></pre><p>The <code>path</code> may be specified as a numeric file descriptor that has been opened
+for appending (using <code>fs.open()</code> or <code>fs.openSync()</code>). The file descriptor will
+not be closed automatically.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { open, close, appendFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">closeFd</span>(<span class="hljs-params">fd</span>) {
+  <span class="hljs-title function_">close</span>(fd, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  });
+}
+
+<span class="hljs-title function_">open</span>(<span class="hljs-string">'message.txt'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-title function_">appendFile</span>(fd, <span class="hljs-string">'data to append'</span>, <span class="hljs-string">'utf8'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      <span class="hljs-title function_">closeFd</span>(fd);
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    });
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-title function_">closeFd</span>(fd);
+    <span class="hljs-keyword">throw</span> err;
+  }
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

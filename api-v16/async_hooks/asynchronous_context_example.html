@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>异步上下文的示例 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>异步上下文的示例</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_asynchronous_context_example" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/asynchronous_context_example.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/asynchronous_context_example.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#asynchronous-context-example.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>以下是一个示例，其中包含有关 <code>before</code> 和 <code>after</code> 调用之间对 <code>init</code> 的调用的附加信息，特别是对 <code>listen()</code> 的回调将是什么样子。
+输出格式稍微复杂一点，使调用上下文更容易看到。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> async_hooks = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> { fd } = process.<span class="hljs-property">stdout</span>;
+
+<span class="hljs-keyword">let</span> indent = <span class="hljs-number">0</span>;
+async_hooks.<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId</span>) {
+    <span class="hljs-keyword">const</span> eid = async_hooks.<span class="hljs-title function_">executionAsyncId</span>();
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(
+      fd,
+      <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span><span class="hljs-subst">${type}</span>(<span class="hljs-subst">${asyncId}</span>):`</span> +
+      <span class="hljs-string">` trigger: <span class="hljs-subst">${triggerAsyncId}</span> execution: <span class="hljs-subst">${eid}</span>\n`</span>);
+  },
+  <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) {
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(fd, <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span>before:  <span class="hljs-subst">${asyncId}</span>\n`</span>);
+    indent += <span class="hljs-number">2</span>;
+  },
+  <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) {
+    indent -= <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(fd, <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span>after:  <span class="hljs-subst">${asyncId}</span>\n`</span>);
+  },
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) {
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(fd, <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span>destroy:  <span class="hljs-subst">${asyncId}</span>\n`</span>);
+  },
+}).<span class="hljs-title function_">enable</span>();
+
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">() =&gt;</span> {}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">8080</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 让我们在记录服务器启动之前等待 10 毫秒。</span>
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'&gt;&gt;&gt;'</span>, async_hooks.<span class="hljs-title function_">executionAsyncId</span>());
+  }, <span class="hljs-number">10</span>);
+});</code></pre><p class="">仅启动服务器的输出：</p><pre class=""><code class="language-console">TCPSERVERWRAP(5): trigger: 1 execution: 1
+TickObject(6): trigger: 5 execution: 1
+before:  6
+  Timeout(7): trigger: 6 execution: 6
+after:   6
+destroy: 6
+before:  7
+<span class="hljs-meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; 7</span>
+  TickObject(8): trigger: 7 execution: 7
+after:   7
+before:  8
+after:   8</code></pre><p class="">如示例所示，<code>executionAsyncId()</code> 和 <code>execution</code> 各自指定当前执行上下文的值；通过调用 <code>before</code> 和 <code>after</code> 来描述。</p><p class="">仅使用 <code>execution</code> 绘制资源分配图结果如下：</p><pre class=""><code class="language-console">  root(1)
+     ^
+     |
+TickObject(6)
+     ^
+     |
+ Timeout(7)</code></pre><p class=""><code>TCPSERVERWRAP</code> 不是这个图表的一部分，尽管它是调用 <code>console.log()</code> 的原因。
+这是因为绑定到一个没有主机名的端口是一个同步操作，但是为了维护一个完全异步的 API，用户的回调被放置在一个 <code>process.nextTick()</code> 中。
+这就是为什么 <code>TickObject</code> 出现在输出中并且是 <code>.listen()</code> 回调的'父调用'。</p><p class="">该图只显示资源的创建时间，而不是创建原因，因此要跟踪使用 <code>triggerAsyncId</code> 的原因。
+可以用下图表示：</p><pre class=""><code class="language-console"> bootstrap(1)
+     |
+     ˅
+TCPSERVERWRAP(5)
+     |
+     ˅
+ TickObject(6)
+     |
+     ˅
+  Timeout(7)</code></pre></div>
+          <div id="content_right"><p>The following is an example with additional information about the calls to
+<code>init</code> between the <code>before</code> and <code>after</code> calls, specifically what the
+callback to <code>listen()</code> will look like. The output formatting is slightly more
+elaborate to make calling context easier to see.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> async_hooks = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> { fd } = process.<span class="hljs-property">stdout</span>;
+
+<span class="hljs-keyword">let</span> indent = <span class="hljs-number">0</span>;
+async_hooks.<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId</span>) {
+    <span class="hljs-keyword">const</span> eid = async_hooks.<span class="hljs-title function_">executionAsyncId</span>();
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(
+      fd,
+      <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span><span class="hljs-subst">${type}</span>(<span class="hljs-subst">${asyncId}</span>):`</span> +
+      <span class="hljs-string">` trigger: <span class="hljs-subst">${triggerAsyncId}</span> execution: <span class="hljs-subst">${eid}</span>\n`</span>);
+  },
+  <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) {
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(fd, <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span>before:  <span class="hljs-subst">${asyncId}</span>\n`</span>);
+    indent += <span class="hljs-number">2</span>;
+  },
+  <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) {
+    indent -= <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(fd, <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span>after:  <span class="hljs-subst">${asyncId}</span>\n`</span>);
+  },
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) {
+    <span class="hljs-keyword">const</span> indentStr = <span class="hljs-string">' '</span>.<span class="hljs-title function_">repeat</span>(indent);
+    fs.<span class="hljs-title function_">writeSync</span>(fd, <span class="hljs-string">`<span class="hljs-subst">${indentStr}</span>destroy:  <span class="hljs-subst">${asyncId}</span>\n`</span>);
+  },
+}).<span class="hljs-title function_">enable</span>();
+
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">() =&gt;</span> {}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">8080</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// Let's wait 10ms before logging the server started.</span>
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'&gt;&gt;&gt;'</span>, async_hooks.<span class="hljs-title function_">executionAsyncId</span>());
+  }, <span class="hljs-number">10</span>);
+});</code></pre><p>Output from only starting the server:</p><pre><code class="language-console">TCPSERVERWRAP(5): trigger: 1 execution: 1
+TickObject(6): trigger: 5 execution: 1
+before:  6
+  Timeout(7): trigger: 6 execution: 6
+after:   6
+destroy: 6
+before:  7
+<span class="hljs-meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; 7</span>
+  TickObject(8): trigger: 7 execution: 7
+after:   7
+before:  8
+after:   8</code></pre><p>As illustrated in the example, <code>executionAsyncId()</code> and <code>execution</code> each specify
+the value of the current execution context; which is delineated by calls to
+<code>before</code> and <code>after</code>.</p><p>Only using <code>execution</code> to graph resource allocation results in the following:</p><pre><code class="language-console">  root(1)
+     ^
+     |
+TickObject(6)
+     ^
+     |
+ Timeout(7)</code></pre><p>The <code>TCPSERVERWRAP</code> is not part of this graph, even though it was the reason for
+<code>console.log()</code> being called. This is because binding to a port without a host
+name is a <em>synchronous</em> operation, but to maintain a completely asynchronous
+API the user's callback is placed in a <code>process.nextTick()</code>. Which is why
+<code>TickObject</code> is present in the output and is a 'parent' for <code>.listen()</code>
+callback.</p><p>The graph only shows <em>when</em> a resource was created, not <em>why</em>, so to track
+the <em>why</em> use <code>triggerAsyncId</code>. Which can be represented with the following
+graph:</p><pre><code class="language-console"> bootstrap(1)
+     |
+     ˅
+TCPSERVERWRAP(5)
+     |
+     ˅
+ TickObject(6)
+     |
+     ˅
+  Timeout(7)</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

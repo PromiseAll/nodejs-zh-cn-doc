@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>server.listen(options[, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-net">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>server.listen(options[, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../net.html#net_server_listen_options_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/net/server_listen_options_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/net/server_listen_options_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/net/#serverlistenoptions-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.6.0</td>
+<td><p>添加了中止信号支持。</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>支持 <code>ipv6Only</code> 选项。</p></td></tr>
+<tr><td>v0.11.14</td>
+<td><p><span>新增于: v0.11.14</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 必需的。
+支持以下属性：
+<ul>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果指定了 <code>port</code>，则将被忽略。
+请参阅<a href="../net.html#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a>。</li>
+<li><code>backlog</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <a href="../net.html#serverlisten"><code>server.listen()</code></a> 函数的通用参数。</li>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>false</code></li>
+<li><code>readableAll</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 对于 IPC 服务器，使管道对所有用户都可读。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>writableAll</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 对于 IPC 服务器，使管道对所有用户都可写。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>ipv6Only</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 对于 TCP 服务器，将 <code>ipv6Only</code> 设置为 <code>true</code> 将禁用双栈支持，即绑定到主机 <code>::</code> 不会绑定 <code>0.0.0.0</code>。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于关闭监听服务器的中止信号。</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+函数。</li>
+<li>返回: <a href="../net.html#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul><p>如果指定了 <code>port</code>，则其行为与 <a href="../net.html#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a> 相同。
+否则，如果指定了 <code>path</code>，则其行为与 <a href="../net.html#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a> 相同。
+如果未指定任何一个，则会抛出错误。</p><p class="">如果 <code>exclusive</code> 是 <code>false</code>（默认），则集群工作进程将使用相同的底层句柄，允许共享连接处理职责。
+当 <code>exclusive</code> 为 <code>true</code> 时，句柄不共享，尝试共享端口会导致错误。
+下面展示了监听独占端口的示例。</p><pre class=""><code class="language-js">server.<span class="hljs-title function_">listen</span>({
+  <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">exclusive</span>: <span class="hljs-literal">true</span>
+});</code></pre><p class="">当 <code>exclusive</code> 为 <code>true</code> 且底层句柄共享时，可能有多个工作进程查询具有不同积压的句柄。
+在这种情况下，将使用传给主进程的第一个 <code>backlog</code>。</p><p class="">以 root 身份启动 IPC 服务器可能会导致非特权用户无法访问服务器路径。
+使用 <code>readableAll</code> 和 <code>writableAll</code> 将使所有用户都可以访问服务器。</p><p class="">如果启用了 <code>signal</code> 选项，则在对应的 <code>AbortController</code> 上调用 <code>.abort()</code> 类似于在服务器上调用 <code>.close()</code>：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+server.<span class="hljs-title function_">listen</span>({
+  <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">signal</span>: controller.<span class="hljs-property">signal</span>
+});
+<span class="hljs-comment">// 稍后，当要关闭服务器时。</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.6.0</td>
+<td><p>AbortSignal support was added.</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>The <code>ipv6Only</code> option is supported.</p></td></tr>
+<tr><td>v0.11.14</td>
+<td><p><span>Added in: v0.11.14</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Required. Supports the following properties:
+<ul>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Will be ignored if <code>port</code> is specified. See
+<a href="../net.html#identifying-paths-for-ipc-connections">Identifying paths for IPC connections</a>.</li>
+<li><code>backlog</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Common parameter of <a href="../net.html#serverlisten"><code>server.listen()</code></a>
+functions.</li>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>Default:</strong> <code>false</code></li>
+<li><code>readableAll</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> For IPC servers makes the pipe readable
+for all users. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>writableAll</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> For IPC servers makes the pipe writable
+for all users. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>ipv6Only</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> For TCP servers, setting <code>ipv6Only</code> to <code>true</code> will
+disable dual-stack support, i.e., binding to host <code>::</code> won't make
+<code>0.0.0.0</code> be bound. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> An AbortSignal that may be used to close a listening server.</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+functions.</li>
+<li>Returns: <a href="../net.html#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul><p>If <code>port</code> is specified, it behaves the same as
+<a href="../net.html#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a>.
+Otherwise, if <code>path</code> is specified, it behaves the same as
+<a href="../net.html#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a>.
+If none of them is specified, an error will be thrown.</p><p>If <code>exclusive</code> is <code>false</code> (default), then cluster workers will use the same
+underlying handle, allowing connection handling duties to be shared. When
+<code>exclusive</code> is <code>true</code>, the handle is not shared, and attempted port sharing
+results in an error. An example which listens on an exclusive port is
+shown below.</p><pre><code class="language-js">server.<span class="hljs-title function_">listen</span>({
+  <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">exclusive</span>: <span class="hljs-literal">true</span>
+});</code></pre><p>When <code>exclusive</code> is <code>true</code> and the underlying handle is shared, it is
+possible that several workers query a handle with different backlogs.
+In this case, the first <code>backlog</code> passed to the master process will be used.</p><p>Starting an IPC server as root may cause the server path to be inaccessible for
+unprivileged users. Using <code>readableAll</code> and <code>writableAll</code> will make the server
+accessible for all users.</p><p>If the <code>signal</code> option is enabled, calling <code>.abort()</code> on the corresponding
+<code>AbortController</code> is similar to calling <code>.close()</code> on the server:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+server.<span class="hljs-title function_">listen</span>({
+  <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">signal</span>: controller.<span class="hljs-property">signal</span>
+});
+<span class="hljs-comment">// Later, when you want to close the server.</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

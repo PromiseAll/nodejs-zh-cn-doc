@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>命令与特殊键 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-repl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>命令与特殊键</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../repl.html#repl_commands_and_special_keys" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/repl/commands_and_special_keys.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/repl/commands_and_special_keys.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/repl/#commands-and-special-keys.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>所有 REPL 实例都支持以下特殊命令：</p><ul class="">
+<li><code>.break</code>: 当在输入多行表达式的过程中，输入 <code>.break</code> 命令（或按 <kbd>Ctrl</kbd>+<kbd>C</kbd>）以中止该表达式的进一步输入或处理。</li>
+<li><code>.clear</code>: 将 REPL <code>context</code> 重置为空对象并清除任何输入的多行表达式。</li>
+<li><code>.exit</code>: 关闭 I/O 流，导致 REPL 退出。</li>
+<li><code>.help</code>: 显示此特殊命令列表。</li>
+<li><code>.save</code>: 将当前 REPL 会话保存到文件：<code>&gt; .save ./file/to/save.js</code></li>
+<li><code>.load</code>: 将文件加载到当前 REPL 会话中。
+<code>&gt; .load ./file/to/load.js</code></li>
+<li><code>.editor</code>: 进入编辑器模式（<kbd>Ctrl</kbd>+<kbd>D</kbd> 完成，<kbd>Ctrl</kbd>+<kbd>C</kbd> 取消）。</li>
+</ul><pre class=""><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">.editor</span>
+// 进入编辑器模式（^D 完成，^C 取消）
+function welcome(name) {
+  return `Hello ${name}!`;
+}
+
+welcome('Node.js User');
+
+// ^D
+'Hello Node.js User!'
+<span class="hljs-meta prompt_">&gt;</span></code></pre><p class="">REPL 中的以下组合键具有这些特殊效果：</p><ul class="">
+<li><kbd>Ctrl</kbd>+<kbd>C</kbd>: 按下一次，效果与 <code>.break</code> 命令相同。
+当在空白行上按两次时，效果与 <code>.exit</code> 命令相同。</li>
+<li><kbd>Ctrl</kbd>+<kbd>D</kbd>: 与 <code>.exit</code> 命令效果相同。</li>
+<li><kbd>Tab</kbd>: 当在空白行上按下时，显示全局和局部（作用域）变量。
+当在输入其他输入时按下时，显示相关的自动完成选项。</li>
+</ul><p class="">有关反向搜索的键绑定，请参阅 <a href="../repl.html#reverse-i-search"><code>reverse-i-search</code></a>。
+对于所有其他键绑定，请参阅 <a href="../readline.html#tty-keybindings">TTY 键绑定</a>。</p></div>
+          <div id="content_right"><p>The following special commands are supported by all REPL instances:</p><ul>
+<li><code>.break</code>: When in the process of inputting a multi-line expression, enter
+the <code>.break</code> command (or press <kbd>Ctrl</kbd>+<kbd>C</kbd>) to abort
+further input or processing of that expression.</li>
+<li><code>.clear</code>: Resets the REPL <code>context</code> to an empty object and clears any
+multi-line expression being input.</li>
+<li><code>.exit</code>: Close the I/O stream, causing the REPL to exit.</li>
+<li><code>.help</code>: Show this list of special commands.</li>
+<li><code>.save</code>: Save the current REPL session to a file:
+<code>&gt; .save ./file/to/save.js</code></li>
+<li><code>.load</code>: Load a file into the current REPL session.
+<code>&gt; .load ./file/to/load.js</code></li>
+<li><code>.editor</code>: Enter editor mode (<kbd>Ctrl</kbd>+<kbd>D</kbd> to
+finish, <kbd>Ctrl</kbd>+<kbd>C</kbd> to cancel).</li>
+</ul><pre><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">.editor</span>
+// Entering editor mode (^D to finish, ^C to cancel)
+function welcome(name) {
+  return `Hello ${name}!`;
+}
+
+welcome('Node.js User');
+
+// ^D
+'Hello Node.js User!'
+<span class="hljs-meta prompt_">&gt;</span></code></pre><p>The following key combinations in the REPL have these special effects:</p><ul>
+<li><kbd>Ctrl</kbd>+<kbd>C</kbd>: When pressed once, has the same effect as the
+<code>.break</code> command.
+When pressed twice on a blank line, has the same effect as the <code>.exit</code>
+command.</li>
+<li><kbd>Ctrl</kbd>+<kbd>D</kbd>: Has the same effect as the <code>.exit</code> command.</li>
+<li><kbd>Tab</kbd>: When pressed on a blank line, displays global and local
+(scope) variables. When pressed while entering other input, displays relevant
+autocompletion options.</li>
+</ul><p>For key bindings related to the reverse-i-search, see <a href="../repl.html#reverse-i-search"><code>reverse-i-search</code></a>.
+For all other key bindings, see <a href="../readline.html#tty-keybindings">TTY keybindings</a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>url.resolve(from, to) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-url">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>url.resolve(from, to)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../url.html#url_url_resolve_from_to" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/url/url_resolve_from_to.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/url/url_resolve_from_to.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/url/#urlresolvefrom-to.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.13.0</td>
+<td><p>弃用已撤销。 状态更改为“旧版”。</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>旧版的网址 API 已弃用。 使用 WHATWG 网址 API。</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p>当 <code>from</code> 和 <code>to</code> 引用同一主机时，<code>auth</code> 字段现在保持不变。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>现在 <code>to</code> 参数包含主机名，<code>auth</code> 字段被清除。</p></td></tr>
+<tr><td>v6.5.0, v4.6.2</td>
+<td><p>字段 <code>port</code> 现在已正确复制。</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>新增于: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 WHATWG URL API 。</div><p></p><ul class="">
+<li><code>from</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果 <code>to</code> 是相对的 URL，则使用的基本的 URL。</li>
+<li><code>to</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要解析的目标 URL。</li>
+</ul><p><code>url.resolve()</code> 方法以类似于 Web 浏览器解析锚标记的方式解析相对于基本 URL 的目标 URL。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+url.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'/one/two/three'</span>, <span class="hljs-string">'four'</span>);         <span class="hljs-comment">// '/one/two/four'</span>
+url.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/'</span>, <span class="hljs-string">'/one'</span>);    <span class="hljs-comment">// 'http://example.com/one'</span>
+url.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/one'</span>, <span class="hljs-string">'/two'</span>); <span class="hljs-comment">// 'http://example.com/two'</span></code></pre><p class="">使用 WHATWG URL API 实现相同的结果：</p><pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-params"><span class="hljs-keyword">from</span>, to</span>) {
+  <span class="hljs-keyword">const</span> resolvedUrl = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(to, <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-keyword">from</span>, <span class="hljs-string">'resolve://'</span>));
+  <span class="hljs-keyword">if</span> (resolvedUrl.<span class="hljs-property">protocol</span> === <span class="hljs-string">'resolve:'</span>) {
+    <span class="hljs-comment">// `from` is a relative URL.</span>
+    <span class="hljs-keyword">const</span> { pathname, search, hash } = resolvedUrl;
+    <span class="hljs-keyword">return</span> pathname + search + hash;
+  }
+  <span class="hljs-keyword">return</span> resolvedUrl.<span class="hljs-title function_">toString</span>();
+}
+
+<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'/one/two/three'</span>, <span class="hljs-string">'four'</span>);         <span class="hljs-comment">// '/one/two/four'</span>
+<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/'</span>, <span class="hljs-string">'/one'</span>);    <span class="hljs-comment">// 'http://example.com/one'</span>
+<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/one'</span>, <span class="hljs-string">'/two'</span>); <span class="hljs-comment">// 'http://example.com/two'</span></code></pre><p class=""><a id="whatwg-percent-encoding"></a></p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.13.0</td>
+<td><p>Deprecation revoked. Status changed to "Legacy".</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>The Legacy URL API is deprecated. Use the WHATWG URL API.</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p>The <code>auth</code> fields are now kept intact when <code>from</code> and <code>to</code> refer to the same host.</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>The <code>auth</code> fields is cleared now the <code>to</code> parameter contains a hostname.</p></td></tr>
+<tr><td>v6.5.0, v4.6.2</td>
+<td><p>The <code>port</code> field is copied correctly now.</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>Added in: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">Stability: 3</a> - Legacy: Use the WHATWG URL API instead.</div><p></p><ul>
+<li><code>from</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The base URL to use if <code>to</code> is a relative URL.</li>
+<li><code>to</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The target URL to resolve.</li>
+</ul><p>The <code>url.resolve()</code> method resolves a target URL relative to a base URL in a
+manner similar to that of a web browser resolving an anchor tag.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+url.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'/one/two/three'</span>, <span class="hljs-string">'four'</span>);         <span class="hljs-comment">// '/one/two/four'</span>
+url.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/'</span>, <span class="hljs-string">'/one'</span>);    <span class="hljs-comment">// 'http://example.com/one'</span>
+url.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/one'</span>, <span class="hljs-string">'/two'</span>); <span class="hljs-comment">// 'http://example.com/two'</span></code></pre><p>To achieve the same result using the WHATWG URL API:</p><pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-params"><span class="hljs-keyword">from</span>, to</span>) {
+  <span class="hljs-keyword">const</span> resolvedUrl = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(to, <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-keyword">from</span>, <span class="hljs-string">'resolve://'</span>));
+  <span class="hljs-keyword">if</span> (resolvedUrl.<span class="hljs-property">protocol</span> === <span class="hljs-string">'resolve:'</span>) {
+    <span class="hljs-comment">// `from` is a relative URL.</span>
+    <span class="hljs-keyword">const</span> { pathname, search, hash } = resolvedUrl;
+    <span class="hljs-keyword">return</span> pathname + search + hash;
+  }
+  <span class="hljs-keyword">return</span> resolvedUrl.<span class="hljs-title function_">toString</span>();
+}
+
+<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'/one/two/three'</span>, <span class="hljs-string">'four'</span>);         <span class="hljs-comment">// '/one/two/four'</span>
+<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/'</span>, <span class="hljs-string">'/one'</span>);    <span class="hljs-comment">// 'http://example.com/one'</span>
+<span class="hljs-title function_">resolve</span>(<span class="hljs-string">'http://example.com/one'</span>, <span class="hljs-string">'/two'</span>); <span class="hljs-comment">// 'http://example.com/two'</span></code></pre><p><a id="whatwg-percent-encoding"></a></p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

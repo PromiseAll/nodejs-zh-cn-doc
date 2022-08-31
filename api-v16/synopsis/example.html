@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>示例 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-synopsis">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>示例</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../synopsis.html#synopsis_example" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/synopsis/example.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/synopsis/example.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/synopsis/#example.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>使用 Node.js 编写的<a href="../http.html">网络服务器</a>示例，它以 <code>'Hello, World!'</code> 响应：</p><p class="">本文档中的命令以 <code>$</code> 或 <code>&gt;</code> 开头，以复制其在用户终端中的显示方式。
+不要包含 <code>$</code> 和 <code>&gt;</code> 字符。
+它们在那里显示每个命令的开始。</p><p class="">不以 <code>$</code> 或 <code>&gt;</code> 字符开头的行显示上一个命令的输出。</p><p class="">首先，确保已经下载并安装了 Node.js。
+有关更多安装信息，请参阅<a href="https://nodejs.org/en/download/package-manager/" rel="nofollow">通过包管理器安装 Node.js</a>。</p><p class="">现在，创建一个名为 <code>projects</code> 的空项目文件夹，然后导航到其中。</p><p class="">Linux 和 Mac：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> ~/projects</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> ~/projects</span></code></pre><p class="">Windows CMD:</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> %USERPROFILE%\projects</span>
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">cd</span> %USERPROFILE%\projects</span></code></pre><p class="">Windows PowerShell:</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$env</span>:USERPROFILE\projects</span>
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">cd</span> <span class="hljs-variable">$env</span>:USERPROFILE\projects</span></code></pre><p class="">接下来，在 <code>projects</code> 文件夹中创建新的源文件并将其命名为 <code>hello-world.js</code>。</p><p class="">在任何首选的文本编辑器中打开 <code>hello-world.js</code> 并粘贴以下内容：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-keyword">const</span> hostname = <span class="hljs-string">'127.0.0.1'</span>;
+<span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>;
+
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-property">statusCode</span> = <span class="hljs-number">200</span>;
+  res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/plain'</span>);
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'Hello, World!\n'</span>);
+});
+
+server.<span class="hljs-title function_">listen</span>(port, hostname, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Server running at http://<span class="hljs-subst">${hostname}</span>:<span class="hljs-subst">${port}</span>/`</span>);
+});</code></pre><p class="">保存文件，返回终端窗口，输入以下命令：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node hello-world.js</span></code></pre><p class="">这样的输出应该出现在终端中：</p><pre class=""><code class="language-console">Server running at http://127.0.0.1:3000/</code></pre><p class="">现在，打开任何首选的网络浏览器并访问 <code>http://127.0.0.1:3000</code>。</p><p class="">如果浏览器显示字符串 <code>Hello, World!</code>，则表示服务器正在工作。</p></div>
+          <div id="content_right"><p>An example of a <a href="../http.html">web server</a> written with Node.js which responds with
+<code>'Hello, World!'</code>:</p><p>Commands in this document start with <code>$</code> or <code>&gt;</code> to replicate how they would
+appear in a user's terminal. Do not include the <code>$</code> and <code>&gt;</code> characters. They are
+there to show the start of each command.</p><p>Lines that don’t start with <code>$</code> or <code>&gt;</code> character show the output of the previous
+command.</p><p>First, make sure to have downloaded and installed Node.js. See
+<a href="https://nodejs.org/en/download/package-manager/" rel="nofollow">Installing Node.js via package manager</a> for further install information.</p><p>Now, create an empty project folder called <code>projects</code>, then navigate into it.</p><p>Linux and Mac:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> ~/projects</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> ~/projects</span></code></pre><p>Windows CMD:</p><pre><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> %USERPROFILE%\projects</span>
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">cd</span> %USERPROFILE%\projects</span></code></pre><p>Windows PowerShell:</p><pre><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$env</span>:USERPROFILE\projects</span>
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">cd</span> <span class="hljs-variable">$env</span>:USERPROFILE\projects</span></code></pre><p>Next, create a new source file in the <code>projects</code>
+folder and call it <code>hello-world.js</code>.</p><p>Open <code>hello-world.js</code> in any preferred text editor and
+paste in the following content:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-keyword">const</span> hostname = <span class="hljs-string">'127.0.0.1'</span>;
+<span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>;
+
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-property">statusCode</span> = <span class="hljs-number">200</span>;
+  res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/plain'</span>);
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'Hello, World!\n'</span>);
+});
+
+server.<span class="hljs-title function_">listen</span>(port, hostname, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Server running at http://<span class="hljs-subst">${hostname}</span>:<span class="hljs-subst">${port}</span>/`</span>);
+});</code></pre><p>Save the file, go back to the terminal window, and enter the following command:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node hello-world.js</span></code></pre><p>Output like this should appear in the terminal:</p><pre><code class="language-console">Server running at http://127.0.0.1:3000/</code></pre><p>Now, open any preferred web browser and visit <code>http://127.0.0.1:3000</code>.</p><p>If the browser displays the string <code>Hello, World!</code>, that indicates
+the server is working.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

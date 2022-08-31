@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Node.js 的 V8 检查器集成 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-debugger">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Node.js 的 V8 检查器集成</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../debugger.html#debugger_v8_inspector_integration_for_node_js" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/debugger/v8_inspector_integration_for_node_js.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/debugger/v8_inspector_integration_for_node_js.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/debugger/#v8-inspector-integration-for-nodejs.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>V8 检查器集成允许将 Chrome 开发者工具绑定到 Node.js 实例以进行调试和分析。
+它使用 <a href="https://chromedevtools.github.io/devtools-protocol/" rel="nofollow">Chrome 开发者工具协议</a>。</p><p class="">V8 检查器可以通过在启动 Node.js 应用程序时传入 <code>--inspect</code> 标志来启用。
+也可以使用该标志提供自定义的端口，例如 <code>--inspect=9222</code> 将接受端口 9222 上的开发者工具连接。</p><p class="">要中断应用程序代码的第一行，则传入 <code>--inspect-brk</code> 标志而不是 <code>--inspect</code>。</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --inspect index.js</span>
+Debugger listening on ws://127.0.0.1:9229/dc9010dd-f8b8-4ac5-a510-c1a114ec7d29
+For help, see: https://nodejs.org/en/docs/inspector</code></pre><p class="">（在上面的示例中，网址末尾的 UUID dc9010dd-f8b8-4ac5-a510-c1a114ec7d29 是动态生成的，它在不同的调试会话中有所不同。）</p><p class="">如果 Chrome 浏览器版本低于 66.0.3345.0，则在上述网址中使用 <code>inspector.html</code> 而不是 <code>js_app.html</code>。</p><p class="">Chrome 开发者工具尚不支持调试<a href="../worker_threads.html">工作线程</a>。
+<a href="https://github.com/GoogleChromeLabs/ndb/" rel="nofollow">ndb</a> 可用于调试它们。</p></div>
+          <div id="content_right"><p>V8 Inspector integration allows attaching Chrome DevTools to Node.js
+instances for debugging and profiling. It uses the
+<a href="https://chromedevtools.github.io/devtools-protocol/" rel="nofollow">Chrome DevTools Protocol</a>.</p><p>V8 Inspector can be enabled by passing the <code>--inspect</code> flag when starting a
+Node.js application. It is also possible to supply a custom port with that flag,
+e.g. <code>--inspect=9222</code> will accept DevTools connections on port 9222.</p><p>To break on the first line of the application code, pass the <code>--inspect-brk</code>
+flag instead of <code>--inspect</code>.</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --inspect index.js</span>
+Debugger listening on ws://127.0.0.1:9229/dc9010dd-f8b8-4ac5-a510-c1a114ec7d29
+For help, see: https://nodejs.org/en/docs/inspector</code></pre><p>(In the example above, the UUID dc9010dd-f8b8-4ac5-a510-c1a114ec7d29
+at the end of the URL is generated on the fly, it varies in different
+debugging sessions.)</p><p>If the Chrome browser is older than 66.0.3345.0,
+use <code>inspector.html</code> instead of <code>js_app.html</code> in the above URL.</p><p>Chrome DevTools doesn't support debugging <a href="../worker_threads.html">worker threads</a> yet.
+<a href="https://github.com/GoogleChromeLabs/ndb/" rel="nofollow">ndb</a> can be used to debug them.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

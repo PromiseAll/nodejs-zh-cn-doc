@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.env | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.env</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_env" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_env.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_env.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processenv.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v11.14.0</td>
+<td><p>工作线程现在默认使用父线程 <code>process.env</code> 的副本，可通过 <code>Worker</code> 构造函数的 <code>env</code> 选项进行配置。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>不推荐将变量值隐式转换为字符串。</p></td></tr>
+<tr><td>v0.1.27</td>
+<td><p><span>新增于: v0.1.27</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p><code>process.env</code> 属性返回包含用户环境的对象。
+参见 <a href="http://man7.org/linux/man-pages/man7/environ.7.html" rel="nofollow"><code>environ(7)</code></a>。</p><p class="">此对象的示例如下所示：</p><pre class=""><code class="language-js">{
+  <span class="hljs-attr">TERM</span>: <span class="hljs-string">'xterm-256color'</span>,
+  <span class="hljs-attr">SHELL</span>: <span class="hljs-string">'/usr/local/bin/bash'</span>,
+  <span class="hljs-attr">USER</span>: <span class="hljs-string">'maciej'</span>,
+  <span class="hljs-attr">PATH</span>: <span class="hljs-string">'~/.bin/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin'</span>,
+  <span class="hljs-attr">PWD</span>: <span class="hljs-string">'/Users/maciej'</span>,
+  <span class="hljs-attr">EDITOR</span>: <span class="hljs-string">'vim'</span>,
+  <span class="hljs-attr">SHLVL</span>: <span class="hljs-string">'1'</span>,
+  <span class="hljs-attr">HOME</span>: <span class="hljs-string">'/Users/maciej'</span>,
+  <span class="hljs-attr">LOGNAME</span>: <span class="hljs-string">'maciej'</span>,
+  <span class="hljs-attr">_</span>: <span class="hljs-string">'/usr/local/bin/node'</span>
+}</code></pre><p class="">可以修改此对象，但此类修改不会反映在 Node.js 进程之外，或反映到其他 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 线程（除非显示请求）。
+换句话说，以下示例将不起作用：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node -e <span class="hljs-string">'process.env.foo = "bar"'</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-variable">$foo</span></span></code></pre><p class="">但是以下示例则将起作用：</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">foo</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">foo</span>);</code></pre><p class="">在 <code>process.env</code> 上分配属性会将值隐式转换为字符串。
+<strong>此行为已弃用。</strong> 当值不是字符串、数字或布尔值时，Node.js 的未来版本可能会抛出错误。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">null</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'null'</span>
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">undefined</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'undefined'</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">null</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'null'</span>
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">undefined</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'undefined'</span></code></pre><p class="">使用 <code>delete</code> 从 <code>process.env</code> 中删除属性。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">delete</span> env.<span class="hljs-property">TEST</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">TEST</span>);
+<span class="hljs-comment">// =&gt; undefined</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">delete</span> env.<span class="hljs-property">TEST</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">TEST</span>);
+<span class="hljs-comment">// =&gt; undefined</span></code></pre><p class="">在 Windows 操作系统上，环境变量不区分大小写。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 1</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 1</span></code></pre><p class="">除非在创建 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 实例时显式指定，否则每个 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 线程都有自己的 <code>process.env</code> 副本，基于其父线程的 <code>process.env</code> 或指定为 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 构造函数的 <code>env</code> 选项的任何内容。
+对 <code>process.env</code> 的更改不会跨 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 线程可见，只有主线程可以进行对操作系统或原生插件可见的更改。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v11.14.0</td>
+<td><p>Worker threads will now use a copy of the parent thread’s <code>process.env</code> by default, configurable through the <code>env</code> option of the <code>Worker</code> constructor.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>Implicit conversion of variable value to string is deprecated.</p></td></tr>
+<tr><td>v0.1.27</td>
+<td><p><span>Added in: v0.1.27</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>The <code>process.env</code> property returns an object containing the user environment.
+See <a href="http://man7.org/linux/man-pages/man7/environ.7.html" rel="nofollow"><code>environ(7)</code></a>.</p><p>An example of this object looks like:</p><pre><code class="language-js">{
+  <span class="hljs-attr">TERM</span>: <span class="hljs-string">'xterm-256color'</span>,
+  <span class="hljs-attr">SHELL</span>: <span class="hljs-string">'/usr/local/bin/bash'</span>,
+  <span class="hljs-attr">USER</span>: <span class="hljs-string">'maciej'</span>,
+  <span class="hljs-attr">PATH</span>: <span class="hljs-string">'~/.bin/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin'</span>,
+  <span class="hljs-attr">PWD</span>: <span class="hljs-string">'/Users/maciej'</span>,
+  <span class="hljs-attr">EDITOR</span>: <span class="hljs-string">'vim'</span>,
+  <span class="hljs-attr">SHLVL</span>: <span class="hljs-string">'1'</span>,
+  <span class="hljs-attr">HOME</span>: <span class="hljs-string">'/Users/maciej'</span>,
+  <span class="hljs-attr">LOGNAME</span>: <span class="hljs-string">'maciej'</span>,
+  <span class="hljs-attr">_</span>: <span class="hljs-string">'/usr/local/bin/node'</span>
+}</code></pre><p>It is possible to modify this object, but such modifications will not be
+reflected outside the Node.js process, or (unless explicitly requested)
+to other <a href="../worker_threads.html#class-worker"><code>Worker</code></a> threads.
+In other words, the following example would not work:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node -e <span class="hljs-string">'process.env.foo = "bar"'</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-variable">$foo</span></span></code></pre><p>While the following will:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">foo</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">foo</span>);</code></pre><p>Assigning a property on <code>process.env</code> will implicitly convert the value
+to a string. <strong>This behavior is deprecated.</strong> Future versions of Node.js may
+throw an error when the value is not a string, number, or boolean.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">null</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'null'</span>
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">undefined</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'undefined'</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">null</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'null'</span>
+env.<span class="hljs-property">test</span> = <span class="hljs-literal">undefined</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 'undefined'</span></code></pre><p>Use <code>delete</code> to delete a property from <code>process.env</code>.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">delete</span> env.<span class="hljs-property">TEST</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">TEST</span>);
+<span class="hljs-comment">// =&gt; undefined</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">delete</span> env.<span class="hljs-property">TEST</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">TEST</span>);
+<span class="hljs-comment">// =&gt; undefined</span></code></pre><p>On Windows operating systems, environment variables are case-insensitive.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 1</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+env.<span class="hljs-property">TEST</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env.<span class="hljs-property">test</span>);
+<span class="hljs-comment">// =&gt; 1</span></code></pre><p>Unless explicitly specified when creating a <a href="../worker_threads.html#class-worker"><code>Worker</code></a> instance,
+each <a href="../worker_threads.html#class-worker"><code>Worker</code></a> thread has its own copy of <code>process.env</code>, based on its
+parent thread’s <code>process.env</code>, or whatever was specified as the <code>env</code> option
+to the <a href="../worker_threads.html#class-worker"><code>Worker</code></a> constructor. Changes to <code>process.env</code> will not be visible
+across <a href="../worker_threads.html#class-worker"><code>Worker</code></a> threads, and only the main thread can make changes that
+are visible to the operating system or to native add-ons.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

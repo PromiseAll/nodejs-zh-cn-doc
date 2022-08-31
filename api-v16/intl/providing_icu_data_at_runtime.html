@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>在运行时提供 ICU 数据 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-intl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>在运行时提供 ICU 数据</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../intl.html#intl_providing_icu_data_at_runtime" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/intl/providing_icu_data_at_runtime.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/intl/providing_icu_data_at_runtime.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/intl/#providing-icu-data-at-runtime.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>如果使用 <code>small-icu</code> 选项，则仍然可以在运行时提供额外的语言环境数据，以便 JS 方法适用于所有 ICU 语言环境。
+假设数据文件存储在 <code>/some/directory</code>，它可以通过以下任一方式提供给 ICU：</p><ul class="">
+<li>
+<p><a href="../cli.html#node_icu_datafile"><code>NODE_ICU_DATA</code></a> 环境变量：</p>
+<pre><code class="language-bash"><span class="hljs-built_in">env</span> NODE_ICU_DATA=/some/directory node</code></pre>
+</li>
+<li>
+<p><a href="../cli.html#--icu-data-dirfile"><code>--icu-data-dir</code></a> 命令行参数：</p>
+<pre><code class="language-bash">node --icu-data-dir=/some/directory</code></pre>
+</li>
+</ul><p class="">（如果两者都指定，则 <code>--icu-data-dir</code> 命令行参数优先。）</p><p class="">ICU 能够自动查找和加载多种数据格式，但数据必须适合 ICU 版本，并且文件命名正确。
+数据文件最常见的名称是 <code>icudt6X[bl].dat</code>，其中 <code>6X</code> 表示预期的 ICU 版本，而 <code>b</code> 或 <code>l</code> 表示系统的字节序。
+查看 ICU 用户指南中的 <a href="http://userguide.icu-project.org/icudata" rel="nofollow">"ICU 数据"</a>文章以了解其他支持的格式以及有关 ICU 数据的更多详细信息。</p><p class=""><a href="https://www.npmjs.com/package/full-icu" rel="nofollow">full-icu</a> npm 模块通过检测运行中的 <code>node</code> 可执行文件的 ICU 版本并下载相应的数据文件，可以大大简化 ICU 数据安装。
+通过 <code>npm i full-icu</code> 安装模块后，数据文件将在 <code>./node_modules/full-icu</code> 可用。
+然后可以将此路径传给 <code>NODE_ICU_DATA</code> 或 <code>--icu-data-dir</code>，如上所示以启用完整的 <code>Intl</code> 支持。</p></div>
+          <div id="content_right"><p>If the <code>small-icu</code> option is used, one can still provide additional locale data
+at runtime so that the JS methods would work for all ICU locales. Assuming the
+data file is stored at <code>/some/directory</code>, it can be made available to ICU
+through either:</p><ul>
+<li>
+<p>The <a href="../cli.html#node_icu_datafile"><code>NODE_ICU_DATA</code></a> environment variable:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">env</span> NODE_ICU_DATA=/some/directory node</code></pre>
+</li>
+<li>
+<p>The <a href="../cli.html#--icu-data-dirfile"><code>--icu-data-dir</code></a> CLI parameter:</p>
+<pre><code class="language-bash">node --icu-data-dir=/some/directory</code></pre>
+</li>
+</ul><p>(If both are specified, the <code>--icu-data-dir</code> CLI parameter takes precedence.)</p><p>ICU is able to automatically find and load a variety of data formats, but the
+data must be appropriate for the ICU version, and the file correctly named.
+The most common name for the data file is <code>icudt6X[bl].dat</code>, where <code>6X</code> denotes
+the intended ICU version, and <code>b</code> or <code>l</code> indicates the system's endianness.
+Check <a href="http://userguide.icu-project.org/icudata" rel="nofollow">"ICU Data"</a> article in the ICU User Guide for other supported formats
+and more details on ICU data in general.</p><p>The <a href="https://www.npmjs.com/package/full-icu" rel="nofollow">full-icu</a> npm module can greatly simplify ICU data installation by
+detecting the ICU version of the running <code>node</code> executable and downloading the
+appropriate data file. After installing the module through <code>npm i full-icu</code>,
+the data file will be available at <code>./node_modules/full-icu</code>. This path can be
+then passed either to <code>NODE_ICU_DATA</code> or <code>--icu-data-dir</code> as shown above to
+enable full <code>Intl</code> support.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

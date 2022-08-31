@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>dns.resolveAny(hostname, callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dns">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>dns.resolveAny(hostname, callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dns.html#dns_dns_resolveany_hostname_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dns/dns_resolveany_hostname_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dns/dns_resolveany_hostname_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dns/#dnsresolveanyhostname-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><code>hostname</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>ret</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a></li>
+</ul>
+</li>
+</ul><p>使用域名系统协议解析所有记录（也称为 <code>ANY</code> 或 <code>*</code> 查询）。
+传给 <code>callback</code> 函数的 <code>ret</code> 参数将是包含各种类型记录的数组。
+每个对象都有表示当前记录的类型的属性 <code>type</code>。
+并且根据 <code>type</code>，对象上将出现其他属性：</p><table class=""><thead><tr><th>Type</th><th>Properties</th></tr></thead><tbody><tr><td><code>'A'</code></td><td><code>address</code>/<code>ttl</code></td></tr><tr><td><code>'AAAA'</code></td><td><code>address</code>/<code>ttl</code></td></tr><tr><td><code>'CNAME'</code></td><td><code>value</code></td></tr><tr><td><code>'MX'</code></td><td>指向 <a href="../dns.html#dnsresolvemxhostname-callback"><code>dns.resolveMx()</code></a></td></tr><tr><td><code>'NAPTR'</code></td><td>指向 <a href="../dns.html#dnsresolvenaptrhostname-callback"><code>dns.resolveNaptr()</code></a></td></tr><tr><td><code>'NS'</code></td><td><code>value</code></td></tr><tr><td><code>'PTR'</code></td><td><code>value</code></td></tr><tr><td><code>'SOA'</code></td><td>指向 <a href="../dns.html#dnsresolvesoahostname-callback"><code>dns.resolveSoa()</code></a></td></tr><tr><td><code>'SRV'</code></td><td>指向 <a href="../dns.html#dnsresolvesrvhostname-callback"><code>dns.resolveSrv()</code></a></td></tr><tr><td><code>'TXT'</code></td><td>此类型的记录包含名为 <code>entries</code> 的数组属性，它指向 <a href="../dns.html#dnsresolvetxthostname-callback"><code>dns.resolveTxt()</code></a>，例如 <code>{ entries: ['...'], type: 'TXT' }</code></td></tr></tbody></table><p class="">这是传给回调的 <code>ret</code> 对象的示例：</p><pre class=""><code class="language-js">[ { <span class="hljs-attr">type</span>: <span class="hljs-string">'A'</span>, <span class="hljs-attr">address</span>: <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-attr">ttl</span>: <span class="hljs-number">299</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'CNAME'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'example.com'</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'MX'</span>, <span class="hljs-attr">exchange</span>: <span class="hljs-string">'alt4.aspmx.l.example.com'</span>, <span class="hljs-attr">priority</span>: <span class="hljs-number">50</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'NS'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'ns1.example.com'</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'TXT'</span>, <span class="hljs-attr">entries</span>: [ <span class="hljs-string">'v=spf1 include:_spf.example.com ~all'</span> ] },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'SOA'</span>,
+    <span class="hljs-attr">nsname</span>: <span class="hljs-string">'ns1.example.com'</span>,
+    <span class="hljs-attr">hostmaster</span>: <span class="hljs-string">'admin.example.com'</span>,
+    <span class="hljs-attr">serial</span>: <span class="hljs-number">156696742</span>,
+    <span class="hljs-attr">refresh</span>: <span class="hljs-number">900</span>,
+    <span class="hljs-attr">retry</span>: <span class="hljs-number">900</span>,
+    <span class="hljs-attr">expire</span>: <span class="hljs-number">1800</span>,
+    <span class="hljs-attr">minttl</span>: <span class="hljs-number">60</span> } ]</code></pre><p class="">域名系统服务器运营商可以选择不响应 <code>ANY</code> 查询。
+调用单个方法（如 <a href="../dns.html#dnsresolve4hostname-options-callback"><code>dns.resolve4()</code></a>、<a href="../dns.html#dnsresolvemxhostname-callback"><code>dns.resolveMx()</code></a> 等）可能会更好。
+有关更多详细信息，请参阅 <a href="https://tools.ietf.org/html/rfc8482" rel="nofollow">RFC 8482</a>。</p></div>
+          <div id="content_right"><ul>
+<li><code>hostname</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>ret</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a></li>
+</ul>
+</li>
+</ul><p>Uses the DNS protocol to resolve all records (also known as <code>ANY</code> or <code>*</code> query).
+The <code>ret</code> argument passed to the <code>callback</code> function will be an array containing
+various types of records. Each object has a property <code>type</code> that indicates the
+type of the current record. And depending on the <code>type</code>, additional properties
+will be present on the object:</p><table><thead><tr><th>Type</th><th>Properties</th></tr></thead><tbody><tr><td><code>'A'</code></td><td><code>address</code>/<code>ttl</code></td></tr><tr><td><code>'AAAA'</code></td><td><code>address</code>/<code>ttl</code></td></tr><tr><td><code>'CNAME'</code></td><td><code>value</code></td></tr><tr><td><code>'MX'</code></td><td>Refer to <a href="../dns.html#dnsresolvemxhostname-callback"><code>dns.resolveMx()</code></a></td></tr><tr><td><code>'NAPTR'</code></td><td>Refer to <a href="../dns.html#dnsresolvenaptrhostname-callback"><code>dns.resolveNaptr()</code></a></td></tr><tr><td><code>'NS'</code></td><td><code>value</code></td></tr><tr><td><code>'PTR'</code></td><td><code>value</code></td></tr><tr><td><code>'SOA'</code></td><td>Refer to <a href="../dns.html#dnsresolvesoahostname-callback"><code>dns.resolveSoa()</code></a></td></tr><tr><td><code>'SRV'</code></td><td>Refer to <a href="../dns.html#dnsresolvesrvhostname-callback"><code>dns.resolveSrv()</code></a></td></tr><tr><td><code>'TXT'</code></td><td>This type of record contains an array property called <code>entries</code> which refers to <a href="../dns.html#dnsresolvetxthostname-callback"><code>dns.resolveTxt()</code></a>, e.g. <code>{ entries: ['...'], type: 'TXT' }</code></td></tr></tbody></table><p>Here is an example of the <code>ret</code> object passed to the callback:</p><pre><code class="language-js">[ { <span class="hljs-attr">type</span>: <span class="hljs-string">'A'</span>, <span class="hljs-attr">address</span>: <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-attr">ttl</span>: <span class="hljs-number">299</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'CNAME'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'example.com'</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'MX'</span>, <span class="hljs-attr">exchange</span>: <span class="hljs-string">'alt4.aspmx.l.example.com'</span>, <span class="hljs-attr">priority</span>: <span class="hljs-number">50</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'NS'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'ns1.example.com'</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'TXT'</span>, <span class="hljs-attr">entries</span>: [ <span class="hljs-string">'v=spf1 include:_spf.example.com ~all'</span> ] },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">'SOA'</span>,
+    <span class="hljs-attr">nsname</span>: <span class="hljs-string">'ns1.example.com'</span>,
+    <span class="hljs-attr">hostmaster</span>: <span class="hljs-string">'admin.example.com'</span>,
+    <span class="hljs-attr">serial</span>: <span class="hljs-number">156696742</span>,
+    <span class="hljs-attr">refresh</span>: <span class="hljs-number">900</span>,
+    <span class="hljs-attr">retry</span>: <span class="hljs-number">900</span>,
+    <span class="hljs-attr">expire</span>: <span class="hljs-number">1800</span>,
+    <span class="hljs-attr">minttl</span>: <span class="hljs-number">60</span> } ]</code></pre><p>DNS server operators may choose not to respond to <code>ANY</code>
+queries. It may be better to call individual methods like <a href="../dns.html#dnsresolve4hostname-options-callback"><code>dns.resolve4()</code></a>,
+<a href="../dns.html#dnsresolvemxhostname-callback"><code>dns.resolveMx()</code></a>, and so on. For more details, see <a href="https://tools.ietf.org/html/rfc8482" rel="nofollow">RFC 8482</a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

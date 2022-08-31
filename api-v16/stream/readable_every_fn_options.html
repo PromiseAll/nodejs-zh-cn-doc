@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.every(fn[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.every(fn[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_every_fn_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_every_fn_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readableeveryfn-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> 调用流中每个子项的函数。
+<ul>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 来自流的数据块。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 如果流被销毁则中止，允许提前中止 <code>fn</code> 调用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>concurrency</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 一次调用流的最大并发调用 <code>fn</code>。 <strong>默认值:</strong> <code>1</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 如果信号被中止，则允许销毁流。</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 如果 <code>fn</code> 返回所有块的真值，则对 <code>true</code> 进行评估的 promise。</li>
+</ul><p>此方法类似于 <code>Array.prototype.every</code>，并在流中的每个块上调用 <code>fn</code> 以检查所有等待的返回值是否为 <code>fn</code> 的真值。
+一旦对块等待返回值的 <code>fn</code> 调用是非真的，则流就会被销毁，并且 promise 会使用 <code>false</code> 履行
+如果对块的所有 <code>fn</code> 调用都返回真值，则该 promise 使用 <code>true</code> 履行。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+<span class="hljs-keyword">import</span> { stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-comment">// 使用同步谓词。</span>
+<span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">every</span>(<span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x &gt; <span class="hljs-number">2</span>); <span class="hljs-comment">// false</span>
+<span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">every</span>(<span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x &gt; <span class="hljs-number">0</span>); <span class="hljs-comment">// true</span>
+
+<span class="hljs-comment">// 使用异步谓词，一次最多进行 2 个文件检查。</span>
+<span class="hljs-keyword">const</span> allBigFiles = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([
+  <span class="hljs-string">'file1'</span>,
+  <span class="hljs-string">'file2'</span>,
+  <span class="hljs-string">'file3'</span>,
+]).<span class="hljs-title function_">every</span>(<span class="hljs-keyword">async</span> (fileName) =&gt; {
+  <span class="hljs-keyword">const</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-title function_">stat</span>(fileName);
+  <span class="hljs-keyword">return</span> stat.<span class="hljs-property">size</span> &gt; <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>;
+}, { <span class="hljs-attr">concurrency</span>: <span class="hljs-number">2</span> });
+<span class="hljs-comment">// 如果列表中的所有文件都大于 1MiB，则为 `true`</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(allBigFiles);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>); <span class="hljs-comment">// 流已结束</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><ul>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> a function to call on each item of the stream.
+<ul>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> a chunk of data from the stream.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> aborted if the stream is destroyed allowing to
+abort the <code>fn</code> call early.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>concurrency</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> the maximum concurrent invocation of <code>fn</code> to call
+on the stream at once. <strong>Default:</strong> <code>1</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> allows destroying the stream if the signal is
+aborted.</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> a promise evaluating to <code>true</code> if <code>fn</code> returned a truthy
+value for all of the chunks.</li>
+</ul><p>This method is similar to <code>Array.prototype.every</code> and calls <code>fn</code> on each chunk
+in the stream to check if all awaited return values are truthy value for <code>fn</code>.
+Once an <code>fn</code> call on a chunk awaited return value is falsy, the stream is
+destroyed and the promise is fulfilled with <code>false</code>. If all of the <code>fn</code> calls
+on the chunks return a truthy value, the promise is fulfilled with <code>true</code>.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+<span class="hljs-keyword">import</span> { stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-comment">// With a synchronous predicate.</span>
+<span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">every</span>(<span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x &gt; <span class="hljs-number">2</span>); <span class="hljs-comment">// false</span>
+<span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">every</span>(<span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x &gt; <span class="hljs-number">0</span>); <span class="hljs-comment">// true</span>
+
+<span class="hljs-comment">// With an asynchronous predicate, making at most 2 file checks at a time.</span>
+<span class="hljs-keyword">const</span> allBigFiles = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([
+  <span class="hljs-string">'file1'</span>,
+  <span class="hljs-string">'file2'</span>,
+  <span class="hljs-string">'file3'</span>,
+]).<span class="hljs-title function_">every</span>(<span class="hljs-keyword">async</span> (fileName) =&gt; {
+  <span class="hljs-keyword">const</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-title function_">stat</span>(fileName);
+  <span class="hljs-keyword">return</span> stat.<span class="hljs-property">size</span> &gt; <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>;
+}, { <span class="hljs-attr">concurrency</span>: <span class="hljs-number">2</span> });
+<span class="hljs-comment">// `true` if all files in the list are bigger than 1MiB</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(allBigFiles);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>); <span class="hljs-comment">// Stream has finished</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

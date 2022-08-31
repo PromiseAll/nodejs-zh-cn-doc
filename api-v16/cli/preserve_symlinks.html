@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>--preserve-symlinks | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cli">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>--preserve-symlinks</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cli.html#cli_preserve_symlinks" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cli/preserve_symlinks.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/cli/preserve_symlinks.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cli/#--preserve-symlinks.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v6.3.0</span>
+</div><p>指示模块加载器在解析和缓存模块时保留符号链接。</p><p class="">默认情况下，当 Node.js 从符号链接到不同磁盘位置的路径加载模块时，Node.js 将取消引用该链接并使用模块的实际磁盘“真实路径”作为既是标识符又是定位其他依赖模块的根路径。
+在大多数情况下，这种默认行为是可以接受的。
+但是，当使用符号链接的对等依赖项时，如下例所示，如果 <code>moduleA</code> 尝试要求 <code>moduleB</code> 作为对等依赖项，则默认行为会引发异常：</p><pre class=""><code class="language-text">{appDir}
+ ├── app
+ │   ├── index.js
+ │   └── node_modules
+ │       ├── moduleA -&gt; {appDir}/moduleA
+ │       └── moduleB
+ │           ├── index.js
+ │           └── package.json
+ └── moduleA
+     ├── index.js
+     └── package.json</code></pre><p class=""><code>--preserve-symlinks</code> 命令行标志指示 Node.js 使用模块的符号链接路径而不是实际路径，从而允许找到符号链接的对等依赖项。</p><p class="">但是请注意，使用 <code>--preserve-symlinks</code> 会产生其他副作用。
+具体来说，如果这些模块是从依赖树中的多个位置链接的，那么符号链接的原生模块可能无法加载（Node.js 会将它们视为两个单独的模块，并会尝试多次加载该模块，从而导致异常被抛出）。</p><p class=""><code>--preserve-symlinks</code> 标志不适用于允许 <code>node --preserve-symlinks node_module/.bin/&lt;foo&gt;</code> 工作的主模块。
+要对主模块应用相同的行为，也请使用 <code>--preserve-symlinks-main</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v6.3.0</span>
+</div><p>Instructs the module loader to preserve symbolic links when resolving and
+caching modules.</p><p>By default, when Node.js loads a module from a path that is symbolically linked
+to a different on-disk location, Node.js will dereference the link and use the
+actual on-disk "real path" of the module as both an identifier and as a root
+path to locate other dependency modules. In most cases, this default behavior
+is acceptable. However, when using symbolically linked peer dependencies, as
+illustrated in the example below, the default behavior causes an exception to
+be thrown if <code>moduleA</code> attempts to require <code>moduleB</code> as a peer dependency:</p><pre><code class="language-text">{appDir}
+ ├── app
+ │   ├── index.js
+ │   └── node_modules
+ │       ├── moduleA -&gt; {appDir}/moduleA
+ │       └── moduleB
+ │           ├── index.js
+ │           └── package.json
+ └── moduleA
+     ├── index.js
+     └── package.json</code></pre><p>The <code>--preserve-symlinks</code> command-line flag instructs Node.js to use the
+symlink path for modules as opposed to the real path, allowing symbolically
+linked peer dependencies to be found.</p><p>Note, however, that using <code>--preserve-symlinks</code> can have other side effects.
+Specifically, symbolically linked <em>native</em> modules can fail to load if those
+are linked from more than one location in the dependency tree (Node.js would
+see those as two separate modules and would attempt to load the module multiple
+times, causing an exception to be thrown).</p><p>The <code>--preserve-symlinks</code> flag does not apply to the main module, which allows
+<code>node --preserve-symlinks node_module/.bin/&lt;foo&gt;</code> to work. To apply the same
+behavior for the main module, also use <code>--preserve-symlinks-main</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

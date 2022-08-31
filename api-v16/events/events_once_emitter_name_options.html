@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>events.once(emitter, name[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>events.once(emitter, name[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_events_once_emitter_name_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/events_once_emitter_name_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/events_once_emitter_name_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#eventsonceemitter-name-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>现在支持 <code>signal</code> 选项。</p></td></tr>
+<tr><td>v11.13.0, v10.16.0</td>
+<td><p><span>新增于: v11.13.0, v10.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>emitter</code> <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于取消等待事件。</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul><p>创建 <code>Promise</code>，其在 <code>EventEmitter</code> 触发给定事件时被履行，或者如果 <code>EventEmitter</code> 在等待时触发 <code>'error'</code> 则被拒绝。
+<code>Promise</code> 将使用触发给定事件的所有参数的数组解决。</p><p class="">此方法有意通用，与 Web 平台 <a href="https://dom.spec.whatwg.org/#interface-eventtarget" rel="nofollow">EventTarget</a> 接口配合使用，该接口没有特殊的 <code>'error'</code> 事件语义，也不监听 <code>'error'</code> 事件。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { once, <span class="hljs-title class_">EventEmitter</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'myevent'</span>, <span class="hljs-number">42</span>);
+  });
+
+  <span class="hljs-keyword">const</span> [value] = <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'myevent'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);
+
+  <span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, err);
+  });
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'myevent'</span>);
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'error happened'</span>, err);
+  }
+}
+
+<span class="hljs-title function_">run</span>();</code></pre><p class=""><code>'error'</code> 事件的特殊处理仅在 <code>events.once()</code> 用于等待另一个事件时使用。
+如果 <code>events.once()</code> 用于等待 <code>error'</code> 事件本身，则它将被视为任何其他类型的事件而无需特殊处理：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'error'</span>)
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">[err]</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'ok'</span>, err.<span class="hljs-property">message</span>))
+  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'error'</span>, err.<span class="hljs-property">message</span>));
+
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'boom'</span>));
+
+<span class="hljs-comment">// 打印: ok boom</span></code></pre><p class=""><a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于取消等待事件：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+<span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">emitter, event, signal</span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(emitter, event, { signal });
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'event emitted!'</span>);
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">if</span> (error.<span class="hljs-property">name</span> === <span class="hljs-string">'AbortError'</span>) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'Waiting for the event was canceled!'</span>);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'There was an error'</span>, error.<span class="hljs-property">message</span>);
+    }
+  }
+}
+
+<span class="hljs-title function_">foo</span>(ee, <span class="hljs-string">'foo'</span>, ac.<span class="hljs-property">signal</span>);
+ac.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// 中止等待事件</span>
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>); <span class="hljs-comment">// 打印: Waiting for the event was canceled!</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>The <code>signal</code> option is supported now.</p></td></tr>
+<tr><td>v11.13.0, v10.16.0</td>
+<td><p><span>Added in: v11.13.0, v10.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>emitter</code> <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> Can be used to cancel waiting for the event.</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul><p>Creates a <code>Promise</code> that is fulfilled when the <code>EventEmitter</code> emits the given
+event or that is rejected if the <code>EventEmitter</code> emits <code>'error'</code> while waiting.
+The <code>Promise</code> will resolve with an array of all the arguments emitted to the
+given event.</p><p>This method is intentionally generic and works with the web platform
+<a href="https://dom.spec.whatwg.org/#interface-eventtarget" rel="nofollow">EventTarget</a> interface, which has no special
+<code>'error'</code> event semantics and does not listen to the <code>'error'</code> event.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { once, <span class="hljs-title class_">EventEmitter</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'myevent'</span>, <span class="hljs-number">42</span>);
+  });
+
+  <span class="hljs-keyword">const</span> [value] = <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'myevent'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);
+
+  <span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, err);
+  });
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'myevent'</span>);
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'error happened'</span>, err);
+  }
+}
+
+<span class="hljs-title function_">run</span>();</code></pre><p>The special handling of the <code>'error'</code> event is only used when <code>events.once()</code>
+is used to wait for another event. If <code>events.once()</code> is used to wait for the
+'<code>error'</code> event itself, then it is treated as any other kind of event without
+special handling:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'error'</span>)
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">[err]</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'ok'</span>, err.<span class="hljs-property">message</span>))
+  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'error'</span>, err.<span class="hljs-property">message</span>));
+
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'boom'</span>));
+
+<span class="hljs-comment">// Prints: ok boom</span></code></pre><p>An <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> can be used to cancel waiting for the event:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+<span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">emitter, event, signal</span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(emitter, event, { signal });
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'event emitted!'</span>);
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">if</span> (error.<span class="hljs-property">name</span> === <span class="hljs-string">'AbortError'</span>) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'Waiting for the event was canceled!'</span>);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'There was an error'</span>, error.<span class="hljs-property">message</span>);
+    }
+  }
+}
+
+<span class="hljs-title function_">foo</span>(ee, <span class="hljs-string">'foo'</span>, ac.<span class="hljs-property">signal</span>);
+ac.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// Abort waiting for the event</span>
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>); <span class="hljs-comment">// Prints: Waiting for the event was canceled!</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

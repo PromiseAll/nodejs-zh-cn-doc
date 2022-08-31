@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>subprocess.stdio | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>subprocess.stdio</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_subprocess_stdio" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/subprocess_stdio.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/subprocess_stdio.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#subprocessstdio.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.7.10</span>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a></li>
+</ul><p>到子进程的稀疏管道数组，对应于传给 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 的 <a href="../child_process.html#optionsstdio"><code>stdio</code></a> 选项中的位置，这些位置已设置为值 <code>'pipe'</code>。
+<code>subprocess.stdio[0]</code>、<code>subprocess.stdio[1]</code> 和 <code>subprocess.stdio[2]</code> 也可分别用作 <code>subprocess.stdin</code>、<code>subprocess.stdout</code> 和 <code>subprocess.stderr</code>。</p><p class="">在下面的例子中，只有子进程的文件描述符 <code>1</code> (标准输出) 被配置为管道，所以只有进程的 <code>subprocess.stdio[1]</code> 是流，数组中的所有其他值都是 <code>null</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> child_process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-keyword">const</span> subprocess = child_process.<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ls'</span>, {
+  <span class="hljs-attr">stdio</span>: [
+    <span class="hljs-number">0</span>, <span class="hljs-comment">// 为子进程使用父进程的标准输入。</span>
+    <span class="hljs-string">'pipe'</span>, <span class="hljs-comment">// 管道子进程的标准输出到父进程。</span>
+    fs.<span class="hljs-title function_">openSync</span>(<span class="hljs-string">'err.out'</span>, <span class="hljs-string">'w'</span>), <span class="hljs-comment">// 将子进程的标准错误定向到文件。</span>
+  ]
+});
+
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">0</span>], <span class="hljs-literal">null</span>);
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">0</span>], subprocess.<span class="hljs-property">stdin</span>);
+
+<span class="hljs-title function_">assert</span>(subprocess.<span class="hljs-property">stdout</span>);
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">1</span>], subprocess.<span class="hljs-property">stdout</span>);
+
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">2</span>], <span class="hljs-literal">null</span>);
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">2</span>], subprocess.<span class="hljs-property">stderr</span>);</code></pre><p class="">如果无法成功衍生子进程，则 <code>subprocess.stdio</code> 属性可能是 <code>undefined</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.7.10</span>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a></li>
+</ul><p>A sparse array of pipes to the child process, corresponding with positions in
+the <a href="../child_process.html#optionsstdio"><code>stdio</code></a> option passed to <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> that have been set
+to the value <code>'pipe'</code>. <code>subprocess.stdio[0]</code>, <code>subprocess.stdio[1]</code>, and
+<code>subprocess.stdio[2]</code> are also available as <code>subprocess.stdin</code>,
+<code>subprocess.stdout</code>, and <code>subprocess.stderr</code>, respectively.</p><p>In the following example, only the child's fd <code>1</code> (stdout) is configured as a
+pipe, so only the parent's <code>subprocess.stdio[1]</code> is a stream, all other values
+in the array are <code>null</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> child_process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-keyword">const</span> subprocess = child_process.<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ls'</span>, {
+  <span class="hljs-attr">stdio</span>: [
+    <span class="hljs-number">0</span>, <span class="hljs-comment">// Use parent's stdin for child.</span>
+    <span class="hljs-string">'pipe'</span>, <span class="hljs-comment">// Pipe child's stdout to parent.</span>
+    fs.<span class="hljs-title function_">openSync</span>(<span class="hljs-string">'err.out'</span>, <span class="hljs-string">'w'</span>), <span class="hljs-comment">// Direct child's stderr to a file.</span>
+  ]
+});
+
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">0</span>], <span class="hljs-literal">null</span>);
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">0</span>], subprocess.<span class="hljs-property">stdin</span>);
+
+<span class="hljs-title function_">assert</span>(subprocess.<span class="hljs-property">stdout</span>);
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">1</span>], subprocess.<span class="hljs-property">stdout</span>);
+
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">2</span>], <span class="hljs-literal">null</span>);
+assert.<span class="hljs-title function_">strictEqual</span>(subprocess.<span class="hljs-property">stdio</span>[<span class="hljs-number">2</span>], subprocess.<span class="hljs-property">stderr</span>);</code></pre><p>The <code>subprocess.stdio</code> property can be <code>undefined</code> if the child process could
+not be successfully spawned.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

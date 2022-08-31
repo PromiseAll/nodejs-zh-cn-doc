@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>构建 Node.js 的选项 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-intl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>构建 Node.js 的选项</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../intl.html#intl_options_for_building_node_js" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/intl/options_for_building_node_js.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/intl/options_for_building_node_js.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/intl/#options-for-building-nodejs.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>为了控制在 Node.js 中如何使用 ICU，在编译期间提供了四个 <code>configure</code> 选项。
+<a href="https://github.com/nodejs/node/blob/HEAD/BUILDING.md" rel="nofollow">BUILDING.md</a> 中记录了有关如何编译 Node.js 的其他详细信息。</p><ul class="">
+<li><code>--with-intl=none</code>/<code>--without-intl</code></li>
+<li><code>--with-intl=system-icu</code></li>
+<li><code>--with-intl=small-icu</code></li>
+<li><code>--with-intl=full-icu</code>（默认）</li>
+</ul><p class="">每个 <code>configure</code> 选项的可用 Node.js 和 JavaScript 特性概述：</p><table class=""><thead><tr><th>特性</th><th><code>none</code></th><th><code>system-icu</code></th><th><code>small-icu</code></th><th><code>full-icu</code></th></tr></thead><tbody><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" rel="nofollow"><code>String.prototype.normalize()</code></a></td><td>无（函数无操作）</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><code>String.prototype.to*Case()</code></td><td>完整</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl" rel="nofollow"><code>Intl</code></a></td><td>无（对象不存在）</td><td>部分/完整（取决于操作系统）</td><td>部分（仅英文）</td><td>完整</td></tr><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare" rel="nofollow"><code>String.prototype.localeCompare()</code></a></td><td>部分（不识别区域设置）</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><code>String.prototype.toLocale*Case()</code></td><td>部分（不识别区域设置）</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString" rel="nofollow"><code>Number.prototype.toLocaleString()</code></a></td><td>部分（不识别区域设置）</td><td>部分/完整（取决于操作系统）</td><td>部分（仅英文）</td><td>完整</td></tr><tr><td><code>Date.prototype.toLocale*String()</code></td><td>部分（不识别区域设置）</td><td>部分/完整（取决于操作系统）</td><td>部分（仅英文）</td><td>完整</td></tr><tr><td><a href="../url.html#legacy-url-api">Legacy URL Parser</a></td><td>部分（不支持 IDN）</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><a href="../url.html#the-whatwg-url-api">WHATWG URL Parser</a></td><td>部分（不支持 IDN）</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><a href="../buffer.html#buffertranscodesource-fromenc-toenc"><code>require('buffer').transcode()</code></a></td><td>无（函数不存在）</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><a href="../repl.html#repl">REPL</a></td><td>部分（不准确的行编辑）</td><td>完整</td><td>完整</td><td>完整</td></tr><tr><td><a href="../util.html#class-utiltextdecoder"><code>require('util').TextDecoder</code></a></td><td>部分（基本的编码支持）</td><td>部分/完整（取决于操作系统）</td><td>部分（仅限 Unicode）</td><td>完整</td></tr><tr><td><a href="https://github.com/tc39/proposal-regexp-unicode-property-escapes" rel="nofollow"><code>RegExp</code> Unicode Property Escapes</a></td><td>无（无效的 <code>RegExp</code> 错误）</td><td>完整</td><td>完整</td><td>完整</td></tr></tbody></table><p class="">"(not locale-aware)" 表示该函数执行其操作就像函数的非 <code>Locale</code> 版本一样，如果存在的话。
+比如在 <code>none</code> 模式下，<code>Date.prototype.toLocaleString()</code> 的操作和 <code>Date.prototype.toString()</code> 是一样的。</p></div>
+          <div id="content_right"><p>To control how ICU is used in Node.js, four <code>configure</code> options are available
+during compilation. Additional details on how to compile Node.js are documented
+in <a href="https://github.com/nodejs/node/blob/HEAD/BUILDING.md" rel="nofollow">BUILDING.md</a>.</p><ul>
+<li><code>--with-intl=none</code>/<code>--without-intl</code></li>
+<li><code>--with-intl=system-icu</code></li>
+<li><code>--with-intl=small-icu</code></li>
+<li><code>--with-intl=full-icu</code> (default)</li>
+</ul><p>An overview of available Node.js and JavaScript features for each <code>configure</code>
+option:</p><table><thead><tr><th>Feature</th><th><code>none</code></th><th><code>system-icu</code></th><th><code>small-icu</code></th><th><code>full-icu</code></th></tr></thead><tbody><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" rel="nofollow"><code>String.prototype.normalize()</code></a></td><td>none (function is no-op)</td><td>full</td><td>full</td><td>full</td></tr><tr><td><code>String.prototype.to*Case()</code></td><td>full</td><td>full</td><td>full</td><td>full</td></tr><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl" rel="nofollow"><code>Intl</code></a></td><td>none (object does not exist)</td><td>partial/full (depends on OS)</td><td>partial (English-only)</td><td>full</td></tr><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare" rel="nofollow"><code>String.prototype.localeCompare()</code></a></td><td>partial (not locale-aware)</td><td>full</td><td>full</td><td>full</td></tr><tr><td><code>String.prototype.toLocale*Case()</code></td><td>partial (not locale-aware)</td><td>full</td><td>full</td><td>full</td></tr><tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString" rel="nofollow"><code>Number.prototype.toLocaleString()</code></a></td><td>partial (not locale-aware)</td><td>partial/full (depends on OS)</td><td>partial (English-only)</td><td>full</td></tr><tr><td><code>Date.prototype.toLocale*String()</code></td><td>partial (not locale-aware)</td><td>partial/full (depends on OS)</td><td>partial (English-only)</td><td>full</td></tr><tr><td><a href="../url.html#legacy-url-api">Legacy URL Parser</a></td><td>partial (no IDN support)</td><td>full</td><td>full</td><td>full</td></tr><tr><td><a href="../url.html#the-whatwg-url-api">WHATWG URL Parser</a></td><td>partial (no IDN support)</td><td>full</td><td>full</td><td>full</td></tr><tr><td><a href="../buffer.html#buffertranscodesource-fromenc-toenc"><code>require('buffer').transcode()</code></a></td><td>none (function does not exist)</td><td>full</td><td>full</td><td>full</td></tr><tr><td><a href="../repl.html#repl">REPL</a></td><td>partial (inaccurate line editing)</td><td>full</td><td>full</td><td>full</td></tr><tr><td><a href="../util.html#class-utiltextdecoder"><code>require('util').TextDecoder</code></a></td><td>partial (basic encodings support)</td><td>partial/full (depends on OS)</td><td>partial (Unicode-only)</td><td>full</td></tr><tr><td><a href="https://github.com/tc39/proposal-regexp-unicode-property-escapes" rel="nofollow"><code>RegExp</code> Unicode Property Escapes</a></td><td>none (invalid <code>RegExp</code> error)</td><td>full</td><td>full</td><td>full</td></tr></tbody></table><p>The "(not locale-aware)" designation denotes that the function carries out its
+operation just like the non-<code>Locale</code> version of the function, if one
+exists. For example, under <code>none</code> mode, <code>Date.prototype.toLocaleString()</code>'s
+operation is identical to that of <code>Date.prototype.toString()</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

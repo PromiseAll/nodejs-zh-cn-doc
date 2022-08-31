@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>退出码 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>退出码</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_exit_codes" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/exit_codes.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/exit_codes.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#exit-codes.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当没有更多异步操作挂起时，Node.js 通常会以 <code>0</code> 状态代码退出。
+在其他情况下使用以下状态代码：</p><ul class="">
+<li><code>1</code> <strong>未捕获的致命异常</strong>：存在未捕获的异常，并且其没有被域或 <a href="../process.html#event-uncaughtexception"><code>'uncaughtException'</code></a> 事件句柄处理。</li>
+<li><code>2</code>: 未使用（由 Bash 预留用于内置误用）</li>
+<li><code>3</code> <strong>内部 JavaScript 解析错误</strong>：Node.js 引导过程中的内部 JavaScript 源代码导致解析错误。
+这是极其罕见的，通常只能在 Node.js 本身的开发过程中发生。</li>
+<li><code>4</code> <strong>内部 JavaScript 评估失败</strong>：Node.js 引导过程中的内部 JavaScript 源代码在评估时未能返回函数值。
+这是极其罕见的，通常只能在 Node.js 本身的开发过程中发生。</li>
+<li><code>5</code> <strong>致命错误</strong>：V8 中存在不可恢复的致命错误。
+通常将打印带有前缀 <code>FATAL ERROR</code> 的消息到标准错误。</li>
+<li><code>6</code> <strong>非函数的内部异常句柄</strong>：存在未捕获的异常，但内部致命异常句柄不知何故设置为非函数，无法调用。</li>
+<li><code>7</code> <strong>内部异常句柄运行时失败</strong>：存在未捕获的异常，并且内部致命异常句柄函数本身在尝试处理时抛出错误。
+例如，如果 <a href="../process.html#event-uncaughtexception"><code>'uncaughtException'</code></a> 或 <code>domain.on('error')</code> 句柄抛出错误，就会发生这种情况。</li>
+<li><code>8</code>: 未使用。
+在以前版本的 Node.js 中，退出码 8 有时表示未捕获的异常。</li>
+<li><code>9</code> <strong>无效参数</strong>：指定了未知选项，或者提供了需要值的选项而没有值。</li>
+<li><code>10</code> <strong>内部 JavaScript 运行时失败</strong>：Node.js 引导过程中的内部 JavaScript 源代码在调用引导函数时抛出错误。
+这是极其罕见的，通常只能在 Node.js 本身的开发过程中发生。</li>
+<li><code>12</code> <strong>无效的调试参数</strong>：设置了 <code>--inspect</code> 和/或 <code>--inspect-brk</code> 选项，但选择的端口号无效或不可用。</li>
+<li><code>13</code> <strong>未完成的顶层等待</strong>：在顶层代码中的函数外使用了 <code>await</code>，但传入的 <code>Promise</code> 从未解决。</li>
+<li><code>&gt;128</code> <strong>信号退出</strong>：如果 Node.js 收到致命的信号，例如 <code>SIGKILL</code> 或 <code>SIGHUP</code>，则其退出码将是 <code>128</code> 加上信号代码的值。
+这是标准的 POSIX 实践，因为退出码被定义为 7 位整数，并且信号退出设置高位，然后包含信号代码的值。
+例如，信号 <code>SIGABRT</code> 的值是 <code>6</code>，因此预期的退出码将是 <code>128</code> + <code>6</code> 或 <code>134</code>。</li>
+</ul></div>
+          <div id="content_right"><p>Node.js will normally exit with a <code>0</code> status code when no more async
+operations are pending. The following status codes are used in other
+cases:</p><ul>
+<li><code>1</code> <strong>Uncaught Fatal Exception</strong>: There was an uncaught exception,
+and it was not handled by a domain or an <a href="../process.html#event-uncaughtexception"><code>'uncaughtException'</code></a> event
+handler.</li>
+<li><code>2</code>: Unused (reserved by Bash for builtin misuse)</li>
+<li><code>3</code> <strong>Internal JavaScript Parse Error</strong>: The JavaScript source code
+internal in the Node.js bootstrapping process caused a parse error. This
+is extremely rare, and generally can only happen during development
+of Node.js itself.</li>
+<li><code>4</code> <strong>Internal JavaScript Evaluation Failure</strong>: The JavaScript
+source code internal in the Node.js bootstrapping process failed to
+return a function value when evaluated. This is extremely rare, and
+generally can only happen during development of Node.js itself.</li>
+<li><code>5</code> <strong>Fatal Error</strong>: There was a fatal unrecoverable error in V8.
+Typically a message will be printed to stderr with the prefix <code>FATAL ERROR</code>.</li>
+<li><code>6</code> <strong>Non-function Internal Exception Handler</strong>: There was an
+uncaught exception, but the internal fatal exception handler
+function was somehow set to a non-function, and could not be called.</li>
+<li><code>7</code> <strong>Internal Exception Handler Run-Time Failure</strong>: There was an
+uncaught exception, and the internal fatal exception handler
+function itself threw an error while attempting to handle it. This
+can happen, for example, if an <a href="../process.html#event-uncaughtexception"><code>'uncaughtException'</code></a> or
+<code>domain.on('error')</code> handler throws an error.</li>
+<li><code>8</code>: Unused. In previous versions of Node.js, exit code 8 sometimes
+indicated an uncaught exception.</li>
+<li><code>9</code> <strong>Invalid Argument</strong>: Either an unknown option was specified,
+or an option requiring a value was provided without a value.</li>
+<li><code>10</code> <strong>Internal JavaScript Run-Time Failure</strong>: The JavaScript
+source code internal in the Node.js bootstrapping process threw an error
+when the bootstrapping function was called. This is extremely rare,
+and generally can only happen during development of Node.js itself.</li>
+<li><code>12</code> <strong>Invalid Debug Argument</strong>: The <code>--inspect</code> and/or <code>--inspect-brk</code>
+options were set, but the port number chosen was invalid or unavailable.</li>
+<li><code>13</code> <strong>Unfinished Top-Level Await</strong>: <code>await</code> was used outside of a function
+in the top-level code, but the passed <code>Promise</code> never resolved.</li>
+<li><code>&gt;128</code> <strong>Signal Exits</strong>: If Node.js receives a fatal signal such as
+<code>SIGKILL</code> or <code>SIGHUP</code>, then its exit code will be <code>128</code> plus the
+value of the signal code. This is a standard POSIX practice, since
+exit codes are defined to be 7-bit integers, and signal exits set
+the high-order bit, and then contain the value of the signal code.
+For example, signal <code>SIGABRT</code> has value <code>6</code>, so the expected exit
+code will be <code>128</code> + <code>6</code>, or <code>134</code>.</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

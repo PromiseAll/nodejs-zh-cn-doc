@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>os.networkInterfaces() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-os">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>os.networkInterfaces()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../os.html#os_os_networkinterfaces" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/os/os_networkinterfaces.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/os/os_networkinterfaces.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/os/#osnetworkinterfaces.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.6.0</span>
+</div><ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>返回包含已分配网络地址的网络接口的对象。</p><p class="">返回对象上的每个键都标识一个网络接口。
+关联的值是每个对象描述一个分配的网络地址的对象数组。</p><p class="">分配的网络地址对象上可用的属性包括：</p><ul class="">
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 分配的 IPv4 或 IPv6 地址</li>
+<li><code>netmask</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> IPv4 或 IPv6 网络掩码</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>IPv4</code> 或 <code>IPv6</code></li>
+<li><code>mac</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 网络接口的 MAC 地址</li>
+<li><code>internal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果网络接口是不能远程访问的环回或类似接口，则为 <code>true</code>；否则为 <code>false</code></li>
+<li><code>scopeid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 数字的 IPv6 范围 ID（仅在 <code>family</code> 为 <code>IPv6</code> 时指定）</li>
+<li><code>cidr</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 使用 CIDR 表示法的路由前缀分配的 IPv4 或 IPv6 地址。
+如果 <code>netmask</code> 无效，则此属性设置为 <code>null</code>。</li>
+</ul><pre class=""><code class="language-js">{
+  <span class="hljs-attr">lo</span>: [
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'127.0.0.1'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'255.0.0.0'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv4'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'00:00:00:00:00:00'</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'127.0.0.1/8'</span>
+    },
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'::1'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv6'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'00:00:00:00:00:00'</span>,
+      <span class="hljs-attr">scopeid</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'::1/128'</span>
+    }
+  ],
+  <span class="hljs-attr">eth0</span>: [
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'192.168.1.108'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'255.255.255.0'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv4'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'01:02:03:0a:0b:0c'</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'192.168.1.108/24'</span>
+    },
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'fe80::a00:27ff:fe4e:66a1'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'ffff:ffff:ffff:ffff::'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv6'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'01:02:03:0a:0b:0c'</span>,
+      <span class="hljs-attr">scopeid</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'fe80::a00:27ff:fe4e:66a1/64'</span>
+    }
+  ]
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.6.0</span>
+</div><ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>Returns an object containing network interfaces that have been assigned a
+network address.</p><p>Each key on the returned object identifies a network interface. The associated
+value is an array of objects that each describe an assigned network address.</p><p>The properties available on the assigned network address object include:</p><ul>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The assigned IPv4 or IPv6 address</li>
+<li><code>netmask</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The IPv4 or IPv6 network mask</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Either <code>IPv4</code> or <code>IPv6</code></li>
+<li><code>mac</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The MAC address of the network interface</li>
+<li><code>internal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <code>true</code> if the network interface is a loopback or
+similar interface that is not remotely accessible; otherwise <code>false</code></li>
+<li><code>scopeid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The numeric IPv6 scope ID (only specified when <code>family</code>
+is <code>IPv6</code>)</li>
+<li><code>cidr</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The assigned IPv4 or IPv6 address with the routing prefix
+in CIDR notation. If the <code>netmask</code> is invalid, this property is set
+to <code>null</code>.</li>
+</ul><pre><code class="language-js">{
+  <span class="hljs-attr">lo</span>: [
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'127.0.0.1'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'255.0.0.0'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv4'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'00:00:00:00:00:00'</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'127.0.0.1/8'</span>
+    },
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'::1'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv6'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'00:00:00:00:00:00'</span>,
+      <span class="hljs-attr">scopeid</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'::1/128'</span>
+    }
+  ],
+  <span class="hljs-attr">eth0</span>: [
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'192.168.1.108'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'255.255.255.0'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv4'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'01:02:03:0a:0b:0c'</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'192.168.1.108/24'</span>
+    },
+    {
+      <span class="hljs-attr">address</span>: <span class="hljs-string">'fe80::a00:27ff:fe4e:66a1'</span>,
+      <span class="hljs-attr">netmask</span>: <span class="hljs-string">'ffff:ffff:ffff:ffff::'</span>,
+      <span class="hljs-attr">family</span>: <span class="hljs-string">'IPv6'</span>,
+      <span class="hljs-attr">mac</span>: <span class="hljs-string">'01:02:03:0a:0b:0c'</span>,
+      <span class="hljs-attr">scopeid</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">internal</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">cidr</span>: <span class="hljs-string">'fe80::a00:27ff:fe4e:66a1/64'</span>
+    }
+  ]
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

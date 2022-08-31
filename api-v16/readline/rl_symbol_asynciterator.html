@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>rl[Symbol.asyncIterator]() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-readline">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>rl[Symbol.asyncIterator]()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../readline.html#readline_rl_symbol_asynciterator" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/readline/rl_symbol_asynciterator.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/readline/rl_symbol_asynciterator.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/readline/#rlsymbolasynciterator.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v11.4.0, v10.16.0</td>
+<td><p><span>新增于: v11.4.0, v10.16.0</span></p></td></tr>
+<tr><td>v11.14.0, v10.17.0</td>
+<td><p>Symbol.asyncIterator 支持不再是实验的。</p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-asynciterator-interface" rel="nofollow" class="type">&lt;AsyncIterator&gt;</a></li>
+</ul><p>创建 <code>AsyncIterator</code> 对象，该对象遍历输入流中的每一行作为字符串。
+此方法允许通过 <code>for await...of</code> 循环异步迭代 <code>readline.Interface</code> 对象。</p><p class="">输入流中的错误不会被转发。</p><p class="">如果循环以 <code>break</code>、<code>throw</code> 或 <code>return</code> 终止，则将调用 <a href="../readline.html#rlclose"><code>rl.close()</code></a>。
+换句话说，迭代 <code>readline.Interface</code> 将始终完全消费输入流。</p><p class="">性能无法与传统的 <code>'line'</code> 事件 API 相提并论。
+对于性能敏感的应用程序，请改用 <code>'line'</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">processLineByLine</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> rl = readline.<span class="hljs-title function_">createInterface</span>({
+    <span class="hljs-comment">// ...</span>
+  });
+
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> line <span class="hljs-keyword">of</span> rl) {
+    <span class="hljs-comment">// 逐行读取输入中的每一行</span>
+    <span class="hljs-comment">// 都将在此处作为 `line` 连续可用。</span>
+  }
+}</code></pre><p class=""><code>readline.createInterface()</code> 将在调用后开始使用输入流。
+在接口创建和异步迭代之间进行异步操作可能会导致丢失行。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v11.4.0, v10.16.0</td>
+<td><p><span>Added in: v11.4.0, v10.16.0</span></p></td></tr>
+<tr><td>v11.14.0, v10.17.0</td>
+<td><p>Symbol.asyncIterator support is no longer experimental.</p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-asynciterator-interface" rel="nofollow" class="type">&lt;AsyncIterator&gt;</a></li>
+</ul><p>Create an <code>AsyncIterator</code> object that iterates through each line in the input
+stream as a string. This method allows asynchronous iteration of
+<code>readline.Interface</code> objects through <code>for await...of</code> loops.</p><p>Errors in the input stream are not forwarded.</p><p>If the loop is terminated with <code>break</code>, <code>throw</code>, or <code>return</code>,
+<a href="../readline.html#rlclose"><code>rl.close()</code></a> will be called. In other words, iterating over a
+<code>readline.Interface</code> will always consume the input stream fully.</p><p>Performance is not on par with the traditional <code>'line'</code> event API. Use <code>'line'</code>
+instead for performance-sensitive applications.</p><pre><code class="language-js"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">processLineByLine</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> rl = readline.<span class="hljs-title function_">createInterface</span>({
+    <span class="hljs-comment">// ...</span>
+  });
+
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> line <span class="hljs-keyword">of</span> rl) {
+    <span class="hljs-comment">// Each line in the readline input will be successively available here as</span>
+    <span class="hljs-comment">// `line`.</span>
+  }
+}</code></pre><p><code>readline.createInterface()</code> will start to consume the input stream once
+invoked. Having asynchronous operations between interface creation and
+asynchronous iteration may result in missed lines.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

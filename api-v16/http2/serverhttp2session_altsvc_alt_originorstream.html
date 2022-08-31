@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>serverhttp2session.altsvc(alt, originOrStream) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>serverhttp2session.altsvc(alt, originOrStream)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_serverhttp2session_altsvc_alt_originorstream" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/serverhttp2session_altsvc_alt_originorstream.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/serverhttp2session_altsvc_alt_originorstream.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#serverhttp2sessionaltsvcalt-originorstream.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v9.4.0</span>
+</div><ul class="">
+<li><code>alt</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <a href="https://tools.ietf.org/html/rfc7838" rel="nofollow">RFC 7838</a> 定义的替代服务配置的描述。</li>
+<li><code>originOrStream</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 指定来源的 URL 字符串（或具有 <code>origin</code> 属性的 <code>Object</code>）或由 <code>http2stream.id</code> 属性给出的活动 <code>Http2Stream</code> 的数字标识符。</li>
+</ul><p>向连接的客户端提交 <code>ALTSVC</code> 帧（由 <a href="https://tools.ietf.org/html/rfc7838" rel="nofollow">RFC 7838</a> 定义）。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'session'</span>, <span class="hljs-function">(<span class="hljs-params">session</span>) =&gt;</span> {
+  <span class="hljs-comment">// 为源 https://example.org:80 设置 altsvc</span>
+  session.<span class="hljs-title function_">altsvc</span>(<span class="hljs-string">'h2=":8000"'</span>, <span class="hljs-string">'https://example.org:80'</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-comment">// 为特定流设置 altsvc</span>
+  stream.<span class="hljs-property">session</span>.<span class="hljs-title function_">altsvc</span>(<span class="hljs-string">'h2=":8000"'</span>, stream.<span class="hljs-property">id</span>);
+});</code></pre><p class="">发送带有特定流 ID 的 <code>ALTSVC</code> 帧表示备用服务与给定 <code>Http2Stream</code> 的来源相关联。</p><p class=""><code>alt</code> 和原点字符串_必须_只包含 ASCII 字节，并且严格解释为 ASCII 字节序列。
+可以传入特殊值 <code>'clear'</code> 以清除给定域的任何先前设置的替代服务。</p><p class="">当为 <code>originOrStream</code> 参数传入字符串时，则它将被解析为 URL 并导出来源。
+例如，HTTP URL <code>'https://example.org/foo/bar'</code> 的来源是 ASCII 字符串 <code>'https://example.org'</code>。
+如果给定的字符串无法解析为 URL，或者无法导出有效的来源，则会抛出错误。</p><p class=""><code>URL</code> 对象，或任何具有 <code>origin</code> 属性的对象，都可以作为 <code>originOrStream</code> 传入，在这种情况下，将使用 <code>origin</code> 属性的值。
+<code>origin</code> 属性的值_必须_是正确序列化的 ASCII 源。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v9.4.0</span>
+</div><ul>
+<li><code>alt</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A description of the alternative service configuration as
+defined by <a href="https://tools.ietf.org/html/rfc7838" rel="nofollow">RFC 7838</a>.</li>
+<li><code>originOrStream</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Either a URL string specifying
+the origin (or an <code>Object</code> with an <code>origin</code> property) or the numeric
+identifier of an active <code>Http2Stream</code> as given by the <code>http2stream.id</code>
+property.</li>
+</ul><p>Submits an <code>ALTSVC</code> frame (as defined by <a href="https://tools.ietf.org/html/rfc7838" rel="nofollow">RFC 7838</a>) to the connected client.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'session'</span>, <span class="hljs-function">(<span class="hljs-params">session</span>) =&gt;</span> {
+  <span class="hljs-comment">// Set altsvc for origin https://example.org:80</span>
+  session.<span class="hljs-title function_">altsvc</span>(<span class="hljs-string">'h2=":8000"'</span>, <span class="hljs-string">'https://example.org:80'</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-comment">// Set altsvc for a specific stream</span>
+  stream.<span class="hljs-property">session</span>.<span class="hljs-title function_">altsvc</span>(<span class="hljs-string">'h2=":8000"'</span>, stream.<span class="hljs-property">id</span>);
+});</code></pre><p>Sending an <code>ALTSVC</code> frame with a specific stream ID indicates that the alternate
+service is associated with the origin of the given <code>Http2Stream</code>.</p><p>The <code>alt</code> and origin string <em>must</em> contain only ASCII bytes and are
+strictly interpreted as a sequence of ASCII bytes. The special value <code>'clear'</code>
+may be passed to clear any previously set alternative service for a given
+domain.</p><p>When a string is passed for the <code>originOrStream</code> argument, it will be parsed as
+a URL and the origin will be derived. For instance, the origin for the
+HTTP URL <code>'https://example.org/foo/bar'</code> is the ASCII string
+<code>'https://example.org'</code>. An error will be thrown if either the given string
+cannot be parsed as a URL or if a valid origin cannot be derived.</p><p>A <code>URL</code> object, or any object with an <code>origin</code> property, may be passed as
+<code>originOrStream</code>, in which case the value of the <code>origin</code> property will be
+used. The value of the <code>origin</code> property <em>must</em> be a properly serialized
+ASCII origin.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

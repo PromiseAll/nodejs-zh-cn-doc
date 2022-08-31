@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>钩子回调 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-v8">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>钩子回调</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../v8.html#v8_hook_callbacks" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/v8/hook_callbacks.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/v8/#hook-callbacks.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>promise 生命周期中的关键事件分为四个方面：promise 的创建、调用继续句柄之前/之后或 await 前后，以及当 promise 解决或拒绝时。</p><p class="">虽然这些钩子与 <a href="../async_hooks.html"><code>async_hooks</code></a> 的钩子相似，但它们缺少 <code>destroy</code> 钩子。
+其他类型的异步资源通常表示套接字或文件描述符，它们具有不同的“关闭”状态来表达 <code>destroy</code> 生命周期事件，而只要代码仍然可以访问它们，则 promise 就仍然可用。
+垃圾收集跟踪用于使 promise 适合 <code>async_hooks</code> 事件模型，但是这种跟踪非常昂贵，而且它们甚至不一定会被垃圾收集。</p><p class="">因为 promise 是异步的资源，其生命周期通过 promise 钩子机制进行跟踪，所以 <code>init()</code>、<code>before()</code>、<code>after()</code> 和 <code>settled()</code> 回调不能是异步的函数，因为它们创建了更多会产生无限循环的 promise。</p><p class="">虽然此 API 用于将 promise 事件提供给 <a href="../async_hooks.html"><code>async_hooks</code></a>，但两者之间的顺序是未定义的。
+两个 API 都是多租户的，因此可以以相对于彼此的任何顺序产生事件。</p></div>
+          <div id="content_right"><p>Key events in the lifetime of a promise have been categorized into four areas:
+creation of a promise, before/after a continuation handler is called or around
+an await, and when the promise resolves or rejects.</p><p>While these hooks are similar to those of <a href="../async_hooks.html"><code>async_hooks</code></a> they lack a
+<code>destroy</code> hook. Other types of async resources typically represent sockets or
+file descriptors which have a distinct "closed" state to express the <code>destroy</code>
+lifecycle event while promises remain usable for as long as code can still
+reach them. Garbage collection tracking is used to make promises fit into the
+<code>async_hooks</code> event model, however this tracking is very expensive and they may
+not necessarily ever even be garbage collected.</p><p>Because promises are asynchronous resources whose lifecycle is tracked
+via the promise hooks mechanism, the <code>init()</code>, <code>before()</code>, <code>after()</code>, and
+<code>settled()</code> callbacks <em>must not</em> be async functions as they create more
+promises which would produce an infinite loop.</p><p>While this API is used to feed promise events into <a href="../async_hooks.html"><code>async_hooks</code></a>, the
+ordering between the two is undefined. Both APIs are multi-tenant
+and therefore could produce events in any order relative to each other.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

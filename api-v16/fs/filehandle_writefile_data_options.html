@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>filehandle.writeFile(data, options) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>filehandle.writeFile(data, options)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_filehandle_writefile_data_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/filehandle_writefile_data_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/filehandle_writefile_data_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#filehandlewritefiledata-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.14.0</td>
+<td><p>参数 <code>data</code> 支持 <code>AsyncIterable</code>、<code>Iterable</code> 和 <code>Stream</code>。</p></td></tr>
+<tr><td>v14.12.0</td>
+<td><p>参数 <code>data</code> 将使用显式 <code>toString</code> 函数对对象进行字符串化。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>参数 <code>data</code> 不会再将不支持的输入强制转换为字符串。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p><span>新增于: v10.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> | <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> 当 <code>data</code> 为字符串时的预期字符编码。 <strong>默认值:</strong> <code>'utf8'</code></li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul><p>异步地将数据写入文件，如果文件已经存在，则替换该文件。
+<code>data</code> 可以是字符串、缓冲区、<a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> 或 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> 对象、或者具有自有的 <code>toString</code> 函数属性的对象。
+成功时不带参数解决 promise。</p><p class="">如果 <code>options</code> 是字符串，则它指定 <code>encoding</code>。</p><p class=""><a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a> 必须支持写入。</p><p class="">在同一文件上多次使用 <code>filehandle.writeFile()</code> 而不等待 promise 被解决（或拒绝）是不安全的。</p><p class="">如果在文件句柄上进行了一次或多次 <code>filehandle.write()</code> 调用，然后进行 <code>filehandle.writeFile()</code> 调用，则数据将从当前位置写入，直到文件末尾。
+它并不总是从文件的开头写入。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.14.0</td>
+<td><p>The <code>data</code> argument supports <code>AsyncIterable</code>, <code>Iterable</code> and <code>Stream</code>.</p></td></tr>
+<tr><td>v14.12.0</td>
+<td><p>The <code>data</code> parameter will stringify an object with an explicit <code>toString</code> function.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>The <code>data</code> parameter won't coerce unsupported input to strings anymore.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p><span>Added in: v10.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> | <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> The expected character encoding when <code>data</code> is a
+string. <strong>Default:</strong> <code>'utf8'</code></li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul><p>Asynchronously writes data to a file, replacing the file if it already exists.
+<code>data</code> can be a string, a buffer, an <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> object, or an
+object with an own <code>toString</code> function
+property. The promise is resolved with no arguments upon success.</p><p>If <code>options</code> is a string, then it specifies the <code>encoding</code>.</p><p>The <a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a> has to support writing.</p><p>It is unsafe to use <code>filehandle.writeFile()</code> multiple times on the same file
+without waiting for the promise to be resolved (or rejected).</p><p>If one or more <code>filehandle.write()</code> calls are made on a file handle and then a
+<code>filehandle.writeFile()</code> call is made, the data will be written from the
+current position till the end of the file. It doesn't always write from the
+beginning of the file.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

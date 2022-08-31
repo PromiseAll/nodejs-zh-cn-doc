@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>events.EventEmitterAsyncResource 类继承 EventEmitter 类 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>events.EventEmitterAsyncResource 类继承 EventEmitter 类</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_class_events_eventemitterasyncresource_extends_eventemitter" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/class_events_eventemitterasyncresource_extends_eventemitter.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#class-eventseventemitterasyncresource-extends-eventemitter.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div><p>为需要手动异步跟踪的 <code>EventEmitter</code> 集成 <code>EventEmitter</code> 和 <a href="../async_hooks.html#class-asyncresource" rel="nofollow" class="type">&lt;AsyncResource&gt;</a>。
+具体来说，<code>events.EventEmitterAsyncResource</code> 实例触发的所有事件都将在其<a href="../async_context.html">异步上下文</a>中运行。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitterAsyncResource</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-keyword">const</span> { notStrictEqual, strictEqual } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> { executionAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-comment">// 异步跟踪工具会将其识别为 'Q'。</span>
+<span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitterAsyncResource</span>({ <span class="hljs-attr">name</span>: <span class="hljs-string">'Q'</span> });
+
+<span class="hljs-comment">// 'foo' 监听器将在 EventEmitter 异步上下文中运行。</span>
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">strictEqual</span>(<span class="hljs-title function_">executionAsyncId</span>(), ee1.<span class="hljs-property">asyncId</span>);
+  <span class="hljs-title function_">strictEqual</span>(<span class="hljs-title function_">triggerAsyncId</span>(), ee1.<span class="hljs-property">triggerAsyncId</span>);
+});
+
+<span class="hljs-keyword">const</span> ee2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-comment">// 普通 EventEmitter 上的 'foo' 监听器不跟踪异步上下文，</span>
+<span class="hljs-comment">// 但是，在与 emit() 相同的异步上下文中运行。</span>
+ee2.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-title function_">executionAsyncId</span>(), ee2.<span class="hljs-property">asyncId</span>);
+  <span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-title function_">triggerAsyncId</span>(), ee2.<span class="hljs-property">triggerAsyncId</span>);
+});
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  ee1.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+  ee2.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});</code></pre><p class=""><code>EventEmitterAsyncResource</code> 类具有与 <code>EventEmitter</code> 和 <code>AsyncResource</code> 本身相同的方法和选项。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v16.14.0</span>
+</div><p>Integrates <code>EventEmitter</code> with <a href="../async_hooks.html#class-asyncresource" rel="nofollow" class="type">&lt;AsyncResource&gt;</a> for <code>EventEmitter</code>s that
+require manual async tracking. Specifically, all events emitted by instances
+of <code>events.EventEmitterAsyncResource</code> will run within its <a href="../async_context.html">async context</a>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitterAsyncResource</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-keyword">const</span> { notStrictEqual, strictEqual } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> { executionAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-comment">// Async tracking tooling will identify this as 'Q'.</span>
+<span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitterAsyncResource</span>({ <span class="hljs-attr">name</span>: <span class="hljs-string">'Q'</span> });
+
+<span class="hljs-comment">// 'foo' listeners will run in the EventEmitters async context.</span>
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">strictEqual</span>(<span class="hljs-title function_">executionAsyncId</span>(), ee1.<span class="hljs-property">asyncId</span>);
+  <span class="hljs-title function_">strictEqual</span>(<span class="hljs-title function_">triggerAsyncId</span>(), ee1.<span class="hljs-property">triggerAsyncId</span>);
+});
+
+<span class="hljs-keyword">const</span> ee2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-comment">// 'foo' listeners on ordinary EventEmitters that do not track async</span>
+<span class="hljs-comment">// context, however, run in the same async context as the emit().</span>
+ee2.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-title function_">executionAsyncId</span>(), ee2.<span class="hljs-property">asyncId</span>);
+  <span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-title function_">triggerAsyncId</span>(), ee2.<span class="hljs-property">triggerAsyncId</span>);
+});
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  ee1.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+  ee2.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});</code></pre><p>The <code>EventEmitterAsyncResource</code> class has the same methods and takes the
+same options as <code>EventEmitter</code> and <code>AsyncResource</code> themselves.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

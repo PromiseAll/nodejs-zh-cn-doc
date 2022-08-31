@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Worker 类 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-worker_threads">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Worker 类</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../worker_threads.html#worker_threads_class_worker" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/worker_threads/class_worker.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/worker_threads/class_worker.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/worker_threads/#class-worker.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v10.5.0</span>
+</div><ul class="">
+<li>继承自: <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul><p><code>Worker</code> 类代表独立的 JavaScript 执行线程。
+大多数 Node.js API 都可以在其中使用。</p><p class="">工作线程环境中的显着差异是：</p><ul class="">
+<li><a href="../process.html#processstdin"><code>process.stdin</code></a>、<a href="../process.html#processstdout"><code>process.stdout</code></a> 和 <a href="../process.html#processstderr"><code>process.stderr</code></a> 可能被父线程重定向。</li>
+<li><a href="../worker_threads.html#workerismainthread"><code>require('worker_threads').isMainThread</code></a> 属性被设置为 <code>false</code>。</li>
+<li><a href="../worker_threads.html#workerparentport"><code>require('worker_threads').parentPort</code></a> 消息端口可用。</li>
+<li><a href="../process.html#processexitcode"><code>process.exit()</code></a> 不会停止整个程序，只是单个线程，且 <a href="../process.html#processabort"><code>process.abort()</code></a> 不可用。</li>
+<li>设置群组或用户标识的 <a href="../process.html#processchdirdirectory"><code>process.chdir()</code></a> 和 <code>process</code> 方法不可用。</li>
+<li><a href="../process.html#processenv"><code>process.env</code></a> 是父线程的环境变量的副本，除非另有说明。
+对副本的更改在其他线程中不可见，且对原生插件不可见（除非将 <a href="../worker_threads.html#workershare_env"><code>worker.SHARE_ENV</code></a> 作为 <code>env</code> 选项传给 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 构造函数）。</li>
+<li><a href="../process.html#processtitle"><code>process.title</code></a> 不能修改。</li>
+<li>信号不通过 <a href="../process.html#signal-events"><code>process.on('...')</code></a> 传送。</li>
+<li><a href="../worker_threads.html#workerterminate"><code>worker.terminate()</code></a> 被调用时，执行可能在任何时候停止。</li>
+<li>来自父进程的进程间通信通道不可访问。</li>
+<li>不支持 <a href="../tracing.html"><code>trace_events</code></a> 模块。</li>
+<li>如果满足<a href="../addons.html#worker-support">某些条件</a>，则原生插件只能从多个线程加载。</li>
+</ul><p class="">可以在其他 <code>Worker</code> 内部创建 <code>Worker</code> 实例。</p><p class="">和<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" rel="nofollow">网络工作线程</a>和 <a href="../cluster.html"><code>cluster</code> 模块</a>一样，可以通过线程间消息传递来实现双向通信。
+在内部，<code>Worker</code> 有一对内置的 <a href="../worker_threads.html#class-messageport"><code>MessagePort</code></a>，在创建 <code>Worker</code> 时它们已经相互关联。
+虽然父端的 <code>MessagePort</code> 对象没有直接暴露，但其功能通过父线程 <code>Worker</code> 对象上的 <a href="../worker_threads.html#workerpostmessagevalue-transferlist"><code>worker.postMessage()</code></a> 和 <a href="../worker_threads.html#event-message_1"><code>worker.on('message')</code></a> 事件暴露。</p><p class="">要创建自定义的消息通道（鼓励使用默认的全局通道，因为它有助于分离关注点），用户可以在任一线程上创建 <code>MessageChannel</code> 对象，并通过预先存在的通道（例如全局通道）将该 <code>MessageChannel</code> 上的 <code>MessagePort</code> 之一传给另一个线程。</p><p class="">有关如何传递消息以及可以成功通过线程屏障传输的 JavaScript 值类型的更多信息，请参阅 <a href="../worker_threads.html#portpostmessagevalue-transferlist"><code>port.postMessage()</code></a>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> {
+  <span class="hljs-title class_">Worker</span>, <span class="hljs-title class_">MessageChannel</span>, <span class="hljs-title class_">MessagePort</span>, isMainThread, parentPort
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+<span class="hljs-keyword">if</span> (isMainThread) {
+  <span class="hljs-keyword">const</span> worker = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Worker</span>(__filename);
+  <span class="hljs-keyword">const</span> subChannel = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+  worker.<span class="hljs-title function_">postMessage</span>({ <span class="hljs-attr">hereIsYourPort</span>: subChannel.<span class="hljs-property">port1</span> }, [subChannel.<span class="hljs-property">port1</span>]);
+  subChannel.<span class="hljs-property">port2</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'received:'</span>, value);
+  });
+} <span class="hljs-keyword">else</span> {
+  parentPort.<span class="hljs-title function_">once</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(value.<span class="hljs-property">hereIsYourPort</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">MessagePort</span>);
+    value.<span class="hljs-property">hereIsYourPort</span>.<span class="hljs-title function_">postMessage</span>(<span class="hljs-string">'the worker is sending this'</span>);
+    value.<span class="hljs-property">hereIsYourPort</span>.<span class="hljs-title function_">close</span>();
+  });
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v10.5.0</span>
+</div><ul>
+<li>Extends: <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul><p>The <code>Worker</code> class represents an independent JavaScript execution thread.
+Most Node.js APIs are available inside of it.</p><p>Notable differences inside a Worker environment are:</p><ul>
+<li>The <a href="../process.html#processstdin"><code>process.stdin</code></a>, <a href="../process.html#processstdout"><code>process.stdout</code></a> and <a href="../process.html#processstderr"><code>process.stderr</code></a>
+may be redirected by the parent thread.</li>
+<li>The <a href="../worker_threads.html#workerismainthread"><code>require('worker_threads').isMainThread</code></a> property is set to <code>false</code>.</li>
+<li>The <a href="../worker_threads.html#workerparentport"><code>require('worker_threads').parentPort</code></a> message port is available.</li>
+<li><a href="../process.html#processexitcode"><code>process.exit()</code></a> does not stop the whole program, just the single thread,
+and <a href="../process.html#processabort"><code>process.abort()</code></a> is not available.</li>
+<li><a href="../process.html#processchdirdirectory"><code>process.chdir()</code></a> and <code>process</code> methods that set group or user ids
+are not available.</li>
+<li><a href="../process.html#processenv"><code>process.env</code></a> is a copy of the parent thread's environment variables,
+unless otherwise specified. Changes to one copy are not visible in other
+threads, and are not visible to native add-ons (unless
+<a href="../worker_threads.html#workershare_env"><code>worker.SHARE_ENV</code></a> is passed as the <code>env</code> option to the
+<a href="../worker_threads.html#class-worker"><code>Worker</code></a> constructor).</li>
+<li><a href="../process.html#processtitle"><code>process.title</code></a> cannot be modified.</li>
+<li>Signals are not delivered through <a href="../process.html#signal-events"><code>process.on('...')</code></a>.</li>
+<li>Execution may stop at any point as a result of <a href="../worker_threads.html#workerterminate"><code>worker.terminate()</code></a>
+being invoked.</li>
+<li>IPC channels from parent processes are not accessible.</li>
+<li>The <a href="../tracing.html"><code>trace_events</code></a> module is not supported.</li>
+<li>Native add-ons can only be loaded from multiple threads if they fulfill
+<a href="../addons.html#worker-support">certain conditions</a>.</li>
+</ul><p>Creating <code>Worker</code> instances inside of other <code>Worker</code>s is possible.</p><p>Like <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" rel="nofollow">Web Workers</a> and the <a href="../cluster.html"><code>cluster</code> module</a>, two-way communication can be
+achieved through inter-thread message passing. Internally, a <code>Worker</code> has a
+built-in pair of <a href="../worker_threads.html#class-messageport"><code>MessagePort</code></a>s that are already associated with each other
+when the <code>Worker</code> is created. While the <code>MessagePort</code> object on the parent side
+is not directly exposed, its functionalities are exposed through
+<a href="../worker_threads.html#workerpostmessagevalue-transferlist"><code>worker.postMessage()</code></a> and the <a href="../worker_threads.html#event-message_1"><code>worker.on('message')</code></a> event
+on the <code>Worker</code> object for the parent thread.</p><p>To create custom messaging channels (which is encouraged over using the default
+global channel because it facilitates separation of concerns), users can create
+a <code>MessageChannel</code> object on either thread and pass one of the
+<code>MessagePort</code>s on that <code>MessageChannel</code> to the other thread through a
+pre-existing channel, such as the global one.</p><p>See <a href="../worker_threads.html#portpostmessagevalue-transferlist"><code>port.postMessage()</code></a> for more information on how messages are passed,
+and what kind of JavaScript values can be successfully transported through
+the thread barrier.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> {
+  <span class="hljs-title class_">Worker</span>, <span class="hljs-title class_">MessageChannel</span>, <span class="hljs-title class_">MessagePort</span>, isMainThread, parentPort
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+<span class="hljs-keyword">if</span> (isMainThread) {
+  <span class="hljs-keyword">const</span> worker = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Worker</span>(__filename);
+  <span class="hljs-keyword">const</span> subChannel = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+  worker.<span class="hljs-title function_">postMessage</span>({ <span class="hljs-attr">hereIsYourPort</span>: subChannel.<span class="hljs-property">port1</span> }, [subChannel.<span class="hljs-property">port1</span>]);
+  subChannel.<span class="hljs-property">port2</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'received:'</span>, value);
+  });
+} <span class="hljs-keyword">else</span> {
+  parentPort.<span class="hljs-title function_">once</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(value.<span class="hljs-property">hereIsYourPort</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">MessagePort</span>);
+    value.<span class="hljs-property">hereIsYourPort</span>.<span class="hljs-title function_">postMessage</span>(<span class="hljs-string">'the worker is sending this'</span>);
+    value.<span class="hljs-property">hereIsYourPort</span>.<span class="hljs-title function_">close</span>();
+  });
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

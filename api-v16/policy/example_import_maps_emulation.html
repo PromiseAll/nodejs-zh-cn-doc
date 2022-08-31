@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>示例：导入映射模拟#import map | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-policy">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>示例：导入映射模拟#import map</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../policy.html#policy_example_import_maps_emulation" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/policy/example_import_maps_emulation.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/policy/example_import_maps_emulation.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/policy/#example-import-maps-emulation.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>给定导入映射：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"imports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/react/index.js"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"scopes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"./ssr/"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/server-side-react/index.js"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"scopes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">""</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"cascade"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/react/index.js"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./ssr/"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"cascade"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/server-side-react/index.js"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">导入映射假定您可以默认获取任何资源。
+这意味着策略顶层的 <code>"dependencies"</code> 应设置为 <code>true</code>。
+策略要求选择加入，因为它启用了应用程序交叉链接的所有资源，这对许多场景没有意义。
+它们还假设任何给定的范围都可以访问超出其允许依赖项的任何范围；所有模拟导入映射的范围都必须设置 <code>"cascade": true</code>。</p><p class="">导入映射只有一个顶级作用域用于其 "imports"。
+所以为了模拟 <code>"imports"</code> 使用 <code>""</code> 范围。
+为了模拟 <code>"scopes"</code>，使用 <code>"scopes"</code> 的方式与 <code>"scopes"</code> 在导入映射中的工作方式类似。</p><p class="">注意事项：策略不使用字符串匹配来寻找各种范围。
+它们做 URL 遍历。
+这意味着像 <code>blob:</code> 和 <code>data:</code> URL 之类的东西可能无法在两个系统之间完全互操作。
+例如导入映射可以通过在 <code>/</code> 字符上对 URL 进行分区来部分匹配 <code>data:</code> 或 <code>blob:</code> URL，策略故意不能。
+对于 <code>blob:</code> URL，导入映射范围不采用 <code>blob:</code> URL 的来源。</p><p class="">此外，导入映射仅适用于 <code>import</code>，因此可能需要向所有依赖项映射添加 <code>"import"</code> 条件。</p></div>
+          <div id="content_right"><p>Given an import map:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"imports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/react/index.js"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"scopes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"./ssr/"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/server-side-react/index.js"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"scopes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">""</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"cascade"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/react/index.js"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./ssr/"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"cascade"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"react"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/server-side-react/index.js"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Import maps assume you can get any resource by default. This means
+<code>"dependencies"</code> at the top level of the policy should be set to <code>true</code>.
+Policies require this to be opt-in since it enables all resources of the
+application cross linkage which doesn't make sense for many scenarios. They also
+assume any given scope has access to any scope above its allowed dependencies;
+all scopes emulating import maps must set <code>"cascade": true</code>.</p><p>Import maps only have a single top level scope for their "imports". So for
+emulating <code>"imports"</code> use the <code>""</code> scope. For emulating <code>"scopes"</code> use the
+<code>"scopes"</code> in a similar manner to how <code>"scopes"</code> works in import maps.</p><p>Caveats: Policies do not use string matching for various finding of scope. They
+do URL traversals. This means things like <code>blob:</code> and <code>data:</code> URLs might not be
+entirely interoperable between the two systems. For example import maps can
+partially match a <code>data:</code> or <code>blob:</code> URL by partitioning the URL on a <code>/</code>
+character, policies intentionally cannot. For <code>blob:</code> URLs import map scopes do
+not adopt the origin of the <code>blob:</code> URL.</p><p>Additionally, import maps only work on <code>import</code> so it may be desirable to add a
+<code>"import"</code> condition to all dependency mappings.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

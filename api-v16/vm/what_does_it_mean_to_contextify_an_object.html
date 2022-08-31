@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>上下文隔离化一个对象意味着什么？ | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>上下文隔离化一个对象意味着什么？</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_what_does_it_mean_to_contextify_an_object" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/what_does_it_mean_to_contextify_an_object.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/what_does_it_mean_to_contextify_an_object.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#what-does-it-mean-to-contextify-an-object.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在 Node.js 中执行的所有 JavaScript 都在 "上下文" 的作用域内运行。
+根据 <a href="https://v8.dev/docs/embed#contexts" rel="nofollow">V8 嵌入器指南</a>：</p><blockquote class="">
+<p>在 V8 中，上下文是一个执行环境，它允许单独的、不相关的 JavaScript 应用程序在 V8 的单个实例中运行。 必须明确指定要在其中运行任何 JavaScript 代码的上下文。</p>
+</blockquote><p class="">当方法 <code>vm.createContext()</code> 被调用时，<code>contextObject</code> 参数（或者新创建的对象，如果 <code>contextObject</code> 是 <code>undefined</code>）在内部与 V8 上下文的新实例相关联。
+这个 V8 上下文使用 <code>vm</code> 模块的方法提供了 <code>code</code> 运行，它可以在隔离的全局环境中运行。
+创建 V8 上下文并将其与 <code>contextObject</code> 相关联的过程就是本文档所指的“上下文隔离化”对象。</p></div>
+          <div id="content_right"><p>All JavaScript executed within Node.js runs within the scope of a "context".
+According to the <a href="https://v8.dev/docs/embed#contexts" rel="nofollow">V8 Embedder's Guide</a>:</p><blockquote>
+<p>In V8, a context is an execution environment that allows separate, unrelated,
+JavaScript applications to run in a single instance of V8. You must explicitly
+specify the context in which you want any JavaScript code to be run.</p>
+</blockquote><p>When the method <code>vm.createContext()</code> is called, the <code>contextObject</code> argument
+(or a newly-created object if <code>contextObject</code> is <code>undefined</code>) is associated
+internally with a new instance of a V8 Context. This V8 Context provides the
+<code>code</code> run using the <code>vm</code> module's methods with an isolated global environment
+within which it can operate. The process of creating the V8 Context and
+associating it with the <code>contextObject</code> is what this document refers to as
+"contextifying" the object.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

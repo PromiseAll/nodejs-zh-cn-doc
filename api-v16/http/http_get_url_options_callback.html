@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http.get(url[, options][, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http.get(url[, options][, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_http_get_url_options_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/http_get_url_options_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/http_get_url_options_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#httpgeturl-options-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.9.0</td>
+<td><p>参数 <code>url</code> 现在可以使用单独的 <code>options</code> 对象传入。</p></td></tr>
+<tr><td>v7.5.0</td>
+<td><p>参数 <code>options</code> 可以是 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v0.3.6</td>
+<td><p><span>新增于: v0.3.6</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>url</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 接受与 <a href="../http.html#httprequestoptions-callback"><code>http.request()</code></a> 相同的 <code>options</code>，但 <code>method</code> 始终设置为 <code>GET</code>。
+从原型继承的属性将被忽略。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="../http.html#class-httpclientrequest" rel="nofollow" class="type">&lt;http.ClientRequest&gt;</a></li>
+</ul><p>由于大多数请求是没有正文的 GET 请求，因此 Node.js 提供了这个便捷的方法。
+此方法与 <a href="../http.html#httprequestoptions-callback"><code>http.request()</code></a> 的唯一区别在于，它将方法设置为 GET 并自动调用 <code>req.end()</code>。
+因为 <a href="../http.html#class-httpclientrequest"><code>http.ClientRequest</code></a> 章节所述的原因，回调必须注意消费响应数据。</p><p class=""><code>callback</code> 使用单个参数（<a href="../http.html#class-httpincomingmessage"><code>http.IncomingMessage</code></a> 的实例）调用。</p><p class="">获取 JSON 的示例：</p><pre class=""><code class="language-js">http.<span class="hljs-title function_">get</span>(<span class="hljs-string">'http://localhost:8000/'</span>, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { statusCode } = res;
+  <span class="hljs-keyword">const</span> contentType = res.<span class="hljs-property">headers</span>[<span class="hljs-string">'content-type'</span>];
+
+  <span class="hljs-keyword">let</span> error;
+  <span class="hljs-comment">// 任何 2xx 状态码都表示成功响应，但这里只检查 200。</span>
+  <span class="hljs-keyword">if</span> (statusCode !== <span class="hljs-number">200</span>) {
+    error = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Request Failed.\n'</span> +
+                      <span class="hljs-string">`Status Code: <span class="hljs-subst">${statusCode}</span>`</span>);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/^application\/json/</span>.<span class="hljs-title function_">test</span>(contentType)) {
+    error = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Invalid content-type.\n'</span> +
+                      <span class="hljs-string">`Expected application/json but received <span class="hljs-subst">${contentType}</span>`</span>);
+  }
+  <span class="hljs-keyword">if</span> (error) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(error.<span class="hljs-property">message</span>);
+    <span class="hljs-comment">// 消费响应数据以释放内存</span>
+    res.<span class="hljs-title function_">resume</span>();
+    <span class="hljs-keyword">return</span>;
+  }
+
+  res.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+  <span class="hljs-keyword">let</span> rawData = <span class="hljs-string">''</span>;
+  res.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> { rawData += chunk; });
+  res.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> parsedData = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(rawData);
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(parsedData);
+    } <span class="hljs-keyword">catch</span> (e) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(e.<span class="hljs-property">message</span>);
+    }
+  });
+}).<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`Got error: <span class="hljs-subst">${e.message}</span>`</span>);
+});
+
+<span class="hljs-comment">// 创建本地服务器来从其接收数据</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    <span class="hljs-attr">data</span>: <span class="hljs-string">'Hello World!'</span>
+  }));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.9.0</td>
+<td><p>The <code>url</code> parameter can now be passed along with a separate <code>options</code> object.</p></td></tr>
+<tr><td>v7.5.0</td>
+<td><p>The <code>options</code> parameter can be a WHATWG <code>URL</code> object.</p></td></tr>
+<tr><td>v0.3.6</td>
+<td><p><span>Added in: v0.3.6</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>url</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Accepts the same <code>options</code> as
+<a href="../http.html#httprequestoptions-callback"><code>http.request()</code></a>, with the <code>method</code> always set to <code>GET</code>.
+Properties that are inherited from the prototype are ignored.</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>Returns: <a href="../http.html#class-httpclientrequest" rel="nofollow" class="type">&lt;http.ClientRequest&gt;</a></li>
+</ul><p>Since most requests are GET requests without bodies, Node.js provides this
+convenience method. The only difference between this method and
+<a href="../http.html#httprequestoptions-callback"><code>http.request()</code></a> is that it sets the method to GET and calls <code>req.end()</code>
+automatically. The callback must take care to consume the response
+data for reasons stated in <a href="../http.html#class-httpclientrequest"><code>http.ClientRequest</code></a> section.</p><p>The <code>callback</code> is invoked with a single argument that is an instance of
+<a href="../http.html#class-httpincomingmessage"><code>http.IncomingMessage</code></a>.</p><p>JSON fetching example:</p><pre><code class="language-js">http.<span class="hljs-title function_">get</span>(<span class="hljs-string">'http://localhost:8000/'</span>, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { statusCode } = res;
+  <span class="hljs-keyword">const</span> contentType = res.<span class="hljs-property">headers</span>[<span class="hljs-string">'content-type'</span>];
+
+  <span class="hljs-keyword">let</span> error;
+  <span class="hljs-comment">// Any 2xx status code signals a successful response but</span>
+  <span class="hljs-comment">// here we're only checking for 200.</span>
+  <span class="hljs-keyword">if</span> (statusCode !== <span class="hljs-number">200</span>) {
+    error = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Request Failed.\n'</span> +
+                      <span class="hljs-string">`Status Code: <span class="hljs-subst">${statusCode}</span>`</span>);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/^application\/json/</span>.<span class="hljs-title function_">test</span>(contentType)) {
+    error = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Invalid content-type.\n'</span> +
+                      <span class="hljs-string">`Expected application/json but received <span class="hljs-subst">${contentType}</span>`</span>);
+  }
+  <span class="hljs-keyword">if</span> (error) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(error.<span class="hljs-property">message</span>);
+    <span class="hljs-comment">// Consume response data to free up memory</span>
+    res.<span class="hljs-title function_">resume</span>();
+    <span class="hljs-keyword">return</span>;
+  }
+
+  res.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+  <span class="hljs-keyword">let</span> rawData = <span class="hljs-string">''</span>;
+  res.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> { rawData += chunk; });
+  res.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> parsedData = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(rawData);
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(parsedData);
+    } <span class="hljs-keyword">catch</span> (e) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(e.<span class="hljs-property">message</span>);
+    }
+  });
+}).<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`Got error: <span class="hljs-subst">${e.message}</span>`</span>);
+});
+
+<span class="hljs-comment">// Create a local server to receive data from</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    <span class="hljs-attr">data</span>: <span class="hljs-string">'Hello World!'</span>
+  }));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

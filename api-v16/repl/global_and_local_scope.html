@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>全局作用域与局部作用域 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-repl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>全局作用域与局部作用域</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../repl.html#repl_global_and_local_scope" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/repl/global_and_local_scope.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/repl/global_and_local_scope.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/repl/#global-and-local-scope.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>默认求值器提供对全局作用域中存在的任何变量的访问。
+可以通过将变量分配给与每个 <code>REPLServer</code> 关联的 <code>context</code> 对象来显式地向 REPL 公开变量：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+<span class="hljs-keyword">const</span> msg = <span class="hljs-string">'message'</span>;
+
+repl.<span class="hljs-title function_">start</span>(<span class="hljs-string">'&gt; '</span>).<span class="hljs-property">context</span>.<span class="hljs-property">m</span> = msg;</code></pre><p class=""><code>context</code> 对象中的属性在 REPL 中显示为本地：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node repl_test.js</span>
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">m</span>
+'message'</code></pre><p class="">默认情况下上下文属性不是只读的。
+要指定只读的全局变量，则必须使用 <code>Object.defineProperty()</code> 定义上下文属性：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+<span class="hljs-keyword">const</span> msg = <span class="hljs-string">'message'</span>;
+
+<span class="hljs-keyword">const</span> r = repl.<span class="hljs-title function_">start</span>(<span class="hljs-string">'&gt; '</span>);
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(r.<span class="hljs-property">context</span>, <span class="hljs-string">'m'</span>, {
+  <span class="hljs-attr">configurable</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">value</span>: msg
+});</code></pre></div>
+          <div id="content_right"><p>The default evaluator provides access to any variables that exist in the global
+scope. It is possible to expose a variable to the REPL explicitly by assigning
+it to the <code>context</code> object associated with each <code>REPLServer</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+<span class="hljs-keyword">const</span> msg = <span class="hljs-string">'message'</span>;
+
+repl.<span class="hljs-title function_">start</span>(<span class="hljs-string">'&gt; '</span>).<span class="hljs-property">context</span>.<span class="hljs-property">m</span> = msg;</code></pre><p>Properties in the <code>context</code> object appear as local within the REPL:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node repl_test.js</span>
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">m</span>
+'message'</code></pre><p>Context properties are not read-only by default. To specify read-only globals,
+context properties must be defined using <code>Object.defineProperty()</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+<span class="hljs-keyword">const</span> msg = <span class="hljs-string">'message'</span>;
+
+<span class="hljs-keyword">const</span> r = repl.<span class="hljs-title function_">start</span>(<span class="hljs-string">'&gt; '</span>);
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(r.<span class="hljs-property">context</span>, <span class="hljs-string">'m'</span>, {
+  <span class="hljs-attr">configurable</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">value</span>: msg
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

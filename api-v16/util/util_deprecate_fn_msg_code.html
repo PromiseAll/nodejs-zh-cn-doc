@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>util.deprecate(fn, msg[, code]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-util">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>util.deprecate(fn, msg[, code])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../util.html#util_util_deprecate_fn_msg_code" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/util/util_deprecate_fn_msg_code.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/util/util_deprecate_fn_msg_code.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/util/#utildeprecatefn-msg-code.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>每个代码只触发一次弃用警告。</p></td></tr>
+<tr><td>v0.8.0</td>
+<td><p><span>新增于: v0.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 被弃用的函数。</li>
+<li><code>msg</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 调用弃用的函数时显示的警告消息。</li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 弃用代码。
+有关代码的列表，请参阅<a href="../deprecations.html#list-of-deprecated-apis">弃用的 API 列表</a>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 弃用的函数被封装以触发警告。</li>
+</ul><p><code>util.deprecate()</code> 方法以标记为已弃用的方式封装 <code>fn</code>（可能是函数或类）。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">obsoleteFunction</span> = util.<span class="hljs-title function_">deprecate</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 在这里做点事情。</span>
+}, <span class="hljs-string">'obsoleteFunction() is deprecated. Use newShinyFunction() instead.'</span>);</code></pre><p class="">当调用时，<code>util.deprecate()</code> 将返回将使用 <a href="../process.html#event-warning"><code>'warning'</code></a> 事件触发 <code>DeprecationWarning</code> 的函数。
+第一次调用返回的函数时，警告将触发并打印到 <code>stderr</code>。
+触发警告后，将调用封装的函数而不触发警告。</p><p class="">如果在多次调用 <code>util.deprecate()</code> 时提供了相同的可选 <code>code</code>，则该 <code>code</code> 只会触发一次警告。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">const</span> fn1 = util.<span class="hljs-title function_">deprecate</span>(someFunction, someMessage, <span class="hljs-string">'DEP0001'</span>);
+<span class="hljs-keyword">const</span> fn2 = util.<span class="hljs-title function_">deprecate</span>(someOtherFunction, someOtherMessage, <span class="hljs-string">'DEP0001'</span>);
+<span class="hljs-title function_">fn1</span>(); <span class="hljs-comment">// 使用代码 DEP0001 触发弃用警告</span>
+<span class="hljs-title function_">fn2</span>(); <span class="hljs-comment">// 不触发弃用警告，因为它具有相同的代码</span></code></pre><p class="">如果使用 <code>--no-deprecation</code> 或 <code>--no-warnings</code> 命令行标志、或者如果 <code>process.noDeprecation</code> 属性在第一次弃用警告之前设置为 <code>true</code>，则 <code>util.deprecate()</code> 方法不执行任何操作。</p><p class="">如果设置了 <code>--trace-deprecation</code> 或 <code>--trace-warnings</code> 命令行标志、或者 <code>process.traceDeprecation</code> 属性设置为 <code>true</code>，则在第一次调用已弃用的函数时会向 <code>stderr</code> 打印警告和堆栈跟踪。</p><p class="">如果设置了 <code>--throw-deprecation</code> 命令行标志、或者 <code>process.throwDeprecation</code> 属性设置为 <code>true</code>，则在调用已弃用的函数时将抛出异常。</p><p class=""><code>--throw-deprecation</code> 命令行标志和 <code>process.throwDeprecation</code> 属性优先于 <code>--trace-deprecation</code> 和 <code>process.traceDeprecation</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>Deprecation warnings are only emitted once for each code.</p></td></tr>
+<tr><td>v0.8.0</td>
+<td><p><span>Added in: v0.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The function that is being deprecated.</li>
+<li><code>msg</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A warning message to display when the deprecated function is
+invoked.</li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A deprecation code. See the <a href="../deprecations.html#list-of-deprecated-apis">list of deprecated APIs</a> for a
+list of codes.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The deprecated function wrapped to emit a warning.</li>
+</ul><p>The <code>util.deprecate()</code> method wraps <code>fn</code> (which may be a function or class) in
+such a way that it is marked as deprecated.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">obsoleteFunction</span> = util.<span class="hljs-title function_">deprecate</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// Do something here.</span>
+}, <span class="hljs-string">'obsoleteFunction() is deprecated. Use newShinyFunction() instead.'</span>);</code></pre><p>When called, <code>util.deprecate()</code> will return a function that will emit a
+<code>DeprecationWarning</code> using the <a href="../process.html#event-warning"><code>'warning'</code></a> event. The warning will
+be emitted and printed to <code>stderr</code> the first time the returned function is
+called. After the warning is emitted, the wrapped function is called without
+emitting a warning.</p><p>If the same optional <code>code</code> is supplied in multiple calls to <code>util.deprecate()</code>,
+the warning will be emitted only once for that <code>code</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">const</span> fn1 = util.<span class="hljs-title function_">deprecate</span>(someFunction, someMessage, <span class="hljs-string">'DEP0001'</span>);
+<span class="hljs-keyword">const</span> fn2 = util.<span class="hljs-title function_">deprecate</span>(someOtherFunction, someOtherMessage, <span class="hljs-string">'DEP0001'</span>);
+<span class="hljs-title function_">fn1</span>(); <span class="hljs-comment">// Emits a deprecation warning with code DEP0001</span>
+<span class="hljs-title function_">fn2</span>(); <span class="hljs-comment">// Does not emit a deprecation warning because it has the same code</span></code></pre><p>If either the <code>--no-deprecation</code> or <code>--no-warnings</code> command-line flags are
+used, or if the <code>process.noDeprecation</code> property is set to <code>true</code> <em>prior</em> to
+the first deprecation warning, the <code>util.deprecate()</code> method does nothing.</p><p>If the <code>--trace-deprecation</code> or <code>--trace-warnings</code> command-line flags are set,
+or the <code>process.traceDeprecation</code> property is set to <code>true</code>, a warning and a
+stack trace are printed to <code>stderr</code> the first time the deprecated function is
+called.</p><p>If the <code>--throw-deprecation</code> command-line flag is set, or the
+<code>process.throwDeprecation</code> property is set to <code>true</code>, then an exception will be
+thrown when the deprecated function is called.</p><p>The <code>--throw-deprecation</code> command-line flag and <code>process.throwDeprecation</code>
+property take precedence over <code>--trace-deprecation</code> and
+<code>process.traceDeprecation</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

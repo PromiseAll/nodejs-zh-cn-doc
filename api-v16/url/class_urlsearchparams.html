@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>URLSearchParams 类 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-url">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>URLSearchParams 类</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../url.html#url_class_urlsearchparams" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/url/class_urlsearchparams.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/url/class_urlsearchparams.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/url/#class-urlsearchparams.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>该类现在也在全局对象上可用。</p></td></tr>
+<tr><td>v7.5.0, v6.13.0</td>
+<td><p><span>新增于: v7.5.0, v6.13.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p><code>URLSearchParams</code> API 提供对 <code>URL</code> 查询的读写访问。
+<code>URLSearchParams</code> 类也可以与以下四个构造函数之一单独使用。
+<code>URLSearchParams</code> 类也在全局对象上可用。</p><p class="">WHATWG <code>URLSearchParams</code> 接口和 <a href="../querystring.html"><code>querystring</code></a> 模块具有相似的用途，但 <a href="../querystring.html"><code>querystring</code></a> 模块的用途更通用，因为它允许自定义的分隔符（<code>&amp;</code> 和 <code>=</code>）。
+换句话说，此 API 纯粹是为网址查询字符串而设计。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://example.org/?abc=123'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">'abc'</span>));
+<span class="hljs-comment">// 打印 123</span>
+
+myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">append</span>(<span class="hljs-string">'abc'</span>, <span class="hljs-string">'xyz'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// 打印 https://example.org/?abc=123&amp;abc=xyz</span>
+
+myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">delete</span>(<span class="hljs-string">'abc'</span>);
+myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">set</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// 打印 https://example.org/?a=b</span>
+
+<span class="hljs-keyword">const</span> newSearchParams = <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLSearchParams</span>(myURL.<span class="hljs-property">searchParams</span>);
+<span class="hljs-comment">// 以上相当于</span>
+<span class="hljs-comment">// const newSearchParams = new URLSearchParams(myURL.search);</span>
+
+newSearchParams.<span class="hljs-title function_">append</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'c'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// 打印 https://example.org/?a=b</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(newSearchParams.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印 a=b&amp;a=c</span>
+
+<span class="hljs-comment">// newSearchParams.toString() 是隐式调用的</span>
+myURL.<span class="hljs-property">search</span> = newSearchParams;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// 打印 https://example.org/?a=b&amp;a=c</span>
+newSearchParams.<span class="hljs-title function_">delete</span>(<span class="hljs-string">'a'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// 打印 https://example.org/?a=b&amp;a=c</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>The class is now available on the global object.</p></td></tr>
+<tr><td>v7.5.0, v6.13.0</td>
+<td><p><span>Added in: v7.5.0, v6.13.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p>The <code>URLSearchParams</code> API provides read and write access to the query of a
+<code>URL</code>. The <code>URLSearchParams</code> class can also be used standalone with one of the
+four following constructors.
+The <code>URLSearchParams</code> class is also available on the global object.</p><p>The WHATWG <code>URLSearchParams</code> interface and the <a href="../querystring.html"><code>querystring</code></a> module have
+similar purpose, but the purpose of the <a href="../querystring.html"><code>querystring</code></a> module is more
+general, as it allows the customization of delimiter characters (<code>&amp;</code> and <code>=</code>).
+On the other hand, this API is designed purely for URL query strings.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> myURL = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'https://example.org/?abc=123'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">'abc'</span>));
+<span class="hljs-comment">// Prints 123</span>
+
+myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">append</span>(<span class="hljs-string">'abc'</span>, <span class="hljs-string">'xyz'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// Prints https://example.org/?abc=123&amp;abc=xyz</span>
+
+myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">delete</span>(<span class="hljs-string">'abc'</span>);
+myURL.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">set</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// Prints https://example.org/?a=b</span>
+
+<span class="hljs-keyword">const</span> newSearchParams = <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLSearchParams</span>(myURL.<span class="hljs-property">searchParams</span>);
+<span class="hljs-comment">// The above is equivalent to</span>
+<span class="hljs-comment">// const newSearchParams = new URLSearchParams(myURL.search);</span>
+
+newSearchParams.<span class="hljs-title function_">append</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'c'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// Prints https://example.org/?a=b</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(newSearchParams.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints a=b&amp;a=c</span>
+
+<span class="hljs-comment">// newSearchParams.toString() is implicitly called</span>
+myURL.<span class="hljs-property">search</span> = newSearchParams;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// Prints https://example.org/?a=b&amp;a=c</span>
+newSearchParams.<span class="hljs-title function_">delete</span>(<span class="hljs-string">'a'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myURL.<span class="hljs-property">href</span>);
+<span class="hljs-comment">// Prints https://example.org/?a=b&amp;a=c</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

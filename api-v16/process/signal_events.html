@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>信号事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>信号事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_signal_events" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/signal_events.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/signal_events.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#signal-events.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当 Node.js 进程收到信号时，则将触发信号事件。
+有关标准 POSIX 信号名称（例如 <code>'SIGINT'</code>、<code>'SIGHUP'</code> 等）的列表，请参阅 <a href="http://man7.org/linux/man-pages/man7/signal.7.html" rel="nofollow"><code>signal(7)</code></a>。</p><p class="">信号在 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 线程上不可用。</p><p class="">信号句柄将接收信号的名称（<code>'SIGINT'</code>、<code>'SIGTERM'</code> 等）作为第一个参数。</p><p class="">每个事件的名称将是信号的大写通用名称（例如 <code>'SIGINT'</code> 表示 <code>SIGINT</code> 信号）。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// 从标准输入开始读取，因此进程不会退出。</span>
+process.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">resume</span>();
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Received SIGINT. Press Control-D to exit.'</span>);
+});
+
+<span class="hljs-comment">// 使用单个函数处理多个信号</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">handle</span>(<span class="hljs-params">signal</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received <span class="hljs-subst">${signal}</span>`</span>);
+}
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, handle);
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGTERM'</span>, handle);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// 从标准输入开始读取，因此进程不会退出。</span>
+process.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">resume</span>();
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Received SIGINT. Press Control-D to exit.'</span>);
+});
+
+<span class="hljs-comment">// 使用单个函数处理多个信号</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">handle</span>(<span class="hljs-params">signal</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received <span class="hljs-subst">${signal}</span>`</span>);
+}
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, handle);
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGTERM'</span>, handle);</code></pre><ul class="">
+<li><code>'SIGUSR1'</code> 由 Node.js 预留以启动<a href="../debugger.html">调试器</a>。
+可以安装监听器，但这样做可能会干扰调试器。</li>
+<li><code>'SIGTERM'</code> 和 <code>'SIGINT'</code> 在非 Windows 平台上具有默认的句柄，其在使用代码 <code>128 + signal number</code> 退出之前重置终端模式。
+如果这些信号之一安装了监听器，则其默认行为将被删除（Node.js 将不再退出）。</li>
+<li><code>'SIGPIPE'</code> 默认情况下忽略。
+它可以安装监听器。</li>
+<li><code>'SIGHUP'</code> 在 Windows 上是在关闭控制台窗口时生成，在其他平台上是在各种类似条件下生成。
+参见 <a href="http://man7.org/linux/man-pages/man7/signal.7.html" rel="nofollow"><code>signal(7)</code></a>。
+它可以安装监听器，但是 Node.js 将在大约 10 秒后被 Windows 无条件地终止。
+在非 Windows 平台上，<code>SIGHUP</code> 的默认行为是终止 Node.js，但一旦安装了监听器，则其默认行为将被删除。</li>
+<li><code>'SIGTERM'</code> Windows 上不支持，可以监听。</li>
+<li>所有平台都支持来自终端的 <code>'SIGINT'</code>，通常可以使用 <kbd>Ctrl</kbd>+<kbd>C</kbd> 生成（但是这是可配置的）。
+当启用<a href="../tty.html#readstreamsetrawmodemode">终端原始模式</a>并使用 <kbd>Ctrl</kbd>+<kbd>C</kbd> 时不会生成它。</li>
+<li><code>'SIGBREAK'</code> 在 Windows 上，当按下 <kbd>Ctrl</kbd>+<kbd>Break</kbd> 时会发送。
+在非 Windows 平台上，它可以被监听，但无法发送或生成它。</li>
+<li><code>'SIGWINCH'</code> 当调整控制台大小时会发送。
+在 Windows 上，这只会发生在当光标移动时写入控制台，或者当在原始模式下使用可读的终端时。</li>
+<li><code>'SIGKILL'</code> 不能安装监听器，它会无条件地终止所有平台上的 Node.js。</li>
+<li><code>'SIGSTOP'</code> 不能安装监听器。</li>
+<li><code>'SIGBUS'</code>、<code>'SIGFPE'</code>、<code>'SIGSEGV'</code> 和 <code>'SIGILL'</code>，当没有使用 <a href="http://man7.org/linux/man-pages/man2/kill.2.html" rel="nofollow"><code>kill(2)</code></a> 人为引发时，本质上会使进程处于调用 JS 监听器不安全的状态。
+这样做可能会导致进程停止响应。</li>
+<li><code>0</code> 可以发送来测试进程是否存在，如果进程存在则没影响，如果进程不存在则抛出错误。</li>
+</ul><p class="">Windows 不支持信号，因此没有等价的使用信号来终止，但 Node.js 提供了一些对 <a href="../process.html#processkillpid-signal"><code>process.kill()</code></a> 和 <a href="../child_process.html#subprocesskillsignal"><code>subprocess.kill()</code></a> 的模拟：</p><ul class="">
+<li>发送 <code>SIGINT</code>、<code>SIGTERM</code>、和 <code>SIGKILL</code> 会导致目标进程无条件的终止，之后子进程会报告进程被信号终止。</li>
+<li>发送信号 <code>0</code> 可以作为独立于平台的方式来测试进程是否存在。</li>
+</ul></div>
+          <div id="content_right"><p>Signal events will be emitted when the Node.js process receives a signal. Please
+refer to <a href="http://man7.org/linux/man-pages/man7/signal.7.html" rel="nofollow"><code>signal(7)</code></a> for a listing of standard POSIX signal names such as
+<code>'SIGINT'</code>, <code>'SIGHUP'</code>, etc.</p><p>Signals are not available on <a href="../worker_threads.html#class-worker"><code>Worker</code></a> threads.</p><p>The signal handler will receive the signal's name (<code>'SIGINT'</code>,
+<code>'SIGTERM'</code>, etc.) as the first argument.</p><p>The name of each event will be the uppercase common name for the signal (e.g.
+<code>'SIGINT'</code> for <code>SIGINT</code> signals).</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// Begin reading from stdin so the process does not exit.</span>
+process.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">resume</span>();
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Received SIGINT. Press Control-D to exit.'</span>);
+});
+
+<span class="hljs-comment">// Using a single function to handle multiple signals</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">handle</span>(<span class="hljs-params">signal</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received <span class="hljs-subst">${signal}</span>`</span>);
+}
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, handle);
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGTERM'</span>, handle);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// Begin reading from stdin so the process does not exit.</span>
+process.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">resume</span>();
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Received SIGINT. Press Control-D to exit.'</span>);
+});
+
+<span class="hljs-comment">// Using a single function to handle multiple signals</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">handle</span>(<span class="hljs-params">signal</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received <span class="hljs-subst">${signal}</span>`</span>);
+}
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGINT'</span>, handle);
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'SIGTERM'</span>, handle);</code></pre><ul>
+<li><code>'SIGUSR1'</code> is reserved by Node.js to start the <a href="../debugger.html">debugger</a>. It's possible to
+install a listener but doing so might interfere with the debugger.</li>
+<li><code>'SIGTERM'</code> and <code>'SIGINT'</code> have default handlers on non-Windows platforms that
+reset the terminal mode before exiting with code <code>128 + signal number</code>. If one
+of these signals has a listener installed, its default behavior will be
+removed (Node.js will no longer exit).</li>
+<li><code>'SIGPIPE'</code> is ignored by default. It can have a listener installed.</li>
+<li><code>'SIGHUP'</code> is generated on Windows when the console window is closed, and on
+other platforms under various similar conditions. See <a href="http://man7.org/linux/man-pages/man7/signal.7.html" rel="nofollow"><code>signal(7)</code></a>. It can have a
+listener installed, however Node.js will be unconditionally terminated by
+Windows about 10 seconds later. On non-Windows platforms, the default
+behavior of <code>SIGHUP</code> is to terminate Node.js, but once a listener has been
+installed its default behavior will be removed.</li>
+<li><code>'SIGTERM'</code> is not supported on Windows, it can be listened on.</li>
+<li><code>'SIGINT'</code> from the terminal is supported on all platforms, and can usually be
+generated with <kbd>Ctrl</kbd>+<kbd>C</kbd> (though this may be configurable).
+It is not generated when <a href="../tty.html#readstreamsetrawmodemode">terminal raw mode</a> is enabled
+and <kbd>Ctrl</kbd>+<kbd>C</kbd> is used.</li>
+<li><code>'SIGBREAK'</code> is delivered on Windows when <kbd>Ctrl</kbd>+<kbd>Break</kbd> is
+pressed. On non-Windows platforms, it can be listened on, but there is no way
+to send or generate it.</li>
+<li><code>'SIGWINCH'</code> is delivered when the console has been resized. On Windows, this
+will only happen on write to the console when the cursor is being moved, or
+when a readable tty is used in raw mode.</li>
+<li><code>'SIGKILL'</code> cannot have a listener installed, it will unconditionally
+terminate Node.js on all platforms.</li>
+<li><code>'SIGSTOP'</code> cannot have a listener installed.</li>
+<li><code>'SIGBUS'</code>, <code>'SIGFPE'</code>, <code>'SIGSEGV'</code> and <code>'SIGILL'</code>, when not raised
+artificially using <a href="http://man7.org/linux/man-pages/man2/kill.2.html" rel="nofollow"><code>kill(2)</code></a>, inherently leave the process in a state from
+which it is not safe to call JS listeners. Doing so might cause the process
+to stop responding.</li>
+<li><code>0</code> can be sent to test for the existence of a process, it has no effect if
+the process exists, but will throw an error if the process does not exist.</li>
+</ul><p>Windows does not support signals so has no equivalent to termination by signal,
+but Node.js offers some emulation with <a href="../process.html#processkillpid-signal"><code>process.kill()</code></a>, and
+<a href="../child_process.html#subprocesskillsignal"><code>subprocess.kill()</code></a>:</p><ul>
+<li>Sending <code>SIGINT</code>, <code>SIGTERM</code>, and <code>SIGKILL</code> will cause the unconditional
+termination of the target process, and afterwards, subprocess will report that
+the process was terminated by signal.</li>
+<li>Sending signal <code>0</code> can be used as a platform independent way to test for the
+existence of a process.</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

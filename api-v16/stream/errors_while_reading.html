@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>读取时出错 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>读取时出错</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_errors_while_reading" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/errors_while_reading.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/errors_while_reading.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#errors-while-reading.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 处理过程中发生的错误必须通过 <a href="../stream.html#readable_destroyerr-callback"><code>readable.destroy(err)</code></a> 方法传播。
+从 <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 中抛出 <code>Error</code> 或手动触发 <code>'error'</code> 事件会导致未定义的行为。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Readable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> myReadable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Readable</span>({
+  <span class="hljs-title function_">read</span>(<span class="hljs-params">size</span>) {
+    <span class="hljs-keyword">const</span> err = <span class="hljs-title function_">checkSomeErrorCondition</span>();
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">destroy</span>(err);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// 做一些工作。</span>
+    }
+  }
+});</code></pre></div>
+          <div id="content_right"><p>Errors occurring during processing of the <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> must be
+propagated through the <a href="../stream.html#readable_destroyerr-callback"><code>readable.destroy(err)</code></a> method.
+Throwing an <code>Error</code> from within <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> or manually emitting an
+<code>'error'</code> event results in undefined behavior.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Readable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> myReadable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Readable</span>({
+  <span class="hljs-title function_">read</span>(<span class="hljs-params">size</span>) {
+    <span class="hljs-keyword">const</span> err = <span class="hljs-title function_">checkSomeErrorCondition</span>();
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">destroy</span>(err);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// Do some work.</span>
+    }
+  }
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>stream.addAbortSignal(signal, stream) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>stream.addAbortSignal(signal, stream)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_stream_addabortsignal_signal_stream" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/stream_addabortsignal_signal_stream.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#streamaddabortsignalsignal-stream.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v15.4.0</span>
+</div><ul class="">
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 代表可能取消的信号</li>
+<li><code>stream</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> 将信号绑定到的流</li>
+</ul><p>将中止信号绑定到可读或可写的流。
+这让代码可以使用 <code>AbortController</code> 来控制流销毁。</p><p class="">在与传入的 <code>AbortSignal</code> 对应的 <code>AbortController</code> 上调用 <code>abort</code> 的行为与在流上调用 <code>.destroy(new AbortError())</code> 的行为相同。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> read = <span class="hljs-title function_">addAbortSignal</span>(
+  controller.<span class="hljs-property">signal</span>,
+  fs.<span class="hljs-title function_">createReadStream</span>((<span class="hljs-string">'object.json'</span>))
+);
+<span class="hljs-comment">// 稍后，中止关闭流的操作</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre><p class="">或者使用带有可读流的 <code>AbortSignal</code> 作为异步可迭代对象：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> controller.<span class="hljs-title function_">abort</span>(), <span class="hljs-number">10_000</span>); <span class="hljs-comment">// 设置超时</span>
+<span class="hljs-keyword">const</span> stream = <span class="hljs-title function_">addAbortSignal</span>(
+  controller.<span class="hljs-property">signal</span>,
+  fs.<span class="hljs-title function_">createReadStream</span>((<span class="hljs-string">'object.json'</span>))
+);
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> chunk <span class="hljs-keyword">of</span> stream) {
+      <span class="hljs-keyword">await</span> <span class="hljs-title function_">process</span>(chunk);
+    }
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-keyword">if</span> (e.<span class="hljs-property">name</span> === <span class="hljs-string">'AbortError'</span>) {
+      <span class="hljs-comment">// 操作被取消</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">throw</span> e;
+    }
+  }
+})();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v15.4.0</span>
+</div><ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> A signal representing possible cancellation</li>
+<li><code>stream</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> a stream to attach a signal to</li>
+</ul><p>Attaches an AbortSignal to a readable or writeable stream. This lets code
+control stream destruction using an <code>AbortController</code>.</p><p>Calling <code>abort</code> on the <code>AbortController</code> corresponding to the passed
+<code>AbortSignal</code> will behave the same way as calling <code>.destroy(new AbortError())</code>
+on the stream.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> read = <span class="hljs-title function_">addAbortSignal</span>(
+  controller.<span class="hljs-property">signal</span>,
+  fs.<span class="hljs-title function_">createReadStream</span>((<span class="hljs-string">'object.json'</span>))
+);
+<span class="hljs-comment">// Later, abort the operation closing the stream</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre><p>Or using an <code>AbortSignal</code> with a readable stream as an async iterable:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> controller.<span class="hljs-title function_">abort</span>(), <span class="hljs-number">10_000</span>); <span class="hljs-comment">// set a timeout</span>
+<span class="hljs-keyword">const</span> stream = <span class="hljs-title function_">addAbortSignal</span>(
+  controller.<span class="hljs-property">signal</span>,
+  fs.<span class="hljs-title function_">createReadStream</span>((<span class="hljs-string">'object.json'</span>))
+);
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> chunk <span class="hljs-keyword">of</span> stream) {
+      <span class="hljs-keyword">await</span> <span class="hljs-title function_">process</span>(chunk);
+    }
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-keyword">if</span> (e.<span class="hljs-property">name</span> === <span class="hljs-string">'AbortError'</span>) {
+      <span class="hljs-comment">// The operation was cancelled</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">throw</span> e;
+    }
+  }
+})();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

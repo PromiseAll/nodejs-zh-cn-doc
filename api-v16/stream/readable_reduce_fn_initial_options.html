@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.reduce(fn[, initial[, options]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.reduce(fn[, initial[, options]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_reduce_fn_initial_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_reduce_fn_initial_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readablereducefn-initial-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> 调用流中每个块的减数函数。
+<ul>
+<li><code>previous</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 从最后一次调用 <code>fn</code> 获得的值或 <code>initial</code> 值（如果指定）或流的第一个块。</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 来自流的数据块。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 如果流被销毁则中止，允许提前中止 <code>fn</code> 调用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>initial</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 在减数中使用的初始值。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 如果信号被中止，则允许销毁流。</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 用于减数最终值的 promise。</li>
+</ul><p>此方法按顺序在流的每个块上调用 <code>fn</code>，并将对前一个元素的计算结果传给它。
+它返回减数最终值的 promise。</p><p class="">减数函数逐个元素地迭代流，这意味着没有 <code>concurrency</code> 参数或并行性。
+要同时执行 <code>reduce</code>，则可以链接到 <a href="../stream.html#readablemapfn-options"><code>readable.map</code></a> 方法。</p><p class="">如果没有提供 <code>initial</code> 值，则将流的第一个块用作初始值。
+如果流为空，则使用带有 <code>ERR_INVALID_ARGS</code> 代码属性的 <code>TypeError</code> 拒绝 promise。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+
+<span class="hljs-keyword">const</span> ten = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">previous, data</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> previous + data;
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(ten); <span class="hljs-comment">// 10</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><ul>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://tc39.es/ecma262/#sec-async-function-constructor" rel="nofollow" class="type">&lt;AsyncFunction&gt;</a> a reducer function to call over every chunk
+in the stream.
+<ul>
+<li><code>previous</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> the value obtained from the last call to <code>fn</code> or the
+<code>initial</code> value if specified or the first chunk of the stream otherwise.</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> a chunk of data from the stream.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> aborted if the stream is destroyed allowing to
+abort the <code>fn</code> call early.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>initial</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> the initial value to use in the reduction.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> allows destroying the stream if the signal is
+aborted.</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> a promise for the final value of the reduction.</li>
+</ul><p>This method calls <code>fn</code> on each chunk of the stream in order, passing it the
+result from the calculation on the previous element. It returns a promise for
+the final value of the reduction.</p><p>The reducer function iterates the stream element-by-element which means that
+there is no <code>concurrency</code> parameter or parallism. To perform a <code>reduce</code>
+concurrently, it can be chained to the <a href="../stream.html#readablemapfn-options"><code>readable.map</code></a> method.</p><p>If no <code>initial</code> value is supplied the first chunk of the stream is used as the
+initial value. If the stream is empty, the promise is rejected with a
+<code>TypeError</code> with the <code>ERR_INVALID_ARGS</code> code property.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+
+<span class="hljs-keyword">const</span> ten = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">previous, data</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> previous + data;
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(ten); <span class="hljs-comment">// 10</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>wasi 网络汇编系统接口 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-wasi">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>wasi 网络汇编系统接口</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../wasi.html#wasi_webassembly_system_interface_wasi" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/wasi/webassembly_system_interface_wasi.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/wasi/webassembly_system_interface_wasi.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/wasi/#webassembly-system-interface-wasi.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/wasi.js">lib/wasi.js</a></p><p>WASI API 提供了 <a href="https://wasi.dev/" rel="nofollow">WebAssembly 系统接口</a>规范的实现。
+WASI 让沙盒化的 WebAssembly 应用程序通过一系列类似 POSIX 的函数访问底层操作系统。</p><pre class="with-44-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">WASI</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'wasi'</span>;
+<span class="hljs-keyword">import</span> { argv, env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">const</span> wasi = <span class="hljs-keyword">new</span> <span class="hljs-title function_">WASI</span>({
+  <span class="hljs-attr">args</span>: argv,
+  env,
+  <span class="hljs-attr">preopens</span>: {
+    <span class="hljs-string">'/sandbox'</span>: <span class="hljs-string">'/some/real/path/that/wasm/can/access'</span>
+  }
+});
+
+<span class="hljs-comment">// 一些 WASI 二进制文件需要：</span>
+<span class="hljs-comment">//   const importObject = { wasi_unstable: wasi.wasiImport };</span>
+<span class="hljs-keyword">const</span> importObject = { <span class="hljs-attr">wasi_snapshot_preview1</span>: wasi.<span class="hljs-property">wasiImport</span> };
+
+<span class="hljs-keyword">const</span> wasm = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">compile</span>(
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'./demo.wasm'</span>, <span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">url</span>))
+);
+<span class="hljs-keyword">const</span> instance = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">instantiate</span>(wasm, importObject);
+
+wasi.<span class="hljs-title function_">start</span>(instance);</code><code class="language-js cjs"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> { readFile } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-variable constant_">WASI</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wasi'</span>);
+<span class="hljs-keyword">const</span> { argv, env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+<span class="hljs-keyword">const</span> { join } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-keyword">const</span> wasi = <span class="hljs-keyword">new</span> <span class="hljs-title function_">WASI</span>({
+  <span class="hljs-attr">args</span>: argv,
+  env,
+  <span class="hljs-attr">preopens</span>: {
+    <span class="hljs-string">'/sandbox'</span>: <span class="hljs-string">'/some/real/path/that/wasm/can/access'</span>
+  }
+});
+
+<span class="hljs-comment">// 一些 WASI 二进制文件需要：</span>
+<span class="hljs-comment">//   const importObject = { wasi_unstable: wasi.wasiImport };</span>
+<span class="hljs-keyword">const</span> importObject = { <span class="hljs-attr">wasi_snapshot_preview1</span>: wasi.<span class="hljs-property">wasiImport</span> };
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> wasm = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">compile</span>(
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">'demo.wasm'</span>))
+  );
+  <span class="hljs-keyword">const</span> instance = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">instantiate</span>(wasm, importObject);
+
+  wasi.<span class="hljs-title function_">start</span>(instance);
+})();</code></pre><p class="">要运行上面的示例，则新建一个名为 <code>demo.wat</code> 的 WebAssembly 文本格式文件：</p><pre class=""><code class="language-text">(module
+    ;; Import the required fd_write WASI function which will write the given io vectors to stdout
+    ;; The function signature for fd_write is:
+    ;; (File Descriptor, *iovs, iovs_len, nwritten) -&gt; Returns number of bytes written
+    (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (result i32)))
+
+    (memory 1)
+    (export "memory" (memory 0))
+
+    ;; Write 'hello world\n' to memory at an offset of 8 bytes
+    ;; Note the trailing newline which is required for the text to appear
+    (data (i32.const 8) "hello world\n")
+
+    (func $main (export "_start")
+        ;; Creating a new io vector within linear memory
+        (i32.store (i32.const 0) (i32.const 8))  ;; iov.iov_base - This is a pointer to the start of the 'hello world\n' string
+        (i32.store (i32.const 4) (i32.const 12))  ;; iov.iov_len - The length of the 'hello world\n' string
+
+        (call $fd_write
+            (i32.const 1) ;; file_descriptor - 1 for stdout
+            (i32.const 0) ;; *iovs - The pointer to the iov array, which is stored at memory location 0
+            (i32.const 1) ;; iovs_len - We're printing 1 string stored in an iov - so one.
+            (i32.const 20) ;; nwritten - A place in memory to store the number of bytes written
+        )
+        drop ;; Discard the number of bytes written from the top of the stack
+    )
+)</code></pre><p class="">使用 <a href="https://github.com/WebAssembly/wabt">wabt</a> 将 <code>.wat</code> 编译为 <code>.wasm</code></p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">wat2wasm demo.wat</span></code></pre><p class="">运行此示例需要 <code>--experimental-wasi-unstable-preview1</code> CLI 参数。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><p><strong>Source Code:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.15.0/lib/wasi.js">lib/wasi.js</a></p><p>The WASI API provides an implementation of the <a href="https://wasi.dev/" rel="nofollow">WebAssembly System Interface</a>
+specification. WASI gives sandboxed WebAssembly applications access to the
+underlying operating system via a collection of POSIX-like functions.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">WASI</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'wasi'</span>;
+<span class="hljs-keyword">import</span> { argv, env } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">const</span> wasi = <span class="hljs-keyword">new</span> <span class="hljs-title function_">WASI</span>({
+  <span class="hljs-attr">args</span>: argv,
+  env,
+  <span class="hljs-attr">preopens</span>: {
+    <span class="hljs-string">'/sandbox'</span>: <span class="hljs-string">'/some/real/path/that/wasm/can/access'</span>
+  }
+});
+
+<span class="hljs-comment">// Some WASI binaries require:</span>
+<span class="hljs-comment">//   const importObject = { wasi_unstable: wasi.wasiImport };</span>
+<span class="hljs-keyword">const</span> importObject = { <span class="hljs-attr">wasi_snapshot_preview1</span>: wasi.<span class="hljs-property">wasiImport</span> };
+
+<span class="hljs-keyword">const</span> wasm = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">compile</span>(
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'./demo.wasm'</span>, <span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">url</span>))
+);
+<span class="hljs-keyword">const</span> instance = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">instantiate</span>(wasm, importObject);
+
+wasi.<span class="hljs-title function_">start</span>(instance);</code><code class="language-js cjs"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> { readFile } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-variable constant_">WASI</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wasi'</span>);
+<span class="hljs-keyword">const</span> { argv, env } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+<span class="hljs-keyword">const</span> { join } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-keyword">const</span> wasi = <span class="hljs-keyword">new</span> <span class="hljs-title function_">WASI</span>({
+  <span class="hljs-attr">args</span>: argv,
+  env,
+  <span class="hljs-attr">preopens</span>: {
+    <span class="hljs-string">'/sandbox'</span>: <span class="hljs-string">'/some/real/path/that/wasm/can/access'</span>
+  }
+});
+
+<span class="hljs-comment">// Some WASI binaries require:</span>
+<span class="hljs-comment">//   const importObject = { wasi_unstable: wasi.wasiImport };</span>
+<span class="hljs-keyword">const</span> importObject = { <span class="hljs-attr">wasi_snapshot_preview1</span>: wasi.<span class="hljs-property">wasiImport</span> };
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> wasm = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">compile</span>(
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">'demo.wasm'</span>))
+  );
+  <span class="hljs-keyword">const</span> instance = <span class="hljs-keyword">await</span> <span class="hljs-title class_">WebAssembly</span>.<span class="hljs-title function_">instantiate</span>(wasm, importObject);
+
+  wasi.<span class="hljs-title function_">start</span>(instance);
+})();</code></pre><p>To run the above example, create a new WebAssembly text format file named
+<code>demo.wat</code>:</p><pre><code class="language-text">(module
+    ;; Import the required fd_write WASI function which will write the given io vectors to stdout
+    ;; The function signature for fd_write is:
+    ;; (File Descriptor, *iovs, iovs_len, nwritten) -&gt; Returns number of bytes written
+    (import "wasi_snapshot_preview1" "fd_write" (func $fd_write (param i32 i32 i32 i32) (result i32)))
+
+    (memory 1)
+    (export "memory" (memory 0))
+
+    ;; Write 'hello world\n' to memory at an offset of 8 bytes
+    ;; Note the trailing newline which is required for the text to appear
+    (data (i32.const 8) "hello world\n")
+
+    (func $main (export "_start")
+        ;; Creating a new io vector within linear memory
+        (i32.store (i32.const 0) (i32.const 8))  ;; iov.iov_base - This is a pointer to the start of the 'hello world\n' string
+        (i32.store (i32.const 4) (i32.const 12))  ;; iov.iov_len - The length of the 'hello world\n' string
+
+        (call $fd_write
+            (i32.const 1) ;; file_descriptor - 1 for stdout
+            (i32.const 0) ;; *iovs - The pointer to the iov array, which is stored at memory location 0
+            (i32.const 1) ;; iovs_len - We're printing 1 string stored in an iov - so one.
+            (i32.const 20) ;; nwritten - A place in memory to store the number of bytes written
+        )
+        drop ;; Discard the number of bytes written from the top of the stack
+    )
+)</code></pre><p>Use <a href="https://github.com/WebAssembly/wabt">wabt</a> to compile <code>.wat</code> to <code>.wasm</code></p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">wat2wasm demo.wat</span></code></pre><p>The <code>--experimental-wasi-unstable-preview1</code> CLI argument is needed for this
+example to run.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

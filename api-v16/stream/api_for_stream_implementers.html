@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>流实现者的 API | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>流实现者的 API</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_api_for_stream_implementers" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/api_for_stream_implementers.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/api_for_stream_implementers.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#api-for-stream-implementers.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>stream</code> 模块 API 旨在使使用 JavaScript 的原型继承模型轻松实现流成为可能。</p><p class="">首先，流开发者将声明新的 JavaScript 类，该类扩展四个基本流类（<code>stream.Writable</code>、<code>stream.Readable</code>、<code>stream.Duplex</code> 或 <code>stream.Transform</code>）之一，确保它们调用适当的父类构造函数：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyWritable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Writable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">{ highWaterMark, ...options }</span>) {
+    <span class="hljs-variable language_">super</span>({ highWaterMark });
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre><p class="">当扩展流时，在将这些选项转发给基本构造函数之前，请记住用户可以和应该提供哪些选项。
+例如，如果实现对 <code>autoDestroy</code> 和 <code>emitClose</code> 选项做出假设，则不允许用户覆盖这些。
+显式转发哪些选项，而不是隐式转发所有选项。</p><p class="">然后，新的流类必须实现一个或多个特定方法，具体取决于正在创建的流的类型，如下图所示：</p><table class=""><thead><tr><th>Use-case</th><th>Class</th><th>Method(s) to implement</th></tr></thead><tbody><tr><td>只读</td><td><a href="../stream.html#class-streamreadable"><code>Readable</code></a></td><td><a href="../stream.html#readable_readsize"><code>_read()</code></a></td></tr><tr><td>只写</td><td><a href="../stream.html#class-streamwritable"><code>Writable</code></a></td><td><a href="../stream.html#writable_writechunk-encoding-callback"><code>_write()</code></a>, <a href="../stream.html#writable_writevchunks-callback"><code>_writev()</code></a>, <a href="../stream.html#writable_finalcallback"><code>_final()</code></a></td></tr><tr><td>可读可写</td><td><a href="../stream.html#class-streamduplex"><code>Duplex</code></a></td><td><a href="../stream.html#readable_readsize"><code>_read()</code></a>, <a href="../stream.html#writable_writechunk-encoding-callback"><code>_write()</code></a>, <a href="../stream.html#writable_writevchunks-callback"><code>_writev()</code></a>, <a href="../stream.html#writable_finalcallback"><code>_final()</code></a></td></tr><tr><td>对写入的数据进行操作，然后读取结果</td><td><a href="../stream.html#class-streamtransform"><code>Transform</code></a></td><td><a href="../stream.html#transform_transformchunk-encoding-callback"><code>_transform()</code></a>, <a href="../stream.html#transform_flushcallback"><code>_flush()</code></a>, <a href="../stream.html#writable_finalcallback"><code>_final()</code></a></td></tr></tbody></table><p class="">流的实现代码永远不应该调用供消费者使用的流的“公共”方法（如<a href="../stream.html#api-for-stream-consumers">流消费者的 API</a> 章节所述）。
+这样做可能会对使用流的应用程序代码产生不利的副作用。</p><p class="">避免覆盖公共方法，例如 <code>write()</code>、<code>end()</code>、<code>cork()</code>、<code>uncork()</code>、<code>read()</code> 和 <code>destroy()</code>，或触发内部事件，例如 <code>'error'</code>、<code>'data'</code>、<code>'end'</code>、<code>'finish'</code> 和 <code>'close'</code> 到 <code>.emit()</code>。
+这样做可能会破坏当前和未来的流的不变量，从而导致行为和/或与其他流、流实用程序和用户期望的兼容性问题。</p></div>
+          <div id="content_right"><p>The <code>stream</code> module API has been designed to make it possible to easily
+implement streams using JavaScript's prototypal inheritance model.</p><p>First, a stream developer would declare a new JavaScript class that extends one
+of the four basic stream classes (<code>stream.Writable</code>, <code>stream.Readable</code>,
+<code>stream.Duplex</code>, or <code>stream.Transform</code>), making sure they call the appropriate
+parent class constructor:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyWritable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Writable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">{ highWaterMark, ...options }</span>) {
+    <span class="hljs-variable language_">super</span>({ highWaterMark });
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre><p>When extending streams, keep in mind what options the user
+can and should provide before forwarding these to the base constructor. For
+example, if the implementation makes assumptions in regard to the
+<code>autoDestroy</code> and <code>emitClose</code> options, do not allow the
+user to override these. Be explicit about what
+options are forwarded instead of implicitly forwarding all options.</p><p>The new stream class must then implement one or more specific methods, depending
+on the type of stream being created, as detailed in the chart below:</p><table><thead><tr><th>Use-case</th><th>Class</th><th>Method(s) to implement</th></tr></thead><tbody><tr><td>Reading only</td><td><a href="../stream.html#class-streamreadable"><code>Readable</code></a></td><td><a href="../stream.html#readable_readsize"><code>_read()</code></a></td></tr><tr><td>Writing only</td><td><a href="../stream.html#class-streamwritable"><code>Writable</code></a></td><td><a href="../stream.html#writable_writechunk-encoding-callback"><code>_write()</code></a>, <a href="../stream.html#writable_writevchunks-callback"><code>_writev()</code></a>, <a href="../stream.html#writable_finalcallback"><code>_final()</code></a></td></tr><tr><td>Reading and writing</td><td><a href="../stream.html#class-streamduplex"><code>Duplex</code></a></td><td><a href="../stream.html#readable_readsize"><code>_read()</code></a>, <a href="../stream.html#writable_writechunk-encoding-callback"><code>_write()</code></a>, <a href="../stream.html#writable_writevchunks-callback"><code>_writev()</code></a>, <a href="../stream.html#writable_finalcallback"><code>_final()</code></a></td></tr><tr><td>Operate on written data, then read the result</td><td><a href="../stream.html#class-streamtransform"><code>Transform</code></a></td><td><a href="../stream.html#transform_transformchunk-encoding-callback"><code>_transform()</code></a>, <a href="../stream.html#transform_flushcallback"><code>_flush()</code></a>, <a href="../stream.html#writable_finalcallback"><code>_final()</code></a></td></tr></tbody></table><p>The implementation code for a stream should <em>never</em> call the "public" methods
+of a stream that are intended for use by consumers (as described in the
+<a href="../stream.html#api-for-stream-consumers">API for stream consumers</a> section). Doing so may lead to adverse side effects
+in application code consuming the stream.</p><p>Avoid overriding public methods such as <code>write()</code>, <code>end()</code>, <code>cork()</code>,
+<code>uncork()</code>, <code>read()</code> and <code>destroy()</code>, or emitting internal events such
+as <code>'error'</code>, <code>'data'</code>, <code>'end'</code>, <code>'finish'</code> and <code>'close'</code> through <code>.emit()</code>.
+Doing so can break current and future stream invariants leading to behavior
+and/or compatibility issues with other streams, stream utilities, and user
+expectations.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

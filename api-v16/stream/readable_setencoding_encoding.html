@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.setEncoding(encoding) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.setEncoding(encoding)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_setencoding_encoding" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_setencoding_encoding.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/readable_setencoding_encoding.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readablesetencodingencoding.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.4</span>
+</div><ul class="">
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要使用的编码。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p><code>readable.setEncoding()</code> 方法为从 <code>Readable</code> 流读取的数据设置字符编码。</p><p class="">默认情况下，没有分配编码，流数据将作为 <code>Buffer</code> 对象返回。
+设置编码会导致流数据作为指定编码的字符串而不是 <code>Buffer</code> 对象返回。
+例如，调用 <code>readable.setEncoding('utf8')</code> 将导致输出数据被解释为 UTF-8 数据，并作为字符串传入。
+调用 <code>readable.setEncoding('hex')</code> 将使数据以十六进制字符串格式进行编码。</p><p class=""><code>Readable</code> 流将正确地处理通过流传递的多字节字符，否则如果简单地从流中提取为 <code>Buffer</code> 对象，这些字符将无法正确解码。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+readable.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> {
+  assert.<span class="hljs-title function_">equal</span>(<span class="hljs-keyword">typeof</span> chunk, <span class="hljs-string">'string'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Got %d characters of string data:'</span>, chunk.<span class="hljs-property">length</span>);
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.4</span>
+</div><ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The encoding to use.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p>The <code>readable.setEncoding()</code> method sets the character encoding for
+data read from the <code>Readable</code> stream.</p><p>By default, no encoding is assigned and stream data will be returned as
+<code>Buffer</code> objects. Setting an encoding causes the stream data
+to be returned as strings of the specified encoding rather than as <code>Buffer</code>
+objects. For instance, calling <code>readable.setEncoding('utf8')</code> will cause the
+output data to be interpreted as UTF-8 data, and passed as strings. Calling
+<code>readable.setEncoding('hex')</code> will cause the data to be encoded in hexadecimal
+string format.</p><p>The <code>Readable</code> stream will properly handle multi-byte characters delivered
+through the stream that would otherwise become improperly decoded if simply
+pulled from the stream as <code>Buffer</code> objects.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+readable.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> {
+  assert.<span class="hljs-title function_">equal</span>(<span class="hljs-keyword">typeof</span> chunk, <span class="hljs-string">'string'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Got %d characters of string data:'</span>, chunk.<span class="hljs-property">length</span>);
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

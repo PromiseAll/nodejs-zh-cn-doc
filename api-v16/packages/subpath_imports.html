@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>子路径的导入 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>子路径的导入</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_subpath_imports" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/subpath_imports.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/subpath_imports.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#subpath-imports.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v14.6.0, v12.19.0</span>
+</div><p>除了 <a href="../packages.html#exports"><code>"exports"</code></a> 字段，还可以定义内部包导入映射，这些映射仅适用于包本身内部的导入说明符。</p><p class="">导入字段中的条目必须始终以 <code>#</code> 开头，以确保它们与包说明符没有歧义。</p><p class="">例如，可以使用导入字段来获得内部模块条件导出的好处：</p><pre class=""><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"imports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"#dep"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"node"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"dep-node-native"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"default"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./dep-polyfill.js"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"dep-node-native"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"^1.0.0"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">其中 <code>import '#dep'</code> 没有得到外部包 <code>dep-node-native</code> 的解析（依次包括其导出），而是获取了相对于其他环境中的包的本地文件 <code>./dep-polyfill.js</code>。</p><p class="">与 <code>"exports"</code> 字段不同，<code>"imports"</code> 字段允许映射到外部包。</p><p class="">导入字段的解析规则与导出字段类似。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v14.6.0, v12.19.0</span>
+</div><p>In addition to the <a href="../packages.html#exports"><code>"exports"</code></a> field, it is possible to define internal
+package import maps that only apply to import specifiers from within the package
+itself.</p><p>Entries in the imports field must always start with <code>#</code> to ensure they are
+disambiguated from package specifiers.</p><p>For example, the imports field can be used to gain the benefits of conditional
+exports for internal modules:</p><pre><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"imports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"#dep"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"node"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"dep-node-native"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"default"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./dep-polyfill.js"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"dep-node-native"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"^1.0.0"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>where <code>import '#dep'</code> does not get the resolution of the external package
+<code>dep-node-native</code> (including its exports in turn), and instead gets the local
+file <code>./dep-polyfill.js</code> relative to the package in other environments.</p><p>Unlike the <code>"exports"</code> field, the <code>"imports"</code> field permits mapping to external
+packages.</p><p>The resolution rules for the imports field are otherwise
+analogous to the exports field.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

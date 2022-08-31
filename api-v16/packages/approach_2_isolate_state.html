@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>方法2：隔离状态 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>方法2：隔离状态</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_approach_2_isolate_state" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/approach_2_isolate_state.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/approach_2_isolate_state.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#approach-2-isolate-state.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> 文件可以直接定义单独的 CommonJS 和 ES 模块入口点：</p><pre class=""><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.mjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"require"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">如果包的 CommonJS 和 ES 模块版本相同，则可以这样做，例如因为一个是另一个的转译输出；并且包的状态管理被仔细隔离（或包是无状态的）。</p><p class="">状态是一个问题的原因是因为包的 CommonJS 和 ES 模块版本都可能在应用程序中使用；例如，用户的应用程序代码可以 <code>import</code> ES 模块版本，而依赖项 <code>require</code> 是 CommonJS 版本。
+如果发生这种情况，包的两个副本将被加载到内存中，因此将出现两个不同的状态。
+这可能会导致难以解决的错误。</p><p class="">除了编写无状态的包（例如，如果 JavaScript 的 <code>Math</code> 是一个包，它将是无状态的，因为它的所有方法都是静态的），还有一些方法可以隔离状态，以便在潜在加载的 CommonJS 和 ES 模块之间共享包的实例：</p><ol class="">
+<li>
+<p>如果可能，在实例化对象中包含所有状态。
+例如，JavaScript 的 <code>Date</code> 需要实例化以包含状态；如果它是包，则它会像这样使用：</p>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Date</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'date'</span>;
+<span class="hljs-keyword">const</span> someDate = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-comment">// someDate 包含状态；Date 不包含</span></code></pre>
+<p><code>new</code> 关键字不是必需的；包的函数可以返回新的对象，或修改传入的对象，以保持包外部的状态。</p>
+</li>
+<li>
+<p>在包的 CommonJS 和 ES 模块版本之间共享的一个或多个 CommonJS 文件中隔离状态。
+比如 CommonJS 和 ES 模块入口点分别是 <code>index.cjs</code> 和 <code>index.mjs</code>：</p>
+<pre><code class="language-js cjs"><span class="hljs-comment">// ./node_modules/pkg/index.cjs</span>
+<span class="hljs-keyword">const</span> state = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./state.cjs'</span>);
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">state</span> = state;</code></pre>
+<pre><code class="language-js"><span class="hljs-comment">// ./node_modules/pkg/index.mjs</span>
+<span class="hljs-keyword">import</span> state <span class="hljs-keyword">from</span> <span class="hljs-string">'./state.cjs'</span>;
+<span class="hljs-keyword">export</span> {
+  state
+};</code></pre>
+<p>即使 <code>pkg</code> 在应用程序中通过 <code>require</code> 和 <code>import</code> 使用（例如，通过应用程序代码中的 <code>import</code> 和依赖项通过 <code>require</code>）<code>pkg</code> 的每个引用都将包含相同的状态；并且从任一模块系统修改该状态将适用二者皆是。</p>
+</li>
+</ol><p class="">任何附加到包单例的插件都需要分别附加到 CommonJS 和 ES 模块单例。</p><p class="">此方法适用于以下任何用例：</p><ul class="">
+<li>该包目前是用 ES 模块语法编写的，包作者希望在支持此类语法的任何地方使用该版本。</li>
+<li>包是无状态的，或者它的状态可以很容易地被隔离。</li>
+<li>该包不太可能有其他依赖它的公共包，或者如果有，则该包是无状态的，或者具有不需要在依赖项之间或与整个应用程序共享的状态。</li>
+</ul><p class="">即使处于隔离状态，在 CommonJS 和 ES 模块版本之间仍然存在可能执行额外代码的成本。</p><p class="">与之前的方法一样，这种方法的变体不需要消费者有条件的导出，可以添加一个导出，例如 <code>"./module"</code>，指向包的全 ES 模块语法版本：</p><pre class=""><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./module"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.mjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre></div>
+          <div id="content_right"><p>A <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> file can define the separate CommonJS and ES module entry
+points directly:</p><pre><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.mjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"require"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>This can be done if both the CommonJS and ES module versions of the package are
+equivalent, for example because one is the transpiled output of the other; and
+the package’s management of state is carefully isolated (or the package is
+stateless).</p><p>The reason that state is an issue is because both the CommonJS and ES module
+versions of the package might get used within an application; for example, the
+user’s application code could <code>import</code> the ES module version while a dependency
+<code>require</code>s the CommonJS version. If that were to occur, two copies of the
+package would be loaded in memory and therefore two separate states would be
+present. This would likely cause hard-to-troubleshoot bugs.</p><p>Aside from writing a stateless package (if JavaScript’s <code>Math</code> were a package,
+for example, it would be stateless as all of its methods are static), there are
+some ways to isolate state so that it’s shared between the potentially loaded
+CommonJS and ES module instances of the package:</p><ol>
+<li>
+<p>If possible, contain all state within an instantiated object. JavaScript’s
+<code>Date</code>, for example, needs to be instantiated to contain state; if it were a
+package, it would be used like this:</p>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Date</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'date'</span>;
+<span class="hljs-keyword">const</span> someDate = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-comment">// someDate contains state; Date does not</span></code></pre>
+<p>The <code>new</code> keyword isn’t required; a package’s function can return a new
+object, or modify a passed-in object, to keep the state external to the
+package.</p>
+</li>
+<li>
+<p>Isolate the state in one or more CommonJS files that are shared between the
+CommonJS and ES module versions of the package. For example, if the CommonJS
+and ES module entry points are <code>index.cjs</code> and <code>index.mjs</code>, respectively:</p>
+<pre><code class="language-js cjs"><span class="hljs-comment">// ./node_modules/pkg/index.cjs</span>
+<span class="hljs-keyword">const</span> state = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./state.cjs'</span>);
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">state</span> = state;</code></pre>
+<pre><code class="language-js"><span class="hljs-comment">// ./node_modules/pkg/index.mjs</span>
+<span class="hljs-keyword">import</span> state <span class="hljs-keyword">from</span> <span class="hljs-string">'./state.cjs'</span>;
+<span class="hljs-keyword">export</span> {
+  state
+};</code></pre>
+<p>Even if <code>pkg</code> is used via both <code>require</code> and <code>import</code> in an application (for
+example, via <code>import</code> in application code and via <code>require</code> by a dependency)
+each reference of <code>pkg</code> will contain the same state; and modifying that
+state from either module system will apply to both.</p>
+</li>
+</ol><p>Any plugins that attach to the package’s singleton would need to separately
+attach to both the CommonJS and ES module singletons.</p><p>This approach is appropriate for any of the following use cases:</p><ul>
+<li>The package is currently written in ES module syntax and the package author
+wants that version to be used wherever such syntax is supported.</li>
+<li>The package is stateless or its state can be isolated without too much
+difficulty.</li>
+<li>The package is unlikely to have other public packages that depend on it, or if
+it does, the package is stateless or has state that need not be shared between
+dependencies or with the overall application.</li>
+</ul><p>Even with isolated state, there is still the cost of possible extra code
+execution between the CommonJS and ES module versions of a package.</p><p>As with the previous approach, a variant of this approach not requiring
+conditional exports for consumers could be to add an export, e.g.
+<code>"./module"</code>, to point to an all-ES module-syntax version of the package:</p><pre><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./module"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.mjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

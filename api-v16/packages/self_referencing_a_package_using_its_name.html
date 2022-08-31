@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>使用名称来引用包 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>使用名称来引用包</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_self_referencing_a_package_using_its_name" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/self_referencing_a_package_using_its_name.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/self_referencing_a_package_using_its_name.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#self-referencing-a-package-using-its-name.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.1.0, v12.16.0</td>
+<td><p><span>新增于: v13.1.0, v12.16.0</span></p></td></tr>
+<tr><td>v13.6.0, v12.16.0</td>
+<td><p>使用名称取消标记自引用包。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>在一个包中，在包的 <code>package.json</code> <a href="../packages.html#exports"><code>"exports"</code></a> 字段中定义的值可以通过包的名称引用。
+例如，假设 <code>package.json</code> 是：</p><pre class=""><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"a-package"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.mjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./foo"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./foo.js"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">然后该包中的任何模块都可以引用包本身中的导出：</p><pre class=""><code class="language-js"><span class="hljs-comment">// ./a-module.mjs</span>
+<span class="hljs-keyword">import</span> { something } <span class="hljs-keyword">from</span> <span class="hljs-string">'a-package'</span>; <span class="hljs-comment">// 从 ./main.mjs 导入 "something"。</span></code></pre><p class="">自引用仅在 <code>package.json</code> 具有 <a href="../packages.html#exports"><code>"exports"</code></a> 时可用，并且只允许导入 <a href="../packages.html#exports"><code>"exports"</code></a>（在 <code>package.json</code> 中）允许的内容。
+所以下面的代码，给定前面的包，会产生运行时错误：</p><pre class=""><code class="language-js"><span class="hljs-comment">// ./another-module.mjs</span>
+
+<span class="hljs-comment">// 从 ./m.mjs 导入 "another"。</span>
+<span class="hljs-comment">// 失败，因为 "package.json" "exports" 字段 </span>
+<span class="hljs-comment">// 不提供名为 "./m.mjs" 的导出。</span>
+<span class="hljs-keyword">import</span> { another } <span class="hljs-keyword">from</span> <span class="hljs-string">'a-package/m.mjs'</span>;</code></pre><p class="">在 ES 模块和 CommonJS 模块中使用 <code>require</code> 时也可以使用自引用。
+例如，这段代码也可以工作：</p><pre class=""><code class="language-js cjs"><span class="hljs-comment">// ./a-module.js</span>
+<span class="hljs-keyword">const</span> { something } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'a-package/foo'</span>); <span class="hljs-comment">// 从 ./foo.js 加载。</span></code></pre><p class="">最后，自引用也适用于作用域包。
+例如，这段代码也可以工作：</p><pre class=""><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"@my/package"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.js"</span>
+<span class="hljs-punctuation">}</span></code></pre><pre class=""><code class="language-js cjs"><span class="hljs-comment">// ./index.js</span>
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-number">42</span>;</code></pre><pre class=""><code class="language-js cjs"><span class="hljs-comment">// ./other.js</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">'@my/package'</span>));</code></pre><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node other.js</span>
+42</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v13.1.0, v12.16.0</td>
+<td><p><span>Added in: v13.1.0, v12.16.0</span></p></td></tr>
+<tr><td>v13.6.0, v12.16.0</td>
+<td><p>Unflag self-referencing a package using its name.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>Within a package, the values defined in the package’s
+<code>package.json</code> <a href="../packages.html#exports"><code>"exports"</code></a> field can be referenced via the package’s name.
+For example, assuming the <code>package.json</code> is:</p><pre><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"a-package"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.mjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./foo"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./foo.js"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Then any module <em>in that package</em> can reference an export in the package itself:</p><pre><code class="language-js"><span class="hljs-comment">// ./a-module.mjs</span>
+<span class="hljs-keyword">import</span> { something } <span class="hljs-keyword">from</span> <span class="hljs-string">'a-package'</span>; <span class="hljs-comment">// Imports "something" from ./main.mjs.</span></code></pre><p>Self-referencing is available only if <code>package.json</code> has <a href="../packages.html#exports"><code>"exports"</code></a>, and
+will allow importing only what that <a href="../packages.html#exports"><code>"exports"</code></a> (in the <code>package.json</code>)
+allows. So the code below, given the previous package, will generate a runtime
+error:</p><pre><code class="language-js"><span class="hljs-comment">// ./another-module.mjs</span>
+
+<span class="hljs-comment">// Imports "another" from ./m.mjs. Fails because</span>
+<span class="hljs-comment">// the "package.json" "exports" field</span>
+<span class="hljs-comment">// does not provide an export named "./m.mjs".</span>
+<span class="hljs-keyword">import</span> { another } <span class="hljs-keyword">from</span> <span class="hljs-string">'a-package/m.mjs'</span>;</code></pre><p>Self-referencing is also available when using <code>require</code>, both in an ES module,
+and in a CommonJS one. For example, this code will also work:</p><pre><code class="language-js cjs"><span class="hljs-comment">// ./a-module.js</span>
+<span class="hljs-keyword">const</span> { something } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'a-package/foo'</span>); <span class="hljs-comment">// Loads from ./foo.js.</span></code></pre><p>Finally, self-referencing also works with scoped packages. For example, this
+code will also work:</p><pre><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"@my/package"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.js"</span>
+<span class="hljs-punctuation">}</span></code></pre><pre><code class="language-js cjs"><span class="hljs-comment">// ./index.js</span>
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-number">42</span>;</code></pre><pre><code class="language-js cjs"><span class="hljs-comment">// ./other.js</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">'@my/package'</span>));</code></pre><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node other.js</span>
+42</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

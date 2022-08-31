@@ -1,0 +1,1094 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>v8 引擎 | Node.js API 文档</title>
+  
+  
+  <style>@media(max-width:534px){.with-39-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}</style>
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_v8" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="" class="nav-v8 active" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="v8" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><a href="#v8">v8 引擎</a>
+<ul>
+<li><a href="#v8cacheddataversiontag"><code>v8.cachedDataVersionTag()</code></a></li>
+<li><a href="#v8getheapcodestatistics"><code>v8.getHeapCodeStatistics()</code></a></li>
+<li><a href="#v8getheapsnapshot"><code>v8.getHeapSnapshot()</code></a></li>
+<li><a href="#v8getheapspacestatistics"><code>v8.getHeapSpaceStatistics()</code></a></li>
+<li><a href="#v8getheapstatistics"><code>v8.getHeapStatistics()</code></a></li>
+<li><a href="#v8setflagsfromstringflags"><code>v8.setFlagsFromString(flags)</code></a></li>
+<li><a href="#v8stopcoverage"><code>v8.stopCoverage()</code></a></li>
+<li><a href="#v8takecoverage"><code>v8.takeCoverage()</code></a></li>
+<li><a href="#v8writeheapsnapshotfilename"><code>v8.writeHeapSnapshot([filename])</code></a></li>
+<li><a href="#serialization-api">序列化 API</a>
+<ul>
+<li><a href="#v8serializevalue"><code>v8.serialize(value)</code></a></li>
+<li><a href="#v8deserializebuffer"><code>v8.deserialize(buffer)</code></a></li>
+<li><a href="#class-v8serializer"><code>v8.Serializer</code> 类</a>
+<ul>
+<li><a href="#new-serializer"><code>new Serializer()</code></a></li>
+<li><a href="#serializerwriteheader"><code>serializer.writeHeader()</code></a></li>
+<li><a href="#serializerwritevaluevalue"><code>serializer.writeValue(value)</code></a></li>
+<li><a href="#serializerreleasebuffer"><code>serializer.releaseBuffer()</code></a></li>
+<li><a href="#serializertransferarraybufferid-arraybuffer"><code>serializer.transferArrayBuffer(id, arrayBuffer)</code></a></li>
+<li><a href="#serializerwriteuint32value"><code>serializer.writeUint32(value)</code></a></li>
+<li><a href="#serializerwriteuint64hi-lo"><code>serializer.writeUint64(hi, lo)</code></a></li>
+<li><a href="#serializerwritedoublevalue"><code>serializer.writeDouble(value)</code></a></li>
+<li><a href="#serializerwriterawbytesbuffer"><code>serializer.writeRawBytes(buffer)</code></a></li>
+<li><a href="#serializer_writehostobjectobject"><code>serializer._writeHostObject(object)</code></a></li>
+<li><a href="#serializer_getdatacloneerrormessage"><code>serializer._getDataCloneError(message)</code></a></li>
+<li><a href="#serializer_getsharedarraybufferidsharedarraybuffer"><code>serializer._getSharedArrayBufferId(sharedArrayBuffer)</code></a></li>
+<li><a href="#serializer_settreatarraybufferviewsashostobjectsflag"><code>serializer._setTreatArrayBufferViewsAsHostObjects(flag)</code></a></li>
+</ul>
+</li>
+<li><a href="#class-v8deserializer"><code>v8.Deserializer</code> 类</a>
+<ul>
+<li><a href="#new-deserializerbuffer"><code>new Deserializer(buffer)</code></a></li>
+<li><a href="#deserializerreadheader"><code>deserializer.readHeader()</code></a></li>
+<li><a href="#deserializerreadvalue"><code>deserializer.readValue()</code></a></li>
+<li><a href="#deserializertransferarraybufferid-arraybuffer"><code>deserializer.transferArrayBuffer(id, arrayBuffer)</code></a></li>
+<li><a href="#deserializergetwireformatversion"><code>deserializer.getWireFormatVersion()</code></a></li>
+<li><a href="#deserializerreaduint32"><code>deserializer.readUint32()</code></a></li>
+<li><a href="#deserializerreaduint64"><code>deserializer.readUint64()</code></a></li>
+<li><a href="#deserializerreaddouble"><code>deserializer.readDouble()</code></a></li>
+<li><a href="#deserializerreadrawbyteslength"><code>deserializer.readRawBytes(length)</code></a></li>
+<li><a href="#deserializer_readhostobject"><code>deserializer._readHostObject()</code></a></li>
+</ul>
+</li>
+<li><a href="#class-v8defaultserializer"><code>v8.DefaultSerializer</code> 类</a></li>
+<li><a href="#class-v8defaultdeserializer"><code>v8.DefaultDeserializer</code> 类</a></li>
+</ul>
+</li>
+<li><a href="#promise-hooks">Promise 钩子</a>
+<ul>
+<li><a href="#promisehooksoninitinit"><code>promiseHooks.onInit(init)</code></a></li>
+<li><a href="#promisehooksonsettledsettled"><code>promiseHooks.onSettled(settled)</code></a></li>
+<li><a href="#promisehooksonbeforebefore"><code>promiseHooks.onBefore(before)</code></a></li>
+<li><a href="#promisehooksonafterafter"><code>promiseHooks.onAfter(after)</code></a></li>
+<li><a href="#promisehookscreatehookcallbacks"><code>promiseHooks.createHook(callbacks)</code></a></li>
+<li><a href="#hook-callbacks">钩子回调</a>
+<ul>
+<li><a href="#initpromise-parent"><code>init(promise, parent)</code></a></li>
+<li><a href="#beforepromise"><code>before(promise)</code></a></li>
+<li><a href="#afterpromise"><code>after(promise)</code></a></li>
+<li><a href="#settledpromise"><code>settled(promise)</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="" class="nav-v8 active">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/v8.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/v8.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><a href="#v8">v8 引擎</a>
+<ul>
+<li><a href="#v8cacheddataversiontag"><code>v8.cachedDataVersionTag()</code></a></li>
+<li><a href="#v8getheapcodestatistics"><code>v8.getHeapCodeStatistics()</code></a></li>
+<li><a href="#v8getheapsnapshot"><code>v8.getHeapSnapshot()</code></a></li>
+<li><a href="#v8getheapspacestatistics"><code>v8.getHeapSpaceStatistics()</code></a></li>
+<li><a href="#v8getheapstatistics"><code>v8.getHeapStatistics()</code></a></li>
+<li><a href="#v8setflagsfromstringflags"><code>v8.setFlagsFromString(flags)</code></a></li>
+<li><a href="#v8stopcoverage"><code>v8.stopCoverage()</code></a></li>
+<li><a href="#v8takecoverage"><code>v8.takeCoverage()</code></a></li>
+<li><a href="#v8writeheapsnapshotfilename"><code>v8.writeHeapSnapshot([filename])</code></a></li>
+<li><a href="#serialization-api">序列化 API</a>
+<ul>
+<li><a href="#v8serializevalue"><code>v8.serialize(value)</code></a></li>
+<li><a href="#v8deserializebuffer"><code>v8.deserialize(buffer)</code></a></li>
+<li><a href="#class-v8serializer"><code>v8.Serializer</code> 类</a>
+<ul>
+<li><a href="#new-serializer"><code>new Serializer()</code></a></li>
+<li><a href="#serializerwriteheader"><code>serializer.writeHeader()</code></a></li>
+<li><a href="#serializerwritevaluevalue"><code>serializer.writeValue(value)</code></a></li>
+<li><a href="#serializerreleasebuffer"><code>serializer.releaseBuffer()</code></a></li>
+<li><a href="#serializertransferarraybufferid-arraybuffer"><code>serializer.transferArrayBuffer(id, arrayBuffer)</code></a></li>
+<li><a href="#serializerwriteuint32value"><code>serializer.writeUint32(value)</code></a></li>
+<li><a href="#serializerwriteuint64hi-lo"><code>serializer.writeUint64(hi, lo)</code></a></li>
+<li><a href="#serializerwritedoublevalue"><code>serializer.writeDouble(value)</code></a></li>
+<li><a href="#serializerwriterawbytesbuffer"><code>serializer.writeRawBytes(buffer)</code></a></li>
+<li><a href="#serializer_writehostobjectobject"><code>serializer._writeHostObject(object)</code></a></li>
+<li><a href="#serializer_getdatacloneerrormessage"><code>serializer._getDataCloneError(message)</code></a></li>
+<li><a href="#serializer_getsharedarraybufferidsharedarraybuffer"><code>serializer._getSharedArrayBufferId(sharedArrayBuffer)</code></a></li>
+<li><a href="#serializer_settreatarraybufferviewsashostobjectsflag"><code>serializer._setTreatArrayBufferViewsAsHostObjects(flag)</code></a></li>
+</ul>
+</li>
+<li><a href="#class-v8deserializer"><code>v8.Deserializer</code> 类</a>
+<ul>
+<li><a href="#new-deserializerbuffer"><code>new Deserializer(buffer)</code></a></li>
+<li><a href="#deserializerreadheader"><code>deserializer.readHeader()</code></a></li>
+<li><a href="#deserializerreadvalue"><code>deserializer.readValue()</code></a></li>
+<li><a href="#deserializertransferarraybufferid-arraybuffer"><code>deserializer.transferArrayBuffer(id, arrayBuffer)</code></a></li>
+<li><a href="#deserializergetwireformatversion"><code>deserializer.getWireFormatVersion()</code></a></li>
+<li><a href="#deserializerreaduint32"><code>deserializer.readUint32()</code></a></li>
+<li><a href="#deserializerreaduint64"><code>deserializer.readUint64()</code></a></li>
+<li><a href="#deserializerreaddouble"><code>deserializer.readDouble()</code></a></li>
+<li><a href="#deserializerreadrawbyteslength"><code>deserializer.readRawBytes(length)</code></a></li>
+<li><a href="#deserializer_readhostobject"><code>deserializer._readHostObject()</code></a></li>
+</ul>
+</li>
+<li><a href="#class-v8defaultserializer"><code>v8.DefaultSerializer</code> 类</a></li>
+<li><a href="#class-v8defaultdeserializer"><code>v8.DefaultDeserializer</code> 类</a></li>
+</ul>
+</li>
+<li><a href="#promise-hooks">Promise 钩子</a>
+<ul>
+<li><a href="#promisehooksoninitinit"><code>promiseHooks.onInit(init)</code></a></li>
+<li><a href="#promisehooksonsettledsettled"><code>promiseHooks.onSettled(settled)</code></a></li>
+<li><a href="#promisehooksonbeforebefore"><code>promiseHooks.onBefore(before)</code></a></li>
+<li><a href="#promisehooksonafterafter"><code>promiseHooks.onAfter(after)</code></a></li>
+<li><a href="#promisehookscreatehookcallbacks"><code>promiseHooks.createHook(callbacks)</code></a></li>
+<li><a href="#hook-callbacks">钩子回调</a>
+<ul>
+<li><a href="#initpromise-parent"><code>init(promise, parent)</code></a></li>
+<li><a href="#beforepromise"><code>before(promise)</code></a></li>
+<li><a href="#afterpromise"><code>after(promise)</code></a></li>
+<li><a href="#settledpromise"><code>settled(promise)</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>v8 引擎<span><a class="mark" href="#v8" id="v8">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="">
+                <a href="v8/v8.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v4.0.0-->
+<p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/v8.js">lib/v8.js</a></p>
+<p><code>v8</code> 模块暴露了特定于内置在 Node.js 二进制文件中的 <a href="https://developers.google.com/v8/" rel="nofollow">V8</a> 版本的 API。
+可以使用以下方式访问它：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> v8 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);</code></pre>
+<section><h3><code>v8.cachedDataVersionTag()</code><span><a class="mark" href="#v8cacheddataversiontag" id="v8cacheddataversiontag">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_cacheddataversiontag"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8cacheddataversiontag">
+                <a href="v8/v8_cacheddataversiontag.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>返回表示从 V8 版本、命令行标志、以及检测到的 CPU 特性派生的版本标签的整数。
+这对于判断 <a href="vm.html#new-vmscriptcode-options"><code>vm.Script</code></a> <code>cachedData</code> 缓冲区是否与此 V8 实例兼容很有用。</p>
+<pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(v8.<span class="hljs-title function_">cachedDataVersionTag</span>()); <span class="hljs-comment">// 3947234607</span>
+<span class="hljs-comment">// v8.cachedDataVersionTag() 返回的值源自</span>
+<span class="hljs-comment">// V8 版本、命令行标志、以及检测到的 CPU 特性。</span>
+<span class="hljs-comment">// 测试该值是否确实在切换标志时更新。</span>
+v8.<span class="hljs-title function_">setFlagsFromString</span>(<span class="hljs-string">'--allow_natives_syntax'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(v8.<span class="hljs-title function_">cachedDataVersionTag</span>()); <span class="hljs-comment">// 183726201</span></code></pre>
+</section><section><h3><code>v8.getHeapCodeStatistics()</code><span><a class="mark" href="#v8getheapcodestatistics" id="v8getheapcodestatistics">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_getheapcodestatistics"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8getheapcodestatistics">
+                <a href="v8/v8_getheapcodestatistics.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.8.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>返回具有以下属性的对象：</p>
+<ul class="">
+<li><code>code_and_metadata_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>bytecode_and_metadata_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>external_script_source_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<!-- eslint-skip -->
+<pre class=""><code class="language-js">{
+  <span class="hljs-attr">code_and_metadata_size</span>: <span class="hljs-number">212208</span>,
+  <span class="hljs-attr">bytecode_and_metadata_size</span>: <span class="hljs-number">161368</span>,
+  <span class="hljs-attr">external_script_source_size</span>: <span class="hljs-number">1410794</span>
+}</code></pre>
+</section><section><h3><code>v8.getHeapSnapshot()</code><span><a class="mark" href="#v8getheapsnapshot" id="v8getheapsnapshot">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_getheapsnapshot"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8getheapsnapshot">
+                <a href="v8/v8_getheapsnapshot.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.13.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="stream.html#class-streamreadable" rel="nofollow" class="type">&lt;stream.Readable&gt;</a> 包含 V8 堆快照的可读流</li>
+</ul>
+<p>生成当前 V8 堆的快照并返回可用于读取 JSON 序列化表示的可读流。
+此 JSON 流格式旨在与 Chrome 开发者工具等工具一起使用。
+JSON 模式未记录并且特定于 V8 引擎。
+因此，模式可能会从 V8 的一个版本更改为下一个版本。</p>
+<p class="">创建堆快照需要的内存大约是创建快照时堆大小的两倍。
+这会导致 OOM 杀手终止进程的风险。</p>
+<p class="">生成快照是一个同步的操作，它会根据堆大小在一段时间内阻塞事件循环。</p>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 打印堆快照到控制台</span>
+<span class="hljs-keyword">const</span> v8 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+<span class="hljs-keyword">const</span> stream = v8.<span class="hljs-title function_">getHeapSnapshot</span>();
+stream.<span class="hljs-title function_">pipe</span>(process.<span class="hljs-property">stdout</span>);</code></pre>
+</section><section><h3><code>v8.getHeapSpaceStatistics()</code><span><a class="mark" href="#v8getheapspacestatistics" id="v8getheapspacestatistics">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_getheapspacestatistics"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8getheapspacestatistics">
+                <a href="v8/v8_getheapspacestatistics.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.5.0</td>
+<td><p>支持超过 32 位无符号整数范围的值。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p><span>新增于: v6.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a></li>
+</ul>
+<p>返回有关 V8 堆空间的统计信息，即构成 V8 堆的片段。
+堆空间的排序和堆空间的可用性都无法保证，因为统计信息是通过 V8 <a href="https://v8docs.nodesource.com/node-13.2/d5/dda/classv8_1_1_isolate.html#ac673576f24fdc7a33378f8f57e1d13a4" rel="nofollow"><code>GetHeapSpaceStatistics</code></a> 函数提供的，并且可能会从一个 V8 版本更改为下一个版本。</p>
+<p class="">返回的值是包含以下属性的对象数组</p>
+<ul class="">
+<li><code>space_name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>space_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>space_used_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>space_available_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>physical_space_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<pre class=""><code class="language-json"><span class="hljs-punctuation">[</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"new_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2063872</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">951112</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">80824</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2063872</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"old_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3090560</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2493792</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3090560</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"code_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1260160</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">644256</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">960</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1260160</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"map_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1094160</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">201608</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1094160</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"space_name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"large_object_space"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_used_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"space_available_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1490980608</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"physical_space_size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">]</span></code></pre>
+</section><section><h3><code>v8.getHeapStatistics()</code><span><a class="mark" href="#v8getheapstatistics" id="v8getheapstatistics">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_getheapstatistics"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8getheapstatistics">
+                <a href="v8/v8_getheapstatistics.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.5.0</td>
+<td><p>支持超过 32 位无符号整数范围的值。</p></td></tr>
+<tr><td>v7.2.0</td>
+<td><p>添加了 <code>malloced_memory</code>、<code>peak_malloced_memory</code> 和 <code>does_zap_garbage</code>。</p></td></tr>
+<tr><td>v1.0.0</td>
+<td><p><span>新增于: v1.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>返回具有以下属性的对象：</p>
+<ul class="">
+<li><code>total_heap_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_heap_size_executable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_physical_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_available_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>used_heap_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>heap_size_limit</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>malloced_memory</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>peak_malloced_memory</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>does_zap_garbage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>number_of_native_contexts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>number_of_detached_contexts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p class=""><code>does_zap_garbage</code> 是 0/​​1 布尔值，表示是否启用了 <code>--zap_code_space</code> 选项。
+这使得 V8 使用位模式覆盖堆垃圾。
+RSS 占用空间（常驻集大小）变得更大，因为它不断接触所有堆页面，这使得它们不太可能被操作系统换出。</p>
+<p class=""><code>number_of_native_contexts</code> native_context 的值是当前活动的顶层上下文的数量。
+随着时间的推移此数字的增加表示内存泄漏。</p>
+<p class=""><code>number_of_detached_contexts</code> detached_context 的值是已分离但尚未垃圾回收的上下文数。
+此数字非零表示潜在的内存泄漏。</p>
+<!-- eslint-skip -->
+<pre class=""><code class="language-js">{
+  <span class="hljs-attr">total_heap_size</span>: <span class="hljs-number">7326976</span>,
+  <span class="hljs-attr">total_heap_size_executable</span>: <span class="hljs-number">4194304</span>,
+  <span class="hljs-attr">total_physical_size</span>: <span class="hljs-number">7326976</span>,
+  <span class="hljs-attr">total_available_size</span>: <span class="hljs-number">1152656</span>,
+  <span class="hljs-attr">used_heap_size</span>: <span class="hljs-number">3476208</span>,
+  <span class="hljs-attr">heap_size_limit</span>: <span class="hljs-number">1535115264</span>,
+  <span class="hljs-attr">malloced_memory</span>: <span class="hljs-number">16384</span>,
+  <span class="hljs-attr">peak_malloced_memory</span>: <span class="hljs-number">1127496</span>,
+  <span class="hljs-attr">does_zap_garbage</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">number_of_native_contexts</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">number_of_detached_contexts</span>: <span class="hljs-number">0</span>
+}</code></pre>
+</section><section><h3><code>v8.setFlagsFromString(flags)</code><span><a class="mark" href="#v8setflagsfromstringflags" id="v8setflagsfromstringflags">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_setflagsfromstring_flags"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8setflagsfromstringflags">
+                <a href="v8/v8_setflagsfromstring_flags.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v1.0.0</span>
+</div>
+<ul class="">
+<li><code>flags</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p><code>v8.setFlagsFromString()</code> 方法可用于以编程方式设置 V8 命令行标志。
+此方法需谨慎使用。
+在虚拟机启动后更改设置可能会导致不可预测的行为，包括崩溃和数据丢失；或者它可能只是什么都不做。</p>
+<p class="">可以通过运行 <code>node --v8-options</code> 来确定 Node.js 版本可用的 V8 选项。</p>
+<p class="">用法：</p>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 将 GC 事件打印到标准输出一分钟。</span>
+<span class="hljs-keyword">const</span> v8 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+v8.<span class="hljs-title function_">setFlagsFromString</span>(<span class="hljs-string">'--trace_gc'</span>);
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> { v8.<span class="hljs-title function_">setFlagsFromString</span>(<span class="hljs-string">'--notrace_gc'</span>); }, <span class="hljs-number">60e3</span>);</code></pre>
+</section><section><h3><code>v8.stopCoverage()</code><span><a class="mark" href="#v8stopcoverage" id="v8stopcoverage">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_stopcoverage"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8stopcoverage">
+                <a href="v8/v8_stopcoverage.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.1.0, v12.22.0</span>
+</div>
+<p><code>v8.stopCoverage()</code> 方法允许用户停止 <a href="cli.html#node_v8_coveragedir"><code>NODE_V8_COVERAGE</code></a> 启动的覆盖收集，以便 V8 可以释放执行计数记录并优化代码。
+如果用户想按需收集覆盖范围，可以与 <a href="#v8takecoverage"><code>v8.takeCoverage()</code></a> 结合使用。</p>
+</section><section><h3><code>v8.takeCoverage()</code><span><a class="mark" href="#v8takecoverage" id="v8takecoverage">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_takecoverage"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8takecoverage">
+                <a href="v8/v8_takecoverage.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.1.0, v12.22.0</span>
+</div>
+<p><code>v8.takeCoverage()</code>方法允许用户按需将 <a href="cli.html#node_v8_coveragedir"><code>NODE_V8_COVERAGE</code></a> 开始的覆盖写入磁盘。
+此方法可以在进程的生命周期内多次调用。
+每次执行计数器将被重置，并且新的覆盖报告将写入 <a href="cli.html#node_v8_coveragedir"><code>NODE_V8_COVERAGE</code></a> 指定的目录。</p>
+<p class="">当进程即将退出时，除非在进程退出前调用 <a href="#v8stopcoverage"><code>v8.stopCoverage()</code></a>，否则最后一个覆盖仍会写入磁盘。</p>
+</section><section><h3><code>v8.writeHeapSnapshot([filename])</code><span><a class="mark" href="#v8writeheapsnapshotfilename" id="v8writeheapsnapshotfilename">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_writeheapsnapshot_filename"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#v8writeheapsnapshotfilename">
+                <a href="v8/v8_writeheapsnapshot_filename.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.13.0</span>
+</div>
+<ul class="">
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要保存 V8 堆快照的文件路径。
+如果不指定，则会生成格式为 <code>'Heap-${yyyymmdd}-${hhmmss}-${pid}-${thread_id}.heapsnapshot'</code> 的文件名，其中 <code>{pid}</code> 是 Node.js 进程的 PID，当 <code>writeHeapSnapshot()</code> 从 Node.js 主线程调用时，<code>{thread_id}</code> 将是 <code>0</code> 或工作线程的 id。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 保存快照的文件名。</li>
+</ul>
+<p>生成当前 V8 堆的快照并将其写入 JSON 文件。
+此文件旨在与 Chrome 开发者工具等工具一起使用
+JSON 模式未记录并且特定于 V8 引擎，并且可能会从 V8 的一个版本更改为下一个版本。</p>
+<p class="">堆快照特定于单个 V8 隔离。
+当使用<a href="worker_threads.html">工作线程</a>时，主线程生成的堆快照将不包含任何关于工作线程的信息，反之亦然。</p>
+<p class="">创建堆快照需要的内存大约是创建快照时堆大小的两倍。
+这会导致 OOM 杀手终止进程的风险。</p>
+<p class="">生成快照是一个同步的操作，它会根据堆大小在一段时间内阻塞事件循环。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { writeHeapSnapshot } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+<span class="hljs-keyword">const</span> {
+  <span class="hljs-title class_">Worker</span>,
+  isMainThread,
+  parentPort
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+
+<span class="hljs-keyword">if</span> (isMainThread) {
+  <span class="hljs-keyword">const</span> worker = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Worker</span>(__filename);
+
+  worker.<span class="hljs-title function_">once</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">filename</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`worker heapdump: <span class="hljs-subst">${filename}</span>`</span>);
+    <span class="hljs-comment">// 现在获取主线程的堆转储。</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`main thread heapdump: <span class="hljs-subst">${writeHeapSnapshot()}</span>`</span>);
+  });
+
+  <span class="hljs-comment">// 告诉工作进程创建堆转储。</span>
+  worker.<span class="hljs-title function_">postMessage</span>(<span class="hljs-string">'heapdump'</span>);
+} <span class="hljs-keyword">else</span> {
+  parentPort.<span class="hljs-title function_">once</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (message === <span class="hljs-string">'heapdump'</span>) {
+      <span class="hljs-comment">// 为工作进程生成堆转储，</span>
+      <span class="hljs-comment">// 并将文件名返回给父进程。</span>
+      parentPort.<span class="hljs-title function_">postMessage</span>(<span class="hljs-title function_">writeHeapSnapshot</span>());
+    }
+  });
+}</code></pre>
+</section><section><h3>序列化 API<span><a class="mark" href="#serialization-api" id="serialization-api">#</a></span><a aria-hidden="true" class="legacy" id="v8_serialization_api"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#serialization-api">
+                <a href="v8/serialization_api.html" class="tip_trans">中英对照</a>
+                </p>
+<p>序列化 API 提供了以与 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm" rel="nofollow">HTML 结构化克隆算法</a>兼容的方式序列化 JavaScript 值的方法。</p>
+<p class="">格式是向后兼容的（即可以安全地存储到磁盘）。
+相同的 JavaScript 值可能会导致不同的序列化输出。</p>
+<h4><code>v8.serialize(value)</code><span><a class="mark" href="#v8serializevalue" id="v8serializevalue">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_serialize_value"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#v8serializevalue">
+                <a href="v8/v8_serialize_value.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li>返回: <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-v8defaultserializer"><code>DefaultSerializer</code></a> 将 <code>value</code> 序列化到缓冲区中。</p>
+<p class="">尝试序列化需要大于 <a href="buffer.html#bufferconstantsmax_length"><code>buffer.constants.MAX_LENGTH</code></a> 的缓冲区的大对象时，则将抛出 <a href="errors.html#err_buffer_too_large"><code>ERR_BUFFER_TOO_LARGE</code></a>。</p>
+<h4><code>v8.deserialize(buffer)</code><span><a class="mark" href="#v8deserializebuffer" id="v8deserializebuffer">#</a></span><a aria-hidden="true" class="legacy" id="v8_v8_deserialize_buffer"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#v8deserializebuffer">
+                <a href="v8/v8_deserialize_buffer.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> <a href="#v8serializevalue"><code>serialize()</code></a> 返回的缓冲区。</li>
+</ul>
+<p>使用带有默认选项的 <a href="#class-v8defaultdeserializer"><code>DefaultDeserializer</code></a> 从缓冲区读取 JS 值。</p>
+<h4><code>v8.Serializer</code> 类<span><a class="mark" href="#class-v8serializer" id="class-v8serializer">#</a></span><a aria-hidden="true" class="legacy" id="v8_class_v8_serializer"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<h5><code>new Serializer()</code><span><a class="mark" href="#new-serializer" id="new-serializer">#</a></span><a aria-hidden="true" class="legacy" id="v8_new_serializer"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#new-serializer">
+                <a href="v8/new_serializer.html" class="tip_trans">中英对照</a>
+                </p>
+<p>创建新的 <code>Serializer</code> 对象。</p>
+<h5><code>serializer.writeHeader()</code><span><a class="mark" href="#serializerwriteheader" id="serializerwriteheader">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_writeheader"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializerwriteheader">
+                <a href="v8/serializer_writeheader.html" class="tip_trans">中英对照</a>
+                </p>
+<p>写出标头，其中包括序列化格式版本。</p>
+<h5><code>serializer.writeValue(value)</code><span><a class="mark" href="#serializerwritevaluevalue" id="serializerwritevaluevalue">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_writevalue_value"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializerwritevaluevalue">
+                <a href="v8/serializer_writevalue_value.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>序列化 JavaScript 值并将序列化的表示添加到内部缓冲区。</p>
+<p class="">如果无法序列化 <code>value</code>，则抛出错误。</p>
+<h5><code>serializer.releaseBuffer()</code><span><a class="mark" href="#serializerreleasebuffer" id="serializerreleasebuffer">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_releasebuffer"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializerreleasebuffer">
+                <a href="v8/serializer_releasebuffer.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>返回: <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>返回存储的内部缓冲区。
+释放缓冲区后不应使用此序列化器。
+如果先前的写入失败，则调用此方法会导致未定义的行为。</p>
+<h5><code>serializer.transferArrayBuffer(id, arrayBuffer)</code><span><a class="mark" href="#serializertransferarraybufferid-arraybuffer" id="serializertransferarraybufferid-arraybuffer">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_transferarraybuffer_id_arraybuffer"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializertransferarraybufferid-arraybuffer">
+                <a href="v8/serializer_transferarraybuffer_id_arraybuffer.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>id</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 32 位无符号整数。</li>
+<li><code>arrayBuffer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> <code>ArrayBuffer</code> 实例。</li>
+</ul>
+<p>将 <code>ArrayBuffer</code> 标记为将其内容传输到带外。
+将反序列化上下文中对应的 <code>ArrayBuffer</code> 传给 <a href="#deserializertransferarraybufferid-arraybuffer"><code>deserializer.transferArrayBuffer()</code></a>。</p>
+<h5><code>serializer.writeUint32(value)</code><span><a class="mark" href="#serializerwriteuint32value" id="serializerwriteuint32value">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_writeuint32_value"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializerwriteuint32value">
+                <a href="v8/serializer_writeuint32_value.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>写入原始的 32 位无符号整数。
+用于自定义的 <a href="#serializer_writehostobjectobject"><code>serializer._writeHostObject()</code></a> 内部。</p>
+<h5><code>serializer.writeUint64(hi, lo)</code><span><a class="mark" href="#serializerwriteuint64hi-lo" id="serializerwriteuint64hi-lo">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_writeuint64_hi_lo"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializerwriteuint64hi-lo">
+                <a href="v8/serializer_writeuint64_hi_lo.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>hi</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>lo</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>写入原始的 64 位无符号整数，分成高和低 32 位部分。
+用于自定义的 <a href="#serializer_writehostobjectobject"><code>serializer._writeHostObject()</code></a> 内部。</p>
+<h5><code>serializer.writeDouble(value)</code><span><a class="mark" href="#serializerwritedoublevalue" id="serializerwritedoublevalue">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_writedouble_value"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializerwritedoublevalue">
+                <a href="v8/serializer_writedouble_value.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>写入 JS <code>number</code> 值。
+用于自定义的 <a href="#serializer_writehostobjectobject"><code>serializer._writeHostObject()</code></a> 内部。</p>
+<h5><code>serializer.writeRawBytes(buffer)</code><span><a class="mark" href="#serializerwriterawbytesbuffer" id="serializerwriterawbytesbuffer">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_writerawbytes_buffer"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializerwriterawbytesbuffer">
+                <a href="v8/serializer_writerawbytes_buffer.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+</ul>
+<p>将原始字节写入序列化器的内部缓冲区。
+反序列化器需要一种方法来计算缓冲区的长度。
+用于自定义的 <a href="#serializer_writehostobjectobject"><code>serializer._writeHostObject()</code></a> 内部。</p>
+<h5><code>serializer._writeHostObject(object)</code><span><a class="mark" href="#serializer_writehostobjectobject" id="serializer_writehostobjectobject">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_writehostobject_object"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializer_writehostobjectobject">
+                <a href="v8/serializer_writehostobject_object.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>object</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>调用此方法来写入某种宿主对象，即由原生 C++ 绑定创建的对象。
+如果无法序列化 <code>object</code>，则应抛出合适的异常。</p>
+<p class="">此方法不存在于 <code>Serializer</code> 类本身，但可以由子类提供。</p>
+<h5><code>serializer._getDataCloneError(message)</code><span><a class="mark" href="#serializer_getdatacloneerrormessage" id="serializer_getdatacloneerrormessage">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_getdatacloneerror_message"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializer_getdatacloneerrormessage">
+                <a href="v8/serializer_getdatacloneerror_message.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>调用此方法生成错误对象，当无法克隆对象时将抛出该错误对象。</p>
+<p class="">此方法默认为 <a href="errors.html#class-error"><code>Error</code></a> 构造函数，并且可以在子类上覆盖。</p>
+<h5><code>serializer._getSharedArrayBufferId(sharedArrayBuffer)</code><span><a class="mark" href="#serializer_getsharedarraybufferidsharedarraybuffer" id="serializer_getsharedarraybufferidsharedarraybuffer">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_getsharedarraybufferid_sharedarraybuffer"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializer_getsharedarraybufferidsharedarraybuffer">
+                <a href="v8/serializer_getsharedarraybufferid_sharedarraybuffer.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>sharedArrayBuffer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow" class="type">&lt;SharedArrayBuffer&gt;</a></li>
+</ul>
+<p>此方法在序列化器要序列化 <code>SharedArrayBuffer</code> 对象时被调用。
+它必须为对象返回无符号的 32 位整数 ID，如果此 <code>SharedArrayBuffer</code> 已被序列化，则使用相同的 ID。
+当反序列化时，此 ID 会传给 <a href="#deserializertransferarraybufferid-arraybuffer"><code>deserializer.transferArrayBuffer()</code></a>。</p>
+<p class="">如果对象无法序列化，则应抛出异常。</p>
+<p class="">此方法不存在于 <code>Serializer</code> 类本身，但可以由子类提供。</p>
+<h5><code>serializer._setTreatArrayBufferViewsAsHostObjects(flag)</code><span><a class="mark" href="#serializer_settreatarraybufferviewsashostobjectsflag" id="serializer_settreatarraybufferviewsashostobjectsflag">#</a></span><a aria-hidden="true" class="legacy" id="v8_serializer_settreatarraybufferviewsashostobjects_flag"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serializer_settreatarraybufferviewsashostobjectsflag">
+                <a href="v8/serializer_settreatarraybufferviewsashostobjects_flag.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>false</code></li>
+</ul>
+<p>指示是否将 <code>TypedArray</code> 和 <code>DataView</code> 对象视为宿主对象，即将它们传给 <a href="#serializer_writehostobjectobject"><code>serializer._writeHostObject()</code></a>。</p>
+<h4><code>v8.Deserializer</code> 类<span><a class="mark" href="#class-v8deserializer" id="class-v8deserializer">#</a></span><a aria-hidden="true" class="legacy" id="v8_class_v8_deserializer"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<h5><code>new Deserializer(buffer)</code><span><a class="mark" href="#new-deserializerbuffer" id="new-deserializerbuffer">#</a></span><a aria-hidden="true" class="legacy" id="v8_new_deserializer_buffer"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#new-deserializerbuffer">
+                <a href="v8/new_deserializer_buffer.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> <a href="#serializerreleasebuffer"><code>serializer.releaseBuffer()</code></a> 返回的缓冲区。</li>
+</ul>
+<p>创建新的 <code>Deserializer</code> 对象。</p>
+<h5><code>deserializer.readHeader()</code><span><a class="mark" href="#deserializerreadheader" id="deserializerreadheader">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_readheader"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializerreadheader">
+                <a href="v8/deserializer_readheader.html" class="tip_trans">中英对照</a>
+                </p>
+<p>读取并验证标头（包括格式版本）。
+例如，可以拒绝无效或不受支持的有线格式。
+在这种情况下，会抛出 <code>Error</code>。</p>
+<h5><code>deserializer.readValue()</code><span><a class="mark" href="#deserializerreadvalue" id="deserializerreadvalue">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_readvalue"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializerreadvalue">
+                <a href="v8/deserializer_readvalue.html" class="tip_trans">中英对照</a>
+                </p>
+<p>从缓冲区反序列化 JavaScript 值并返回。</p>
+<h5><code>deserializer.transferArrayBuffer(id, arrayBuffer)</code><span><a class="mark" href="#deserializertransferarraybufferid-arraybuffer" id="deserializertransferarraybufferid-arraybuffer">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_transferarraybuffer_id_arraybuffer"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializertransferarraybufferid-arraybuffer">
+                <a href="v8/deserializer_transferarraybuffer_id_arraybuffer.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>id</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 32 位无符号整数。</li>
+<li><code>arrayBuffer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow" class="type">&lt;SharedArrayBuffer&gt;</a> <code>ArrayBuffer</code> 实例。</li>
+</ul>
+<p>将 <code>ArrayBuffer</code> 标记为将其内容传输到带外。
+将序列化上下文中对应的 <code>ArrayBuffer</code> 传给 <a href="#serializertransferarraybufferid-arraybuffer"><code>serializer.transferArrayBuffer()</code></a>（或者在 <code>SharedArrayBuffer</code> 的情况下从 <a href="#serializer_getsharedarraybufferidsharedarraybuffer"><code>serializer._getSharedArrayBufferId()</code></a> 返回 <code>id</code>）。</p>
+<h5><code>deserializer.getWireFormatVersion()</code><span><a class="mark" href="#deserializergetwireformatversion" id="deserializergetwireformatversion">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_getwireformatversion"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializergetwireformatversion">
+                <a href="v8/deserializer_getwireformatversion.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>读取底层有线格式版本。
+可能主要用于读取旧的有线格式版本的遗留代码
+不能在 <code>.readHeader()</code> 之前调用。</p>
+<h5><code>deserializer.readUint32()</code><span><a class="mark" href="#deserializerreaduint32" id="deserializerreaduint32">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_readuint32"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializerreaduint32">
+                <a href="v8/deserializer_readuint32.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>读取原始的 32 位无符号整数并返回。
+用于自定义的 <a href="#deserializer_readhostobject"><code>deserializer._readHostObject()</code></a> 内部。</p>
+<h5><code>deserializer.readUint64()</code><span><a class="mark" href="#deserializerreaduint64" id="deserializerreaduint64">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_readuint64"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializerreaduint64">
+                <a href="v8/deserializer_readuint64.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer[]&gt;</a></li>
+</ul>
+<p>读取原始的 64 位无符号整数并将其作为具有两个 32 位无符号整数条目的数组 <code>[hi, lo]</code> 返回。
+用于自定义的 <a href="#deserializer_readhostobject"><code>deserializer._readHostObject()</code></a> 内部。</p>
+<h5><code>deserializer.readDouble()</code><span><a class="mark" href="#deserializerreaddouble" id="deserializerreaddouble">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_readdouble"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializerreaddouble">
+                <a href="v8/deserializer_readdouble.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>读取 JS <code>number</code> 值。
+用于自定义的 <a href="#deserializer_readhostobject"><code>deserializer._readHostObject()</code></a> 内部。</p>
+<h5><code>deserializer.readRawBytes(length)</code><span><a class="mark" href="#deserializerreadrawbyteslength" id="deserializerreadrawbyteslength">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_readrawbytes_length"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializerreadrawbyteslength">
+                <a href="v8/deserializer_readrawbytes_length.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>length</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li>返回: <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>从反序列化器的内部缓冲区读取原始字节。
+<code>length</code> 参数必须对应于传给 <a href="#serializerwriterawbytesbuffer"><code>serializer.writeRawBytes()</code></a> 的缓冲区的长度。
+用于自定义的 <a href="#deserializer_readhostobject"><code>deserializer._readHostObject()</code></a> 内部。</p>
+<h5><code>deserializer._readHostObject()</code><span><a class="mark" href="#deserializer_readhostobject" id="deserializer_readhostobject">#</a></span><a aria-hidden="true" class="legacy" id="v8_deserializer_readhostobject"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#deserializer_readhostobject">
+                <a href="v8/deserializer_readhostobject.html" class="tip_trans">中英对照</a>
+                </p>
+<p>调用此方法来读取某种宿主对象，即由原生 C++ 绑定创建的对象。
+如果无法反序列化数据，则应抛出合适的异常。</p>
+<p class="">此方法不存在于 <code>Deserializer</code> 类本身，但可以由子类提供。</p>
+<h4><code>v8.DefaultSerializer</code> 类<span><a class="mark" href="#class-v8defaultserializer" id="class-v8defaultserializer">#</a></span><a aria-hidden="true" class="legacy" id="v8_class_v8_defaultserializer"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#class-v8defaultserializer">
+                <a href="v8/class_v8_defaultserializer.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p><a href="#class-v8serializer"><code>Serializer</code></a> 的子类，将 <code>TypedArray</code>（特别是 <a href="buffer.html"><code>Buffer</code></a>）和 <code>DataView</code> 对象序列化为宿主对象，并且只存储它们所指向的底层 <code>ArrayBuffer</code>。</p>
+<h4><code>v8.DefaultDeserializer</code> 类<span><a class="mark" href="#class-v8defaultdeserializer" id="class-v8defaultdeserializer">#</a></span><a aria-hidden="true" class="legacy" id="v8_class_v8_defaultdeserializer"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#class-v8defaultdeserializer">
+                <a href="v8/class_v8_defaultdeserializer.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p><a href="#class-v8defaultserializer"><code>DefaultSerializer</code></a> 所写格式对应的 <a href="#class-v8deserializer"><code>Deserializer</code></a> 子类。</p>
+</section><section><h3>Promise 钩子<span><a class="mark" href="#promise-hooks" id="promise-hooks">#</a></span><a aria-hidden="true" class="legacy" id="v8_promise_hooks"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#promise-hooks">
+                <a href="v8/promise_hooks.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>promiseHooks</code> 接口可用于跟踪 promise 生命周期事件。
+要跟踪所有的异步活动，则参阅 <a href="async_hooks.html"><code>async_hooks</code></a>，其在内部使用此模块生成 promise 生命周期事件以及其他异步资源的事件。
+请求的上下文管理参阅 <a href="async_context.html#class-asynclocalstorage"><code>AsyncLocalStorage</code></a>。</p>
+<pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-comment">// promise 产生了四个生命周期事件：</span>
+
+<span class="hljs-comment">// `init` 事件代表了 promise 的创建。</span>
+<span class="hljs-comment">// 这可以是直接创建，例如使用 `new Promise(...)`，</span>
+<span class="hljs-comment">// 或者是继续，例如 `then()` 或 `catch()`。</span>
+<span class="hljs-comment">// 每当调用异步函数或执行“等待”时，也会发生这种情况。</span>
+<span class="hljs-comment">// 如果创建了继续 promise，则 `parent` 将是它作为继续的 promise。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">init</span>(<span class="hljs-params">promise, parent</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise was created'</span>, { promise, parent });
+}
+
+<span class="hljs-comment">// `settled` 事件在 promise 收到解决或拒绝值时发生。</span>
+<span class="hljs-comment">// 这可能会同步地发生，</span>
+<span class="hljs-comment">// 例如在非 promise 输入上使用 `Promise.resolve()` 时。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">settled</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise resolved or rejected'</span>, { promise });
+}
+
+<span class="hljs-comment">// `before` 事件在 `then()` 或 `catch()` 句柄运行</span>
+<span class="hljs-comment">// 或 `await` 恢复执行之前立即运行。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">before</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise is about to call a then handler'</span>, { promise });
+}
+
+<span class="hljs-comment">// `after` 事件在 `then()` 句柄运行之后</span>
+<span class="hljs-comment">// 或 `await` 从另一个句柄恢复之后立即运行。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">after</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise is done calling a then handler'</span>, { promise });
+}
+
+<span class="hljs-comment">// 生命周期钩子可以单独启动和停止</span>
+<span class="hljs-keyword">const</span> stopWatchingInits = promiseHooks.<span class="hljs-title function_">onInit</span>(init);
+<span class="hljs-keyword">const</span> stopWatchingSettleds = promiseHooks.<span class="hljs-title function_">onSettled</span>(settled);
+<span class="hljs-keyword">const</span> stopWatchingBefores = promiseHooks.<span class="hljs-title function_">onBefore</span>(before);
+<span class="hljs-keyword">const</span> stopWatchingAfters = promiseHooks.<span class="hljs-title function_">onAfter</span>(after);
+
+<span class="hljs-comment">// 或者它们可以分组启动和停止</span>
+<span class="hljs-keyword">const</span> stopHookSet = promiseHooks.<span class="hljs-title function_">createHook</span>({
+  init,
+  settled,
+  before,
+  after
+});
+
+<span class="hljs-comment">// 要停止钩子，则调用创建时返回的函数。</span>
+<span class="hljs-title function_">stopWatchingInits</span>();
+<span class="hljs-title function_">stopWatchingSettleds</span>();
+<span class="hljs-title function_">stopWatchingBefores</span>();
+<span class="hljs-title function_">stopWatchingAfters</span>();
+<span class="hljs-title function_">stopHookSet</span>();</code></pre>
+<h4><code>promiseHooks.onInit(init)</code><span><a class="mark" href="#promisehooksoninitinit" id="promisehooksoninitinit">#</a></span><a aria-hidden="true" class="legacy" id="v8_promisehooks_oninit_init"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#promisehooksoninitinit">
+                <a href="v8/promisehooks_oninit_init.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<ul class="">
+<li><code>init</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当创建 promise 时调用的 <a href="#initpromise-parent"><code>init</code> 回调</a>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 调用以停止钩子。
+<strong><code>init</code> 钩子必须是普通函数。
+提供异步函数会抛出异常，因为它会产生无限微任务循环。</strong></li>
+</ul>
+
+<pre class="with-39-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onInit</span>(<span class="hljs-function">(<span class="hljs-params">promise, parent</span>) =&gt;</span> {});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { promiseHooks } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onInit</span>(<span class="hljs-function">(<span class="hljs-params">promise, parent</span>) =&gt;</span> {});</code></pre>
+<h4><code>promiseHooks.onSettled(settled)</code><span><a class="mark" href="#promisehooksonsettledsettled" id="promisehooksonsettledsettled">#</a></span><a aria-hidden="true" class="legacy" id="v8_promisehooks_onsettled_settled"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#promisehooksonsettledsettled">
+                <a href="v8/promisehooks_onsettled_settled.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<ul class="">
+<li><code>settled</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当 promise 被解决或拒绝时调用的 <a href="#settledpromise"><code>settled</code> 回调</a>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 调用以停止钩子。
+<strong><code>settled</code> 钩子必须是普通函数。
+提供异步函数会抛出异常，因为它会产生无限微任务循环。</strong></li>
+</ul>
+
+<pre class="with-39-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onSettled</span>(<span class="hljs-function">(<span class="hljs-params">promise</span>) =&gt;</span> {});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { promiseHooks } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onSettled</span>(<span class="hljs-function">(<span class="hljs-params">promise</span>) =&gt;</span> {});</code></pre>
+<h4><code>promiseHooks.onBefore(before)</code><span><a class="mark" href="#promisehooksonbeforebefore" id="promisehooksonbeforebefore">#</a></span><a aria-hidden="true" class="legacy" id="v8_promisehooks_onbefore_before"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#promisehooksonbeforebefore">
+                <a href="v8/promisehooks_onbefore_before.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<ul class="">
+<li><code>before</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在 promise 继续执行之前调用的 <a href="#beforepromise"><code>before</code> 回调</a>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 调用以停止钩子。
+<strong><code>before</code> 钩子必须是普通函数。
+提供异步函数会抛出异常，因为它会产生无限微任务循环。</strong></li>
+</ul>
+
+<pre class="with-39-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onBefore</span>(<span class="hljs-function">(<span class="hljs-params">promise</span>) =&gt;</span> {});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { promiseHooks } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onBefore</span>(<span class="hljs-function">(<span class="hljs-params">promise</span>) =&gt;</span> {});</code></pre>
+<h4><code>promiseHooks.onAfter(after)</code><span><a class="mark" href="#promisehooksonafterafter" id="promisehooksonafterafter">#</a></span><a aria-hidden="true" class="legacy" id="v8_promisehooks_onafter_after"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#promisehooksonafterafter">
+                <a href="v8/promisehooks_onafter_after.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<ul class="">
+<li><code>after</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> promise 继续执行后要调用的 <a href="#afterpromise"><code>after</code> 回调</a>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 调用以停止钩子。
+<strong><code>after</code> 钩子必须是普通函数。
+提供异步函数会抛出异常，因为它会产生无限微任务循环。</strong></li>
+</ul>
+
+<pre class="with-39-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onAfter</span>(<span class="hljs-function">(<span class="hljs-params">promise</span>) =&gt;</span> {});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { promiseHooks } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+
+<span class="hljs-keyword">const</span> stop = promiseHooks.<span class="hljs-title function_">onAfter</span>(<span class="hljs-function">(<span class="hljs-params">promise</span>) =&gt;</span> {});</code></pre>
+<h4><code>promiseHooks.createHook(callbacks)</code><span><a class="mark" href="#promisehookscreatehookcallbacks" id="promisehookscreatehookcallbacks">#</a></span><a aria-hidden="true" class="legacy" id="v8_promisehooks_createhook_callbacks"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#promisehookscreatehookcallbacks">
+                <a href="v8/promisehooks_createhook_callbacks.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<ul class="">
+<li><code>callbacks</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 要注册的<a href="#hook-callbacks">钩子回调</a>
+<ul>
+<li><code>init</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#initpromise-parent"><code>init</code> 回调</a>。</li>
+<li><code>before</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#beforepromise"><code>before</code> 回调</a>。</li>
+<li><code>after</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#afterpromise"><code>after</code> 回调</a>。</li>
+<li><code>settled</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#settledpromise"><code>settled</code> 回调</a>。</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 用于禁用钩子 <strong>钩子回调必须是普通函数。
+提供异步函数会抛出异常，因为它会产生无限的微任务循环。</strong></li>
+</ul>
+<p>注册要为每个 promise 的不同生命周期事件调用的函数。</p>
+<p class="">回调 <code>init()</code>/<code>before()</code>/<code>after()</code>/<code>settled()</code> 在 promise 的生命周期内为各个事件调用。</p>
+<p class="">所有回调都是可选的。
+例如，如果只需要跟踪 promise 的创建，则只需要传入 <code>init</code> 回调。
+可以传给 <code>callbacks</code> 的所有函数的细节都在<a href="#hook-callbacks">钩子回调</a>章节。</p>
+
+<pre class="with-39-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-keyword">const</span> stopAll = promiseHooks.<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">promise, parent</span>) {}
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { promiseHooks } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>);
+
+<span class="hljs-keyword">const</span> stopAll = promiseHooks.<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">promise, parent</span>) {}
+});</code></pre>
+<h4>钩子回调<span><a class="mark" href="#hook-callbacks" id="hook-callbacks">#</a></span><a aria-hidden="true" class="legacy" id="v8_hook_callbacks"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#hook-callbacks">
+                <a href="v8/hook_callbacks.html" class="tip_trans">中英对照</a>
+                </p>
+<p>promise 生命周期中的关键事件分为四个方面：promise 的创建、调用继续句柄之前/之后或 await 前后，以及当 promise 解决或拒绝时。</p>
+<p class="">虽然这些钩子与 <a href="async_hooks.html"><code>async_hooks</code></a> 的钩子相似，但它们缺少 <code>destroy</code> 钩子。
+其他类型的异步资源通常表示套接字或文件描述符，它们具有不同的“关闭”状态来表达 <code>destroy</code> 生命周期事件，而只要代码仍然可以访问它们，则 promise 就仍然可用。
+垃圾收集跟踪用于使 promise 适合 <code>async_hooks</code> 事件模型，但是这种跟踪非常昂贵，而且它们甚至不一定会被垃圾收集。</p>
+<p class="">因为 promise 是异步的资源，其生命周期通过 promise 钩子机制进行跟踪，所以 <code>init()</code>、<code>before()</code>、<code>after()</code> 和 <code>settled()</code> 回调不能是异步的函数，因为它们创建了更多会产生无限循环的 promise。</p>
+<p class="">虽然此 API 用于将 promise 事件提供给 <a href="async_hooks.html"><code>async_hooks</code></a>，但两者之间的顺序是未定义的。
+两个 API 都是多租户的，因此可以以相对于彼此的任何顺序产生事件。</p>
+<h5><code>init(promise, parent)</code><span><a class="mark" href="#initpromise-parent" id="initpromise-parent">#</a></span><a aria-hidden="true" class="legacy" id="v8_init_promise_parent"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#initpromise-parent">
+                <a href="v8/init_promise_parent.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 正在创建的 promise。</li>
+<li><code>parent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 如果适用，则 promise 从此继续。</li>
+</ul>
+<p>当构造 promise 时调用。
+这不意味着会发生相应的 <code>before</code>/<code>after</code> 事件，只是存在可能性。
+如果在没有获得继续的情况下创建了 promise，则会发生这种情况。</p>
+<h5><code>before(promise)</code><span><a class="mark" href="#beforepromise" id="beforepromise">#</a></span><a aria-hidden="true" class="legacy" id="v8_before_promise"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#beforepromise">
+                <a href="v8/before_promise.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul>
+<p>在 promise 继续执行之前调用。
+这可以是 <code>then()</code>、<code>catch()</code> 或 <code>finally()</code> 句柄或 <code>await</code> 恢复的形式。</p>
+<p class=""><code>before</code> 回调将被调用 0 到 N 次。
+如果 promise 没有继续进行，则 <code>before</code> 回调通常会被调用 0 次。
+<code>before</code> 回调可能会在同一个 promise 进行了许多继续的情况下被多次调用。</p>
+<h5><code>after(promise)</code><span><a class="mark" href="#afterpromise" id="afterpromise">#</a></span><a aria-hidden="true" class="legacy" id="v8_after_promise"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#afterpromise">
+                <a href="v8/after_promise.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul>
+<p>在 promise 继续执行后立即调用。
+这可能在 <code>then()</code>、<code>catch()</code> 或 <code>finally()</code> 句柄之后，或者在另一个 <code>await</code> 之后的 <code>await</code> 之前。</p>
+<h5><code>settled(promise)</code><span><a class="mark" href="#settledpromise" id="settledpromise">#</a></span><a aria-hidden="true" class="legacy" id="v8_settled_promise"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#settledpromise">
+                <a href="v8/settled_promise.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul>
+<p>当 promise 收到解决或拒绝值时调用。
+这可能在 <code>Promise.resolve()</code> 或 <code>Promise.reject()</code> 的情况下同步地发生。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

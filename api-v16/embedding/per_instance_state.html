@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>每个实例的状态 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-embedding">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>每个实例的状态</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../embedding.html#embedding_per_instance_state" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/embedding/per_instance_state.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/embedding/per_instance_state.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/embedding/#per-instance-state.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>添加了 <code>CommonEnvironmentSetup</code> 和 <code>SpinEventLoop</code> 实用工具。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>Node.js 有“Node.js 实例”的概念，通常被称为 <code>node::Environment</code>。
+每个 <code>node::Environment</code> 都与：</p><ul class="">
+<li>正好是 <code>v8::Isolate</code>，即 JS 引擎实例，</li>
+<li>正好是 <code>uv_loop_t</code>，即事件循环，并且</li>
+<li>许多 <code>v8::Context</code>，但只有一个主要的 <code>v8::Context</code>。</li>
+<li><code>node::IsolateData</code> 实例包含的信息可以由使用相同 <code>v8::Isolate</code> 的多个 <code>node::Environment</code> 共享。
+目前，没有针对此场景执行测试。</li>
+</ul><p class="">为了设置 <code>v8::Isolate</code>，需要提供 <code>v8::ArrayBuffer::Allocator</code>。
+一种可能的选择是默认的 Node.js 分配器，它可以通过 <code>node::ArrayBufferAllocator::Create()</code> 创建。
+当插件使用 Node.js C++ <code>Buffer</code> API 时，使用 Node.js 分配器可以实现较小的性能优化，并且需要在 <a href="../process.html#processmemoryusage"><code>process.memoryUsage()</code></a> 中跟踪 <code>ArrayBuffer</code> 内存。</p><p class="">此外，每个用于 Node.js 实例的 <code>v8::Isolate</code> 都需要在 <code>MultiIsolatePlatform</code> 实例中注册和注销（如果正在使用），以便平台知道对于 <code>v8::Isolate</code> 调度的任务使用哪个事件循环。</p><p class=""><code>node::NewIsolate()</code> 辅助函数创建 <code>v8::Isolate</code>，使用一些 Node.js 特定的钩子（例如 Node.js 错误句柄）设置，并自动将其注册到平台。</p><pre class=""><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">RunNodeInstance</span><span class="hljs-params">(MultiIsolatePlatform* platform,
+                    <span class="hljs-type">const</span> std::vector&lt;std::string&gt;&amp; args,
+                    <span class="hljs-type">const</span> std::vector&lt;std::string&gt;&amp; exec_args)</span> </span>{
+  <span class="hljs-type">int</span> exit_code = <span class="hljs-number">0</span>;
+
+  <span class="hljs-comment">// 设置 libuv 事件循环、v8::Isolate、以及 Node.js 环境</span>
+  std::vector&lt;std::string&gt; errors;
+  std::unique_ptr&lt;CommonEnvironmentSetup&gt; setup =
+      CommonEnvironmentSetup::<span class="hljs-built_in">Create</span>(platform, &amp;errors, args, exec_args);
+  <span class="hljs-keyword">if</span> (!setup) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> std::string&amp; err : errors)
+      <span class="hljs-built_in">fprintf</span>(stderr, <span class="hljs-string">"%s: %s\n"</span>, args[<span class="hljs-number">0</span>].<span class="hljs-built_in">c_str</span>(), err.<span class="hljs-built_in">c_str</span>());
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  }
+
+  Isolate* isolate = setup-&gt;<span class="hljs-built_in">isolate</span>();
+  Environment* env = setup-&gt;<span class="hljs-built_in">env</span>();
+
+  {
+    <span class="hljs-function">Locker <span class="hljs-title">locker</span><span class="hljs-params">(isolate)</span></span>;
+    <span class="hljs-function">Isolate::Scope <span class="hljs-title">isolate_scope</span><span class="hljs-params">(isolate)</span></span>;
+    <span class="hljs-comment">// 当调用 node::CreateEnvironment() 和 node::LoadEnvironment() 时，</span>
+    <span class="hljs-comment">// 需要输入 v8::Context。</span>
+    <span class="hljs-function">Context::Scope <span class="hljs-title">context_scope</span><span class="hljs-params">(setup-&gt;context())</span></span>;
+
+    <span class="hljs-comment">// 设置要执行的 Node.js 实例，并在其中运行代码。</span>
+    <span class="hljs-comment">// 还有一个变体接受回调</span>
+    <span class="hljs-comment">// 并为其提供 `require` 和 `process` 对象，</span>
+    <span class="hljs-comment">// 以便它可以根据需要手动编译和运行脚本。</span>
+    <span class="hljs-comment">// 此脚本中的 `require` 函数不访问文件系统，</span>
+    <span class="hljs-comment">// 并且只能加载 Node.js 内置模块。</span>
+    <span class="hljs-comment">// `module.createRequire()` 被用来创建能够从磁盘加载文件的文件，</span>
+    <span class="hljs-comment">// 并使用标准的 CommonJS 文件加载器</span>
+    <span class="hljs-comment">// 而不是内部的 `require` 函数。</span>
+    MaybeLocal&lt;Value&gt; loadenv_ret = node::<span class="hljs-built_in">LoadEnvironment</span>(
+        env,
+        <span class="hljs-string">"const publicRequire ="</span>
+        <span class="hljs-string">"  require('module').createRequire(process.cwd() + '/');"</span>
+        <span class="hljs-string">"globalThis.require = publicRequire;"</span>
+        <span class="hljs-string">"require('vm').runInThisContext(process.argv[1]);"</span>);
+
+    <span class="hljs-keyword">if</span> (loadenv_ret.<span class="hljs-built_in">IsEmpty</span>())  <span class="hljs-comment">// 出现了 JS 异常。</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+
+    exit_code = node::<span class="hljs-built_in">SpinEventLoop</span>(env).<span class="hljs-built_in">FromMaybe</span>(<span class="hljs-number">1</span>);
+
+    <span class="hljs-comment">// node::Stop() 可用于显式停止事件循环并阻止进一步的 JavaScript 运行。</span>
+    <span class="hljs-comment">// 它可以从任何线程调用，</span>
+    <span class="hljs-comment">// 如果从另一个线程调用，则像 worker.terminate() 一样。</span>
+    node::<span class="hljs-built_in">Stop</span>(env);
+  }
+
+  <span class="hljs-keyword">return</span> exit_code;
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>The <code>CommonEnvironmentSetup</code> and <code>SpinEventLoop</code> utilities were added.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>Node.js has a concept of a “Node.js instance”, that is commonly being referred
+to as <code>node::Environment</code>. Each <code>node::Environment</code> is associated with:</p><ul>
+<li>Exactly one <code>v8::Isolate</code>, i.e. one JS Engine instance,</li>
+<li>Exactly one <code>uv_loop_t</code>, i.e. one event loop, and</li>
+<li>A number of <code>v8::Context</code>s, but exactly one main <code>v8::Context</code>.</li>
+<li>One <code>node::IsolateData</code> instance that contains information that could be
+shared by multiple <code>node::Environment</code>s that use the same <code>v8::Isolate</code>.
+Currently, no testing if performed for this scenario.</li>
+</ul><p>In order to set up a <code>v8::Isolate</code>, an <code>v8::ArrayBuffer::Allocator</code> needs
+to be provided. One possible choice is the default Node.js allocator, which
+can be created through <code>node::ArrayBufferAllocator::Create()</code>. Using the Node.js
+allocator allows minor performance optimizations when addons use the Node.js
+C++ <code>Buffer</code> API, and is required in order to track <code>ArrayBuffer</code> memory in
+<a href="../process.html#processmemoryusage"><code>process.memoryUsage()</code></a>.</p><p>Additionally, each <code>v8::Isolate</code> that is used for a Node.js instance needs to
+be registered and unregistered with the <code>MultiIsolatePlatform</code> instance, if one
+is being used, in order for the platform to know which event loop to use
+for tasks scheduled by the <code>v8::Isolate</code>.</p><p>The <code>node::NewIsolate()</code> helper function creates a <code>v8::Isolate</code>,
+sets it up with some Node.js-specific hooks (e.g. the Node.js error handler),
+and registers it with the platform automatically.</p><pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">RunNodeInstance</span><span class="hljs-params">(MultiIsolatePlatform* platform,
+                    <span class="hljs-type">const</span> std::vector&lt;std::string&gt;&amp; args,
+                    <span class="hljs-type">const</span> std::vector&lt;std::string&gt;&amp; exec_args)</span> </span>{
+  <span class="hljs-type">int</span> exit_code = <span class="hljs-number">0</span>;
+
+  <span class="hljs-comment">// Setup up a libuv event loop, v8::Isolate, and Node.js Environment.</span>
+  std::vector&lt;std::string&gt; errors;
+  std::unique_ptr&lt;CommonEnvironmentSetup&gt; setup =
+      CommonEnvironmentSetup::<span class="hljs-built_in">Create</span>(platform, &amp;errors, args, exec_args);
+  <span class="hljs-keyword">if</span> (!setup) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> std::string&amp; err : errors)
+      <span class="hljs-built_in">fprintf</span>(stderr, <span class="hljs-string">"%s: %s\n"</span>, args[<span class="hljs-number">0</span>].<span class="hljs-built_in">c_str</span>(), err.<span class="hljs-built_in">c_str</span>());
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  }
+
+  Isolate* isolate = setup-&gt;<span class="hljs-built_in">isolate</span>();
+  Environment* env = setup-&gt;<span class="hljs-built_in">env</span>();
+
+  {
+    <span class="hljs-function">Locker <span class="hljs-title">locker</span><span class="hljs-params">(isolate)</span></span>;
+    <span class="hljs-function">Isolate::Scope <span class="hljs-title">isolate_scope</span><span class="hljs-params">(isolate)</span></span>;
+    <span class="hljs-comment">// The v8::Context needs to be entered when node::CreateEnvironment() and</span>
+    <span class="hljs-comment">// node::LoadEnvironment() are being called.</span>
+    <span class="hljs-function">Context::Scope <span class="hljs-title">context_scope</span><span class="hljs-params">(setup-&gt;context())</span></span>;
+
+    <span class="hljs-comment">// Set up the Node.js instance for execution, and run code inside of it.</span>
+    <span class="hljs-comment">// There is also a variant that takes a callback and provides it with</span>
+    <span class="hljs-comment">// the `require` and `process` objects, so that it can manually compile</span>
+    <span class="hljs-comment">// and run scripts as needed.</span>
+    <span class="hljs-comment">// The `require` function inside this script does *not* access the file</span>
+    <span class="hljs-comment">// system, and can only load built-in Node.js modules.</span>
+    <span class="hljs-comment">// `module.createRequire()` is being used to create one that is able to</span>
+    <span class="hljs-comment">// load files from the disk, and uses the standard CommonJS file loader</span>
+    <span class="hljs-comment">// instead of the internal-only `require` function.</span>
+    MaybeLocal&lt;Value&gt; loadenv_ret = node::<span class="hljs-built_in">LoadEnvironment</span>(
+        env,
+        <span class="hljs-string">"const publicRequire ="</span>
+        <span class="hljs-string">"  require('module').createRequire(process.cwd() + '/');"</span>
+        <span class="hljs-string">"globalThis.require = publicRequire;"</span>
+        <span class="hljs-string">"require('vm').runInThisContext(process.argv[1]);"</span>);
+
+    <span class="hljs-keyword">if</span> (loadenv_ret.<span class="hljs-built_in">IsEmpty</span>())  <span class="hljs-comment">// There has been a JS exception.</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+
+    exit_code = node::<span class="hljs-built_in">SpinEventLoop</span>(env).<span class="hljs-built_in">FromMaybe</span>(<span class="hljs-number">1</span>);
+
+    <span class="hljs-comment">// node::Stop() can be used to explicitly stop the event loop and keep</span>
+    <span class="hljs-comment">// further JavaScript from running. It can be called from any thread,</span>
+    <span class="hljs-comment">// and will act like worker.terminate() if called from another thread.</span>
+    node::<span class="hljs-built_in">Stop</span>(env);
+  }
+
+  <span class="hljs-keyword">return</span> exit_code;
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

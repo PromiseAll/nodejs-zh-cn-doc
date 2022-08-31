@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>条件导出 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>条件导出</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_conditional_exports" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/conditional_exports.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/conditional_exports.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#conditional-exports.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p><span>新增于: v13.2.0, v12.16.0</span></p></td></tr>
+<tr><td>v13.7.0, v12.16.0</td>
+<td><p>取消标记条件导出。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>条件导出提供了一种根据特定条件映射到不同路径的方法。
+CommonJS 和 ES 模块导入都支持它们。</p><p class="">比如，包想要为 <code>require()</code> 和 <code>import</code> 提供不同的 ES 模块导出可以这样写：</p><pre class=""><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main-require.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main-module.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"require"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main-require.cjs"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">Node.js 实现了以下条件，按从最具体到最不具体的顺序列出，因为应该定义条件：</p><ul class="">
+<li><code>"node-addons"</code> - 类似于 <code>"node"</code> 并匹配任何 Node.js 环境。
+此条件可用于提供使用原生 C++ 插件的入口点，而不是更通用且不依赖原生插件的入口点。
+可以通过 <a href="../cli.html#--no-addons"><code>--no-addons</code> 标志</a>禁用此条件。</li>
+<li><code>"node"</code> - 匹配任何 Node.js 环境。
+可以是 CommonJS 或 ES 模块文件。
+<em>在大多数情况下，不需要明确调用 Node.js 平台。</em></li>
+<li><code>"import"</code> - 当包通过 <code>import</code> 或 <code>import()</code>，或者通过 ECMAScript 模块加载器的任何顶层导入或解析操作加载时匹配。
+无论目标文件的模块格式如何，都适用。
+<em>始终与 <code>"require"</code> 互斥。</em></li>
+<li><code>"require"</code> - 当包通过 <code>require()</code> 加载时匹配。
+引用的文件应该可以用 <code>require()</code> 加载，尽管无论目标文件的模块格式如何，条件都匹配。
+预期的格式包括 CommonJS、JSON 和原生插件，但不包括 ES 模块，因为 <code>require()</code> 不支持它们。
+<em>始终与 <code>"import"</code> 互斥。</em></li>
+<li><code>"default"</code> - 始终匹配的通用后备。
+可以是 CommonJS 或 ES 模块文件。
+<em>此条件应始终放在最后。</em></li>
+</ul><p class="">在 <a href="../packages.html#exports"><code>"exports"</code></a> 对象中，键顺序很重要。
+在条件匹配过程中，较早的条目具有更高的优先级并优先于较晚的条目。
+<em>一般规则是条件应该按照对象顺序从最具体到最不具体</em>。</p><p class="">使用 <code>"import"</code> 和 <code>"require"</code> 条件会导致一些危害，在<a href="../packages.html#dual-commonjses-module-packages">双 CommonJS/ES 模块包章节</a>中有进一步的解释。</p><p class=""><code>"node-addons"</code> 条件可用于提供使用原生 C++ 插件的入口点。
+但是，可以通过 <a href="../cli.html#--no-addons"><code>--no-addons</code> 标志</a>禁用此条件。
+当使用 <code>"node-addons"</code> 时，建议将 <code>"default"</code> 视为提供更通用入口点的增强功能，例如使用 WebAssembly 而不是原生插件。</p><p class="">条件导出也可以扩展为导出子路径，例如：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"node"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature-node.js"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"default"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature.js"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">定义了一个包，其中 <code>require('pkg/feature')</code> 和 <code>import 'pkg/feature'</code> 可以在 Node.js 和其他 JS 环境之间提供不同的实现。</p><p class="">当使用环境分支时，总是尽可能包含 <code>"default"</code> 条件。
+提供 <code>"default"</code> 条件可确保任何未知的 JS 环境都能够使用此通用实现，这有助于避免这些 JS 环境必须伪装成现有环境以支持具有条件导出的包。
+出于这个原因，使用 <code>"node"</code> 和 <code>"default"</code> 条件分支通常比使用 <code>"node"</code> 和 <code>"browser"</code> 条件分支更可取。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p><span>Added in: v13.2.0, v12.16.0</span></p></td></tr>
+<tr><td>v13.7.0, v12.16.0</td>
+<td><p>Unflag conditional exports.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>Conditional exports provide a way to map to different paths depending on
+certain conditions. They are supported for both CommonJS and ES module imports.</p><p>For example, a package that wants to provide different ES module exports for
+<code>require()</code> and <code>import</code> can be written:</p><pre><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main-require.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main-module.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"require"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main-require.cjs"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Node.js implements the following conditions, listed in order from most
+specific to least specific as conditions should be defined:</p><ul>
+<li><code>"node-addons"</code> - similar to <code>"node"</code> and matches for any Node.js environment.
+This condition can be used to provide an entry point which uses native C++
+addons as opposed to an entry point which is more universal and doesn't rely
+on native addons. This condition can be disabled via the
+<a href="../cli.html#--no-addons"><code>--no-addons</code> flag</a>.</li>
+<li><code>"node"</code> - matches for any Node.js environment. Can be a CommonJS or ES
+module file. <em>In most cases explicitly calling out the Node.js platform is
+not necessary.</em></li>
+<li><code>"import"</code> - matches when the package is loaded via <code>import</code> or
+<code>import()</code>, or via any top-level import or resolve operation by the
+ECMAScript module loader. Applies regardless of the module format of the
+target file. <em>Always mutually exclusive with <code>"require"</code>.</em></li>
+<li><code>"require"</code> - matches when the package is loaded via <code>require()</code>. The
+referenced file should be loadable with <code>require()</code> although the condition
+matches regardless of the module format of the target file. Expected
+formats include CommonJS, JSON, and native addons but not ES modules as
+<code>require()</code> doesn't support them. <em>Always mutually exclusive with
+<code>"import"</code>.</em></li>
+<li><code>"default"</code> - the generic fallback that always matches. Can be a CommonJS
+or ES module file. <em>This condition should always come last.</em></li>
+</ul><p>Within the <a href="../packages.html#exports"><code>"exports"</code></a> object, key order is significant. During condition
+matching, earlier entries have higher priority and take precedence over later
+entries. <em>The general rule is that conditions should be from most specific to
+least specific in object order</em>.</p><p>Using the <code>"import"</code> and <code>"require"</code> conditions can lead to some hazards,
+which are further explained in <a href="../packages.html#dual-commonjses-module-packages">the dual CommonJS/ES module packages section</a>.</p><p>The <code>"node-addons"</code> condition can be used to provide an entry point which
+uses native C++ addons. However, this condition can be disabled via the
+<a href="../cli.html#--no-addons"><code>--no-addons</code> flag</a>. When using <code>"node-addons"</code>, it's recommended to treat
+<code>"default"</code> as an enhancement that provides a more universal entry point, e.g.
+using WebAssembly instead of a native addon.</p><p>Conditional exports can also be extended to exports subpaths, for example:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"node"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature-node.js"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"default"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature.js"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Defines a package where <code>require('pkg/feature')</code> and <code>import 'pkg/feature'</code>
+could provide different implementations between Node.js and other JS
+environments.</p><p>When using environment branches, always include a <code>"default"</code> condition where
+possible. Providing a <code>"default"</code> condition ensures that any unknown JS
+environments are able to use this universal implementation, which helps avoid
+these JS environments from having to pretend to be existing environments in
+order to support packages with conditional exports. For this reason, using
+<code>"node"</code> and <code>"default"</code> condition branches is usually preferable to using
+<code>"node"</code> and <code>"browser"</code> condition branches.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

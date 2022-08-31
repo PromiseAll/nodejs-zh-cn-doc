@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fsPromises.mkdtemp(prefix[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fsPromises.mkdtemp(prefix[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fspromises_mkdtemp_prefix_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fspromises_mkdtemp_prefix_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fspromises_mkdtemp_prefix_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fspromisesmkdtempprefix-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.5.0</td>
+<td><p>参数 <code>prefix</code> 现在接受空字符串。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p><span>新增于: v10.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>prefix</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>'utf8'</code></li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a>  使用包含新创建的临时目录的文件系统路径的字符串来履行。</li>
+</ul><p>创建唯一的临时目录。
+通过在所提供的 <code>prefix</code> 的末尾附加六个随机字符来生成唯一的目录名称。
+由于平台的不一致，请避免在 <code>prefix</code> 中尾随 <code>X</code> 字符。
+某些平台，尤其是 BSD，可能返回六个以上的随机字符，并将 <code>prefix</code> 中的尾随 <code>X</code> 字符替换为随机字符。</p><p class="">可选的 <code>options</code> 参数可以是指定编码的字符串，也可以是具有 <code>encoding</code> 属性（指定要使用的字符编码）的对象。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { mkdtemp } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">try</span> {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">mkdtemp</span>(path.<span class="hljs-title function_">join</span>(os.<span class="hljs-title function_">tmpdir</span>(), <span class="hljs-string">'foo-'</span>));
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err);
+}</code></pre><p class=""><code>fsPromises.mkdtemp()</code> 方法会将六个随机选择的字符直接附加到 <code>prefix</code> 字符串。
+例如，给定目录 <code>/tmp</code>，如果要在 <code>/tmp</code> 内创建临时目录，则 <code>prefix</code> 必须以平台特定的尾随路径分隔符（<code>require('path').sep</code>）结尾。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.5.0</td>
+<td><p>The <code>prefix</code> parameter now accepts an empty string.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p><span>Added in: v10.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>prefix</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>Default:</strong> <code>'utf8'</code></li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a>  Fulfills with a string containing the filesystem path
+of the newly created temporary directory.</li>
+</ul><p>Creates a unique temporary directory. A unique directory name is generated by
+appending six random characters to the end of the provided <code>prefix</code>. Due to
+platform inconsistencies, avoid trailing <code>X</code> characters in <code>prefix</code>. Some
+platforms, notably the BSDs, can return more than six random characters, and
+replace trailing <code>X</code> characters in <code>prefix</code> with random characters.</p><p>The optional <code>options</code> argument can be a string specifying an encoding, or an
+object with an <code>encoding</code> property specifying the character encoding to use.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { mkdtemp } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">try</span> {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">mkdtemp</span>(path.<span class="hljs-title function_">join</span>(os.<span class="hljs-title function_">tmpdir</span>(), <span class="hljs-string">'foo-'</span>));
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err);
+}</code></pre><p>The <code>fsPromises.mkdtemp()</code> method will append the six randomly selected
+characters directly to the <code>prefix</code> string. For instance, given a directory
+<code>/tmp</code>, if the intention is to create a temporary directory <em>within</em> <code>/tmp</code>, the
+<code>prefix</code> must end with a trailing platform-specific path separator
+(<code>require('path').sep</code>).</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

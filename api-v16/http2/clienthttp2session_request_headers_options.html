@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>clienthttp2session.request(headers[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>clienthttp2session.request(headers[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_clienthttp2session_request_headers_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/clienthttp2session_request_headers_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/clienthttp2session_request_headers_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#clienthttp2sessionrequestheaders-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v8.4.0</span>
+</div><ul class="">
+<li>
+<p><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a></p>
+</li>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>endStream</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果 <code>Http2Stream</code> _可写_端最初应该关闭（例如发送不应期待有效负载正文的 <code>GET</code> 请求时），则为 <code>true</code>。</li>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当 <code>true</code> 和 <code>parent</code> 标识父流时，创建的流将成为父流的唯一直接依赖项，所有其他现有依赖项都成为新创建流的依赖项。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>parent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定新创建的流所依赖的流的数字标识符。</li>
+<li><code>weight</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定流相对于具有相同 <code>parent</code> 的其他流的相对依赖性。
+该值为 <code>1</code> 到 <code>256</code>（含）之间的数字。</li>
+<li><code>waitForTrailers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，<code>Http2Stream</code> 将在发送完最后的 <code>DATA</code> 帧后触发 <code>'wantTrailers'</code> 事件。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于中止正在进行的请求的中止信号。</li>
+</ul>
+</li>
+<li>
+<p>返回: <a href="../http2.html#class-clienthttp2stream" rel="nofollow" class="type">&lt;ClientHttp2Stream&gt;</a></p>
+</li>
+</ul><p>仅对于 HTTP/2 客户端 <code>Http2Session</code> 实例，<code>http2session.request()</code> 创建并返回 <code>Http2Stream</code> 实例，该实例可用于向连接的服务器发送 HTTP/2 请求。</p><p class="">当第一次创建 <code>ClientHttp2Session</code> 时，套接字可能尚未连接。
+如果在此期间调用 <code>clienthttp2session.request()</code>，则实际的请求将被推迟到套接字准备就绪。
+如果在实际的请求执行之前关闭了 <code>session</code>，则抛出 <code>ERR_HTTP2_GOAWAY_SESSION</code>。</p><p class="">此方法仅在 <code>http2session.type</code> 等于 <code>http2.constants.NGHTTP2_SESSION_CLIENT</code> 时可用。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> clientSession = http2.<span class="hljs-title function_">connect</span>(<span class="hljs-string">'https://localhost:1234'</span>);
+<span class="hljs-keyword">const</span> {
+  <span class="hljs-title class_">HTTP2</span>_HEADER_PATH,
+  <span class="hljs-title class_">HTTP2</span>_HEADER_STATUS
+} = http2.<span class="hljs-property">constants</span>;
+
+<span class="hljs-keyword">const</span> req = clientSession.<span class="hljs-title function_">request</span>({ [<span class="hljs-title class_">HTTP2</span>_HEADER_PATH]: <span class="hljs-string">'/'</span> });
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'response'</span>, <span class="hljs-function">(<span class="hljs-params">headers</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers[<span class="hljs-title class_">HTTP2</span>_HEADER_STATUS]);
+  req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> { <span class="hljs-comment">/* .. */</span> });
+  req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> { <span class="hljs-comment">/* .. */</span> });
+});</code></pre><p class="">当设置了 <code>options.waitForTrailers</code> 选项时，在将要发送的最后一块有效负载数据排队后立即触发 <code>'wantTrailers'</code> 事件。
+然后可以调用 <code>http2stream.sendTrailers()</code> 方法将尾随标头发送到对等方。</p><p class="">当设置了 <code>options.waitForTrailers</code>，则传输完最后的 <code>DATA</code> 帧时，<code>Http2Stream</code> 不会自动关闭。
+用户代码必须调用 <code>http2stream.sendTrailers()</code> 或 <code>http2stream.close()</code> 来关闭 <code>Http2Stream</code>。</p><p class="">当 <code>options.signal</code> 设置为 <code>AbortSignal</code>，然后调用相应 <code>AbortController</code> 上的 <code>abort</code> 时，则请求将使用 <code>AbortError</code> 错误触发 <code>'error'</code> 事件。</p><p class=""><code>:method</code> 和 <code>:path</code> 伪标头在 <code>headers</code> 中没有指定，它们分别默认为：</p><ul class="">
+<li><code>:method</code> = <code>'GET'</code></li>
+<li><code>:path</code> = <code>/</code></li>
+</ul></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v8.4.0</span>
+</div><ul>
+<li>
+<p><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a></p>
+</li>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>endStream</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <code>true</code> if the <code>Http2Stream</code> <em>writable</em> side should
+be closed initially, such as when sending a <code>GET</code> request that should not
+expect a payload body.</li>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code> and <code>parent</code> identifies a parent Stream,
+the created stream is made the sole direct dependency of the parent, with
+all other existing dependents made a dependent of the newly created stream.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>parent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the numeric identifier of a stream the newly
+created stream is dependent on.</li>
+<li><code>weight</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the relative dependency of a stream in relation
+to other streams with the same <code>parent</code>. The value is a number between <code>1</code>
+and <code>256</code> (inclusive).</li>
+<li><code>waitForTrailers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code>, the <code>Http2Stream</code> will emit the
+<code>'wantTrailers'</code> event after the final <code>DATA</code> frame has been sent.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> An AbortSignal that may be used to abort an ongoing
+request.</li>
+</ul>
+</li>
+<li>
+<p>Returns: <a href="../http2.html#class-clienthttp2stream" rel="nofollow" class="type">&lt;ClientHttp2Stream&gt;</a></p>
+</li>
+</ul><p>For HTTP/2 Client <code>Http2Session</code> instances only, the <code>http2session.request()</code>
+creates and returns an <code>Http2Stream</code> instance that can be used to send an
+HTTP/2 request to the connected server.</p><p>When a <code>ClientHttp2Session</code> is first created, the socket may not yet be
+connected. if <code>clienthttp2session.request()</code> is called during this time, the
+actual request will be deferred until the socket is ready to go.
+If the <code>session</code> is closed before the actual request be executed, an
+<code>ERR_HTTP2_GOAWAY_SESSION</code> is thrown.</p><p>This method is only available if <code>http2session.type</code> is equal to
+<code>http2.constants.NGHTTP2_SESSION_CLIENT</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> clientSession = http2.<span class="hljs-title function_">connect</span>(<span class="hljs-string">'https://localhost:1234'</span>);
+<span class="hljs-keyword">const</span> {
+  <span class="hljs-title class_">HTTP2</span>_HEADER_PATH,
+  <span class="hljs-title class_">HTTP2</span>_HEADER_STATUS
+} = http2.<span class="hljs-property">constants</span>;
+
+<span class="hljs-keyword">const</span> req = clientSession.<span class="hljs-title function_">request</span>({ [<span class="hljs-title class_">HTTP2</span>_HEADER_PATH]: <span class="hljs-string">'/'</span> });
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'response'</span>, <span class="hljs-function">(<span class="hljs-params">headers</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers[<span class="hljs-title class_">HTTP2</span>_HEADER_STATUS]);
+  req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> { <span class="hljs-comment">/* .. */</span> });
+  req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> { <span class="hljs-comment">/* .. */</span> });
+});</code></pre><p>When the <code>options.waitForTrailers</code> option is set, the <code>'wantTrailers'</code> event
+is emitted immediately after queuing the last chunk of payload data to be sent.
+The <code>http2stream.sendTrailers()</code> method can then be called to send trailing
+headers to the peer.</p><p>When <code>options.waitForTrailers</code> is set, the <code>Http2Stream</code> will not automatically
+close when the final <code>DATA</code> frame is transmitted. User code must call either
+<code>http2stream.sendTrailers()</code> or <code>http2stream.close()</code> to close the
+<code>Http2Stream</code>.</p><p>When <code>options.signal</code> is set with an <code>AbortSignal</code> and then <code>abort</code> on the
+corresponding <code>AbortController</code> is called, the request will emit an <code>'error'</code>
+event with an <code>AbortError</code> error.</p><p>The <code>:method</code> and <code>:path</code> pseudo-headers are not specified within <code>headers</code>,
+they respectively default to:</p><ul>
+<li><code>:method</code> = <code>'GET'</code></li>
+<li><code>:path</code> = <code>/</code></li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

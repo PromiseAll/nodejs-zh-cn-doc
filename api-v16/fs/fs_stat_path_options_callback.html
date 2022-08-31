@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.stat(path[, options], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.stat(path[, options], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_stat_path_options_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_stat_path_options_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_stat_path_options_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fsstatpath-options-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.5.0</td>
+<td><p>接受额外的 <code>options</code> 对象，以指定返回的数字值是否应为长整数。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它会在运行时抛出 <code>TypeError</code>。</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>参数 <code>path</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>参数 <code>callback</code> 不再是可选的。 不传入它将触发 ID 为 DEP0013 的弃用警告。</p></td></tr>
+<tr><td>v0.0.2</td>
+<td><p><span>新增于: v0.0.2</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>bigint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 返回的 <a href="../fs.html#class-fsstats" rel="nofollow" class="type">&lt;fs.Stats&gt;</a> 对象中的数值是否应为 <code>bigint</code>。 <strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>stats</code> <a href="../fs.html#class-fsstats" rel="nofollow" class="type">&lt;fs.Stats&gt;</a></li>
+</ul>
+</li>
+</ul><p>异步的 <a href="http://man7.org/linux/man-pages/man2/stat.2.html" rel="nofollow"><code>stat(2)</code></a>。
+回调有两个参数 <code>(err, stats)</code>，其中 <code>stats</code> 是 <a href="../fs.html#class-fsstats" rel="nofollow" class="type">&lt;fs.Stats&gt;</a> 对象。</p><p class="">如果出现错误，<code>err.code</code> 将是<a href="../errors.html#common-system-errors">常见系统错误</a>之一。</p><p class="">不推荐在调用 <code>fs.open()</code>、<code>fs.readFile()</code> 或 <code>fs.writeFile()</code> 之前使用 <code>fs.stat()</code> 检查文件是否存在。
+而是，用户代码应该直接打开/读取/写入文件，并在文件不可用时处理引发的错误。</p><p class="">要检查文件是否存在而不对其进行操作，建议使用 <a href="../fs.html#fsaccesspath-mode-callback"><code>fs.access()</code></a>。</p><p class="">例如，给定以下目录结构：</p><pre class=""><code class="language-text">- txtDir
+-- file.txt
+- app.js</code></pre><p class="">下一个程序将检查给定路径的统计信息：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">const</span> pathsToCheck = [<span class="hljs-string">'./txtDir'</span>, <span class="hljs-string">'./txtDir/file.txt'</span>];
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; pathsToCheck.<span class="hljs-property">length</span>; i++) {
+  <span class="hljs-title function_">stat</span>(pathsToCheck[i], <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stats.<span class="hljs-title function_">isDirectory</span>());
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stats);
+  });
+}</code></pre><p class="">结果输出将类似于：</p><pre class=""><code class="language-console">true
+Stats {
+  dev: 16777220,
+  mode: 16877,
+  nlink: 3,
+  uid: 501,
+  gid: 20,
+  rdev: 0,
+  blksize: 4096,
+  ino: 14214262,
+  size: 96,
+  blocks: 0,
+  atimeMs: 1561174653071.963,
+  mtimeMs: 1561174614583.3518,
+  ctimeMs: 1561174626623.5366,
+  birthtimeMs: 1561174126937.2893,
+  atime: 2019-06-22T03:37:33.072Z,
+  mtime: 2019-06-22T03:36:54.583Z,
+  ctime: 2019-06-22T03:37:06.624Z,
+  birthtime: 2019-06-22T03:28:46.937Z
+}
+false
+Stats {
+  dev: 16777220,
+  mode: 33188,
+  nlink: 1,
+  uid: 501,
+  gid: 20,
+  rdev: 0,
+  blksize: 4096,
+  ino: 14214074,
+  size: 8,
+  blocks: 8,
+  atimeMs: 1561174616618.8555,
+  mtimeMs: 1561174614584,
+  ctimeMs: 1561174614583.8145,
+  birthtimeMs: 1561174007710.7478,
+  atime: 2019-06-22T03:36:56.619Z,
+  mtime: 2019-06-22T03:36:54.584Z,
+  ctime: 2019-06-22T03:36:54.584Z,
+  birthtime: 2019-06-22T03:26:47.711Z
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.5.0</td>
+<td><p>Accepts an additional <code>options</code> object to specify whether the numeric values returned should be bigint.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will throw a <code>TypeError</code> at runtime.</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>The <code>path</code> parameter can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>The <code>callback</code> parameter is no longer optional. Not passing it will emit a deprecation warning with id DEP0013.</p></td></tr>
+<tr><td>v0.0.2</td>
+<td><p><span>Added in: v0.0.2</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>bigint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether the numeric values in the returned
+<a href="../fs.html#class-fsstats" rel="nofollow" class="type">&lt;fs.Stats&gt;</a> object should be <code>bigint</code>. <strong>Default:</strong> <code>false</code>.</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>stats</code> <a href="../fs.html#class-fsstats" rel="nofollow" class="type">&lt;fs.Stats&gt;</a></li>
+</ul>
+</li>
+</ul><p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/stat.2.html" rel="nofollow"><code>stat(2)</code></a>. The callback gets two arguments <code>(err, stats)</code> where
+<code>stats</code> is an <a href="../fs.html#class-fsstats" rel="nofollow" class="type">&lt;fs.Stats&gt;</a> object.</p><p>In case of an error, the <code>err.code</code> will be one of <a href="../errors.html#common-system-errors">Common System Errors</a>.</p><p>Using <code>fs.stat()</code> to check for the existence of a file before calling
+<code>fs.open()</code>, <code>fs.readFile()</code> or <code>fs.writeFile()</code> is not recommended.
+Instead, user code should open/read/write the file directly and handle the
+error raised if the file is not available.</p><p>To check if a file exists without manipulating it afterwards, <a href="../fs.html#fsaccesspath-mode-callback"><code>fs.access()</code></a>
+is recommended.</p><p>For example, given the following directory structure:</p><pre><code class="language-text">- txtDir
+-- file.txt
+- app.js</code></pre><p>The next program will check for the stats of the given paths:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">const</span> pathsToCheck = [<span class="hljs-string">'./txtDir'</span>, <span class="hljs-string">'./txtDir/file.txt'</span>];
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; pathsToCheck.<span class="hljs-property">length</span>; i++) {
+  <span class="hljs-title function_">stat</span>(pathsToCheck[i], <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stats.<span class="hljs-title function_">isDirectory</span>());
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stats);
+  });
+}</code></pre><p>The resulting output will resemble:</p><pre><code class="language-console">true
+Stats {
+  dev: 16777220,
+  mode: 16877,
+  nlink: 3,
+  uid: 501,
+  gid: 20,
+  rdev: 0,
+  blksize: 4096,
+  ino: 14214262,
+  size: 96,
+  blocks: 0,
+  atimeMs: 1561174653071.963,
+  mtimeMs: 1561174614583.3518,
+  ctimeMs: 1561174626623.5366,
+  birthtimeMs: 1561174126937.2893,
+  atime: 2019-06-22T03:37:33.072Z,
+  mtime: 2019-06-22T03:36:54.583Z,
+  ctime: 2019-06-22T03:37:06.624Z,
+  birthtime: 2019-06-22T03:28:46.937Z
+}
+false
+Stats {
+  dev: 16777220,
+  mode: 33188,
+  nlink: 1,
+  uid: 501,
+  gid: 20,
+  rdev: 0,
+  blksize: 4096,
+  ino: 14214074,
+  size: 8,
+  blocks: 8,
+  atimeMs: 1561174616618.8555,
+  mtimeMs: 1561174614584,
+  ctimeMs: 1561174614583.8145,
+  birthtimeMs: 1561174007710.7478,
+  atime: 2019-06-22T03:36:56.619Z,
+  mtime: 2019-06-22T03:36:54.584Z,
+  ctime: 2019-06-22T03:36:54.584Z,
+  birthtime: 2019-06-22T03:26:47.711Z
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

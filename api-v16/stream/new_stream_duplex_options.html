@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new stream.Duplex(options) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>new stream.Duplex(options)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_new_stream_duplex_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/new_stream_duplex_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/new_stream_duplex_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#new-streamduplexoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v8.4.0</td>
+<td><p>现在支持 <code>readableHighWaterMark</code> 和 <code>writableHighWaterMark</code> 选项。</p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 传给 <code>Writable</code> 和 <code>Readable</code> 构造函数。
+还具有以下字段：
+<ul>
+<li><code>allowHalfOpen</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>false</code>，则流将在可读端结束时自动结束可写端。
+<strong>默认值:</strong> <code>true</code>。</li>
+<li><code>readable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 设置 <code>Duplex</code> 是否可读。
+<strong>默认值:</strong> <code>true</code>。</li>
+<li><code>writable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 设置 <code>Duplex</code> 是否可写。
+<strong>默认值:</strong> <code>true</code>。</li>
+<li><code>readableObjectMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 为流的可读端设置 <code>objectMode</code>。
+如果 <code>objectMode</code> 是 <code>true</code>，则无效。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>writableObjectMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 为流的可写端设置 <code>objectMode</code>。
+如果 <code>objectMode</code> 是 <code>true</code>，则无效。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>readableHighWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 为流的可读端设置 <code>highWaterMark</code>。
+如果提供 <code>highWaterMark</code>，则无效。</li>
+<li><code>writableHighWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 为流的可写端设置 <code>highWaterMark</code>。
+如果提供 <code>highWaterMark</code>，则无效。</li>
+</ul>
+</li>
+</ul><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDuplex</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Duplex</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">options</span>) {
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre><p>或者，当使用 ES6 之前的风格构造函数时：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyDuplex</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">MyDuplex</span>))
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyDuplex</span>(options);
+  <span class="hljs-title class_">Duplex</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, options);
+}
+util.<span class="hljs-title function_">inherits</span>(<span class="hljs-title class_">MyDuplex</span>, <span class="hljs-title class_">Duplex</span>);</code></pre><p class="">或者，使用简化的构造函数方法：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> myDuplex = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Duplex</span>({
+  <span class="hljs-title function_">read</span>(<span class="hljs-params">size</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  }
+});</code></pre><p class="">当使用管道时：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Transform</span>, pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-title function_">pipeline</span>(
+  fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'object.json'</span>)
+    .<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>),
+  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transform</span>({
+    <span class="hljs-attr">decodeStrings</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 接受字符串输入而不是缓冲区</span>
+    <span class="hljs-title function_">construct</span>(<span class="hljs-params">callback</span>) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = <span class="hljs-string">''</span>;
+      <span class="hljs-title function_">callback</span>();
+    },
+    <span class="hljs-title function_">transform</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> += chunk;
+      <span class="hljs-title function_">callback</span>();
+    },
+    <span class="hljs-title function_">flush</span>(<span class="hljs-params">callback</span>) {
+      <span class="hljs-keyword">try</span> {
+        <span class="hljs-comment">// 确保是有效的 json。</span>
+        <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>);
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>);
+        <span class="hljs-title function_">callback</span>();
+      } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-title function_">callback</span>(err);
+      }
+    }
+  }),
+  fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'valid-object.json'</span>),
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'failed'</span>, err);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'completed'</span>);
+    }
+  }
+);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v8.4.0</td>
+<td><p>The <code>readableHighWaterMark</code> and <code>writableHighWaterMark</code> options are supported now.</p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Passed to both <code>Writable</code> and <code>Readable</code>
+constructors. Also has the following fields:
+<ul>
+<li><code>allowHalfOpen</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to <code>false</code>, then the stream will
+automatically end the writable side when the readable side ends.
+<strong>Default:</strong> <code>true</code>.</li>
+<li><code>readable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Sets whether the <code>Duplex</code> should be readable.
+<strong>Default:</strong> <code>true</code>.</li>
+<li><code>writable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Sets whether the <code>Duplex</code> should be writable.
+<strong>Default:</strong> <code>true</code>.</li>
+<li><code>readableObjectMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Sets <code>objectMode</code> for readable side of the
+stream. Has no effect if <code>objectMode</code> is <code>true</code>. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>writableObjectMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Sets <code>objectMode</code> for writable side of the
+stream. Has no effect if <code>objectMode</code> is <code>true</code>. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>readableHighWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets <code>highWaterMark</code> for the readable side
+of the stream. Has no effect if <code>highWaterMark</code> is provided.</li>
+<li><code>writableHighWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets <code>highWaterMark</code> for the writable side
+of the stream. Has no effect if <code>highWaterMark</code> is provided.</li>
+</ul>
+</li>
+</ul><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDuplex</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Duplex</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">options</span>) {
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre><p>Or, when using pre-ES6 style constructors:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyDuplex</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">MyDuplex</span>))
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyDuplex</span>(options);
+  <span class="hljs-title class_">Duplex</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, options);
+}
+util.<span class="hljs-title function_">inherits</span>(<span class="hljs-title class_">MyDuplex</span>, <span class="hljs-title class_">Duplex</span>);</code></pre><p>Or, using the simplified constructor approach:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Duplex</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> myDuplex = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Duplex</span>({
+  <span class="hljs-title function_">read</span>(<span class="hljs-params">size</span>) {
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-comment">// ...</span>
+  }
+});</code></pre><p>When using pipeline:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Transform</span>, pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-title function_">pipeline</span>(
+  fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'object.json'</span>)
+    .<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>),
+  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transform</span>({
+    <span class="hljs-attr">decodeStrings</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// Accept string input rather than Buffers</span>
+    <span class="hljs-title function_">construct</span>(<span class="hljs-params">callback</span>) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = <span class="hljs-string">''</span>;
+      <span class="hljs-title function_">callback</span>();
+    },
+    <span class="hljs-title function_">transform</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> += chunk;
+      <span class="hljs-title function_">callback</span>();
+    },
+    <span class="hljs-title function_">flush</span>(<span class="hljs-params">callback</span>) {
+      <span class="hljs-keyword">try</span> {
+        <span class="hljs-comment">// Make sure is valid json.</span>
+        <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>);
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>);
+        <span class="hljs-title function_">callback</span>();
+      } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-title function_">callback</span>(err);
+      }
+    }
+  }),
+  fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'valid-object.json'</span>),
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'failed'</span>, err);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'completed'</span>);
+    }
+  }
+);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

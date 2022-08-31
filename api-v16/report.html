@@ -1,0 +1,783 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>report 诊断报告 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_report" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="" class="nav-report active" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="report" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_2"><a href="#diagnostic-report">report 诊断报告</a></span>
+<ul>
+<li><a href="#usage">用法</a></li>
+<li><a href="#configuration">配置</a></li>
+<li><a href="#interaction-with-workers">与工作线程的交互</a></li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="" class="nav-report active">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/report.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/report.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_2"><a href="#diagnostic-report">report 诊断报告</a></span>
+<ul>
+<li><a href="#usage">用法</a></li>
+<li><a href="#configuration">配置</a></li>
+<li><a href="#interaction-with-workers">与工作线程的交互</a></li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>report 诊断报告<span><a class="mark" href="#diagnostic-report" id="diagnostic-report">#</a></span><a aria-hidden="true" class="legacy" id="report_diagnostic_report"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="#diagnostic-report">
+                <a href="report/diagnostic_report.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v11.8.0-->
+<!-- type=misc -->
+<p></p><div class="api_stability api_stability_2"><a href="documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p>
+<!-- name=report -->
+<p>提供 JSON 格式的诊断摘要，写入文件。</p>
+<p class="">该报告旨在用于开发、测试和生产用途，以捕获和保存用于问题确定的信息。
+它包括 JavaScript 和原生堆栈跟踪、堆统计、平台信息、资源使用情况等。
+启用报告选项后，除了通过 API 调用以编程方式触发之外，还可以在未处理的异常、致命错误和用户信号上触发诊断报告。</p>
+<p class="">下面提供了针对未捕获异常生成的完整示例报告以供参考。</p>
+<pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"header"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"reportVersion"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"event"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"exception"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"trigger"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Exception"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"filename"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"report.20181221.005011.8974.0.001.json"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"dumpEventTime"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2018-12-21T00:50:11Z"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"dumpEventTimeStamp"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1545371411331"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"processId"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">8974</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"cwd"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/home/nodeuser/project/node"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"commandLine"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-string">"/home/nodeuser/project/node/out/Release/node"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"--report-uncaught-exception"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"/home/nodeuser/project/node/test/report/test-exception.js"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"child"</span>
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"nodejsVersion"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"v12.0.0-pre"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"glibcVersionRuntime"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2.17"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"glibcVersionCompiler"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2.17"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"wordSize"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"64 bit"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"arch"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"x64"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"platform"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"linux"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"componentVersions"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"node"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"12.0.0-pre"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"v8"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"7.1.302.28-node.5"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"uv"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1.24.1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"zlib"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1.2.11"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"ares"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1.15.0"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"modules"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"68"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"nghttp2"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1.34.0"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"napi"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"3"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"llhttp"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1.0.1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"openssl"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1.1.0j"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"release"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"node"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"osName"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Linux"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"osRelease"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"3.10.0-862.el7.x86_64"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"osVersion"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"#1 SMP Wed Mar 21 18:14:51 EDT 2018"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"osMachine"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"x86_64"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"cpus"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"model"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"speed"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2700</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"user"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">88902660</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"nice"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"sys"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50902570</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"idle"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">241732220</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"irq"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"model"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"speed"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2700</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"user"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">88902660</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"nice"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"sys"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50902570</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"idle"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">241732220</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"irq"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"networkInterfaces"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"en0"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"internal"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"mac"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"13:10:de:ad:be:ef"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"10.0.0.37"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"netmask"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"255.255.255.0"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"family"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"IPv4"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"host"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"test_machine"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"javascriptStack"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"message"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Error: *** test-exception.js: throwing uncaught Error"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"stack"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-string">"at myException (/home/nodeuser/project/node/test/report/test-exception.js:9:11)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at Object.&lt;anonymous&gt; (/home/nodeuser/project/node/test/report/test-exception.js:12:3)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at Module._compile (internal/modules/cjs/loader.js:718:30)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at Object.Module._extensions..js (internal/modules/cjs/loader.js:729:10)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at Module.load (internal/modules/cjs/loader.js:617:32)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at tryModuleLoad (internal/modules/cjs/loader.js:560:12)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at Function.Module._load (internal/modules/cjs/loader.js:552:3)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at Function.Module.runMain (internal/modules/cjs/loader.js:771:12)"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"at executeUserCode (internal/bootstrap/node.js:332:15)"</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"nativeStack"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"pc"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b57f07a9ef"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"symbol"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"report::GetNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, v8::Local&lt;v8::String&gt;, std::ostream&amp;) [./node]"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"pc"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b57f07cf03"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"symbol"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"report::GetReport(v8::FunctionCallbackInfo&lt;v8::Value&gt; const&amp;) [./node]"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"pc"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b57f1bccfd"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"symbol"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">" [./node]"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"pc"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b57f1be048"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"symbol"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*) [./node]"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"pc"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b57feeda0e"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"symbol"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">" [./node]"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"javascriptHeap"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"totalMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">6127616</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"totalCommittedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4357352</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"usedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3221136</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"availableMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1521370240</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"memoryLimit"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1526909922</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"heapSpaces"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"read_only_space"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"memorySize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">524288</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"committedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">39208</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"capacity"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">515584</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"used"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">30504</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"available"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">485080</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"new_space"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"memorySize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2097152</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"committedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2019312</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"capacity"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1031168</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"used"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">985496</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"available"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">45672</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"old_space"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"memorySize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2273280</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"committedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1769008</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"capacity"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1974640</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"used"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1725488</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"available"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">249152</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"code_space"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"memorySize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">696320</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"committedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">184896</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"capacity"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">152128</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"used"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">152128</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"available"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"map_space"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"memorySize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">536576</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"committedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">344928</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"capacity"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">327520</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"used"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">327520</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"available"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"large_object_space"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"memorySize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"committedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"capacity"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1520590336</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"used"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"available"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1520590336</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"new_large_object_space"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"memorySize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"committedMemory"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"capacity"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"used"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"available"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"resourceUsage"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"userCpuSeconds"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.069595</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"kernelCpuSeconds"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.019163</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"cpuConsumptionPercent"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.000000</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"maxRss"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">18079744</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"pageFaults"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"IORequired"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"IONotRequired"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4610</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"fsActivity"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"reads"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"writes"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"uvthreadResourceUsage"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"userCpuSeconds"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.068457</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"kernelCpuSeconds"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.019127</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"cpuConsumptionPercent"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.000000</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"fsActivity"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"reads"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"writes"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"libuv"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"async"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x0000000102910900"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"details"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">""</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"timer"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x00007fff5fbfeab0"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"repeat"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"firesInMsFromNow"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">94403548320796</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"expired"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"check"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x00007fff5fbfeb48"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"idle"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x00007fff5fbfebc0"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"prepare"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x00007fff5fbfec38"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"check"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x00007fff5fbfecb0"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"async"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000000010188f2e0"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"tty"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b581db0e18"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"width"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">204</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"height"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">55</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"fd"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">17</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"writeQueueSize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"readable"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"writable"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"signal"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b581d80010"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"signum"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">28</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"signal"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"SIGWINCH"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"tty"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_referenced"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055b581df59f8"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"width"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">204</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"height"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">55</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"fd"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">19</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"writeQueueSize"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"readable"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"writable"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"loop"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"is_active"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"address"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0x000055fc7b2cb180"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"loopIdleTimeSeconds"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">22644.8</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"workers"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"environmentVariables"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"REMOTEHOST"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"REMOVED"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"MANPATH"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root/usr/share/man:"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"XDG_SESSION_ID"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"66126"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"HOSTNAME"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"test_machine"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"HOST"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"test_machine"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"TERM"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"xterm-256color"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"SHELL"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/bin/csh"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"SSH_CLIENT"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"REMOVED"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"PERL5LIB"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root//usr/lib64/perl5/vendor_perl:/opt/rh/devtoolset-3/root/usr/lib/perl5:/opt/rh/devtoolset-3/root//usr/share/perl5/vendor_perl"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"OLDPWD"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/home/nodeuser/project/node/src"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"JAVACONFDIRS"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root/etc/java:/etc/java"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"SSH_TTY"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/dev/pts/0"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"PCP_DIR"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"GROUP"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"normaluser"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"USER"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"nodeuser"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"LD_LIBRARY_PATH"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root/usr/lib64:/opt/rh/devtoolset-3/root/usr/lib"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"HOSTTYPE"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"x86_64-linux"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"XDG_CONFIG_DIRS"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root/etc/xdg:/etc/xdg"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"MAIL"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/var/spool/mail/nodeuser"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"PATH"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/home/nodeuser/project/node:/opt/rh/devtoolset-3/root/usr/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"PWD"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/home/nodeuser/project/node"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"LANG"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"en_US.UTF-8"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"PS1"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"\\u@\\h : \\[\\e[31m\\]\\w\\[\\e[m\\] &gt;  "</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"SHLVL"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"HOME"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/home/nodeuser"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"OSTYPE"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"linux"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"VENDOR"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unknown"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"PYTHONPATH"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root/usr/lib64/python2.7/site-packages:/opt/rh/devtoolset-3/root/usr/lib/python2.7/site-packages"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"MACHTYPE"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"x86_64"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"LOGNAME"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"nodeuser"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"XDG_DATA_DIRS"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root/usr/share:/usr/local/share:/usr/share"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"LESSOPEN"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"||/usr/bin/lesspipe.sh %s"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"INFOPATH"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/opt/rh/devtoolset-3/root/usr/share/info"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"XDG_RUNTIME_DIR"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"/run/user/50141"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"_"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./node"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"userLimits"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"core_file_size_blocks"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">""</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"data_seg_size_kbytes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"file_size_blocks"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"max_locked_memory_bytes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">65536</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"max_memory_size_kbytes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"open_files"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4096</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"stack_size_bytes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"cpu_time_seconds"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"max_user_processes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4127290</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"virtual_memory_kbytes"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"soft"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"hard"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"unlimited"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"sharedObjects"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">"/lib64/libdl.so.2"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"/lib64/librt.so.1"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"/lib64/libstdc++.so.6"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"/lib64/libm.so.6"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"/lib64/libgcc_s.so.1"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"/lib64/libpthread.so.0"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"/lib64/libc.so.6"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"/lib64/ld-linux-x86-64.so.2"</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span></code></pre>
+<section><h3>用法<span><a class="mark" href="#usage" id="usage">#</a></span><a aria-hidden="true" class="legacy" id="report_usage"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#usage">
+                <a href="report/usage.html" class="tip_trans">中英对照</a>
+                </p>
+<pre class=""><code class="language-bash">node --report-uncaught-exception --report-on-signal \
+--report-on-fatalerror app.js</code></pre>
+<ul class="">
+<li>
+<p><code>--report-uncaught-exception</code> 启用对未捕获的异常生成报告。
+当结合原生堆栈和其他运行时环境数据检查 JavaScript 堆栈时很有用。</p>
+</li>
+<li>
+<p><code>--report-on-signal</code> 允许在接收到正在运行的 Node.js 进程的指定（或预定义）信号时生成报告。
+（有关如何修改触发报告的信号，请参见下文。）默认信号为 <code>SIGUSR2</code>。
+当需要从另一个程序触发报告时很有用。
+应用程序监视器可以利用此特性定期收集报告并将丰富的内部运行时数据集绘制到其视图中。</p>
+</li>
+</ul>
+<p>Windows 不支持基于信号的报告生成。</p>
+<p class="">一般情况下，不需要修改上报触发信号。
+然而，如果 <code>SIGUSR2</code> 已经被用于其他目的，则此标志有助于改变报告生成的信号，并为上述目的保留 <code>SIGUSR2</code> 的原始含义。</p>
+<ul class="">
+<li>
+<p><code>--report-on-fatalerror</code> 允许在导致应用程序终止的致命错误（Node.js 运行时中的内部错误，例如内存不足）时触发报告。
+用于检查各种诊断数据元素，例如堆、堆栈、事件循环状态、资源消耗等
+推断致命错误。</p>
+</li>
+<li>
+<p><code>--report-compact</code> 以紧凑的单行 JSON 格式编写报告，与为人类设计的默认多行格式相比，日志处理系统更容易使用。</p>
+</li>
+<li>
+<p><code>--report-directory</code> 生成报告的位置。</p>
+</li>
+<li>
+<p><code>--report-filename</code> 将写入报告的文件的名称。</p>
+</li>
+<li>
+<p><code>--report-signal</code> 设置或重置报告生成信号（Windows 不支持）。
+默认信号为 <code>SIGUSR2</code>。</p>
+</li>
+</ul>
+<p class="">报告也可以通过 JavaScript 应用程序的 API 调用触发：</p>
+<pre class=""><code class="language-js">process.<span class="hljs-property">report</span>.<span class="hljs-title function_">writeReport</span>();</code></pre>
+<p class="">此函数接受可选的额外参数 <code>filename</code>，其是写入报告的文件的名称。</p>
+<pre class=""><code class="language-js">process.<span class="hljs-property">report</span>.<span class="hljs-title function_">writeReport</span>(<span class="hljs-string">'./foo.json'</span>);</code></pre>
+<p class="">此函数接受可选的额外参数 <code>err</code>，其是 <code>Error</code> 对象，将用作报告中打印的 JavaScript 堆栈的上下文。
+当使用报告处理回调或异常句柄中的错误时，这允许报告包括原始错误的位置以及处理它的位置。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">try</span> {
+  process.<span class="hljs-title function_">chdir</span>(<span class="hljs-string">'/non-existent-path'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  process.<span class="hljs-property">report</span>.<span class="hljs-title function_">writeReport</span>(err);
+}
+<span class="hljs-comment">// 任何其他代码</span></code></pre>
+<p class="">如果文件名和错误对象都传给 <code>writeReport()</code>，则错误对象必须是第二个参数。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">try</span> {
+  process.<span class="hljs-title function_">chdir</span>(<span class="hljs-string">'/non-existent-path'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  process.<span class="hljs-property">report</span>.<span class="hljs-title function_">writeReport</span>(filename, err);
+}
+<span class="hljs-comment">// 任何其他代码</span></code></pre>
+<p class="">诊断报告的内容可以通过 JavaScript 应用程序的 API 调用作为 JavaScript 对象返回：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> report = process.<span class="hljs-property">report</span>.<span class="hljs-title function_">getReport</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">typeof</span> report === <span class="hljs-string">'object'</span>); <span class="hljs-comment">// true</span>
+
+<span class="hljs-comment">// 类似于 process.report.writeReport() 输出</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(report, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));</code></pre>
+<p class="">此函数接受可选的额外参数 <code>err</code>，其是 <code>Error</code> 对象，将用作报告中打印的 JavaScript 堆栈的上下文。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> report = process.<span class="hljs-property">report</span>.<span class="hljs-title function_">getReport</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'custom error'</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">typeof</span> report === <span class="hljs-string">'object'</span>); <span class="hljs-comment">// true</span></code></pre>
+<p class="">API 版本在从应用程序内部检查运行时状态时很有用，期望自我调整资源消耗、负载平衡、监控等。</p>
+<p class="">报告的内容的组成部分是：包含事件类型、日期、时间、进程标识 和 Node.js 版本的标题部分，包含 JavaScript 和原生堆栈跟踪的部分，包含 V8 堆信息的部分，包含 <code>libuv</code> 句柄信息的部分，以及显示 CPU 和内存使用情况以及系统限制的操作系统平台信息部分。
+可以使用 Node.js 交互式解释器触发的示例报告：</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node</span>
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">process.report.writeReport();</span>
+Writing Node.js report to file: report.20181126.091102.8480.0.001.json
+Node.js report completed
+<span class="hljs-meta prompt_">&gt;</span></code></pre>
+<p class="">当写入报告时，将开始和结束消息发送到标准错误，并将报告的文件名返回给调用者。
+默认文件名包括日期、时间、进程标识、以及序列号。
+如果为同一个 Node.js 进程多次生成，则序列号有助于将报告转储与运行时状态相关联</p>
+</section><section><h3>配置<span><a class="mark" href="#configuration" id="configuration">#</a></span><a aria-hidden="true" class="legacy" id="report_configuration"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#configuration">
+                <a href="report/configuration.html" class="tip_trans">中英对照</a>
+                </p>
+<p>报告生成的其他运行时配置可通过 <code>process.report</code> 的以下属性获得：</p>
+<p class="">当为 <code>true</code> 时，<code>reportOnFatalError</code> 触发致命错误的诊断报告。
+默认为 <code>false</code>。</p>
+<p class="">当为 <code>true</code> 时，<code>reportOnSignal</code> 触发信号的诊断报告。
+Windows 不支持此。
+默认为 <code>false</code>。</p>
+<p class="">当为 <code>true</code> 时，<code>reportOnUncaughtException</code> 触发未捕获异常的诊断报告。
+默认为 <code>false</code>。</p>
+<p class=""><code>signal</code> 指定将用于拦截外部触发器以生成报告的 POSIX 信号标识符
+默认为 <code>'SIGUSR2'</code>。</p>
+<p class=""><code>filename</code> 指定文件系统中输出文件的名称。
+<code>stdout</code> 和 <code>stderr</code> 附有特殊含义。
+使用这些将导致报告被写入相关的标准流。
+在使用标准流的情况下，<code>directory</code> 中的值将被忽略。
+不支持网址。
+默认为包含时间戳、进程标识、以及序列号的复合文件名。</p>
+<p class=""><code>directory</code> 指定将写入报告的文件系统目录。
+不支持网址。
+默认为 Node.js 进程的当前工作目录。</p>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 仅触发未捕获异常上的报告。</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// 触发内部错误和外部信号的报告。</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">false</span>;
+
+<span class="hljs-comment">// 将默认信号更改为 'SIGQUIT' 并启用。</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">signal</span> = <span class="hljs-string">'SIGQUIT'</span>;</code></pre>
+<p class="">模块初始化的配置也可以通过环境变量获得：</p>
+<pre class=""><code class="language-bash">NODE_OPTIONS=<span class="hljs-string">"--report-uncaught-exception \
+  --report-on-fatalerror --report-on-signal \
+  --report-signal=SIGUSR2  --report-filename=./report.json \
+  --report-directory=/home/nodeuser"</span></code></pre>
+<p class="">具体的 API 文档可以在 <a href="process.html"><code>process API documentation</code></a> 章节下找到。</p>
+</section><section><h3>与工作线程的交互<span><a class="mark" href="#interaction-with-workers" id="interaction-with-workers">#</a></span><a aria-hidden="true" class="legacy" id="report_interaction_with_workers"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#interaction-with-workers">
+                <a href="report/interaction_with_workers.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.9.0, v12.16.2</td>
+<td><p>工作线程现在包含在报告中。</p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p><a href="worker_threads.html"><code>Worker</code></a> 线程可以像主线程一样创建报告。</p>
+<p class="">报告将包括作为 <code>workers</code> 部分的一部分的当前线程的子线程的任何工作线程的信息，每个工作线程以标准报告格式生成报告。</p>
+<p class="">生成报告的线程将等待工作线程的报告完成。
+但是，由于运行 JavaScript 和事件循环都被中断以生成报告，因此延迟通常很低。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

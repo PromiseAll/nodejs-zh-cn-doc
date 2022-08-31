@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new vm.Script(code[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>new vm.Script(code[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_new_vm_script_code_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/new_vm_script_code_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/new_vm_script_code_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#new-vmscriptcode-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>添加了对 <code>importModuleDynamically</code> 参数的导入断言的支持。</p></td></tr>
+<tr><td>v10.6.0</td>
+<td><p><code>produceCachedData</code> 已被弃用，取而代之的是 <code>script.createCachedData()</code>。</p></td></tr>
+<tr><td>v5.7.0</td>
+<td><p>现在支持 <code>cachedData</code> 和 <code>produceCachedData</code> 选项。</p></td></tr>
+<tr><td>v0.3.1</td>
+<td><p><span>新增于: v0.3.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要编译的 JavaScript 代码。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指定此脚本生成的堆栈跟踪中使用的文件名。 <strong>默认值:</strong> <code>'evalmachine.&lt;anonymous&gt;'</code>。</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定在此脚本生成的堆栈跟踪中显示的行号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定在此脚本生成的堆栈跟踪中显示的第一行列号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> 为所提供的源提供可选的 <code>Buffer</code> 或 <code>TypedArray</code> 或 <code>DataView</code>，其中包含 V8 的代码缓存数据。
+当提供时，<code>cachedDataRejected</code> 值将设置为 <code>true</code> 或 <code>false</code>，具体取决于 V8 对数据的接受程度。</li>
+<li><code>produceCachedData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当 <code>true</code> 且没有 <code>cachedData</code> 存在时，则 V8 将尝试为 <code>code</code> 生成代码缓存数据。
+当成功后，会生成带有 V8 代码缓存数据的 <code>Buffer</code> 并存储在返回的 <code>vm.Script</code> 实例的 <code>cachedData</code> 属性中。
+<code>cachedDataProduced</code> 值将设置为 <code>true</code> 或 <code>false</code>，这取决于代码缓存数据是否成功生成。
+此选项<strong>已弃用</strong>，支持 <code>script.createCachedData()</code>。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在调用 <code>import()</code> 时在评估此模块期间调用。
+如果未指定此选项，则调用 <code>import()</code> 将使用 <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a> 拒绝。
+此选项是实验模块 API 的一部分。
+不建议在生产环境中使用它。
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 传给 <code>import()</code> 的说明符</li>
+<li><code>script</code> <a href="../vm.html#class-vmscript" rel="nofollow" class="type">&lt;vm.Script&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 传给 <a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> 可选参数的 <code>"assert"</code> 值，如果没有提供值，则为空对象。</li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> 建议返回 <code>vm.Module</code> 以利用错误跟踪，并避免包含 <code>then</code> 函数导出的命名空间出现问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>如果 <code>options</code> 是字符串，则指定文件名。</p><p class="">创建新的 <code>vm.Script</code> 对象编译 <code>code</code> 但不运行它。
+编译后的 <code>vm.Script</code> 可以多次运行。
+<code>code</code> 没有绑定到任何全局对象；相反，它在每次运行之前绑定，只是为了那次运行。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>Added support for import assertions to the <code>importModuleDynamically</code> parameter.</p></td></tr>
+<tr><td>v10.6.0</td>
+<td><p>The <code>produceCachedData</code> is deprecated in favour of <code>script.createCachedData()</code>.</p></td></tr>
+<tr><td>v5.7.0</td>
+<td><p>The <code>cachedData</code> and <code>produceCachedData</code> options are supported now.</p></td></tr>
+<tr><td>v0.3.1</td>
+<td><p><span>Added in: v0.3.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The JavaScript code to compile.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Specifies the filename used in stack traces produced
+by this script. <strong>Default:</strong> <code>'evalmachine.&lt;anonymous&gt;'</code>.</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the line number offset that is displayed
+in stack traces produced by this script. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the first-line column number offset that
+is displayed in stack traces produced by this script. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> Provides an optional <code>Buffer</code> or
+<code>TypedArray</code>, or <code>DataView</code> with V8's code cache data for the supplied
+source. When supplied, the <code>cachedDataRejected</code> value will be set to
+either <code>true</code> or <code>false</code> depending on acceptance of the data by V8.</li>
+<li><code>produceCachedData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code> and no <code>cachedData</code> is present, V8
+will attempt to produce code cache data for <code>code</code>. Upon success, a
+<code>Buffer</code> with V8's code cache data will be produced and stored in the
+<code>cachedData</code> property of the returned <code>vm.Script</code> instance.
+The <code>cachedDataProduced</code> value will be set to either <code>true</code> or <code>false</code>
+depending on whether code cache data is produced successfully.
+This option is <strong>deprecated</strong> in favor of <code>script.createCachedData()</code>.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Called during evaluation of this module
+when <code>import()</code> is called. If this option is not specified, calls to
+<code>import()</code> will reject with <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a>.
+This option is part of the experimental modules API. We do not recommend
+using it in a production environment.
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> specifier passed to <code>import()</code></li>
+<li><code>script</code> <a href="../vm.html#class-vmscript" rel="nofollow" class="type">&lt;vm.Script&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The <code>"assert"</code> value passed to the
+<a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> optional parameter, or an empty object if no value
+was provided.</li>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> Returning a <code>vm.Module</code> is
+recommended in order to take advantage of error tracking, and to avoid
+issues with namespaces that contain <code>then</code> function exports.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>If <code>options</code> is a string, then it specifies the filename.</p><p>Creating a new <code>vm.Script</code> object compiles <code>code</code> but does not run it. The
+compiled <code>vm.Script</code> can be run later multiple times. The <code>code</code> is not bound to
+any global object; rather, it is bound before each run, just for that run.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

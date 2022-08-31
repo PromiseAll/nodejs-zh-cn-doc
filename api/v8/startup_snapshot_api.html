@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>启动快照 API | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-v8">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>启动快照 API</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../v8.html#v8_startup_snapshot_api" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/v8/#startup-snapshot-api.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v18.6.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><p><code>v8.startupSnapshot</code> 接口可用于为自定义启动快照添加序列化和反序列化钩子。
+目前启动快照只能从源代码构建到 Node.js 二进制文件中。</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> /path/to/node</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">./configure --node-snapshot-main=entry.js</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">make node</span>
+<span class="hljs-meta prompt_"># </span><span class="language-bash">此二进制文件包含 entry.js 的执行结果</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">out/Release/node</span></code></pre><p class="">在上面的例子中，<code>entry.js</code> 可以使用来自 <code>v8.startupSnapshot</code> 接口的方法来指定如何在序列化过程中为快照中的自定义对象保存信息，以及如何在快照的反序列化过程中使用这些信息来同步这些对象。
+例如，如果 <code>entry.js</code> 包含以下脚本：</p><pre class=""><code class="language-js cjs"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-keyword">const</span> {
+  isBuildingSnapshot,
+  addSerializeCallback,
+  addDeserializeCallback,
+  setDeserializeMainFunction
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>).<span class="hljs-property">startupSnapshot</span>;
+
+<span class="hljs-keyword">const</span> filePath = path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">'../x1024.txt'</span>);
+<span class="hljs-keyword">const</span> storage = {};
+
+<span class="hljs-title function_">assert</span>(<span class="hljs-title function_">isBuildingSnapshot</span>());
+
+<span class="hljs-title function_">addSerializeCallback</span>(<span class="hljs-function">(<span class="hljs-params">{ filePath }</span>) =&gt;</span> {
+  storage[filePath] = zlib.<span class="hljs-title function_">gzipSync</span>(fs.<span class="hljs-title function_">readFileSync</span>(filePath));
+}, { filePath });
+
+<span class="hljs-title function_">addDeserializeCallback</span>(<span class="hljs-function">(<span class="hljs-params">{ filePath }</span>) =&gt;</span> {
+  storage[filePath] = zlib.<span class="hljs-title function_">gunzipSync</span>(storage[filePath]);
+}, { filePath });
+
+<span class="hljs-title function_">setDeserializeMainFunction</span>(<span class="hljs-function">(<span class="hljs-params">{ filePath }</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(storage[filePath].<span class="hljs-title function_">toString</span>());
+}, { filePath });</code></pre><p class="">生成的二进制文件将在启动期间简单地打印从快照反序列化的数据：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">out/Release/node</span>
+<span class="hljs-meta prompt_"># </span><span class="language-bash">打印 ./test/fixtures/x1024.txt 的内容</span></code></pre><p class="">目前该 API 仅适用于从默认快照启动的 Node.js 实例，即从用户端快照反序列化的应用程序无法再次使用这些 API。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v18.6.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><p>The <code>v8.startupSnapshot</code> interface can be used to add serialization and
+deserialization hooks for custom startup snapshots. Currently the startup
+snapshots can only be built into the Node.js binary from source.</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> /path/to/node</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">./configure --node-snapshot-main=entry.js</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">make node</span>
+<span class="hljs-meta prompt_"># </span><span class="language-bash">This binary contains the result of the execution of entry.js</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">out/Release/node</span></code></pre><p>In the example above, <code>entry.js</code> can use methods from the <code>v8.startupSnapshot</code>
+interface to specify how to save information for custom objects in the snapshot
+during serialization and how the information can be used to synchronize these
+objects during deserialization of the snapshot. For example, if the <code>entry.js</code>
+contains the following script:</p><pre><code class="language-js cjs"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-keyword">const</span> {
+  isBuildingSnapshot,
+  addSerializeCallback,
+  addDeserializeCallback,
+  setDeserializeMainFunction
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'v8'</span>).<span class="hljs-property">startupSnapshot</span>;
+
+<span class="hljs-keyword">const</span> filePath = path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">'../x1024.txt'</span>);
+<span class="hljs-keyword">const</span> storage = {};
+
+<span class="hljs-title function_">assert</span>(<span class="hljs-title function_">isBuildingSnapshot</span>());
+
+<span class="hljs-title function_">addSerializeCallback</span>(<span class="hljs-function">(<span class="hljs-params">{ filePath }</span>) =&gt;</span> {
+  storage[filePath] = zlib.<span class="hljs-title function_">gzipSync</span>(fs.<span class="hljs-title function_">readFileSync</span>(filePath));
+}, { filePath });
+
+<span class="hljs-title function_">addDeserializeCallback</span>(<span class="hljs-function">(<span class="hljs-params">{ filePath }</span>) =&gt;</span> {
+  storage[filePath] = zlib.<span class="hljs-title function_">gunzipSync</span>(storage[filePath]);
+}, { filePath });
+
+<span class="hljs-title function_">setDeserializeMainFunction</span>(<span class="hljs-function">(<span class="hljs-params">{ filePath }</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(storage[filePath].<span class="hljs-title function_">toString</span>());
+}, { filePath });</code></pre><p>The resulted binary will simply print the data deserialized from the snapshot
+during start up:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">out/Release/node</span>
+<span class="hljs-meta prompt_"># </span><span class="language-bash">Prints content of ./test/fixtures/x1024.txt</span></code></pre><p>Currently the API is only available to a Node.js instance launched from the
+default snapshot, that is, the application deserialized from a user-land
+snapshot cannot use these APIs again.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

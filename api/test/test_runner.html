@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>test 测试 | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-test">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>test 测试</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../test.html#test_test_runner" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/test/#test-runner.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v18.6.0/lib/test.js">lib/test.js</a></p><p><code>node:test</code> 模块有助于创建以 <a href="https://testanything.org/">TAP</a> 格式报告结果的 JavaScript 测试。
+要访问它：</p><pre class="with-34-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> test <span class="hljs-keyword">from</span> <span class="hljs-string">'node:test'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> test = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node:test'</span>);</code></pre><p class="">此模块仅在 <code>node:</code> 协议下可用。
+以下将不起作用：</p><pre class="with-29-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> test <span class="hljs-keyword">from</span> <span class="hljs-string">'test'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> test = <span class="hljs-built_in">require</span>(<span class="hljs-string">'test'</span>);</code></pre><p class="">通过 <code>test</code> 模块创建的测试由单个函数组成，该函数以三种方式之一进行处理：</p><ol class="">
+<li>同步的函数，如果抛出异常则认为失败，否则认为通过。</li>
+<li>返回 <code>Promise</code> 的函数，如果 <code>Promise</code> 拒绝，则认为该函数失败，如果 <code>Promise</code> 解决，则认为该函数通过。</li>
+<li>接收回调函数的函数。
+如果回调接收到任何真值作为其第一个参数，则认为测试失败。
+如果非真值作为第一个参数传给回调，则认为测试通过。
+如果测试函数接收到回调函数并且还返回 <code>Promise</code>，则测试将失败。</li>
+</ol><p class="">以下示例说明了如何使用 <code>test</code> 模块编写测试。</p><pre class=""><code class="language-js"><span class="hljs-title function_">test</span>(<span class="hljs-string">'synchronous passing test'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-comment">// 此测试通过了，因为它没有抛出异常。</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'synchronous failing test'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-comment">// 此测试失败，因为它抛出了异常。</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'asynchronous passing test'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+  <span class="hljs-comment">// 此测试通过了，</span>
+  <span class="hljs-comment">// 因为异步函数返回的 Promise 没有被拒绝。</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'asynchronous failing test'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+  <span class="hljs-comment">// 此测试失败，</span>
+  <span class="hljs-comment">// 因为异步函数返回的 Promise 被拒绝。</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'failing test using Promises'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-comment">// Promise 也可以直接使用。</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'this will cause the test to fail'</span>));
+    });
+  });
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'callback passing test'</span>, <span class="hljs-function">(<span class="hljs-params">t, done</span>) =&gt;</span> {
+  <span class="hljs-comment">// done() 是回调函数。</span>
+  <span class="hljs-comment">// 当 setImmediate() 运行时，它调用 done() 不带参数。</span>
+  <span class="hljs-title function_">setImmediate</span>(done);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'callback failing test'</span>, <span class="hljs-function">(<span class="hljs-params">t, done</span>) =&gt;</span> {
+  <span class="hljs-comment">// 当 setImmediate() 运行时，</span>
+  <span class="hljs-comment">// 使用 Error 对象调用 done() 并且测试失败。</span>
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">done</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'callback failure'</span>));
+  });
+});</code></pre><p class="">当测试文件执行时，TAP 被写入 Node.js 进程的标准输出。
+此输出可以被任何理解 TAP 格式的测试工具解释。
+如果任何测试失败，则进程退出代码设置为 <code>1</code>。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><p><strong>Source Code:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v18.4.0/lib/test.js">lib/test.js</a></p><p>The <code>node:test</code> module facilitates the creation of JavaScript tests that
+report results in <a href="https://testanything.org/">TAP</a> format. To access it:</p><pre class="with-34-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> test <span class="hljs-keyword">from</span> <span class="hljs-string">'node:test'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> test = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node:test'</span>);</code></pre><p>This module is only available under the <code>node:</code> scheme. The following will not
+work:</p><pre class="with-29-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> test <span class="hljs-keyword">from</span> <span class="hljs-string">'test'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> test = <span class="hljs-built_in">require</span>(<span class="hljs-string">'test'</span>);</code></pre><p>Tests created via the <code>test</code> module consist of a single function that is
+processed in one of three ways:</p><ol>
+<li>A synchronous function that is considered failing if it throws an exception,
+and is considered passing otherwise.</li>
+<li>A function that returns a <code>Promise</code> that is considered failing if the
+<code>Promise</code> rejects, and is considered passing if the <code>Promise</code> resolves.</li>
+<li>A function that receives a callback function. If the callback receives any
+truthy value as its first argument, the test is considered failing. If a
+falsy value is passed as the first argument to the callback, the test is
+considered passing. If the test function receives a callback function and
+also returns a <code>Promise</code>, the test will fail.</li>
+</ol><p>The following example illustrates how tests are written using the
+<code>test</code> module.</p><pre><code class="language-js"><span class="hljs-title function_">test</span>(<span class="hljs-string">'synchronous passing test'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-comment">// This test passes because it does not throw an exception.</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'synchronous failing test'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-comment">// This test fails because it throws an exception.</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'asynchronous passing test'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+  <span class="hljs-comment">// This test passes because the Promise returned by the async</span>
+  <span class="hljs-comment">// function is not rejected.</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'asynchronous failing test'</span>, <span class="hljs-keyword">async</span> (t) =&gt; {
+  <span class="hljs-comment">// This test fails because the Promise returned by the async</span>
+  <span class="hljs-comment">// function is rejected.</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'failing test using Promises'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-comment">// Promises can be used directly as well.</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'this will cause the test to fail'</span>));
+    });
+  });
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'callback passing test'</span>, <span class="hljs-function">(<span class="hljs-params">t, done</span>) =&gt;</span> {
+  <span class="hljs-comment">// done() is the callback function. When the setImmediate() runs, it invokes</span>
+  <span class="hljs-comment">// done() with no arguments.</span>
+  <span class="hljs-title function_">setImmediate</span>(done);
+});
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">'callback failing test'</span>, <span class="hljs-function">(<span class="hljs-params">t, done</span>) =&gt;</span> {
+  <span class="hljs-comment">// When the setImmediate() runs, done() is invoked with an Error object and</span>
+  <span class="hljs-comment">// the test fails.</span>
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">done</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'callback failure'</span>));
+  });
+});</code></pre><p>As a test file executes, TAP is written to the standard output of the Node.js
+process. This output can be interpreted by any test harness that understands
+the TAP format. If any tests fail, the process exit code is set to <code>1</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

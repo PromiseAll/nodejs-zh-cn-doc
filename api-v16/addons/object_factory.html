@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>对象工厂 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>对象工厂</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_object_factory" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/object_factory.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/object_factory.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#object-factory.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>插件可以从 C++ 函数中创建和返回新对象，如下例所示。
+创建并返回带有属性 <code>msg</code> 的对象，该属性与传给 <code>createObject()</code> 的字符串相呼应：</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::Context;
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">CreateObject</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+
+  Local&lt;Object&gt; obj = Object::<span class="hljs-built_in">New</span>(isolate);
+  obj-&gt;<span class="hljs-built_in">Set</span>(context,
+           String::<span class="hljs-built_in">NewFromUtf8</span>(isolate,
+                               <span class="hljs-string">"msg"</span>).<span class="hljs-built_in">ToLocalChecked</span>(),
+                               args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">ToString</span>(context).<span class="hljs-built_in">ToLocalChecked</span>())
+           .<span class="hljs-built_in">FromJust</span>();
+
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(obj);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Init</span><span class="hljs-params">(Local&lt;Object&gt; exports, Local&lt;Object&gt; <span class="hljs-keyword">module</span>)</span> </span>{
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(<span class="hljs-keyword">module</span>, <span class="hljs-string">"exports"</span>, CreateObject);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Init)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p class="">在 JavaScript 中测试它：</p><pre class=""><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-keyword">const</span> addon = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-keyword">const</span> obj1 = <span class="hljs-title function_">addon</span>(<span class="hljs-string">'hello'</span>);
+<span class="hljs-keyword">const</span> obj2 = <span class="hljs-title function_">addon</span>(<span class="hljs-string">'world'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj1.<span class="hljs-property">msg</span>, obj2.<span class="hljs-property">msg</span>);
+<span class="hljs-comment">// 打印: 'hello world'</span></code></pre></div>
+          <div id="content_right"><p>Addons can create and return new objects from within a C++ function as
+illustrated in the following example. An object is created and returned with a
+property <code>msg</code> that echoes the string passed to <code>createObject()</code>:</p><pre><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::Context;
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">CreateObject</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+  Local&lt;Context&gt; context = isolate-&gt;<span class="hljs-built_in">GetCurrentContext</span>();
+
+  Local&lt;Object&gt; obj = Object::<span class="hljs-built_in">New</span>(isolate);
+  obj-&gt;<span class="hljs-built_in">Set</span>(context,
+           String::<span class="hljs-built_in">NewFromUtf8</span>(isolate,
+                               <span class="hljs-string">"msg"</span>).<span class="hljs-built_in">ToLocalChecked</span>(),
+                               args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">ToString</span>(context).<span class="hljs-built_in">ToLocalChecked</span>())
+           .<span class="hljs-built_in">FromJust</span>();
+
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(obj);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Init</span><span class="hljs-params">(Local&lt;Object&gt; exports, Local&lt;Object&gt; <span class="hljs-keyword">module</span>)</span> </span>{
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(<span class="hljs-keyword">module</span>, <span class="hljs-string">"exports"</span>, CreateObject);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Init)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p>To test it in JavaScript:</p><pre><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-keyword">const</span> addon = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-keyword">const</span> obj1 = <span class="hljs-title function_">addon</span>(<span class="hljs-string">'hello'</span>);
+<span class="hljs-keyword">const</span> obj2 = <span class="hljs-title function_">addon</span>(<span class="hljs-string">'world'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj1.<span class="hljs-property">msg</span>, obj2.<span class="hljs-property">msg</span>);
+<span class="hljs-comment">// Prints: 'hello world'</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

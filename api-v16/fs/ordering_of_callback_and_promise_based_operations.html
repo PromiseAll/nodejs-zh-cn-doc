@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>回调与基于 promise 的操作的顺序 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>回调与基于 promise 的操作的顺序</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_ordering_of_callback_and_promise_based_operations" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/ordering_of_callback_and_promise_based_operations.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/ordering_of_callback_and_promise_based_operations.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#ordering-of-callback-and-promise-based-operations.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>因为它们是由底层线程池异步地执行，所以当使用回调或基于 promise 的方法时无法保证顺序。</p><p class="">例如，以下内容容易出错，因为 <code>fs.stat()</code> 操作可能会在 <code>fs.rename()</code> 操作之前完成：</p><pre class=""><code class="language-js">fs.<span class="hljs-title function_">rename</span>(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'renamed complete'</span>);
+});
+fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+});</code></pre><p class="">通过在调用另一个之前等待前一个的结果来正确地排序操作，这是很重要的：</p><pre class="with-48-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { rename, stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">from</span> = <span class="hljs-string">'/tmp/hello'</span>;
+<span class="hljs-keyword">const</span> to = <span class="hljs-string">'/tmp/world'</span>;
+
+<span class="hljs-keyword">try</span> {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">rename</span>(<span class="hljs-keyword">from</span>, to);
+  <span class="hljs-keyword">const</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-title function_">stat</span>(to);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+} <span class="hljs-keyword">catch</span> (error) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'there was an error:'</span>, error.<span class="hljs-property">message</span>);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { rename, stat } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+
+(<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-keyword">from</span>, to</span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">rename</span>(<span class="hljs-keyword">from</span>, to);
+    <span class="hljs-keyword">const</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-title function_">stat</span>(to);
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'there was an error:'</span>, error.<span class="hljs-property">message</span>);
+  }
+})(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>);</code></pre><p class="">或者，当使用回调 API 时，将 <code>fs.stat()</code> 调用移动到 <code>fs.rename()</code> 操作的回调中。</p><pre class="with-48-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { rename, stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">rename</span>(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-title function_">stat</span>(<span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+  });
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { rename, stat } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+
+<span class="hljs-title function_">rename</span>(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-title function_">stat</span>(<span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+  });
+});</code></pre></div>
+          <div id="content_right"><p>Because they are executed asynchronously by the underlying thread pool,
+there is no guaranteed ordering when using either the callback or
+promise-based methods.</p><p>For example, the following is prone to error because the <code>fs.stat()</code>
+operation might complete before the <code>fs.rename()</code> operation:</p><pre><code class="language-js">fs.<span class="hljs-title function_">rename</span>(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'renamed complete'</span>);
+});
+fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+});</code></pre><p>It is important to correctly order the operations by awaiting the results
+of one before invoking the other:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { rename, stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">from</span> = <span class="hljs-string">'/tmp/hello'</span>;
+<span class="hljs-keyword">const</span> to = <span class="hljs-string">'/tmp/world'</span>;
+
+<span class="hljs-keyword">try</span> {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">rename</span>(<span class="hljs-keyword">from</span>, to);
+  <span class="hljs-keyword">const</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-title function_">stat</span>(to);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+} <span class="hljs-keyword">catch</span> (error) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'there was an error:'</span>, error.<span class="hljs-property">message</span>);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { rename, stat } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+
+(<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-keyword">from</span>, to</span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">rename</span>(<span class="hljs-keyword">from</span>, to);
+    <span class="hljs-keyword">const</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-title function_">stat</span>(to);
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'there was an error:'</span>, error.<span class="hljs-property">message</span>);
+  }
+})(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>);</code></pre><p>Or, when using the callback APIs, move the <code>fs.stat()</code> call into the callback
+of the <code>fs.rename()</code> operation:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { rename, stat } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-title function_">rename</span>(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-title function_">stat</span>(<span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+  });
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { rename, stat } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+
+<span class="hljs-title function_">rename</span>(<span class="hljs-string">'/tmp/hello'</span>, <span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-title function_">stat</span>(<span class="hljs-string">'/tmp/world'</span>, <span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stats: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(stats)}</span>`</span>);
+  });
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>术语 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-esm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>术语</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../esm.html#esm_terminology" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/esm/terminology.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/esm/terminology.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/esm/#terminology.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>import</code> 语句的说明符是 <code>from</code> 关键字之后的字符串，例如 <code>import { sep } from 'path'</code> 中的 <code>'path'</code>。
+说明符也用于 <code>export from</code> 语句，并作为 <code>import()</code> 表达式的参数。</p><p class="">有三种类型的说明符：</p><ul class="">
+<li>
+<p>相对说明符，如 <code>'./startup.js'</code> 或 <code>'../config.mjs'</code>。
+它们指的是相对于导入文件位置的路径。
+文件扩展名对于这些始终是必需的。</p>
+</li>
+<li>
+<p>裸说明符，如 <code>'some-package'</code> 或 <code>'some-package/shuffle'</code>。
+它们可以通过包名称来引用包的主要入口点，或者根据示例分别以包名称为前缀的包中的特定功能模块。
+包括文件扩展名仅适用于没有 <a href="../packages.html#exports"><code>"exports"</code></a> 字段的包。</p>
+</li>
+<li>
+<p>绝对说明符，如 <code>'file:///opt/nodejs/config.js'</code>。
+它们直接且明确地引用完整的路径。</p>
+</li>
+</ul><p class="">裸说明符解析由 <a href="../esm.html#resolver-algorithm-specification">Node.js 模块解析算法</a>处理。
+所有其他说明符解析始终仅使用标准的相对<a href="https://url.spec.whatwg.org/" rel="nofollow">网址</a>解析语义进行解析。</p><p class="">就像在 CommonJS 中一样，包中的模块文件可以通过在包名后附加路径来访问，除非包的 <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> 包含 <a href="../packages.html#exports"><code>"exports"</code></a> 字段，在这种情况下，包中的文件只能通过 <a href="../packages.html#exports"><code>"exports"</code></a> 中定义的路径访问。</p><p class="">有关这些适用于 Node.js 模块解析中的裸说明符的包解析规则的详细信息，请参阅<a href="../packages.html">包文档</a>。</p></div>
+          <div id="content_right"><p>The <em>specifier</em> of an <code>import</code> statement is the string after the <code>from</code> keyword,
+e.g. <code>'path'</code> in <code>import { sep } from 'path'</code>. Specifiers are also used in
+<code>export from</code> statements, and as the argument to an <code>import()</code> expression.</p><p>There are three types of specifiers:</p><ul>
+<li>
+<p><em>Relative specifiers</em> like <code>'./startup.js'</code> or <code>'../config.mjs'</code>. They refer
+to a path relative to the location of the importing file. <em>The file extension
+is always necessary for these.</em></p>
+</li>
+<li>
+<p><em>Bare specifiers</em> like <code>'some-package'</code> or <code>'some-package/shuffle'</code>. They can
+refer to the main entry point of a package by the package name, or a
+specific feature module within a package prefixed by the package name as per
+the examples respectively. <em>Including the file extension is only necessary
+for packages without an <a href="../packages.html#exports"><code>"exports"</code></a> field.</em></p>
+</li>
+<li>
+<p><em>Absolute specifiers</em> like <code>'file:///opt/nodejs/config.js'</code>. They refer
+directly and explicitly to a full path.</p>
+</li>
+</ul><p>Bare specifier resolutions are handled by the <a href="../esm.html#resolver-algorithm-specification">Node.js module resolution
+algorithm</a>. All other specifier resolutions are always only resolved with
+the standard relative <a href="https://url.spec.whatwg.org/" rel="nofollow">URL</a> resolution semantics.</p><p>Like in CommonJS, module files within packages can be accessed by appending a
+path to the package name unless the package’s <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> contains an
+<a href="../packages.html#exports"><code>"exports"</code></a> field, in which case files within packages can only be accessed
+via the paths defined in <a href="../packages.html#exports"><code>"exports"</code></a>.</p><p>For details on these package resolution rules that apply to bare specifiers in
+the Node.js module resolution, see the <a href="../packages.html">packages documentation</a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

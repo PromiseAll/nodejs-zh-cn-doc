@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http.ClientRequest 类 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http.ClientRequest 类</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_class_http_clientrequest" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/class_http_clientrequest.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/class_http_clientrequest.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#class-httpclientrequest.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.17</span>
+</div><ul class="">
+<li>继承自: <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a></li>
+</ul><p>此对象从 <a href="../http.html#httprequestoptions-callback"><code>http.request()</code></a> 内部创建并返回。
+它表示正在进行的请求，其标头已入队。
+使用 <a href="../http.html#requestsetheadername-value"><code>setHeader(name, value)</code></a>、<a href="../http.html#requestgetheadername"><code>getHeader(name)</code></a>、<a href="../http.html#requestremoveheadername"><code>removeHeader(name)</code></a> API 时，标头仍然是可变的。
+实际标头将与第一个数据块一起发送或在调用 <a href="../http.html#requestenddata-encoding-callback"><code>request.end()</code></a> 时发送。</p><p class="">要获得响应，则将 <a href="../http.html#event-response"><code>'response'</code></a> 的监听器添加到请求对象。
+当接收到响应头时，则请求对象会触发 <a href="../http.html#event-response"><code>'response'</code></a>。
+<a href="../http.html#event-response"><code>'response'</code></a> 事件使用一个参数执行，该参数是 <a href="../http.html#class-httpincomingmessage"><code>http.IncomingMessage</code></a> 的实例。</p><p class="">在 <a href="../http.html#event-response"><code>'response'</code></a> 事件期间，可以向响应对象添加监听器；特别是监听 <code>'data'</code> 事件。</p><p class="">如果没有添加 <a href="../http.html#event-response"><code>'response'</code></a> 句柄，则响应将被完全丢弃。
+但是，如果添加了 <a href="../http.html#event-response"><code>'response'</code></a> 事件句柄，则必须消费响应对象中的数据，方法是在有 <code>'readable'</code> 事件时调用 <code>response.read()</code>，或者添加 <code>'data'</code> 句柄，或者调用 <code>.resume()</code> 方法。
+在数据被消费之前，不会触发 <code>'end'</code> 事件。
+此外，在读取数据之前，其会消耗内存，最终可能导致进程内存不足的错误。</p><p class="">为了向后兼容，如果注册了 <code>'error'</code> 监听器，则 <code>res</code> 只会触发 <code>'error'</code>。</p><p class="">Node.js 不会检查内容长度和已经传输的正文的长度是否相等。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.17</span>
+</div><ul>
+<li>Extends: <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a></li>
+</ul><p>This object is created internally and returned from <a href="../http.html#httprequestoptions-callback"><code>http.request()</code></a>. It
+represents an <em>in-progress</em> request whose header has already been queued. The
+header is still mutable using the <a href="../http.html#requestsetheadername-value"><code>setHeader(name, value)</code></a>,
+<a href="../http.html#requestgetheadername"><code>getHeader(name)</code></a>, <a href="../http.html#requestremoveheadername"><code>removeHeader(name)</code></a> API. The actual header will
+be sent along with the first data chunk or when calling <a href="../http.html#requestenddata-encoding-callback"><code>request.end()</code></a>.</p><p>To get the response, add a listener for <a href="../http.html#event-response"><code>'response'</code></a> to the request object.
+<a href="../http.html#event-response"><code>'response'</code></a> will be emitted from the request object when the response
+headers have been received. The <a href="../http.html#event-response"><code>'response'</code></a> event is executed with one
+argument which is an instance of <a href="../http.html#class-httpincomingmessage"><code>http.IncomingMessage</code></a>.</p><p>During the <a href="../http.html#event-response"><code>'response'</code></a> event, one can add listeners to the
+response object; particularly to listen for the <code>'data'</code> event.</p><p>If no <a href="../http.html#event-response"><code>'response'</code></a> handler is added, then the response will be
+entirely discarded. However, if a <a href="../http.html#event-response"><code>'response'</code></a> event handler is added,
+then the data from the response object <strong>must</strong> be consumed, either by
+calling <code>response.read()</code> whenever there is a <code>'readable'</code> event, or
+by adding a <code>'data'</code> handler, or by calling the <code>.resume()</code> method.
+Until the data is consumed, the <code>'end'</code> event will not fire. Also, until
+the data is read it will consume memory that can eventually lead to a
+'process out of memory' error.</p><p>For backward compatibility, <code>res</code> will only emit <code>'error'</code> if there is an
+<code>'error'</code> listener registered.</p><p>Node.js does not check whether Content-Length and the length of the
+body which has been transmitted are equal or not.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

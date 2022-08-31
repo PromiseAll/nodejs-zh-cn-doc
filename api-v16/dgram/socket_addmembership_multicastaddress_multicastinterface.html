@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>socket.addMembership(multicastAddress[, multicastInterface]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dgram">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>socket.addMembership(multicastAddress[, multicastInterface])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dgram.html#dgram_socket_addmembership_multicastaddress_multicastinterface" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dgram/socket_addmembership_multicastaddress_multicastinterface.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dgram/socket_addmembership_multicastaddress_multicastinterface.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dgram/#socketaddmembershipmulticastaddress-multicastinterface.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.6.9</span>
+</div><ul class="">
+<li><code>multicastAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>multicastInterface</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>使用 <code>IP_ADD_MEMBERSHIP</code> 套接字选项告诉内核在给定的 <code>multicastAddress</code> 和 <code>multicastInterface</code> 上加入多播组。
+如果未指定 <code>multicastInterface</code> 参数，则操作系统将选择一个接口并为其添加成员资格。
+要为每个可用接口添加成员资格，则多次调用 <code>addMembership</code>，每个接口一次。</p><p class="">当在未绑定的套接字上调用时，则此方法将隐式地绑定到随机端口，监听所有接口。</p><p class="">当在多个 <code>cluster</code> 工作进程共享 UDP 套接字时，则必须只调用一次 <code>socket.addMembership()</code> 函数，否则会发生 <code>EADDRINUSE</code> 错误：</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> cluster <span class="hljs-keyword">from</span> <span class="hljs-string">'cluster'</span>;
+<span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+
+<span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// 工作正常。</span>
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// EADDRINUSE 失败。</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> s = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+  s.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+    s.<span class="hljs-title function_">addMembership</span>(<span class="hljs-string">'224.0.0.114'</span>);
+  });
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> cluster = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cluster'</span>);
+<span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+
+<span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// 工作正常。</span>
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// EADDRINUSE 失败。</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> s = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+  s.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+    s.<span class="hljs-title function_">addMembership</span>(<span class="hljs-string">'224.0.0.114'</span>);
+  });
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.6.9</span>
+</div><ul>
+<li><code>multicastAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>multicastInterface</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>Tells the kernel to join a multicast group at the given <code>multicastAddress</code> and
+<code>multicastInterface</code> using the <code>IP_ADD_MEMBERSHIP</code> socket option. If the
+<code>multicastInterface</code> argument is not specified, the operating system will choose
+one interface and will add membership to it. To add membership to every
+available interface, call <code>addMembership</code> multiple times, once per interface.</p><p>When called on an unbound socket, this method will implicitly bind to a random
+port, listening on all interfaces.</p><p>When sharing a UDP socket across multiple <code>cluster</code> workers, the
+<code>socket.addMembership()</code> function must be called only once or an
+<code>EADDRINUSE</code> error will occur:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> cluster <span class="hljs-keyword">from</span> <span class="hljs-string">'cluster'</span>;
+<span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+
+<span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// Works ok.</span>
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// Fails with EADDRINUSE.</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> s = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+  s.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+    s.<span class="hljs-title function_">addMembership</span>(<span class="hljs-string">'224.0.0.114'</span>);
+  });
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> cluster = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cluster'</span>);
+<span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+
+<span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// Works ok.</span>
+  cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// Fails with EADDRINUSE.</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> s = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+  s.<span class="hljs-title function_">bind</span>(<span class="hljs-number">1234</span>, <span class="hljs-function">() =&gt;</span> {
+    s.<span class="hljs-title function_">addMembership</span>(<span class="hljs-string">'224.0.0.114'</span>);
+  });
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

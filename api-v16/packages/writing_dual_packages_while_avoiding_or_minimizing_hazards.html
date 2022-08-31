@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>在避免或最小化危害的同时编写双包 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>在避免或最小化危害的同时编写双包</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_writing_dual_packages_while_avoiding_or_minimizing_hazards" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/writing_dual_packages_while_avoiding_or_minimizing_hazards.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/writing_dual_packages_while_avoiding_or_minimizing_hazards.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#writing-dual-packages-while-avoiding-or-minimizing-hazards.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>首先，当一个包同时包含 CommonJS 和 ES 模块源并且这两个源都通过单独的主入口点或导出路径提供以在 Node.js 中使用时，就会发生上一节中描述的危险。
+一个包可能被写成任何版本的 Node.js 只接收 CommonJS 源，并且包可能包含的任何单独的 ES 模块源仅用于其他环境，例如浏览器。
+这样的包可以被任何版本的 Node.js 使用，因为 <code>import</code> 可以引用 CommonJS 文件；但它不会提供使用 ES 模块语法的任何优点。</p><p class="">一个包也可能会在<a href="https://semver.org/" rel="nofollow">重大更改</a>版本碰撞中从 CommonJS 切换到 ES 模块语法。
+这有一个缺点，即最新版本的包只能在支持 ES 模块的 Node.js 版本中使用。</p><p class="">每种模式都有权衡，但有两种广泛的方法可以满足以下条件：</p><ol class="">
+<li>该软件包可通过 <code>require</code> 和 <code>import</code> 使用。</li>
+<li>该包在当前 Node.js 和不支持 ES 模块的旧版本 Node.js 中都可用。</li>
+<li>包主入口点，例如 <code>'pkg'</code> 可以被 <code>require</code> 用来解析 CommonJS 文件，也可以被 <code>import</code> 用来解析 ES 模块文件。
+（对于导出的路径也是如此，例如 <code>'pkg/feature'</code>。）</li>
+<li>该包提供命名导出，例如 <code>import { name } from 'pkg'</code> 而不是 <code>import pkg from 'pkg'; pkg.name</code>。</li>
+<li>该包可能在其他 ES 模块环境中可用，例如浏览器。</li>
+<li>避免或最小化上一节中描述的危害。</li>
+</ol></div>
+          <div id="content_right"><p>First, the hazard described in the previous section occurs when a package
+contains both CommonJS and ES module sources and both sources are provided for
+use in Node.js, either via separate main entry points or exported paths. A
+package might instead be written where any version of Node.js receives only
+CommonJS sources, and any separate ES module sources the package might contain
+are intended only for other environments such as browsers. Such a package
+would be usable by any version of Node.js, since <code>import</code> can refer to CommonJS
+files; but it would not provide any of the advantages of using ES module syntax.</p><p>A package might also switch from CommonJS to ES module syntax in a <a href="https://semver.org/" rel="nofollow">breaking
+change</a> version bump. This has the disadvantage that the
+newest version of the package would only be usable in ES module-supporting
+versions of Node.js.</p><p>Every pattern has tradeoffs, but there are two broad approaches that satisfy the
+following conditions:</p><ol>
+<li>The package is usable via both <code>require</code> and <code>import</code>.</li>
+<li>The package is usable in both current Node.js and older versions of Node.js
+that lack support for ES modules.</li>
+<li>The package main entry point, e.g. <code>'pkg'</code> can be used by both <code>require</code> to
+resolve to a CommonJS file and by <code>import</code> to resolve to an ES module file.
+(And likewise for exported paths, e.g. <code>'pkg/feature'</code>.)</li>
+<li>The package provides named exports, e.g. <code>import { name } from 'pkg'</code> rather
+than <code>import pkg from 'pkg'; pkg.name</code>.</li>
+<li>The package is potentially usable in other ES module environments such as
+browsers.</li>
+<li>The hazards described in the previous section are avoided or minimized.</li>
+</ol></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

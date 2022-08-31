@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>buffer 缓冲区 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>buffer 缓冲区</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buffer" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buffer.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buffer.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p><p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/buffer.js">lib/buffer.js</a></p><p><code>Buffer</code> 对象用于表示固定长度的字节序列。
+许多 Node.js API 都支持 <code>Buffer</code>。</p><p class=""><code>Buffer</code> 类是 JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow"><code>Uint8Array</code></a> 类的子类，并使用涵盖额外用例的方法对其进行扩展。
+Node.js API 在支持 <code>Buffer</code> 的地方也接受普通的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow"><code>Uint8Array</code></a>。</p><p class="">虽然 <code>Buffer</code> 类在全局作用域内可用，但仍然建议通过 import 或 require 语句显式地引用它。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// 创建长度为 10 的以零填充的缓冲区。</span>
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// 创建长度为 10 的缓冲区，</span>
+<span class="hljs-comment">// 使用值为 `1` 的字节填充。</span>
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>);
+
+<span class="hljs-comment">// 创建长度为 10 的未初始化的缓冲区。</span>
+<span class="hljs-comment">// 这比调用 Buffer.alloc() 快，</span>
+<span class="hljs-comment">// 但返回的缓冲区实例可能包含旧数据，</span>
+<span class="hljs-comment">// 需要使用 fill()、write() 、</span>
+<span class="hljs-comment">// 或其他填充缓冲区内容的函数重写。</span>
+<span class="hljs-keyword">const</span> buf3 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// 创建包含字节 [1, 2, 3] 的缓冲区。</span>
+<span class="hljs-keyword">const</span> buf4 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
+
+<span class="hljs-comment">// 创建包含字节 [1, 1, 1, 1] 的缓冲区，</span>
+<span class="hljs-comment">// 所有条目都使用 `(value &amp; 255)` 截断以符合范围 0–255。</span>
+<span class="hljs-keyword">const</span> buf5 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">257</span>, <span class="hljs-number">257.5</span>, -<span class="hljs-number">255</span>, <span class="hljs-string">'1'</span>]);
+
+<span class="hljs-comment">// 创建包含字符串 'tést' 的 UTF-8 编码字节的缓冲区：</span>
+<span class="hljs-comment">// [0x74, 0xc3, 0xa9, 0x73, 0x74]（十六进制）</span>
+<span class="hljs-comment">// [116, 195, 169, 115, 116]（十进制）</span>
+<span class="hljs-keyword">const</span> buf6 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>);
+
+<span class="hljs-comment">// 创建包含 Latin-1 字节 [0x74, 0xe9, 0x73, 0x74] 的缓冲区。</span>
+<span class="hljs-keyword">const</span> buf7 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>, <span class="hljs-string">'latin1'</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// 创建长度为 10 的以零填充的缓冲区。</span>
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// 创建长度为 10 的缓冲区，</span>
+<span class="hljs-comment">// 使用值为 `1` 的字节填充。</span>
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>);
+
+<span class="hljs-comment">// 创建长度为 10 的未初始化的缓冲区。</span>
+<span class="hljs-comment">// 这比调用 Buffer.alloc() 快，</span>
+<span class="hljs-comment">// 但返回的缓冲区实例可能包含旧数据，</span>
+<span class="hljs-comment">// 需要使用 fill()、write() 、</span>
+<span class="hljs-comment">// 或其他填充缓冲区内容的函数重写。</span>
+<span class="hljs-keyword">const</span> buf3 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// 创建包含字节 [1, 2, 3] 的缓冲区。</span>
+<span class="hljs-keyword">const</span> buf4 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
+
+<span class="hljs-comment">// 创建包含字节 [1, 1, 1, 1] 的缓冲区，</span>
+<span class="hljs-comment">// 所有条目都使用 `(value &amp; 255)` 截断以符合范围 0–255。</span>
+<span class="hljs-keyword">const</span> buf5 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">257</span>, <span class="hljs-number">257.5</span>, -<span class="hljs-number">255</span>, <span class="hljs-string">'1'</span>]);
+
+<span class="hljs-comment">// 创建包含字符串 'tést' 的 UTF-8 编码字节的缓冲区：</span>
+<span class="hljs-comment">// [0x74, 0xc3, 0xa9, 0x73, 0x74]（十六进制）</span>
+<span class="hljs-comment">// [116, 195, 169, 115, 116]（十进制）</span>
+<span class="hljs-keyword">const</span> buf6 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>);
+
+<span class="hljs-comment">// 创建包含 Latin-1 字节 [0x74, 0xe9, 0x73, 0x74] 的缓冲区。</span>
+<span class="hljs-keyword">const</span> buf7 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>, <span class="hljs-string">'latin1'</span>);</code></pre></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">Stability: 2</a> - Stable</div><p></p><p><strong>Source Code:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.15.0/lib/buffer.js">lib/buffer.js</a></p><p><code>Buffer</code> objects are used to represent a fixed-length sequence of bytes. Many
+Node.js APIs support <code>Buffer</code>s.</p><p>The <code>Buffer</code> class is a subclass of JavaScript's <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow"><code>Uint8Array</code></a> class and
+extends it with methods that cover additional use cases. Node.js APIs accept
+plain <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow"><code>Uint8Array</code></a>s wherever <code>Buffer</code>s are supported as well.</p><p>While the <code>Buffer</code> class is available within the global scope, it is still
+recommended to explicitly reference it via an import or require statement.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// Creates a zero-filled Buffer of length 10.</span>
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// Creates a Buffer of length 10,</span>
+<span class="hljs-comment">// filled with bytes which all have the value `1`.</span>
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>);
+
+<span class="hljs-comment">// Creates an uninitialized buffer of length 10.</span>
+<span class="hljs-comment">// This is faster than calling Buffer.alloc() but the returned</span>
+<span class="hljs-comment">// Buffer instance might contain old data that needs to be</span>
+<span class="hljs-comment">// overwritten using fill(), write(), or other functions that fill the Buffer's</span>
+<span class="hljs-comment">// contents.</span>
+<span class="hljs-keyword">const</span> buf3 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// Creates a Buffer containing the bytes [1, 2, 3].</span>
+<span class="hljs-keyword">const</span> buf4 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
+
+<span class="hljs-comment">// Creates a Buffer containing the bytes [1, 1, 1, 1] – the entries</span>
+<span class="hljs-comment">// are all truncated using `(value &amp; 255)` to fit into the range 0–255.</span>
+<span class="hljs-keyword">const</span> buf5 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">257</span>, <span class="hljs-number">257.5</span>, -<span class="hljs-number">255</span>, <span class="hljs-string">'1'</span>]);
+
+<span class="hljs-comment">// Creates a Buffer containing the UTF-8-encoded bytes for the string 'tést':</span>
+<span class="hljs-comment">// [0x74, 0xc3, 0xa9, 0x73, 0x74] (in hexadecimal notation)</span>
+<span class="hljs-comment">// [116, 195, 169, 115, 116] (in decimal notation)</span>
+<span class="hljs-keyword">const</span> buf6 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>);
+
+<span class="hljs-comment">// Creates a Buffer containing the Latin-1 bytes [0x74, 0xe9, 0x73, 0x74].</span>
+<span class="hljs-keyword">const</span> buf7 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>, <span class="hljs-string">'latin1'</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// Creates a zero-filled Buffer of length 10.</span>
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// Creates a Buffer of length 10,</span>
+<span class="hljs-comment">// filled with bytes which all have the value `1`.</span>
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>);
+
+<span class="hljs-comment">// Creates an uninitialized buffer of length 10.</span>
+<span class="hljs-comment">// This is faster than calling Buffer.alloc() but the returned</span>
+<span class="hljs-comment">// Buffer instance might contain old data that needs to be</span>
+<span class="hljs-comment">// overwritten using fill(), write(), or other functions that fill the Buffer's</span>
+<span class="hljs-comment">// contents.</span>
+<span class="hljs-keyword">const</span> buf3 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-comment">// Creates a Buffer containing the bytes [1, 2, 3].</span>
+<span class="hljs-keyword">const</span> buf4 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
+
+<span class="hljs-comment">// Creates a Buffer containing the bytes [1, 1, 1, 1] – the entries</span>
+<span class="hljs-comment">// are all truncated using `(value &amp; 255)` to fit into the range 0–255.</span>
+<span class="hljs-keyword">const</span> buf5 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">257</span>, <span class="hljs-number">257.5</span>, -<span class="hljs-number">255</span>, <span class="hljs-string">'1'</span>]);
+
+<span class="hljs-comment">// Creates a Buffer containing the UTF-8-encoded bytes for the string 'tést':</span>
+<span class="hljs-comment">// [0x74, 0xc3, 0xa9, 0x73, 0x74] (in hexadecimal notation)</span>
+<span class="hljs-comment">// [116, 195, 169, 115, 116] (in decimal notation)</span>
+<span class="hljs-keyword">const</span> buf6 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>);
+
+<span class="hljs-comment">// Creates a Buffer containing the Latin-1 bytes [0x74, 0xe9, 0x73, 0x74].</span>
+<span class="hljs-keyword">const</span> buf7 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'tést'</span>, <span class="hljs-string">'latin1'</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

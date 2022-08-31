@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>ALPN 协商 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>ALPN 协商</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_alpn_negotiation" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/alpn_negotiation.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/alpn_negotiation.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#alpn-negotiation.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>ALPN 协商允许在同一个套接字上同时支持 <a href="../https.html">HTTPS</a> 和 HTTP/2。
+<code>req</code> 和 <code>res</code> 对象可以是 HTTP/1 或 HTTP/2，并且应用程序<strong>必须</strong>将自己限制在 <a href="../http.html">HTTP/1</a> 的公共 API，并检测是否可以使用更多HTTP/2 的高级特性。</p><p class="">以下示例创建了支持两种协议的服务器：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { createSecureServer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> { readFileSync } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">const</span> cert = <span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">'./cert.pem'</span>);
+<span class="hljs-keyword">const</span> key = <span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">'./key.pem'</span>);
+
+<span class="hljs-keyword">const</span> server = <span class="hljs-title function_">createSecureServer</span>(
+  { cert, key, <span class="hljs-attr">allowHTTP1</span>: <span class="hljs-literal">true</span> },
+  onRequest
+).<span class="hljs-title function_">listen</span>(<span class="hljs-number">4443</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">onRequest</span>(<span class="hljs-params">req, res</span>) {
+  <span class="hljs-comment">// 检测是 HTTPS 请求还是 HTTP/2</span>
+  <span class="hljs-keyword">const</span> { <span class="hljs-attr">socket</span>: { alpnProtocol } } = req.<span class="hljs-property">httpVersion</span> === <span class="hljs-string">'2.0'</span> ?
+    req.<span class="hljs-property">stream</span>.<span class="hljs-property">session</span> : req;
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    alpnProtocol,
+    <span class="hljs-attr">httpVersion</span>: req.<span class="hljs-property">httpVersion</span>
+  }));
+}</code></pre><p class=""><code>'request'</code> 事件在 <a href="../https.html">HTTPS</a> 和 HTTP/2 上的工作方式相同。</p></div>
+          <div id="content_right"><p>ALPN negotiation allows supporting both <a href="../https.html">HTTPS</a> and HTTP/2 over
+the same socket. The <code>req</code> and <code>res</code> objects can be either HTTP/1 or
+HTTP/2, and an application <strong>must</strong> restrict itself to the public API of
+<a href="../http.html">HTTP/1</a>, and detect if it is possible to use the more advanced
+features of HTTP/2.</p><p>The following example creates a server that supports both protocols:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { createSecureServer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> { readFileSync } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">const</span> cert = <span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">'./cert.pem'</span>);
+<span class="hljs-keyword">const</span> key = <span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">'./key.pem'</span>);
+
+<span class="hljs-keyword">const</span> server = <span class="hljs-title function_">createSecureServer</span>(
+  { cert, key, <span class="hljs-attr">allowHTTP1</span>: <span class="hljs-literal">true</span> },
+  onRequest
+).<span class="hljs-title function_">listen</span>(<span class="hljs-number">4443</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">onRequest</span>(<span class="hljs-params">req, res</span>) {
+  <span class="hljs-comment">// Detects if it is a HTTPS request or HTTP/2</span>
+  <span class="hljs-keyword">const</span> { <span class="hljs-attr">socket</span>: { alpnProtocol } } = req.<span class="hljs-property">httpVersion</span> === <span class="hljs-string">'2.0'</span> ?
+    req.<span class="hljs-property">stream</span>.<span class="hljs-property">session</span> : req;
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    alpnProtocol,
+    <span class="hljs-attr">httpVersion</span>: req.<span class="hljs-property">httpVersion</span>
+  }));
+}</code></pre><p>The <code>'request'</code> event works identically on both <a href="../https.html">HTTPS</a> and
+HTTP/2.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

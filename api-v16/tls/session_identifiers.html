@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>会话标识符 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>会话标识符</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_session_identifiers" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/session_identifiers.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/session_identifiers.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#session-identifiers.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>服务器为新连接生成唯一的 ID 并将其发送给客户端。
+客户端和服务器保存会话状态。
+当重新连接时，客户端发送其保存的会话状态的 ID，如果服务器也有该 ID 的状态，它可以同意使用它。
+否则，服务器将创建新的会话。
+请参阅 <a href="https://www.ietf.org/rfc/rfc2246.txt" rel="nofollow">RFC 2246</a> 了解更多信息，第 23 和 30 页\。</p><p class="">当发出 HTTPS 请求时，大多数网络浏览器都支持使用会话标识符恢复。</p><p class="">对于 Node.js，客户端等待 <a href="../tls.html#event-session"><code>'session'</code></a> 事件获取会话数据，并将数据提供给后续 <a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a> 的 <code>session</code> 选项以重用会话。
+服务器必须为 <a href="../tls.html#event-newsession"><code>'newSession'</code></a> 和 <a href="../tls.html#event-resumesession"><code>'resumeSession'</code></a> 事件实现句柄，以使用会话 ID 作为查找键来保存和恢复会话数据以重用会话。
+要在负载均衡器或集群工作器之间重用会话，服务器必须在其会话处理程序中使用共享会话缓存（例如 Redis）。</p></div>
+          <div id="content_right"><p>Servers generate a unique ID for new connections and
+send it to the client. Clients and servers save the session state. When
+reconnecting, clients send the ID of their saved session state and if the server
+also has the state for that ID, it can agree to use it. Otherwise, the server
+will create a new session. See <a href="https://www.ietf.org/rfc/rfc2246.txt" rel="nofollow">RFC 2246</a> for more information, page 23 and
+30.</p><p>Resumption using session identifiers is supported by most web browsers when
+making HTTPS requests.</p><p>For Node.js, clients wait for the <a href="../tls.html#event-session"><code>'session'</code></a> event to get the session data,
+and provide the data to the <code>session</code> option of a subsequent <a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a>
+to reuse the session. Servers must
+implement handlers for the <a href="../tls.html#event-newsession"><code>'newSession'</code></a> and <a href="../tls.html#event-resumesession"><code>'resumeSession'</code></a> events
+to save and restore the session data using the session ID as the lookup key to
+reuse sessions. To reuse sessions across load balancers or cluster workers,
+servers must use a shared session cache (such as Redis) in their session
+handlers.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

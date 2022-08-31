@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>cluster.setupPrimary([settings]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cluster">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>cluster.setupPrimary([settings])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cluster.html#cluster_cluster_setupprimary_settings" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cluster/cluster_setupprimary_settings.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cluster/#clustersetupprimarysettings.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v16.0.0</span>
+</div><ul class="">
+<li><code>settings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 参见 <a href="../cluster.html#clustersettings"><code>cluster.settings</code></a>。</li>
+</ul><p><code>setupPrimary</code> 用于更改默认的 'fork' 行为。
+调用后，设置将出现在 <code>cluster.settings</code> 中。</p><p class="">任何设置更改只会影响未来对 <a href="../cluster.html#clusterforkenv"><code>.fork()</code></a> 的调用，而不会影响已经运行的工作进程。</p><p class="">唯一不能通过 <code>.setupPrimary()</code> 设置的工作进程属性是传给 <a href="../cluster.html#clusterforkenv"><code>.fork()</code></a> 的 <code>env</code>。</p><p class="">上述默认值仅适用于第一次调用；以后调用的默认值是调用 <code>cluster.setupPrimary()</code> 时的当前值。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> cluster <span class="hljs-keyword">from</span> <span class="hljs-string">'cluster'</span>;
+
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'https'</span>],
+  <span class="hljs-attr">silent</span>: <span class="hljs-literal">true</span>
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// https 工作进程</span>
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'http'</span>]
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// http 工作进程</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> cluster = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cluster'</span>);
+
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'https'</span>],
+  <span class="hljs-attr">silent</span>: <span class="hljs-literal">true</span>
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// https 工作进程</span>
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'http'</span>]
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// http 工作进程</span></code></pre><p class="">这只能从主进程调用。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v16.0.0</span>
+</div><ul>
+<li><code>settings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> See <a href="../cluster.html#clustersettings"><code>cluster.settings</code></a>.</li>
+</ul><p><code>setupPrimary</code> is used to change the default 'fork' behavior. Once called,
+the settings will be present in <code>cluster.settings</code>.</p><p>Any settings changes only affect future calls to <a href="../cluster.html#clusterforkenv"><code>.fork()</code></a> and have no
+effect on workers that are already running.</p><p>The only attribute of a worker that cannot be set via <code>.setupPrimary()</code> is
+the <code>env</code> passed to <a href="../cluster.html#clusterforkenv"><code>.fork()</code></a>.</p><p>The defaults above apply to the first call only; the defaults for later
+calls are the current values at the time of <code>cluster.setupPrimary()</code> is called.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> cluster <span class="hljs-keyword">from</span> <span class="hljs-string">'cluster'</span>;
+
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'https'</span>],
+  <span class="hljs-attr">silent</span>: <span class="hljs-literal">true</span>
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// https worker</span>
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'http'</span>]
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// http worker</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> cluster = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cluster'</span>);
+
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'https'</span>],
+  <span class="hljs-attr">silent</span>: <span class="hljs-literal">true</span>
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// https worker</span>
+cluster.<span class="hljs-title function_">setupPrimary</span>({
+  <span class="hljs-attr">exec</span>: <span class="hljs-string">'worker.js'</span>,
+  <span class="hljs-attr">args</span>: [<span class="hljs-string">'--use'</span>, <span class="hljs-string">'http'</span>]
+});
+cluster.<span class="hljs-title function_">fork</span>(); <span class="hljs-comment">// http worker</span></code></pre><p>This can only be called from the primary process.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

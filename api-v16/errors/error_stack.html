@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>error.stack | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-errors">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>error.stack</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../errors.html#errors_error_stack" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/errors/error_stack.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/errors/error_stack.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/errors/#errorstack.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p><code>error.stack</code> 属性是描述代码中实例化 <code>Error</code> 的点的字符串。</p><pre class=""><code class="language-console">Error: Things keep happening!
+   at /home/gbusey/file.js:525:2
+   at Frobnicator.refrobulate (/home/gbusey/business-logic.js:424:21)
+   at Actor.&lt;anonymous&gt; (/home/gbusey/actors.js:400:8)
+   at increaseSynergy (/home/gbusey/actors.js:701:6)</code></pre><p class="">第一行格式为 <code>&lt;error class name&gt;: &lt;error message&gt;</code>，后面是一系列堆栈帧（每行以 "at " 开头）。
+每一帧都描述了代码中导致错误生成的调用点。
+V8 尝试为每个函数显示名称（通过变量名、函数名、或对象方法名），但偶尔会找不到合适的名称。
+如果 V8 无法确定函数的名称，则只会显示该帧的位置信息。
+否则，将显示确定的函数名称，括号中会附加位置信息。</p><p class="">帧仅为 JavaScript 函数生成。
+例如，如果执行同步通过名为 <code>cheetahify</code> 的 C++ 插件函数，该函数本身调用 JavaScript 函数，则表示 <code>cheetahify</code> 调用的帧将不会出现在堆栈跟踪中：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> cheetahify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./native-binding.node'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">makeFaster</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// `cheetahify()` 同步地调用 speedy。</span>
+  <span class="hljs-title function_">cheetahify</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">speedy</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'oh no!'</span>);
+  });
+}
+
+<span class="hljs-title function_">makeFaster</span>();
+<span class="hljs-comment">// 会抛出：</span>
+<span class="hljs-comment">//   /home/gbusey/file.js:6</span>
+<span class="hljs-comment">//       throw new Error('oh no!');</span>
+<span class="hljs-comment">//           ^</span>
+<span class="hljs-comment">//   Error: oh no!</span>
+<span class="hljs-comment">//       at speedy (/home/gbusey/file.js:6:11)</span>
+<span class="hljs-comment">//       at makeFaster (/home/gbusey/file.js:5:3)</span>
+<span class="hljs-comment">//       at Object.&lt;anonymous&gt; (/home/gbusey/file.js:10:1)</span>
+<span class="hljs-comment">//       at Module._compile (module.js:456:26)</span>
+<span class="hljs-comment">//       at Object.Module._extensions..js (module.js:474:10)</span>
+<span class="hljs-comment">//       at Module.load (module.js:356:32)</span>
+<span class="hljs-comment">//       at Function.Module._load (module.js:312:12)</span>
+<span class="hljs-comment">//       at Function.Module.runMain (module.js:497:10)</span>
+<span class="hljs-comment">//       at startup (node.js:119:16)</span>
+<span class="hljs-comment">//       at node.js:906:3</span></code></pre><p class="">位置信息将是以下之一：</p><ul class="">
+<li><code>native</code>, 如果帧代表 V8 内部的调用（如 <code>[].forEach</code>）。</li>
+<li><code>plain-filename.js:line:column</code>, 如果帧代表 Node.js 内部调用</li>
+<li>如果帧代表用户程序中的调用（使用 CommonJS 模块系统）或其依赖项，则为 <code>/absolute/path/to/file.js:line:column</code>。</li>
+<li>如果帧代表用户程序中的调用（使用 ES 模块系统）或其依赖关系，则为 <code>&lt;transport-protocol&gt;:///url/to/module/file.mjs:line:column</code>。</li>
+</ul><p class="">访问 <code>error.stack</code> 属性时，延迟生成表示堆栈跟踪的字符串。</p><p class="">堆栈跟踪捕获的帧数以 <code>Error.stackTraceLimit</code> 或当前事件循环刻度上的可用帧数中的较小者为界。</p></div>
+          <div id="content_right"><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>The <code>error.stack</code> property is a string describing the point in the code at which
+the <code>Error</code> was instantiated.</p><pre><code class="language-console">Error: Things keep happening!
+   at /home/gbusey/file.js:525:2
+   at Frobnicator.refrobulate (/home/gbusey/business-logic.js:424:21)
+   at Actor.&lt;anonymous&gt; (/home/gbusey/actors.js:400:8)
+   at increaseSynergy (/home/gbusey/actors.js:701:6)</code></pre><p>The first line is formatted as <code>&lt;error class name&gt;: &lt;error message&gt;</code>, and
+is followed by a series of stack frames (each line beginning with "at ").
+Each frame describes a call site within the code that lead to the error being
+generated. V8 attempts to display a name for each function (by variable name,
+function name, or object method name), but occasionally it will not be able to
+find a suitable name. If V8 cannot determine a name for the function, only
+location information will be displayed for that frame. Otherwise, the
+determined function name will be displayed with location information appended
+in parentheses.</p><p>Frames are only generated for JavaScript functions. If, for example, execution
+synchronously passes through a C++ addon function called <code>cheetahify</code> which
+itself calls a JavaScript function, the frame representing the <code>cheetahify</code> call
+will not be present in the stack traces:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> cheetahify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./native-binding.node'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">makeFaster</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// `cheetahify()` *synchronously* calls speedy.</span>
+  <span class="hljs-title function_">cheetahify</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">speedy</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'oh no!'</span>);
+  });
+}
+
+<span class="hljs-title function_">makeFaster</span>();
+<span class="hljs-comment">// will throw:</span>
+<span class="hljs-comment">//   /home/gbusey/file.js:6</span>
+<span class="hljs-comment">//       throw new Error('oh no!');</span>
+<span class="hljs-comment">//           ^</span>
+<span class="hljs-comment">//   Error: oh no!</span>
+<span class="hljs-comment">//       at speedy (/home/gbusey/file.js:6:11)</span>
+<span class="hljs-comment">//       at makeFaster (/home/gbusey/file.js:5:3)</span>
+<span class="hljs-comment">//       at Object.&lt;anonymous&gt; (/home/gbusey/file.js:10:1)</span>
+<span class="hljs-comment">//       at Module._compile (module.js:456:26)</span>
+<span class="hljs-comment">//       at Object.Module._extensions..js (module.js:474:10)</span>
+<span class="hljs-comment">//       at Module.load (module.js:356:32)</span>
+<span class="hljs-comment">//       at Function.Module._load (module.js:312:12)</span>
+<span class="hljs-comment">//       at Function.Module.runMain (module.js:497:10)</span>
+<span class="hljs-comment">//       at startup (node.js:119:16)</span>
+<span class="hljs-comment">//       at node.js:906:3</span></code></pre><p>The location information will be one of:</p><ul>
+<li><code>native</code>, if the frame represents a call internal to V8 (as in <code>[].forEach</code>).</li>
+<li><code>plain-filename.js:line:column</code>, if the frame represents a call internal
+to Node.js.</li>
+<li><code>/absolute/path/to/file.js:line:column</code>, if the frame represents a call in
+a user program (using CommonJS module system), or its dependencies.</li>
+<li><code>&lt;transport-protocol&gt;:///url/to/module/file.mjs:line:column</code>, if the frame
+represents a call in a user program (using ES module system), or
+its dependencies.</li>
+</ul><p>The string representing the stack trace is lazily generated when the
+<code>error.stack</code> property is <strong>accessed</strong>.</p><p>The number of frames captured by the stack trace is bounded by the smaller of
+<code>Error.stackTraceLimit</code> or the number of available frames on the current event
+loop tick.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

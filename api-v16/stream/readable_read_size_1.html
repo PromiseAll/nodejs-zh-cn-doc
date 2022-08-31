@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable._read(size) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable._read(size)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_read_size_1" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_read_size_1.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/readable_read_size_1.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readable_readsize.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.4</span>
+</div><ul class="">
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 异步地读取的字节数</li>
+</ul><p>此函数不得由应用程序代码直接调用。
+它应该由子类实现，并且只能由内部 <code>Readable</code> 类方法调用。</p><p class="">所有 <code>Readable</code> 流实现都必须提供 <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 方法的实现，以从底层资源中获取数据。</p><p class="">调用 <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 时，如果资源中的数据可用，则实现应开始使用 <a href="../stream.html#readablepushchunk-encoding"><code>this.push(dataChunk)</code></a> 方法将该数据推送到读取队列中。
+一旦流准备好接受更多数据，则 <code>_read()</code> 将在每次调用 <a href="../stream.html#readablepushchunk-encoding"><code>this.push(dataChunk)</code></a> 后再次调用。
+<code>_read()</code> 可能会继续从资源中读取并推送数据，直到 <code>readable.push()</code> 返回 <code>false</code>。
+只有当 <code>_read()</code> 停止后再次被调用时，它才能继续将额外的数据推入队列。</p><p class="">一旦调用了 <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 方法，则不会再次调用它，直到通过 <a href="../stream.html#readablepushchunk-encoding"><code>readable.push()</code></a> 方法推送更多数据。
+空缓冲区和字符串等空数据不会导致调用 <a href="../stream.html#readable_readsize"><code>readable._read()</code></a>。</p><p class=""><code>size</code> 参数是建议性的。
+对于“读取”是返回数据的单个操作的实现，可以使用 <code>size</code> 参数来确定要获取多少数据。
+其他实现可能会忽略此参数，并在数据可用时简单地提供数据。
+在调用 <a href="../stream.html#readablepushchunk-encoding"><code>stream.push(chunk)</code></a> 之前不需要“等待”直到 <code>size</code> 个字节可用。</p><p class=""><a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 方法以下划线为前缀，因为它是定义它的类的内部方法，不应由用户程序直接调用。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.4</span>
+</div><ul>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Number of bytes to read asynchronously</li>
+</ul><p>This function MUST NOT be called by application code directly. It should be
+implemented by child classes, and called by the internal <code>Readable</code> class
+methods only.</p><p>All <code>Readable</code> stream implementations must provide an implementation of the
+<a href="../stream.html#readable_readsize"><code>readable._read()</code></a> method to fetch data from the underlying resource.</p><p>When <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> is called, if data is available from the resource,
+the implementation should begin pushing that data into the read queue using the
+<a href="../stream.html#readablepushchunk-encoding"><code>this.push(dataChunk)</code></a> method. <code>_read()</code> will be called again
+after each call to <a href="../stream.html#readablepushchunk-encoding"><code>this.push(dataChunk)</code></a> once the stream is
+ready to accept more data. <code>_read()</code> may continue reading from the resource and
+pushing data until <code>readable.push()</code> returns <code>false</code>. Only when <code>_read()</code> is
+called again after it has stopped should it resume pushing additional data into
+the queue.</p><p>Once the <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> method has been called, it will not be called
+again until more data is pushed through the <a href="../stream.html#readablepushchunk-encoding"><code>readable.push()</code></a>
+method. Empty data such as empty buffers and strings will not cause
+<a href="../stream.html#readable_readsize"><code>readable._read()</code></a> to be called.</p><p>The <code>size</code> argument is advisory. For implementations where a "read" is a
+single operation that returns data can use the <code>size</code> argument to determine how
+much data to fetch. Other implementations may ignore this argument and simply
+provide data whenever it becomes available. There is no need to "wait" until
+<code>size</code> bytes are available before calling <a href="../stream.html#readablepushchunk-encoding"><code>stream.push(chunk)</code></a>.</p><p>The <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> method is prefixed with an underscore because it is
+internal to the class that defines it, and should never be called directly by
+user programs.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

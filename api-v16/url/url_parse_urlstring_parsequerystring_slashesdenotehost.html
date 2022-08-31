@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>url.parse(urlString[, parseQueryString[, slashesDenoteHost]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-url">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>url.parse(urlString[, parseQueryString[, slashesDenoteHost]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/url/url_parse_urlstring_parsequerystring_slashesdenotehost.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/url/url_parse_urlstring_parsequerystring_slashesdenotehost.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/url/#urlparseurlstring-parsequerystring-slashesdenotehost.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.13.0</td>
+<td><p>弃用已撤销。 状态更改为“旧版”。</p></td></tr>
+<tr><td>v11.14.0</td>
+<td><p>当没有路径且协议方案为 <code>ws:</code> 或 <code>wss:</code> 时，返回的网址对象上的 <code>pathname</code> 属性现在为 <code>/</code>。</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>旧版的网址 API 已弃用。 使用 WHATWG 网址 API。</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>当不存在查询字符串时，返回的网址对象上的 <code>search</code> 属性现在是 <code>null</code>。</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>新增于: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 WHATWG URL API 。</div><p></p><ul class="">
+<li><code>urlString</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要解析的 URL 字符串。</li>
+<li><code>parseQueryString</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则 <code>query</code> 属性将始终设置为 <a href="../querystring.html"><code>querystring</code></a> 模块的 <code>parse()</code> 方法返回的对象。
+如果为 <code>false</code>，则返回的网址对象上的 <code>query</code> 属性将是未解析、未解码的字符串。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>slashesDenoteHost</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则文字串 <code>//</code> 之后和下一个 <code>/</code> 之前的第一个令牌将被解释为 <code>host</code>。
+例如，给定 <code>//foo/bar</code>，结果将是 <code>{host: 'foo', pathname: '/bar'}</code> 而不是 <code>{pathname: '//foo/bar'}</code>。
+<strong>默认值:</strong> <code>false</code>。</li>
+</ul><p><code>url.parse()</code> 方法接受网址字符串，解析并返回网址对象。</p><p class="">如果 <code>urlString</code> 不是字符串，则抛出 <code>TypeError</code>。</p><p class="">如果 <code>auth</code> 属性存在但无法解码，则抛出 <code>URIError</code>。</p><p class=""><code>url.parse()</code> 使用一种宽松的、非标准的算法来解析 URL 字符串。
+容易出现<a href="https://hackerone.com/reports/678487" rel="nofollow">主机名欺骗</a>、用户名和密码处理不当等安全问题。</p><p class=""><code>url.parse()</code> 是大多数旧版 API 的例外。
+尽管存在安全问题，但它是旧版的，不会被弃用，因为它是：</p><ul class="">
+<li>比替代的 WHATWG <code>URL</code> 解析器更快。</li>
+<li>相对 URL 比替代的 WHATWG <code>URL</code> API 更易于使用。</li>
+<li>在 npm 生态系统中被广泛依赖。</li>
+</ul><p class="">谨慎使用。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.13.0</td>
+<td><p>Deprecation revoked. Status changed to "Legacy".</p></td></tr>
+<tr><td>v11.14.0</td>
+<td><p>The <code>pathname</code> property on the returned URL object is now <code>/</code> when there is no path and the protocol scheme is <code>ws:</code> or <code>wss:</code>.</p></td></tr>
+<tr><td>v11.0.0</td>
+<td><p>The Legacy URL API is deprecated. Use the WHATWG URL API.</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>The <code>search</code> property on the returned URL object is now <code>null</code> when no query string is present.</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>Added in: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">Stability: 3</a> - Legacy: Use the WHATWG URL API instead.</div><p></p><ul>
+<li><code>urlString</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The URL string to parse.</li>
+<li><code>parseQueryString</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, the <code>query</code> property will always
+be set to an object returned by the <a href="../querystring.html"><code>querystring</code></a> module's <code>parse()</code>
+method. If <code>false</code>, the <code>query</code> property on the returned URL object will be an
+unparsed, undecoded string. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>slashesDenoteHost</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, the first token after the literal
+string <code>//</code> and preceding the next <code>/</code> will be interpreted as the <code>host</code>.
+For instance, given <code>//foo/bar</code>, the result would be
+<code>{host: 'foo', pathname: '/bar'}</code> rather than <code>{pathname: '//foo/bar'}</code>.
+<strong>Default:</strong> <code>false</code>.</li>
+</ul><p>The <code>url.parse()</code> method takes a URL string, parses it, and returns a URL
+object.</p><p>A <code>TypeError</code> is thrown if <code>urlString</code> is not a string.</p><p>A <code>URIError</code> is thrown if the <code>auth</code> property is present but cannot be decoded.</p><p><code>url.parse()</code> uses a lenient, non-standard algorithm for parsing URL
+strings. It is prone to security issues such as <a href="https://hackerone.com/reports/678487" rel="nofollow">host name spoofing</a>
+and incorrect handling of usernames and passwords.</p><p><code>url.parse()</code> is an exception to most of the legacy APIs. Despite its security
+concerns, it is legacy and not deprecated because it is:</p><ul>
+<li>Faster than the alternative WHATWG <code>URL</code> parser.</li>
+<li>Easier to use with regards to relative URLs than the alternative WHATWG <code>URL</code> API.</li>
+<li>Widely relied upon within the npm ecosystem.</li>
+</ul><p>Use with caution.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

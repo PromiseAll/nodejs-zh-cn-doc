@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replServer.defineCommand(keyword, cmd) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-repl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>replServer.defineCommand(keyword, cmd)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../repl.html#repl_replserver_definecommand_keyword_cmd" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/repl/replserver_definecommand_keyword_cmd.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/repl/replserver_definecommand_keyword_cmd.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/repl/#replserverdefinecommandkeyword-cmd.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.3.0</span>
+</div><ul class="">
+<li><code>keyword</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 命令关键字（不带前导 <code>.</code> 字符）。</li>
+<li><code>cmd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当处理命令时调用的函数。</li>
+</ul><p><code>replServer.defineCommand()</code> 方法用于向 REPL 实例添加新的以 <code>.</code> 为前缀的命令。
+此类命令是通过键入 <code>.</code> 后跟 <code>keyword</code> 来调用的。
+<code>cmd</code> 是具有以下属性的 <code>Function</code> 或 <code>Object</code>：</p><ul class="">
+<li><code>help</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 当输入 <code>.help</code> 时显示的帮助文本（可选）。</li>
+<li><code>action</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 要执行的函数，可选择接受单个字符串参数。</li>
+</ul><p class="">以下示例显示了添加到 REPL 实例的两个新命令：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+
+<span class="hljs-keyword">const</span> replServer = repl.<span class="hljs-title function_">start</span>({ <span class="hljs-attr">prompt</span>: <span class="hljs-string">'&gt; '</span> });
+replServer.<span class="hljs-title function_">defineCommand</span>(<span class="hljs-string">'sayhello'</span>, {
+  <span class="hljs-attr">help</span>: <span class="hljs-string">'Say hello'</span>,
+  <span class="hljs-title function_">action</span>(<span class="hljs-params">name</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">clearBufferedCommand</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello, <span class="hljs-subst">${name}</span>!`</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">displayPrompt</span>();
+  }
+});
+replServer.<span class="hljs-title function_">defineCommand</span>(<span class="hljs-string">'saybye'</span>, <span class="hljs-keyword">function</span> <span class="hljs-title function_">saybye</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Goodbye!'</span>);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">close</span>();
+});</code></pre><p class="">然后可以在 REPL 实例中使用新命令：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">.sayhello Node.js User</span>
+Hello, Node.js User!
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">.saybye</span>
+Goodbye!</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.3.0</span>
+</div><ul>
+<li><code>keyword</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The command keyword (<em>without</em> a leading <code>.</code> character).</li>
+<li><code>cmd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The function to invoke when the command is processed.</li>
+</ul><p>The <code>replServer.defineCommand()</code> method is used to add new <code>.</code>-prefixed commands
+to the REPL instance. Such commands are invoked by typing a <code>.</code> followed by the
+<code>keyword</code>. The <code>cmd</code> is either a <code>Function</code> or an <code>Object</code> with the following
+properties:</p><ul>
+<li><code>help</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Help text to be displayed when <code>.help</code> is entered (Optional).</li>
+<li><code>action</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The function to execute, optionally accepting a single
+string argument.</li>
+</ul><p>The following example shows two new commands added to the REPL instance:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+
+<span class="hljs-keyword">const</span> replServer = repl.<span class="hljs-title function_">start</span>({ <span class="hljs-attr">prompt</span>: <span class="hljs-string">'&gt; '</span> });
+replServer.<span class="hljs-title function_">defineCommand</span>(<span class="hljs-string">'sayhello'</span>, {
+  <span class="hljs-attr">help</span>: <span class="hljs-string">'Say hello'</span>,
+  <span class="hljs-title function_">action</span>(<span class="hljs-params">name</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">clearBufferedCommand</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello, <span class="hljs-subst">${name}</span>!`</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">displayPrompt</span>();
+  }
+});
+replServer.<span class="hljs-title function_">defineCommand</span>(<span class="hljs-string">'saybye'</span>, <span class="hljs-keyword">function</span> <span class="hljs-title function_">saybye</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Goodbye!'</span>);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">close</span>();
+});</code></pre><p>The new commands can then be used from within the REPL instance:</p><pre><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">.sayhello Node.js User</span>
+Hello, Node.js User!
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">.saybye</span>
+Goodbye!</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

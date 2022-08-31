@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>vm.runInThisContext(code[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>vm.runInThisContext(code[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_vm_runinthiscontext_code_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/vm_runinthiscontext_code_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/vm_runinthiscontext_code_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#vmruninthiscontextcode-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>添加了对 <code>importModuleDynamically</code> 参数的导入断言的支持。</p></td></tr>
+<tr><td>v6.3.0</td>
+<td><p>现在支持 <code>breakOnSigint</code> 选项。</p></td></tr>
+<tr><td>v0.3.1</td>
+<td><p><span>新增于: v0.3.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要编译和运行的 JavaScript 代码。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指定此脚本生成的堆栈跟踪中使用的文件名。 <strong>默认值:</strong> <code>'evalmachine.&lt;anonymous&gt;'</code>。</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定在此脚本生成的堆栈跟踪中显示的行号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定在此脚本生成的堆栈跟踪中显示的第一行列号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>displayErrors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，如果编译 <code>code</code> 时出现 <a href="../errors.html#class-error"><code>Error</code></a>，则导致错误的代码行会附加到堆栈跟踪中。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 指定终止执行前执行 <code>code</code> 的毫秒数。
+如果执行终止，则将抛出 <a href="../errors.html#class-error"><code>Error</code></a>。
+此值必须是严格的正整数。</li>
+<li><code>breakOnSigint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则接收 <code>SIGINT</code>（<kbd>Ctrl</kbd>+<kbd>C</kbd>）将终止执行并抛出 <a href="../errors.html#class-error"><code>Error</code></a>。
+已通过 <code>process.on('SIGINT')</code> 附加的事件的现有句柄在脚本执行期间被禁用，但在此之后继续工作。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> 为所提供的源提供可选的 <code>Buffer</code> 或 <code>TypedArray</code> 或 <code>DataView</code>，其中包含 V8 的代码缓存数据。
+当提供时，<code>cachedDataRejected</code> 值将设置为 <code>true</code> 或 <code>false</code>，具体取决于 V8 对数据的接受程度。</li>
+<li><code>produceCachedData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当 <code>true</code> 且没有 <code>cachedData</code> 存在时，则 V8 将尝试为 <code>code</code> 生成代码缓存数据。
+当成功后，会生成带有 V8 代码缓存数据的 <code>Buffer</code> 并存储在返回的 <code>vm.Script</code> 实例的 <code>cachedData</code> 属性中。
+<code>cachedDataProduced</code> 值将设置为 <code>true</code> 或 <code>false</code>，这取决于代码缓存数据是否成功生成。
+此选项<strong>已弃用</strong>，支持 <code>script.createCachedData()</code>。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在调用 <code>import()</code> 时在评估此模块期间调用。
+如果未指定此选项，则调用 <code>import()</code> 将使用 <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a> 拒绝。
+此选项是实验模块 API 的一部分。
+不建议在生产环境中使用它。
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 传给 <code>import()</code> 的说明符</li>
+<li><code>script</code> <a href="../vm.html#class-vmscript" rel="nofollow" class="type">&lt;vm.Script&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 传给 <a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> 可选参数的 <code>"assert"</code> 值，如果没有提供值，则为空对象。</li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> 建议返回 <code>vm.Module</code> 以利用错误跟踪，并避免包含 <code>then</code> 函数导出的命名空间出现问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 脚本中执行的最后一条语句的结果。</li>
+</ul><p><code>vm.runInThisContext()</code> 编译 <code>code</code>，在当前 <code>global</code> 的上下文中运行它并返回结果。
+运行代码无权访问局部作用域，但可以访问当前 <code>global</code> 对象。</p><p class="">如果 <code>options</code> 是字符串，则指定文件名。</p><p class="">以下示例说明使用 <code>vm.runInThisContext()</code> 和 JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval" rel="nofollow"><code>eval()</code></a> 函数来运行相同的代码：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+<span class="hljs-keyword">let</span> localVar = <span class="hljs-string">'initial value'</span>;
+
+<span class="hljs-keyword">const</span> vmResult = vm.<span class="hljs-title function_">runInThisContext</span>(<span class="hljs-string">'localVar = "vm";'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`vmResult: '<span class="hljs-subst">${vmResult}</span>', localVar: '<span class="hljs-subst">${localVar}</span>'`</span>);
+<span class="hljs-comment">// 打印: vmResult: 'vm', localVar: 'initial value'</span>
+
+<span class="hljs-keyword">const</span> evalResult = <span class="hljs-built_in">eval</span>(<span class="hljs-string">'localVar = "eval";'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`evalResult: '<span class="hljs-subst">${evalResult}</span>', localVar: '<span class="hljs-subst">${localVar}</span>'`</span>);
+<span class="hljs-comment">// 打印: evalResult: 'eval', localVar: 'eval'</span></code></pre><p class="">因为 <code>vm.runInThisContext()</code> 无权访问本地作用域，所以 <code>localVar</code> 不变。
+相比之下，<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval" rel="nofollow"><code>eval()</code></a> 确实有权访问本地作用域，因此值 <code>localVar</code> 已更改。
+这样 <code>vm.runInThisContext()</code> 很像 <a href="https://es5.github.io/#x10.4.2" rel="nofollow">间接 <code>eval()</code> 调用</a>，例如 <code>(0,eval)('code')</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>Added support for import assertions to the <code>importModuleDynamically</code> parameter.</p></td></tr>
+<tr><td>v6.3.0</td>
+<td><p>The <code>breakOnSigint</code> option is supported now.</p></td></tr>
+<tr><td>v0.3.1</td>
+<td><p><span>Added in: v0.3.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The JavaScript code to compile and run.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Specifies the filename used in stack traces produced
+by this script. <strong>Default:</strong> <code>'evalmachine.&lt;anonymous&gt;'</code>.</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the line number offset that is displayed
+in stack traces produced by this script. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the first-line column number offset that
+is displayed in stack traces produced by this script. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>displayErrors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code>, if an <a href="../errors.html#class-error"><code>Error</code></a> occurs
+while compiling the <code>code</code>, the line of code causing the error is attached
+to the stack trace. <strong>Default:</strong> <code>true</code>.</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Specifies the number of milliseconds to execute <code>code</code>
+before terminating execution. If execution is terminated, an <a href="../errors.html#class-error"><code>Error</code></a>
+will be thrown. This value must be a strictly positive integer.</li>
+<li><code>breakOnSigint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, receiving <code>SIGINT</code>
+(<kbd>Ctrl</kbd>+<kbd>C</kbd>) will terminate execution and throw an
+<a href="../errors.html#class-error"><code>Error</code></a>. Existing handlers for the event that have been attached via
+<code>process.on('SIGINT')</code> are disabled during script execution, but continue to
+work after that. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> Provides an optional <code>Buffer</code> or
+<code>TypedArray</code>, or <code>DataView</code> with V8's code cache data for the supplied
+source. When supplied, the <code>cachedDataRejected</code> value will be set to
+either <code>true</code> or <code>false</code> depending on acceptance of the data by V8.</li>
+<li><code>produceCachedData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code> and no <code>cachedData</code> is present, V8
+will attempt to produce code cache data for <code>code</code>. Upon success, a
+<code>Buffer</code> with V8's code cache data will be produced and stored in the
+<code>cachedData</code> property of the returned <code>vm.Script</code> instance.
+The <code>cachedDataProduced</code> value will be set to either <code>true</code> or <code>false</code>
+depending on whether code cache data is produced successfully.
+This option is <strong>deprecated</strong> in favor of <code>script.createCachedData()</code>.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Called during evaluation of this module
+when <code>import()</code> is called. If this option is not specified, calls to
+<code>import()</code> will reject with <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a>.
+This option is part of the experimental modules API. We do not recommend
+using it in a production environment.
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> specifier passed to <code>import()</code></li>
+<li><code>script</code> <a href="../vm.html#class-vmscript" rel="nofollow" class="type">&lt;vm.Script&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The <code>"assert"</code> value passed to the
+<a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> optional parameter, or an empty object if no value
+was provided.</li>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> Returning a <code>vm.Module</code> is
+recommended in order to take advantage of error tracking, and to avoid
+issues with namespaces that contain <code>then</code> function exports.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> the result of the very last statement executed in the script.</li>
+</ul><p><code>vm.runInThisContext()</code> compiles <code>code</code>, runs it within the context of the
+current <code>global</code> and returns the result. Running code does not have access to
+local scope, but does have access to the current <code>global</code> object.</p><p>If <code>options</code> is a string, then it specifies the filename.</p><p>The following example illustrates using both <code>vm.runInThisContext()</code> and
+the JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval" rel="nofollow"><code>eval()</code></a> function to run the same code:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+<span class="hljs-keyword">let</span> localVar = <span class="hljs-string">'initial value'</span>;
+
+<span class="hljs-keyword">const</span> vmResult = vm.<span class="hljs-title function_">runInThisContext</span>(<span class="hljs-string">'localVar = "vm";'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`vmResult: '<span class="hljs-subst">${vmResult}</span>', localVar: '<span class="hljs-subst">${localVar}</span>'`</span>);
+<span class="hljs-comment">// Prints: vmResult: 'vm', localVar: 'initial value'</span>
+
+<span class="hljs-keyword">const</span> evalResult = <span class="hljs-built_in">eval</span>(<span class="hljs-string">'localVar = "eval";'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`evalResult: '<span class="hljs-subst">${evalResult}</span>', localVar: '<span class="hljs-subst">${localVar}</span>'`</span>);
+<span class="hljs-comment">// Prints: evalResult: 'eval', localVar: 'eval'</span></code></pre><p>Because <code>vm.runInThisContext()</code> does not have access to the local scope,
+<code>localVar</code> is unchanged. In contrast, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval" rel="nofollow"><code>eval()</code></a> <em>does</em> have access to the
+local scope, so the value <code>localVar</code> is changed. In this way
+<code>vm.runInThisContext()</code> is much like an <a href="https://es5.github.io/#x10.4.2" rel="nofollow">indirect <code>eval()</code> call</a>, e.g.
+<code>(0,eval)('code')</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

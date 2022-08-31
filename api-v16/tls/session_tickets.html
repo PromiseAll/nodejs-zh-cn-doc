@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>会话票证 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>会话票证</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_session_tickets" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/session_tickets.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/session_tickets.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#session-tickets.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>服务器加密整个会话状态并将其作为"票证"发送给客户端。
+当重新连接时，在初始连接时将状态发送到服务器。
+这种机制避免了服务器端会话缓存的需要。
+如果服务器不使用票证，出于任何原因（无法解密、太旧等），则它将创建新的会话并发送新的票证。
+请参阅 <a href="https://tools.ietf.org/html/rfc5077" rel="nofollow">RFC 5077</a> 了解更多信息。</p><p class="">当发出 HTTPS 请求时，许多网络浏览器普遍支持使用会话票证恢复。</p><p class="">对于 Node.js，客户端使用相同的 API 来恢复会话标识符和恢复会话票证。
+用于调试，如果 <a href="../tls.html#tlssocketgettlsticket"><code>tls.TLSSocket.getTLSTicket()</code></a> 返回值，则会话数据包含票证，否则包含客户端会话状态。</p><p class="">使用 TLSv1.3，请注意服务器可能会发送多个票证，从而导致多个 <code>'session'</code> 事件，请参阅 <a href="../tls.html#event-session"><code>'session'</code></a> 了解更多信息。</p><p class="">单进程服务器不需要特定的实现来使用会话票证。
+要在服务器重新启动或负载平衡器之间使用会话票证，服务器必须都具有相同的票证密钥。
+内部有三个 16 字节的密钥，但 tls API 为方便起见将它们公开为单个 48 字节的缓冲区。</p><p class="">可以通过在一个服务器实例上调用 <a href="../tls.html#servergetticketkeys"><code>server.getTicketKeys()</code></a> 来获取票证密钥然后分发它们，但是更合理的是安全地生成 48 字节的安全随机数据并使用 <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a> 的 <code>ticketKeys</code> 选项设置它们。
+应该定期重新生成密钥，并且可以使用 <a href="../tls.html#serversetticketkeyskeys"><code>server.setTicketKeys()</code></a> 重置服务器的密钥。</p><p class="">会话票证密钥是加密密钥，它们_<strong>必须安全存储</strong>_。
+使用 TLS 1.2 及更低版本，如果它们被泄露，所有使用用它们加密的票证的会话都可以解密。
+它们不应该存储在磁盘上，应该定期重新生成。</p><p class="">如果客户端宣传支持票证，则服务器将发送它们。
+服务器可以通过在 <code>secureOptions</code> 中提供 <code>require('constants').SSL_OP_NO_TICKET</code> 来禁用票证。</p><p class="">会话标识符和会话票证都超时，导致服务器创建新会话。
+超时时间可以用 <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a> 的 <code>sessionTimeout</code> 选项配置。</p><p class="">对于所有机制，当恢复失败时，服务器将创建新会话。
+由于无法恢复会话不会导致 TLS/HTTPS 连接失败，所以很容易不会注意到 TLS 性能不必要的糟糕。
+OpenSSL CLI 可用于验证服务器是否正在恢复会话。
+使用 <code>-reconnect</code> 选项到 <code>openssl s_client</code>，例如：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">openssl s_client -connect localhost:443 -reconnect</span></code></pre><p class="">通过调试输出读取。
+第一个连接应该说 "New"，例如：</p><pre class=""><code class="language-text">New, TLSv1.2, Cipher is ECDHE-RSA-AES128-GCM-SHA256</code></pre><p class="">后续连接应该说 "Reused"，例如：</p><pre class=""><code class="language-text">Reused, TLSv1.2, Cipher is ECDHE-RSA-AES128-GCM-SHA256</code></pre></div>
+          <div id="content_right"><p>The servers encrypt the entire session state and send it
+to the client as a "ticket". When reconnecting, the state is sent to the server
+in the initial connection. This mechanism avoids the need for server-side
+session cache. If the server doesn't use the ticket, for any reason (failure
+to decrypt it, it's too old, etc.), it will create a new session and send a new
+ticket. See <a href="https://tools.ietf.org/html/rfc5077" rel="nofollow">RFC 5077</a> for more information.</p><p>Resumption using session tickets is becoming commonly supported by many web
+browsers when making HTTPS requests.</p><p>For Node.js, clients use the same APIs for resumption with session identifiers
+as for resumption with session tickets. For debugging, if
+<a href="../tls.html#tlssocketgettlsticket"><code>tls.TLSSocket.getTLSTicket()</code></a> returns a value, the session data contains a
+ticket, otherwise it contains client-side session state.</p><p>With TLSv1.3, be aware that multiple tickets may be sent by the server,
+resulting in multiple <code>'session'</code> events, see <a href="../tls.html#event-session"><code>'session'</code></a> for more
+information.</p><p>Single process servers need no specific implementation to use session tickets.
+To use session tickets across server restarts or load balancers, servers must
+all have the same ticket keys. There are three 16-byte keys internally, but the
+tls API exposes them as a single 48-byte buffer for convenience.</p><p>It's possible to get the ticket keys by calling <a href="../tls.html#servergetticketkeys"><code>server.getTicketKeys()</code></a> on
+one server instance and then distribute them, but it is more reasonable to
+securely generate 48 bytes of secure random data and set them with the
+<code>ticketKeys</code> option of <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a>. The keys should be regularly
+regenerated and server's keys can be reset with
+<a href="../tls.html#serversetticketkeyskeys"><code>server.setTicketKeys()</code></a>.</p><p>Session ticket keys are cryptographic keys, and they <em><strong>must be stored
+securely</strong></em>. With TLS 1.2 and below, if they are compromised all sessions that
+used tickets encrypted with them can be decrypted. They should not be stored
+on disk, and they should be regenerated regularly.</p><p>If clients advertise support for tickets, the server will send them. The
+server can disable tickets by supplying
+<code>require('constants').SSL_OP_NO_TICKET</code> in <code>secureOptions</code>.</p><p>Both session identifiers and session tickets timeout, causing the server to
+create new sessions. The timeout can be configured with the <code>sessionTimeout</code>
+option of <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a>.</p><p>For all the mechanisms, when resumption fails, servers will create new sessions.
+Since failing to resume the session does not cause TLS/HTTPS connection
+failures, it is easy to not notice unnecessarily poor TLS performance. The
+OpenSSL CLI can be used to verify that servers are resuming sessions. Use the
+<code>-reconnect</code> option to <code>openssl s_client</code>, for example:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">openssl s_client -connect localhost:443 -reconnect</span></code></pre><p>Read through the debug output. The first connection should say "New", for
+example:</p><pre><code class="language-text">New, TLSv1.2, Cipher is ECDHE-RSA-AES128-GCM-SHA256</code></pre><p>Subsequent connections should say "Reused", for example:</p><pre><code class="language-text">Reused, TLSv1.2, Cipher is ECDHE-RSA-AES128-GCM-SHA256</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

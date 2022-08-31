@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>buf.slice([start[, end]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>buf.slice([start[, end]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buf_slice_start_end" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buf_slice_start_end.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buf_slice_start_end.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#bufslicestart-end.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.15.0</td>
+<td><p>buf.slice() 方法已被弃用。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>在进行任何计算之前，所有偏移量现在都被强制为整数。</p></td></tr>
+<tr><td>v7.1.0, v6.9.2</td>
+<td><p>将偏移量强制为整数现在可以正确处理 32 位整数范围之外的值。</p></td></tr>
+<tr><td>v0.3.0</td>
+<td><p><span>新增于: v0.3.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 新的 <code>Buffer</code> 将开始的位置。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 新的 <code>Buffer</code> 将结束的位置（不包括在内）。
+<strong>默认值:</strong> <a href="../buffer.html#buflength"><code>buf.length</code></a>.</li>
+<li>返回: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul><p></p><div class="api_stability api_stability_0"><a href="../documentation.html#stability-index">稳定性: 0</a> - 弃用: 改为使用 <a href="../buffer.html#bufsubarraystart-end"><code>buf.subarray</code></a> 。</div><p></p><p>返回新的 <code>Buffer</code>，其引用与原始缓冲区相同的内存，但由 <code>start</code> 和 <code>end</code> 索引进行偏移和裁剪。</p><p class="">此方法与 <code>Uint8Array.prototype.slice()</code>（<code>Buffer</code> 的超类）不兼容。
+要复制切片，则使用 <code>Uint8Array.prototype.slice()</code>。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> copiedBuf = <span class="hljs-title class_">Uint8Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">slice</span>.<span class="hljs-title function_">call</span>(buf);
+copiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(copiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: cuffer</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: buffer</span>
+
+<span class="hljs-comment">// 使用 buf.slice()，修改原始的缓冲区。</span>
+<span class="hljs-keyword">const</span> notReallyCopiedBuf = buf.<span class="hljs-title function_">slice</span>();
+notReallyCopiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(notReallyCopiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: cuffer</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 也打印: cuffer (!)</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> copiedBuf = <span class="hljs-title class_">Uint8Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">slice</span>.<span class="hljs-title function_">call</span>(buf);
+copiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(copiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: cuffer</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: buffer</span>
+
+<span class="hljs-comment">// 使用 buf.slice()，修改原始的缓冲区。</span>
+<span class="hljs-keyword">const</span> notReallyCopiedBuf = buf.<span class="hljs-title function_">slice</span>();
+notReallyCopiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(notReallyCopiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: cuffer</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 也打印: cuffer (!)</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.15.0</td>
+<td><p>The buf.slice() method has been deprecated.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>All offsets are now coerced to integers before doing any calculations with them.</p></td></tr>
+<tr><td>v7.1.0, v6.9.2</td>
+<td><p>Coercing the offsets to integers now handles values outside the 32-bit integer range properly.</p></td></tr>
+<tr><td>v0.3.0</td>
+<td><p><span>Added in: v0.3.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Where the new <code>Buffer</code> will start. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Where the new <code>Buffer</code> will end (not inclusive).
+<strong>Default:</strong> <a href="../buffer.html#buflength"><code>buf.length</code></a>.</li>
+<li>Returns: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul><p></p><div class="api_stability api_stability_0"><a href="../documentation.html#stability-index">Stability: 0</a> - Deprecated: Use <a href="../buffer.html#bufsubarraystart-end"><code>buf.subarray</code></a> instead.</div><p></p><p>Returns a new <code>Buffer</code> that references the same memory as the original, but
+offset and cropped by the <code>start</code> and <code>end</code> indices.</p><p>This method is not compatible with the <code>Uint8Array.prototype.slice()</code>,
+which is a superclass of <code>Buffer</code>. To copy the slice, use
+<code>Uint8Array.prototype.slice()</code>.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> copiedBuf = <span class="hljs-title class_">Uint8Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">slice</span>.<span class="hljs-title function_">call</span>(buf);
+copiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(copiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: cuffer</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: buffer</span>
+
+<span class="hljs-comment">// With buf.slice(), the original buffer is modified.</span>
+<span class="hljs-keyword">const</span> notReallyCopiedBuf = buf.<span class="hljs-title function_">slice</span>();
+notReallyCopiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(notReallyCopiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: cuffer</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Also prints: cuffer (!)</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> copiedBuf = <span class="hljs-title class_">Uint8Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">slice</span>.<span class="hljs-title function_">call</span>(buf);
+copiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(copiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: cuffer</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: buffer</span>
+
+<span class="hljs-comment">// With buf.slice(), the original buffer is modified.</span>
+<span class="hljs-keyword">const</span> notReallyCopiedBuf = buf.<span class="hljs-title function_">slice</span>();
+notReallyCopiedBuf[<span class="hljs-number">0</span>]++;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(notReallyCopiedBuf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: cuffer</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Also prints: cuffer (!)</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>捕捉 Promise 拒绝 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>捕捉 Promise 拒绝</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_capture_rejections_of_promises" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/capture_rejections_of_promises.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/capture_rejections_of_promises.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#capture-rejections-of-promises.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>将 <code>async</code> 函数与事件句柄一起使用是有问题的，因为它会在抛出异常的情况下导致未处理的拒绝：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+ee.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});</code></pre><p class=""><code>EventEmitter</code> 构造函数中的 <code>captureRejections</code> 选项或全局的设置可以改变这种行为，在 <code>Promise</code> 上安装 <code>.then(undefined, handler)</code> 句柄。
+此句柄将异常异步地路由到 <a href="../events.html#emittersymbolfornodejsrejectionerr-eventname-args"><code>Symbol.for('nodejs.rejection')</code></a> 方法（如果有）或 <a href="../events.html#error-events"><code>'error'</code></a> 事件句柄（如果没有）。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>({ <span class="hljs-attr">captureRejections</span>: <span class="hljs-literal">true</span> });
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);
+
+<span class="hljs-keyword">const</span> ee2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>({ <span class="hljs-attr">captureRejections</span>: <span class="hljs-literal">true</span> });
+ee2.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee2[<span class="hljs-title class_">Symbol</span>.<span class="hljs-title function_">for</span>(<span class="hljs-string">'nodejs.rejection'</span>)] = <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>;</code></pre><p class="">设置 <code>events.captureRejections = true</code> 将更改 <code>EventEmitter</code> 的所有新实例的默认值。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> events = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+events.<span class="hljs-property">captureRejections</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> events.<span class="hljs-title class_">EventEmitter</span>();
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);</code></pre><p class="">由 <code>captureRejections</code> 行为生成的 <code>'error'</code> 事件没有捕获句柄以避免无限的错误循环：建议不要使用 <code>async</code> 函数作为 <code>'error'</code> 事件句柄。</p></div>
+          <div id="content_right"><p>Using <code>async</code> functions with event handlers is problematic, because it
+can lead to an unhandled rejection in case of a thrown exception:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+ee.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});</code></pre><p>The <code>captureRejections</code> option in the <code>EventEmitter</code> constructor or the global
+setting change this behavior, installing a <code>.then(undefined, handler)</code>
+handler on the <code>Promise</code>. This handler routes the exception
+asynchronously to the <a href="../events.html#emittersymbolfornodejsrejectionerr-eventname-args"><code>Symbol.for('nodejs.rejection')</code></a> method
+if there is one, or to <a href="../events.html#error-events"><code>'error'</code></a> event handler if there is none.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>({ <span class="hljs-attr">captureRejections</span>: <span class="hljs-literal">true</span> });
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);
+
+<span class="hljs-keyword">const</span> ee2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>({ <span class="hljs-attr">captureRejections</span>: <span class="hljs-literal">true</span> });
+ee2.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee2[<span class="hljs-title class_">Symbol</span>.<span class="hljs-title function_">for</span>(<span class="hljs-string">'nodejs.rejection'</span>)] = <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>;</code></pre><p>Setting <code>events.captureRejections = true</code> will change the default for all
+new instances of <code>EventEmitter</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> events = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+events.<span class="hljs-property">captureRejections</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> events.<span class="hljs-title class_">EventEmitter</span>();
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);</code></pre><p>The <code>'error'</code> events that are generated by the <code>captureRejections</code> behavior
+do not have a catch handler to avoid infinite error loops: the
+recommendation is to <strong>not use <code>async</code> functions as <code>'error'</code> event handlers</strong>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

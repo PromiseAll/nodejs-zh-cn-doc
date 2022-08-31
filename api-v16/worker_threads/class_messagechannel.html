@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>MessageChannel 类 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-worker_threads">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>MessageChannel 类</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../worker_threads.html#worker_threads_class_messagechannel" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/worker_threads/class_messagechannel.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/worker_threads/class_messagechannel.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/worker_threads/#class-messagechannel.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v10.5.0</span>
+</div><p><code>worker.MessageChannel</code> 类的实例代表异步的双向通信通道。
+<code>MessageChannel</code> 没有自己的方法。
+<code>new MessageChannel()</code> 产生具有 <code>port1</code> 和 <code>port2</code> 属性的对象，其引用链接的 <a href="../worker_threads.html#class-messageport"><code>MessagePort</code></a> 实例。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+
+<span class="hljs-keyword">const</span> { port1, port2 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+port1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'received'</span>, message));
+port2.<span class="hljs-title function_">postMessage</span>({ <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span> });
+<span class="hljs-comment">// 从 `port1.on('message')` 监听器打印 received { foo: 'bar' }</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v10.5.0</span>
+</div><p>Instances of the <code>worker.MessageChannel</code> class represent an asynchronous,
+two-way communications channel.
+The <code>MessageChannel</code> has no methods of its own. <code>new MessageChannel()</code>
+yields an object with <code>port1</code> and <code>port2</code> properties, which refer to linked
+<a href="../worker_threads.html#class-messageport"><code>MessagePort</code></a> instances.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+
+<span class="hljs-keyword">const</span> { port1, port2 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+port1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'received'</span>, message));
+port2.<span class="hljs-title function_">postMessage</span>({ <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span> });
+<span class="hljs-comment">// Prints: received { foo: 'bar' } from the `port1.on('message')` listener</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

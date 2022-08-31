@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>两种读取模式 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>两种读取模式</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_two_reading_modes" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/two_reading_modes.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/two_reading_modes.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#two-reading-modes.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>Readable</code> 流以两种模式之一有效地运行：流动和暂停。
+这些模式与<a href="../stream.html#object-mode">对象模式</a>是分开的。
+<a href="../stream.html#class-streamreadable"><code>Readable</code></a> 流可以处于或不处于对象模式，无论其是处于流动模式还是暂停模式。</p><ul class="">
+<li>
+<p>在流动模式下，数据会自动从底层系统读取，并通过 <a href="../events.html#class-eventemitter"><code>EventEmitter</code></a> 接口使用事件尽快提供给应用程序。</p>
+</li>
+<li>
+<p>在暂停模式下，必须显式调用 <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> 方法以从流中读取数据块。</p>
+</li>
+</ul><p class="">所有的 <a href="../stream.html#class-streamreadable"><code>Readable</code></a> 流都以暂停模式开始，但可以通过以下方式之一切换到流动模式：</p><ul class="">
+<li>添加 <a href="../stream.html#event-data"><code>'data'</code></a> 事件句柄。</li>
+<li>调用 <a href="../stream.html#readableresume"><code>stream.resume()</code></a> 方法。</li>
+<li>调用 <a href="../stream.html#readablepipedestination-options"><code>stream.pipe()</code></a> 方法将数据发送到 <a href="../stream.html#class-streamwritable"><code>Writable</code></a>。</li>
+</ul><p class=""><code>Readable</code> 可以使用以下方法之一切换回暂停模式：</p><ul class="">
+<li>如果没有管道目标，则通过调用 <a href="../stream.html#readablepause"><code>stream.pause()</code></a> 方法。</li>
+<li>如果有管道目标，则删除所有管道目标。
+可以通过调用 <a href="../stream.html#readableunpipedestination"><code>stream.unpipe()</code></a> 方法删除多个管道目标。</li>
+</ul><p class="">要记住的重要概念是，在提供消费或忽略该数据的机制之前，<code>Readable</code> 不会产生数据。
+如果消费机制被禁用或移除，则 <code>Readable</code> 将尝试停止产生数据。</p><p class="">出于向后兼容性的原因，删除 <a href="../stream.html#event-data"><code>'data'</code></a> 事件句柄不会自动暂停流。
+此外，如果有管道目标，则调用 <a href="../stream.html#readablepause"><code>stream.pause()</code></a> 将不能保证一旦这些目标排空并要求更多数据，流将保持暂停状态。</p><p class="">如果 <a href="../stream.html#class-streamreadable"><code>Readable</code></a> 切换到流动模式并且没有消费者可用于处理数据，则数据将被丢失。
+例如，当调用 <code>readable.resume()</code> 方法而没有绑定到 <code>'data'</code> 事件的监听器时，或者当从流中删除 <code>'data'</code> 事件句柄时，就会发生这种情况。</p><p class="">添加 <a href="../stream.html#event-readable"><code>'readable'</code></a> 事件句柄会自动使流停止流动，并且必须通过 <a href="../stream.html#readablereadsize"><code>readable.read()</code></a> 来消费数据。
+如果删除了 <a href="../stream.html#event-readable"><code>'readable'</code></a> 事件句柄，则如果有 <a href="../stream.html#event-data"><code>'data'</code></a> 事件句柄，流将再次开始流动。</p></div>
+          <div id="content_right"><p><code>Readable</code> streams effectively operate in one of two modes: flowing and
+paused. These modes are separate from <a href="../stream.html#object-mode">object mode</a>.
+A <a href="../stream.html#class-streamreadable"><code>Readable</code></a> stream can be in object mode or not, regardless of whether
+it is in flowing mode or paused mode.</p><ul>
+<li>
+<p>In flowing mode, data is read from the underlying system automatically
+and provided to an application as quickly as possible using events via the
+<a href="../events.html#class-eventemitter"><code>EventEmitter</code></a> interface.</p>
+</li>
+<li>
+<p>In paused mode, the <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> method must be called
+explicitly to read chunks of data from the stream.</p>
+</li>
+</ul><p>All <a href="../stream.html#class-streamreadable"><code>Readable</code></a> streams begin in paused mode but can be switched to flowing
+mode in one of the following ways:</p><ul>
+<li>Adding a <a href="../stream.html#event-data"><code>'data'</code></a> event handler.</li>
+<li>Calling the <a href="../stream.html#readableresume"><code>stream.resume()</code></a> method.</li>
+<li>Calling the <a href="../stream.html#readablepipedestination-options"><code>stream.pipe()</code></a> method to send the data to a <a href="../stream.html#class-streamwritable"><code>Writable</code></a>.</li>
+</ul><p>The <code>Readable</code> can switch back to paused mode using one of the following:</p><ul>
+<li>If there are no pipe destinations, by calling the
+<a href="../stream.html#readablepause"><code>stream.pause()</code></a> method.</li>
+<li>If there are pipe destinations, by removing all pipe destinations.
+Multiple pipe destinations may be removed by calling the
+<a href="../stream.html#readableunpipedestination"><code>stream.unpipe()</code></a> method.</li>
+</ul><p>The important concept to remember is that a <code>Readable</code> will not generate data
+until a mechanism for either consuming or ignoring that data is provided. If
+the consuming mechanism is disabled or taken away, the <code>Readable</code> will <em>attempt</em>
+to stop generating the data.</p><p>For backward compatibility reasons, removing <a href="../stream.html#event-data"><code>'data'</code></a> event handlers will
+<strong>not</strong> automatically pause the stream. Also, if there are piped destinations,
+then calling <a href="../stream.html#readablepause"><code>stream.pause()</code></a> will not guarantee that the
+stream will <em>remain</em> paused once those destinations drain and ask for more data.</p><p>If a <a href="../stream.html#class-streamreadable"><code>Readable</code></a> is switched into flowing mode and there are no consumers
+available to handle the data, that data will be lost. This can occur, for
+instance, when the <code>readable.resume()</code> method is called without a listener
+attached to the <code>'data'</code> event, or when a <code>'data'</code> event handler is removed
+from the stream.</p><p>Adding a <a href="../stream.html#event-readable"><code>'readable'</code></a> event handler automatically makes the stream
+stop flowing, and the data has to be consumed via
+<a href="../stream.html#readablereadsize"><code>readable.read()</code></a>. If the <a href="../stream.html#event-readable"><code>'readable'</code></a> event handler is
+removed, then the stream will start flowing again if there is a
+<a href="../stream.html#event-data"><code>'data'</code></a> event handler.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

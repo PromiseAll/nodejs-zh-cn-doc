@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.emitWarning(warning[, type[, code]][, ctor]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.emitWarning(warning[, type[, code]][, ctor])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_emitwarning_warning_type_code_ctor" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_emitwarning_warning_type_code_ctor.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_emitwarning_warning_type_code_ctor.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processemitwarningwarning-type-code-ctor.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div><ul class="">
+<li><code>warning</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> 要触发的警告。</li>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 当 <code>warning</code> 是 <code>String</code> 时，<code>type</code> 是用于触发警告的 <em>type</em> 的名称。 <strong>默认值:</strong> <code>'Warning'</code>。</li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 触发的警告实例的唯一标识符。</li>
+<li><code>ctor</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当 <code>warning</code> 为 <code>String</code> 时，<code>ctor</code> 是可选函数，用于限制生成的堆栈跟踪。 <strong>默认值:</strong> <code>process.emitWarning</code>。</li>
+</ul><p><code>process.emitWarning()</code> 方法可用于触发自定义或特定于应用程序的进程警告。
+这些可以通过向 <a href="../process.html#event-warning"><code>'warning'</code></a> 事件添加句柄来监听。</p><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// 使用字符串触发警告。</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// 触发: (node: 56338) Warning: Something happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// 使用字符串触发警告。</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// 触发: (node: 56338) Warning: Something happened!</span></code></pre><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// 使用字符串和类型触发警告。</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something Happened!'</span>, <span class="hljs-string">'CustomWarning'</span>);
+<span class="hljs-comment">// 触发: (node:56338) CustomWarning: Something Happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// 使用字符串和类型触发警告。</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something Happened!'</span>, <span class="hljs-string">'CustomWarning'</span>);
+<span class="hljs-comment">// 触发: (node:56338) CustomWarning: Something Happened!</span></code></pre><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>, <span class="hljs-string">'CustomWarning'</span>, <span class="hljs-string">'WARN001'</span>);
+<span class="hljs-comment">// 触发: (node:56338) [WARN001] CustomWarning: Something happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>, <span class="hljs-string">'CustomWarning'</span>, <span class="hljs-string">'WARN001'</span>);
+<span class="hljs-comment">// 触发: (node:56338) [WARN001] CustomWarning: Something happened!</span></code></pre><p class="">在前面的每个示例中，<code>Error</code> 对象由 <code>process.emitWarning()</code> 在内部生成并传给 <a href="../process.html#event-warning"><code>'warning'</code></a> 句柄。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'warning'</span>, <span class="hljs-function">(<span class="hljs-params">warning</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">name</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">message</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">code</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">stack</span>);
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'warning'</span>, <span class="hljs-function">(<span class="hljs-params">warning</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">name</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">message</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">code</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">stack</span>);
+});</code></pre><p class="">如果 <code>warning</code> 作为 <code>Error</code> 对象传入，则它将被不加修改地传给 <code>'warning'</code> 事件句柄（并且可选的 <code>type</code>、<code>code</code> 和 <code>ctor</code> 参数将被忽略）：</p><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// 使用 Error 对象触发警告。</span>
+<span class="hljs-keyword">const</span> myWarning = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// 使用错误名称属性指定类型名称</span>
+myWarning.<span class="hljs-property">name</span> = <span class="hljs-string">'CustomWarning'</span>;
+myWarning.<span class="hljs-property">code</span> = <span class="hljs-string">'WARN001'</span>;
+
+<span class="hljs-title function_">emitWarning</span>(myWarning);
+<span class="hljs-comment">// 触发: (node:56338) [WARN001] CustomWarning: Something happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// 使用 Error 对象触发警告。</span>
+<span class="hljs-keyword">const</span> myWarning = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// 使用错误名称属性指定类型名称</span>
+myWarning.<span class="hljs-property">name</span> = <span class="hljs-string">'CustomWarning'</span>;
+myWarning.<span class="hljs-property">code</span> = <span class="hljs-string">'WARN001'</span>;
+
+<span class="hljs-title function_">emitWarning</span>(myWarning);
+<span class="hljs-comment">// 触发: (node:56338) [WARN001] CustomWarning: Something happened!</span></code></pre><p class="">如果 <code>warning</code> 不是字符串或 <code>Error</code> 对象，则抛出 <code>TypeError</code>。</p><p class="">虽然进程警告使用 <code>Error</code> 对象，但进程警告机制<strong>不是</strong>替代正常错误处理机制。</p><p class="">如果警告 <code>type</code> 为 <code>'DeprecationWarning'</code>，则执行以下额外处理：</p><ul class="">
+<li>如果使用 <code>--throw-deprecation</code> 命令行标志，则弃用警告将作为异常抛出，而不是作为事件触发。</li>
+<li>如果使用 <code>--no-deprecation</code> 命令行标志，则会取消弃用警告。</li>
+<li>如果使用 <code>--trace-deprecation</code> 命令行标志，则弃用警告将与完整堆栈跟踪一起打印到 <code>stderr</code>。</li>
+</ul></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v6.0.0</span>
+</div><ul>
+<li><code>warning</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> The warning to emit.</li>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> When <code>warning</code> is a <code>String</code>, <code>type</code> is the name to use
+for the <em>type</em> of warning being emitted. <strong>Default:</strong> <code>'Warning'</code>.</li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A unique identifier for the warning instance being emitted.</li>
+<li><code>ctor</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> When <code>warning</code> is a <code>String</code>, <code>ctor</code> is an optional
+function used to limit the generated stack trace. <strong>Default:</strong>
+<code>process.emitWarning</code>.</li>
+</ul><p>The <code>process.emitWarning()</code> method can be used to emit custom or application
+specific process warnings. These can be listened for by adding a handler to the
+<a href="../process.html#event-warning"><code>'warning'</code></a> event.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// Emit a warning using a string.</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// Emits: (node: 56338) Warning: Something happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// Emit a warning using a string.</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// Emits: (node: 56338) Warning: Something happened!</span></code></pre><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// Emit a warning using a string and a type.</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something Happened!'</span>, <span class="hljs-string">'CustomWarning'</span>);
+<span class="hljs-comment">// Emits: (node:56338) CustomWarning: Something Happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// Emit a warning using a string and a type.</span>
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something Happened!'</span>, <span class="hljs-string">'CustomWarning'</span>);
+<span class="hljs-comment">// Emits: (node:56338) CustomWarning: Something Happened!</span></code></pre><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>, <span class="hljs-string">'CustomWarning'</span>, <span class="hljs-string">'WARN001'</span>);
+<span class="hljs-comment">// Emits: (node:56338) [WARN001] CustomWarning: Something happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">emitWarning</span>(<span class="hljs-string">'Something happened!'</span>, <span class="hljs-string">'CustomWarning'</span>, <span class="hljs-string">'WARN001'</span>);
+<span class="hljs-comment">// Emits: (node:56338) [WARN001] CustomWarning: Something happened!</span></code></pre><p>In each of the previous examples, an <code>Error</code> object is generated internally by
+<code>process.emitWarning()</code> and passed through to the <a href="../process.html#event-warning"><code>'warning'</code></a>
+handler.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'warning'</span>, <span class="hljs-function">(<span class="hljs-params">warning</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">name</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">message</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">code</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">stack</span>);
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'warning'</span>, <span class="hljs-function">(<span class="hljs-params">warning</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">name</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">message</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">code</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(warning.<span class="hljs-property">stack</span>);
+});</code></pre><p>If <code>warning</code> is passed as an <code>Error</code> object, it will be passed through to the
+<code>'warning'</code> event handler unmodified (and the optional <code>type</code>,
+<code>code</code> and <code>ctor</code> arguments will be ignored):</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { emitWarning } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-comment">// Emit a warning using an Error object.</span>
+<span class="hljs-keyword">const</span> myWarning = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// Use the Error name property to specify the type name</span>
+myWarning.<span class="hljs-property">name</span> = <span class="hljs-string">'CustomWarning'</span>;
+myWarning.<span class="hljs-property">code</span> = <span class="hljs-string">'WARN001'</span>;
+
+<span class="hljs-title function_">emitWarning</span>(myWarning);
+<span class="hljs-comment">// Emits: (node:56338) [WARN001] CustomWarning: Something happened!</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { emitWarning } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-comment">// Emit a warning using an Error object.</span>
+<span class="hljs-keyword">const</span> myWarning = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Something happened!'</span>);
+<span class="hljs-comment">// Use the Error name property to specify the type name</span>
+myWarning.<span class="hljs-property">name</span> = <span class="hljs-string">'CustomWarning'</span>;
+myWarning.<span class="hljs-property">code</span> = <span class="hljs-string">'WARN001'</span>;
+
+<span class="hljs-title function_">emitWarning</span>(myWarning);
+<span class="hljs-comment">// Emits: (node:56338) [WARN001] CustomWarning: Something happened!</span></code></pre><p>A <code>TypeError</code> is thrown if <code>warning</code> is anything other than a string or <code>Error</code>
+object.</p><p>While process warnings use <code>Error</code> objects, the process warning
+mechanism is <strong>not</strong> a replacement for normal error handling mechanisms.</p><p>The following additional handling is implemented if the warning <code>type</code> is
+<code>'DeprecationWarning'</code>:</p><ul>
+<li>If the <code>--throw-deprecation</code> command-line flag is used, the deprecation
+warning is thrown as an exception rather than being emitted as an event.</li>
+<li>If the <code>--no-deprecation</code> command-line flag is used, the deprecation
+warning is suppressed.</li>
+<li>If the <code>--trace-deprecation</code> command-line flag is used, the deprecation
+warning is printed to <code>stderr</code> along with the full stack trace.</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

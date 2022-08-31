@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'clientError' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'clientError' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_event_clienterror" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/event_clienterror.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/event_clienterror.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#event-clienterror.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v12.0.0</td>
+<td><p>如果发生 HPE_HEADER_OVERFLOW 错误，则默认行为将返回 431 Request Header Fields Too Large。</p></td></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>rawPacket</code> 是刚刚解析的当前缓冲区。 将此缓冲区添加到 <code>'clientError'</code> 事件的错误对象是为了让开发人员可以记录损坏的数据包。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>如果为 <code>'clientError'</code> 附加了监听器，则将不再发生在 <code>socket</code> 上调用 <code>.destroy()</code> 的默认操作。</p></td></tr>
+<tr><td>v0.1.94</td>
+<td><p><span>新增于: v0.1.94</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>exception</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>socket</code> <a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a></li>
+</ul><p>如果客户端连接触发 <code>'error'</code> 事件，则会在此处转发。
+此事件的监听器负责关闭/销毁底层套接字。
+例如，可能希望使用自定义 HTTP 响应更优雅地关闭套接字，而不是突然切断连接。</p><p class="">除非用户指定 <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 以外的套接字类型，否则此事件保证传入 <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 类（<a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a> 的子类）的实例。</p><p class="">默认行为是在 <a href="../errors.html#hpe_header_overflow"><code>HPE_HEADER_OVERFLOW</code></a> 错误的情况下尝试使用 HTTP '400 Bad Request' 或 HTTP '431 Request Header Fields Too Large' 关闭套接字。
+如果套接字不可写或已经写入数据，则会立即被销毁。</p><p class=""><code>socket</code> 是错误源自的 <a href="../net.html#class-netsocket"><code>net.Socket</code></a> 对象。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">end</span>();
+});
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'clientError'</span>, <span class="hljs-function">(<span class="hljs-params">err, socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'HTTP/1.1 400 Bad Request\r\n\r\n'</span>);
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre><p class="">当 <code>'clientError'</code> 事件发生时，没有 <code>request</code> 或 <code>response</code> 对象，因此发送的任何 HTTP 响应，包括响应头和有效负载，都必须直接写入 <code>socket</code> 对象。
+必须注意确保响应是格式正确的 HTTP 响应消息。</p><p class=""><code>err</code> 是 <code>Error</code> 的实例，有两个额外的列：</p><ul class="">
+<li><code>bytesParsed</code>: Node.js 可能正确解析的请求数据包的字节数；</li>
+<li><code>rawPacket</code>: 当前请求的原始数据包。</li>
+</ul><p class="">在某些情况下，客户端已经收到响应和/或套接字已经被销毁，例如 <code>ECONNRESET</code> 错误。
+在尝试向套接字发送数据之前，最好检查它是否仍然可写。</p><pre class=""><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'clientError'</span>, <span class="hljs-function">(<span class="hljs-params">err, socket</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err.<span class="hljs-property">code</span> === <span class="hljs-string">'ECONNRESET'</span> || !socket.<span class="hljs-property">writable</span>) {
+    <span class="hljs-keyword">return</span>;
+  }
+
+  socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'HTTP/1.1 400 Bad Request\r\n\r\n'</span>);
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v12.0.0</td>
+<td><p>The default behavior will return a 431 Request Header Fields Too Large if a HPE_HEADER_OVERFLOW error occurs.</p></td></tr>
+<tr><td>v9.4.0</td>
+<td><p>The <code>rawPacket</code> is the current buffer that just parsed. Adding this buffer to the error object of <code>'clientError'</code> event is to make it possible that developers can log the broken packet.</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>The default action of calling <code>.destroy()</code> on the <code>socket</code> will no longer take place if there are listeners attached for <code>'clientError'</code>.</p></td></tr>
+<tr><td>v0.1.94</td>
+<td><p><span>Added in: v0.1.94</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>exception</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>socket</code> <a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a></li>
+</ul><p>If a client connection emits an <code>'error'</code> event, it will be forwarded here.
+Listener of this event is responsible for closing/destroying the underlying
+socket. For example, one may wish to more gracefully close the socket with a
+custom HTTP response instead of abruptly severing the connection.</p><p>This event is guaranteed to be passed an instance of the <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> class,
+a subclass of <a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a>, unless the user specifies a socket
+type other than <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a>.</p><p>Default behavior is to try close the socket with a HTTP '400 Bad Request',
+or a HTTP '431 Request Header Fields Too Large' in the case of a
+<a href="../errors.html#hpe_header_overflow"><code>HPE_HEADER_OVERFLOW</code></a> error. If the socket is not writable or has already
+written data it is immediately destroyed.</p><p><code>socket</code> is the <a href="../net.html#class-netsocket"><code>net.Socket</code></a> object that the error originated from.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">end</span>();
+});
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'clientError'</span>, <span class="hljs-function">(<span class="hljs-params">err, socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'HTTP/1.1 400 Bad Request\r\n\r\n'</span>);
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre><p>When the <code>'clientError'</code> event occurs, there is no <code>request</code> or <code>response</code>
+object, so any HTTP response sent, including response headers and payload,
+<em>must</em> be written directly to the <code>socket</code> object. Care must be taken to
+ensure the response is a properly formatted HTTP response message.</p><p><code>err</code> is an instance of <code>Error</code> with two extra columns:</p><ul>
+<li><code>bytesParsed</code>: the bytes count of request packet that Node.js may have parsed
+correctly;</li>
+<li><code>rawPacket</code>: the raw packet of current request.</li>
+</ul><p>In some cases, the client has already received the response and/or the socket
+has already been destroyed, like in case of <code>ECONNRESET</code> errors. Before
+trying to send data to the socket, it is better to check that it is still
+writable.</p><pre><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'clientError'</span>, <span class="hljs-function">(<span class="hljs-params">err, socket</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err.<span class="hljs-property">code</span> === <span class="hljs-string">'ECONNRESET'</span> || !socket.<span class="hljs-property">writable</span>) {
+    <span class="hljs-keyword">return</span>;
+  }
+
+  socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'HTTP/1.1 400 Bad Request\r\n\r\n'</span>);
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

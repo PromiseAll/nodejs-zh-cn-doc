@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>dnsPromises.setServers(servers) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dns">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>dnsPromises.setServers(servers)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dns.html#dns_dnspromises_setservers_servers" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dns/dnspromises_setservers_servers.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dns/dnspromises_setservers_servers.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dns/#dnspromisessetserversservers.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v10.6.0</span>
+</div><ul class="">
+<li><code>servers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> <a href="https://tools.ietf.org/html/rfc5952#section-6" rel="nofollow">RFC 5952</a> 格式的地址数组</li>
+</ul><p>设置执行 DNS 解析时要使用的服务器的 IP 地址和端口。
+<code>servers</code> 参数是 <a href="https://tools.ietf.org/html/rfc5952#section-6" rel="nofollow">RFC 5952</a> 格式的地址数组。
+如果端口是 IANA 默认 DNS 端口 (53)，则可以省略。</p><pre class=""><code class="language-js">dnsPromises.<span class="hljs-title function_">setServers</span>([
+  <span class="hljs-string">'4.4.4.4'</span>,
+  <span class="hljs-string">'[2001:4860:4860::8888]'</span>,
+  <span class="hljs-string">'4.4.4.4:1053'</span>,
+  <span class="hljs-string">'[2001:4860:4860::8888]:1053'</span>,
+]);</code></pre><p class="">如果提供的地址无效，则会抛出错误。</p><p class="">在进行域名系统查询时不得调用 <code>dnsPromises.setServers()</code> 方法。</p><p class="">此方法的工作方式与 <a href="https://man7.org/linux/man-pages/man5/resolv.conf.5.html" rel="nofollow">resolve.conf</a> 非常相似。
+也就是说，如果尝试使用提供的第一个服务器进行解析导致 <code>NOTFOUND</code> 错误，则 <code>resolve()</code> 方法将不会尝试使用提供的后续服务器进行解析。
+仅当较早的域名系统服务器超时或导致其他错误时，才会使用后备域名系统服务器。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v10.6.0</span>
+</div><ul>
+<li><code>servers</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> array of <a href="https://tools.ietf.org/html/rfc5952#section-6" rel="nofollow">RFC 5952</a> formatted addresses</li>
+</ul><p>Sets the IP address and port of servers to be used when performing DNS
+resolution. The <code>servers</code> argument is an array of <a href="https://tools.ietf.org/html/rfc5952#section-6" rel="nofollow">RFC 5952</a> formatted
+addresses. If the port is the IANA default DNS port (53) it can be omitted.</p><pre><code class="language-js">dnsPromises.<span class="hljs-title function_">setServers</span>([
+  <span class="hljs-string">'4.4.4.4'</span>,
+  <span class="hljs-string">'[2001:4860:4860::8888]'</span>,
+  <span class="hljs-string">'4.4.4.4:1053'</span>,
+  <span class="hljs-string">'[2001:4860:4860::8888]:1053'</span>,
+]);</code></pre><p>An error will be thrown if an invalid address is provided.</p><p>The <code>dnsPromises.setServers()</code> method must not be called while a DNS query is in
+progress.</p><p>This method works much like
+<a href="https://man7.org/linux/man-pages/man5/resolv.conf.5.html" rel="nofollow">resolve.conf</a>.
+That is, if attempting to resolve with the first server provided results in a
+<code>NOTFOUND</code> error, the <code>resolve()</code> method will <em>not</em> attempt to resolve with
+subsequent servers provided. Fallback DNS servers will only be used if the
+earlier ones time out or result in some other error.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'keylog' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'keylog' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_event_keylog_1" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/event_keylog_1.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/event_keylog_1.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#event-keylog_1.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v12.3.0, v10.20.0</span>
+</div><ul class="">
+<li><code>line</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> ASCII 文本行，采用 NSS <code>SSLKEYLOGFILE</code> 格式。</li>
+</ul><p>当套接字生成或接收密钥材料时，<code>keylog</code> 事件在 <code>tls.TLSSocket</code> 上触发。
+该密钥材料可以存储用于调试，因为它允许对捕获的 TLS 流量进行解密。
+它可能会在握手完成之前或之后多次触发。</p><p class="">一个典型的用例是将接收到的行附加到公共文本文件中，稍后软件（例如 Wireshark）使用它来解密流量：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> logFile = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'/tmp/ssl-keys.log'</span>, { <span class="hljs-attr">flags</span>: <span class="hljs-string">'a'</span> });
+<span class="hljs-comment">// ...</span>
+tlsSocket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'keylog'</span>, <span class="hljs-function">(<span class="hljs-params">line</span>) =&gt;</span> logFile.<span class="hljs-title function_">write</span>(line));</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v12.3.0, v10.20.0</span>
+</div><ul>
+<li><code>line</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> Line of ASCII text, in NSS <code>SSLKEYLOGFILE</code> format.</li>
+</ul><p>The <code>keylog</code> event is emitted on a <code>tls.TLSSocket</code> when key material
+is generated or received by the socket. This keying material can be stored
+for debugging, as it allows captured TLS traffic to be decrypted. It may
+be emitted multiple times, before or after the handshake completes.</p><p>A typical use case is to append received lines to a common text file, which
+is later used by software (such as Wireshark) to decrypt the traffic:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> logFile = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'/tmp/ssl-keys.log'</span>, { <span class="hljs-attr">flags</span>: <span class="hljs-string">'a'</span> });
+<span class="hljs-comment">// ...</span>
+tlsSocket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'keylog'</span>, <span class="hljs-function">(<span class="hljs-params">line</span>) =&gt;</span> logFile.<span class="hljs-title function_">write</span>(line));</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

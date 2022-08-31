@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>module.syncBuiltinESMExports() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-module">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>module.syncBuiltinESMExports()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../module.html#module_module_syncbuiltinesmexports" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/module/module_syncbuiltinesmexports.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/module/module_syncbuiltinesmexports.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/module/#modulesyncbuiltinesmexports.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v12.12.0</span>
+</div><p><code>module.syncBuiltinESMExports()</code> 方法更新内置的 <a href="../esm.html">ES 模块</a>的所有实时绑定，以匹配 <a href="../modules.html">CommonJS</a> 导出的属性。
+它不会在 <a href="../esm.html">ES 模块</a>中添加或删除导出的名称。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> { syncBuiltinESMExports } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'module'</span>);
+
+fs.<span class="hljs-property">readFile</span> = newAPI;
+
+<span class="hljs-keyword">delete</span> fs.<span class="hljs-property">readFileSync</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">newAPI</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// ...</span>
+}
+
+fs.<span class="hljs-property">newAPI</span> = newAPI;
+
+<span class="hljs-title function_">syncBuiltinESMExports</span>();
+
+<span class="hljs-title function_">import</span>(<span class="hljs-string">'fs'</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">esmFS</span>) =&gt;</span> {
+  <span class="hljs-comment">// 它将现有的 readFile 属性与新值同步</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(esmFS.<span class="hljs-property">readFile</span>, newAPI);
+  <span class="hljs-comment">// readFileSync 已从所需的 fs 中删除</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-string">'readFileSync'</span> <span class="hljs-keyword">in</span> fs, <span class="hljs-literal">false</span>);
+  <span class="hljs-comment">// syncBuiltinESMExports() 不会从 esmFS 中删除 readFileSync</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-string">'readFileSync'</span> <span class="hljs-keyword">in</span> esmFS, <span class="hljs-literal">true</span>);
+  <span class="hljs-comment">// syncBuiltinESMExports() 不添加名称</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(esmFS.<span class="hljs-property">newAPI</span>, <span class="hljs-literal">undefined</span>);
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v12.12.0</span>
+</div><p>The <code>module.syncBuiltinESMExports()</code> method updates all the live bindings for
+builtin <a href="../esm.html">ES Modules</a> to match the properties of the <a href="../modules.html">CommonJS</a> exports. It
+does not add or remove exported names from the <a href="../esm.html">ES Modules</a>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> { syncBuiltinESMExports } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'module'</span>);
+
+fs.<span class="hljs-property">readFile</span> = newAPI;
+
+<span class="hljs-keyword">delete</span> fs.<span class="hljs-property">readFileSync</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">newAPI</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// ...</span>
+}
+
+fs.<span class="hljs-property">newAPI</span> = newAPI;
+
+<span class="hljs-title function_">syncBuiltinESMExports</span>();
+
+<span class="hljs-title function_">import</span>(<span class="hljs-string">'fs'</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">esmFS</span>) =&gt;</span> {
+  <span class="hljs-comment">// It syncs the existing readFile property with the new value</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(esmFS.<span class="hljs-property">readFile</span>, newAPI);
+  <span class="hljs-comment">// readFileSync has been deleted from the required fs</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-string">'readFileSync'</span> <span class="hljs-keyword">in</span> fs, <span class="hljs-literal">false</span>);
+  <span class="hljs-comment">// syncBuiltinESMExports() does not remove readFileSync from esmFS</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-string">'readFileSync'</span> <span class="hljs-keyword">in</span> esmFS, <span class="hljs-literal">true</span>);
+  <span class="hljs-comment">// syncBuiltinESMExports() does not add names</span>
+  assert.<span class="hljs-title function_">strictEqual</span>(esmFS.<span class="hljs-property">newAPI</span>, <span class="hljs-literal">undefined</span>);
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

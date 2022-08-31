@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>promiseResolve(asyncId) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>promiseResolve(asyncId)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_promiseresolve_asyncid" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/promiseresolve_asyncid.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/promiseresolve_asyncid.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#promiseresolveasyncid.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v8.6.0</span>
+</div><ul class="">
+<li><code>asyncId</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul><p>当调用传给 <code>Promise</code> 构造函数的 <code>resolve</code> 函数时调用（直接或通过其他解决 promise 的方法）。</p><p class=""><code>resolve()</code> 不做任何可观察到的同步工作。</p><p class="">如果 <code>Promise</code> 是通过假设另一个 <code>Promise</code> 的状态来解决的，则此时 <code>Promise</code> 不一定满足或拒绝。</p><pre class=""><code class="language-js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-literal">true</span>)).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> {});</code></pre><p class="">调用以下回调：</p><pre class=""><code class="language-text">init for PROMISE with id 5, trigger id: 1
+  promise resolve 5      # 对应于 resolve(true)
+init for PROMISE with id 6, trigger id: 5  # then() 返回的 Promise
+  before 6               # 输入 then() 回调
+  promise resolve 6      # then() 回调通过返回来解决 promise
+  after 6</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v8.6.0</span>
+</div><ul>
+<li><code>asyncId</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul><p>Called when the <code>resolve</code> function passed to the <code>Promise</code> constructor is
+invoked (either directly or through other means of resolving a promise).</p><p><code>resolve()</code> does not do any observable synchronous work.</p><p>The <code>Promise</code> is not necessarily fulfilled or rejected at this point if the
+<code>Promise</code> was resolved by assuming the state of another <code>Promise</code>.</p><pre><code class="language-js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-literal">true</span>)).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> {});</code></pre><p>calls the following callbacks:</p><pre><code class="language-text">init for PROMISE with id 5, trigger id: 1
+  promise resolve 5      # corresponds to resolve(true)
+init for PROMISE with id 6, trigger id: 5  # the Promise returned by then()
+  before 6               # the then() callback is entered
+  promise resolve 6      # the then() callback resolves the promise by returning
+  after 6</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

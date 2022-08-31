@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>writable.cork() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>writable.cork()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_writable_cork" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/writable_cork.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/writable_cork.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#writablecork.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.11.2</span>
+</div><p><code>writable.cork()</code> 方法强制所有写入的数据都缓存在内存中。
+当调用 <a href="../stream.html#writableuncork"><code>stream.uncork()</code></a> 或 <a href="../stream.html#writableendchunk-encoding-callback"><code>stream.end()</code></a> 方法时，缓冲的数据将被刷新。</p><p class=""><code>writable.cork()</code> 的主要目的是适应将几个小块快速连续写入流的情况。
+<code>writable.cork()</code> 不是立即将它们转发到底层目标，而是缓冲所有块，直到 <code>writable.uncork()</code> 被调用，如果存在，<code>writable.uncork()</code> 会将它们全部传给 <code>writable._writev()</code>。
+这可以防止在等待处理第一个小块时正在缓冲数据的行头阻塞情况。
+但是，在不实现 <code>writable._writev()</code> 的情况下使用 <code>writable.cork()</code> 可能会对吞吐量产生不利影响。</p><p class="">另请参阅：<a href="../stream.html#writableuncork"><code>writable.uncork()</code></a>、<a href="../stream.html#writable_writevchunks-callback"><code>writable._writev()</code></a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.11.2</span>
+</div><p>The <code>writable.cork()</code> method forces all written data to be buffered in memory.
+The buffered data will be flushed when either the <a href="../stream.html#writableuncork"><code>stream.uncork()</code></a> or
+<a href="../stream.html#writableendchunk-encoding-callback"><code>stream.end()</code></a> methods are called.</p><p>The primary intent of <code>writable.cork()</code> is to accommodate a situation in which
+several small chunks are written to the stream in rapid succession. Instead of
+immediately forwarding them to the underlying destination, <code>writable.cork()</code>
+buffers all the chunks until <code>writable.uncork()</code> is called, which will pass them
+all to <code>writable._writev()</code>, if present. This prevents a head-of-line blocking
+situation where data is being buffered while waiting for the first small chunk
+to be processed. However, use of <code>writable.cork()</code> without implementing
+<code>writable._writev()</code> may have an adverse effect on throughput.</p><p>See also: <a href="../stream.html#writableuncork"><code>writable.uncork()</code></a>, <a href="../stream.html#writable_writevchunks-callback"><code>writable._writev()</code></a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

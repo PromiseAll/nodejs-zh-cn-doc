@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>C++ 插件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>C++ 插件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_c_addons" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/c_addons.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/c_addons.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#c-addons.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>插件是用 C++ 编写的动态链接共享对象。
+<a href="../modules.html#requireid"><code>require()</code></a> 函数可以将插件加载为普通的 Node.js 模块。
+插件提供了 JavaScript 和 C/C++ 库之间的接口。</p><p class="">实现插件有三种选择：Node-API、nan 或直接使用内部 V8、libuv 和 Node.js 库。
+除非需要直接访问 Node-API 未暴露的功能，否则请使用 Node-API。
+有关 Node-API 的更多信息，请参阅<a href="../n-api.html">使用 Node-API 的 C/C++ 插件</a>。</p><p class="">不使用 Node-API 时，实现插件很复杂，涉及若干组件和 API 的知识：</p><ul class="">
+<li>
+<p><a href="https://v8.dev/" rel="nofollow">V8</a>: Node.js 用来提供 JavaScript 实现的 C++ 库。
+V8 提供了创建对象、调用函数等的机制。
+V8 的 API 主要记录在 <code>v8.h</code> 头文件（Node.js 源代码树中的 <code>deps/v8/include/v8.h</code>）中，该文件也可<a href="https://v8docs.nodesource.com/" rel="nofollow">在线</a>获取。</p>
+</li>
+<li>
+<p><a href="https://github.com/libuv/libuv" rel="nofollow">libuv</a>: 实现 Node.js 事件循环、其工作线程和平台所有异步行为的 C 库。
+它还可以作为跨平台的抽象库，提供跨所有主要操作系统对许多常见系统任务的简单的、类似于 POSIX 的访问，例如与文件系统、套接字、定时器和系统事件的交互。
+libuv 还提供类似于 POSIX 线程的线程抽象，用于需要超越标准事件循环的更复杂的异步插件。
+插件作者应该避免使用 I/O 或其他时间密集型任务阻塞事件循环，通过将工作通过 libuv 分流到非阻塞系统操作、工作线程、或 libuv 线程的自定义使用来实现。</p>
+</li>
+<li>
+<p>内部 Node.js 库。
+Node.js 自身导出了插件可以使用的 C++ API，其中最重要的是 <code>node::ObjectWrap</code> 类。</p>
+</li>
+<li>
+<p>Node.js 包括了其他静态链接库，包括 OpenSSL。
+这些其他库位于 Node.js 源代码树的 <code>deps/</code> 目录中。
+只有 libuv、OpenSSL、V8 和 zlib 符号被 Node.js 有目的地重新导出，并且可以被插件在不同程度上使用。
+有关其他信息，请参阅<a href="../addons.html#linking-to-libraries-included-with-nodejs">链接到 Node.js 中包含的库</a>。</p>
+</li>
+</ul><p class="">以下所有示例均可<a href="https://github.com/nodejs/node-addon-examples" rel="nofollow">下载</a>，并可用作插件的起点。</p></div>
+          <div id="content_right"><p><em>Addons</em> are dynamically-linked shared objects written in C++. The
+<a href="../modules.html#requireid"><code>require()</code></a> function can load addons as ordinary Node.js modules.
+Addons provide an interface between JavaScript and C/C++ libraries.</p><p>There are three options for implementing addons: Node-API, nan, or direct
+use of internal V8, libuv and Node.js libraries. Unless there is a need for
+direct access to functionality which is not exposed by Node-API, use Node-API.
+Refer to <a href="../n-api.html">C/C++ addons with Node-API</a> for more information on
+Node-API.</p><p>When not using Node-API, implementing addons is complicated,
+involving knowledge of several components and APIs:</p><ul>
+<li>
+<p><a href="https://v8.dev/" rel="nofollow">V8</a>: the C++ library Node.js uses to provide the
+JavaScript implementation. V8 provides the mechanisms for creating objects,
+calling functions, etc. V8's API is documented mostly in the
+<code>v8.h</code> header file (<code>deps/v8/include/v8.h</code> in the Node.js source
+tree), which is also available <a href="https://v8docs.nodesource.com/" rel="nofollow">online</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/libuv/libuv" rel="nofollow">libuv</a>: The C library that implements the Node.js event loop, its worker
+threads and all of the asynchronous behaviors of the platform. It also
+serves as a cross-platform abstraction library, giving easy, POSIX-like
+access across all major operating systems to many common system tasks, such
+as interacting with the filesystem, sockets, timers, and system events. libuv
+also provides a threading abstraction similar to POSIX threads for
+more sophisticated asynchronous addons that need to move beyond the
+standard event loop. Addon authors should
+avoid blocking the event loop with I/O or other time-intensive tasks by
+offloading work via libuv to non-blocking system operations, worker threads,
+or a custom use of libuv threads.</p>
+</li>
+<li>
+<p>Internal Node.js libraries. Node.js itself exports C++ APIs that addons can
+use, the most important of which is the <code>node::ObjectWrap</code> class.</p>
+</li>
+<li>
+<p>Node.js includes other statically linked libraries including OpenSSL. These
+other libraries are located in the <code>deps/</code> directory in the Node.js source
+tree. Only the libuv, OpenSSL, V8 and zlib symbols are purposefully
+re-exported by Node.js and may be used to various extents by addons. See
+<a href="../addons.html#linking-to-libraries-included-with-nodejs">Linking to libraries included with Node.js</a> for additional information.</p>
+</li>
+</ul><p>All of the following examples are available for <a href="https://github.com/nodejs/node-addon-examples" rel="nofollow">download</a> and may
+be used as the starting-point for an addon.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

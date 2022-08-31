@@ -1,0 +1,2322 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>assert 断言 | Node.js API 文档</title>
+  
+  
+  <style>@media(max-width:558px){.with-42-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}@media(max-width:542px){.with-40-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}@media(max-width:486px){.with-33-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}@media(max-width:502px){.with-35-chars>.js-flavor-selector{float:none;margin:0 0 1em auto;}}</style>
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_assert" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="" class="nav-assert active" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="assert" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_2"><a href="#assert">assert 断言</a></span>
+<ul>
+<li><a href="#strict-assertion-mode">严格断言模式</a></li>
+<li><a href="#legacy-assertion-mode">旧版断言模式</a></li>
+<li><a href="#class-assertassertionerror">assert.AssertionError 类</a>
+<ul>
+<li><a href="#new-assertassertionerroroptions"><code>new assert.AssertionError(options)</code></a></li>
+</ul>
+</li>
+<li><span class="stability_1"><a href="#class-assertcalltracker"><code>assert.CallTracker</code> 类</a></span>
+<ul>
+<li><a href="#new-assertcalltracker"><code>new assert.CallTracker()</code></a></li>
+<li><a href="#trackercallsfn-exact"><code>tracker.calls([fn][, exact])</code></a></li>
+<li><a href="#trackerreport"><code>tracker.report()</code></a></li>
+<li><a href="#trackerverify"><code>tracker.verify()</code></a></li>
+</ul>
+</li>
+<li><a href="#assertvalue-message"><code>assert(value[, message])</code></a></li>
+<li><a href="#assertdeepequalactual-expected-message"><code>assert.deepEqual(actual, expected[, message])</code></a>
+<ul>
+<li><a href="#comparison-details">比较详情</a></li>
+</ul>
+</li>
+<li><a href="#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual(actual, expected[, message])</code></a>
+<ul>
+<li><a href="#comparison-details_1">比较详情</a></li>
+</ul>
+</li>
+<li><a href="#assertdoesnotmatchstring-regexp-message"><code>assert.doesNotMatch(string, regexp[, message])</code></a></li>
+<li><a href="#assertdoesnotrejectasyncfn-error-message"><code>assert.doesNotReject(asyncFn[, error][, message])</code></a></li>
+<li><a href="#assertdoesnotthrowfn-error-message"><code>assert.doesNotThrow(fn[, error][, message])</code></a></li>
+<li><a href="#assertequalactual-expected-message"><code>assert.equal(actual, expected[, message])</code></a></li>
+<li><a href="#assertfailmessage"><code>assert.fail([message])</code></a></li>
+<li><span class="stability_0"><a href="#assertfailactual-expected-message-operator-stackstartfn"><code>assert.fail(actual, expected[, message[, operator[, stackStartFn]]])</code></a></span></li>
+<li><a href="#assertiferrorvalue"><code>assert.ifError(value)</code></a></li>
+<li><a href="#assertmatchstring-regexp-message"><code>assert.match(string, regexp[, message])</code></a></li>
+<li><a href="#assertnotdeepequalactual-expected-message"><code>assert.notDeepEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertnotdeepstrictequalactual-expected-message"><code>assert.notDeepStrictEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertnotequalactual-expected-message"><code>assert.notEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertnotstrictequalactual-expected-message"><code>assert.notStrictEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertokvalue-message"><code>assert.ok(value[, message])</code></a></li>
+<li><a href="#assertrejectsasyncfn-error-message"><code>assert.rejects(asyncFn[, error][, message])</code></a></li>
+<li><a href="#assertstrictequalactual-expected-message"><code>assert.strictEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertthrowsfn-error-message"><code>assert.throws(fn[, error][, message])</code></a></li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="" class="nav-assert active">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/assert.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/assert.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_2"><a href="#assert">assert 断言</a></span>
+<ul>
+<li><a href="#strict-assertion-mode">严格断言模式</a></li>
+<li><a href="#legacy-assertion-mode">旧版断言模式</a></li>
+<li><a href="#class-assertassertionerror">assert.AssertionError 类</a>
+<ul>
+<li><a href="#new-assertassertionerroroptions"><code>new assert.AssertionError(options)</code></a></li>
+</ul>
+</li>
+<li><span class="stability_1"><a href="#class-assertcalltracker"><code>assert.CallTracker</code> 类</a></span>
+<ul>
+<li><a href="#new-assertcalltracker"><code>new assert.CallTracker()</code></a></li>
+<li><a href="#trackercallsfn-exact"><code>tracker.calls([fn][, exact])</code></a></li>
+<li><a href="#trackerreport"><code>tracker.report()</code></a></li>
+<li><a href="#trackerverify"><code>tracker.verify()</code></a></li>
+</ul>
+</li>
+<li><a href="#assertvalue-message"><code>assert(value[, message])</code></a></li>
+<li><a href="#assertdeepequalactual-expected-message"><code>assert.deepEqual(actual, expected[, message])</code></a>
+<ul>
+<li><a href="#comparison-details">比较详情</a></li>
+</ul>
+</li>
+<li><a href="#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual(actual, expected[, message])</code></a>
+<ul>
+<li><a href="#comparison-details_1">比较详情</a></li>
+</ul>
+</li>
+<li><a href="#assertdoesnotmatchstring-regexp-message"><code>assert.doesNotMatch(string, regexp[, message])</code></a></li>
+<li><a href="#assertdoesnotrejectasyncfn-error-message"><code>assert.doesNotReject(asyncFn[, error][, message])</code></a></li>
+<li><a href="#assertdoesnotthrowfn-error-message"><code>assert.doesNotThrow(fn[, error][, message])</code></a></li>
+<li><a href="#assertequalactual-expected-message"><code>assert.equal(actual, expected[, message])</code></a></li>
+<li><a href="#assertfailmessage"><code>assert.fail([message])</code></a></li>
+<li><span class="stability_0"><a href="#assertfailactual-expected-message-operator-stackstartfn"><code>assert.fail(actual, expected[, message[, operator[, stackStartFn]]])</code></a></span></li>
+<li><a href="#assertiferrorvalue"><code>assert.ifError(value)</code></a></li>
+<li><a href="#assertmatchstring-regexp-message"><code>assert.match(string, regexp[, message])</code></a></li>
+<li><a href="#assertnotdeepequalactual-expected-message"><code>assert.notDeepEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertnotdeepstrictequalactual-expected-message"><code>assert.notDeepStrictEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertnotequalactual-expected-message"><code>assert.notEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertnotstrictequalactual-expected-message"><code>assert.notStrictEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertokvalue-message"><code>assert.ok(value[, message])</code></a></li>
+<li><a href="#assertrejectsasyncfn-error-message"><code>assert.rejects(asyncFn[, error][, message])</code></a></li>
+<li><a href="#assertstrictequalactual-expected-message"><code>assert.strictEqual(actual, expected[, message])</code></a></li>
+<li><a href="#assertthrowsfn-error-message"><code>assert.throws(fn[, error][, message])</code></a></li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>assert 断言<span><a class="mark" href="#assert" id="assert">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="">
+                <a href="assert/assert.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v0.1.21-->
+<p></p><div class="api_stability api_stability_2"><a href="documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p>
+<p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/assert.js">lib/assert.js</a></p>
+<p><code>assert</code> 模块提供了一组用于验证不变量的断言函数。</p>
+<section><h3>严格断言模式<span><a class="mark" href="#strict-assertion-mode" id="strict-assertion-mode">#</a></span><a aria-hidden="true" class="legacy" id="assert_strict_assertion_mode"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#strict-assertion-mode">
+                <a href="assert/strict_assertion_mode.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>暴露为 <code>require('assert/strict')</code>。</p></td></tr>
+<tr><td>v13.9.0, v12.16.2</td>
+<td><p>将“严格模式”更改为“严格断言模式”，将“旧版模式”更改为“旧版断言模式”，以避免与“严格模式”更常见的含义混淆。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>添加错误差异到严格断言模式。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>添加严格断言模式到断言模块。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p><span>新增于: v9.9.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>在严格断言模式下，非严格方法的行为与其对应的严格方法相同。
+例如，<a href="#assertdeepequalactual-expected-message"><code>assert.deepEqual()</code></a> 的行为类似于 <a href="#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual()</code></a>。</p>
+<p class="">在严格断言模式下，对象的错误消息显示差异。
+在旧版断言模式下，对象的错误消息显示对象，通常被截断。</p>
+<p class="">使用严格断言模式：</p>
+
+<pre class="with-42-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { strict <span class="hljs-keyword">as</span> assert } <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>).<span class="hljs-property">strict</span>;</code></pre>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);</code></pre>
+<p class="">错误差异的示例：</p>
+
+<pre class="with-42-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { strict <span class="hljs-keyword">as</span> assert } <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+assert.<span class="hljs-title function_">deepEqual</span>([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'3'</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected ... Lines skipped</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   [</span>
+<span class="hljs-comment">//     [</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//       2,</span>
+<span class="hljs-comment">// +     3</span>
+<span class="hljs-comment">// -     '3'</span>
+<span class="hljs-comment">//     ],</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//     5</span>
+<span class="hljs-comment">//   ]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">deepEqual</span>([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'3'</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected ... Lines skipped</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   [</span>
+<span class="hljs-comment">//     [</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//       2,</span>
+<span class="hljs-comment">// +     3</span>
+<span class="hljs-comment">// -     '3'</span>
+<span class="hljs-comment">//     ],</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//     5</span>
+<span class="hljs-comment">//   ]</span></code></pre>
+<p class="">要停用颜色，则使用 <code>NO_COLOR</code> 或 <code>NODE_DISABLE_COLORS</code> 环境变量。
+这也将停用交互式解释器中的颜色。
+有关终端环境中颜色支持的更多信息，请阅读终端 <a href="tty.html#writestreamgetcolordepthenv"><code>getColorDepth()</code></a> 文档。</p>
+</section><section><h3>旧版断言模式<span><a class="mark" href="#legacy-assertion-mode" id="legacy-assertion-mode">#</a></span><a aria-hidden="true" class="legacy" id="assert_legacy_assertion_mode"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#legacy-assertion-mode">
+                <a href="assert/legacy_assertion_mode.html" class="tip_trans">中英对照</a>
+                </p>
+<p>旧版断言模式在以下方法中使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality"><code>==</code> 运算符</a>：</p>
+<ul class="">
+<li><a href="#assertdeepequalactual-expected-message"><code>assert.deepEqual()</code></a></li>
+<li><a href="#assertequalactual-expected-message"><code>assert.equal()</code></a></li>
+<li><a href="#assertnotdeepequalactual-expected-message"><code>assert.notDeepEqual()</code></a></li>
+<li><a href="#assertnotequalactual-expected-message"><code>assert.notEqual()</code></a></li>
+</ul>
+<p class="">要使用旧版断言模式：</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);</code></pre>
+<p class="">旧版断言模式可能会产生意外的结果，尤其是在使用 <a href="#assertdeepequalactual-expected-message"><code>assert.deepEqual()</code></a> 时：</p>
+<pre class=""><code class="language-js cjs"><span class="hljs-comment">// 注意：在旧版断言模式下这不会抛出 AssertionError！</span>
+assert.<span class="hljs-title function_">deepEqual</span>(<span class="hljs-regexp">/a/gi</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());</code></pre>
+</section><section><h3>assert.AssertionError 类<span><a class="mark" href="#class-assertassertionerror" id="class-assertassertionerror">#</a></span><a aria-hidden="true" class="legacy" id="assert_class_assert_assertionerror"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-assertassertionerror">
+                <a href="assert/class_assert_assertionerror.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>继承自: <a href="errors.html#class-error" rel="nofollow" class="type">&lt;errors.Error&gt;</a></li>
+</ul>
+<p>表示断言的失败。
+<code>assert</code> 模块抛出的所有错误都是 <code>AssertionError</code> 类的实例。</p>
+<h4><code>new assert.AssertionError(options)</code><span><a class="mark" href="#new-assertassertionerroroptions" id="new-assertassertionerroroptions">#</a></span><a aria-hidden="true" class="legacy" id="assert_new_assert_assertionerror_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#new-assertassertionerroroptions">
+                <a href="assert/new_assert_assertionerror_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.21</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果提供，则错误消息将设置为此值。</li>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 错误实例上的 <code>actual</code> 属性。</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 错误实例上的 <code>expected</code> 属性。</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 错误实例上的 <code>operator</code> 属性。</li>
+<li><code>stackStartFn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 如果提供，则生成的堆栈跟踪将省略此函数之前的帧。</li>
+</ul>
+</li>
+</ul>
+<p><code>Error</code> 的子类，表示断言的失败。</p>
+<p class="">所有实例都包含内置的 <code>Error</code> 属性（<code>message</code> 和 <code>name</code>），以及：</p>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 对于 <a href="#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 等方法，设置为 <code>actual</code> 参数。</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 对于 <a href="#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 等方法，设置为 <code>expected</code> 值。</li>
+<li><code>generatedMessage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示消息是否是自动生成的 (<code>true</code>)。</li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 值始终为 <code>ERR_ASSERTION</code>，以表明该错误是断言错误。</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 设置为传入的运算符值。</li>
+</ul>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// 生成 AssertionError，以便稍后比较错误信息：</span>
+<span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">AssertionError</span>({
+  <span class="hljs-attr">actual</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">expected</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">operator</span>: <span class="hljs-string">'strictEqual'</span>
+});
+
+<span class="hljs-comment">// 验证错误的输出：</span>
+<span class="hljs-keyword">try</span> {
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> assert.<span class="hljs-property">AssertionError</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, message);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'AssertionError'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">actual</span>, <span class="hljs-number">1</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">expected</span>, <span class="hljs-number">2</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">code</span>, <span class="hljs-string">'ERR_ASSERTION'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">operator</span>, <span class="hljs-string">'strictEqual'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">generatedMessage</span>, <span class="hljs-literal">true</span>);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// 生成 AssertionError，以便稍后比较错误信息：</span>
+<span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">AssertionError</span>({
+  <span class="hljs-attr">actual</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">expected</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">operator</span>: <span class="hljs-string">'strictEqual'</span>
+});
+
+<span class="hljs-comment">// 验证错误的输出：</span>
+<span class="hljs-keyword">try</span> {
+  assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> assert.<span class="hljs-property">AssertionError</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, message);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'AssertionError'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">actual</span>, <span class="hljs-number">1</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">expected</span>, <span class="hljs-number">2</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">code</span>, <span class="hljs-string">'ERR_ASSERTION'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">operator</span>, <span class="hljs-string">'strictEqual'</span>);
+  assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">generatedMessage</span>, <span class="hljs-literal">true</span>);
+}</code></pre>
+</section><section><h3><code>assert.CallTracker</code> 类<span><a class="mark" href="#class-assertcalltracker" id="class-assertcalltracker">#</a></span><a aria-hidden="true" class="legacy" id="assert_class_assert_calltracker"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-assertcalltracker">
+                <a href="assert/class_assert_calltracker.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.2.0, v12.19.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>此功能目前处于实验阶段，行为可能仍会发生变化。</p>
+<h4><code>new assert.CallTracker()</code><span><a class="mark" href="#new-assertcalltracker" id="new-assertcalltracker">#</a></span><a aria-hidden="true" class="legacy" id="assert_new_assert_calltracker"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#new-assertcalltracker">
+                <a href="assert/new_assert_calltracker.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.2.0, v12.19.0</span>
+</div>
+<p>创建新的 <a href="#class-assertcalltracker"><code>CallTracker</code></a> 对象，其可用于跟踪函数是否被调用了特定次数。
+必须调用 <code>tracker.verify()</code> 才能进行验证。
+通常的模式是在 <a href="process.html#event-exit"><code>process.on('exit')</code></a> 句柄中调用。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+<span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// callfunc() 必须在 tracker.verify() 之前恰好被调用 1 次。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">1</span>);
+
+<span class="hljs-title function_">callsfunc</span>();
+
+<span class="hljs-comment">// 调用 tracker.verify() 并验证是否所有 tracker.calls() 函数都已被准确调用。</span>
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'exit'</span>, <span class="hljs-function">() =&gt;</span> {
+  tracker.<span class="hljs-title function_">verify</span>();
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// callfunc() 必须在 tracker.verify() 之前恰好被调用 1 次。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">1</span>);
+
+<span class="hljs-title function_">callsfunc</span>();
+
+<span class="hljs-comment">// 调用 tracker.verify() 并验证是否所有 tracker.calls() 函数都已被准确调用。</span>
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'exit'</span>, <span class="hljs-function">() =&gt;</span> {
+  tracker.<span class="hljs-title function_">verify</span>();
+});</code></pre>
+<h4><code>tracker.calls([fn][, exact])</code><span><a class="mark" href="#trackercallsfn-exact" id="trackercallsfn-exact">#</a></span><a aria-hidden="true" class="legacy" id="assert_tracker_calls_fn_exact"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#trackercallsfn-exact">
+                <a href="assert/tracker_calls_fn_exact.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.2.0, v12.19.0</span>
+</div>
+<ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <strong>默认值:</strong> 无操作的函数。</li>
+<li><code>exact</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <strong>默认值:</strong> <code>1</code>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 封装 <code>fn</code>。</li>
+</ul>
+<p>预计封装函数将被精确调用 <code>exact</code> 次。
+如果在调用 <a href="#trackerverify"><code>tracker.verify()</code></a> 时函数没有被精确调用 <code>exact</code> 次，那么 <a href="#trackerverify"><code>tracker.verify()</code></a> 将抛出错误。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func);</code></pre>
+<h4><code>tracker.report()</code><span><a class="mark" href="#trackerreport" id="trackerreport">#</a></span><a aria-hidden="true" class="legacy" id="assert_tracker_report"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#trackerreport">
+                <a href="assert/tracker_report.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.2.0, v12.19.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> 包含有关 <a href="#trackercallsfn-exact"><code>tracker.calls()</code></a> 返回的封装函数的信息的对象的数组。</li>
+<li>对象 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 函数被调用的实际次数。</li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 函数预期被调用的次数。</li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 被封装的函数的名称。</li>
+<li><code>stack</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 函数的堆栈跟踪。</li>
+</ul>
+</li>
+</ul>
+<p>数组包含有关未调用预期次数的函数的预期和实际调用次数的信息。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-comment">// 返回包含 callfunc() 信息的数组()</span>
+tracker.<span class="hljs-title function_">report</span>();
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//    message: 'Expected the func function to be executed 2 time(s) but was</span>
+<span class="hljs-comment">//    executed 0 time(s).',</span>
+<span class="hljs-comment">//    actual: 0,</span>
+<span class="hljs-comment">//    expected: 2,</span>
+<span class="hljs-comment">//    operator: 'func',</span>
+<span class="hljs-comment">//    stack: stack trace</span>
+<span class="hljs-comment">//  }</span>
+<span class="hljs-comment">// ]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-comment">// 返回包含 callfunc() 信息的数组()</span>
+tracker.<span class="hljs-title function_">report</span>();
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//    message: 'Expected the func function to be executed 2 time(s) but was</span>
+<span class="hljs-comment">//    executed 0 time(s).',</span>
+<span class="hljs-comment">//    actual: 0,</span>
+<span class="hljs-comment">//    expected: 2,</span>
+<span class="hljs-comment">//    operator: 'func',</span>
+<span class="hljs-comment">//    stack: stack trace</span>
+<span class="hljs-comment">//  }</span>
+<span class="hljs-comment">// ]</span></code></pre>
+<h4><code>tracker.verify()</code><span><a class="mark" href="#trackerverify" id="trackerverify">#</a></span><a aria-hidden="true" class="legacy" id="assert_tracker_verify"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#trackerverify">
+                <a href="assert/tracker_verify.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.2.0, v12.19.0</span>
+</div>
+<p>遍历传给 <a href="#trackercallsfn-exact"><code>tracker.calls()</code></a> 的函数列表，对于未按预期调用次数的函数将抛出错误。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-title function_">callsfunc</span>();
+
+<span class="hljs-comment">// 会抛出错误，因为 callfunc() 只被调用了一次。</span>
+tracker.<span class="hljs-title function_">verify</span>();</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// 创建调用跟踪器。</span>
+<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> assert.<span class="hljs-title class_">CallTracker</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">func</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 返回封装 func() 的函数，其必须在 tracker.verify() 之前调用准确次数。</span>
+<span class="hljs-keyword">const</span> callsfunc = tracker.<span class="hljs-title function_">calls</span>(func, <span class="hljs-number">2</span>);
+
+<span class="hljs-title function_">callsfunc</span>();
+
+<span class="hljs-comment">// 会抛出错误，因为 callfunc() 只被调用了一次。</span>
+tracker.<span class="hljs-title function_">verify</span>();</code></pre>
+</section><section><h3><code>assert(value[, message])</code><span><a class="mark" href="#assertvalue-message" id="assertvalue-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_value_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertvalue-message">
+                <a href="assert/assert_value_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.9</span>
+</div>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 检查为真的输入。</li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p><a href="#assertokvalue-message"><code>assert.ok()</code></a> 的别名。</p>
+</section><section><h3><code>assert.deepEqual(actual, expected[, message])</code><span><a class="mark" href="#assertdeepequalactual-expected-message" id="assertdeepequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_deepequal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertdeepequalactual-expected-message">
+                <a href="assert/assert_deepequal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>在旧版断言模式下，状态从弃用更改为旧版。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>如果双方都是 NaN，则现在 NaN 被视为相同。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>现在可以正确地比较类型标签，并且有一些小的比较调整使检查更少意外。</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>现在可以正确地比较 <code>Error</code> 名称和消息。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>也比较 <code>Set</code> 和 <code>Map</code> 的内容。</p></td></tr>
+<tr><td>v6.4.0, v4.7.1</td>
+<td><p>现在可以正确地处理类型化数组切片。</p></td></tr>
+<tr><td>v6.1.0, v4.5.0</td>
+<td><p>现在可以将具有循环引用的对象用作输入。</p></td></tr>
+<tr><td>v5.10.1, v4.4.3</td>
+<td><p>正确地处理非 <code>Uint8Array</code> 类型的数组。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p><strong>严格断言模式</strong></p>
+<p class=""><a href="#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual()</code></a> 的别名。</p>
+<p class=""><strong>旧版断言模式</strong></p>
+<p></p><div class="api_stability api_stability_3"><a href="documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 <a href="#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual()</code></a> 。</div><p></p>
+<p class="">测试 <code>actual</code> 和 <code>expected</code> 参数之间的深度相等。
+考虑使用 <a href="#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual()</code></a> 代替。
+<a href="#assertdeepequalactual-expected-message"><code>assert.deepEqual()</code></a> 可能产生意外的结果。</p>
+<p class="">深度相等意味着子对象的可枚举"自有"属性也按照以下规则递归地评估。</p>
+<h4>比较详情<span><a class="mark" href="#comparison-details" id="comparison-details">#</a></span><a aria-hidden="true" class="legacy" id="assert_comparison_details"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#comparison-details">
+                <a href="assert/comparison_details.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>除 <code>NaN</code> 外，原始值使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality"><code>==</code> 运算符</a>进行比较。
+如果双方都是 <code>NaN</code>，则视为相同。</li>
+<li>对象的<a href="https://tc39.github.io/ecma262/#sec-object.prototype.tostring" rel="nofollow">类型标签</a>应该是一样的。</li>
+<li>仅考虑<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties" rel="nofollow">自有属性</a>。</li>
+<li><a href="errors.html#class-error"><code>Error</code></a> 名称和消息总是被比较，即使它们不是可枚举的属性。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive#Primitive_wrapper_objects_in_JavaScript" rel="nofollow">对象封装器</a>作为对象和未封装的值进行比较。</li>
+<li><code>Object</code> 属性是无序比较的。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" rel="nofollow"><code>Map</code></a> 键和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" rel="nofollow"><code>Set</code></a> 项是无序比较的。</li>
+<li>当双方不同或双方遇到循环引用时，则递归停止。</li>
+<li>实现不测试对象的 <a href="https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots" rel="nofollow"><code>[[Prototype]]</code></a>。</li>
+<li>不比较 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" rel="nofollow"><code>Symbol</code></a> 属性。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" rel="nofollow"><code>WeakMap</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" rel="nofollow"><code>WeakSet</code></a> 的比较不依赖于它们的值。</li>
+</ul>
+<p>以下示例不会抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，因为使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality"><code>==</code> 运算符</a>比较原始值。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+<span class="hljs-comment">// 注意：这不会抛出 AssertionError！</span>
+
+assert.<span class="hljs-title function_">deepEqual</span>(<span class="hljs-string">'+00000000'</span>, <span class="hljs-literal">false</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-comment">// 注意：这不会抛出 AssertionError！</span>
+
+assert.<span class="hljs-title function_">deepEqual</span>(<span class="hljs-string">'+00000000'</span>, <span class="hljs-literal">false</span>);</code></pre>
+<p class="">“深度”相等意味着子对象的可枚举"自有"属性也被评估：</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-keyword">const</span> obj1 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj2 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj3 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj4 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(obj1);
+
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj1);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// b 的值不同：</span>
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj2);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } deepEqual { a: { b: 2 } }</span>
+
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj3);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// 原型被忽略：</span>
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj4);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } deepEqual {}</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-keyword">const</span> obj1 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj2 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj3 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj4 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(obj1);
+
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj1);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// b 的值不同：</span>
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj2);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } deepEqual { a: { b: 2 } }</span>
+
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj3);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// 原型被忽略：</span>
+assert.<span class="hljs-title function_">deepEqual</span>(obj1, obj4);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } deepEqual {}</span></code></pre>
+<p class="">如果值不相等，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。</p>
+</section><section><h3><code>assert.deepStrictEqual(actual, expected[, message])</code><span><a class="mark" href="#assertdeepstrictequalactual-expected-message" id="assertdeepstrictequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_deepstrictequal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertdeepstrictequalactual-expected-message">
+                <a href="assert/assert_deepstrictequal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>现在比较可枚举的符号属性。</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>现在使用 <a href="https://tc39.github.io/ecma262/#sec-samevaluezero" rel="nofollow">SameValueZero</a> 比较来比较 <code>NaN</code>。</p></td></tr>
+<tr><td>v8.5.0</td>
+<td><p>现在可以正确地比较 <code>Error</code> 名称和消息。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>也比较 <code>Set</code> 和 <code>Map</code> 的内容。</p></td></tr>
+<tr><td>v6.1.0</td>
+<td><p>现在可以将具有循环引用的对象用作输入。</p></td></tr>
+<tr><td>v6.4.0, v4.7.1</td>
+<td><p>现在可以正确地处理类型化数组切片。</p></td></tr>
+<tr><td>v5.10.1, v4.4.3</td>
+<td><p>正确地处理非 <code>Uint8Array</code> 类型的数组。</p></td></tr>
+<tr><td>v1.2.0</td>
+<td><p><span>新增于: v1.2.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>测试 <code>actual</code> 和 <code>expected</code> 参数之间的深度相等。
+"深度"相等意味着子对象的可枚举"自有"属性也按照以下规则递归地评估。</p>
+<h4>比较详情<span><a class="mark" href="#comparison-details_1" id="comparison-details_1">#</a></span><a aria-hidden="true" class="legacy" id="assert_comparison_details_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#comparison-details_1">
+                <a href="assert/comparison_details_1.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is" rel="nofollow"><code>Object.is()</code></a> 比较原始值。</li>
+<li>对象的<a href="https://tc39.github.io/ecma262/#sec-object.prototype.tostring" rel="nofollow">类型标签</a>应该是一样的。</li>
+<li>对象的 <a href="https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots" rel="nofollow"><code>[[Prototype]]</code></a> 使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality"><code>===</code> 运算符</a>进行比较。</li>
+<li>仅考虑<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties" rel="nofollow">自有属性</a>。</li>
+<li><a href="errors.html#class-error"><code>Error</code></a> 名称和消息总是被比较，即使它们不是可枚举的属性。</li>
+<li>也比较了可枚举的自有 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" rel="nofollow"><code>Symbol</code></a> 属性。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive#Primitive_wrapper_objects_in_JavaScript" rel="nofollow">对象封装器</a>作为对象和未封装的值进行比较。</li>
+<li><code>Object</code> 属性是无序比较的。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" rel="nofollow"><code>Map</code></a> 键和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" rel="nofollow"><code>Set</code></a> 项是无序比较的。</li>
+<li>当双方不同或双方遇到循环引用时，则递归停止。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" rel="nofollow"><code>WeakMap</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" rel="nofollow"><code>WeakSet</code></a> 的比较不依赖于它们的值。
+有关更多详细信息，请参见下文。</li>
+</ul>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-comment">// 这失败了，因为 1 !== '1'。</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">// +   a: 1</span>
+<span class="hljs-comment">// -   a: '1'</span>
+<span class="hljs-comment">//   }</span>
+
+<span class="hljs-comment">// 以下对象没有自有的属性</span>
+<span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-keyword">const</span> object = {};
+<span class="hljs-keyword">const</span> fakeDate = {};
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(fakeDate, <span class="hljs-title class_">Date</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>);
+
+<span class="hljs-comment">// 不同的原型：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(object, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + {}</span>
+<span class="hljs-comment">// - Date {}</span>
+
+<span class="hljs-comment">// 不同的类型标签：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(date, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 2018-04-26T00:49:08.604Z</span>
+<span class="hljs-comment">// - Date {}</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK，因为 Object.is(NaN, NaN) 为 true。</span>
+
+<span class="hljs-comment">// 不同的解封装数字：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">2</span>));
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + [Number: 1]</span>
+<span class="hljs-comment">// - [Number: 2]</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">'foo'</span>), <span class="hljs-title class_">Object</span>(<span class="hljs-string">'foo'</span>));
+<span class="hljs-comment">// OK，因为对象和字符串在解封装时是相同的。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(-<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// 不同的零：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 0</span>
+<span class="hljs-comment">// - -0</span>
+
+<span class="hljs-keyword">const</span> symbol1 = <span class="hljs-title class_">Symbol</span>();
+<span class="hljs-keyword">const</span> symbol2 = <span class="hljs-title class_">Symbol</span>();
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol1]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// OK，因为它是两个对象上的相同符号。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol2]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Inputs identical but not reference equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   [Symbol()]: 1</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-keyword">const</span> weakMap1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+<span class="hljs-keyword">const</span> weakMap2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>([[{}, {}]]);
+<span class="hljs-keyword">const</span> weakMap3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+weakMap3.<span class="hljs-property">unequal</span> = <span class="hljs-literal">true</span>;
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap2);
+<span class="hljs-comment">// OK，因为无法比较条目</span>
+
+<span class="hljs-comment">// 失败，因为 weakMap3 有一个 weakMap1 不包含的属性：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap3);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   WeakMap {</span>
+<span class="hljs-comment">// +   [items unknown]</span>
+<span class="hljs-comment">// -   [items unknown],</span>
+<span class="hljs-comment">// -   unequal: true</span>
+<span class="hljs-comment">//   }</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-comment">// 这失败了，因为 1 !== '1'。</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">// +   a: 1</span>
+<span class="hljs-comment">// -   a: '1'</span>
+<span class="hljs-comment">//   }</span>
+
+<span class="hljs-comment">// 以下对象没有自有的属性</span>
+<span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-keyword">const</span> object = {};
+<span class="hljs-keyword">const</span> fakeDate = {};
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(fakeDate, <span class="hljs-title class_">Date</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>);
+
+<span class="hljs-comment">// 不同的原型：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(object, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + {}</span>
+<span class="hljs-comment">// - Date {}</span>
+
+<span class="hljs-comment">// 不同的类型标签：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(date, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 2018-04-26T00:49:08.604Z</span>
+<span class="hljs-comment">// - Date {}</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK，因为 Object.is(NaN, NaN) 为 true。</span>
+
+<span class="hljs-comment">// 不同的解封装数字：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">2</span>));
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + [Number: 1]</span>
+<span class="hljs-comment">// - [Number: 2]</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">'foo'</span>), <span class="hljs-title class_">Object</span>(<span class="hljs-string">'foo'</span>));
+<span class="hljs-comment">// OK，因为对象和字符串在解封装时是相同的。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(-<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// 不同的零：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 0</span>
+<span class="hljs-comment">// - -0</span>
+
+<span class="hljs-keyword">const</span> symbol1 = <span class="hljs-title class_">Symbol</span>();
+<span class="hljs-keyword">const</span> symbol2 = <span class="hljs-title class_">Symbol</span>();
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol1]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// OK，因为它是两个对象上的相同符号。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol2]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Inputs identical but not reference equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   [Symbol()]: 1</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-keyword">const</span> weakMap1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+<span class="hljs-keyword">const</span> weakMap2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>([[{}, {}]]);
+<span class="hljs-keyword">const</span> weakMap3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+weakMap3.<span class="hljs-property">unequal</span> = <span class="hljs-literal">true</span>;
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap2);
+<span class="hljs-comment">// OK，因为无法比较条目</span>
+
+<span class="hljs-comment">// 失败，因为 weakMap3 有一个 weakMap1 不包含的属性：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap3);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   WeakMap {</span>
+<span class="hljs-comment">// +   [items unknown]</span>
+<span class="hljs-comment">// -   [items unknown],</span>
+<span class="hljs-comment">// -   unequal: true</span>
+<span class="hljs-comment">//   }</span></code></pre>
+<p>如果值不相等，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。</p>
+</section><section><h3><code>assert.doesNotMatch(string, regexp[, message])</code><span><a class="mark" href="#assertdoesnotmatchstring-regexp-message" id="assertdoesnotmatchstring-regexp-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_doesnotmatch_string_regexp_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertdoesnotmatchstring-regexp-message">
+                <a href="assert/assert_doesnotmatch_string_regexp_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>此 API 不再是实验的。</p></td></tr>
+<tr><td>v13.6.0, v12.16.0</td>
+<td><p><span>新增于: v13.6.0, v12.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>regexp</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>期望 <code>string</code> 输入与正则表达式不匹配。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">doesNotMatch</span>(<span class="hljs-string">'I will fail'</span>, <span class="hljs-regexp">/fail/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The input was expected to not match the ...</span>
+
+assert.<span class="hljs-title function_">doesNotMatch</span>(<span class="hljs-number">123</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The "string" argument must be of type string.</span>
+
+assert.<span class="hljs-title function_">doesNotMatch</span>(<span class="hljs-string">'I will pass'</span>, <span class="hljs-regexp">/different/</span>);
+<span class="hljs-comment">// OK</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">doesNotMatch</span>(<span class="hljs-string">'I will fail'</span>, <span class="hljs-regexp">/fail/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The input was expected to not match the ...</span>
+
+assert.<span class="hljs-title function_">doesNotMatch</span>(<span class="hljs-number">123</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The "string" argument must be of type string.</span>
+
+assert.<span class="hljs-title function_">doesNotMatch</span>(<span class="hljs-string">'I will pass'</span>, <span class="hljs-regexp">/different/</span>);
+<span class="hljs-comment">// OK</span></code></pre>
+<p class="">如果值匹配，或者 <code>string</code> 参数的类型不是 <code>string</code>，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。</p>
+</section><section><h3><code>assert.doesNotReject(asyncFn[, error][, message])</code><span><a class="mark" href="#assertdoesnotrejectasyncfn-error-message" id="assertdoesnotrejectasyncfn-error-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_doesnotreject_asyncfn_error_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertdoesnotrejectasyncfn-error-message">
+                <a href="assert/assert_doesnotreject_asyncfn_error_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div>
+<ul class="">
+<li><code>asyncFn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>等待 <code>asyncFn</code> promise，或者，如果 <code>asyncFn</code> 是函数，则立即调用该函数并等待返回的 promise 完成。
+然后会检查 promise 是否没有被拒绝。</p>
+<p class="">如果 <code>asyncFn</code> 是函数并且它同步抛出错误，则 <code>assert.doesNotReject()</code> 将返回使用使用该错误拒绝的 <code>Promise</code>。
+如果函数没有返回 promise，则 <code>assert.doesNotReject()</code> 将返回使用 <a href="errors.html#err_invalid_return_value"><code>ERR_INVALID_RETURN_VALUE</code></a> 错误拒绝的 <code>Promise</code>。
+在这两种情况下，都会跳过错误句柄。</p>
+<p class="">使用 <code>assert.doesNotReject()</code> 实际上没有用，因为捕获拒绝然后再次拒绝它几乎没有什么好处。
+相反，请考虑在特定代码路径旁边添加不应拒绝的注释，并尽可能使错误消息具有表现力。</p>
+<p class="">如果指定，则 <code>error</code> 可以是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="nofollow"><code>Class</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a> 或验证函数。
+有关详细信息，请参阅 <a href="#assertthrowsfn-error-message"><code>assert.throws()</code></a>。</p>
+<p class="">除了等待完成的异步性质外，其行为与 <a href="#assertdoesnotthrowfn-error-message"><code>assert.doesNotThrow()</code></a> 相同。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">await</span> assert.<span class="hljs-title function_">doesNotReject</span>(
+  <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">SyntaxError</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">await</span> assert.<span class="hljs-title function_">doesNotReject</span>(
+    <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+    },
+    <span class="hljs-title class_">SyntaxError</span>
+  );
+})();</code></pre>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">doesNotReject</span>(<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>)))
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-comment">// ...</span>
+  });</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">doesNotReject</span>(<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>)))
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-comment">// ...</span>
+  });</code></pre>
+</section><section><h3><code>assert.doesNotThrow(fn[, error][, message])</code><span><a class="mark" href="#assertdoesnotthrowfn-error-message" id="assertdoesnotthrowfn-error-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_doesnotthrow_fn_error_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertdoesnotthrowfn-error-message">
+                <a href="assert/assert_doesnotthrow_fn_error_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v5.11.0, v4.4.5</td>
+<td><p>现在尊重 <code>message</code> 参数。</p></td></tr>
+<tr><td>v4.2.0</td>
+<td><p>参数 <code>error</code> 现在可以是箭头函数。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>断言函数 <code>fn</code> 不会抛出错误。</p>
+<p class="">使用 <code>assert.doesNotThrow()</code> 实际上没有用，因为捕获错误然后重新抛出它没有任何好处。
+相反，请考虑在不应该抛出的特定代码路径旁边添加注释，并尽可能保持错误消息的表现力。</p>
+<p class="">当 <code>assert.doesNotThrow()</code> 被调用时，它会立即调用 <code>fn</code> 函数。</p>
+<p class="">如果抛出错误并且它与 <code>error</code> 参数指定的类型相同，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。
+如果错误属于不同类型，或者 <code>error</code> 参数未定义，则错误将传播回调用者。</p>
+<p class="">如果指定，则 <code>error</code> 可以是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="nofollow"><code>Class</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a> 或验证函数。
+有关详细信息，请参阅 <a href="#assertthrowsfn-error-message"><code>assert.throws()</code></a>。</p>
+<p class="">例如，以下将抛出 <a href="errors.html#class-typeerror"><code>TypeError</code></a>，因为断言中没有匹配的错误类型：</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">doesNotThrow</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">SyntaxError</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">doesNotThrow</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">SyntaxError</span>
+);</code></pre>
+<p class="">但是，以下将导致使用消息 'Got unwanted exception...' 的 <a href="#class-assertassertionerror"><code>AssertionError</code></a>：</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">doesNotThrow</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">TypeError</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">doesNotThrow</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">TypeError</span>
+);</code></pre>
+<p class="">如果抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a> 并且为 <code>message</code> 参数提供了值，则 <code>message</code> 的值将附加到 <a href="#class-assertassertionerror"><code>AssertionError</code></a> 消息：</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">doesNotThrow</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/Wrong value/</span>,
+  <span class="hljs-string">'Whoops'</span>
+);
+<span class="hljs-comment">// 抛出: AssertionError: Got unwanted exception: Whoops</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">doesNotThrow</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/Wrong value/</span>,
+  <span class="hljs-string">'Whoops'</span>
+);
+<span class="hljs-comment">// 抛出: AssertionError: Got unwanted exception: Whoops</span></code></pre>
+</section><section><h3><code>assert.equal(actual, expected[, message])</code><span><a class="mark" href="#assertequalactual-expected-message" id="assertequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_equal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertequalactual-expected-message">
+                <a href="assert/assert_equal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>在旧版断言模式下，状态从弃用更改为旧版。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>如果双方都是 NaN，则现在 NaN 被视为相同。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p><strong>严格断言模式</strong></p>
+<p class=""><a href="#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 的别名。</p>
+<p class=""><strong>旧版断言模式</strong></p>
+<p></p><div class="api_stability api_stability_3"><a href="documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 <a href="#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 。</div><p></p>
+<p class="">使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality"><code>==</code> 运算符</a>测试 <code>actual</code> 和 <code>expected</code> 参数之间的浅层强制相等。
+<code>NaN</code> 是特殊处理的，如果双方都是 <code>NaN</code>，则视为相同。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK, 1 == 1</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK, 1 == '1'</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError: 1 == 2</span>
+assert.<span class="hljs-title function_">equal</span>({ <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } }, { <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } });
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } == { a: { b: 1 } }</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK, 1 == 1</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK, 1 == '1'</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError: 1 == 2</span>
+assert.<span class="hljs-title function_">equal</span>({ <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } }, { <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } });
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } == { a: { b: 1 } }</span></code></pre>
+<p class="">如果值不相等，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。</p>
+</section><section><h3><code>assert.fail([message])</code><span><a class="mark" href="#assertfailmessage" id="assertfailmessage">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_fail_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertfailmessage">
+                <a href="assert/assert_fail_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.21</span>
+</div>
+<ul class="">
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> <strong>默认值:</strong> <code>'Failed'</code></li>
+</ul>
+<p>抛出带有提供的错误消息或默认错误消息的 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">fail</span>();
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Failed</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-string">'boom'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: boom</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'need array'</span>));
+<span class="hljs-comment">// TypeError: need array</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">fail</span>();
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Failed</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-string">'boom'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: boom</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'need array'</span>));
+<span class="hljs-comment">// TypeError: need array</span></code></pre>
+<p class="">可以使用带有两个以上参数的 <code>assert.fail()</code>，但不推荐使用。
+有关更多详细信息，请参见下文。</p>
+</section><section><h3><code>assert.fail(actual, expected[, message[, operator[, stackStartFn]]])</code><span><a class="mark" href="#assertfailactual-expected-message-operator-stackstartfn" id="assertfailactual-expected-message-operator-stackstartfn">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_fail_actual_expected_message_operator_stackstartfn"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertfailactual-expected-message-operator-stackstartfn">
+                <a href="assert/assert_fail_actual_expected_message_operator_stackstartfn.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>不推荐使用多个参数调用 <code>assert.fail()</code> 并触发警告。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p></p><div class="api_stability api_stability_0"><a href="documentation.html#stability-index">稳定性: 0</a> - 弃用: 改为使用 <code>assert.fail([message])</code> 或其他 assert
+函数。</div><p></p>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>operator</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>'!='</code></li>
+<li><code>stackStartFn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <strong>默认值:</strong> <code>assert.fail</code></li>
+</ul>
+<p>如果 <code>message</code> 为假，则错误消息设置为由提供的 <code>operator</code> 分隔的 <code>actual</code> 和 <code>expected</code> 的值。
+如果只提供了两个 <code>actual</code> 和 <code>expected</code> 参数，则 <code>operator</code> 将默认为 <code>'!='</code>。
+如果 <code>message</code> 作为第三个参数提供，则它将用作错误消息，其他参数将作为抛出对象的属性存储。
+如果提供了 <code>stackStartFn</code>，则该函数之上的所有堆栈帧都将从堆栈跟踪中删除（参见 <a href="errors.html#errorcapturestacktracetargetobject-constructoropt"><code>Error.captureStackTrace</code></a>）。
+如果没有给出参数，则将使用默认消息 <code>Failed</code>。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: 'a' != 'b'</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-string">'&gt;'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: 1 &gt; 2</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'fail'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: fail</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'whoops'</span>, <span class="hljs-string">'&gt;'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: whoops</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'need array'</span>));
+<span class="hljs-comment">// TypeError: need array</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: 'a' != 'b'</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-string">'&gt;'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: 1 &gt; 2</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'fail'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: fail</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'whoops'</span>, <span class="hljs-string">'&gt;'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: whoops</span>
+
+assert.<span class="hljs-title function_">fail</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'need array'</span>));
+<span class="hljs-comment">// TypeError: need array</span></code></pre>
+<p class="">在后三种情况下，<code>actual</code>、<code>expected</code> 和 <code>operator</code> 对错误消息没有影响。</p>
+<p class="">使用 <code>stackStartFn</code> 截断异常堆栈跟踪的示例：</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">suppressFrame</span>(<span class="hljs-params"></span>) {
+  assert.<span class="hljs-title function_">fail</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-string">'!=='</span>, suppressFrame);
+}
+<span class="hljs-title function_">suppressFrame</span>();
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: 'a' !== 'b'</span>
+<span class="hljs-comment">//     at repl:1:1</span>
+<span class="hljs-comment">//     at ContextifyScript.Script.runInThisContext (vm.js:44:33)</span>
+<span class="hljs-comment">//     ...</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">suppressFrame</span>(<span class="hljs-params"></span>) {
+  assert.<span class="hljs-title function_">fail</span>(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-string">'!=='</span>, suppressFrame);
+}
+<span class="hljs-title function_">suppressFrame</span>();
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: 'a' !== 'b'</span>
+<span class="hljs-comment">//     at repl:1:1</span>
+<span class="hljs-comment">//     at ContextifyScript.Script.runInThisContext (vm.js:44:33)</span>
+<span class="hljs-comment">//     ...</span></code></pre>
+</section><section><h3><code>assert.ifError(value)</code><span><a class="mark" href="#assertiferrorvalue" id="assertiferrorvalue">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_iferror_value"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertiferrorvalue">
+                <a href="assert/assert_iferror_value.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>其现在被封装到包含完整堆栈跟踪的 [<code>AssertionError</code>][] 中，而不是抛出原始错误。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>值现在可能仅为 <code>undefined</code> 或 <code>null</code>。 之前所有的假值都与 <code>null</code> 一样处理并且没有抛出错误。</p></td></tr>
+<tr><td>v0.1.97</td>
+<td><p><span>新增于: v0.1.97</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>如果 <code>value</code> 不是 <code>undefined</code> 或 <code>null</code>，则抛出 <code>value</code>。
+这在回调中测试 <code>error</code> 参数时很有用。
+堆栈跟踪包含来自传给 <code>ifError()</code> 的错误的所有帧，包括 <code>ifError()</code> 本身的潜在新帧。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-literal">null</span>);
+<span class="hljs-comment">// OK</span>
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: 0</span>
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-string">'error'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: 'error'</span>
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>());
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: Error</span>
+
+<span class="hljs-comment">// 创建一些随机错误帧。</span>
+<span class="hljs-keyword">let</span> err;
+(<span class="hljs-keyword">function</span> <span class="hljs-title function_">errorFrame</span>(<span class="hljs-params"></span>) {
+  err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'test error'</span>);
+})();
+
+(<span class="hljs-keyword">function</span> <span class="hljs-title function_">ifErrorFrame</span>(<span class="hljs-params"></span>) {
+  assert.<span class="hljs-title function_">ifError</span>(err);
+})();
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: test error</span>
+<span class="hljs-comment">//     at ifErrorFrame</span>
+<span class="hljs-comment">//     at errorFrame</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-literal">null</span>);
+<span class="hljs-comment">// OK</span>
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: 0</span>
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-string">'error'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: 'error'</span>
+assert.<span class="hljs-title function_">ifError</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>());
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: Error</span>
+
+<span class="hljs-comment">// 创建一些随机错误帧。</span>
+<span class="hljs-keyword">let</span> err;
+(<span class="hljs-keyword">function</span> <span class="hljs-title function_">errorFrame</span>(<span class="hljs-params"></span>) {
+  err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'test error'</span>);
+})();
+
+(<span class="hljs-keyword">function</span> <span class="hljs-title function_">ifErrorFrame</span>(<span class="hljs-params"></span>) {
+  assert.<span class="hljs-title function_">ifError</span>(err);
+})();
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: ifError got unwanted exception: test error</span>
+<span class="hljs-comment">//     at ifErrorFrame</span>
+<span class="hljs-comment">//     at errorFrame</span></code></pre>
+</section><section><h3><code>assert.match(string, regexp[, message])</code><span><a class="mark" href="#assertmatchstring-regexp-message" id="assertmatchstring-regexp-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_match_string_regexp_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertmatchstring-regexp-message">
+                <a href="assert/assert_match_string_regexp_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>此 API 不再是实验的。</p></td></tr>
+<tr><td>v13.6.0, v12.16.0</td>
+<td><p><span>新增于: v13.6.0, v12.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>regexp</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>期望 <code>string</code> 输入与正则表达式匹配。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">match</span>(<span class="hljs-string">'I will fail'</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The input did not match the regular ...</span>
+
+assert.<span class="hljs-title function_">match</span>(<span class="hljs-number">123</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The "string" argument must be of type string.</span>
+
+assert.<span class="hljs-title function_">match</span>(<span class="hljs-string">'I will pass'</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// OK</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">match</span>(<span class="hljs-string">'I will fail'</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The input did not match the regular ...</span>
+
+assert.<span class="hljs-title function_">match</span>(<span class="hljs-number">123</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: The "string" argument must be of type string.</span>
+
+assert.<span class="hljs-title function_">match</span>(<span class="hljs-string">'I will pass'</span>, <span class="hljs-regexp">/pass/</span>);
+<span class="hljs-comment">// OK</span></code></pre>
+<p class="">如果值不匹配，或者 <code>string</code> 参数的类型不是 <code>string</code>，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。</p>
+</section><section><h3><code>assert.notDeepEqual(actual, expected[, message])</code><span><a class="mark" href="#assertnotdeepequalactual-expected-message" id="assertnotdeepequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_notdeepequal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertnotdeepequalactual-expected-message">
+                <a href="assert/assert_notdeepequal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>在旧版断言模式下，状态从弃用更改为旧版。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>如果双方都是 NaN，则现在 NaN 被视为相同。</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>现在可以正确地比较 <code>Error</code> 名称和消息。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>也比较 <code>Set</code> 和 <code>Map</code> 的内容。</p></td></tr>
+<tr><td>v6.4.0, v4.7.1</td>
+<td><p>现在可以正确地处理类型化数组切片。</p></td></tr>
+<tr><td>v6.1.0, v4.5.0</td>
+<td><p>现在可以将具有循环引用的对象用作输入。</p></td></tr>
+<tr><td>v5.10.1, v4.4.3</td>
+<td><p>正确地处理非 <code>Uint8Array</code> 类型的数组。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p><strong>严格断言模式</strong></p>
+<p class=""><a href="#assertnotdeepstrictequalactual-expected-message"><code>assert.notDeepStrictEqual()</code></a> 的别名。</p>
+<p class=""><strong>旧版断言模式</strong></p>
+<p></p><div class="api_stability api_stability_3"><a href="documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 <a href="#assertnotdeepstrictequalactual-expected-message"><code>assert.notDeepStrictEqual()</code></a> 。</div><p></p>
+<p class="">测试任何深度不相等。
+<a href="#assertdeepequalactual-expected-message"><code>assert.deepEqual()</code></a> 的相反。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+<span class="hljs-keyword">const</span> obj1 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj2 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj3 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj4 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(obj1);
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj1);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } notDeepEqual { a: { b: 1 } }</span>
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj2);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj3);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } notDeepEqual { a: { b: 1 } }</span>
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj4);
+<span class="hljs-comment">// OK</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-keyword">const</span> obj1 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj2 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj3 = {
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">b</span>: <span class="hljs-number">1</span>
+  }
+};
+<span class="hljs-keyword">const</span> obj4 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(obj1);
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj1);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } notDeepEqual { a: { b: 1 } }</span>
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj2);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj3);
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } notDeepEqual { a: { b: 1 } }</span>
+
+assert.<span class="hljs-title function_">notDeepEqual</span>(obj1, obj4);
+<span class="hljs-comment">// OK</span></code></pre>
+<p class="">如果值深度相等，则会抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。</p>
+</section><section><h3><code>assert.notDeepStrictEqual(actual, expected[, message])</code><span><a class="mark" href="#assertnotdeepstrictequalactual-expected-message" id="assertnotdeepstrictequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_notdeepstrictequal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertnotdeepstrictequalactual-expected-message">
+                <a href="assert/assert_notdeepstrictequal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>不再将 <code>-0</code> 和 <code>+0</code> 视为相等。</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>现在使用 <a href="https://tc39.github.io/ecma262/#sec-samevaluezero" rel="nofollow">SameValueZero</a> 比较来比较 <code>NaN</code>。</p></td></tr>
+<tr><td>v9.0.0</td>
+<td><p>现在可以正确地比较 <code>Error</code> 名称和消息。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>也比较 <code>Set</code> 和 <code>Map</code> 的内容。</p></td></tr>
+<tr><td>v6.1.0</td>
+<td><p>现在可以将具有循环引用的对象用作输入。</p></td></tr>
+<tr><td>v6.4.0, v4.7.1</td>
+<td><p>现在可以正确地处理类型化数组切片。</p></td></tr>
+<tr><td>v5.10.1, v4.4.3</td>
+<td><p>正确地处理非 <code>Uint8Array</code> 类型的数组。</p></td></tr>
+<tr><td>v1.2.0</td>
+<td><p><span>新增于: v1.2.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>检验深度严格不相等。
+<a href="#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual()</code></a> 的相反。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">notDeepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// OK</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">notDeepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// OK</span></code></pre>
+<p class="">如果值是深度且严格相等的，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。</p>
+</section><section><h3><code>assert.notEqual(actual, expected[, message])</code><span><a class="mark" href="#assertnotequalactual-expected-message" id="assertnotequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_notequal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertnotequalactual-expected-message">
+                <a href="assert/assert_notequal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>在旧版断言模式下，状态从弃用更改为旧版。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>如果双方都是 NaN，则现在 NaN 被视为相同。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p><strong>严格断言模式</strong></p>
+<p class=""><a href="#assertnotstrictequalactual-expected-message"><code>assert.notStrictEqual()</code></a> 的别名。</p>
+<p class=""><strong>旧版断言模式</strong></p>
+<p></p><div class="api_stability api_stability_3"><a href="documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 <a href="#assertnotstrictequalactual-expected-message"><code>assert.notStrictEqual()</code></a> 。</div><p></p>
+<p class="">使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Inequality"><code>!=</code> 运算符</a>测试浅层强制不相等。
+<code>NaN</code> 是特殊处理的，如果双方都是 <code>NaN</code>，则视为相同。</p>
+
+<pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+assert.<span class="hljs-title function_">notEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">notEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// AssertionError: 1 != 1</span>
+
+assert.<span class="hljs-title function_">notEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// AssertionError: 1 != '1'</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+assert.<span class="hljs-title function_">notEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">notEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// AssertionError: 1 != 1</span>
+
+assert.<span class="hljs-title function_">notEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// AssertionError: 1 != '1'</span></code></pre>
+<p class="">如果值相等，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。</p>
+</section><section><h3><code>assert.notStrictEqual(actual, expected[, message])</code><span><a class="mark" href="#assertnotstrictequalactual-expected-message" id="assertnotstrictequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_notstrictequal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertnotstrictequalactual-expected-message">
+                <a href="assert/assert_notstrictequal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>使用的比较从严格相等更改为 <code>Object.is()</code>。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>测试由 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is" rel="nofollow"><code>Object.is()</code></a> 确定的 <code>actual</code> 和 <code>expected</code> 参数之间的严格不相等。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 1</span>
+
+assert.<span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 1</span>
+
+assert.<span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK</span></code></pre>
+<p class="">如果值严格相等，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。</p>
+</section><section><h3><code>assert.ok(value[, message])</code><span><a class="mark" href="#assertokvalue-message" id="assertokvalue-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_ok_value_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertokvalue-message">
+                <a href="assert/assert_ok_value_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>无参数的 <code>assert.ok()</code> 现在将使用预定义的错误消息。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>测试 <code>value</code> 是否为真。
+相当于 <code>assert.equal(!!value, true, message)</code>。</p>
+<p class="">如果 <code>value</code> 不是真值，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果 <code>message</code> 参数为 <code>undefined</code>，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。
+如果根本没有传入任何参数，则 <code>message</code> 将设置为字符串：<code>'No value argument passed to `assert.ok()`'</code>。</p>
+<p class="">请注意，在 <code>repl</code> 中，错误消息将与文件中抛出的错误消息不同！
+有关更多详细信息，请参见下文。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-literal">true</span>);
+<span class="hljs-comment">// OK</span>
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">ok</span>();
+<span class="hljs-comment">// AssertionError: No value argument passed to `assert.ok()`</span>
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-literal">false</span>, <span class="hljs-string">'it\'s false'</span>);
+<span class="hljs-comment">// AssertionError: it's false</span>
+
+<span class="hljs-comment">// 在交互式解释器中：</span>
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-number">123</span> === <span class="hljs-string">'string'</span>);
+<span class="hljs-comment">// AssertionError: false == true</span>
+
+<span class="hljs-comment">// 在文件中（例如 test.js）：</span>
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-number">123</span> === <span class="hljs-string">'string'</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert.ok(typeof 123 === 'string')</span>
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-literal">false</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert.ok(false)</span>
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert.ok(0)</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-literal">true</span>);
+<span class="hljs-comment">// OK</span>
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">ok</span>();
+<span class="hljs-comment">// AssertionError: No value argument passed to `assert.ok()`</span>
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-literal">false</span>, <span class="hljs-string">'it\'s false'</span>);
+<span class="hljs-comment">// AssertionError: it's false</span>
+
+<span class="hljs-comment">// 在交互式解释器中：</span>
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-number">123</span> === <span class="hljs-string">'string'</span>);
+<span class="hljs-comment">// AssertionError: false == true</span>
+
+<span class="hljs-comment">// 在文件中（例如 test.js）：</span>
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-number">123</span> === <span class="hljs-string">'string'</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert.ok(typeof 123 === 'string')</span>
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-literal">false</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert.ok(false)</span>
+
+assert.<span class="hljs-title function_">ok</span>(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert.ok(0)</span></code></pre>
+
+<pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-comment">// 使用 `assert()` 的工作一样：</span>
+<span class="hljs-title function_">assert</span>(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert(0)</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+<span class="hljs-comment">// 使用 `assert()` 的工作一样：</span>
+<span class="hljs-title function_">assert</span>(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: The expression evaluated to a falsy value:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   assert(0)</span></code></pre>
+</section><section><h3><code>assert.rejects(asyncFn[, error][, message])</code><span><a class="mark" href="#assertrejectsasyncfn-error-message" id="assertrejectsasyncfn-error-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_rejects_asyncfn_error_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertrejectsasyncfn-error-message">
+                <a href="assert/assert_rejects_asyncfn_error_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div>
+<ul class="">
+<li><code>asyncFn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>等待 <code>asyncFn</code> promise，或者，如果 <code>asyncFn</code> 是函数，则立即调用该函数并等待返回的 promise 完成。
+然后将检查 promise 是否被拒绝。</p>
+<p class="">如果 <code>asyncFn</code> 是函数并且它同步抛出错误，则 <code>assert.rejects()</code> 将返回使用使用该错误拒绝的 <code>Promise</code>。
+如果函数没有返回 promise，则 <code>assert.rejects()</code> 将返回使用 <a href="errors.html#err_invalid_return_value"><code>ERR_INVALID_RETURN_VALUE</code></a> 错误拒绝的 <code>Promise</code>。
+在这两种情况下，都会跳过错误句柄。</p>
+<p class="">除了等待完成的异步性质外，其行为与 <a href="#assertthrowsfn-error-message"><code>assert.throws()</code></a> 相同。</p>
+<p class="">如果指定，则 <code>error</code> 可以是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="nofollow"><code>Class</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a>、验证函数、每个属性将被测试的对象，或者每个属性（包括不可枚举的 <code>message</code> 和 <code>name</code> 属性）将被测试的错误实例。</p>
+<p class="">如果指定，则 <code>message</code> 将是 <a href="#class-assertassertionerror"><code>AssertionError</code></a> 提供的消息（如果 <code>asyncFn</code> 没有被拒绝）。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">await</span> assert.<span class="hljs-title function_">rejects</span>(
+  <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>
+  }
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">await</span> assert.<span class="hljs-title function_">rejects</span>(
+    <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+    },
+    {
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+      <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>
+    }
+  );
+})();</code></pre>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">await</span> assert.<span class="hljs-title function_">rejects</span>(
+  <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'TypeError'</span>);
+    assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, <span class="hljs-string">'Wrong value'</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  }
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">await</span> assert.<span class="hljs-title function_">rejects</span>(
+    <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+    },
+    <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">name</span>, <span class="hljs-string">'TypeError'</span>);
+      assert.<span class="hljs-title function_">strictEqual</span>(err.<span class="hljs-property">message</span>, <span class="hljs-string">'Wrong value'</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+  );
+})();</code></pre>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">rejects</span>(
+  <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>)),
+  <span class="hljs-title class_">Error</span>
+).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// ...</span>
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">rejects</span>(
+  <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>)),
+  <span class="hljs-title class_">Error</span>
+).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// ...</span>
+});</code></pre>
+<p class=""><code>error</code> 不能是字符串。
+如果提供字符串作为第二个参数，则假定 <code>error</code> 被省略，而该字符串将用于 <code>message</code>。
+这可能会导致容易遗漏的错误。
+如果考虑使用字符串作为第二个参数，则请仔细阅读 <a href="#assertthrowsfn-error-message"><code>assert.throws()</code></a> 中的示例。</p>
+</section><section><h3><code>assert.strictEqual(actual, expected[, message])</code><span><a class="mark" href="#assertstrictequalactual-expected-message" id="assertstrictequalactual-expected-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_strictequal_actual_expected_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertstrictequalactual-expected-message">
+                <a href="assert/assert_strictequal_actual_expected_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>使用的比较从严格相等更改为 <code>Object.is()</code>。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>测试由 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is" rel="nofollow"><code>Object.is()</code></a> 确定的 <code>actual</code> 和 <code>expected</code> 参数之间的严格相等。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Expected inputs to be strictly equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 1 !== 2</span>
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-string">'Hello foobar'</span>, <span class="hljs-string">'Hello World!'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Expected inputs to be strictly equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 'Hello foobar'</span>
+<span class="hljs-comment">// - 'Hello World!'</span>
+<span class="hljs-comment">//          ^</span>
+
+<span class="hljs-keyword">const</span> apples = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> oranges = <span class="hljs-number">2</span>;
+assert.<span class="hljs-title function_">strictEqual</span>(apples, oranges, <span class="hljs-string">`apples <span class="hljs-subst">${apples}</span> !== oranges <span class="hljs-subst">${oranges}</span>`</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: apples 1 !== oranges 2</span>
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Inputs are not identical'</span>));
+<span class="hljs-comment">// TypeError: Inputs are not identical</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Expected inputs to be strictly equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 1 !== 2</span>
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-string">'Hello foobar'</span>, <span class="hljs-string">'Hello World!'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Expected inputs to be strictly equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 'Hello foobar'</span>
+<span class="hljs-comment">// - 'Hello World!'</span>
+<span class="hljs-comment">//          ^</span>
+
+<span class="hljs-keyword">const</span> apples = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> oranges = <span class="hljs-number">2</span>;
+assert.<span class="hljs-title function_">strictEqual</span>(apples, oranges, <span class="hljs-string">`apples <span class="hljs-subst">${apples}</span> !== oranges <span class="hljs-subst">${oranges}</span>`</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: apples 1 !== oranges 2</span>
+
+assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Inputs are not identical'</span>));
+<span class="hljs-comment">// TypeError: Inputs are not identical</span></code></pre>
+<p class="">如果值不严格相等，则抛出 <a href="#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <a href="#class-assertassertionerror"><code>AssertionError</code></a>。</p>
+</section><section><h3><code>assert.throws(fn[, error][, message])</code><span><a class="mark" href="#assertthrowsfn-error-message" id="assertthrowsfn-error-message">#</a></span><a aria-hidden="true" class="legacy" id="assert_assert_throws_fn_error_message"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#assertthrowsfn-error-message">
+                <a href="assert/assert_throws_fn_error_message.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.2.0</td>
+<td><p>参数 <code>error</code> 现在可以是包含正则表达式的对象。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>参数 <code>error</code> 现在也可以是对象。</p></td></tr>
+<tr><td>v4.2.0</td>
+<td><p>参数 <code>error</code> 现在可以是箭头函数。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>期望函数 <code>fn</code> 抛出错误。</p>
+<p class="">如果指定，则 <code>error</code> 可以是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="nofollow"><code>Class</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a>、验证函数、其中每个属性都将进行严格深度相等测试的验证对象，或者其中每个属性（包括不可枚举的 <code>message</code>和 <code>name</code> 属性）都将进行严格深度相等测试的错误实例。
+使用对象时，也可以使用正则表达式来验证字符串属性。
+有关示例，请参见下文。</p>
+<p class="">如果指定，且如果 <code>fn</code> 调用失败或错误验证失败，则 <code>message</code> 将附加到 <code>AssertionError</code> 提供的消息。</p>
+<p class="">自定义验证对象/错误实例：</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+err.<span class="hljs-property">code</span> = <span class="hljs-number">404</span>;
+err.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+err.<span class="hljs-property">info</span> = {
+  <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+};
+err.<span class="hljs-property">reg</span> = <span class="hljs-regexp">/abc/i</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    }
+    <span class="hljs-comment">// 只会测试验证对象上的属性。</span>
+    <span class="hljs-comment">// 使用嵌套对象需要存在所有属性。</span>
+    <span class="hljs-comment">// 否则验证将失败。</span>
+  }
+);
+
+<span class="hljs-comment">// 使用正则表达式验证错误属性：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-comment">// `name` 和 `message` 属性是字符串，在这些属性上使用正则表达式将匹配字符串。</span>
+    <span class="hljs-comment">// 如果失败，则会抛出错误。</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-regexp">/^TypeError$/</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-regexp">/Wrong/</span>,
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// 不能对嵌套属性使用正则表达式！</span>
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    },
+    <span class="hljs-comment">// `reg` 属性包含正则表达式，只有当验证对象包含相同的正则表达式时，它才会通过。</span>
+    <span class="hljs-attr">reg</span>: <span class="hljs-regexp">/abc/i</span>
+  }
+);
+
+<span class="hljs-comment">// 由于不同的 `message` 和 `name` 属性而失败：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> otherErr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Not found'</span>);
+    <span class="hljs-comment">// 将所有可枚举属性从 `err` 复制到 `otherErr`。</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(err)) {
+      otherErr[key] = value;
+    }
+    <span class="hljs-keyword">throw</span> otherErr;
+  },
+  <span class="hljs-comment">// 当使用错误作为验证对象时，错误的 `message` 和 `name` 属性也将被检查。</span>
+  err
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+err.<span class="hljs-property">code</span> = <span class="hljs-number">404</span>;
+err.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+err.<span class="hljs-property">info</span> = {
+  <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+};
+err.<span class="hljs-property">reg</span> = <span class="hljs-regexp">/abc/i</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    }
+    <span class="hljs-comment">// 只会测试验证对象上的属性。</span>
+    <span class="hljs-comment">// 使用嵌套对象需要存在所有属性。</span>
+    <span class="hljs-comment">// 否则验证将失败。</span>
+  }
+);
+
+<span class="hljs-comment">// 使用正则表达式验证错误属性：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-comment">// `name` 和 `message` 属性是字符串，在这些属性上使用正则表达式将匹配字符串。</span>
+    <span class="hljs-comment">// 如果失败，则会抛出错误。</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-regexp">/^TypeError$/</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-regexp">/Wrong/</span>,
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// 不能对嵌套属性使用正则表达式！</span>
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    },
+    <span class="hljs-comment">// `reg` 属性包含正则表达式，只有当验证对象包含相同的正则表达式时，它才会通过。</span>
+    <span class="hljs-attr">reg</span>: <span class="hljs-regexp">/abc/i</span>
+  }
+);
+
+<span class="hljs-comment">// 由于不同的 `message` 和 `name` 属性而失败：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> otherErr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Not found'</span>);
+    <span class="hljs-comment">// 将所有可枚举属性从 `err` 复制到 `otherErr`。</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(err)) {
+      otherErr[key] = value;
+    }
+    <span class="hljs-keyword">throw</span> otherErr;
+  },
+  <span class="hljs-comment">// 当使用错误作为验证对象时，错误的 `message` 和 `name` 属性也将被检查。</span>
+  err
+);</code></pre>
+<p class="">使用构造函数验证 instanceof：</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">Error</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">Error</span>
+);</code></pre>
+<p class="">使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a> 验证错误消息：</p>
+<p class="">使用正则表达式在错误对象上运行 <code>.toString</code>，因此还将包含错误名称。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/^Error: Wrong value$/</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/^Error: Wrong value$/</span>
+);</code></pre>
+<p class="">自定义错误验证：</p>
+<p class="">该函数必须返回 <code>true</code> 以指示通过了所有内部验证。
+否则它将因 <a href="#class-assertassertionerror"><code>AssertionError</code></a> 而失败。</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Error</span>);
+    <span class="hljs-title function_">assert</span>(<span class="hljs-regexp">/value/</span>.<span class="hljs-title function_">test</span>(err));
+    <span class="hljs-comment">// 避免从验证函数返回除 `true` 之外的任何内容。</span>
+    <span class="hljs-comment">// 否则，不清楚验证的哪一部分失败。而是，抛出有关失败的特定验证的错误（如本示例中所做的那样），并尽可能多地向该错误添加有用的调试信息。</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  },
+  <span class="hljs-string">'unexpected error'</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Error</span>);
+    <span class="hljs-title function_">assert</span>(<span class="hljs-regexp">/value/</span>.<span class="hljs-title function_">test</span>(err));
+    <span class="hljs-comment">// 避免从验证函数返回除 `true` 之外的任何内容。</span>
+    <span class="hljs-comment">// 否则，不清楚验证的哪一部分失败。而是，抛出有关失败的特定验证的错误（如本示例中所做的那样），并尽可能多地向该错误添加有用的调试信息。</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  },
+  <span class="hljs-string">'unexpected error'</span>
+);</code></pre>
+<p class=""><code>error</code> 不能是字符串。
+如果提供字符串作为第二个参数，则假定 <code>error</code> 被省略，而该字符串将用于 <code>message</code>。
+这可能会导致容易遗漏的错误。
+使用与抛出的错误消息相同的消息将导致 <code>ERR_AMBIGUOUS_ARGUMENT</code> 错误。
+如果考虑使用字符串作为第二个参数，则请仔细阅读下面的示例：</p>
+
+<pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingFirst</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'First'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingSecond</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Second'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">notThrowing</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 第二个参数是字符串，且输入函数抛出错误。</span>
+<span class="hljs-comment">// 第一种情况不会抛出错误，因为它与输入函数抛出的错误消息不匹配！</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// 在下一个示例中，该消息与错误消息相比没有任何好处，并且由于不清楚用户是否打算实际匹配错误消息，Node.js 会抛出 `ERR_AMBIGUOUS_ARGUMENT` 错误。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// TypeError [ERR_AMBIGUOUS_ARGUMENT]</span>
+
+<span class="hljs-comment">// 该字符串仅在函数不抛出的情况下（作为消息）使用：</span>
+assert.<span class="hljs-title function_">throws</span>(notThrowing, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Missing expected exception: Second</span>
+
+<span class="hljs-comment">// 如果它旨在匹配错误消息，则执行以下操作：</span>
+<span class="hljs-comment">// 它不会抛出错误，因为错误消息匹配。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-regexp">/Second$/</span>);
+
+<span class="hljs-comment">// 如果错误消息不匹配，则抛出 AssertionError。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-regexp">/Second$/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingFirst</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'First'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingSecond</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Second'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">notThrowing</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 第二个参数是字符串，且输入函数抛出错误。</span>
+<span class="hljs-comment">// 第一种情况不会抛出错误，因为它与输入函数抛出的错误消息不匹配！</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// 在下一个示例中，该消息与错误消息相比没有任何好处，并且由于不清楚用户是否打算实际匹配错误消息，Node.js 会抛出 `ERR_AMBIGUOUS_ARGUMENT` 错误。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// TypeError [ERR_AMBIGUOUS_ARGUMENT]</span>
+
+<span class="hljs-comment">// 该字符串仅在函数不抛出的情况下（作为消息）使用：</span>
+assert.<span class="hljs-title function_">throws</span>(notThrowing, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Missing expected exception: Second</span>
+
+<span class="hljs-comment">// 如果它旨在匹配错误消息，则执行以下操作：</span>
+<span class="hljs-comment">// 它不会抛出错误，因为错误消息匹配。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-regexp">/Second$/</span>);
+
+<span class="hljs-comment">// 如果错误消息不匹配，则抛出 AssertionError。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-regexp">/Second$/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]</span></code></pre>
+<p class="">由于容易混淆的符号，请避免将字符串作为第二个参数。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

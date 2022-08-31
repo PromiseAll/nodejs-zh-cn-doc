@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>queueMicrotask(callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-globals">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>queueMicrotask(callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../globals.html#globals_queuemicrotask_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/globals/queuemicrotask_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/globals/queuemicrotask_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/globals/#queuemicrotaskcallback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v11.0.0</span>
+</div><ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 要排队的函数。</li>
+</ul><p><code>queueMicrotask()</code> 方法将微任务排队以调用 <code>callback</code>。
+如果 <code>callback</code> 抛出异常，则将触发 <a href="../process.html#process"><code>process</code> 对象</a>的 <code>'uncaughtException'</code> 事件。</p><p class="">微任务队列由 V8 管理，并且可以以类似于 <a href="../process.html#processnexttickcallback-args"><code>process.nextTick()</code></a> 队列的方式使用，后者由 Node.js 管理。
+在 Node.js 事件循环的每次轮询中，<code>process.nextTick()</code> 队列总是在微任务队列之前处理。</p><pre class=""><code class="language-js"><span class="hljs-comment">// 在这里，`queueMicrotask()` 用于确保 'load' 事件总是异步地触发，</span>
+<span class="hljs-comment">// 并且因此始终如一。</span>
+<span class="hljs-comment">// 在这里使用 `process.nextTick()` 会导致 'load' 事件</span>
+<span class="hljs-comment">// 总是在任何其他 promise 作业之前触发。</span>
+
+<span class="hljs-title class_">DataHandler</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">load</span> = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">load</span>(<span class="hljs-params">key</span>) {
+  <span class="hljs-keyword">const</span> hit = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_cache</span>.<span class="hljs-title function_">get</span>(key);
+  <span class="hljs-keyword">if</span> (hit !== <span class="hljs-literal">undefined</span>) {
+    <span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'load'</span>, hit);
+    });
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetchData</span>(key);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">_cache</span>.<span class="hljs-title function_">set</span>(key, data);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'load'</span>, data);
+};</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v11.0.0</span>
+</div><ul>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Function to be queued.</li>
+</ul><p>The <code>queueMicrotask()</code> method queues a microtask to invoke <code>callback</code>. If
+<code>callback</code> throws an exception, the <a href="../process.html#process"><code>process</code> object</a> <code>'uncaughtException'</code>
+event will be emitted.</p><p>The microtask queue is managed by V8 and may be used in a similar manner to
+the <a href="../process.html#processnexttickcallback-args"><code>process.nextTick()</code></a> queue, which is managed by Node.js. The
+<code>process.nextTick()</code> queue is always processed before the microtask queue
+within each turn of the Node.js event loop.</p><pre><code class="language-js"><span class="hljs-comment">// Here, `queueMicrotask()` is used to ensure the 'load' event is always</span>
+<span class="hljs-comment">// emitted asynchronously, and therefore consistently. Using</span>
+<span class="hljs-comment">// `process.nextTick()` here would result in the 'load' event always emitting</span>
+<span class="hljs-comment">// before any other promise jobs.</span>
+
+<span class="hljs-title class_">DataHandler</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">load</span> = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">load</span>(<span class="hljs-params">key</span>) {
+  <span class="hljs-keyword">const</span> hit = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_cache</span>.<span class="hljs-title function_">get</span>(key);
+  <span class="hljs-keyword">if</span> (hit !== <span class="hljs-literal">undefined</span>) {
+    <span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'load'</span>, hit);
+    });
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetchData</span>(key);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">_cache</span>.<span class="hljs-title function_">set</span>(key, data);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'load'</span>, data);
+};</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

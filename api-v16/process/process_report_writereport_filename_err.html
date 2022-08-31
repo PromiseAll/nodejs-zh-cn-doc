@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.report.writeReport([filename][, err]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.report.writeReport([filename][, err])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_report_writereport_filename_err" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_report_writereport_filename_err.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_report_writereport_filename_err.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processreportwritereportfilename-err.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>此 API 不再是实验的。</p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>新增于: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li>
+<p><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 写入报告的文件的名称。
+这应该是相对路径，如果未指定，它将附加到 <code>process.report.directory</code> 中指定的目录或 Node.js 进程的当前工作目录。</p>
+</li>
+<li>
+<p><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> 用于报告 JavaScript 堆栈的自定义错误。</p>
+</li>
+<li>
+<p>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 返回生成的报告的文件名。</p>
+</li>
+</ul><p>将诊断报告写入文件。
+如果未提供 <code>filename</code>，则默认文件名包括日期、时间、PID 和序列号。
+报告的 JavaScript 堆栈跟踪取自 <code>err</code>（如果存在）。</p><pre class="with-38-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { report } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+report.<span class="hljs-title function_">writeReport</span>();</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { report } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+report.<span class="hljs-title function_">writeReport</span>();</code></pre><p class=""><a href="../report.html">报告文档</a>中提供了额外文档。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>This API is no longer experimental.</p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>Added in: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li>
+<p><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Name of the file where the report is written. This
+should be a relative path, that will be appended to the directory specified in
+<code>process.report.directory</code>, or the current working directory of the Node.js
+process, if unspecified.</p>
+</li>
+<li>
+<p><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> A custom error used for reporting the JavaScript stack.</p>
+</li>
+<li>
+<p>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Returns the filename of the generated report.</p>
+</li>
+</ul><p>Writes a diagnostic report to a file. If <code>filename</code> is not provided, the default
+filename includes the date, time, PID, and a sequence number. The report's
+JavaScript stack trace is taken from <code>err</code>, if present.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { report } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+report.<span class="hljs-title function_">writeReport</span>();</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { report } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+report.<span class="hljs-title function_">writeReport</span>();</code></pre><p>Additional documentation is available in the <a href="../report.html">report documentation</a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

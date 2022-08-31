@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>包的入口 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>包的入口</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_package_entry_points" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/package_entry_points.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/package_entry_points.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#package-entry-points.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在包的 <code>package.json</code> 文件中，有两个字段可以定义包的入口点：<a href="../packages.html#main"><code>"main"</code></a> 和 <a href="../packages.html#exports"><code>"exports"</code></a>。
+所有版本的 Node.js 都支持 <a href="../packages.html#main"><code>"main"</code></a> 字段，但它的功能有限：它只定义了包的主要入口点。</p><p class=""><a href="../packages.html#exports"><code>"exports"</code></a> 字段提供了 <a href="../packages.html#main"><code>"main"</code></a> 的替代方案，其中可以定义包主入口点，同时封装包，<strong>防止除 <a href="../packages.html#exports"><code>"exports"</code></a> 中定义的入口点之外的任何其他入口点</strong>。
+这种封装允许模块作者为他们的包定义一个公共接口。</p><p class="">如果同时定义了 <a href="../packages.html#exports"><code>"exports"</code></a> 和 <a href="../packages.html#main"><code>"main"</code></a>，则 <a href="../packages.html#exports"><code>"exports"</code></a> 字段优先于 <a href="../packages.html#main"><code>"main"</code></a>。
+<a href="../packages.html#exports"><code>"exports"</code></a> 不特定于 ES 模块或 CommonJS；如果 <a href="../packages.html#exports"><code>"exports"</code></a> 存在，则 <a href="../packages.html#main"><code>"main"</code></a> 将被覆盖。
+因此 <a href="../packages.html#main"><code>"main"</code></a> 不能用作 CommonJS 的后备，但它可以用作不支持 <a href="../packages.html#exports"><code>"exports"</code></a> 字段的旧版 Node.js 的后备。</p><p class=""><a href="../packages.html#conditional-exports">条件导出</a>可以在 <a href="../packages.html#exports"><code>"exports"</code></a> 中用于为每个环境定义不同的包入口点，包括包是通过 <code>require</code> 还是通过 <code>import</code> 引用。
+有关在单个包中同时支持 CommonJS 和 ES 模块的更多信息，请参阅<a href="../packages.html#dual-commonjses-module-packages">双 CommonJS/ES 模块包章节</a>。</p><p class=""><strong>警告</strong>：引入 <a href="../packages.html#exports"><code>"exports"</code></a> 字段可防止包的消费者使用任何未定义的入口点，包括 <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a>（例如 <code>require('your-package/package.json')</code>。
+<strong>这可能是一个突破性的变化。</strong></p><p class="">为了使 <a href="../packages.html#exports"><code>"exports"</code></a> 的引入不间断，请确保导出每个以前支持的入口点。
+最好明确指定入口点，以便明确定义包的公共 API。
+例如，以前导出 <code>main</code>、<code>lib</code>、<code>feature</code> 和 <code>package.json</code> 的项目可以使用以下 <code>package.exports</code>：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"my-mod"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib/index"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib/index.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature/index.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./package.json"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./package.json"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">或者，一个项目可以选择导出整个文件夹：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"my-mod"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib/*"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/*.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature/*"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/*.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./package.json"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./package.json"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">作为最后的手段，可以通过为包 <code>"./*": "./*"</code> 的根创建导出来完全禁用包封装。
+这会以禁用封装和潜在的工具优势为代价公开包中的每个文件。
+由于 Node.js 中的 ES 模块加载器强制使用<a href="../esm.html#mandatory-file-extensions">完整说明符路径</a>，导出根而不是明确表示条目比前面的任何一个示例都没有表现力。
+不仅封装丢失，模块消费者也无法 <code>import feature from 'my-mod/feature'</code>，因为他们需要提供完整路径 <code>import feature from 'my-mod/feature/index.js</code>。</p></div>
+          <div id="content_right"><p>In a package’s <code>package.json</code> file, two fields can define entry points for a
+package: <a href="../packages.html#main"><code>"main"</code></a> and <a href="../packages.html#exports"><code>"exports"</code></a>. The <a href="../packages.html#main"><code>"main"</code></a> field is supported
+in all versions of Node.js, but its capabilities are limited: it only defines
+the main entry point of the package.</p><p>The <a href="../packages.html#exports"><code>"exports"</code></a> field provides an alternative to <a href="../packages.html#main"><code>"main"</code></a> where the
+package main entry point can be defined while also encapsulating the package,
+<strong>preventing any other entry points besides those defined in <a href="../packages.html#exports"><code>"exports"</code></a></strong>.
+This encapsulation allows module authors to define a public interface for
+their package.</p><p>If both <a href="../packages.html#exports"><code>"exports"</code></a> and <a href="../packages.html#main"><code>"main"</code></a> are defined, the <a href="../packages.html#exports"><code>"exports"</code></a> field
+takes precedence over <a href="../packages.html#main"><code>"main"</code></a>. <a href="../packages.html#exports"><code>"exports"</code></a> are not specific to ES
+modules or CommonJS; <a href="../packages.html#main"><code>"main"</code></a> is overridden by <a href="../packages.html#exports"><code>"exports"</code></a> if it
+exists. As such <a href="../packages.html#main"><code>"main"</code></a> cannot be used as a fallback for CommonJS but it
+can be used as a fallback for legacy versions of Node.js that do not support the
+<a href="../packages.html#exports"><code>"exports"</code></a> field.</p><p><a href="../packages.html#conditional-exports">Conditional exports</a> can be used within <a href="../packages.html#exports"><code>"exports"</code></a> to define different
+package entry points per environment, including whether the package is
+referenced via <code>require</code> or via <code>import</code>. For more information about supporting
+both CommonJS and ES Modules in a single package please consult
+<a href="../packages.html#dual-commonjses-module-packages">the dual CommonJS/ES module packages section</a>.</p><p><strong>Warning</strong>: Introducing the <a href="../packages.html#exports"><code>"exports"</code></a> field prevents consumers of a
+package from using any entry points that are not defined, including the
+<a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> (e.g. <code>require('your-package/package.json')</code>. <strong>This will
+likely be a breaking change.</strong></p><p>To make the introduction of <a href="../packages.html#exports"><code>"exports"</code></a> non-breaking, ensure that every
+previously supported entry point is exported. It is best to explicitly specify
+entry points so that the package’s public API is well-defined. For example,
+a project that previous exported <code>main</code>, <code>lib</code>,
+<code>feature</code>, and the <code>package.json</code> could use the following <code>package.exports</code>:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"my-mod"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib/index"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib/index.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature/index.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./package.json"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./package.json"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Alternatively a project could choose to export entire folders:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"my-mod"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./lib/*"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/*.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/index.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./feature/*"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./feature/*.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./package.json"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./package.json"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>As a last resort, package encapsulation can be disabled entirely by creating an
+export for the root of the package <code>"./*": "./*"</code>. This exposes every file
+in the package at the cost of disabling the encapsulation and potential tooling
+benefits this provides. As the ES Module loader in Node.js enforces the use of
+<a href="../esm.html#mandatory-file-extensions">the full specifier path</a>, exporting the root rather than being explicit
+about entry is less expressive than either of the prior examples. Not only
+is encapsulation lost but module consumers are unable to
+<code>import feature from 'my-mod/feature'</code> as they need to provide the full
+path <code>import feature from 'my-mod/feature/index.js</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

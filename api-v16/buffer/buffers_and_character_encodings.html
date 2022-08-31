@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>缓冲区与字符编码 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>缓冲区与字符编码</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buffers_and_character_encodings" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buffers_and_character_encodings.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buffers_and_character_encodings.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#buffers-and-character-encodings.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.7.0</td>
+<td><p>引入 <code>base64url</code> 编码。</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>引入 <code>latin1</code> 作为 <code>binary</code> 的别名。</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>删除已弃用的 <code>raw</code> 和 <code>raws</code> 编码。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>当在 <code>Buffer</code> 和字符串之间进行转换时，可以指定字符编码。
+如果未指定字符编码，则默认使用 UTF-8。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'hello world'</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// 打印: 68656c6c6f20776f726c64</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'base64'</span>));
+<span class="hljs-comment">// 打印: aGVsbG8gd29ybGQ=</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf8'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer 66 68 71 77 68 67 61 64 73&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf16le'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer 66 00 68 00 71 00 77 00 68 00 67 00 61 00 64 00 73 00&gt;</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'hello world'</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// 打印: 68656c6c6f20776f726c64</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'base64'</span>));
+<span class="hljs-comment">// 打印: aGVsbG8gd29ybGQ=</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf8'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer 66 68 71 77 68 67 61 64 73&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf16le'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer 66 00 68 00 71 00 77 00 68 00 67 00 61 00 64 00 73 00&gt;</span></code></pre><p class="">Node.js 缓冲区接受它们接收到的编码字符串的所有大小写变体。
+例如，UTF-8 可以指定为 <code>'utf8'</code>、<code>'UTF8'</code> 或 <code>'uTf8'</code>。</p><p class="">Node.js 目前支持的字符编码如下：</p><ul class="">
+<li>
+<p><code>'utf8'</code>（别名：<code>'utf-8'</code>）：多字节编码的 Unicode 字符。
+许多网页和其他文档格式使用 <a href="https://en.wikipedia.org/wiki/UTF-8" rel="nofollow">UTF-8</a>。
+这是默认的字符编码。
+当将 <code>Buffer</code> 解码为不完全包含有效 UTF-8 数据的字符串时，则 Unicode 替换字符 <code>U+FFFD</code> � 将用于表示这些错误。</p>
+</li>
+<li>
+<p><code>'utf16le'</code>（别名：<code>'utf-16le'</code>）：多字节编码的 Unicode 字符。
+与 <code>'utf8'</code> 不同，字符串中的每个字符都将使用 2 或 4 个字节进行编码。
+Node.js 仅支持 <a href="https://en.wikipedia.org/wiki/UTF-16" rel="nofollow">UTF-16</a> 的<a href="https://en.wikipedia.org/wiki/Endianness" rel="nofollow">小端序</a>变体。</p>
+</li>
+<li>
+<p><code>'latin1'</code>: Latin-1 代表 <a href="https://en.wikipedia.org/wiki/ISO-8859-1" rel="nofollow">ISO-8859-1</a>。
+此字符编码仅支持 <code>U+0000</code> 至 <code>U+00FF</code> 的 Unicode 字符。
+每个字符都使用单个字节进行编码。
+不符合该范围的字符将被截断并映射到该范围内的字符。</p>
+</li>
+</ul><p class="">使用以上编码之一将 <code>Buffer</code> 转换为字符串称为解码，将字符串转换为 <code>Buffer</code> 称为编码。</p><p class="">Node.js 还支持以下二进制转文本的编码。
+对于二进制转文本的编码，命名约定是相反的：将 <code>Buffer</code> 转换为字符串通常称为编码，将字符串转换为 <code>Buffer</code> 通常称为解码。</p><ul class="">
+<li>
+<p><code>'base64'</code>: <a href="https://en.wikipedia.org/wiki/Base64" rel="nofollow">Base64</a> 编码。
+当从字符串创建 <code>Buffer</code> 时，此编码还将正确接受 <a href="https://tools.ietf.org/html/rfc4648#section-5" rel="nofollow">RFC 4648，第 5 节</a>中指定的 "URL 和文件名安全字母表"。
+base64 编码的字符串中包含的空白字符（例如空格、制表符和换行符）会被忽略。</p>
+</li>
+<li>
+<p><code>'base64url'</code>: <a href="https://tools.ietf.org/html/rfc4648#section-5" rel="nofollow">base64url</a> 编码如 <a href="https://tools.ietf.org/html/rfc4648#section-5" rel="nofollow">RFC 4648 第 5 节</a>中指定。
+当从字符串创建 <code>Buffer</code> 时，此编码也将正确接受常规的 base64 编码的字符串。
+当将 <code>Buffer</code> 编码为字符串时，此编码将忽略填充。</p>
+</li>
+<li>
+<p><code>'hex'</code>: 将每个字节编码为两个十六进制字符。
+当解码不完全由偶数个十六进制字符组成的字符串时，可能会发生数据截断。
+请参阅下面的示例。</p>
+</li>
+</ul><p class="">还支持以下旧版字符编码：</p><ul class="">
+<li>
+<p><code>'ascii'</code>: 仅适用于 7 位 <a href="https://en.wikipedia.org/wiki/ASCII" rel="nofollow">ASCII</a> 数据。
+当将字符串编码为 <code>Buffer</code> 时，这等效于使用 <code>'latin1'</code>。
+当将 <code>Buffer</code> 解码为字符串时，使用此编码将在解码为 <code>'latin1'</code> 之前额外取消设置每个字节的最高位。
+通常，没有理由使用此编码，因为在编码或解码纯 ASCII 文本时，<code>'utf8'</code>（或者，如果已知数据始终是纯 ASCII，则为 <code>'latin1'</code>）将是更好的选择。
+它仅用于旧版兼容性。</p>
+</li>
+<li>
+<p><code>'binary'</code>: <code>'latin1'</code> 的别名。
+有关此主题的更多背景信息，请参阅<a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString/Binary" rel="nofollow">二进制字符串</a>。
+此编码的名称很容易让人误解，因为这里列出的所有编码都在字符串和二进制数据之间进行转换。
+对于字符串和 <code>Buffer</code> 之间的转换，通常 <code>'utf8'</code> 是正确的选择。</p>
+</li>
+<li>
+<p><code>'ucs2'</code>, <code>'ucs-2'</code>: <code>'utf16le'</code> 的别名。
+UCS-2 过去指的是 UTF-16 的一种变体，它不支持代码点大于 U+FFFF 的字符。
+在 Node.js 中，始终支持这些代码点。</p>
+</li>
+</ul><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1ag123'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// 打印 &lt;Buffer 1a&gt;，当遇到第一个非十六进制值 ('g') 时，则截断数据。</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1a7'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// 打印 &lt;Buffer 1a&gt;，当数据以一位数 ('7') 结尾时，则截断数据。</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1634'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// 打印 &lt;Buffer 16 34&gt;，表现所有数据。</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1ag123'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// 打印 &lt;Buffer 1a&gt;，当遇到第一个非十六进制值 ('g') 时，则截断数据。</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1a7'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// 打印 &lt;Buffer 1a&gt;，当数据以一位数 ('7') 结尾时，则截断数据。</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1634'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// 打印 &lt;Buffer 16 34&gt;，表现所有数据。</span></code></pre><p class="">现代 Web 浏览器遵循 <a href="https://encoding.spec.whatwg.org/" rel="nofollow">WHATWG 编码标准</a>，其将 <code>'latin1'</code> 和 <code>'ISO-8859-1'</code> 别名为 <code>'win-1252'</code>。
+这意味着在执行 <code>http.get()</code> 之类的操作时，如果返回的字符集是 WHATWG 规范中列出的字符集之一，则服务器实际上可能返回 <code>'win-1252'</code> 编码的数据，使用 <code>'latin1'</code> 编码可能会错误地解码字符。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.7.0</td>
+<td><p>Introduced <code>base64url</code> encoding.</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>Introduced <code>latin1</code> as an alias for <code>binary</code>.</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>Removed the deprecated <code>raw</code> and <code>raws</code> encodings.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>When converting between <code>Buffer</code>s and strings, a character encoding may be
+specified. If no character encoding is specified, UTF-8 will be used as the
+default.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'hello world'</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// Prints: 68656c6c6f20776f726c64</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'base64'</span>));
+<span class="hljs-comment">// Prints: aGVsbG8gd29ybGQ=</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf8'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer 66 68 71 77 68 67 61 64 73&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf16le'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer 66 00 68 00 71 00 77 00 68 00 67 00 61 00 64 00 73 00&gt;</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'hello world'</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// Prints: 68656c6c6f20776f726c64</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'base64'</span>));
+<span class="hljs-comment">// Prints: aGVsbG8gd29ybGQ=</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf8'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer 66 68 71 77 68 67 61 64 73&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'fhqwhgads'</span>, <span class="hljs-string">'utf16le'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer 66 00 68 00 71 00 77 00 68 00 67 00 61 00 64 00 73 00&gt;</span></code></pre><p>Node.js buffers accept all case variations of encoding strings that they
+receive. For example, UTF-8 can be specified as <code>'utf8'</code>, <code>'UTF8'</code> or <code>'uTf8'</code>.</p><p>The character encodings currently supported by Node.js are the following:</p><ul>
+<li>
+<p><code>'utf8'</code> (alias: <code>'utf-8'</code>): Multi-byte encoded Unicode characters. Many web
+pages and other document formats use <a href="https://en.wikipedia.org/wiki/UTF-8" rel="nofollow">UTF-8</a>. This is the default character
+encoding. When decoding a <code>Buffer</code> into a string that does not exclusively
+contain valid UTF-8 data, the Unicode replacement character <code>U+FFFD</code> � will be
+used to represent those errors.</p>
+</li>
+<li>
+<p><code>'utf16le'</code> (alias: <code>'utf-16le'</code>): Multi-byte encoded Unicode characters.
+Unlike <code>'utf8'</code>, each character in the string will be encoded using either 2
+or 4 bytes. Node.js only supports the <a href="https://en.wikipedia.org/wiki/Endianness" rel="nofollow">little-endian</a> variant of
+<a href="https://en.wikipedia.org/wiki/UTF-16" rel="nofollow">UTF-16</a>.</p>
+</li>
+<li>
+<p><code>'latin1'</code>: Latin-1 stands for <a href="https://en.wikipedia.org/wiki/ISO-8859-1" rel="nofollow">ISO-8859-1</a>. This character encoding only
+supports the Unicode characters from <code>U+0000</code> to <code>U+00FF</code>. Each character is
+encoded using a single byte. Characters that do not fit into that range are
+truncated and will be mapped to characters in that range.</p>
+</li>
+</ul><p>Converting a <code>Buffer</code> into a string using one of the above is referred to as
+decoding, and converting a string into a <code>Buffer</code> is referred to as encoding.</p><p>Node.js also supports the following binary-to-text encodings. For
+binary-to-text encodings, the naming convention is reversed: Converting a
+<code>Buffer</code> into a string is typically referred to as encoding, and converting a
+string into a <code>Buffer</code> as decoding.</p><ul>
+<li>
+<p><code>'base64'</code>: <a href="https://en.wikipedia.org/wiki/Base64" rel="nofollow">Base64</a> encoding. When creating a <code>Buffer</code> from a string,
+this encoding will also correctly accept "URL and Filename Safe Alphabet" as
+specified in <a href="https://tools.ietf.org/html/rfc4648#section-5" rel="nofollow">RFC 4648, Section 5</a>. Whitespace characters such as spaces,
+tabs, and new lines contained within the base64-encoded string are ignored.</p>
+</li>
+<li>
+<p><code>'base64url'</code>: <a href="https://tools.ietf.org/html/rfc4648#section-5" rel="nofollow">base64url</a> encoding as specified in
+<a href="https://tools.ietf.org/html/rfc4648#section-5" rel="nofollow">RFC 4648, Section 5</a>. When creating a <code>Buffer</code> from a string, this
+encoding will also correctly accept regular base64-encoded strings. When
+encoding a <code>Buffer</code> to a string, this encoding will omit padding.</p>
+</li>
+<li>
+<p><code>'hex'</code>: Encode each byte as two hexadecimal characters. Data truncation
+may occur when decoding strings that do not exclusively consist of an even
+number of hexadecimal characters. See below for an example.</p>
+</li>
+</ul><p>The following legacy character encodings are also supported:</p><ul>
+<li>
+<p><code>'ascii'</code>: For 7-bit <a href="https://en.wikipedia.org/wiki/ASCII" rel="nofollow">ASCII</a> data only. When encoding a string into a
+<code>Buffer</code>, this is equivalent to using <code>'latin1'</code>. When decoding a <code>Buffer</code>
+into a string, using this encoding will additionally unset the highest bit of
+each byte before decoding as <code>'latin1'</code>.
+Generally, there should be no reason to use this encoding, as <code>'utf8'</code>
+(or, if the data is known to always be ASCII-only, <code>'latin1'</code>) will be a
+better choice when encoding or decoding ASCII-only text. It is only provided
+for legacy compatibility.</p>
+</li>
+<li>
+<p><code>'binary'</code>: Alias for <code>'latin1'</code>. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString/Binary" rel="nofollow">binary strings</a> for more background
+on this topic. The name of this encoding can be very misleading, as all of the
+encodings listed here convert between strings and binary data. For converting
+between strings and <code>Buffer</code>s, typically <code>'utf8'</code> is the right choice.</p>
+</li>
+<li>
+<p><code>'ucs2'</code>, <code>'ucs-2'</code>: Aliases of <code>'utf16le'</code>. UCS-2 used to refer to a variant
+of UTF-16 that did not support characters that had code points larger than
+U+FFFF. In Node.js, these code points are always supported.</p>
+</li>
+</ul><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1ag123'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// Prints &lt;Buffer 1a&gt;, data truncated when first non-hexadecimal value</span>
+<span class="hljs-comment">// ('g') encountered.</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1a7'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// Prints &lt;Buffer 1a&gt;, data truncated when data ends in single digit ('7').</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1634'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// Prints &lt;Buffer 16 34&gt;, all data represented.</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1ag123'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// Prints &lt;Buffer 1a&gt;, data truncated when first non-hexadecimal value</span>
+<span class="hljs-comment">// ('g') encountered.</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1a7'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// Prints &lt;Buffer 1a&gt;, data truncated when data ends in single digit ('7').</span>
+
+<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'1634'</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-comment">// Prints &lt;Buffer 16 34&gt;, all data represented.</span></code></pre><p>Modern Web browsers follow the <a href="https://encoding.spec.whatwg.org/" rel="nofollow">WHATWG Encoding Standard</a> which aliases
+both <code>'latin1'</code> and <code>'ISO-8859-1'</code> to <code>'win-1252'</code>. This means that while doing
+something like <code>http.get()</code>, if the returned charset is one of those listed in
+the WHATWG specification it is possible that the server actually returned
+<code>'win-1252'</code>-encoded data, and using <code>'latin1'</code> encoding may incorrectly decode
+the characters.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

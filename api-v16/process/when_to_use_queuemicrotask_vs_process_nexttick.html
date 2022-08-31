@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>何时使用 queueMicrotask() 与 process.nextTick() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>何时使用 queueMicrotask() 与 process.nextTick()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_when_to_use_queuemicrotask_vs_process_nexttick" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/when_to_use_queuemicrotask_vs_process_nexttick.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/when_to_use_queuemicrotask_vs_process_nexttick.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#when-to-use-queuemicrotask-vs-processnexttick.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><a href="../globals.html#queuemicrotaskcallback"><code>queueMicrotask()</code></a> API 是 <code>process.nextTick()</code> 的替代方案，它还使用用于执行 then、catch 和 finally 处理程序的相同微任务队列来延迟函数的执行。
+在 Node.js 中，每次“下一个滴答队列”被排空时，微任务队列也会立即排空。</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>));
+<span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>));
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// 输出：</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// 3</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>));
+<span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>));
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// 输出：</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// 3</span></code></pre><p class="">对于_大多数_用户空间用例，<code>queueMicrotask()</code> API 提供了一种可移植且可靠的延迟执行机制，该机制适用于多个 JavaScript 平台环境，应该比 <code>process.nextTick()</code> 更受青睐。
+在简单的场景中，<code>queueMicrotask()</code> 可以直接替代 <code>process.nextTick()</code>。</p><pre class=""><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'microtask callback'</span>);
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// 输出：</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// microtask callback</span></code></pre><p class="">两个 API 之间一个值得注意的区别是 <code>process.nextTick()</code> 允许指定额外值，这些值将在调用时作为参数传递给延迟函数。
+使用 <code>queueMicrotask()</code> 实现相同的结果需要使用闭包或绑定函数：</p><pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">deferred</span>(<span class="hljs-params">a, b</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'microtask'</span>, a + b);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">queueMicrotask</span>(deferred.<span class="hljs-title function_">bind</span>(<span class="hljs-literal">undefined</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// 输出：</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// microtask 3</span></code></pre><p class="">从下一个滴答队列和微任务队列中引发的错误的处理方式存在细微差别。
+在排队的微任务回调中抛出的错误应该在可能的情况下在排队的回调中处理。
+如果不是，则可以使用 <code>process.on('uncaughtException')</code> 事件句柄来捕获和处理错误。</p><p class="">如有疑问，除非需要 <code>process.nextTick()</code> 的特定功能，否则请使用 <code>queueMicrotask()</code>。</p></div>
+          <div id="content_right"><p>The <a href="../globals.html#queuemicrotaskcallback"><code>queueMicrotask()</code></a> API is an alternative to <code>process.nextTick()</code> that
+also defers execution of a function using the same microtask queue used to
+execute the then, catch, and finally handlers of resolved promises. Within
+Node.js, every time the "next tick queue" is drained, the microtask queue
+is drained immediately after.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>));
+<span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>));
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// 3</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>));
+<span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>));
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// 3</span></code></pre><p>For <em>most</em> userland use cases, the <code>queueMicrotask()</code> API provides a portable
+and reliable mechanism for deferring execution that works across multiple
+JavaScript platform environments and should be favored over <code>process.nextTick()</code>.
+In simple scenarios, <code>queueMicrotask()</code> can be a drop-in replacement for
+<code>process.nextTick()</code>.</p><pre><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'microtask callback'</span>);
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// microtask callback</span></code></pre><p>One note-worthy difference between the two APIs is that <code>process.nextTick()</code>
+allows specifying additional values that will be passed as arguments to the
+deferred function when it is called. Achieving the same result with
+<code>queueMicrotask()</code> requires using either a closure or a bound function:</p><pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">deferred</span>(<span class="hljs-params">a, b</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'microtask'</span>, a + b);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">queueMicrotask</span>(deferred.<span class="hljs-title function_">bind</span>(<span class="hljs-literal">undefined</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// microtask 3</span></code></pre><p>There are minor differences in the way errors raised from within the next tick
+queue and microtask queue are handled. Errors thrown within a queued microtask
+callback should be handled within the queued callback when possible. If they are
+not, the <code>process.on('uncaughtException')</code> event handler can be used to capture
+and handle the errors.</p><p>When in doubt, unless the specific capabilities of <code>process.nextTick()</code> are
+needed, use <code>queueMicrotask()</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

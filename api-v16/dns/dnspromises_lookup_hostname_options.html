@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>dnsPromises.lookup(hostname[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dns">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>dnsPromises.lookup(hostname[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dns.html#dns_dnspromises_lookup_hostname_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dns/dnspromises_lookup_hostname_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dns/dnspromises_lookup_hostname_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dns/#dnspromiseslookuphostname-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v10.6.0</span>
+</div><ul class="">
+<li><code>hostname</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 记录族。
+必须是 <code>4</code>、<code>6</code> 或 <code>0</code>。
+值 <code>0</code> 表示同时返回 IPv4 和 IPv6 地址。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>hints</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 一个或多个<a href="../dns.html#supported-getaddrinfo-flags">受支持的 <code>getaddrinfo</code> 标志</a>。
+多个标志可以通过按位 <code>OR</code> 其值来传入。</li>
+<li><code>all</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，<code>Promise</code> 使用数组中的所有地址进行解决。
+否则，返回单个地址。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>verbatim</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，<code>Promise</code> 使用按照 DNS 解析器返回的顺序使用 IPv4 和 IPv6 地址进行解决。
+当为 <code>false</code> 时，IPv4 地址位于 IPv6 地址之前。
+<strong>默认值:</strong> 当前为 <code>false</code>（地址已重新排序），但预计在不久的将来会发生变化。
+默认值可使用 <a href="../dns.html#dnssetdefaultresultorderorder"><code>dns.setDefaultResultOrder()</code></a> 或 <a href="../cli.html#--dns-result-orderorder"><code>--dns-result-order</code></a> 进行配置。
+新代码应使用 <code>{ verbatim: true }</code>。</li>
+</ul>
+</li>
+</ul><p>将主机名（例如 <code>'nodejs.org'</code>）解析为第一个找到的 A (IPv4) 或 AAAA (IPv6) 记录。
+所有 <code>option</code> 属性都是可选的。
+如果 <code>options</code> 是整数，则它必须是 <code>4</code> 或 <code>6</code> – 如果未提供 <code>options</code>，则如果找到，则返回 IPv4 和 IPv6 地址。</p><p class="">将 <code>all</code> 选项设置为 <code>true</code>，则 <code>Promise</code> 使用 <code>addresses</code> 是具有属性 <code>address</code> 和 <code>family</code> 的对象数组进行解决。</p><p class="">当出错时，<code>Promise</code> 使用 <a href="../errors.html#class-error"><code>Error</code></a> 对象拒绝，其中 <code>err.code</code> 是错误码。
+记住，<code>err.code</code> 将设置为 <code>'ENOTFOUND'</code>，不仅当主机名不存在时，而且当查找以其他方式失败时，例如没有可用的文件描述符。</p><p class=""><a href="../dns.html#dnspromiseslookuphostname-options"><code>dnsPromises.lookup()</code></a> 不一定与域名系统协议有任何关系。
+该实现使用了一个操作系统工具，可以将名称与地址相关联，反之亦然。
+这种实现会对任何 Node.js 程序的行为产生微妙但重要的影响。
+在使用 <code>dnsPromises.lookup()</code> 之前，请花一些时间查阅<a href="../dns.html#implementation-considerations">实现的注意事项章节</a>。</p><p class="">用法示例：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> dns = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dns'</span>);
+<span class="hljs-keyword">const</span> dnsPromises = dns.<span class="hljs-property">promises</span>;
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">family</span>: <span class="hljs-number">6</span>,
+  <span class="hljs-attr">hints</span>: dns.<span class="hljs-property">ADDRCONFIG</span> | dns.<span class="hljs-property">V4MAPPED</span>,
+};
+
+dnsPromises.<span class="hljs-title function_">lookup</span>(<span class="hljs-string">'example.com'</span>, options).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'address: %j family: IPv%s'</span>, result.<span class="hljs-property">address</span>, result.<span class="hljs-property">family</span>);
+  <span class="hljs-comment">// address: "2606:2800:220:1:248:1893:25c8:1946" family: IPv6</span>
+});
+
+<span class="hljs-comment">// 当 options.all 为真时，结果将是数组。</span>
+options.<span class="hljs-property">all</span> = <span class="hljs-literal">true</span>;
+dnsPromises.<span class="hljs-title function_">lookup</span>(<span class="hljs-string">'example.com'</span>, options).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'addresses: %j'</span>, result);
+  <span class="hljs-comment">// addresses: [{"address":"2606:2800:220:1:248:1893:25c8:1946","family":6}]</span>
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v10.6.0</span>
+</div><ul>
+<li><code>hostname</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The record family. Must be <code>4</code>, <code>6</code>, or <code>0</code>. The value
+<code>0</code> indicates that IPv4 and IPv6 addresses are both returned. <strong>Default:</strong>
+<code>0</code>.</li>
+<li><code>hints</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> One or more <a href="../dns.html#supported-getaddrinfo-flags">supported <code>getaddrinfo</code> flags</a>. Multiple
+flags may be passed by bitwise <code>OR</code>ing their values.</li>
+<li><code>all</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code>, the <code>Promise</code> is resolved with all addresses in
+an array. Otherwise, returns a single address. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>verbatim</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code>, the <code>Promise</code> is resolved with IPv4 and
+IPv6 addresses in the order the DNS resolver returned them. When <code>false</code>,
+IPv4 addresses are placed before IPv6 addresses.
+<strong>Default:</strong> currently <code>false</code> (addresses are reordered) but this is
+expected to change in the not too distant future. Default value is
+configurable using <a href="../dns.html#dnssetdefaultresultorderorder"><code>dns.setDefaultResultOrder()</code></a> or
+<a href="../cli.html#--dns-result-orderorder"><code>--dns-result-order</code></a>. New code should use <code>{ verbatim: true }</code>.</li>
+</ul>
+</li>
+</ul><p>Resolves a host name (e.g. <code>'nodejs.org'</code>) into the first found A (IPv4) or
+AAAA (IPv6) record. All <code>option</code> properties are optional. If <code>options</code> is an
+integer, then it must be <code>4</code> or <code>6</code> – if <code>options</code> is not provided, then IPv4
+and IPv6 addresses are both returned if found.</p><p>With the <code>all</code> option set to <code>true</code>, the <code>Promise</code> is resolved with <code>addresses</code>
+being an array of objects with the properties <code>address</code> and <code>family</code>.</p><p>On error, the <code>Promise</code> is rejected with an <a href="../errors.html#class-error"><code>Error</code></a> object, where <code>err.code</code>
+is the error code.
+Keep in mind that <code>err.code</code> will be set to <code>'ENOTFOUND'</code> not only when
+the host name does not exist but also when the lookup fails in other ways
+such as no available file descriptors.</p><p><a href="../dns.html#dnspromiseslookuphostname-options"><code>dnsPromises.lookup()</code></a> does not necessarily have anything to do with the DNS
+protocol. The implementation uses an operating system facility that can
+associate names with addresses, and vice versa. This implementation can have
+subtle but important consequences on the behavior of any Node.js program. Please
+take some time to consult the <a href="../dns.html#implementation-considerations">Implementation considerations section</a> before
+using <code>dnsPromises.lookup()</code>.</p><p>Example usage:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> dns = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dns'</span>);
+<span class="hljs-keyword">const</span> dnsPromises = dns.<span class="hljs-property">promises</span>;
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">family</span>: <span class="hljs-number">6</span>,
+  <span class="hljs-attr">hints</span>: dns.<span class="hljs-property">ADDRCONFIG</span> | dns.<span class="hljs-property">V4MAPPED</span>,
+};
+
+dnsPromises.<span class="hljs-title function_">lookup</span>(<span class="hljs-string">'example.com'</span>, options).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'address: %j family: IPv%s'</span>, result.<span class="hljs-property">address</span>, result.<span class="hljs-property">family</span>);
+  <span class="hljs-comment">// address: "2606:2800:220:1:248:1893:25c8:1946" family: IPv6</span>
+});
+
+<span class="hljs-comment">// When options.all is true, the result will be an Array.</span>
+options.<span class="hljs-property">all</span> = <span class="hljs-literal">true</span>;
+dnsPromises.<span class="hljs-title function_">lookup</span>(<span class="hljs-string">'example.com'</span>, options).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'addresses: %j'</span>, result);
+  <span class="hljs-comment">// addresses: [{"address":"2606:2800:220:1:248:1893:25c8:1946","family":6}]</span>
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

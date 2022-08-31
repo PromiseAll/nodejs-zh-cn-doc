@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>解析器算法 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-esm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>解析器算法</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../esm.html#esm_resolver_algorithm" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/esm/resolver_algorithm.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/esm/resolver_algorithm.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/esm/#resolver-algorithm.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>加载 ES 模块说明符的算法通过下面的 <strong>ESM_RESOLVE</strong> 方法给出。
+它返回相对于 parentURL 的模块说明符的解析 URL。</p><p class="">确定解析 URL 的模块格式的算法由 <strong>ESM_FORMAT</strong> 提供，它返回任何文件的唯一模块格式。
+"module" 格式为 ECMAScript 模块返回，而 "commonjs" 格式用于指示通过旧版 CommonJS 加载器加载。
+其他格式，如 "addon" 可以在未来的更新中扩展。</p><p class="">在以下算法中，除非另有说明，否则所有子程序错误都将作为这些顶层程序的错误传播。</p><p class="">defaultConditions 是条件环境名称数组，<code>["node", "import"]</code>。</p><p class="">解析器可能会抛出以下错误：</p><ul class="">
+<li>无效的模块说明符：模块说明符是无效的 URL、包名称、或包子路径说明符。</li>
+<li>无效的包配置：package.json 配置无效或包含无效配置。</li>
+<li>无效的包目标：包导出或导入为无效类型或字符串目标的包定义了目标模块。</li>
+<li>未导出包路径：包导出未定义或允许给定模块的包中的目标子路径。</li>
+<li>未定义包导入：包导入未定义说明符。</li>
+<li>未找到模块：请求的包或模块不存在。</li>
+<li>不支持的目录导入：解析的路径对应的目录不是模块导入支持的目标。</li>
+</ul></div>
+          <div id="content_right"><p>The algorithm to load an ES module specifier is given through the
+<strong>ESM_RESOLVE</strong> method below. It returns the resolved URL for a
+module specifier relative to a parentURL.</p><p>The algorithm to determine the module format of a resolved URL is
+provided by <strong>ESM_FORMAT</strong>, which returns the unique module
+format for any file. The <em>"module"</em> format is returned for an ECMAScript
+Module, while the <em>"commonjs"</em> format is used to indicate loading through the
+legacy CommonJS loader. Additional formats such as <em>"addon"</em> can be extended in
+future updates.</p><p>In the following algorithms, all subroutine errors are propagated as errors
+of these top-level routines unless stated otherwise.</p><p><em>defaultConditions</em> is the conditional environment name array,
+<code>["node", "import"]</code>.</p><p>The resolver can throw the following errors:</p><ul>
+<li><em>Invalid Module Specifier</em>: Module specifier is an invalid URL, package name
+or package subpath specifier.</li>
+<li><em>Invalid Package Configuration</em>: package.json configuration is invalid or
+contains an invalid configuration.</li>
+<li><em>Invalid Package Target</em>: Package exports or imports define a target module
+for the package that is an invalid type or string target.</li>
+<li><em>Package Path Not Exported</em>: Package exports do not define or permit a target
+subpath in the package for the given module.</li>
+<li><em>Package Import Not Defined</em>: Package imports do not define the specifier.</li>
+<li><em>Module Not Found</em>: The package or module requested does not exist.</li>
+<li><em>Unsupported Directory Import</em>: The resolved path corresponds to a directory,
+which is not a supported target for module imports.</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

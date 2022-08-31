@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>测试运行器执行模型 | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-test">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>测试运行器执行模型</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../test.html#test_test_runner_execution_model" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/test/#test-runner-execution-model.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当搜索要执行的测试文件时，测试运行器的行为如下：</p><ul class="">
+<li>执行用户显式提供的任何文件。</li>
+<li>如果用户没有显式地指定任何路径，则递归搜索当前工作目录中指定的文件，如以下步骤所示。</li>
+<li>除非用户显式地提供，否则跳过 <code>node_modules</code> 目录。</li>
+<li>如果遇到名为 <code>test</code> 的目录，则测试运行程序将递归搜索所有 <code>.js</code>、<code>.cjs</code> 和 <code>.mjs</code> 文件。
+所有这些文件都被视为测试文件，不需要匹配下面详述的特定命名约定。
+这是为了适应将所有测试放在单个 <code>test</code> 目录中的项目。</li>
+<li>在所有其他目录中，匹配以下模式的 <code>.js</code>、<code>.cjs</code> 和 <code>.mjs</code> 文件被视为测试文件：
+<ul>
+<li><code>^test$</code> - 基本名称为字符串 <code>'test'</code> 的文件。
+示例：<code>test.js</code>、<code>test.cjs</code>、<code>test.mjs</code>。</li>
+<li><code>^test-.+</code> - 基本名称以字符串 <code>'test-'</code> 开头，后跟一个或多个字符的文件。
+示例：<code>test-example.js</code>、<code>test-another-example.mjs</code>。</li>
+<li><code>.+[\.\-\_]test$</code> - 基本名称以 <code>.test</code>、<code>-test</code> 或 <code>_test</code> 结尾的文件，前面有一个或多个字符。
+示例：<code>example.test.js</code>、<code>example-test.cjs</code>、<code>example_test.mjs</code>。</li>
+<li>Node.js 理解的其他文件类型，例如 <code>.node</code> 和 <code>.json</code>，不会由测试运行程序自动执行，但如果在命令行上显式地提供，则支持。</li>
+</ul>
+</li>
+</ul><p class="">每个匹配的测试文件都在单独的子进程中执行。
+如果子进程以退出代码 0 结束，则认为测试通过。
+否则，认为测试失败。
+测试文件必须是 Node.js 可执行文件，但不需要在内部使用 <code>node:test</code> 模块。</p></div>
+          <div id="content_right"><p>When searching for test files to execute, the test runner behaves as follows:</p><ul>
+<li>Any files explicitly provided by the user are executed.</li>
+<li>If the user did not explicitly specify any paths, the current working
+directory is recursively searched for files as specified in the following
+steps.</li>
+<li><code>node_modules</code> directories are skipped unless explicitly provided by the
+user.</li>
+<li>If a directory named <code>test</code> is encountered, the test runner will search it
+recursively for all all <code>.js</code>, <code>.cjs</code>, and <code>.mjs</code> files. All of these files
+are treated as test files, and do not need to match the specific naming
+convention detailed below. This is to accommodate projects that place all of
+their tests in a single <code>test</code> directory.</li>
+<li>In all other directories, <code>.js</code>, <code>.cjs</code>, and <code>.mjs</code> files matching the
+following patterns are treated as test files:
+<ul>
+<li><code>^test$</code> - Files whose basename is the string <code>'test'</code>. Examples:
+<code>test.js</code>, <code>test.cjs</code>, <code>test.mjs</code>.</li>
+<li><code>^test-.+</code> - Files whose basename starts with the string <code>'test-'</code>
+followed by one or more characters. Examples: <code>test-example.js</code>,
+<code>test-another-example.mjs</code>.</li>
+<li><code>.+[\.\-\_]test$</code> - Files whose basename ends with <code>.test</code>, <code>-test</code>, or
+<code>_test</code>, preceded by one or more characters. Examples: <code>example.test.js</code>,
+<code>example-test.cjs</code>, <code>example_test.mjs</code>.</li>
+<li>Other file types understood by Node.js such as <code>.node</code> and <code>.json</code> are not
+automatically executed by the test runner, but are supported if explicitly
+provided on the command line.</li>
+</ul>
+</li>
+</ul><p>Each matching test file is executed in a separate child process. If the child
+process finishes with an exit code of 0, the test is considered passing.
+Otherwise, the test is considered to be a failure. Test files must be
+executable by Node.js, but are not required to use the <code>node:test</code> module
+internally.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>转译器加载器 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-esm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>转译器加载器</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../esm.html#esm_transpiler_loader" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/esm/transpiler_loader.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/esm/transpiler_loader.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/esm/#transpiler-loader.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>可以使用 <a href="../esm.html#loadurl-context-defaultload"><code>load</code> 钩子</a>将 Node.js 无法理解的格式的源转换为 JavaScript。
+但是，在调用该钩子之前，<a href="../esm.html#resolvespecifier-context-defaultresolve"><code>resolve</code> 钩子</a>需要告诉 Node.js 不要在未知文件类型上抛出错误。</p><p class="">这比在运行 Node.js 之前转译源文件的性能要低；转译加载器应该只用于开发和测试目的。</p><pre class=""><code class="language-js"><span class="hljs-comment">// coffeescript-loader.mjs</span>
+<span class="hljs-keyword">import</span> { readFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:fs/promises'</span>;
+<span class="hljs-keyword">import</span> { dirname, extname, resolve <span class="hljs-keyword">as</span> resolvePath } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:path'</span>;
+<span class="hljs-keyword">import</span> { cwd } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:process'</span>;
+<span class="hljs-keyword">import</span> { fileURLToPath, pathToFileURL } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:url'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">CoffeeScript</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'coffeescript'</span>;
+
+<span class="hljs-keyword">const</span> baseURL = <span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">`<span class="hljs-subst">${cwd()}</span>/`</span>).<span class="hljs-property">href</span>;
+
+<span class="hljs-comment">// CoffeeScript 文件以 .coffee、.litcoffee 或 .coffee.md 结尾。</span>
+<span class="hljs-keyword">const</span> extensionsRegex = <span class="hljs-regexp">/\.coffee$|\.litcoffee$|\.coffee\.md$/</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-params">specifier, context, defaultResolve</span>) {
+  <span class="hljs-keyword">const</span> { parentURL = baseURL } = context;
+
+  <span class="hljs-comment">// Node.js 通常在未知文件扩展名上出错，</span>
+  <span class="hljs-comment">// 因此返回以 CoffeeScript 文件扩展名结尾的说明符的 URL。</span>
+  <span class="hljs-keyword">if</span> (extensionsRegex.<span class="hljs-title function_">test</span>(specifier)) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">url</span>: <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(specifier, parentURL).<span class="hljs-property">href</span>
+    };
+  }
+
+  <span class="hljs-comment">// 让 Node.js 处理所有其他说明符。</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultResolve</span>(specifier, context, defaultResolve);
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">load</span>(<span class="hljs-params">url, context, defaultLoad</span>) {
+  <span class="hljs-comment">// 现在修补了解决以让 CoffeeScript URL 通过，</span>
+  <span class="hljs-comment">// 需要告诉 Node.js 这样的 URL 应该被解释为什么格式。</span>
+  <span class="hljs-comment">// 为了这个加载器的目的，所有 CoffeeScript URL 都是 ES 模块。</span>
+  <span class="hljs-comment">// 因为 CoffeeScript 会转译成 JavaScript，</span>
+  <span class="hljs-comment">// 所以它应该是两种 JavaScript 格式之一：'commonjs' 或 'module'。</span>
+  <span class="hljs-keyword">if</span> (extensionsRegex.<span class="hljs-title function_">test</span>(url)) {
+    <span class="hljs-comment">// CoffeeScript 文件可以是 CommonJS 或 ES 模块，</span>
+    <span class="hljs-comment">// 因此我们希望 Node.js 将任何 CoffeeScript 文件视为相同位置的 .js 文件。 </span>
+    <span class="hljs-comment">// 要确定 Node.js 如何解释任意 .js 文件，</span>
+    <span class="hljs-comment">// 则在文件系统中搜索最近的父 package.json 文件 </span>
+    <span class="hljs-comment">// 并读取其 "type" 字段。</span>
+    <span class="hljs-keyword">const</span> format = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getPackageType</span>(url);
+    <span class="hljs-comment">// 当钩子返回 'commonjs' 格式时，则 `source` 将被忽略。</span>
+    <span class="hljs-comment">// 为了处理 CommonJS 文件，需要使用 `require.extensions` 注册句柄，</span>
+    <span class="hljs-comment">// 以便使用 CommonJS 加载器处理文件。</span>
+    <span class="hljs-comment">// 避免需要单独的 CommonJS 处理程序 </span>
+    <span class="hljs-comment">// 是 ES 模块加载器计划的未来增强功能。</span>
+    <span class="hljs-keyword">if</span> (format === <span class="hljs-string">'commonjs'</span>) {
+      <span class="hljs-keyword">return</span> { format };
+    }
+
+    <span class="hljs-keyword">const</span> { <span class="hljs-attr">source</span>: rawSource } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">defaultLoad</span>(url, { format });
+    <span class="hljs-comment">// 此钩子将所有导入的 CoffeeScript 文件的 CoffeeScript 源代码 </span>
+    <span class="hljs-comment">// 转换为的 JavaScript 源代码。</span>
+    <span class="hljs-keyword">const</span> transformedSource = <span class="hljs-title class_">CoffeeScript</span>.<span class="hljs-title function_">compile</span>(rawSource.<span class="hljs-title function_">toString</span>(), {
+      <span class="hljs-attr">bare</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">filename</span>: url,
+    });
+
+    <span class="hljs-keyword">return</span> {
+      format,
+      <span class="hljs-attr">source</span>: transformedSource,
+    };
+  }
+
+  <span class="hljs-comment">// 让 Node.js 处理所有其他 URL。</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultLoad</span>(url, context, defaultLoad);
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getPackageType</span>(<span class="hljs-params">url</span>) {
+  <span class="hljs-comment">// `url` is only a file path during the first iteration when passed the</span>
+  <span class="hljs-comment">// resolved url from the load() hook</span>
+  <span class="hljs-comment">// an actual file path from load() will contain a file extension as it's</span>
+  <span class="hljs-comment">// required by the spec</span>
+  <span class="hljs-comment">// this simple truthy check for whether `url` contains a file extension will</span>
+  <span class="hljs-comment">// work for most projects but does not cover some edge-cases (such as</span>
+  <span class="hljs-comment">// extensionless files or a url ending in a trailing space)</span>
+  <span class="hljs-keyword">const</span> isFilePath = !!<span class="hljs-title function_">extname</span>(url);
+  <span class="hljs-comment">// 如果是文件路径，则获取它所在的目录</span>
+  <span class="hljs-keyword">const</span> dir = isFilePath ?
+    <span class="hljs-title function_">dirname</span>(<span class="hljs-title function_">fileURLToPath</span>(url)) :
+    url;
+  <span class="hljs-comment">// 生成同一个目录下的 package.json 的文件路径，</span>
+  <span class="hljs-comment">// 文件可能存在也可能不存在</span>
+  <span class="hljs-keyword">const</span> packagePath = <span class="hljs-title function_">resolvePath</span>(dir, <span class="hljs-string">'package.json'</span>);
+  <span class="hljs-comment">// 尝试读取可能不存在的 package.json</span>
+  <span class="hljs-keyword">const</span> type = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(packagePath, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'utf8'</span> })
+    .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">filestring</span>) =&gt;</span> <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(filestring).<span class="hljs-property">type</span>)
+    .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err?.<span class="hljs-property">code</span> !== <span class="hljs-string">'ENOENT'</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err);
+    });
+  <span class="hljs-comment">// 如果 package.json 存在并包含带有值的 `type` 字段</span>
+  <span class="hljs-keyword">if</span> (type) <span class="hljs-keyword">return</span> type;
+  <span class="hljs-comment">// 否则，（如果不在根目录下）继续检查下一个目录</span>
+  <span class="hljs-comment">// 如果在根目录，则停止并返回 false</span>
+  <span class="hljs-keyword">return</span> dir.<span class="hljs-property">length</span> &gt; <span class="hljs-number">1</span> &amp;&amp; <span class="hljs-title function_">getPackageType</span>(<span class="hljs-title function_">resolvePath</span>(dir, <span class="hljs-string">'..'</span>));
+}</code></pre><pre class=""><code class="language-coffee"><span class="hljs-comment"># main.coffee</span>
+<span class="hljs-keyword">import</span> { scream } <span class="hljs-keyword">from</span> <span class="hljs-string">'./scream.coffee'</span>
+console.log scream <span class="hljs-string">'hello, world'</span>
+
+<span class="hljs-keyword">import</span> { version } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>
+console.log <span class="hljs-string">"Brought to you by Node.js version <span class="hljs-subst">#{version}</span>"</span></code></pre><pre class=""><code class="language-coffee"><span class="hljs-comment"># scream.coffee</span>
+<span class="hljs-keyword">export</span> scream = <span class="hljs-function"><span class="hljs-params">(str)</span> -&gt;</span> str.toUpperCase()</code></pre><p class="">使用前面的加载器，运行 <code>node --experimental-loader ./coffeescript-loader.mjs main.coffee</code> 会导致 <code>main.coffee</code> 在其源代码从磁盘加载之后但在 Node.js 执行之前转换为 JavaScript；对于通过任何加载文件的 <code>import</code> 语句引用的任何 <code>.coffee</code>、<code>.litcoffee</code> 或 <code>.coffee.md</code> 文件，依此类推。</p></div>
+          <div id="content_right"><p>Sources that are in formats Node.js doesn’t understand can be converted into
+JavaScript using the <a href="../esm.html#loadurl-context-defaultload"><code>load</code> hook</a>. Before that hook gets called,
+however, a <a href="../esm.html#resolvespecifier-context-defaultresolve"><code>resolve</code> hook</a> needs to tell Node.js not to
+throw an error on unknown file types.</p><p>This is less performant than transpiling source files before running
+Node.js; a transpiler loader should only be used for development and testing
+purposes.</p><pre><code class="language-js"><span class="hljs-comment">// coffeescript-loader.mjs</span>
+<span class="hljs-keyword">import</span> { readFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:fs/promises'</span>;
+<span class="hljs-keyword">import</span> { dirname, extname, resolve <span class="hljs-keyword">as</span> resolvePath } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:path'</span>;
+<span class="hljs-keyword">import</span> { cwd } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:process'</span>;
+<span class="hljs-keyword">import</span> { fileURLToPath, pathToFileURL } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:url'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">CoffeeScript</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'coffeescript'</span>;
+
+<span class="hljs-keyword">const</span> baseURL = <span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">`<span class="hljs-subst">${cwd()}</span>/`</span>).<span class="hljs-property">href</span>;
+
+<span class="hljs-comment">// CoffeeScript files end in .coffee, .litcoffee or .coffee.md.</span>
+<span class="hljs-keyword">const</span> extensionsRegex = <span class="hljs-regexp">/\.coffee$|\.litcoffee$|\.coffee\.md$/</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-params">specifier, context, defaultResolve</span>) {
+  <span class="hljs-keyword">const</span> { parentURL = baseURL } = context;
+
+  <span class="hljs-comment">// Node.js normally errors on unknown file extensions, so return a URL for</span>
+  <span class="hljs-comment">// specifiers ending in the CoffeeScript file extensions.</span>
+  <span class="hljs-keyword">if</span> (extensionsRegex.<span class="hljs-title function_">test</span>(specifier)) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">url</span>: <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(specifier, parentURL).<span class="hljs-property">href</span>
+    };
+  }
+
+  <span class="hljs-comment">// Let Node.js handle all other specifiers.</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultResolve</span>(specifier, context, defaultResolve);
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">load</span>(<span class="hljs-params">url, context, defaultLoad</span>) {
+  <span class="hljs-comment">// Now that we patched resolve to let CoffeeScript URLs through, we need to</span>
+  <span class="hljs-comment">// tell Node.js what format such URLs should be interpreted as. Because</span>
+  <span class="hljs-comment">// CoffeeScript transpiles into JavaScript, it should be one of the two</span>
+  <span class="hljs-comment">// JavaScript formats: 'commonjs' or 'module'.</span>
+  <span class="hljs-keyword">if</span> (extensionsRegex.<span class="hljs-title function_">test</span>(url)) {
+    <span class="hljs-comment">// CoffeeScript files can be either CommonJS or ES modules, so we want any</span>
+    <span class="hljs-comment">// CoffeeScript file to be treated by Node.js the same as a .js file at the</span>
+    <span class="hljs-comment">// same location. To determine how Node.js would interpret an arbitrary .js</span>
+    <span class="hljs-comment">// file, search up the file system for the nearest parent package.json file</span>
+    <span class="hljs-comment">// and read its "type" field.</span>
+    <span class="hljs-keyword">const</span> format = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getPackageType</span>(url);
+    <span class="hljs-comment">// When a hook returns a format of 'commonjs', `source` is be ignored.</span>
+    <span class="hljs-comment">// To handle CommonJS files, a handler needs to be registered with</span>
+    <span class="hljs-comment">// `require.extensions` in order to process the files with the CommonJS</span>
+    <span class="hljs-comment">// loader. Avoiding the need for a separate CommonJS handler is a future</span>
+    <span class="hljs-comment">// enhancement planned for ES module loaders.</span>
+    <span class="hljs-keyword">if</span> (format === <span class="hljs-string">'commonjs'</span>) {
+      <span class="hljs-keyword">return</span> { format };
+    }
+
+    <span class="hljs-keyword">const</span> { <span class="hljs-attr">source</span>: rawSource } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">defaultLoad</span>(url, { format });
+    <span class="hljs-comment">// This hook converts CoffeeScript source code into JavaScript source code</span>
+    <span class="hljs-comment">// for all imported CoffeeScript files.</span>
+    <span class="hljs-keyword">const</span> transformedSource = <span class="hljs-title class_">CoffeeScript</span>.<span class="hljs-title function_">compile</span>(rawSource.<span class="hljs-title function_">toString</span>(), {
+      <span class="hljs-attr">bare</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">filename</span>: url,
+    });
+
+    <span class="hljs-keyword">return</span> {
+      format,
+      <span class="hljs-attr">source</span>: transformedSource,
+    };
+  }
+
+  <span class="hljs-comment">// Let Node.js handle all other URLs.</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultLoad</span>(url, context, defaultLoad);
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getPackageType</span>(<span class="hljs-params">url</span>) {
+  <span class="hljs-comment">// `url` is only a file path during the first iteration when passed the</span>
+  <span class="hljs-comment">// resolved url from the load() hook</span>
+  <span class="hljs-comment">// an actual file path from load() will contain a file extension as it's</span>
+  <span class="hljs-comment">// required by the spec</span>
+  <span class="hljs-comment">// this simple truthy check for whether `url` contains a file extension will</span>
+  <span class="hljs-comment">// work for most projects but does not cover some edge-cases (such as</span>
+  <span class="hljs-comment">// extensionless files or a url ending in a trailing space)</span>
+  <span class="hljs-keyword">const</span> isFilePath = !!<span class="hljs-title function_">extname</span>(url);
+  <span class="hljs-comment">// If it is a file path, get the directory it's in</span>
+  <span class="hljs-keyword">const</span> dir = isFilePath ?
+    <span class="hljs-title function_">dirname</span>(<span class="hljs-title function_">fileURLToPath</span>(url)) :
+    url;
+  <span class="hljs-comment">// Compose a file path to a package.json in the same directory,</span>
+  <span class="hljs-comment">// which may or may not exist</span>
+  <span class="hljs-keyword">const</span> packagePath = <span class="hljs-title function_">resolvePath</span>(dir, <span class="hljs-string">'package.json'</span>);
+  <span class="hljs-comment">// Try to read the possibly nonexistent package.json</span>
+  <span class="hljs-keyword">const</span> type = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(packagePath, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'utf8'</span> })
+    .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">filestring</span>) =&gt;</span> <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(filestring).<span class="hljs-property">type</span>)
+    .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err?.<span class="hljs-property">code</span> !== <span class="hljs-string">'ENOENT'</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err);
+    });
+  <span class="hljs-comment">// Ff package.json existed and contained a `type` field with a value, voila</span>
+  <span class="hljs-keyword">if</span> (type) <span class="hljs-keyword">return</span> type;
+  <span class="hljs-comment">// Otherwise, (if not at the root) continue checking the next directory up</span>
+  <span class="hljs-comment">// If at the root, stop and return false</span>
+  <span class="hljs-keyword">return</span> dir.<span class="hljs-property">length</span> &gt; <span class="hljs-number">1</span> &amp;&amp; <span class="hljs-title function_">getPackageType</span>(<span class="hljs-title function_">resolvePath</span>(dir, <span class="hljs-string">'..'</span>));
+}</code></pre><pre><code class="language-coffee"><span class="hljs-comment"># main.coffee</span>
+<span class="hljs-keyword">import</span> { scream } <span class="hljs-keyword">from</span> <span class="hljs-string">'./scream.coffee'</span>
+console.log scream <span class="hljs-string">'hello, world'</span>
+
+<span class="hljs-keyword">import</span> { version } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>
+console.log <span class="hljs-string">"Brought to you by Node.js version <span class="hljs-subst">#{version}</span>"</span></code></pre><pre><code class="language-coffee"><span class="hljs-comment"># scream.coffee</span>
+<span class="hljs-keyword">export</span> scream = <span class="hljs-function"><span class="hljs-params">(str)</span> -&gt;</span> str.toUpperCase()</code></pre><p>With the preceding loader, running
+<code>node --experimental-loader ./coffeescript-loader.mjs main.coffee</code>
+causes <code>main.coffee</code> to be turned into JavaScript after its source code is
+loaded from disk but before Node.js executes it; and so on for any <code>.coffee</code>,
+<code>.litcoffee</code> or <code>.coffee.md</code> files referenced via <code>import</code> statements of any
+loaded file.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

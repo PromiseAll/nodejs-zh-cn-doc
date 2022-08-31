@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.read([size]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.read([size])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_read_size" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_read_size.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/readable_read_size.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readablereadsize.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.4</span>
+</div><ul class="">
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 用于指定要读取的数据量的可选参数。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul><p><code>readable.read()</code> 方法从内部缓冲区中读取数据并返回。
+如果没有数据可以读取，则返回 <code>null</code>。
+默认情况下，除非使用 <code>readable.setEncoding()</code> 方法指定了编码或流在对象模式下运行，否则数据将作为 <code>Buffer</code> 对象返回。</p><p class="">可选的 <code>size</code> 参数指定要读取的特定字节数。
+如果无法读取 <code>size</code> 字节，则将返回 <code>null</code>，除非流已结束，在这种情况下，将返回内部缓冲区中剩余的所有数据。</p><p class="">如果未指定 <code>size</code> 参数，则将返回内部缓冲区中包含的所有数据。</p><p class=""><code>size</code> 参数必须小于或等于 1 GiB。</p><p class=""><code>readable.read()</code> 方法应该只在暂停模式下操作的 <code>Readable</code> 流上调用。
+在流动模式下，会自动调用 <code>readable.read()</code>，直到内部缓冲区完全排空。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+
+<span class="hljs-comment">// 随着数据被缓冲，'readable' 可能会被多次触发</span>
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> chunk;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Stream is readable (new data received in buffer)'</span>);
+  <span class="hljs-comment">// 使用循环来确保读取所有当前可用的数据</span>
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (chunk = readable.<span class="hljs-title function_">read</span>())) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Read <span class="hljs-subst">${chunk.length}</span> bytes of data...`</span>);
+  }
+});
+
+<span class="hljs-comment">// 当没有更多可用数据时，则触发一次 'end'。</span>
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Reached end of stream.'</span>);
+});</code></pre><p class="">每次调用 <code>readable.read()</code> 都会返回一个数据块或 <code>null</code>。
+块不是串联的。
+需要 <code>while</code> 循环来消费当前缓冲区中的所有数据。
+当读取大文件时，<code>.read()</code> 可能会返回 <code>null</code>，到目前为止已经消费了所有缓冲的内容，但是还有更多的数据尚未缓冲。
+在这种情况下，当缓冲区中有更多数据时，将触发新的 <code>'readable'</code> 事件。
+最后，当没有更多数据时，则将触发 <code>'end'</code> 事件。</p><p class="">因此，要从 <code>readable</code> 读取文件的全部内容，必须跨越多个 <code>'readable'</code> 事件来收集块：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> chunks = [];
+
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> chunk;
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (chunk = readable.<span class="hljs-title function_">read</span>())) {
+    chunks.<span class="hljs-title function_">push</span>(chunk);
+  }
+});
+
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> content = chunks.<span class="hljs-title function_">join</span>(<span class="hljs-string">''</span>);
+});</code></pre><p class="">对象模式下的 <code>Readable</code> 流将始终从对 <a href="../stream.html#readablereadsize"><code>readable.read(size)</code></a> 的调用返回单个条目，而不管 <code>size</code> 参数的值如何。</p><p class="">如果 <code>readable.read()</code> 方法返回数据块，则还将触发 <code>'data'</code> 事件。</p><p class="">在 <a href="../stream.html#event-end"><code>'end'</code></a> 事件触发后调用 <a href="../stream.html#readablereadsize"><code>stream.read([size])</code></a> 将返回 <code>null</code>。
+不会引发运行时错误。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.4</span>
+</div><ul>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Optional argument to specify how much data to read.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul><p>The <code>readable.read()</code> method reads data out of the internal buffer and
+returns it. If no data is available to be read, <code>null</code> is returned. By default,
+the data is returned as a <code>Buffer</code> object unless an encoding has been
+specified using the <code>readable.setEncoding()</code> method or the stream is operating
+in object mode.</p><p>The optional <code>size</code> argument specifies a specific number of bytes to read. If
+<code>size</code> bytes are not available to be read, <code>null</code> will be returned <em>unless</em>
+the stream has ended, in which case all of the data remaining in the internal
+buffer will be returned.</p><p>If the <code>size</code> argument is not specified, all of the data contained in the
+internal buffer will be returned.</p><p>The <code>size</code> argument must be less than or equal to 1 GiB.</p><p>The <code>readable.read()</code> method should only be called on <code>Readable</code> streams
+operating in paused mode. In flowing mode, <code>readable.read()</code> is called
+automatically until the internal buffer is fully drained.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+
+<span class="hljs-comment">// 'readable' may be triggered multiple times as data is buffered in</span>
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> chunk;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Stream is readable (new data received in buffer)'</span>);
+  <span class="hljs-comment">// Use a loop to make sure we read all currently available data</span>
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (chunk = readable.<span class="hljs-title function_">read</span>())) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Read <span class="hljs-subst">${chunk.length}</span> bytes of data...`</span>);
+  }
+});
+
+<span class="hljs-comment">// 'end' will be triggered once when there is no more data available</span>
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Reached end of stream.'</span>);
+});</code></pre><p>Each call to <code>readable.read()</code> returns a chunk of data, or <code>null</code>. The chunks
+are not concatenated. A <code>while</code> loop is necessary to consume all data
+currently in the buffer. When reading a large file <code>.read()</code> may return <code>null</code>,
+having consumed all buffered content so far, but there is still more data to
+come not yet buffered. In this case a new <code>'readable'</code> event will be emitted
+when there is more data in the buffer. Finally the <code>'end'</code> event will be
+emitted when there is no more data to come.</p><p>Therefore to read a file's whole contents from a <code>readable</code>, it is necessary
+to collect chunks across multiple <code>'readable'</code> events:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> chunks = [];
+
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> chunk;
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (chunk = readable.<span class="hljs-title function_">read</span>())) {
+    chunks.<span class="hljs-title function_">push</span>(chunk);
+  }
+});
+
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> content = chunks.<span class="hljs-title function_">join</span>(<span class="hljs-string">''</span>);
+});</code></pre><p>A <code>Readable</code> stream in object mode will always return a single item from
+a call to <a href="../stream.html#readablereadsize"><code>readable.read(size)</code></a>, regardless of the value of the
+<code>size</code> argument.</p><p>If the <code>readable.read()</code> method returns a chunk of data, a <code>'data'</code> event will
+also be emitted.</p><p>Calling <a href="../stream.html#readablereadsize"><code>stream.read([size])</code></a> after the <a href="../stream.html#event-end"><code>'end'</code></a> event has
+been emitted will return <code>null</code>. No runtime error will be raised.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

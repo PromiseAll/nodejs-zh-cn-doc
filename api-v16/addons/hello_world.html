@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>你好世界 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>你好世界</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_hello_world" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/hello_world.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/hello_world.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#hello-world.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>这个 "Hello world" 示例是一个简单的插件，用 C++ 编写，相当于以下 JavaScript 代码：</p><pre class=""><code class="language-js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">hello</span> = <span class="hljs-function">() =&gt;</span> <span class="hljs-string">'world'</span>;</code></pre><p class="">首先，创建文件 <code>hello.cc</code>：</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// hello.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Method</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(String::<span class="hljs-built_in">NewFromUtf8</span>(
+      isolate, <span class="hljs-string">"world"</span>).<span class="hljs-built_in">ToLocalChecked</span>());
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Initialize</span><span class="hljs-params">(Local&lt;Object&gt; exports)</span> </span>{
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(exports, <span class="hljs-string">"hello"</span>, Method);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Initialize)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p class="">所有 Node.js 插件都必须按照以下模式导出初始化函数：</p><pre class=""><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Initialize</span><span class="hljs-params">(Local&lt;Object&gt; exports)</span></span>;
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Initialize)</code></pre><p class=""><code>NODE_MODULE</code> 后面没有分号，因为它不是函数（参见 <code>node.h</code>）。</p><p class=""><code>module_name</code> 必须与最终二进制文件的文件名匹配（不包括 <code>.node</code> 后缀）。</p><p class="">在 <code>hello.cc</code> 示例中，初始化函数为 <code>Initialize</code>，插件模块名称为 <code>addon</code>。</p><p class="">使用 <code>node-gyp</code> 构建插件时，使用宏 <code>NODE_GYP_MODULE_NAME</code> 作为 <code>NODE_MODULE()</code> 的第一个参数将确保最终二进制文件的名称将传给 <code>NODE_MODULE()</code>。</p></div>
+          <div id="content_right"><p>This "Hello world" example is a simple addon, written in C++, that is the
+equivalent of the following JavaScript code:</p><pre><code class="language-js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">hello</span> = <span class="hljs-function">() =&gt;</span> <span class="hljs-string">'world'</span>;</code></pre><p>First, create the file <code>hello.cc</code>:</p><pre><code class="language-cpp"><span class="hljs-comment">// hello.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Method</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(String::<span class="hljs-built_in">NewFromUtf8</span>(
+      isolate, <span class="hljs-string">"world"</span>).<span class="hljs-built_in">ToLocalChecked</span>());
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Initialize</span><span class="hljs-params">(Local&lt;Object&gt; exports)</span> </span>{
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(exports, <span class="hljs-string">"hello"</span>, Method);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Initialize)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p>All Node.js addons must export an initialization function following
+the pattern:</p><pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Initialize</span><span class="hljs-params">(Local&lt;Object&gt; exports)</span></span>;
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Initialize)</code></pre><p>There is no semi-colon after <code>NODE_MODULE</code> as it's not a function (see
+<code>node.h</code>).</p><p>The <code>module_name</code> must match the filename of the final binary (excluding
+the <code>.node</code> suffix).</p><p>In the <code>hello.cc</code> example, then, the initialization function is <code>Initialize</code>
+and the addon module name is <code>addon</code>.</p><p>When building addons with <code>node-gyp</code>, using the macro <code>NODE_GYP_MODULE_NAME</code> as
+the first parameter of <code>NODE_MODULE()</code> will ensure that the name of the final
+binary will be passed to <code>NODE_MODULE()</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

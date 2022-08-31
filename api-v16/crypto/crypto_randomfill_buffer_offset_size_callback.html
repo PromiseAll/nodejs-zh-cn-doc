@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>crypto.randomFill(buffer[, offset][, size], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>crypto.randomFill(buffer[, offset][, size], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_crypto_randomfill_buffer_offset_size_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/crypto_randomfill_buffer_offset_size_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/crypto/crypto_randomfill_buffer_offset_size_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#cryptorandomfillbuffer-offset-size-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v7.10.0, v6.13.0</td>
+<td><p><span>新增于: v7.10.0, v6.13.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>buffer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> 必须提供。
+所提供的 <code>buffer</code> 的尺寸不得大于 <code>2**31 - 1</code>。</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <strong>默认值:</strong> <code>0</code></li>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <strong>默认值:</strong> <code>buffer.length - offset</code>。 <code>size</code> 不得大于 <code>2**31 - 1</code>。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <code>function(err, buf) {}</code>.</li>
+</ul><p>此函数类似于 <a href="../crypto.html#cryptorandombytessize-callback"><code>crypto.randomBytes()</code></a>，但要求第一个参数是将被填充的 <a href="../buffer.html"><code>Buffer</code></a>。
+它还要求传入回调。</p><p class="">如果未提供 <code>callback</code> 函数，则会抛出错误。</p><pre class="with-46-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+<span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-comment">// 以上等价于以下内容：</span>
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-comment">// 以上等价于以下内容：</span>
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code></pre><p class="">任何 <code>ArrayBuffer</code>、<code>TypedArray</code> 或 <code>DataView</code> 实例都可以作为 <code>buffer</code> 传入。</p><p class="">虽然这包括 <code>Float32Array</code> 和 <code>Float64Array</code> 的实例，但不应使用此函数生成随机浮点数。
+结果可能包含 <code>+Infinity</code>、<code>-Infinity</code> 和 <code>NaN</code>，即使数组只包含有限数字，它们也不是从均匀随机分布中抽取的，并且没有有意义的下限或上限。</p><pre class="with-46-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+<span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint32Array</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(a, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataView</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>));
+<span class="hljs-title function_">randomFill</span>(b, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> c = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(c, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf).<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint32Array</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(a, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataView</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>));
+<span class="hljs-title function_">randomFill</span>(b, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> c = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(c, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf).<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code></pre><p class="">此 API 使用 libuv 的线程池，这对某些应用程序可能会产生意外的负面性能影响；有关更多信息，请参阅 <a href="../cli.html#uv_threadpool_sizesize"><code>UV_THREADPOOL_SIZE</code></a> 文档。</p><p class=""><code>crypto.randomFill()</code> 的异步版本是在单个线程池请求中执行的。
+为了最大限度地减少线程池任务长度变化，在执行客户端请求时将大型 <code>randomFill</code> 请求分区。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v9.0.0</td>
+<td><p>The <code>buffer</code> argument may be any <code>TypedArray</code> or <code>DataView</code>.</p></td></tr>
+<tr><td>v7.10.0, v6.13.0</td>
+<td><p><span>Added in: v7.10.0, v6.13.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>buffer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> Must be supplied. The
+size of the provided <code>buffer</code> must not be larger than <code>2**31 - 1</code>.</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <strong>Default:</strong> <code>0</code></li>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <strong>Default:</strong> <code>buffer.length - offset</code>. The <code>size</code> must
+not be larger than <code>2**31 - 1</code>.</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <code>function(err, buf) {}</code>.</li>
+</ul><p>This function is similar to <a href="../crypto.html#cryptorandombytessize-callback"><code>crypto.randomBytes()</code></a> but requires the first
+argument to be a <a href="../buffer.html"><code>Buffer</code></a> that will be filled. It also
+requires that a callback is passed in.</p><p>If the <code>callback</code> function is not provided, an error will be thrown.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+<span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-comment">// The above is equivalent to the following:</span>
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-comment">// The above is equivalent to the following:</span>
+<span class="hljs-title function_">randomFill</span>(buf, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code></pre><p>Any <code>ArrayBuffer</code>, <code>TypedArray</code>, or <code>DataView</code> instance may be passed as
+<code>buffer</code>.</p><p>While this includes instances of <code>Float32Array</code> and <code>Float64Array</code>, this
+function should not be used to generate random floating-point numbers. The
+result may contain <code>+Infinity</code>, <code>-Infinity</code>, and <code>NaN</code>, and even if the array
+contains finite numbers only, they are not drawn from a uniform random
+distribution and have no meaningful lower or upper bounds.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+<span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint32Array</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(a, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataView</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>));
+<span class="hljs-title function_">randomFill</span>(b, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> c = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(c, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf).<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { randomFill } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint32Array</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(a, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataView</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>));
+<span class="hljs-title function_">randomFill</span>(b, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf.<span class="hljs-property">buffer</span>, buf.<span class="hljs-property">byteOffset</span>, buf.<span class="hljs-property">byteLength</span>)
+    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});
+
+<span class="hljs-keyword">const</span> c = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>);
+<span class="hljs-title function_">randomFill</span>(c, <span class="hljs-function">(<span class="hljs-params">err, buf</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(buf).<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));
+});</code></pre><p>This API uses libuv's threadpool, which can have surprising and
+negative performance implications for some applications; see the
+<a href="../cli.html#uv_threadpool_sizesize"><code>UV_THREADPOOL_SIZE</code></a> documentation for more information.</p><p>The asynchronous version of <code>crypto.randomFill()</code> is carried out in a single
+threadpool request. To minimize threadpool task length variation, partition
+large <code>randomFill</code> requests when doing so as part of fulfilling a client
+request.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

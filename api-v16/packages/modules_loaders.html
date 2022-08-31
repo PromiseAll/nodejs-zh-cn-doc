@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>模块加载器 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>模块加载器</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_modules_loaders" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/modules_loaders.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#modules-loaders.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>Node.js 有两个系统用于解析说明符和加载模块。</p><p class="">有 CommonJS 模块加载器：</p><ul class="">
+<li>它是完全同步的。</li>
+<li>它负责处理 <code>require()</code> 调用。</li>
+<li>它是可修补的。</li>
+<li>它支持<a href="../modules.html#folders-as-modules">文件夹作为模块</a>。</li>
+<li>当解析说明符时，如果没有找到完全的匹配，则它将尝试添加扩展名（<code>.js</code>、<code>.json</code>，最后是 <code>.node</code>），然后尝试将<a href="../modules.html#folders-as-modules">文件夹作为模块</a>解析。</li>
+<li>它将 <code>.json</code> 视为 JSON 文本文件。</li>
+<li><code>.node</code> 文件被解释为加载了 <code>process.dlopen()</code> 的编译插件模块。</li>
+<li>它将所有缺少 <code>.json</code> 或 <code>.node</code> 扩展名的文件视为 JavaScript 文本文件。</li>
+<li>它不能用于加载 ECMAScript 模块（尽管可以<a href="../modules.html#the-mjs-extension">从 CommonJS 模块加载 ECMASCript 模块</a>）。
+当用于加载不是 ECMAScript 模块的 JavaScript 文本文件时，则它将作为 CommonJS 模块加载。</li>
+</ul><p class="">有 ECMAScript 模块加载器：</p><ul class="">
+<li>它是异步的。</li>
+<li>负责处理 <code>import</code> 语句和 <code>import()</code> 表达式。</li>
+<li>它不是可修补的，可以使用<a href="../esm.html#loaders">加载器钩子</a>自定义。</li>
+<li>它不支持文件夹作为模块，必须完全指定目录索引（例如 <code>'./startup/index.js'</code>）。</li>
+<li>它不进行扩展名搜索。
+当说明符是相对或绝对的文件 URL 时，必须提供文件扩展名。</li>
+<li>它可以加载 JSON 模块，但需要导入断言。</li>
+<li>它只接受 JavaScript 文本文件的 <code>.js</code>、<code>.mjs</code> 和 <code>.cjs</code> 扩展名。</li>
+<li>它可以用来加载 JavaScript CommonJS 模块。
+这样的模块通过 <code>es-module-lexer</code> 来尝试识别命名的导出，如果可以通过静态分析确定的话是可用的。
+导入的 CommonJS 模块将其 URL 转换为绝对路径，然后通过 CommonJS 模块加载器加载。</li>
+</ul></div>
+          <div id="content_right"><p>Node.js has two systems for resolving a specifier and loading modules.</p><p>There is the CommonJS module loader:</p><ul>
+<li>It is fully synchronous.</li>
+<li>It is responsible for handling <code>require()</code> calls.</li>
+<li>It is monkey patchable.</li>
+<li>It supports <a href="../modules.html#folders-as-modules">folders as modules</a>.</li>
+<li>When resolving a specifier, if no exact match is found, it will try to add
+extensions (<code>.js</code>, <code>.json</code>, and finally <code>.node</code>) and then attempt to resolve
+<a href="../modules.html#folders-as-modules">folders as modules</a>.</li>
+<li>It treats <code>.json</code> as JSON text files.</li>
+<li><code>.node</code> files are interpreted as compiled addon modules loaded with
+<code>process.dlopen()</code>.</li>
+<li>It treats all files that lack <code>.json</code> or <code>.node</code> extensions as JavaScript
+text files.</li>
+<li>It cannot be used to load ECMAScript modules (although it is possible to
+<a href="../modules.html#the-mjs-extension">load ECMASCript modules from CommonJS modules</a>). When used to load a
+JavaScript text file that is not an ECMAScript module, it loads it as a
+CommonJS module.</li>
+</ul><p>There is the ECMAScript module loader:</p><ul>
+<li>It is asynchronous.</li>
+<li>It is responsible for handling <code>import</code> statements and <code>import()</code> expressions.</li>
+<li>It is not monkey patchable, can be customized using <a href="../esm.html#loaders">loader hooks</a>.</li>
+<li>It does not support folders as modules, directory indexes (e.g.
+<code>'./startup/index.js'</code>) must be fully specified.</li>
+<li>It does no extension searching. A file extension must be provided
+when the specifier is a relative or absolute file URL.</li>
+<li>It can load JSON modules, but an import assertion is required.</li>
+<li>It accepts only <code>.js</code>, <code>.mjs</code>, and <code>.cjs</code> extensions for JavaScript text
+files.</li>
+<li>It can be used to load JavaScript CommonJS modules. Such modules
+are passed through the <code>es-module-lexer</code> to try to identify named exports,
+which are available if they can be determined through static analysis.
+Imported CommonJS modules have their URLs converted to absolute
+paths and are then loaded via the CommonJS module loader.</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

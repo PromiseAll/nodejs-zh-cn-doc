@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.release | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.release</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_release" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_release.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_release.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processrelease.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v4.2.0</td>
+<td><p>现在支持 <code>lts</code> 属性。</p></td></tr>
+<tr><td>v3.0.0</td>
+<td><p><span>新增于: v3.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p><code>process.release</code> 属性返回 <code>Object</code>，其中包含与当前版本相关的元数据，包括源 tarball 和 headers-only tarball 的网址。</p><p class=""><code>process.release</code> 包含以下属性：</p><ul class="">
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 始终为 <code>'node'</code> 的值。</li>
+<li><code>sourceUrl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指向包含当前版本源代码的 <em><code>.tar.gz</code></em> 文件的绝对网址。</li>
+<li><code>headersUrl</code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指向 <em><code>.tar.gz</code></em> 文件的绝对网址，该文件仅包含当前版本的源头文件。
+该文件比完整的源文件小得多，可用于编译 Node.js 原生插件。</li>
+<li><code>libUrl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指向与当前版本的体系结构和版本匹配的 <em><code>node.lib</code></em> 文件的绝对网址。
+此文件用于编译 Node.js 原生插件。
+<em>此属性仅存在于 Windows 构建的 Node.js 中，在所有其他平台上将缺失。</em></li>
+<li><code>lts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 标识此版本的 <a href="https://github.com/nodejs/Release" rel="nofollow">LTS</a> 标签的字符串标签。
+此属性仅适用于 LTS 版本，对于所有其他版本类型（包括 <em>Current</em> 版本）为 <code>undefined</code>。
+有效值包括 LTS 版本代码名称（包括不再受支持的代码名称）。
+<ul>
+<li><code>'Dubnium'</code> 表示以 10.13.0 开头的 10.x LTS 行。</li>
+<li><code>'Erbium'</code> 表示以 12.13.0 开头的 12.x LTS 行。其他 LTS 版本代码名称，请参见 <a href="https://github.com/nodejs/node/blob/HEAD/doc/changelogs/CHANGELOG_ARCHIVE.md" rel="nofollow">Node.js 更新日志存档</a></li>
+</ul>
+</li>
+</ul><pre class=""><code class="language-js">{
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'node'</span>,
+  <span class="hljs-attr">lts</span>: <span class="hljs-string">'Erbium'</span>,
+  <span class="hljs-attr">sourceUrl</span>: <span class="hljs-string">'https://nodejs.org/download/release/v12.18.1/node-v12.18.1.tar.gz'</span>,
+  <span class="hljs-attr">headersUrl</span>: <span class="hljs-string">'https://nodejs.org/download/release/v12.18.1/node-v12.18.1-headers.tar.gz'</span>,
+  <span class="hljs-attr">libUrl</span>: <span class="hljs-string">'https://nodejs.org/download/release/v12.18.1/win-x64/node.lib'</span>
+}</code></pre><p class="">在源代码树的非发布版本的自定义构建中，可能只存在 <code>name</code> 属性。
+不应依赖附加属性的存在。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v4.2.0</td>
+<td><p>The <code>lts</code> property is now supported.</p></td></tr>
+<tr><td>v3.0.0</td>
+<td><p><span>Added in: v3.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>The <code>process.release</code> property returns an <code>Object</code> containing metadata related
+to the current release, including URLs for the source tarball and headers-only
+tarball.</p><p><code>process.release</code> contains the following properties:</p><ul>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A value that will always be <code>'node'</code>.</li>
+<li><code>sourceUrl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> an absolute URL pointing to a <em><code>.tar.gz</code></em> file containing
+the source code of the current release.</li>
+<li><code>headersUrl</code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> an absolute URL pointing to a <em><code>.tar.gz</code></em> file containing
+only the source header files for the current release. This file is
+significantly smaller than the full source file and can be used for compiling
+Node.js native add-ons.</li>
+<li><code>libUrl</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> an absolute URL pointing to a <em><code>node.lib</code></em> file matching the
+architecture and version of the current release. This file is used for
+compiling Node.js native add-ons. <em>This property is only present on Windows
+builds of Node.js and will be missing on all other platforms.</em></li>
+<li><code>lts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> a string label identifying the <a href="https://github.com/nodejs/Release" rel="nofollow">LTS</a> label for this release.
+This property only exists for LTS releases and is <code>undefined</code> for all other
+release types, including <em>Current</em> releases.
+Valid values include the LTS Release code names (including those
+that are no longer supported).
+<ul>
+<li><code>'Dubnium'</code> for the 10.x LTS line beginning with 10.13.0.</li>
+<li><code>'Erbium'</code> for the 12.x LTS line beginning with 12.13.0.
+For other LTS Release code names, see <a href="https://github.com/nodejs/node/blob/HEAD/doc/changelogs/CHANGELOG_ARCHIVE.md" rel="nofollow">Node.js Changelog Archive</a></li>
+</ul>
+</li>
+</ul><pre><code class="language-js">{
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'node'</span>,
+  <span class="hljs-attr">lts</span>: <span class="hljs-string">'Erbium'</span>,
+  <span class="hljs-attr">sourceUrl</span>: <span class="hljs-string">'https://nodejs.org/download/release/v12.18.1/node-v12.18.1.tar.gz'</span>,
+  <span class="hljs-attr">headersUrl</span>: <span class="hljs-string">'https://nodejs.org/download/release/v12.18.1/node-v12.18.1-headers.tar.gz'</span>,
+  <span class="hljs-attr">libUrl</span>: <span class="hljs-string">'https://nodejs.org/download/release/v12.18.1/win-x64/node.lib'</span>
+}</code></pre><p>In custom builds from non-release versions of the source tree, only the
+<code>name</code> property may be present. The additional properties should not be
+relied upon to exist.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

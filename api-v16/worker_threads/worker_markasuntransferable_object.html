@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>worker.markAsUntransferable(object) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-worker_threads">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>worker.markAsUntransferable(object)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../worker_threads.html#worker_threads_worker_markasuntransferable_object" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/worker_threads/worker_markasuntransferable_object.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/worker_threads/worker_markasuntransferable_object.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/worker_threads/#workermarkasuntransferableobject.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v14.5.0, v12.19.0</span>
+</div><p>将对象标记为不可传输。
+如果 <code>object</code> 出现在 <a href="../worker_threads.html#portpostmessagevalue-transferlist"><code>port.postMessage()</code></a> 调用的传输列表中，则忽略它。</p><p class="">特别是，这对于可以克隆而不是传输的对象，以及被发送方的其他对象使用的对象来说是有意义的。
+例如，Node.js 用这个标记了它用于 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer</code> 池</a>的 <code>ArrayBuffer</code>。</p><p class="">此操作无法撤消。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span>, markAsUntransferable } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+
+<span class="hljs-keyword">const</span> pooledBuffer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">8</span>);
+<span class="hljs-keyword">const</span> typedArray1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(pooledBuffer);
+<span class="hljs-keyword">const</span> typedArray2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Float64Array</span>(pooledBuffer);
+
+<span class="hljs-title function_">markAsUntransferable</span>(pooledBuffer);
+
+<span class="hljs-keyword">const</span> { port1 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+port1.<span class="hljs-title function_">postMessage</span>(typedArray1, [ typedArray1.<span class="hljs-property">buffer</span> ]);
+
+<span class="hljs-comment">// 以下行打印 typedArray1 的内容，</span>
+<span class="hljs-comment">// 它仍然拥有它的内存并且已经被克隆，而不是传输。</span>
+<span class="hljs-comment">// 没有 `markAsUntransferable()`，这将打印空的 Uint8Array。</span>
+<span class="hljs-comment">// typedArray2 也完好无损。</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(typedArray1);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(typedArray2);</code></pre><p class="">浏览器中没有与此 API 等效的 API。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v14.5.0, v12.19.0</span>
+</div><p>Mark an object as not transferable. If <code>object</code> occurs in the transfer list of
+a <a href="../worker_threads.html#portpostmessagevalue-transferlist"><code>port.postMessage()</code></a> call, it is ignored.</p><p>In particular, this makes sense for objects that can be cloned, rather than
+transferred, and which are used by other objects on the sending side.
+For example, Node.js marks the <code>ArrayBuffer</code>s it uses for its
+<a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer</code> pool</a> with this.</p><p>This operation cannot be undone.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">MessageChannel</span>, markAsUntransferable } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'worker_threads'</span>);
+
+<span class="hljs-keyword">const</span> pooledBuffer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">8</span>);
+<span class="hljs-keyword">const</span> typedArray1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(pooledBuffer);
+<span class="hljs-keyword">const</span> typedArray2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Float64Array</span>(pooledBuffer);
+
+<span class="hljs-title function_">markAsUntransferable</span>(pooledBuffer);
+
+<span class="hljs-keyword">const</span> { port1 } = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChannel</span>();
+port1.<span class="hljs-title function_">postMessage</span>(typedArray1, [ typedArray1.<span class="hljs-property">buffer</span> ]);
+
+<span class="hljs-comment">// The following line prints the contents of typedArray1 -- it still owns</span>
+<span class="hljs-comment">// its memory and has been cloned, not transferred. Without</span>
+<span class="hljs-comment">// `markAsUntransferable()`, this would print an empty Uint8Array.</span>
+<span class="hljs-comment">// typedArray2 is intact as well.</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(typedArray1);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(typedArray2);</code></pre><p>There is no equivalent to this API in browsers.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

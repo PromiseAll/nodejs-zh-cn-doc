@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>vm.createContext([contextObject[, options]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>vm.createContext([contextObject[, options]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_vm_createcontext_contextobject_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/vm_createcontext_contextobject_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/vm_createcontext_contextobject_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#vmcreatecontextcontextobject-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.6.0</td>
+<td><p>现在支持 <code>microtaskMode</code> 选项。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>第一个参数不能再是函数。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>现在支持 <code>codeGeneration</code> 选项。</p></td></tr>
+<tr><td>v0.3.1</td>
+<td><p><span>新增于: v0.3.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>contextObject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 新创建的上下文的可读名称。
+<strong>默认值:</strong> <code>'VM Context i'</code>, 其中 <code>i</code> 是创建的上下文的升序数字索引。</li>
+<li><code>origin</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 对应于新创建的用于显示目的的上下文的<a href="https://developer.mozilla.org/en-US/docs/Glossary/Origin" rel="nofollow">来源</a>。
+来源的格式应该像 URL，但只有协议、主机和端口（如果需要），就像 <a href="../url.html#class-url"><code>URL</code></a> 对象的 <a href="../url.html#urlorigin"><code>url.origin</code></a> 属性的值。
+最值得注意的是，该字符串应省略尾部斜杠，因为它表示路径。
+<strong>默认值:</strong> <code>''</code>。</li>
+<li><code>codeGeneration</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>strings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 false，则任何对 <code>eval</code> 或函数构造函数（<code>Function</code>、<code>GeneratorFunction</code> 等）的调用都将抛出 <code>EvalError</code>。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>wasm</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 false，则任何编译 WebAssembly 模块的尝试都将抛出 <code>WebAssembly.CompileError</code>。 <strong>默认值:</strong> <code>true</code>。</li>
+</ul>
+</li>
+<li><code>microtaskMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果设置为 <code>afterEvaluate</code>，则微任务（通过 <code>Promise</code> 和 <code>async function</code> 调度的任务）将在脚本运行到 <a href="../vm.html#scriptrunincontextcontextifiedobject-options"><code>script.runInContext()</code></a> 后立即运行。
+在这种情况下，它们包含在 <code>timeout</code> 和 <code>breakOnSigint</code> 范围内。</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 上下文隔离化的对象。</li>
+</ul><p>如果给定 <code>contextObject</code>，<code>vm.createContext()</code> 方法将<a href="../vm.html#what-does-it-mean-to-contextify-an-object">准备那个对象</a>，以便它可以用于调用 <a href="../vm.html#vmrunincontextcode-contextifiedobject-options"><code>vm.runInContext()</code></a> 或 <a href="../vm.html#scriptrunincontextcontextifiedobject-options"><code>script.runInContext()</code></a>。
+在此类脚本中，<code>contextObject</code> 将是全局对象，保留其所有现有属性，但也具有任何标准<a href="https://es5.github.io/#x15.1" rel="nofollow">全局对象</a>具有的内置对象和函数。
+在 vm 模块运行的脚本之外，全局变量将保持不变。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-variable language_">global</span>.<span class="hljs-property">globalVar</span> = <span class="hljs-number">3</span>;
+
+<span class="hljs-keyword">const</span> context = { <span class="hljs-attr">globalVar</span>: <span class="hljs-number">1</span> };
+vm.<span class="hljs-title function_">createContext</span>(context);
+
+vm.<span class="hljs-title function_">runInContext</span>(<span class="hljs-string">'globalVar *= 2;'</span>, context);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(context);
+<span class="hljs-comment">// 打印: { globalVar: 2 }</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">global</span>.<span class="hljs-property">globalVar</span>);
+<span class="hljs-comment">// 打印: 3</span></code></pre><p class="">如果省略 <code>contextObject</code>（或显式地作为 <code>undefined</code> 传入），则将返回新的空的<a href="../vm.html#what-does-it-mean-to-contextify-an-object">上下文隔离化的</a>对象。</p><p class=""><code>vm.createContext()</code> 方法主要用于创建可用于运行多个脚本的单个上下文。
+例如，如果模拟网络浏览器，则该方法可用于创建表示窗口全局对象的单个上下文，然后在该上下文中一起运行所有 <code>&lt;script&gt;</code> 标签。</p><p class="">提供的上下文的 <code>name</code> 和 <code>origin</code> 通过检查器 API 可见。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.6.0</td>
+<td><p>The <code>microtaskMode</code> option is supported now.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The first argument can no longer be a function.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>codeGeneration</code> option is supported now.</p></td></tr>
+<tr><td>v0.3.1</td>
+<td><p><span>Added in: v0.3.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>contextObject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Human-readable name of the newly created context.
+<strong>Default:</strong> <code>'VM Context i'</code>, where <code>i</code> is an ascending numerical index of
+the created context.</li>
+<li><code>origin</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <a href="https://developer.mozilla.org/en-US/docs/Glossary/Origin" rel="nofollow">Origin</a> corresponding to the newly created
+context for display purposes. The origin should be formatted like a URL,
+but with only the scheme, host, and port (if necessary), like the value of
+the <a href="../url.html#urlorigin"><code>url.origin</code></a> property of a <a href="../url.html#class-url"><code>URL</code></a> object. Most notably, this
+string should omit the trailing slash, as that denotes a path.
+<strong>Default:</strong> <code>''</code>.</li>
+<li><code>codeGeneration</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>strings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to false any calls to <code>eval</code> or function
+constructors (<code>Function</code>, <code>GeneratorFunction</code>, etc) will throw an
+<code>EvalError</code>. <strong>Default:</strong> <code>true</code>.</li>
+<li><code>wasm</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to false any attempt to compile a WebAssembly
+module will throw a <code>WebAssembly.CompileError</code>. <strong>Default:</strong> <code>true</code>.</li>
+</ul>
+</li>
+<li><code>microtaskMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If set to <code>afterEvaluate</code>, microtasks (tasks
+scheduled through <code>Promise</code>s and <code>async function</code>s) will be run immediately
+after a script has run through <a href="../vm.html#scriptrunincontextcontextifiedobject-options"><code>script.runInContext()</code></a>.
+They are included in the <code>timeout</code> and <code>breakOnSigint</code> scopes in that case.</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> contextified object.</li>
+</ul><p>If given a <code>contextObject</code>, the <code>vm.createContext()</code> method will <a href="../vm.html#what-does-it-mean-to-contextify-an-object">prepare
+that object</a> so that it can be used in calls to
+<a href="../vm.html#vmrunincontextcode-contextifiedobject-options"><code>vm.runInContext()</code></a> or <a href="../vm.html#scriptrunincontextcontextifiedobject-options"><code>script.runInContext()</code></a>. Inside such scripts,
+the <code>contextObject</code> will be the global object, retaining all of its existing
+properties but also having the built-in objects and functions any standard
+<a href="https://es5.github.io/#x15.1" rel="nofollow">global object</a> has. Outside of scripts run by the vm module, global variables
+will remain unchanged.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-variable language_">global</span>.<span class="hljs-property">globalVar</span> = <span class="hljs-number">3</span>;
+
+<span class="hljs-keyword">const</span> context = { <span class="hljs-attr">globalVar</span>: <span class="hljs-number">1</span> };
+vm.<span class="hljs-title function_">createContext</span>(context);
+
+vm.<span class="hljs-title function_">runInContext</span>(<span class="hljs-string">'globalVar *= 2;'</span>, context);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(context);
+<span class="hljs-comment">// Prints: { globalVar: 2 }</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">global</span>.<span class="hljs-property">globalVar</span>);
+<span class="hljs-comment">// Prints: 3</span></code></pre><p>If <code>contextObject</code> is omitted (or passed explicitly as <code>undefined</code>), a new,
+empty <a href="../vm.html#what-does-it-mean-to-contextify-an-object">contextified</a> object will be returned.</p><p>The <code>vm.createContext()</code> method is primarily useful for creating a single
+context that can be used to run multiple scripts. For instance, if emulating a
+web browser, the method can be used to create a single context representing a
+window's global object, then run all <code>&lt;script&gt;</code> tags together within that
+context.</p><p>The provided <code>name</code> and <code>origin</code> of the context are made visible through the
+Inspector API.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>dns 域名服务器 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dns">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>dns 域名服务器</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dns.html#dns_dns" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dns/dns.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dns/dns.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dns/.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p><p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/dns.js">lib/dns.js</a></p><p><code>dns</code> 模块启用了名称解析。
+例如，使用它来查找主机名的 IP 地址。</p><p class="">尽管以<a href="https://en.wikipedia.org/wiki/Domain_Name_System" rel="nofollow">域名系统</a>命名，但它并不总是使用域名系统协议进行查找。
+<a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> 使用操作系统工具来执行名称解析。
+它可能不需要执行任何网络通信。
+要像同一系统上的其他应用程序那样执行名称解析，则使用 <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> dns = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dns'</span>);
+
+dns.<span class="hljs-title function_">lookup</span>(<span class="hljs-string">'example.org'</span>, <span class="hljs-function">(<span class="hljs-params">err, address, family</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'address: %j family: IPv%s'</span>, address, family);
+});
+<span class="hljs-comment">// address: "93.184.216.34" family: IPv4</span></code></pre><p class=""><code>dns</code> 模块中的所有其他函数都连接到实际的域名系统服务器以执行名称解析。
+它们将始终使用网络来执行域名系统查询。
+这些函数不使用 <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> 使用的同一组配置文件（例如 <code>/etc/hosts</code>）。
+使用这些函数始终执行域名系统查询，绕过其他名称解析工具。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> dns = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dns'</span>);
+
+dns.<span class="hljs-title function_">resolve4</span>(<span class="hljs-string">'archive.org'</span>, <span class="hljs-function">(<span class="hljs-params">err, addresses</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`addresses: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(addresses)}</span>`</span>);
+
+  addresses.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> {
+    dns.<span class="hljs-title function_">reverse</span>(a, <span class="hljs-function">(<span class="hljs-params">err, hostnames</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-keyword">throw</span> err;
+      }
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`reverse for <span class="hljs-subst">${a}</span>: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(hostnames)}</span>`</span>);
+    });
+  });
+});</code></pre><p class="">有关更多信息，请参阅<a href="../dns.html#implementation-considerations">实现的注意事项章节</a>。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">Stability: 2</a> - Stable</div><p></p><p><strong>Source Code:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.15.0/lib/dns.js">lib/dns.js</a></p><p>The <code>dns</code> module enables name resolution. For example, use it to look up IP
+addresses of host names.</p><p>Although named for the <a href="https://en.wikipedia.org/wiki/Domain_Name_System" rel="nofollow">Domain Name System (DNS)</a>, it does not always use the
+DNS protocol for lookups. <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> uses the operating system
+facilities to perform name resolution. It may not need to perform any network
+communication. To perform name resolution the way other applications on the same
+system do, use <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> dns = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dns'</span>);
+
+dns.<span class="hljs-title function_">lookup</span>(<span class="hljs-string">'example.org'</span>, <span class="hljs-function">(<span class="hljs-params">err, address, family</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'address: %j family: IPv%s'</span>, address, family);
+});
+<span class="hljs-comment">// address: "93.184.216.34" family: IPv4</span></code></pre><p>All other functions in the <code>dns</code> module connect to an actual DNS server to
+perform name resolution. They will always use the network to perform DNS
+queries. These functions do not use the same set of configuration files used by
+<a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> (e.g. <code>/etc/hosts</code>). Use these functions to always perform
+DNS queries, bypassing other name-resolution facilities.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> dns = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dns'</span>);
+
+dns.<span class="hljs-title function_">resolve4</span>(<span class="hljs-string">'archive.org'</span>, <span class="hljs-function">(<span class="hljs-params">err, addresses</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`addresses: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(addresses)}</span>`</span>);
+
+  addresses.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> {
+    dns.<span class="hljs-title function_">reverse</span>(a, <span class="hljs-function">(<span class="hljs-params">err, hostnames</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-keyword">throw</span> err;
+      }
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`reverse for <span class="hljs-subst">${a}</span>: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(hostnames)}</span>`</span>);
+    });
+  });
+});</code></pre><p>See the <a href="../dns.html#implementation-considerations">Implementation considerations section</a> for more information.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

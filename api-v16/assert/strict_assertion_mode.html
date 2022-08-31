@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>严格断言模式 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-assert">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>严格断言模式</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../assert.html#assert_strict_assertion_mode" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/assert/strict_assertion_mode.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/assert/strict_assertion_mode.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/assert/#strict-assertion-mode.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>暴露为 <code>require('assert/strict')</code>。</p></td></tr>
+<tr><td>v13.9.0, v12.16.2</td>
+<td><p>将“严格模式”更改为“严格断言模式”，将“旧版模式”更改为“旧版断言模式”，以避免与“严格模式”更常见的含义混淆。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>添加错误差异到严格断言模式。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>添加严格断言模式到断言模块。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p><span>新增于: v9.9.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p>在严格断言模式下，非严格方法的行为与其对应的严格方法相同。
+例如，<a href="../assert.html#assertdeepequalactual-expected-message"><code>assert.deepEqual()</code></a> 的行为类似于 <a href="../assert.html#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual()</code></a>。</p><p class="">在严格断言模式下，对象的错误消息显示差异。
+在旧版断言模式下，对象的错误消息显示对象，通常被截断。</p><p class="">使用严格断言模式：</p><pre class="with-42-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { strict <span class="hljs-keyword">as</span> assert } <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>).<span class="hljs-property">strict</span>;</code></pre><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);</code></pre><p class="">错误差异的示例：</p><pre class="with-42-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { strict <span class="hljs-keyword">as</span> assert } <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+assert.<span class="hljs-title function_">deepEqual</span>([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'3'</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected ... Lines skipped</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   [</span>
+<span class="hljs-comment">//     [</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//       2,</span>
+<span class="hljs-comment">// +     3</span>
+<span class="hljs-comment">// -     '3'</span>
+<span class="hljs-comment">//     ],</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//     5</span>
+<span class="hljs-comment">//   ]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">deepEqual</span>([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'3'</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected ... Lines skipped</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   [</span>
+<span class="hljs-comment">//     [</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//       2,</span>
+<span class="hljs-comment">// +     3</span>
+<span class="hljs-comment">// -     '3'</span>
+<span class="hljs-comment">//     ],</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//     5</span>
+<span class="hljs-comment">//   ]</span></code></pre><p class="">要停用颜色，则使用 <code>NO_COLOR</code> 或 <code>NODE_DISABLE_COLORS</code> 环境变量。
+这也将停用交互式解释器中的颜色。
+有关终端环境中颜色支持的更多信息，请阅读终端 <a href="../tty.html#writestreamgetcolordepthenv"><code>getColorDepth()</code></a> 文档。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>Exposed as <code>require('assert/strict')</code>.</p></td></tr>
+<tr><td>v13.9.0, v12.16.2</td>
+<td><p>Changed "strict mode" to "strict assertion mode" and "legacy mode" to "legacy assertion mode" to avoid confusion with the more usual meaning of "strict mode".</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>Added error diffs to the strict assertion mode.</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>Added strict assertion mode to the assert module.</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p><span>Added in: v9.9.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p>In strict assertion mode, non-strict methods behave like their corresponding
+strict methods. For example, <a href="../assert.html#assertdeepequalactual-expected-message"><code>assert.deepEqual()</code></a> will behave like
+<a href="../assert.html#assertdeepstrictequalactual-expected-message"><code>assert.deepStrictEqual()</code></a>.</p><p>In strict assertion mode, error messages for objects display a diff. In legacy
+assertion mode, error messages for objects display the objects, often truncated.</p><p>To use strict assertion mode:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { strict <span class="hljs-keyword">as</span> assert } <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>).<span class="hljs-property">strict</span>;</code></pre><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);</code></pre><p>Example error diff:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { strict <span class="hljs-keyword">as</span> assert } <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+assert.<span class="hljs-title function_">deepEqual</span>([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'3'</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected ... Lines skipped</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   [</span>
+<span class="hljs-comment">//     [</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//       2,</span>
+<span class="hljs-comment">// +     3</span>
+<span class="hljs-comment">// -     '3'</span>
+<span class="hljs-comment">//     ],</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//     5</span>
+<span class="hljs-comment">//   ]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">deepEqual</span>([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">'3'</span>]], <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected ... Lines skipped</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   [</span>
+<span class="hljs-comment">//     [</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//       2,</span>
+<span class="hljs-comment">// +     3</span>
+<span class="hljs-comment">// -     '3'</span>
+<span class="hljs-comment">//     ],</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//     5</span>
+<span class="hljs-comment">//   ]</span></code></pre><p>To deactivate the colors, use the <code>NO_COLOR</code> or <code>NODE_DISABLE_COLORS</code>
+environment variables. This will also deactivate the colors in the REPL. For
+more on color support in terminal environments, read the tty
+<a href="../tty.html#writestreamgetcolordepthenv"><code>getColorDepth()</code></a> documentation.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

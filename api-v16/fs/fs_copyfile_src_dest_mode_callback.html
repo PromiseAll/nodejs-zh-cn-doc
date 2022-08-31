@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.copyFile(src, dest[, mode], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.copyFile(src, dest[, mode], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_copyfile_src_dest_mode_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_copyfile_src_dest_mode_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_copyfile_src_dest_mode_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fscopyfilesrc-dest-mode-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.0.0</td>
+<td><p>将 'flags' 参数更改为 'mode'，并进行更严格的类型验证。</p></td></tr>
+<tr><td>v8.5.0</td>
+<td><p><span>新增于: v8.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>src</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 要复制的源文件名</li>
+<li><code>dest</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 复制操作的目标文件名</li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 复制操作的修饰符。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul><p>异步地将 <code>src</code> 复制到 <code>dest</code>。
+默认情况下，如果 <code>dest</code> 已经存在，则会被覆盖。
+除了可能的异常之外，没有给回调函数提供任何参数。
+Node.js 不保证复制操作的原子性。
+如果在打开目标文件进行写入后发生错误，Node.js 将尝试删除目标文件。</p><p class=""><code>mode</code> 是可选的整数，用于指定复制操作的行为。
+可以创建由两个或多个值的按位或组成的掩码（例如 <code>fs.constants.COPYFILE_EXCL | fs.constants.COPYFILE_FICLONE</code>）。</p><ul class="">
+<li><code>fs.constants.COPYFILE_EXCL</code>: 如果 <code>dest</code> 已经存在，则复制操作将失败。</li>
+<li><code>fs.constants.COPYFILE_FICLONE</code>: 复制操作将尝试创建写时复制引用链接。
+如果平台不支持写时复制，则使用后备复制机制。</li>
+<li><code>fs.constants.COPYFILE_FICLONE_FORCE</code>: 复制操作将尝试创建写时复制引用链接。
+如果平台不支持写时复制，则该操作将失败。</li>
+</ul><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { copyFile, constants } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">callback</span>(<span class="hljs-params">err</span>) {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'source.txt was copied to destination.txt'</span>);
+}
+
+<span class="hljs-comment">// 默认情况下将创建或覆盖 destination.txt。</span>
+<span class="hljs-title function_">copyFile</span>(<span class="hljs-string">'source.txt'</span>, <span class="hljs-string">'destination.txt'</span>, callback);
+
+<span class="hljs-comment">// 通过使用 COPYFILE_EXCL，如果 destination.txt 存在，则该操作将失败。</span>
+<span class="hljs-title function_">copyFile</span>(<span class="hljs-string">'source.txt'</span>, <span class="hljs-string">'destination.txt'</span>, constants.<span class="hljs-property">COPYFILE_EXCL</span>, callback);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.0.0</td>
+<td><p>Changed 'flags' argument to 'mode' and imposed stricter type validation.</p></td></tr>
+<tr><td>v8.5.0</td>
+<td><p><span>Added in: v8.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>src</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> source filename to copy</li>
+<li><code>dest</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> destination filename of the copy operation</li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> modifiers for copy operation. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul><p>Asynchronously copies <code>src</code> to <code>dest</code>. By default, <code>dest</code> is overwritten if it
+already exists. No arguments other than a possible exception are given to the
+callback function. Node.js makes no guarantees about the atomicity of the copy
+operation. If an error occurs after the destination file has been opened for
+writing, Node.js will attempt to remove the destination.</p><p><code>mode</code> is an optional integer that specifies the behavior
+of the copy operation. It is possible to create a mask consisting of the bitwise
+OR of two or more values (e.g.
+<code>fs.constants.COPYFILE_EXCL | fs.constants.COPYFILE_FICLONE</code>).</p><ul>
+<li><code>fs.constants.COPYFILE_EXCL</code>: The copy operation will fail if <code>dest</code> already
+exists.</li>
+<li><code>fs.constants.COPYFILE_FICLONE</code>: The copy operation will attempt to create a
+copy-on-write reflink. If the platform does not support copy-on-write, then a
+fallback copy mechanism is used.</li>
+<li><code>fs.constants.COPYFILE_FICLONE_FORCE</code>: The copy operation will attempt to
+create a copy-on-write reflink. If the platform does not support
+copy-on-write, then the operation will fail.</li>
+</ul><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { copyFile, constants } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">callback</span>(<span class="hljs-params">err</span>) {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'source.txt was copied to destination.txt'</span>);
+}
+
+<span class="hljs-comment">// destination.txt will be created or overwritten by default.</span>
+<span class="hljs-title function_">copyFile</span>(<span class="hljs-string">'source.txt'</span>, <span class="hljs-string">'destination.txt'</span>, callback);
+
+<span class="hljs-comment">// By using COPYFILE_EXCL, the operation will fail if destination.txt exists.</span>
+<span class="hljs-title function_">copyFile</span>(<span class="hljs-string">'source.txt'</span>, <span class="hljs-string">'destination.txt'</span>, constants.<span class="hljs-property">COPYFILE_EXCL</span>, callback);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

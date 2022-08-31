@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.accessSync(path[, mode]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.accessSync(path[, mode])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_accesssync_path_mode" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_accesssync_path_mode.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_accesssync_path_mode.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fsaccesssyncpath-mode.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.6.0</td>
+<td><p>参数 <code>path</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v0.11.15</td>
+<td><p><span>新增于: v0.11.15</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>fs.constants.F_OK</code></li>
+</ul><p>同步地测试用户对 <code>path</code> 指定的文件或目录的权限。
+<code>mode</code> 参数是可选的整数，指定要执行的可访问性检查。
+<code>mode</code> 应该是值 <code>fs.constants.F_OK</code> 或由 <code>fs.constants.R_OK</code>、<code>fs.constants.W_OK</code> 和 <code>fs.constants.X_OK</code> 中的任何一个（例如 <code>fs.constants.W_OK | fs.constants.R_OK</code>）的按位或组成的掩码。
+查看<a href="../fs.html#file-access-constants">文件访问的常量</a>以获取可能的 <code>mode</code> 值。</p><p class="">如果任何可访问性检查失败，将抛出 <code>Error</code>。
+否则，该方法将返回 <code>undefined</code>。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { accessSync, constants } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">try</span> {
+  <span class="hljs-title function_">accessSync</span>(<span class="hljs-string">'etc/passwd'</span>, constants.<span class="hljs-property">R_OK</span> | constants.<span class="hljs-property">W_OK</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'can read/write'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'no access!'</span>);
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v7.6.0</td>
+<td><p>The <code>path</code> parameter can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v0.11.15</td>
+<td><p><span>Added in: v0.11.15</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>Default:</strong> <code>fs.constants.F_OK</code></li>
+</ul><p>Synchronously tests a user's permissions for the file or directory specified
+by <code>path</code>. The <code>mode</code> argument is an optional integer that specifies the
+accessibility checks to be performed. <code>mode</code> should be either the value
+<code>fs.constants.F_OK</code> or a mask consisting of the bitwise OR of any of
+<code>fs.constants.R_OK</code>, <code>fs.constants.W_OK</code>, and <code>fs.constants.X_OK</code> (e.g.
+<code>fs.constants.W_OK | fs.constants.R_OK</code>). Check <a href="../fs.html#file-access-constants">File access constants</a> for
+possible values of <code>mode</code>.</p><p>If any of the accessibility checks fail, an <code>Error</code> will be thrown. Otherwise,
+the method will return <code>undefined</code>.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { accessSync, constants } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-keyword">try</span> {
+  <span class="hljs-title function_">accessSync</span>(<span class="hljs-string">'etc/passwd'</span>, constants.<span class="hljs-property">R_OK</span> | constants.<span class="hljs-property">W_OK</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'can read/write'</span>);
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'no access!'</span>);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

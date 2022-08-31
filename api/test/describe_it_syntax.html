@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>describe/it 语法 | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-test">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>describe/it 语法</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../test.html#test_describe_it_syntax" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/test/#describeit-syntax.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>运行测试也可以使用 <code>describe</code> 来声明套件和 <code>it</code> 来声明测试。
+套件用于将相关测试组织和分组在一起。
+<code>it</code> 是 <code>test</code> 的别名，除了没有通过测试上下文，因为嵌套是使用套件完成的，如本例所示</p><pre class=""><code class="language-js"><span class="hljs-title function_">describe</span>(<span class="hljs-string">'A thing'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">it</span>(<span class="hljs-string">'should work'</span>, <span class="hljs-function">() =&gt;</span> {
+    assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+  });
+
+  <span class="hljs-title function_">it</span>(<span class="hljs-string">'should be ok'</span>, <span class="hljs-function">() =&gt;</span> {
+    assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>);
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">'a nested thing'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">'should work'</span>, <span class="hljs-function">() =&gt;</span> {
+      assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>);
+    });
+  });
+});</code></pre><p class=""><code>describe</code> 和 <code>it</code> 是从 <code>node:test</code> 模块导入的</p><pre class="with-46-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { describe, it } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:test'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { describe, it } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node:test'</span>);</code></pre></div>
+          <div id="content_right"><p>Running tests can also be done using <code>describe</code> to declare a suite
+and <code>it</code> to declare a test.
+A suite is used to organize and group related tests together.
+<code>it</code> is an alias for <code>test</code>, except there is no test context passed,
+since nesting is done using suites, as demonstrated in this example</p><pre><code class="language-js"><span class="hljs-title function_">describe</span>(<span class="hljs-string">'A thing'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">it</span>(<span class="hljs-string">'should work'</span>, <span class="hljs-function">() =&gt;</span> {
+    assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+  });
+
+  <span class="hljs-title function_">it</span>(<span class="hljs-string">'should be ok'</span>, <span class="hljs-function">() =&gt;</span> {
+    assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>);
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">'a nested thing'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">'should work'</span>, <span class="hljs-function">() =&gt;</span> {
+      assert.<span class="hljs-title function_">strictEqual</span>(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>);
+    });
+  });
+});</code></pre><p><code>describe</code> and <code>it</code> are imported from the <code>node:test</code> module</p><pre class="with-46-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { describe, it } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:test'</span>;</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { describe, it } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node:test'</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

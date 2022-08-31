@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Promise 执行跟踪 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Promise 执行跟踪</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_promise_execution_tracking" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/promise_execution_tracking.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/promise_execution_tracking.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#promise-execution-tracking.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>默认情况下，由于 V8 提供的 <a href="https://docs.google.com/document/d/1rda3yKGHimKIhg5YeoAmCOtyURgsbTH_qaYR79FELlk/edit" rel="nofollow">promise 自省 API</a> 相对昂贵，因此不会为 promise 执行分配 <code>asyncId</code>。
+这意味着默认情况下，使用 promise 或 <code>async</code>/<code>await</code> 的程序将无法正确执行并触发 promise 回调上下文的 id。</p><pre class="with-68-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { executionAsyncId, triggerAsyncId } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// 产生：</span>
+<span class="hljs-comment">// eid 1 tid 0</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { executionAsyncId, triggerAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// 产生：</span>
+<span class="hljs-comment">// eid 1 tid 0</span></code></pre><p class="">注意 <code>then()</code> 回调声称已在外部范围的上下文中执行，即使涉及异步的跃点。
+另外，<code>triggerAsyncId</code> 的值是 <code>0</code>，这意味着我们缺少有关导致（触发）<code>then()</code> 回调被执行的资源的上下文。</p><p class="">通过 <code>async_hooks.createHook</code> 安装异步钩子启用 promise 执行跟踪：</p><pre class="with-80-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createHook, executionAsyncId, triggerAsyncId } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+<span class="hljs-title function_">createHook</span>({ <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) {} }).<span class="hljs-title function_">enable</span>(); <span class="hljs-comment">// 强制启用 PromiseHooks。</span>
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// 产生：</span>
+<span class="hljs-comment">// eid 7 tid 6</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createHook, executionAsyncId, triggerAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-title function_">createHook</span>({ <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) {} }).<span class="hljs-title function_">enable</span>(); <span class="hljs-comment">// 强制启用 PromiseHooks。</span>
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// 产生：</span>
+<span class="hljs-comment">// eid 7 tid 6</span></code></pre><p class="">在这个示例中，添加任何实际的钩子函数启用了对 promise 的跟踪。
+上面的示例中有两个 promise；由 <code>Promise.resolve()</code> 创建的 promise 和调用 <code>then()</code> 返回的 promise。
+在上面的示例中，第一个 promise 得到 <code>asyncId</code> <code>6</code>，后者得到 <code>asyncId</code> <code>7</code>。
+在执行 <code>then()</code> 回调期间，我们在 <code>asyncId</code> <code>7</code> 的 promise 上下文中执行。
+此 promise 由异步资源 <code>6</code> 触发。</p><p class="">promise 的另一个微妙之处是 <code>before</code> 和 <code>after</code> 回调仅在链式 promise 上运行。
+这意味着不是由 <code>then()</code>/<code>catch()</code> 创建的 promise 不会触发 <code>before</code> 和 <code>after</code> 回调。
+更多详细信息请参见 V8 <a href="https://docs.google.com/document/d/1rda3yKGHimKIhg5YeoAmCOtyURgsbTH_qaYR79FELlk/edit" rel="nofollow">PromiseHooks</a> API 的详细信息。</p></div>
+          <div id="content_right"><p>By default, promise executions are not assigned <code>asyncId</code>s due to the relatively
+expensive nature of the <a href="https://docs.google.com/document/d/1rda3yKGHimKIhg5YeoAmCOtyURgsbTH_qaYR79FELlk/edit" rel="nofollow">promise introspection API</a> provided by
+V8. This means that programs using promises or <code>async</code>/<code>await</code> will not get
+correct execution and trigger ids for promise callback contexts by default.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { executionAsyncId, triggerAsyncId } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// produces:</span>
+<span class="hljs-comment">// eid 1 tid 0</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { executionAsyncId, triggerAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// produces:</span>
+<span class="hljs-comment">// eid 1 tid 0</span></code></pre><p>Observe that the <code>then()</code> callback claims to have executed in the context of the
+outer scope even though there was an asynchronous hop involved. Also,
+the <code>triggerAsyncId</code> value is <code>0</code>, which means that we are missing context about
+the resource that caused (triggered) the <code>then()</code> callback to be executed.</p><p>Installing async hooks via <code>async_hooks.createHook</code> enables promise execution
+tracking:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createHook, executionAsyncId, triggerAsyncId } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+<span class="hljs-title function_">createHook</span>({ <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) {} }).<span class="hljs-title function_">enable</span>(); <span class="hljs-comment">// forces PromiseHooks to be enabled.</span>
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// produces:</span>
+<span class="hljs-comment">// eid 7 tid 6</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createHook, executionAsyncId, triggerAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-title function_">createHook</span>({ <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) {} }).<span class="hljs-title function_">enable</span>(); <span class="hljs-comment">// forces PromiseHooks to be enabled.</span>
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1729</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`eid <span class="hljs-subst">${executionAsyncId()}</span> tid <span class="hljs-subst">${triggerAsyncId()}</span>`</span>);
+});
+<span class="hljs-comment">// produces:</span>
+<span class="hljs-comment">// eid 7 tid 6</span></code></pre><p>In this example, adding any actual hook function enabled the tracking of
+promises. There are two promises in the example above; the promise created by
+<code>Promise.resolve()</code> and the promise returned by the call to <code>then()</code>. In the
+example above, the first promise got the <code>asyncId</code> <code>6</code> and the latter got
+<code>asyncId</code> <code>7</code>. During the execution of the <code>then()</code> callback, we are executing
+in the context of promise with <code>asyncId</code> <code>7</code>. This promise was triggered by
+async resource <code>6</code>.</p><p>Another subtlety with promises is that <code>before</code> and <code>after</code> callbacks are run
+only on chained promises. That means promises not created by <code>then()</code>/<code>catch()</code>
+will not have the <code>before</code> and <code>after</code> callbacks fired on them. For more details
+see the details of the V8 <a href="https://docs.google.com/document/d/1rda3yKGHimKIhg5YeoAmCOtyURgsbTH_qaYR79FELlk/edit" rel="nofollow">PromiseHooks</a> API.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

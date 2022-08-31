@@ -1,0 +1,3145 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>crypto/webcrypto 网络加密 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_webcrypto" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="" class="nav-webcrypto active" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="webcrypto" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_1"><a href="#web-crypto-api">crypto/webcrypto 网络加密</a></span>
+<ul>
+<li><a href="#examples">示例</a>
+<ul>
+<li><a href="#generating-keys">生成密钥</a>
+<ul>
+<li><a href="#aes-keys">AES 密钥</a></li>
+<li><a href="#ecdsa-key-pairs">ECDSA key pairs</a></li>
+<li><a href="#ed25519ed448x25519x448-key-pairs">ED25519/ED448/X25519/X448 key pairs</a></li>
+<li><a href="#hmac-keys">HMAC 密钥</a></li>
+<li><a href="#rsa-key-pairs">RSA 密钥对</a></li>
+</ul>
+</li>
+<li><a href="#encryption-and-decryption">加密与解密</a></li>
+<li><a href="#exporting-and-importing-keys">导出与导入密钥</a></li>
+<li><a href="#wrapping-and-unwrapping-keys">封装与解封密钥</a></li>
+<li><a href="#sign-and-verify">签名与验证</a></li>
+<li><a href="#deriving-bits-and-keys">派生位与密钥</a></li>
+<li><a href="#digest">摘要</a></li>
+</ul>
+</li>
+<li><a href="#algorithm-matrix">算法矩阵</a></li>
+<li><a href="#class-crypto"><code>Crypto</code> 类</a>
+<ul>
+<li><a href="#cryptosubtle"><code>crypto.subtle</code></a></li>
+<li><a href="#cryptogetrandomvaluestypedarray"><code>crypto.getRandomValues(typedArray)</code></a></li>
+<li><a href="#cryptorandomuuid"><code>crypto.randomUUID()</code></a></li>
+</ul>
+</li>
+<li><a href="#class-cryptokey"><code>CryptoKey</code> 类</a>
+<ul>
+<li><a href="#cryptokeyalgorithm"><code>cryptoKey.algorithm</code></a></li>
+<li><a href="#cryptokeyextractable"><code>cryptoKey.extractable</code></a></li>
+<li><a href="#cryptokeytype"><code>cryptoKey.type</code></a></li>
+<li><a href="#cryptokeyusages"><code>cryptoKey.usages</code></a></li>
+</ul>
+</li>
+<li><a href="#class-cryptokeypair"><code>CryptoKeyPair</code> 类</a>
+<ul>
+<li><a href="#cryptokeypairprivatekey"><code>cryptoKeyPair.privateKey</code></a></li>
+<li><a href="#cryptokeypairpublickey"><code>cryptoKeyPair.publicKey</code></a></li>
+</ul>
+</li>
+<li><a href="#class-subtlecrypto"><code>SubtleCrypto</code> 类</a>
+<ul>
+<li><a href="#subtledecryptalgorithm-key-data"><code>subtle.decrypt(algorithm, key, data)</code></a></li>
+<li><a href="#subtlederivebitsalgorithm-basekey-length"><code>subtle.deriveBits(algorithm, baseKey, length)</code></a></li>
+<li><a href="#subtlederivekeyalgorithm-basekey-derivedkeyalgorithm-extractable-keyusages"><code>subtle.deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages)</code></a></li>
+<li><a href="#subtledigestalgorithm-data"><code>subtle.digest(algorithm, data)</code></a></li>
+<li><a href="#subtleencryptalgorithm-key-data"><code>subtle.encrypt(algorithm, key, data)</code></a></li>
+<li><a href="#subtleexportkeyformat-key"><code>subtle.exportKey(format, key)</code></a></li>
+<li><a href="#subtlegeneratekeyalgorithm-extractable-keyusages"><code>subtle.generateKey(algorithm, extractable, keyUsages)</code></a></li>
+<li><a href="#subtleimportkeyformat-keydata-algorithm-extractable-keyusages"><code>subtle.importKey(format, keyData, algorithm, extractable, keyUsages)</code></a></li>
+<li><a href="#subtlesignalgorithm-key-data"><code>subtle.sign(algorithm, key, data)</code></a></li>
+<li><a href="#subtleunwrapkeyformat-wrappedkey-unwrappingkey-unwrapalgo-unwrappedkeyalgo-extractable-keyusages"><code>subtle.unwrapKey(format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages)</code></a></li>
+<li><a href="#subtleverifyalgorithm-key-signature-data"><code>subtle.verify(algorithm, key, signature, data)</code></a></li>
+<li><a href="#subtlewrapkeyformat-key-wrappingkey-wrapalgo"><code>subtle.wrapKey(format, key, wrappingKey, wrapAlgo)</code></a></li>
+</ul>
+</li>
+<li><a href="#algorithm-parameters">算法参数</a>
+<ul>
+<li><a href="#class-aescbcparams"><code>AesCbcParams</code> 类</a>
+<ul>
+<li><a href="#aescbcparamsiv"><code>aesCbcParams.iv</code></a></li>
+<li><a href="#aescbcparamsname"><code>aesCbcParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aesctrparams"><code>AesCtrParams</code> 类</a>
+<ul>
+<li><a href="#aesctrparamscounter"><code>aesCtrParams.counter</code></a></li>
+<li><a href="#aesctrparamslength"><code>aesCtrParams.length</code></a></li>
+<li><a href="#aesctrparamsname"><code>aesCtrParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aesgcmparams"><code>AesGcmParams</code> 类</a>
+<ul>
+<li><a href="#aesgcmparamsadditionaldata"><code>aesGcmParams.additionalData</code></a></li>
+<li><a href="#aesgcmparamsiv"><code>aesGcmParams.iv</code></a></li>
+<li><a href="#aesgcmparamsname"><code>aesGcmParams.name</code></a></li>
+<li><a href="#aesgcmparamstaglength"><code>aesGcmParams.tagLength</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aesimportparams"><code>AesImportParams</code> 类</a>
+<ul>
+<li><a href="#aesimportparamsname"><code>aesImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aeskeygenparams"><code>AesKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#aeskeygenparamslength"><code>aesKeyGenParams.length</code></a></li>
+<li><a href="#aeskeygenparamsname"><code>aesKeyGenParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aeskwparams"><code>AesKwParams</code> 类</a>
+<ul>
+<li><a href="#aeskwparamsname"><code>aesKwParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-ecdhkeyderiveparams"><code>EcdhKeyDeriveParams</code> 类</a>
+<ul>
+<li><a href="#ecdhkeyderiveparamsname"><code>ecdhKeyDeriveParams.name</code></a></li>
+<li><a href="#ecdhkeyderiveparamspublic"><code>ecdhKeyDeriveParams.public</code></a></li>
+</ul>
+</li>
+<li><a href="#class-ecdsaparams"><code>EcdsaParams</code> 类</a>
+<ul>
+<li><a href="#ecdsaparamshash"><code>ecdsaParams.hash</code></a></li>
+<li><a href="#ecdsaparamsname"><code>ecdsaParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-eckeygenparams"><code>EcKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#eckeygenparamsname"><code>ecKeyGenParams.name</code></a></li>
+<li><a href="#eckeygenparamsnamedcurve"><code>ecKeyGenParams.namedCurve</code></a></li>
+</ul>
+</li>
+<li><a href="#class-eckeyimportparams"><code>EcKeyImportParams</code> 类</a>
+<ul>
+<li><a href="#eckeyimportparamsname"><code>ecKeyImportParams.name</code></a></li>
+<li><a href="#eckeyimportparamsnamedcurve"><code>ecKeyImportParams.namedCurve</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hkdfparams"><code>HkdfParams</code> 类</a>
+<ul>
+<li><a href="#hkdfparamshash"><code>hkdfParams.hash</code></a></li>
+<li><a href="#hkdfparamsinfo"><code>hkdfParams.info</code></a></li>
+<li><a href="#hkdfparamsname"><code>hkdfParams.name</code></a></li>
+<li><a href="#hkdfparamssalt"><code>hkdfParams.salt</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hmacimportparams"><code>HmacImportParams</code> 类</a>
+<ul>
+<li><a href="#hmacimportparamshash"><code>hmacImportParams.hash</code></a></li>
+<li><a href="#hmacimportparamslength"><code>hmacImportParams.length</code></a></li>
+<li><a href="#hmacimportparamsname"><code>hmacImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hmackeygenparams"><code>HmacKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#hmackeygenparamshash"><code>hmacKeyGenParams.hash</code></a></li>
+<li><a href="#hmackeygenparamslength"><code>hmacKeyGenParams.length</code></a></li>
+<li><a href="#hmackeygenparamsname"><code>hmacKeyGenParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hmacparams"><code>HmacParams</code> 类</a>
+<ul>
+<li><a href="#hmacparamsname"><code>hmacParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-pbkdf2importparams"><code>Pbkdf2ImportParams</code> 类</a>
+<ul>
+<li><a href="#pbkdf2importparamsname"><code>pbkdf2ImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-pbkdf2params"><code>Pbkdf2Params</code> 类</a>
+<ul>
+<li><a href="#pbkdb2paramshash"><code>pbkdb2Params.hash</code></a></li>
+<li><a href="#pbkdf2paramsiterations"><code>pbkdf2Params.iterations</code></a></li>
+<li><a href="#pbkdf2paramsname"><code>pbkdf2Params.name</code></a></li>
+<li><a href="#pbkdf2paramssalt"><code>pbkdf2Params.salt</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsahashedimportparams"><code>RsaHashedImportParams</code> 类</a>
+<ul>
+<li><a href="#rsahashedimportparamshash"><code>rsaHashedImportParams.hash</code></a></li>
+<li><a href="#rsahashedimportparamsname"><code>rsaHashedImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsahashedkeygenparams"><code>RsaHashedKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#rsahashedkeygenparamshash"><code>rsaHashedKeyGenParams.hash</code></a></li>
+<li><a href="#rsahashedkeygenparamsmoduluslength"><code>rsaHashedKeyGenParams.modulusLength</code></a></li>
+<li><a href="#rsahashedkeygenparamsname"><code>rsaHashedKeyGenParams.name</code></a></li>
+<li><a href="#rsahashedkeygenparamspublicexponent"><code>rsaHashedKeyGenParams.publicExponent</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsaoaepparams"><code>RsaOaepParams</code> 类</a>
+<ul>
+<li><a href="#rsaoaepparamslabel">rsaOaepParams.label</a></li>
+<li><a href="#rsaoaepparamsname">rsaOaepParams.name</a></li>
+</ul>
+</li>
+<li><a href="#class-rsapssparams"><code>RsaPssParams</code> 类</a>
+<ul>
+<li><a href="#rsapssparamsname"><code>rsaPssParams.name</code></a></li>
+<li><a href="#rsapssparamssaltlength"><code>rsaPssParams.saltLength</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsasignparams"><code>RsaSignParams</code> 类</a>
+<ul>
+<li><a href="#rsasignparamsname"><code>rsaSignParams.name</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#nodejs-specific-extensions">Node.js 特定的扩展</a>
+<ul>
+<li><a href="#node-dh-algorithm">NODE-DH 算法</a>
+<ul>
+<li><a href="#class-nodedhimportparams"><code>NodeDhImportParams</code> 类</a>
+<ul>
+<li><a href="#nodedhimportparamsname"><code>nodeDhImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedhkeygenparams"><code>NodeDhKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#nodedhkeygenparamsgenerator"><code>nodeDhKeyGenParams.generator</code></a></li>
+<li><a href="#nodedhkeygenparamsgroup"><code>nodeDhKeyGenParams.group</code></a></li>
+<li><a href="#nodedhkeygenparamsprime"><code>nodeDhKeyGenParams.prime</code></a></li>
+<li><a href="#nodedhkeygenparamsprimelength"><code>nodeDhKeyGenParams.primeLength</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedhderivebitsparams">NodeDhDeriveBitsParams 类</a>
+<ul>
+<li><a href="#nodedhderivebitsparamspublic"><code>nodeDhDeriveBitsParams.public</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#node-dsa-algorithm">NODE-DSA 算法</a>
+<ul>
+<li><a href="#class-nodedsaimportparams"><code>NodeDsaImportParams</code> 类</a>
+<ul>
+<li><a href="#nodedsaimportparamshash"><code>nodeDsaImportParams.hash</code></a></li>
+<li><a href="#nodedsaimportparamsname"><code>nodeDsaImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedsakeygenparams"><code>NodeDsaKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#nodedsakeygenparamsdivisorlength"><code>nodeDsaKeyGenParams.divisorLength</code></a></li>
+<li><a href="#nodedsakeygenparamshash"><code>nodeDsaKeyGenParams.hash</code></a></li>
+<li><a href="#nodedsakeygenparamsmoduluslength"><code>nodeDsaKeyGenParams.modulusLength</code></a></li>
+<li><a href="#nodedsakeygenparamsname"><code>nodeDsaKeyGenParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedsasignparams"><code>NodeDsaSignParams</code> 类</a>
+<ul>
+<li><a href="#nodedsasignparamsname"><code>nodeDsaSignParams.name</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#node-ed25519-and-node-ed448-algorithms">NODE-ED25519 与 NODE-ED448 算法</a>
+<ul>
+<li><a href="#class-nodeedkeygenparams"><code>NodeEdKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#nodeedkeygenparamsname"><code>nodeEdKeyGenParams.name</code></a></li>
+<li><a href="#nodeedkeygenparamsnamedcurve"><code>nodeEdKeyGenParams.namedCurve</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodeedkeyimportparams"><code>NodeEdKeyImportParams</code> 类</a>
+<ul>
+<li><a href="#nodeedkeyimportparamsname"><code>nodeEdKeyImportParams.name</code></a></li>
+<li><a href="#nodeedkeyimportparamsnamedcurve"><code>nodeEdKeyImportParams.namedCurve</code></a></li>
+<li><a href="#nodeedkeyimportparamspublic"><code>nodeEdKeyImportParams.public</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#node-scrypt-algorithm">NODE-SCRYPT 算法</a>
+<ul>
+<li><a href="#class-nodescryptimportparams"><code>NodeScryptImportParams</code> 类</a>
+<ul>
+<li><a href="#nodescryptimportparamsname"><code>nodeScryptImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodescryptparams"><code>NodeScryptParams</code> 类</a>
+<ul>
+<li><a href="#nodescryptparamsencoding"><code>nodeScryptParams.encoding</code></a></li>
+<li><a href="#nodescryptparamsmaxmem"><code>nodeScryptParams.maxmem</code></a></li>
+<li><a href="#nodescryptparamsn"><code>nodeScryptParams.N</code></a></li>
+<li><a href="#nodescryptparamsp"><code>nodeScryptParams.p</code></a></li>
+<li><a href="#nodescryptparamsr"><code>nodeScryptParams.r</code></a></li>
+<li><a href="#nodescryptparamssalt"><code>nodeScryptParams.salt</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="" class="nav-webcrypto active">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/webcrypto.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_1"><a href="#web-crypto-api">crypto/webcrypto 网络加密</a></span>
+<ul>
+<li><a href="#examples">示例</a>
+<ul>
+<li><a href="#generating-keys">生成密钥</a>
+<ul>
+<li><a href="#aes-keys">AES 密钥</a></li>
+<li><a href="#ecdsa-key-pairs">ECDSA key pairs</a></li>
+<li><a href="#ed25519ed448x25519x448-key-pairs">ED25519/ED448/X25519/X448 key pairs</a></li>
+<li><a href="#hmac-keys">HMAC 密钥</a></li>
+<li><a href="#rsa-key-pairs">RSA 密钥对</a></li>
+</ul>
+</li>
+<li><a href="#encryption-and-decryption">加密与解密</a></li>
+<li><a href="#exporting-and-importing-keys">导出与导入密钥</a></li>
+<li><a href="#wrapping-and-unwrapping-keys">封装与解封密钥</a></li>
+<li><a href="#sign-and-verify">签名与验证</a></li>
+<li><a href="#deriving-bits-and-keys">派生位与密钥</a></li>
+<li><a href="#digest">摘要</a></li>
+</ul>
+</li>
+<li><a href="#algorithm-matrix">算法矩阵</a></li>
+<li><a href="#class-crypto"><code>Crypto</code> 类</a>
+<ul>
+<li><a href="#cryptosubtle"><code>crypto.subtle</code></a></li>
+<li><a href="#cryptogetrandomvaluestypedarray"><code>crypto.getRandomValues(typedArray)</code></a></li>
+<li><a href="#cryptorandomuuid"><code>crypto.randomUUID()</code></a></li>
+</ul>
+</li>
+<li><a href="#class-cryptokey"><code>CryptoKey</code> 类</a>
+<ul>
+<li><a href="#cryptokeyalgorithm"><code>cryptoKey.algorithm</code></a></li>
+<li><a href="#cryptokeyextractable"><code>cryptoKey.extractable</code></a></li>
+<li><a href="#cryptokeytype"><code>cryptoKey.type</code></a></li>
+<li><a href="#cryptokeyusages"><code>cryptoKey.usages</code></a></li>
+</ul>
+</li>
+<li><a href="#class-cryptokeypair"><code>CryptoKeyPair</code> 类</a>
+<ul>
+<li><a href="#cryptokeypairprivatekey"><code>cryptoKeyPair.privateKey</code></a></li>
+<li><a href="#cryptokeypairpublickey"><code>cryptoKeyPair.publicKey</code></a></li>
+</ul>
+</li>
+<li><a href="#class-subtlecrypto"><code>SubtleCrypto</code> 类</a>
+<ul>
+<li><a href="#subtledecryptalgorithm-key-data"><code>subtle.decrypt(algorithm, key, data)</code></a></li>
+<li><a href="#subtlederivebitsalgorithm-basekey-length"><code>subtle.deriveBits(algorithm, baseKey, length)</code></a></li>
+<li><a href="#subtlederivekeyalgorithm-basekey-derivedkeyalgorithm-extractable-keyusages"><code>subtle.deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages)</code></a></li>
+<li><a href="#subtledigestalgorithm-data"><code>subtle.digest(algorithm, data)</code></a></li>
+<li><a href="#subtleencryptalgorithm-key-data"><code>subtle.encrypt(algorithm, key, data)</code></a></li>
+<li><a href="#subtleexportkeyformat-key"><code>subtle.exportKey(format, key)</code></a></li>
+<li><a href="#subtlegeneratekeyalgorithm-extractable-keyusages"><code>subtle.generateKey(algorithm, extractable, keyUsages)</code></a></li>
+<li><a href="#subtleimportkeyformat-keydata-algorithm-extractable-keyusages"><code>subtle.importKey(format, keyData, algorithm, extractable, keyUsages)</code></a></li>
+<li><a href="#subtlesignalgorithm-key-data"><code>subtle.sign(algorithm, key, data)</code></a></li>
+<li><a href="#subtleunwrapkeyformat-wrappedkey-unwrappingkey-unwrapalgo-unwrappedkeyalgo-extractable-keyusages"><code>subtle.unwrapKey(format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages)</code></a></li>
+<li><a href="#subtleverifyalgorithm-key-signature-data"><code>subtle.verify(algorithm, key, signature, data)</code></a></li>
+<li><a href="#subtlewrapkeyformat-key-wrappingkey-wrapalgo"><code>subtle.wrapKey(format, key, wrappingKey, wrapAlgo)</code></a></li>
+</ul>
+</li>
+<li><a href="#algorithm-parameters">算法参数</a>
+<ul>
+<li><a href="#class-aescbcparams"><code>AesCbcParams</code> 类</a>
+<ul>
+<li><a href="#aescbcparamsiv"><code>aesCbcParams.iv</code></a></li>
+<li><a href="#aescbcparamsname"><code>aesCbcParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aesctrparams"><code>AesCtrParams</code> 类</a>
+<ul>
+<li><a href="#aesctrparamscounter"><code>aesCtrParams.counter</code></a></li>
+<li><a href="#aesctrparamslength"><code>aesCtrParams.length</code></a></li>
+<li><a href="#aesctrparamsname"><code>aesCtrParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aesgcmparams"><code>AesGcmParams</code> 类</a>
+<ul>
+<li><a href="#aesgcmparamsadditionaldata"><code>aesGcmParams.additionalData</code></a></li>
+<li><a href="#aesgcmparamsiv"><code>aesGcmParams.iv</code></a></li>
+<li><a href="#aesgcmparamsname"><code>aesGcmParams.name</code></a></li>
+<li><a href="#aesgcmparamstaglength"><code>aesGcmParams.tagLength</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aesimportparams"><code>AesImportParams</code> 类</a>
+<ul>
+<li><a href="#aesimportparamsname"><code>aesImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aeskeygenparams"><code>AesKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#aeskeygenparamslength"><code>aesKeyGenParams.length</code></a></li>
+<li><a href="#aeskeygenparamsname"><code>aesKeyGenParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-aeskwparams"><code>AesKwParams</code> 类</a>
+<ul>
+<li><a href="#aeskwparamsname"><code>aesKwParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-ecdhkeyderiveparams"><code>EcdhKeyDeriveParams</code> 类</a>
+<ul>
+<li><a href="#ecdhkeyderiveparamsname"><code>ecdhKeyDeriveParams.name</code></a></li>
+<li><a href="#ecdhkeyderiveparamspublic"><code>ecdhKeyDeriveParams.public</code></a></li>
+</ul>
+</li>
+<li><a href="#class-ecdsaparams"><code>EcdsaParams</code> 类</a>
+<ul>
+<li><a href="#ecdsaparamshash"><code>ecdsaParams.hash</code></a></li>
+<li><a href="#ecdsaparamsname"><code>ecdsaParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-eckeygenparams"><code>EcKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#eckeygenparamsname"><code>ecKeyGenParams.name</code></a></li>
+<li><a href="#eckeygenparamsnamedcurve"><code>ecKeyGenParams.namedCurve</code></a></li>
+</ul>
+</li>
+<li><a href="#class-eckeyimportparams"><code>EcKeyImportParams</code> 类</a>
+<ul>
+<li><a href="#eckeyimportparamsname"><code>ecKeyImportParams.name</code></a></li>
+<li><a href="#eckeyimportparamsnamedcurve"><code>ecKeyImportParams.namedCurve</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hkdfparams"><code>HkdfParams</code> 类</a>
+<ul>
+<li><a href="#hkdfparamshash"><code>hkdfParams.hash</code></a></li>
+<li><a href="#hkdfparamsinfo"><code>hkdfParams.info</code></a></li>
+<li><a href="#hkdfparamsname"><code>hkdfParams.name</code></a></li>
+<li><a href="#hkdfparamssalt"><code>hkdfParams.salt</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hmacimportparams"><code>HmacImportParams</code> 类</a>
+<ul>
+<li><a href="#hmacimportparamshash"><code>hmacImportParams.hash</code></a></li>
+<li><a href="#hmacimportparamslength"><code>hmacImportParams.length</code></a></li>
+<li><a href="#hmacimportparamsname"><code>hmacImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hmackeygenparams"><code>HmacKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#hmackeygenparamshash"><code>hmacKeyGenParams.hash</code></a></li>
+<li><a href="#hmackeygenparamslength"><code>hmacKeyGenParams.length</code></a></li>
+<li><a href="#hmackeygenparamsname"><code>hmacKeyGenParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-hmacparams"><code>HmacParams</code> 类</a>
+<ul>
+<li><a href="#hmacparamsname"><code>hmacParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-pbkdf2importparams"><code>Pbkdf2ImportParams</code> 类</a>
+<ul>
+<li><a href="#pbkdf2importparamsname"><code>pbkdf2ImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-pbkdf2params"><code>Pbkdf2Params</code> 类</a>
+<ul>
+<li><a href="#pbkdb2paramshash"><code>pbkdb2Params.hash</code></a></li>
+<li><a href="#pbkdf2paramsiterations"><code>pbkdf2Params.iterations</code></a></li>
+<li><a href="#pbkdf2paramsname"><code>pbkdf2Params.name</code></a></li>
+<li><a href="#pbkdf2paramssalt"><code>pbkdf2Params.salt</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsahashedimportparams"><code>RsaHashedImportParams</code> 类</a>
+<ul>
+<li><a href="#rsahashedimportparamshash"><code>rsaHashedImportParams.hash</code></a></li>
+<li><a href="#rsahashedimportparamsname"><code>rsaHashedImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsahashedkeygenparams"><code>RsaHashedKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#rsahashedkeygenparamshash"><code>rsaHashedKeyGenParams.hash</code></a></li>
+<li><a href="#rsahashedkeygenparamsmoduluslength"><code>rsaHashedKeyGenParams.modulusLength</code></a></li>
+<li><a href="#rsahashedkeygenparamsname"><code>rsaHashedKeyGenParams.name</code></a></li>
+<li><a href="#rsahashedkeygenparamspublicexponent"><code>rsaHashedKeyGenParams.publicExponent</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsaoaepparams"><code>RsaOaepParams</code> 类</a>
+<ul>
+<li><a href="#rsaoaepparamslabel">rsaOaepParams.label</a></li>
+<li><a href="#rsaoaepparamsname">rsaOaepParams.name</a></li>
+</ul>
+</li>
+<li><a href="#class-rsapssparams"><code>RsaPssParams</code> 类</a>
+<ul>
+<li><a href="#rsapssparamsname"><code>rsaPssParams.name</code></a></li>
+<li><a href="#rsapssparamssaltlength"><code>rsaPssParams.saltLength</code></a></li>
+</ul>
+</li>
+<li><a href="#class-rsasignparams"><code>RsaSignParams</code> 类</a>
+<ul>
+<li><a href="#rsasignparamsname"><code>rsaSignParams.name</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#nodejs-specific-extensions">Node.js 特定的扩展</a>
+<ul>
+<li><a href="#node-dh-algorithm">NODE-DH 算法</a>
+<ul>
+<li><a href="#class-nodedhimportparams"><code>NodeDhImportParams</code> 类</a>
+<ul>
+<li><a href="#nodedhimportparamsname"><code>nodeDhImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedhkeygenparams"><code>NodeDhKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#nodedhkeygenparamsgenerator"><code>nodeDhKeyGenParams.generator</code></a></li>
+<li><a href="#nodedhkeygenparamsgroup"><code>nodeDhKeyGenParams.group</code></a></li>
+<li><a href="#nodedhkeygenparamsprime"><code>nodeDhKeyGenParams.prime</code></a></li>
+<li><a href="#nodedhkeygenparamsprimelength"><code>nodeDhKeyGenParams.primeLength</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedhderivebitsparams">NodeDhDeriveBitsParams 类</a>
+<ul>
+<li><a href="#nodedhderivebitsparamspublic"><code>nodeDhDeriveBitsParams.public</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#node-dsa-algorithm">NODE-DSA 算法</a>
+<ul>
+<li><a href="#class-nodedsaimportparams"><code>NodeDsaImportParams</code> 类</a>
+<ul>
+<li><a href="#nodedsaimportparamshash"><code>nodeDsaImportParams.hash</code></a></li>
+<li><a href="#nodedsaimportparamsname"><code>nodeDsaImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedsakeygenparams"><code>NodeDsaKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#nodedsakeygenparamsdivisorlength"><code>nodeDsaKeyGenParams.divisorLength</code></a></li>
+<li><a href="#nodedsakeygenparamshash"><code>nodeDsaKeyGenParams.hash</code></a></li>
+<li><a href="#nodedsakeygenparamsmoduluslength"><code>nodeDsaKeyGenParams.modulusLength</code></a></li>
+<li><a href="#nodedsakeygenparamsname"><code>nodeDsaKeyGenParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodedsasignparams"><code>NodeDsaSignParams</code> 类</a>
+<ul>
+<li><a href="#nodedsasignparamsname"><code>nodeDsaSignParams.name</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#node-ed25519-and-node-ed448-algorithms">NODE-ED25519 与 NODE-ED448 算法</a>
+<ul>
+<li><a href="#class-nodeedkeygenparams"><code>NodeEdKeyGenParams</code> 类</a>
+<ul>
+<li><a href="#nodeedkeygenparamsname"><code>nodeEdKeyGenParams.name</code></a></li>
+<li><a href="#nodeedkeygenparamsnamedcurve"><code>nodeEdKeyGenParams.namedCurve</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodeedkeyimportparams"><code>NodeEdKeyImportParams</code> 类</a>
+<ul>
+<li><a href="#nodeedkeyimportparamsname"><code>nodeEdKeyImportParams.name</code></a></li>
+<li><a href="#nodeedkeyimportparamsnamedcurve"><code>nodeEdKeyImportParams.namedCurve</code></a></li>
+<li><a href="#nodeedkeyimportparamspublic"><code>nodeEdKeyImportParams.public</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#node-scrypt-algorithm">NODE-SCRYPT 算法</a>
+<ul>
+<li><a href="#class-nodescryptimportparams"><code>NodeScryptImportParams</code> 类</a>
+<ul>
+<li><a href="#nodescryptimportparamsname"><code>nodeScryptImportParams.name</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodescryptparams"><code>NodeScryptParams</code> 类</a>
+<ul>
+<li><a href="#nodescryptparamsencoding"><code>nodeScryptParams.encoding</code></a></li>
+<li><a href="#nodescryptparamsmaxmem"><code>nodeScryptParams.maxmem</code></a></li>
+<li><a href="#nodescryptparamsn"><code>nodeScryptParams.N</code></a></li>
+<li><a href="#nodescryptparamsp"><code>nodeScryptParams.p</code></a></li>
+<li><a href="#nodescryptparamsr"><code>nodeScryptParams.r</code></a></li>
+<li><a href="#nodescryptparamssalt"><code>nodeScryptParams.salt</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>crypto/webcrypto 网络加密<span><a class="mark" href="#web-crypto-api" id="web-crypto-api">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_web_crypto_api"></a></h2><p class="tip_wrap"></p>
+<!-- introduced_in=v15.0.0 -->
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>Node.js provides an implementation of the standard <a href="https://www.w3.org/TR/WebCryptoAPI/" rel="nofollow">Web Crypto API</a>.</p>
+<p>Use <code>require('crypto').webcrypto</code> to access this module.</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+(<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'HMAC'</span>,
+    <span class="hljs-attr">hash</span>: <span class="hljs-string">'SHA-256'</span>,
+    <span class="hljs-attr">length</span>: <span class="hljs-number">256</span>
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+
+  <span class="hljs-keyword">const</span> enc = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextEncoder</span>();
+  <span class="hljs-keyword">const</span> message = enc.<span class="hljs-title function_">encode</span>(<span class="hljs-string">'I love cupcakes'</span>);
+
+  <span class="hljs-keyword">const</span> digest = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">sign</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'HMAC'</span>
+  }, key, message);
+
+})();</code></pre>
+<section><h3>示例<span><a class="mark" href="#examples" id="examples">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_examples"></a></h3>
+<h4>生成密钥<span><a class="mark" href="#generating-keys" id="generating-keys">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_generating_keys"></a></h4><p class="tip_wrap"></p>
+<p>The <a href="#class-subtlecrypto" rel="nofollow" class="type">&lt;SubtleCrypto&gt;</a> class can be used to generate symmetric (secret) keys
+or asymmetric key pairs (public key and private key).</p>
+<h5>AES 密钥<span><a class="mark" href="#aes-keys" id="aes-keys">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aes_keys"></a></h5><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateAesKey</span>(<span class="hljs-params">length = <span class="hljs-number">256</span></span>) {
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'AES-CBC'</span>,
+    length
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'encrypt'</span>, <span class="hljs-string">'decrypt'</span>]);
+
+  <span class="hljs-keyword">return</span> key;
+}</code></pre>
+<h5>ECDSA key pairs<span><a class="mark" href="#ecdsa-key-pairs" id="ecdsa-key-pairs">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_ecdsa_key_pairs"></a></h5><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateEcKey</span>(<span class="hljs-params">namedCurve = <span class="hljs-string">'P-521'</span></span>) {
+  <span class="hljs-keyword">const</span> {
+    publicKey,
+    privateKey
+  } = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'ECDSA'</span>,
+    namedCurve,
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+
+  <span class="hljs-keyword">return</span> { publicKey, privateKey };
+}</code></pre>
+<h5>ED25519/ED448/X25519/X448 key pairs<span><a class="mark" href="#ed25519ed448x25519x448-key-pairs" id="ed25519ed448x25519x448-key-pairs">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_ed25519_ed448_x25519_x448_key_pairs"></a></h5><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateEd25519Key</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'NODE-ED25519'</span>,
+    <span class="hljs-attr">namedCurve</span>: <span class="hljs-string">'NODE-ED25519'</span>,
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateX25519Key</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'ECDH'</span>,
+    <span class="hljs-attr">namedCurve</span>: <span class="hljs-string">'NODE-X25519'</span>,
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'deriveKey'</span>]);
+}</code></pre>
+<h5>HMAC 密钥<span><a class="mark" href="#hmac-keys" id="hmac-keys">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmac_keys"></a></h5><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateHmacKey</span>(<span class="hljs-params">hash = <span class="hljs-string">'SHA-256'</span></span>) {
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'HMAC'</span>,
+    hash
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+
+  <span class="hljs-keyword">return</span> key;
+}</code></pre>
+<h5>RSA 密钥对<span><a class="mark" href="#rsa-key-pairs" id="rsa-key-pairs">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsa_key_pairs"></a></h5><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+<span class="hljs-keyword">const</span> publicExponent = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>([<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateRsaKey</span>(<span class="hljs-params">modulusLength = <span class="hljs-number">2048</span>, hash = <span class="hljs-string">'SHA-256'</span></span>) {
+  <span class="hljs-keyword">const</span> {
+    publicKey,
+    privateKey
+  } = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'RSASSA-PKCS1-v1_5'</span>,
+    modulusLength,
+    publicExponent,
+    hash,
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+
+  <span class="hljs-keyword">return</span> { publicKey, privateKey };
+}</code></pre>
+<h4>加密与解密<span><a class="mark" href="#encryption-and-decryption" id="encryption-and-decryption">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_encryption_and_decryption"></a></h4><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">aesEncrypt</span>(<span class="hljs-params">plaintext</span>) {
+  <span class="hljs-keyword">const</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextEncoder</span>();
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> <span class="hljs-title function_">generateAesKey</span>();
+  <span class="hljs-keyword">const</span> iv = crypto.<span class="hljs-title function_">getRandomValues</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-number">16</span>));
+
+  <span class="hljs-keyword">const</span> ciphertext = <span class="hljs-keyword">await</span> crypto.<span class="hljs-property">subtle</span>.<span class="hljs-title function_">encrypt</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'AES-CBC'</span>,
+    iv,
+  }, key, ec.<span class="hljs-title function_">encode</span>(plaintext));
+
+  <span class="hljs-keyword">return</span> {
+    key,
+    iv,
+    ciphertext
+  };
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">aesDecrypt</span>(<span class="hljs-params">ciphertext, key, iv</span>) {
+  <span class="hljs-keyword">const</span> dec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextDecoder</span>();
+  <span class="hljs-keyword">const</span> plaintext = <span class="hljs-keyword">await</span> crypto.<span class="hljs-property">subtle</span>.<span class="hljs-title function_">decrypt</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'AES-CBC'</span>,
+    iv,
+  }, key, ciphertext);
+
+  <span class="hljs-keyword">return</span> dec.<span class="hljs-title function_">decode</span>(plaintext);
+}</code></pre>
+<h4>导出与导入密钥<span><a class="mark" href="#exporting-and-importing-keys" id="exporting-and-importing-keys">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_exporting_and_importing_keys"></a></h4><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateAndExportHmacKey</span>(<span class="hljs-params">format = <span class="hljs-string">'jwk'</span>, hash = <span class="hljs-string">'SHA-512'</span></span>) {
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">generateKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'HMAC'</span>,
+    hash
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+
+  <span class="hljs-keyword">return</span> subtle.<span class="hljs-title function_">exportKey</span>(format, key);
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">importHmacKey</span>(<span class="hljs-params">keyData, format = <span class="hljs-string">'jwk'</span>, hash = <span class="hljs-string">'SHA-512'</span></span>) {
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">importKey</span>(format, keyData, {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'HMAC'</span>,
+    hash
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+
+  <span class="hljs-keyword">return</span> key;
+}</code></pre>
+<h4>封装与解封密钥<span><a class="mark" href="#wrapping-and-unwrapping-keys" id="wrapping-and-unwrapping-keys">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_wrapping_and_unwrapping_keys"></a></h4><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateAndWrapHmacKey</span>(<span class="hljs-params">format = <span class="hljs-string">'jwk'</span>, hash = <span class="hljs-string">'SHA-512'</span></span>) {
+  <span class="hljs-keyword">const</span> [
+    key,
+    wrappingKey,
+  ] = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([
+    subtle.<span class="hljs-title function_">generateKey</span>({
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'HMAC'</span>, hash
+    }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]),
+    subtle.<span class="hljs-title function_">generateKey</span>({
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'AES-KW'</span>,
+      <span class="hljs-attr">length</span>: <span class="hljs-number">256</span>
+    }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'wrapKey'</span>, <span class="hljs-string">'unwrapKey'</span>]),
+  ]);
+
+  <span class="hljs-keyword">const</span> wrappedKey = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">wrapKey</span>(format, key, wrappingKey, <span class="hljs-string">'AES-KW'</span>);
+
+  <span class="hljs-keyword">return</span> wrappedKey;
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">unwrapHmacKey</span>(<span class="hljs-params">
+  wrappedKey,
+  wrappingKey,
+  format = <span class="hljs-string">'jwk'</span>,
+  hash = <span class="hljs-string">'SHA-512'</span></span>) {
+
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">unwrapKey</span>(
+    format,
+    wrappedKey,
+    unwrappingKey,
+    <span class="hljs-string">'AES-KW'</span>,
+    { <span class="hljs-attr">name</span>: <span class="hljs-string">'HMAC'</span>, hash },
+    <span class="hljs-literal">true</span>,
+    [<span class="hljs-string">'sign'</span>, <span class="hljs-string">'verify'</span>]);
+
+  <span class="hljs-keyword">return</span> key;
+}</code></pre>
+<h4>签名与验证<span><a class="mark" href="#sign-and-verify" id="sign-and-verify">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_sign_and_verify"></a></h4><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sign</span>(<span class="hljs-params">key, data</span>) {
+  <span class="hljs-keyword">const</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextEncoder</span>();
+  <span class="hljs-keyword">const</span> signature =
+    <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">sign</span>(<span class="hljs-string">'RSASSA-PKCS1-v1_5'</span>, key, ec.<span class="hljs-title function_">encode</span>(data));
+  <span class="hljs-keyword">return</span> signature;
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">verify</span>(<span class="hljs-params">key, signature, data</span>) {
+  <span class="hljs-keyword">const</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextEncoder</span>();
+  <span class="hljs-keyword">const</span> verified =
+    <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">verify</span>(
+      <span class="hljs-string">'RSASSA-PKCS1-v1_5'</span>,
+      key,
+      signature,
+      ec.<span class="hljs-title function_">encode</span>(data));
+  <span class="hljs-keyword">return</span> verified;
+}</code></pre>
+<h4>派生位与密钥<span><a class="mark" href="#deriving-bits-and-keys" id="deriving-bits-and-keys">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_deriving_bits_and_keys"></a></h4><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">pbkdf2</span>(<span class="hljs-params">pass, salt, iterations = <span class="hljs-number">1000</span>, length = <span class="hljs-number">256</span></span>) {
+  <span class="hljs-keyword">const</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextEncoder</span>();
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">importKey</span>(
+    <span class="hljs-string">'raw'</span>,
+    ec.<span class="hljs-title function_">encode</span>(pass),
+    <span class="hljs-string">'PBKDF2'</span>,
+    <span class="hljs-literal">false</span>,
+    [<span class="hljs-string">'deriveBits'</span>]);
+  <span class="hljs-keyword">const</span> bits = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">deriveBits</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'PBKDF2'</span>,
+    <span class="hljs-attr">hash</span>: <span class="hljs-string">'SHA-512'</span>,
+    <span class="hljs-attr">salt</span>: ec.<span class="hljs-title function_">encode</span>(salt),
+    iterations
+  }, key, length);
+  <span class="hljs-keyword">return</span> bits;
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">pbkdf2Key</span>(<span class="hljs-params">pass, salt, iterations = <span class="hljs-number">1000</span>, length = <span class="hljs-number">256</span></span>) {
+  <span class="hljs-keyword">const</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextEncoder</span>();
+  <span class="hljs-keyword">const</span> keyMaterial = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">importKey</span>(
+    <span class="hljs-string">'raw'</span>,
+    ec.<span class="hljs-title function_">encode</span>(pass),
+    <span class="hljs-string">'PBKDF2'</span>,
+    <span class="hljs-literal">false</span>,
+    [<span class="hljs-string">'deriveKey'</span>]);
+  <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">deriveKey</span>({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'PBKDF2'</span>,
+    <span class="hljs-attr">hash</span>: <span class="hljs-string">'SHA-512'</span>,
+    <span class="hljs-attr">salt</span>: ec.<span class="hljs-title function_">encode</span>(salt),
+    iterations
+  }, keyMaterial, {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'AES-GCM'</span>,
+    <span class="hljs-attr">length</span>: <span class="hljs-number">256</span>
+  }, <span class="hljs-literal">true</span>, [<span class="hljs-string">'encrypt'</span>, <span class="hljs-string">'decrypt'</span>]);
+  <span class="hljs-keyword">return</span> key;
+}</code></pre>
+<h4>摘要<span><a class="mark" href="#digest" id="digest">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_digest"></a></h4><p class="tip_wrap"></p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { subtle } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>).<span class="hljs-property">webcrypto</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">digest</span>(<span class="hljs-params">data, algorithm = <span class="hljs-string">'SHA-512'</span></span>) {
+  <span class="hljs-keyword">const</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TextEncoder</span>();
+  <span class="hljs-keyword">const</span> digest = <span class="hljs-keyword">await</span> subtle.<span class="hljs-title function_">digest</span>(algorithm, ec.<span class="hljs-title function_">encode</span>(data));
+  <span class="hljs-keyword">return</span> digest;
+}</code></pre>
+</section><section><h3>算法矩阵<span><a class="mark" href="#algorithm-matrix" id="algorithm-matrix">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_algorithm_matrix"></a></h3><p class="tip_wrap"></p>
+<p>The table details the algorithms supported by the Node.js Web Crypto API
+implementation and the APIs supported for each:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Algorithm</th><th><code>generateKey</code></th><th><code>exportKey</code></th><th><code>importKey</code></th><th><code>encrypt</code></th><th><code>decrypt</code></th><th><code>wrapKey</code></th><th><code>unwrapKey</code></th><th><code>deriveBits</code></th><th><code>deriveKey</code></th><th><code>sign</code></th><th><code>verify</code></th><th><code>digest</code></th></tr></thead><tbody><tr><td><code>'RSASSA-PKCS1-v1_5'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'RSA-PSS'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'RSA-OAEP'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'ECDSA'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'ECDH'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td></tr><tr><td><code>'AES-CTR'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'AES-CBC'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'AES-GCM'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'AES-KW'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'HMAC'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'HKDF'</code></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td></tr><tr><td><code>'PBKDF2'</code></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td></tr><tr><td><code>'SHA-1'</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td></tr><tr><td><code>'SHA-256'</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td></tr><tr><td><code>'SHA-384'</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td></tr><tr><td><code>'SHA-512'</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td></tr><tr><td><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-2" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td></tr><tr><td><code>'NODE-ED25519'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-3" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'NODE-ED448'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-4" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td></tr></tbody></table>
+</section><section><h3><code>Crypto</code> 类<span><a class="mark" href="#class-crypto" id="class-crypto">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_crypto"></a></h3><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p>Calling <code>require('crypto').webcrypto</code> returns an instance of the <code>Crypto</code> class.
+<code>Crypto</code> is a singleton that provides access to the remainder of the crypto API.</p>
+<h4><code>crypto.subtle</code><span><a class="mark" href="#cryptosubtle" id="cryptosubtle">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_crypto_subtle"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="#class-subtlecrypto" rel="nofollow" class="type">&lt;SubtleCrypto&gt;</a></li>
+</ul>
+<p>Provides access to the <code>SubtleCrypto</code> API.</p>
+<h4><code>crypto.getRandomValues(typedArray)</code><span><a class="mark" href="#cryptogetrandomvaluestypedarray" id="cryptogetrandomvaluestypedarray">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_crypto_getrandomvalues_typedarray"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li><code>typedArray</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a></li>
+<li>返回: <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a></li>
+</ul>
+<p>Generates cryptographically strong random values. The given <code>typedArray</code> is
+filled with random values, and a reference to <code>typedArray</code> is returned.</p>
+<p>The given <code>typedArray</code> must be an integer-based instance of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a>,
+i.e. <code>Float32Array</code> and <code>Float64Array</code> are not accepted.</p>
+<p>An error will be thrown if the given <code>typedArray</code> is larger than 65,536 bytes.</p>
+<h4><code>crypto.randomUUID()</code><span><a class="mark" href="#cryptorandomuuid" id="cryptorandomuuid">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_crypto_randomuuid"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v16.7.0</span>
+</div>
+<ul>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>Generates a random <a href="https://www.rfc-editor.org/rfc/rfc4122.txt" rel="nofollow">RFC 4122</a> version 4 UUID. The UUID is generated using a
+cryptographic pseudorandom number generator.</p>
+</section><section><h3><code>CryptoKey</code> 类<span><a class="mark" href="#class-cryptokey" id="class-cryptokey">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_cryptokey"></a></h3><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h4><code>cryptoKey.algorithm</code><span><a class="mark" href="#cryptokeyalgorithm" id="cryptokeyalgorithm">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_cryptokey_algorithm"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li>类型: <a href="#class-aeskeygenparams" rel="nofollow" class="type">&lt;AesKeyGenParams&gt;</a> | <a href="#class-rsahashedkeygenparams" rel="nofollow" class="type">&lt;RsaHashedKeyGenParams&gt;</a> | <a href="#class-eckeygenparams" rel="nofollow" class="type">&lt;EcKeyGenParams&gt;</a> | <a href="#class-hmackeygenparams" rel="nofollow" class="type">&lt;HmacKeyGenParams&gt;</a> | <a href="#class-nodedsakeygenparams" rel="nofollow" class="type">&lt;NodeDsaKeyGenParams&gt;</a> | <a href="#class-nodedhkeygenparams" rel="nofollow" class="type">&lt;NodeDhKeyGenParams&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<p>An object detailing the algorithm for which the key can be used along with
+additional algorithm-specific parameters.</p>
+<p>Read-only.</p>
+<h4><code>cryptoKey.extractable</code><span><a class="mark" href="#cryptokeyextractable" id="cryptokeyextractable">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_cryptokey_extractable"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>When <code>true</code>, the <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> can be extracted using either
+<code>subtleCrypto.exportKey()</code> or <code>subtleCrypto.wrapKey()</code>.</p>
+<p>Read-only.</p>
+<h4><code>cryptoKey.type</code><span><a class="mark" href="#cryptokeytype" id="cryptokeytype">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_cryptokey_type"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> One of <code>'secret'</code>, <code>'private'</code>, or <code>'public'</code>.</li>
+</ul>
+<p>A string identifying whether the key is a symmetric (<code>'secret'</code>) or
+asymmetric (<code>'private'</code> or <code>'public'</code>) key.</p>
+<h4><code>cryptoKey.usages</code><span><a class="mark" href="#cryptokeyusages" id="cryptokeyusages">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_cryptokey_usages"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a></li>
+</ul>
+<p>An array of strings identifying the operations for which the
+key may be used.</p>
+<p>The possible usages are:</p>
+<ul>
+<li><code>'encrypt'</code> - The key may be used to encrypt data.</li>
+<li><code>'decrypt'</code> - The key may be used to decrypt data.</li>
+<li><code>'sign'</code> - The key may be used to generate digital signatures.</li>
+<li><code>'verify'</code> - The key may be used to verify digital signatures.</li>
+<li><code>'deriveKey'</code> - The key may be used to derive a new key.</li>
+<li><code>'deriveBits'</code> - The key may be used to derive bits.</li>
+<li><code>'wrapKey'</code> - The key may be used to wrap another key.</li>
+<li><code>'unwrapKey'</code> - The key may be used to unwrap another key.</li>
+</ul>
+<p>Valid key usages depend on the key algorithm (identified by
+<code>cryptokey.algorithm.name</code>).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key Type</th><th><code>'encrypt'</code></th><th><code>'decrypt'</code></th><th><code>'sign'</code></th><th><code>'verify'</code></th><th><code>'deriveKey'</code></th><th><code>'deriveBits'</code></th><th><code>'wrapKey'</code></th><th><code>'unwrapKey'</code></th></tr></thead><tbody><tr><td><code>'AES-CBC'</code></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-CTR'</code></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-GCM'</code></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-KW'</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'ECDH'</code></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'ECDSA'</code></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td></tr><tr><td><code>'HDKF'</code></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'HMAC'</code></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td></tr><tr><td><code>'PBKDF2'</code></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'RSA-OAEP'</code></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'RSA-PSS'</code></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td></tr><tr><td><code>'RSASSA-PKCS1-v1_5'</code></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td></tr><tr><td><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-5" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td></tr><tr><td><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-6" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'NODE-SCRYPT'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-7" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td></td><td></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'NODE-ED25519'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-8" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td></tr><tr><td><code>'NODE-ED448'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-9" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td></td><td></td><td>✔</td><td>✔</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+</section><section><h3><code>CryptoKeyPair</code> 类<span><a class="mark" href="#class-cryptokeypair" id="class-cryptokeypair">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_cryptokeypair"></a></h3><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p>The <code>CryptoKeyPair</code> is a simple dictionary object with <code>publicKey</code> and
+<code>privateKey</code> properties, representing an asymmetric key pair.</p>
+<h4><code>cryptoKeyPair.privateKey</code><span><a class="mark" href="#cryptokeypairprivatekey" id="cryptokeypairprivatekey">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_cryptokeypair_privatekey"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> A <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> whose <code>type</code> will be <code>'private'</code>.</li>
+</ul>
+<h4><code>cryptoKeyPair.publicKey</code><span><a class="mark" href="#cryptokeypairpublickey" id="cryptokeypairpublickey">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_cryptokeypair_publickey"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> A <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> whose <code>type</code> will be <code>'public'</code>.</li>
+</ul>
+</section><section><h3><code>SubtleCrypto</code> 类<span><a class="mark" href="#class-subtlecrypto" id="class-subtlecrypto">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_subtlecrypto"></a></h3><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h4><code>subtle.decrypt(algorithm, key, data)</code><span><a class="mark" href="#subtledecryptalgorithm-key-data" id="subtledecryptalgorithm-key-data">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_decrypt_algorithm_key_data"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li><code>algorithm</code>: <a href="#class-rsaoaepparams" rel="nofollow" class="type">&lt;RsaOaepParams&gt;</a> | <a href="#class-aesctrparams" rel="nofollow" class="type">&lt;AesCtrParams&gt;</a> | <a href="#class-aescbcparams" rel="nofollow" class="type">&lt;AesCbcParams&gt;</a> | <a href="#class-aesgcmparams" rel="nofollow" class="type">&lt;AesGcmParams&gt;</a></li>
+<li><code>key</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>data</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a></li>
+</ul>
+<p>Using the method and parameters specified in <code>algorithm</code> and the keying
+material provided by <code>key</code>, <code>subtle.decrypt()</code> attempts to decipher the
+provided <code>data</code>. If successful, the returned promise will be resolved with
+an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> containing the plaintext result.</p>
+<p>The algorithms currently supported include:</p>
+<ul>
+<li><code>'RSA-OAEP'</code></li>
+<li><code>'AES-CTR'</code></li>
+<li><code>'AES-CBC'</code></li>
+<li><code>'AES-GCM</code>'</li>
+</ul>
+<h4><code>subtle.deriveBits(algorithm, baseKey, length)</code><span><a class="mark" href="#subtlederivebitsalgorithm-basekey-length" id="subtlederivebitsalgorithm-basekey-length">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_derivebits_algorithm_basekey_length"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li><code>algorithm</code>: <a href="#class-ecdhkeyderiveparams" rel="nofollow" class="type">&lt;EcdhKeyDeriveParams&gt;</a> | <a href="#class-hkdfparams" rel="nofollow" class="type">&lt;HkdfParams&gt;</a> | <a href="#class-pbkdf2params" rel="nofollow" class="type">&lt;Pbkdf2Params&gt;</a> | <a href="#class-nodedhderivebitsparams" rel="nofollow" class="type">&lt;NodeDhDeriveBitsParams&gt;</a> | <a href="#class-nodescryptparams" rel="nofollow" class="type">&lt;NodeScryptParams&gt;</a></li>
+<li><code>baseKey</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>length</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<p>Using the method and parameters specified in <code>algorithm</code> and the keying
+material provided by <code>baseKey</code>, <code>subtle.deriveBits()</code> attempts to generate
+<code>length</code> bits. The Node.js implementation requires that <code>length</code> is a
+multiple of <code>8</code>. If successful, the returned promise will be resolved with
+an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> containing the generated data.</p>
+<p>The algorithms currently supported include:</p>
+<ul>
+<li><code>'ECDH'</code></li>
+<li><code>'HKDF'</code></li>
+<li><code>'PBKDF2'</code></li>
+<li><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-10" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-SCRYPT'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-11" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+</ul>
+<h4><code>subtle.deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages)</code><span><a class="mark" href="#subtlederivekeyalgorithm-basekey-derivedkeyalgorithm-extractable-keyusages" id="subtlederivekeyalgorithm-basekey-derivedkeyalgorithm-extractable-keyusages">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_derivekey_algorithm_basekey_derivedkeyalgorithm_extractable_keyusages"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li><code>algorithm</code>: <a href="#class-ecdhkeyderiveparams" rel="nofollow" class="type">&lt;EcdhKeyDeriveParams&gt;</a> | <a href="#class-hkdfparams" rel="nofollow" class="type">&lt;HkdfParams&gt;</a> | <a href="#class-pbkdf2params" rel="nofollow" class="type">&lt;Pbkdf2Params&gt;</a> | <a href="#class-nodedhderivebitsparams" rel="nofollow" class="type">&lt;NodeDhDeriveBitsParams&gt;</a> | <a href="#class-nodescryptparams" rel="nofollow" class="type">&lt;NodeScryptParams&gt;</a></li>
+<li><code>baseKey</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>derivedKeyAlgorithm</code>: <a href="#class-hmackeygenparams" rel="nofollow" class="type">&lt;HmacKeyGenParams&gt;</a> | <a href="#class-aeskeygenparams" rel="nofollow" class="type">&lt;AesKeyGenParams&gt;</a></li>
+<li><code>extractable</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+<li><code>keyUsages</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> See <a href="#cryptokeyusages">Key usages</a>.</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<p>Using the method and parameters specified in <code>algorithm</code>, and the keying
+material provided by <code>baseKey</code>, <code>subtle.deriveKey()</code> attempts to generate
+a new <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> based on the method and parameters in <code>derivedKeyAlgorithm</code>.</p>
+<p>Calling <code>subtle.deriveKey()</code> is equivalent to calling <code>subtle.deriveBits()</code> to
+generate raw keying material, then passing the result into the
+<code>subtle.importKey()</code> method using the <code>deriveKeyAlgorithm</code>, <code>extractable</code>, and
+<code>keyUsages</code> parameters as input.</p>
+<p>The algorithms currently supported include:</p>
+<ul>
+<li><code>'ECDH'</code></li>
+<li><code>'HKDF'</code></li>
+<li><code>'PBKDF2'</code></li>
+<li><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-12" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li>'<code>NODE-SCRYPT'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-13" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+</ul>
+<h4><code>subtle.digest(algorithm, data)</code><span><a class="mark" href="#subtledigestalgorithm-data" id="subtledigestalgorithm-data">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_digest_algorithm_data"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li><code>algorithm</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>data</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a></li>
+</ul>
+<p>Using the method identified by <code>algorithm</code>, <code>subtle.digest()</code> attempts to
+generate a digest of <code>data</code>. If successful, the returned promise is resolved
+with an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> containing the computed digest.</p>
+<p>If <code>algorithm</code> is provided as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, it must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If <code>algorithm</code> is provided as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, it must have a <code>name</code> property
+whose value is one of the above.</p>
+<h4><code>subtle.encrypt(algorithm, key, data)</code><span><a class="mark" href="#subtleencryptalgorithm-key-data" id="subtleencryptalgorithm-key-data">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_encrypt_algorithm_key_data"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li><code>algorithm</code>: <a href="#class-rsaoaepparams" rel="nofollow" class="type">&lt;RsaOaepParams&gt;</a> | <a href="#class-aesctrparams" rel="nofollow" class="type">&lt;AesCtrParams&gt;</a> | <a href="#class-aescbcparams" rel="nofollow" class="type">&lt;AesCbcParams&gt;</a> | <a href="#class-aesgcmparams" rel="nofollow" class="type">&lt;AesGcmParams&gt;</a></li>
+<li><code>key</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a></li>
+</ul>
+<p>Using the method and parameters specified by <code>algorithm</code> and the keying
+material provided by <code>key</code>, <code>subtle.encrypt()</code> attempts to encipher <code>data</code>.
+If successful, the returned promise is resolved with an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a>
+containing the encrypted result.</p>
+<p>The algorithms currently supported include:</p>
+<ul>
+<li><code>'RSA-OAEP'</code></li>
+<li><code>'AES-CTR'</code></li>
+<li><code>'AES-CBC'</code></li>
+<li><code>'AES-GCM</code>'</li>
+</ul>
+<h4><code>subtle.exportKey(format, key)</code><span><a class="mark" href="#subtleexportkeyformat-key" id="subtleexportkeyformat-key">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_exportkey_format_key"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.9.0</td>
+<td><p>Removed <code>'NODE-DSA'</code> JWK export.</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p><span>新增于: v15.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'raw'</code>, <code>'pkcs8'</code>, <code>'spki'</code>, <code>'jwk'</code>, or
+<code>'node.keyObject'</code>.</li>
+<li><code>key</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a>, or, if <code>format</code> is
+<code>'node.keyObject'</code>, a <a href="crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a>.</li>
+</ul>
+<p>Exports the given key into the specified format, if supported.</p>
+<p>If the <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> is not extractable, the returned promise will reject.</p>
+<p>When <code>format</code> is either <code>'pkcs8'</code> or <code>'spki'</code> and the export is successful,
+the returned promise will be resolved with an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> containing the
+exported key data.</p>
+<p>When <code>format</code> is <code>'jwk'</code> and the export is successful, the returned promise
+will be resolved with a JavaScript object conforming to the <a href="https://tools.ietf.org/html/rfc7517" rel="nofollow">JSON Web Key</a>
+specification.</p>
+<p>The special <code>'node.keyObject'</code> value for <code>format</code> is a Node.js-specific
+extension that allows converting a <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> into a Node.js <a href="crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key Type</th><th><code>'spki'</code></th><th><code>'pkcs8'</code></th><th><code>'jwk'</code></th><th><code>'raw'</code></th></tr></thead><tbody><tr><td><code>'AES-CBC'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-CTR'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-GCM'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-KW'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'ECDH'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr><tr><td><code>'ECDSA'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr><tr><td><code>'HDKF'</code></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'HMAC'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'PBKDF2'</code></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'RSA-OAEP'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'RSA-PSS'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'RSASSA-PKCS1-v1_5'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-14" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-15" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'NODE-SCRYPT'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-16" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td></td><td></td><td></td><td></td></tr><tr><td><code>'NODE-ED25519'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-17" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr><tr><td><code>'NODE-ED448'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-18" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr></tbody></table>
+<h4><code>subtle.generateKey(algorithm, extractable, keyUsages)</code><span><a class="mark" href="#subtlegeneratekeyalgorithm-extractable-keyusages" id="subtlegeneratekeyalgorithm-extractable-keyusages">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_generatekey_algorithm_extractable_keyusages"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li><code>algorithm</code>: <a href="#class-rsahashedkeygenparams" rel="nofollow" class="type">&lt;RsaHashedKeyGenParams&gt;</a> | <a href="#class-eckeygenparams" rel="nofollow" class="type">&lt;EcKeyGenParams&gt;</a> | <a href="#class-hmackeygenparams" rel="nofollow" class="type">&lt;HmacKeyGenParams&gt;</a> | <a href="#class-aeskeygenparams" rel="nofollow" class="type">&lt;AesKeyGenParams&gt;</a> | <a href="#class-nodedsakeygenparams" rel="nofollow" class="type">&lt;NodeDsaKeyGenParams&gt;</a> | <a href="#class-nodedhkeygenparams" rel="nofollow" class="type">&lt;NodeDhKeyGenParams&gt;</a> | <a href="#class-nodeedkeygenparams" rel="nofollow" class="type">&lt;NodeEdKeyGenParams&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<ul>
+<li><code>extractable</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+<li><code>keyUsages</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> See <a href="#cryptokeyusages">Key usages</a>.</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> | <a href="#class-cryptokeypair" rel="nofollow" class="type">&lt;CryptoKeyPair&gt;</a></li>
+</ul>
+<p>Using the method and parameters provided in <code>algorithm</code>, <code>subtle.generateKey()</code>
+attempts to generate new keying material. Depending the method used, the method
+may generate either a single <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> or a <a href="#class-cryptokeypair" rel="nofollow" class="type">&lt;CryptoKeyPair&gt;</a>.</p>
+<p>The <a href="#class-cryptokeypair" rel="nofollow" class="type">&lt;CryptoKeyPair&gt;</a> (public and private key) generating algorithms supported
+include:</p>
+<ul>
+<li><code>'RSASSA-PKCS1-v1_5'</code></li>
+<li><code>'RSA-PSS'</code></li>
+<li><code>'RSA-OAEP'</code></li>
+<li><code>'ECDSA'</code></li>
+<li><code>'ECDH'</code></li>
+<li><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-19" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-20" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-ED25519'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-21" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-ED448'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-22" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+</ul>
+<p>The <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> (secret key) generating algorithms supported include:</p>
+<ul>
+<li><code>'HMAC'</code></li>
+<li><code>'AES-CTR'</code></li>
+<li><code>'AES-CBC'</code></li>
+<li><code>'AES-GCM'</code></li>
+<li><code>'AES-KW'</code></li>
+</ul>
+<h4><code>subtle.importKey(format, keyData, algorithm, extractable, keyUsages)</code><span><a class="mark" href="#subtleimportkeyformat-keydata-algorithm-extractable-keyusages" id="subtleimportkeyformat-keydata-algorithm-extractable-keyusages">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_importkey_format_keydata_algorithm_extractable_keyusages"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.9.0</td>
+<td><p>Removed <code>'NODE-DSA'</code> JWK import.</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p><span>新增于: v15.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'raw'</code>, <code>'pkcs8'</code>, <code>'spki'</code>, <code>'jwk'</code>, or
+<code>'node.keyObject'</code>.</li>
+<li><code>keyData</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a></li>
+</ul>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li><code>algorithm</code>: <a href="#class-rsahashedimportparams" rel="nofollow" class="type">&lt;RsaHashedImportParams&gt;</a> | <a href="#class-eckeyimportparams" rel="nofollow" class="type">&lt;EcKeyImportParams&gt;</a> | <a href="#class-hmacimportparams" rel="nofollow" class="type">&lt;HmacImportParams&gt;</a> | <a href="#class-aesimportparams" rel="nofollow" class="type">&lt;AesImportParams&gt;</a> | <a href="#class-pbkdf2importparams" rel="nofollow" class="type">&lt;Pbkdf2ImportParams&gt;</a> | <a href="#class-nodedsaimportparams" rel="nofollow" class="type">&lt;NodeDsaImportParams&gt;</a> | <a href="#class-nodedhimportparams" rel="nofollow" class="type">&lt;NodeDhImportParams&gt;</a> | <a href="#class-nodescryptimportparams" rel="nofollow" class="type">&lt;NodeScryptImportParams&gt;</a> | <a href="#class-nodeedkeyimportparams" rel="nofollow" class="type">&lt;NodeEdKeyImportParams&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<ul>
+<li><code>extractable</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+<li><code>keyUsages</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> See <a href="#cryptokeyusages">Key usages</a>.</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+</ul>
+<p>The <code>subtle.importKey()</code> method attempts to interpret the provided <code>keyData</code>
+as the given <code>format</code> to create a <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> instance using the provided
+<code>algorithm</code>, <code>extractable</code>, and <code>keyUsages</code> arguments. If the import is
+successful, the returned promise will be resolved with the created <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a>.</p>
+<p>The special <code>'node.keyObject'</code> value for <code>format</code> is a Node.js-specific
+extension that allows converting a Node.js <a href="crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a> into a <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a>.</p>
+<p>If importing a <code>'PBKDF2'</code> key, <code>extractable</code> must be <code>false</code>.</p>
+<p>The algorithms currently supported include:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key Type</th><th><code>'spki'</code></th><th><code>'pkcs8'</code></th><th><code>'jwk'</code></th><th><code>'raw'</code></th></tr></thead><tbody><tr><td><code>'AES-CBC'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-CTR'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-GCM'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'AES-KW'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'ECDH'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr><tr><td><code>'ECDSA'</code></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr><tr><td><code>'HDKF'</code></td><td></td><td></td><td></td><td>✔</td></tr><tr><td><code>'HMAC'</code></td><td></td><td></td><td>✔</td><td>✔</td></tr><tr><td><code>'PBKDF2'</code></td><td></td><td></td><td></td><td>✔</td></tr><tr><td><code>'RSA-OAEP'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'RSA-PSS'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'RSASSA-PKCS1-v1_5'</code></td><td>✔</td><td>✔</td><td>✔</td><td></td></tr><tr><td><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-23" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-24" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td></td><td></td></tr><tr><td><code>'NODE-SCRYPT'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-25" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td></td><td></td><td></td><td>✔</td></tr><tr><td><code>'NODE-ED25519'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-26" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr><tr><td><code>'NODE-ED448'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-27" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr></tbody></table>
+<h4><code>subtle.sign(algorithm, key, data)</code><span><a class="mark" href="#subtlesignalgorithm-key-data" id="subtlesignalgorithm-key-data">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_sign_algorithm_key_data"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li><code>algorithm</code>: <a href="#class-rsasignparams" rel="nofollow" class="type">&lt;RsaSignParams&gt;</a> | <a href="#class-rsapssparams" rel="nofollow" class="type">&lt;RsaPssParams&gt;</a> | <a href="#class-ecdsaparams" rel="nofollow" class="type">&lt;EcdsaParams&gt;</a> | <a href="#class-hmacparams" rel="nofollow" class="type">&lt;HmacParams&gt;</a> | <a href="#class-nodedsasignparams" rel="nofollow" class="type">&lt;NodeDsaSignParams&gt;</a></li>
+<li><code>key</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>data</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<p>Using the method and parameters given by <code>algorithm</code> and the keying material
+provided by <code>key</code>, <code>subtle.sign()</code> attempts to generate a cryptographic
+signature of <code>data</code>. If successful, the returned promise is resolved with
+an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> containing the generated signature.</p>
+<p>The algorithms currently supported include:</p>
+<ul>
+<li><code>'RSASSA-PKCS1-v1_5'</code></li>
+<li><code>'RSA-PSS'</code></li>
+<li><code>'ECDSA'</code></li>
+<li><code>'HMAC'</code></li>
+<li><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-28" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-ED25519'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-29" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-ED448'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-30" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+</ul>
+<h4><code>subtle.unwrapKey(format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages)</code><span><a class="mark" href="#subtleunwrapkeyformat-wrappedkey-unwrappingkey-unwrapalgo-unwrappedkeyalgo-extractable-keyusages" id="subtleunwrapkeyformat-wrappedkey-unwrappingkey-unwrapalgo-unwrappedkeyalgo-extractable-keyusages">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_unwrapkey_format_wrappedkey_unwrappingkey_unwrapalgo_unwrappedkeyalgo_extractable_keyusages"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'raw'</code>, <code>'pkcs8'</code>, <code>'spki'</code>, or <code>'jwk'</code>.</li>
+<li><code>wrappedKey</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>unwrappingKey</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+</ul>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li><code>unwrapAlgo</code>: <a href="#class-rsaoaepparams" rel="nofollow" class="type">&lt;RsaOaepParams&gt;</a> | <a href="#class-aesctrparams" rel="nofollow" class="type">&lt;AesCtrParams&gt;</a> | <a href="#class-aescbcparams" rel="nofollow" class="type">&lt;AesCbcParams&gt;</a> | <a href="#class-aesgcmparams" rel="nofollow" class="type">&lt;AesGcmParams&gt;</a> | <a href="#class-aeskwparams" rel="nofollow" class="type">&lt;AesKwParams&gt;</a></li>
+<li><code>unwrappedKeyAlgo</code>: <a href="#class-rsahashedimportparams" rel="nofollow" class="type">&lt;RsaHashedImportParams&gt;</a> | <a href="#class-eckeyimportparams" rel="nofollow" class="type">&lt;EcKeyImportParams&gt;</a> | <a href="#class-hmacimportparams" rel="nofollow" class="type">&lt;HmacImportParams&gt;</a> | <a href="#class-aesimportparams" rel="nofollow" class="type">&lt;AesImportParams&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<ul>
+<li><code>extractable</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+<li><code>keyUsages</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> See <a href="#cryptokeyusages">Key usages</a>.</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+</ul>
+<p>In cryptography, "wrapping a key" refers to exporting and then encrypting the
+keying material. The <code>subtle.unwrapKey()</code> method attempts to decrypt a wrapped
+key and create a <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> instance. It is equivalent to calling
+<code>subtle.decrypt()</code> first on the encrypted key data (using the <code>wrappedKey</code>,
+<code>unwrapAlgo</code>, and <code>unwrappingKey</code> arguments as input) then passing the results
+in to the <code>subtle.importKey()</code> method using the <code>unwrappedKeyAlgo</code>,
+<code>extractable</code>, and <code>keyUsages</code> arguments as inputs. If successful, the returned
+promise is resolved with a <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> object.</p>
+<p>The wrapping algorithms currently supported include:</p>
+<ul>
+<li><code>'RSA-OAEP'</code></li>
+<li><code>'AES-CTR'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-31" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'AES-CBC'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-32" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'AES-GCM'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-33" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'AES-KW'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-34" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+</ul>
+<p>The unwrapped key algorithms supported include:</p>
+<ul>
+<li><code>'RSASSA-PKCS1-v1_5'</code></li>
+<li><code>'RSA-PSS'</code></li>
+<li><code>'RSA-OAEP'</code></li>
+<li><code>'ECDSA'</code></li>
+<li><code>'ECDH'</code></li>
+<li><code>'HMAC'</code></li>
+<li><code>'AES-CTR'</code></li>
+<li><code>'AES-CBC'</code></li>
+<li><code>'AES-GCM'</code></li>
+<li><code>'AES-KW'</code></li>
+<li><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-35" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-DH'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-36" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+</ul>
+<h4><code>subtle.verify(algorithm, key, signature, data)</code><span><a class="mark" href="#subtleverifyalgorithm-key-signature-data" id="subtleverifyalgorithm-key-signature-data">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_verify_algorithm_key_signature_data"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!--lint disable maximum-line-length remark-lint-->
+<ul>
+<li><code>algorithm</code>: <a href="#class-rsasignparams" rel="nofollow" class="type">&lt;RsaSignParams&gt;</a> | <a href="#class-rsapssparams" rel="nofollow" class="type">&lt;RsaPssParams&gt;</a> | <a href="#class-ecdsaparams" rel="nofollow" class="type">&lt;EcdsaParams&gt;</a> | <a href="#class-hmacparams" rel="nofollow" class="type">&lt;HmacParams&gt;</a> | <a href="#class-nodedsasignparams" rel="nofollow" class="type">&lt;NodeDsaSignParams&gt;</a></li>
+<li><code>key</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>signature</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>data</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<!--lint enable maximum-line-length remark-lint-->
+<p>Using the method and parameters given in <code>algorithm</code> and the keying material
+provided by <code>key</code>, <code>subtle.verify()</code> attempts to verify that <code>signature</code> is
+a valid cryptographic signature of <code>data</code>. The returned promise is resolved
+with either <code>true</code> or <code>false</code>.</p>
+<p>The algorithms currently supported include:</p>
+<ul>
+<li><code>'RSASSA-PKCS1-v1_5'</code></li>
+<li><code>'RSA-PSS'</code></li>
+<li><code>'ECDSA'</code></li>
+<li><code>'HMAC'</code></li>
+<li><code>'NODE-DSA'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-37" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-ED25519'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-38" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+<li><code>'NODE-ED448'</code><sup><a href="#user-content-fn-1" id="user-content-fnref-1-39" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></li>
+</ul>
+<h4><code>subtle.wrapKey(format, key, wrappingKey, wrapAlgo)</code><span><a class="mark" href="#subtlewrapkeyformat-key-wrappingkey-wrapalgo" id="subtlewrapkeyformat-key-wrappingkey-wrapalgo">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_subtle_wrapkey_format_key_wrappingkey_wrapalgo"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li><code>format</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'raw'</code>, <code>'pkcs8'</code>, <code>'spki'</code>, or <code>'jwk'</code>.</li>
+<li><code>key</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>wrappingKey</code>: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+<li><code>wrapAlgo</code>: <a href="#class-rsaoaepparams" rel="nofollow" class="type">&lt;RsaOaepParams&gt;</a> | <a href="#class-aesctrparams" rel="nofollow" class="type">&lt;AesCtrParams&gt;</a> | <a href="#class-aescbcparams" rel="nofollow" class="type">&lt;AesCbcParams&gt;</a> | <a href="#class-aesgcmparams" rel="nofollow" class="type">&lt;AesGcmParams&gt;</a> | <a href="#class-aeskwparams" rel="nofollow" class="type">&lt;AesKwParams&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> containing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a></li>
+</ul>
+<p>In cryptography, "wrapping a key" refers to exporting and then encrypting the
+keying material. The <code>subtle.wrapKey()</code> method exports the keying material into
+the format identified by <code>format</code>, then encrypts it using the method and
+parameters specified by <code>wrapAlgo</code> and the keying material provided by
+<code>wrappingKey</code>. It is the equivalent to calling <code>subtle.exportKey()</code> using
+<code>format</code> and <code>key</code> as the arguments, then passing the result to the
+<code>subtle.encrypt()</code> method using <code>wrappingKey</code> and <code>wrapAlgo</code> as inputs. If
+successful, the returned promise will be resolved with an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a>
+containing the encrypted key data.</p>
+<p>The wrapping algorithms currently supported include:</p>
+<ul>
+<li><code>'RSA-OAEP'</code></li>
+<li><code>'AES-CTR'</code></li>
+<li><code>'AES-CBC'</code></li>
+<li><code>'AES-GCM'</code></li>
+<li><code>'AES-KW'</code></li>
+</ul>
+</section><section><h3>算法参数<span><a class="mark" href="#algorithm-parameters" id="algorithm-parameters">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_algorithm_parameters"></a></h3><p class="tip_wrap"></p>
+<p>The algorithm parameter objects define the methods and parameters used by
+the various <a href="#class-subtlecrypto" rel="nofollow" class="type">&lt;SubtleCrypto&gt;</a> methods. While described here as "classes", they
+are simple JavaScript dictionary objects.</p>
+<h4><code>AesCbcParams</code> 类<span><a class="mark" href="#class-aescbcparams" id="class-aescbcparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_aescbcparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>aesCbcParams.iv</code><span><a class="mark" href="#aescbcparamsiv" id="aescbcparamsiv">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aescbcparams_iv"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>Provides the initialization vector. It must be exactly 16-bytes in length
+and should be unpredictable and cryptographically random.</p>
+<h5><code>aesCbcParams.name</code><span><a class="mark" href="#aescbcparamsname" id="aescbcparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aescbcparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'AES-CBC'</code>.</li>
+</ul>
+<h4><code>AesCtrParams</code> 类<span><a class="mark" href="#class-aesctrparams" id="class-aesctrparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_aesctrparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>aesCtrParams.counter</code><span><a class="mark" href="#aesctrparamscounter" id="aesctrparamscounter">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesctrparams_counter"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>The initial value of the counter block. This must be exactly 16 bytes long.</p>
+<p>The <code>AES-CTR</code> method uses the rightmost <code>length</code> bits of the block as the
+counter and the remaining bits as the nonce.</p>
+<h5><code>aesCtrParams.length</code><span><a class="mark" href="#aesctrparamslength" id="aesctrparamslength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesctrparams_length"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The number of bits in the <code>aesCtrParams.counter</code> that are
+to be used as the counter.</li>
+</ul>
+<h5><code>aesCtrParams.name</code><span><a class="mark" href="#aesctrparamsname" id="aesctrparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesctrparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'AES-CTR'</code>.</li>
+</ul>
+<h4><code>AesGcmParams</code> 类<span><a class="mark" href="#class-aesgcmparams" id="class-aesgcmparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_aesgcmparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>aesGcmParams.additionalData</code><span><a class="mark" href="#aesgcmparamsadditionaldata" id="aesgcmparamsadditionaldata">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesgcmparams_additionaldata"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a></li>
+</ul>
+<p>With the AES-GCM method, the <code>additionalData</code> is extra input that is not
+encrypted but is included in the authentication of the data. The use of
+<code>additionalData</code> is optional.</p>
+<h5><code>aesGcmParams.iv</code><span><a class="mark" href="#aesgcmparamsiv" id="aesgcmparamsiv">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesgcmparams_iv"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>The initialization vector must be unique for every encryption operation
+using a given key. It is recommended by the AES-GCM specification that
+this contain at least 12 random bytes.</p>
+<h5><code>aesGcmParams.name</code><span><a class="mark" href="#aesgcmparamsname" id="aesgcmparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesgcmparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'AES-GCM'</code>.</li>
+</ul>
+<h5><code>aesGcmParams.tagLength</code><span><a class="mark" href="#aesgcmparamstaglength" id="aesgcmparamstaglength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesgcmparams_taglength"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The size in bits of the generated authentication tag.
+This values must be one of <code>32</code>, <code>64</code>, <code>96</code>, <code>104</code>, <code>112</code>, <code>120</code>, or
+<code>128</code>. <strong>默认值:</strong> <code>128</code>。</li>
+</ul>
+<h4><code>AesImportParams</code> 类<span><a class="mark" href="#class-aesimportparams" id="class-aesimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_aesimportparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>aesImportParams.name</code><span><a class="mark" href="#aesimportparamsname" id="aesimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aesimportparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'AES-CTR'</code>, <code>'AES-CBC'</code>, <code>'AES-GCM'</code>, or
+<code>'AES-KW'</code>.</li>
+</ul>
+<h4><code>AesKeyGenParams</code> 类<span><a class="mark" href="#class-aeskeygenparams" id="class-aeskeygenparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_aeskeygenparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>aesKeyGenParams.length</code><span><a class="mark" href="#aeskeygenparamslength" id="aeskeygenparamslength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aeskeygenparams_length"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The length of the AES key to be generated. This must be either <code>128</code>, <code>192</code>,
+or <code>256</code>.</p>
+<h5><code>aesKeyGenParams.name</code><span><a class="mark" href="#aeskeygenparamsname" id="aeskeygenparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aeskeygenparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'AES-CBC'</code>, <code>'AES-CTR'</code>, <code>'AES-GCM'</code>, or
+<code>'AES-KW'</code></li>
+</ul>
+<h4><code>AesKwParams</code> 类<span><a class="mark" href="#class-aeskwparams" id="class-aeskwparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_aeskwparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>aesKwParams.name</code><span><a class="mark" href="#aeskwparamsname" id="aeskwparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_aeskwparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'AES-KW'</code>.</li>
+</ul>
+<h4><code>EcdhKeyDeriveParams</code> 类<span><a class="mark" href="#class-ecdhkeyderiveparams" id="class-ecdhkeyderiveparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_ecdhkeyderiveparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>ecdhKeyDeriveParams.name</code><span><a class="mark" href="#ecdhkeyderiveparamsname" id="ecdhkeyderiveparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_ecdhkeyderiveparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'ECDH'</code>.</li>
+</ul>
+<h5><code>ecdhKeyDeriveParams.public</code><span><a class="mark" href="#ecdhkeyderiveparamspublic" id="ecdhkeyderiveparamspublic">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_ecdhkeyderiveparams_public"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a></li>
+</ul>
+<p>ECDH key derivation operates by taking as input one parties private key and
+another parties public key -- using both to generate a common shared secret.
+The <code>ecdhKeyDeriveParams.public</code> property is set to the other parties public
+key.</p>
+<h4><code>EcdsaParams</code> 类<span><a class="mark" href="#class-ecdsaparams" id="class-ecdsaparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_ecdsaparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>ecdsaParams.hash</code><span><a class="mark" href="#ecdsaparamshash" id="ecdsaparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_ecdsaparams_hash"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h5><code>ecdsaParams.name</code><span><a class="mark" href="#ecdsaparamsname" id="ecdsaparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_ecdsaparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'ECDSA'</code>.</li>
+</ul>
+<h4><code>EcKeyGenParams</code> 类<span><a class="mark" href="#class-eckeygenparams" id="class-eckeygenparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_eckeygenparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>ecKeyGenParams.name</code><span><a class="mark" href="#eckeygenparamsname" id="eckeygenparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_eckeygenparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'ECDSA'</code> or <code>'ECDH'</code>.</li>
+</ul>
+<h5><code>ecKeyGenParams.namedCurve</code><span><a class="mark" href="#eckeygenparamsnamedcurve" id="eckeygenparamsnamedcurve">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_eckeygenparams_namedcurve"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'P-256'</code>, <code>'P-384'</code>, <code>'P-521'</code>,
+<code>'NODE-ED25519'</code>, <code>'NODE-ED448'</code>, <code>'NODE-X25519'</code>, or <code>'NODE-X448'</code>.</li>
+</ul>
+<h4><code>EcKeyImportParams</code> 类<span><a class="mark" href="#class-eckeyimportparams" id="class-eckeyimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_eckeyimportparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>ecKeyImportParams.name</code><span><a class="mark" href="#eckeyimportparamsname" id="eckeyimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_eckeyimportparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'ECDSA'</code> or <code>'ECDH'</code>.</li>
+</ul>
+<h5><code>ecKeyImportParams.namedCurve</code><span><a class="mark" href="#eckeyimportparamsnamedcurve" id="eckeyimportparamsnamedcurve">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_eckeyimportparams_namedcurve"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'P-256'</code>, <code>'P-384'</code>, <code>'P-521'</code>,
+<code>'NODE-ED25519'</code>, <code>'NODE-ED448'</code>, <code>'NODE-X25519'</code>, or <code>'NODE-X448'</code>.</li>
+</ul>
+<h4><code>HkdfParams</code> 类<span><a class="mark" href="#class-hkdfparams" id="class-hkdfparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_hkdfparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>hkdfParams.hash</code><span><a class="mark" href="#hkdfparamshash" id="hkdfparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hkdfparams_hash"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h5><code>hkdfParams.info</code><span><a class="mark" href="#hkdfparamsinfo" id="hkdfparamsinfo">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hkdfparams_info"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>Provides application-specific contextual input to the HKDF algorithm.
+This can be zero-length but must be provided.</p>
+<h5><code>hkdfParams.name</code><span><a class="mark" href="#hkdfparamsname" id="hkdfparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hkdfparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'HKDF'</code>.</li>
+</ul>
+<h5><code>hkdfParams.salt</code><span><a class="mark" href="#hkdfparamssalt" id="hkdfparamssalt">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hkdfparams_salt"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>The salt value significantly improves the strength of the HKDF algorithm.
+It should be random or pseudorandom and should be the same length as the
+output of the digest function (for instance, if using <code>'SHA-256'</code> as the
+digest, the salt should be 256-bits of random data).</p>
+<h4><code>HmacImportParams</code> 类<span><a class="mark" href="#class-hmacimportparams" id="class-hmacimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_hmacimportparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>hmacImportParams.hash</code><span><a class="mark" href="#hmacimportparamshash" id="hmacimportparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmacimportparams_hash"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h5><code>hmacImportParams.length</code><span><a class="mark" href="#hmacimportparamslength" id="hmacimportparamslength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmacimportparams_length"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The optional number of bits in the HMAC key. This is optional and should
+be omitted for most cases.</p>
+<h5><code>hmacImportParams.name</code><span><a class="mark" href="#hmacimportparamsname" id="hmacimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmacimportparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'HMAC'</code>.</li>
+</ul>
+<h4><code>HmacKeyGenParams</code> 类<span><a class="mark" href="#class-hmackeygenparams" id="class-hmackeygenparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_hmackeygenparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>hmacKeyGenParams.hash</code><span><a class="mark" href="#hmackeygenparamshash" id="hmackeygenparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmackeygenparams_hash"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h5><code>hmacKeyGenParams.length</code><span><a class="mark" href="#hmackeygenparamslength" id="hmackeygenparamslength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmackeygenparams_length"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The number of bits to generate for the HMAC key. If omitted,
+the length will be determined by the hash algorithm used.
+This is optional and should be omitted for most cases.</p>
+<h5><code>hmacKeyGenParams.name</code><span><a class="mark" href="#hmackeygenparamsname" id="hmackeygenparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmackeygenparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'HMAC'</code>.</li>
+</ul>
+<h4><code>HmacParams</code> 类<span><a class="mark" href="#class-hmacparams" id="class-hmacparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_hmacparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>hmacParams.name</code><span><a class="mark" href="#hmacparamsname" id="hmacparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_hmacparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'HMAC'</code>.</li>
+</ul>
+<h4><code>Pbkdf2ImportParams</code> 类<span><a class="mark" href="#class-pbkdf2importparams" id="class-pbkdf2importparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_pbkdf2importparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>pbkdf2ImportParams.name</code><span><a class="mark" href="#pbkdf2importparamsname" id="pbkdf2importparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_pbkdf2importparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'PBKDF2'</code></li>
+</ul>
+<h4><code>Pbkdf2Params</code> 类<span><a class="mark" href="#class-pbkdf2params" id="class-pbkdf2params">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_pbkdf2params"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>pbkdb2Params.hash</code><span><a class="mark" href="#pbkdb2paramshash" id="pbkdb2paramshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_pbkdb2params_hash"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h5><code>pbkdf2Params.iterations</code><span><a class="mark" href="#pbkdf2paramsiterations" id="pbkdf2paramsiterations">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_pbkdf2params_iterations"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The number of iterations the PBKDF2 algorithm should make when deriving bits.</p>
+<h5><code>pbkdf2Params.name</code><span><a class="mark" href="#pbkdf2paramsname" id="pbkdf2paramsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_pbkdf2params_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'PBKDF2'</code>.</li>
+</ul>
+<h5><code>pbkdf2Params.salt</code><span><a class="mark" href="#pbkdf2paramssalt" id="pbkdf2paramssalt">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_pbkdf2params_salt"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>Should be at least 16 random or pseudorandom bytes.</p>
+<h4><code>RsaHashedImportParams</code> 类<span><a class="mark" href="#class-rsahashedimportparams" id="class-rsahashedimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_rsahashedimportparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>rsaHashedImportParams.hash</code><span><a class="mark" href="#rsahashedimportparamshash" id="rsahashedimportparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsahashedimportparams_hash"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h5><code>rsaHashedImportParams.name</code><span><a class="mark" href="#rsahashedimportparamsname" id="rsahashedimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsahashedimportparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'RSASSA-PKCS1-v1_5'</code>, <code>'RSA-PSS'</code>, or
+<code>'RSA-OAEP'</code>.</li>
+</ul>
+<h4><code>RsaHashedKeyGenParams</code> 类<span><a class="mark" href="#class-rsahashedkeygenparams" id="class-rsahashedkeygenparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_rsahashedkeygenparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>rsaHashedKeyGenParams.hash</code><span><a class="mark" href="#rsahashedkeygenparamshash" id="rsahashedkeygenparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsahashedkeygenparams_hash"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h5><code>rsaHashedKeyGenParams.modulusLength</code><span><a class="mark" href="#rsahashedkeygenparamsmoduluslength" id="rsahashedkeygenparamsmoduluslength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsahashedkeygenparams_moduluslength"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The length in bits of the RSA modulus. As a best practice, this should be
+at least <code>2048</code>.</p>
+<h5><code>rsaHashedKeyGenParams.name</code><span><a class="mark" href="#rsahashedkeygenparamsname" id="rsahashedkeygenparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsahashedkeygenparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'RSASSA-PKCS1-v1_5'</code>, <code>'RSA-PSS'</code>, or
+<code>'RSA-OAEP'</code>.</li>
+</ul>
+<h5><code>rsaHashedKeyGenParams.publicExponent</code><span><a class="mark" href="#rsahashedkeygenparamspublicexponent" id="rsahashedkeygenparamspublicexponent">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsahashedkeygenparams_publicexponent"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a></li>
+</ul>
+<p>The RSA public exponent. This must be a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> containing a big-endian,
+unsigned integer that must fit within 32-bits. The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> may contain an
+arbitrary number of leading zero-bits. The value must be a prime number. Unless
+there is reason to use a different value, use <code>new Uint8Array([1, 0, 1])</code>
+(65537) as the public exponent.</p>
+<h4><code>RsaOaepParams</code> 类<span><a class="mark" href="#class-rsaoaepparams" id="class-rsaoaepparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_rsaoaepparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5>rsaOaepParams.label<span><a class="mark" href="#rsaoaepparamslabel" id="rsaoaepparamslabel">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsaoaepparams_label"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+<p>An additional collection of bytes that will not be encrypted, but will be bound
+to the generated ciphertext.</p>
+<p>The <code>rsaOaepParams.label</code> parameter is optional.</p>
+<h5>rsaOaepParams.name<span><a class="mark" href="#rsaoaepparamsname" id="rsaoaepparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsaoaepparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> must be <code>'RSA-OAEP'</code>.</li>
+</ul>
+<h4><code>RsaPssParams</code> 类<span><a class="mark" href="#class-rsapssparams" id="class-rsapssparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_rsapssparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>rsaPssParams.name</code><span><a class="mark" href="#rsapssparamsname" id="rsapssparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsapssparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'RSA-PSS'</code>.</li>
+</ul>
+<h5><code>rsaPssParams.saltLength</code><span><a class="mark" href="#rsapssparamssaltlength" id="rsapssparamssaltlength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsapssparams_saltlength"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The length (in bytes) of the random salt to use.</p>
+<h4><code>RsaSignParams</code> 类<span><a class="mark" href="#class-rsasignparams" id="class-rsasignparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_rsasignparams"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h5><code>rsaSignParams.name</code><span><a class="mark" href="#rsasignparamsname" id="rsasignparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_rsasignparams_name"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'RSASSA-PKCS1-v1_5'</code></li>
+</ul>
+</section><section><h3>Node.js 特定的扩展<span><a class="mark" href="#nodejs-specific-extensions" id="nodejs-specific-extensions">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_node_js_specific_extensions"></a></h3><p class="tip_wrap"></p>
+<p>The Node.js Web Crypto API extends various aspects of the Web Crypto API.
+These extensions are consistently identified by prepending names with the
+<code>node.</code> prefix. For instance, the <code>'node.keyObject'</code> key format can be
+used with the <code>subtle.exportKey()</code> and <code>subtle.importKey()</code> methods to
+convert between a WebCrypto <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> object and a Node.js <a href="crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a>.</p>
+<p>Care should be taken when using Node.js-specific extensions as they are
+not supported by other WebCrypto implementations and reduce the portability
+of code to other environments.</p>
+<h4>NODE-DH 算法<span><a class="mark" href="#node-dh-algorithm" id="node-dh-algorithm">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_node_dh_algorithm"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p>The <code>NODE-DH</code> algorithm is the common implementation of Diffie-Hellman
+key agreement.</p>
+<h5><code>NodeDhImportParams</code> 类<span><a class="mark" href="#class-nodedhimportparams" id="class-nodedhimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodedhimportparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeDhImportParams.name</code><span><a class="mark" href="#nodedhimportparamsname" id="nodedhimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedhimportparams_name"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'NODE-DH'</code>.</li>
+</ul>
+<h5><code>NodeDhKeyGenParams</code> 类<span><a class="mark" href="#class-nodedhkeygenparams" id="class-nodedhkeygenparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodedhkeygenparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeDhKeyGenParams.generator</code><span><a class="mark" href="#nodedhkeygenparamsgenerator" id="nodedhkeygenparamsgenerator">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedhkeygenparams_generator"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> A custom generator.</li>
+</ul>
+<h6><code>nodeDhKeyGenParams.group</code><span><a class="mark" href="#nodedhkeygenparamsgroup" id="nodedhkeygenparamsgroup">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedhkeygenparams_group"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The Diffie-Hellman group name.</li>
+</ul>
+<h6><code>nodeDhKeyGenParams.prime</code><span><a class="mark" href="#nodedhkeygenparamsprime" id="nodedhkeygenparamsprime">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedhkeygenparams_prime"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The prime parameter.</li>
+</ul>
+<h6><code>nodeDhKeyGenParams.primeLength</code><span><a class="mark" href="#nodedhkeygenparamsprimelength" id="nodedhkeygenparamsprimelength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedhkeygenparams_primelength"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The length in bits of the prime.</li>
+</ul>
+<h5>NodeDhDeriveBitsParams 类<span><a class="mark" href="#class-nodedhderivebitsparams" id="class-nodedhderivebitsparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodedhderivebitsparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeDhDeriveBitsParams.public</code><span><a class="mark" href="#nodedhderivebitsparamspublic" id="nodedhderivebitsparamspublic">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedhderivebitsparams_public"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> The other parties public key.</li>
+</ul>
+<h4>NODE-DSA 算法<span><a class="mark" href="#node-dsa-algorithm" id="node-dsa-algorithm">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_node_dsa_algorithm"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p>The <code>NODE-DSA</code> algorithm is the common implementation of the DSA digital
+signature algorithm.</p>
+<h5><code>NodeDsaImportParams</code> 类<span><a class="mark" href="#class-nodedsaimportparams" id="class-nodedsaimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodedsaimportparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeDsaImportParams.hash</code><span><a class="mark" href="#nodedsaimportparamshash" id="nodedsaimportparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedsaimportparams_hash"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h6><code>nodeDsaImportParams.name</code><span><a class="mark" href="#nodedsaimportparamsname" id="nodedsaimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedsaimportparams_name"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'NODE-DSA'</code>.</li>
+</ul>
+<h5><code>NodeDsaKeyGenParams</code> 类<span><a class="mark" href="#class-nodedsakeygenparams" id="class-nodedsakeygenparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodedsakeygenparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeDsaKeyGenParams.divisorLength</code><span><a class="mark" href="#nodedsakeygenparamsdivisorlength" id="nodedsakeygenparamsdivisorlength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedsakeygenparams_divisorlength"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The optional length in bits of the DSA divisor.</p>
+<h6><code>nodeDsaKeyGenParams.hash</code><span><a class="mark" href="#nodedsakeygenparamshash" id="nodedsakeygenparamshash">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedsakeygenparams_hash"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>If represented as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>, the value must be one of:</p>
+<ul>
+<li><code>'SHA-1'</code></li>
+<li><code>'SHA-256'</code></li>
+<li><code>'SHA-384'</code></li>
+<li><code>'SHA-512'</code></li>
+</ul>
+<p>If represented as an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>, the object must have a <code>name</code> property
+whose value is one of the above listed values.</p>
+<h6><code>nodeDsaKeyGenParams.modulusLength</code><span><a class="mark" href="#nodedsakeygenparamsmoduluslength" id="nodedsakeygenparamsmoduluslength">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedsakeygenparams_moduluslength"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>The length in bits of the DSA modulus. As a best practice, this should be
+at least <code>2048</code>.</p>
+<h6><code>nodeDsaKeyGenParams.name</code><span><a class="mark" href="#nodedsakeygenparamsname" id="nodedsakeygenparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedsakeygenparams_name"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'NODE-DSA'</code>.</li>
+</ul>
+<h5><code>NodeDsaSignParams</code> 类<span><a class="mark" href="#class-nodedsasignparams" id="class-nodedsasignparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodedsasignparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeDsaSignParams.name</code><span><a class="mark" href="#nodedsasignparamsname" id="nodedsasignparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodedsasignparams_name"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'NODE-DSA'</code></li>
+</ul>
+<h4>NODE-ED25519 与 NODE-ED448 算法<span><a class="mark" href="#node-ed25519-and-node-ed448-algorithms" id="node-ed25519-and-node-ed448-algorithms">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_node_ed25519_and_node_ed448_algorithms"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<h5><code>NodeEdKeyGenParams</code> 类<span><a class="mark" href="#class-nodeedkeygenparams" id="class-nodeedkeygenparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodeedkeygenparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<h6><code>nodeEdKeyGenParams.name</code><span><a class="mark" href="#nodeedkeygenparamsname" id="nodeedkeygenparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodeedkeygenparams_name"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'NODE-ED25519'</code>, <code>'NODE-ED448'</code> or <code>'ECDH'</code>.</li>
+</ul>
+<h6><code>nodeEdKeyGenParams.namedCurve</code><span><a class="mark" href="#nodeedkeygenparamsnamedcurve" id="nodeedkeygenparamsnamedcurve">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodeedkeygenparams_namedcurve"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'NODE-ED25519'</code>, <code>'NODE-ED448'</code>,
+<code>'NODE-X25519'</code>, or <code>'NODE-X448'</code>.</li>
+</ul>
+<h5><code>NodeEdKeyImportParams</code> 类<span><a class="mark" href="#class-nodeedkeyimportparams" id="class-nodeedkeyimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodeedkeyimportparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<h6><code>nodeEdKeyImportParams.name</code><span><a class="mark" href="#nodeedkeyimportparamsname" id="nodeedkeyimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodeedkeyimportparams_name"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'NODE-ED25519'</code> or <code>'NODE-ED448'</code>
+if importing an <code>Ed25519</code> or <code>Ed448</code> key, or <code>'ECDH'</code> if importing
+an <code>X25519</code> or <code>X448</code> key.</li>
+</ul>
+<h6><code>nodeEdKeyImportParams.namedCurve</code><span><a class="mark" href="#nodeedkeyimportparamsnamedcurve" id="nodeedkeyimportparamsnamedcurve">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodeedkeyimportparams_namedcurve"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be one of <code>'NODE-ED25519'</code>, <code>'NODE-ED448'</code>,
+<code>'NODE-X25519'</code>, or <code>'NODE-X448'</code>.</li>
+</ul>
+<h6><code>nodeEdKeyImportParams.public</code><span><a class="mark" href="#nodeedkeyimportparamspublic" id="nodeedkeyimportparamspublic">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodeedkeyimportparams_public"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.8.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>The <code>public</code> parameter is used to specify that the <code>'raw'</code> format key is to be
+interpreted as a public key. <strong>默认值:</strong> <code>false</code>。</p>
+<h4>NODE-SCRYPT 算法<span><a class="mark" href="#node-scrypt-algorithm" id="node-scrypt-algorithm">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_node_scrypt_algorithm"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p>The <code>NODE-SCRYPT</code> algorithm is the common implementation of the scrypt key
+derivation algorithm.</p>
+<h5><code>NodeScryptImportParams</code> 类<span><a class="mark" href="#class-nodescryptimportparams" id="class-nodescryptimportparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodescryptimportparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeScryptImportParams.name</code><span><a class="mark" href="#nodescryptimportparamsname" id="nodescryptimportparamsname">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodescryptimportparams_name"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Must be <code>'NODE-SCRYPT'</code>.</li>
+</ul>
+<h5><code>NodeScryptParams</code> 类<span><a class="mark" href="#class-nodescryptparams" id="class-nodescryptparams">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_class_nodescryptparams"></a></h5><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<h6><code>nodeScryptParams.encoding</code><span><a class="mark" href="#nodescryptparamsencoding" id="nodescryptparamsencoding">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodescryptparams_encoding"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The string encoding when <code>salt</code> is a string.</li>
+</ul>
+<h6><code>nodeScryptParams.maxmem</code><span><a class="mark" href="#nodescryptparamsmaxmem" id="nodescryptparamsmaxmem">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodescryptparams_maxmem"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Memory upper bound. It is an error when (approximately)
+<code>127 * N * r &gt; maxmem</code>. <strong>默认值:</strong> <code>32 * 1024 * 1024</code>。</li>
+</ul>
+<h6><code>nodeScryptParams.N</code><span><a class="mark" href="#nodescryptparamsn" id="nodescryptparamsn">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodescryptparams_n"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The CPU/memory cost parameter. Must e a power of two
+greater than 1. <strong>默认值:</strong> <code>16384</code>。</li>
+</ul>
+<h6><code>nodeScryptParams.p</code><span><a class="mark" href="#nodescryptparamsp" id="nodescryptparamsp">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodescryptparams_p"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Parallelization parameter. <strong>默认值:</strong> <code>1</code>。</li>
+</ul>
+<h6><code>nodeScryptParams.r</code><span><a class="mark" href="#nodescryptparamsr" id="nodescryptparamsr">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodescryptparams_r"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Block size parameter. <strong>默认值:</strong> <code>8</code>。</li>
+</ul>
+<h6><code>nodeScryptParams.salt</code><span><a class="mark" href="#nodescryptparamssalt" id="nodescryptparamssalt">#</a></span><a aria-hidden="true" class="legacy" id="webcrypto_nodescryptparams_salt"></a></h6><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+</ul>
+<section data-footnotes="" class="footnotes"><h3 id="footnote-label" class="sr-only">Footnotes</h3>
+<ol>
+<li id="user-content-fn-1">
+<p>Non-standard Node.js-specific extension <a href="#user-content-fnref-1" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a> <a href="#user-content-fnref-1-2" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>2</sup></a> <a href="#user-content-fnref-1-3" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>3</sup></a> <a href="#user-content-fnref-1-4" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>4</sup></a> <a href="#user-content-fnref-1-5" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>5</sup></a> <a href="#user-content-fnref-1-6" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>6</sup></a> <a href="#user-content-fnref-1-7" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>7</sup></a> <a href="#user-content-fnref-1-8" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>8</sup></a> <a href="#user-content-fnref-1-9" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>9</sup></a> <a href="#user-content-fnref-1-10" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>10</sup></a> <a href="#user-content-fnref-1-11" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>11</sup></a> <a href="#user-content-fnref-1-12" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>12</sup></a> <a href="#user-content-fnref-1-13" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>13</sup></a> <a href="#user-content-fnref-1-14" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>14</sup></a> <a href="#user-content-fnref-1-15" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>15</sup></a> <a href="#user-content-fnref-1-16" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>16</sup></a> <a href="#user-content-fnref-1-17" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>17</sup></a> <a href="#user-content-fnref-1-18" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>18</sup></a> <a href="#user-content-fnref-1-19" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>19</sup></a> <a href="#user-content-fnref-1-20" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>20</sup></a> <a href="#user-content-fnref-1-21" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>21</sup></a> <a href="#user-content-fnref-1-22" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>22</sup></a> <a href="#user-content-fnref-1-23" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>23</sup></a> <a href="#user-content-fnref-1-24" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>24</sup></a> <a href="#user-content-fnref-1-25" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>25</sup></a> <a href="#user-content-fnref-1-26" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>26</sup></a> <a href="#user-content-fnref-1-27" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>27</sup></a> <a href="#user-content-fnref-1-28" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>28</sup></a> <a href="#user-content-fnref-1-29" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>29</sup></a> <a href="#user-content-fnref-1-30" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>30</sup></a> <a href="#user-content-fnref-1-31" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>31</sup></a> <a href="#user-content-fnref-1-32" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>32</sup></a> <a href="#user-content-fnref-1-33" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>33</sup></a> <a href="#user-content-fnref-1-34" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>34</sup></a> <a href="#user-content-fnref-1-35" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>35</sup></a> <a href="#user-content-fnref-1-36" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>36</sup></a> <a href="#user-content-fnref-1-37" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>37</sup></a> <a href="#user-content-fnref-1-38" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>38</sup></a> <a href="#user-content-fnref-1-39" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>39</sup></a></p>
+</li>
+</ol>
+</section></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

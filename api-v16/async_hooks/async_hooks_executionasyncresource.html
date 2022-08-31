@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>async_hooks.executionAsyncResource() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>async_hooks.executionAsyncResource()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_async_hooks_executionasyncresource" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/async_hooks_executionasyncresource.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/async_hooks_executionasyncresource.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#async_hooksexecutionasyncresource.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v13.9.0, v12.17.0</span>
+</div><ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 代表当前执行的资源。
+用于在资源中存储数据。</li>
+</ul><p><code>executionAsyncResource()</code> 返回的资源对象通常是带有未记录 API 的内部 Node.js 句柄对象。
+在对象上使用任何函数或属性都可能使您的应用程序崩溃，应该避免。</p><p class="">在顶层执行上下文中使用 <code>executionAsyncResource()</code> 将返回空的对象，因为没有要使用的句柄或请求对象，但是有一个代表顶层的对象可能会有所帮助。</p><pre class="with-76-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { executionAsyncId, executionAsyncResource } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 1 {}</span>
+<span class="hljs-title function_">open</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">url</span>), <span class="hljs-string">'r'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 7 FSReqWrap</span>
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { open } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { executionAsyncId, executionAsyncResource } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 1 {}</span>
+<span class="hljs-title function_">open</span>(__filename, <span class="hljs-string">'r'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 7 FSReqWrap</span>
+});</code></pre><p class="">这可用于实现连续本地存储，无需使用跟踪 <code>Map</code> 来存储元数据：</p><pre class="with-41-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createServer } <span class="hljs-keyword">from</span> <span class="hljs-string">'http'</span>;
+<span class="hljs-keyword">import</span> {
+  executionAsyncId,
+  executionAsyncResource,
+  createHook
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+<span class="hljs-keyword">const</span> sym = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">'state'</span>); <span class="hljs-comment">// 避免污染的私有符号</span>
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) {
+    <span class="hljs-keyword">const</span> cr = <span class="hljs-title function_">executionAsyncResource</span>();
+    <span class="hljs-keyword">if</span> (cr) {
+      resource[sym] = cr[sym];
+    }
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-keyword">const</span> server = <span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  <span class="hljs-title function_">executionAsyncResource</span>()[sym] = { <span class="hljs-attr">state</span>: req.<span class="hljs-property">url</span> };
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+    res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-title function_">executionAsyncResource</span>()[sym]));
+  }, <span class="hljs-number">100</span>);
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createServer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> {
+  executionAsyncId,
+  executionAsyncResource,
+  createHook
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+<span class="hljs-keyword">const</span> sym = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">'state'</span>); <span class="hljs-comment">// 避免污染的私有符号</span>
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) {
+    <span class="hljs-keyword">const</span> cr = <span class="hljs-title function_">executionAsyncResource</span>();
+    <span class="hljs-keyword">if</span> (cr) {
+      resource[sym] = cr[sym];
+    }
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-keyword">const</span> server = <span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  <span class="hljs-title function_">executionAsyncResource</span>()[sym] = { <span class="hljs-attr">state</span>: req.<span class="hljs-property">url</span> };
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+    res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-title function_">executionAsyncResource</span>()[sym]));
+  }, <span class="hljs-number">100</span>);
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v13.9.0, v12.17.0</span>
+</div><ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The resource representing the current execution.
+Useful to store data within the resource.</li>
+</ul><p>Resource objects returned by <code>executionAsyncResource()</code> are most often internal
+Node.js handle objects with undocumented APIs. Using any functions or properties
+on the object is likely to crash your application and should be avoided.</p><p>Using <code>executionAsyncResource()</code> in the top-level execution context will
+return an empty object as there is no handle or request object to use,
+but having an object representing the top-level can be helpful.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { executionAsyncId, executionAsyncResource } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 1 {}</span>
+<span class="hljs-title function_">open</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">url</span>), <span class="hljs-string">'r'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 7 FSReqWrap</span>
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { open } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { executionAsyncId, executionAsyncResource } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 1 {}</span>
+<span class="hljs-title function_">open</span>(__filename, <span class="hljs-string">'r'</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">executionAsyncId</span>(), <span class="hljs-title function_">executionAsyncResource</span>());  <span class="hljs-comment">// 7 FSReqWrap</span>
+});</code></pre><p>This can be used to implement continuation local storage without the
+use of a tracking <code>Map</code> to store the metadata:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createServer } <span class="hljs-keyword">from</span> <span class="hljs-string">'http'</span>;
+<span class="hljs-keyword">import</span> {
+  executionAsyncId,
+  executionAsyncResource,
+  createHook
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+<span class="hljs-keyword">const</span> sym = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">'state'</span>); <span class="hljs-comment">// Private symbol to avoid pollution</span>
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) {
+    <span class="hljs-keyword">const</span> cr = <span class="hljs-title function_">executionAsyncResource</span>();
+    <span class="hljs-keyword">if</span> (cr) {
+      resource[sym] = cr[sym];
+    }
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-keyword">const</span> server = <span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  <span class="hljs-title function_">executionAsyncResource</span>()[sym] = { <span class="hljs-attr">state</span>: req.<span class="hljs-property">url</span> };
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+    res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-title function_">executionAsyncResource</span>()[sym]));
+  }, <span class="hljs-number">100</span>);
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createServer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> {
+  executionAsyncId,
+  executionAsyncResource,
+  createHook
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+<span class="hljs-keyword">const</span> sym = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">'state'</span>); <span class="hljs-comment">// Private symbol to avoid pollution</span>
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) {
+    <span class="hljs-keyword">const</span> cr = <span class="hljs-title function_">executionAsyncResource</span>();
+    <span class="hljs-keyword">if</span> (cr) {
+      resource[sym] = cr[sym];
+    }
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-keyword">const</span> server = <span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  <span class="hljs-title function_">executionAsyncResource</span>()[sym] = { <span class="hljs-attr">state</span>: req.<span class="hljs-property">url</span> };
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+    res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-title function_">executionAsyncResource</span>()[sym]));
+  }, <span class="hljs-number">100</span>);
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

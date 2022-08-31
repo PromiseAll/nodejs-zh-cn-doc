@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>在 AsyncHook 回调中打印 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>在 AsyncHook 回调中打印</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_printing_in_asynchook_callbacks" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/printing_in_asynchook_callbacks.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#printing-in-asynchook-callbacks.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>因为打印到控制台是异步的操作，所以 <code>console.log()</code> 会导致 <code>AsyncHook</code> 回调被调用。
+在 <code>AsyncHook</code> 回调函数中使用 <code>console.log()</code> 或类似的异步操作将导致无限递归。
+当调试时，一个简单的解决方案是使用同步的日志记录操作，例如 <code>fs.writeFileSync(file, msg, flag)</code>。
+这将打印到文件并且不会递归地调用 <code>AsyncHook</code>，因为它是同步的。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { format } <span class="hljs-keyword">from</span> <span class="hljs-string">'util'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">debug</span>(<span class="hljs-params">...args</span>) {
+  <span class="hljs-comment">// 在 AsyncHook 回调中调试时使用这样的函数</span>
+  <span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">'log.out'</span>, <span class="hljs-string">`<span class="hljs-subst">${format(...args)}</span>\n`</span>, { <span class="hljs-attr">flag</span>: <span class="hljs-string">'a'</span> });
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">debug</span>(<span class="hljs-params">...args</span>) {
+  <span class="hljs-comment">// 在 AsyncHook 回调中调试时使用这样的函数</span>
+  fs.<span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">'log.out'</span>, <span class="hljs-string">`<span class="hljs-subst">${util.format(...args)}</span>\n`</span>, { <span class="hljs-attr">flag</span>: <span class="hljs-string">'a'</span> });
+}</code></pre><p class="">如果日志记录需要异步的操作，则可以使用 <code>AsyncHook</code> 本身提供的信息来跟踪导致异步操作的原因。
+当日志本身导致调用 <code>AsyncHook</code> 回调时，应跳过日志记录。
+通过这样做，否则无限递归被打破。</p></div>
+          <div id="content_right"><p>Because printing to the console is an asynchronous operation, <code>console.log()</code>
+will cause <code>AsyncHook</code> callbacks to be called. Using <code>console.log()</code> or
+similar asynchronous operations inside an <code>AsyncHook</code> callback function will
+cause an infinite recursion. An easy solution to this when debugging is to use a
+synchronous logging operation such as <code>fs.writeFileSync(file, msg, flag)</code>.
+This will print to the file and will not invoke <code>AsyncHook</code> recursively because
+it is synchronous.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { writeFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { format } <span class="hljs-keyword">from</span> <span class="hljs-string">'util'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">debug</span>(<span class="hljs-params">...args</span>) {
+  <span class="hljs-comment">// Use a function like this one when debugging inside an AsyncHook callback</span>
+  <span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">'log.out'</span>, <span class="hljs-string">`<span class="hljs-subst">${format(...args)}</span>\n`</span>, { <span class="hljs-attr">flag</span>: <span class="hljs-string">'a'</span> });
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">debug</span>(<span class="hljs-params">...args</span>) {
+  <span class="hljs-comment">// Use a function like this one when debugging inside an AsyncHook callback</span>
+  fs.<span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">'log.out'</span>, <span class="hljs-string">`<span class="hljs-subst">${util.format(...args)}</span>\n`</span>, { <span class="hljs-attr">flag</span>: <span class="hljs-string">'a'</span> });
+}</code></pre><p>If an asynchronous operation is needed for logging, it is possible to keep
+track of what caused the asynchronous operation using the information
+provided by <code>AsyncHook</code> itself. The logging should then be skipped when
+it was the logging itself that caused the <code>AsyncHook</code> callback to be called. By
+doing this, the otherwise infinite recursion is broken.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

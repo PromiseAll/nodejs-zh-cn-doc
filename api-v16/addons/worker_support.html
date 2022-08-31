@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>工作线程的支持 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>工作线程的支持</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_worker_support" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/worker_support.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/worker_support.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#worker-support.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.8.0, v12.19.0</td>
+<td><p>清理钩子现在可以是异步的。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>为了从多个 Node.js 环境（例如主线程和工作线程）加载，插件需要：</p><ul class="">
+<li>成为 Node-API 插件，或</li>
+<li>如上所述使用 <code>NODE_MODULE_INIT()</code> 声明为上下文感知</li>
+</ul><p class="">为了支持 <a href="../worker_threads.html#class-worker"><code>Worker</code></a> 线程，插件需要清理它们可能在此类线程存在时分配的任何资源。
+这可以通过使用 <code>AddEnvironmentCleanupHook()</code> 函数来实现：</p><pre class=""><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">AddEnvironmentCleanupHook</span><span class="hljs-params">(v8::Isolate* isolate,
+                               <span class="hljs-type">void</span> (*fun)(<span class="hljs-type">void</span>* arg),
+                               <span class="hljs-type">void</span>* arg)</span></span>;</code></pre><p class="">此函数添加了一个钩子，该钩子将在给定的 Node.js 实例关闭之前运行。
+如有必要，可以在使用具有相同签名的 <code>RemoveEnvironmentCleanupHook()</code> 运行这些钩子之前将其删除。
+回调按后进先出的顺序运行。</p><p class="">如有必要，还有一对额外的 <code>AddEnvironmentCleanupHook()</code> 和 <code>RemoveEnvironmentCleanupHook()</code> 重载，其中清理钩子采用回调函数。
+这可用于关闭异步资源，例如插件注册的任何 libuv 句柄。</p><p class="">以下 <code>addon.cc</code> 使用 <code>AddEnvironmentCleanupHook</code>：</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> node::AddEnvironmentCleanupHook;
+<span class="hljs-keyword">using</span> v8::HandleScope;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+
+<span class="hljs-comment">// 注意：在实际应用程序中，不要依赖静态/全局数据。</span>
+<span class="hljs-type">static</span> <span class="hljs-type">char</span> cookie[] = <span class="hljs-string">"yum yum"</span>;
+<span class="hljs-type">static</span> <span class="hljs-type">int</span> cleanup_cb1_called = <span class="hljs-number">0</span>;
+<span class="hljs-type">static</span> <span class="hljs-type">int</span> cleanup_cb2_called = <span class="hljs-number">0</span>;
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">cleanup_cb1</span><span class="hljs-params">(<span class="hljs-type">void</span>* arg)</span> </span>{
+  Isolate* isolate = <span class="hljs-built_in">static_cast</span>&lt;Isolate*&gt;(arg);
+  <span class="hljs-function">HandleScope <span class="hljs-title">scope</span><span class="hljs-params">(isolate)</span></span>;
+  Local&lt;Object&gt; obj = Object::<span class="hljs-built_in">New</span>(isolate);
+  <span class="hljs-built_in">assert</span>(!obj.<span class="hljs-built_in">IsEmpty</span>());  <span class="hljs-comment">// 断言 VM 仍旧存活</span>
+  <span class="hljs-built_in">assert</span>(obj-&gt;<span class="hljs-built_in">IsObject</span>());
+  cleanup_cb1_called++;
+}
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">cleanup_cb2</span><span class="hljs-params">(<span class="hljs-type">void</span>* arg)</span> </span>{
+  <span class="hljs-built_in">assert</span>(arg == <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">void</span>*&gt;(cookie));
+  cleanup_cb2_called++;
+}
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sanity_check</span><span class="hljs-params">(<span class="hljs-type">void</span>*)</span> </span>{
+  <span class="hljs-built_in">assert</span>(cleanup_cb1_called == <span class="hljs-number">1</span>);
+  <span class="hljs-built_in">assert</span>(cleanup_cb2_called == <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-comment">// 将此插件初始化为上下文感知。</span>
+<span class="hljs-built_in">NODE_MODULE_INIT</span>(<span class="hljs-comment">/* exports, module, context */</span>) {
+  Isolate* isolate = context-&gt;<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, sanity_check, <span class="hljs-literal">nullptr</span>);
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, cleanup_cb2, cookie);
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, cleanup_cb1, isolate);
+}</code></pre><p class="">通过运行在 JavaScript 中进行测试：</p><pre class=""><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.8.0, v12.19.0</td>
+<td><p>Cleanup hooks may now be asynchronous.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>In order to be loaded from multiple Node.js environments,
+such as a main thread and a Worker thread, an add-on needs to either:</p><ul>
+<li>Be an Node-API addon, or</li>
+<li>Be declared as context-aware using <code>NODE_MODULE_INIT()</code> as described above</li>
+</ul><p>In order to support <a href="../worker_threads.html#class-worker"><code>Worker</code></a> threads, addons need to clean up any resources
+they may have allocated when such a thread exists. This can be achieved through
+the usage of the <code>AddEnvironmentCleanupHook()</code> function:</p><pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">AddEnvironmentCleanupHook</span><span class="hljs-params">(v8::Isolate* isolate,
+                               <span class="hljs-type">void</span> (*fun)(<span class="hljs-type">void</span>* arg),
+                               <span class="hljs-type">void</span>* arg)</span></span>;</code></pre><p>This function adds a hook that will run before a given Node.js instance shuts
+down. If necessary, such hooks can be removed before they are run using
+<code>RemoveEnvironmentCleanupHook()</code>, which has the same signature. Callbacks are
+run in last-in first-out order.</p><p>If necessary, there is an additional pair of <code>AddEnvironmentCleanupHook()</code>
+and <code>RemoveEnvironmentCleanupHook()</code> overloads, where the cleanup hook takes a
+callback function. This can be used for shutting down asynchronous resources,
+such as any libuv handles registered by the addon.</p><p>The following <code>addon.cc</code> uses <code>AddEnvironmentCleanupHook</code>:</p><pre><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> node::AddEnvironmentCleanupHook;
+<span class="hljs-keyword">using</span> v8::HandleScope;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Object;
+
+<span class="hljs-comment">// Note: In a real-world application, do not rely on static/global data.</span>
+<span class="hljs-type">static</span> <span class="hljs-type">char</span> cookie[] = <span class="hljs-string">"yum yum"</span>;
+<span class="hljs-type">static</span> <span class="hljs-type">int</span> cleanup_cb1_called = <span class="hljs-number">0</span>;
+<span class="hljs-type">static</span> <span class="hljs-type">int</span> cleanup_cb2_called = <span class="hljs-number">0</span>;
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">cleanup_cb1</span><span class="hljs-params">(<span class="hljs-type">void</span>* arg)</span> </span>{
+  Isolate* isolate = <span class="hljs-built_in">static_cast</span>&lt;Isolate*&gt;(arg);
+  <span class="hljs-function">HandleScope <span class="hljs-title">scope</span><span class="hljs-params">(isolate)</span></span>;
+  Local&lt;Object&gt; obj = Object::<span class="hljs-built_in">New</span>(isolate);
+  <span class="hljs-built_in">assert</span>(!obj.<span class="hljs-built_in">IsEmpty</span>());  <span class="hljs-comment">// assert VM is still alive</span>
+  <span class="hljs-built_in">assert</span>(obj-&gt;<span class="hljs-built_in">IsObject</span>());
+  cleanup_cb1_called++;
+}
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">cleanup_cb2</span><span class="hljs-params">(<span class="hljs-type">void</span>* arg)</span> </span>{
+  <span class="hljs-built_in">assert</span>(arg == <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">void</span>*&gt;(cookie));
+  cleanup_cb2_called++;
+}
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sanity_check</span><span class="hljs-params">(<span class="hljs-type">void</span>*)</span> </span>{
+  <span class="hljs-built_in">assert</span>(cleanup_cb1_called == <span class="hljs-number">1</span>);
+  <span class="hljs-built_in">assert</span>(cleanup_cb2_called == <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-comment">// Initialize this addon to be context-aware.</span>
+<span class="hljs-built_in">NODE_MODULE_INIT</span>(<span class="hljs-comment">/* exports, module, context */</span>) {
+  Isolate* isolate = context-&gt;<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, sanity_check, <span class="hljs-literal">nullptr</span>);
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, cleanup_cb2, cookie);
+  <span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, cleanup_cb1, isolate);
+}</code></pre><p>Test in JavaScript by running:</p><pre><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

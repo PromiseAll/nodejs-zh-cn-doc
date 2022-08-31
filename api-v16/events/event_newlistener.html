@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'newListener' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'newListener' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_event_newlistener" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/event_newlistener.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/event_newlistener.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#event-newlistener.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.26</span>
+</div><ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 正在监听的事件的名称</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 事件处理函数</li>
+</ul><p>在将监听器添加到其内部监听器数组之前，<code>EventEmitter</code> 实例将触发自身的 <code>'newListener'</code> 事件。</p><p class="">为 <code>'newListener'</code> 事件注册的监听器会传入事件名称和对正在添加的监听器的引用。</p><p class="">在添加监听器之前触发事件这一事实有一个微妙但重要的副作用：在 <code>'newListener'</code> 回调中注册到同一个 <code>name</code> 的任何其他监听器都会在正在添加的监听器之前插入。</p><pre class=""><code class="language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEmitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {}
+
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+<span class="hljs-comment">// 只做一次，这样就不会永远循环</span>
+myEmitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'newListener'</span>, <span class="hljs-function">(<span class="hljs-params">event, listener</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (event === <span class="hljs-string">'event'</span>) {
+    <span class="hljs-comment">// 在前面插入新的监听器</span>
+    myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'B'</span>);
+    });
+  }
+});
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'A'</span>);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   B</span>
+<span class="hljs-comment">//   A</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.26</span>
+</div><ul>
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> The name of the event being listened for</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The event handler function</li>
+</ul><p>The <code>EventEmitter</code> instance will emit its own <code>'newListener'</code> event <em>before</em>
+a listener is added to its internal array of listeners.</p><p>Listeners registered for the <code>'newListener'</code> event are passed the event
+name and a reference to the listener being added.</p><p>The fact that the event is triggered before adding the listener has a subtle
+but important side effect: any <em>additional</em> listeners registered to the same
+<code>name</code> <em>within</em> the <code>'newListener'</code> callback are inserted <em>before</em> the
+listener that is in the process of being added.</p><pre><code class="language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEmitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {}
+
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+<span class="hljs-comment">// Only do this once so we don't loop forever</span>
+myEmitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'newListener'</span>, <span class="hljs-function">(<span class="hljs-params">event, listener</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (event === <span class="hljs-string">'event'</span>) {
+    <span class="hljs-comment">// Insert a new listener in front</span>
+    myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'B'</span>);
+    });
+  }
+});
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'A'</span>);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// Prints:</span>
+<span class="hljs-comment">//   B</span>
+<span class="hljs-comment">//   A</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

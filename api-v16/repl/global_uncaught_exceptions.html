@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>全局的未捕获异常 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-repl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>全局的未捕获异常</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../repl.html#repl_global_uncaught_exceptions" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/repl/global_uncaught_exceptions.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/repl/global_uncaught_exceptions.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/repl/#global-uncaught-exceptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v12.3.0</td>
+<td><p>如果将 repl 用作独立程序，则从现在开始触发 <code>'uncaughtException'</code> 事件。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>REPL 使用 <a href="../domain.html"><code>domain</code></a> 模块来捕获该 REPL 会话的所有未捕获的异常。</p><p class="">在 REPL 中使用 <a href="../domain.html"><code>domain</code></a> 模块有这些副作用：</p><ul class="">
+<li>
+<p>未捕获的异常仅在独立 REPL 中触发 <a href="../process.html#event-uncaughtexception"><code>'uncaughtException'</code></a> 事件。
+在另一个 Node.js 程序的 REPL 中为此事件添加监听器会导致 <a href="../errors.html#err_invalid_repl_input"><code>ERR_INVALID_REPL_INPUT</code></a>。</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> r = repl.<span class="hljs-title function_">start</span>();
+
+r.<span class="hljs-title function_">write</span>(<span class="hljs-string">'process.on("uncaughtException", () =&gt; console.log("Foobar"));\n'</span>);
+<span class="hljs-comment">// 输出流包括：</span>
+<span class="hljs-comment">//   TypeError [ERR_INVALID_REPL_INPUT]: Listeners for `uncaughtException`</span>
+<span class="hljs-comment">//   cannot be used in the REPL</span>
+
+r.<span class="hljs-title function_">close</span>();</code></pre>
+</li>
+<li>
+<p>尝试使用 <a href="../process.html#processsetuncaughtexceptioncapturecallbackfn"><code>process.setUncaughtExceptionCaptureCallback()</code></a> 会抛出 <a href="../errors.html#err_domain_cannot_set_uncaught_exception_capture"><code>ERR_DOMAIN_CANNOT_SET_UNCAUGHT_EXCEPTION_CAPTURE</code></a> 错误。</p>
+</li>
+</ul></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v12.3.0</td>
+<td><p>The <code>'uncaughtException'</code> event is from now on triggered if the repl is used as standalone program.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>The REPL uses the <a href="../domain.html"><code>domain</code></a> module to catch all uncaught exceptions for that
+REPL session.</p><p>This use of the <a href="../domain.html"><code>domain</code></a> module in the REPL has these side effects:</p><ul>
+<li>
+<p>Uncaught exceptions only emit the <a href="../process.html#event-uncaughtexception"><code>'uncaughtException'</code></a> event in the
+standalone REPL. Adding a listener for this event in a REPL within
+another Node.js program results in <a href="../errors.html#err_invalid_repl_input"><code>ERR_INVALID_REPL_INPUT</code></a>.</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> r = repl.<span class="hljs-title function_">start</span>();
+
+r.<span class="hljs-title function_">write</span>(<span class="hljs-string">'process.on("uncaughtException", () =&gt; console.log("Foobar"));\n'</span>);
+<span class="hljs-comment">// Output stream includes:</span>
+<span class="hljs-comment">//   TypeError [ERR_INVALID_REPL_INPUT]: Listeners for `uncaughtException`</span>
+<span class="hljs-comment">//   cannot be used in the REPL</span>
+
+r.<span class="hljs-title function_">close</span>();</code></pre>
+</li>
+<li>
+<p>Trying to use <a href="../process.html#processsetuncaughtexceptioncapturecallbackfn"><code>process.setUncaughtExceptionCaptureCallback()</code></a> throws
+an <a href="../errors.html#err_domain_cannot_set_uncaught_exception_capture"><code>ERR_DOMAIN_CANNOT_SET_UNCAUGHT_EXCEPTION_CAPTURE</code></a> error.</p>
+</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

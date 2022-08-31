@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>导出的快捷方式 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-modules">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>导出的快捷方式</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../modules.html#modules_exports_shortcut" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/modules/exports_shortcut.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/modules/exports_shortcut.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/modules/#exports-shortcut.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.16</span>
+</div><p><code>exports</code> 变量在模块的文件级作用域内可用，并在评估模块之前被分配 <code>module.exports</code> 的值。</p><p class="">它允许一个快捷方式，以便 <code>module.exports.f = ...</code> 可以更简洁地写成 <code>exports.f = ...</code>。 但是，请注意，与任何变量一样，如果将新值分配给 <code>exports</code>，则它就不再绑定到 <code>module.exports</code>：</p><pre class=""><code class="language-js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">hello</span> = <span class="hljs-literal">true</span>; <span class="hljs-comment">// 从模块的 require 中导出</span>
+<span class="hljs-built_in">exports</span> = { <span class="hljs-attr">hello</span>: <span class="hljs-literal">false</span> };  <span class="hljs-comment">// 未导出，仅在模块中可用</span></code></pre><p class="">当 <code>module.exports</code> 属性被新对象完全替换时，通常也会重新分配 <code>exports</code>：</p><pre class=""><code class="language-js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-built_in">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">Constructor</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// ... 等等。</span>
+};</code></pre><p class="">为了阐明该行为，想象一下 <code>require()</code> 的这个假设实现，它与 <code>require()</code> 的实际实现非常相似：</p><pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">require</span>(<span class="hljs-params"><span class="hljs-comment">/* ... */</span></span>) {
+  <span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = { <span class="hljs-attr">exports</span>: {} };
+  (<span class="hljs-function">(<span class="hljs-params"><span class="hljs-variable language_">module</span>, <span class="hljs-built_in">exports</span></span>) =&gt;</span> {
+    <span class="hljs-comment">// 模块代码在这里。 在本例中，定义一个函数。</span>
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">someFunc</span>(<span class="hljs-params"></span>) {}
+    <span class="hljs-built_in">exports</span> = someFunc;
+    <span class="hljs-comment">// 此时，exports 不再是 module.exports 的快捷方式，</span>
+    <span class="hljs-comment">// 并且此模块仍然会导出空的默认对象。</span>
+    <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = someFunc;
+    <span class="hljs-comment">// 此时，该模块现在将导出 someFunc，</span>
+    <span class="hljs-comment">// 而不是默认对象。</span>
+  })(<span class="hljs-variable language_">module</span>, <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>;
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.16</span>
+</div><p>The <code>exports</code> variable is available within a module's file-level scope, and is
+assigned the value of <code>module.exports</code> before the module is evaluated.</p><p>It allows a shortcut, so that <code>module.exports.f = ...</code> can be written more
+succinctly as <code>exports.f = ...</code>. However, be aware that like any variable, if a
+new value is assigned to <code>exports</code>, it is no longer bound to <code>module.exports</code>:</p><pre><code class="language-js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">hello</span> = <span class="hljs-literal">true</span>; <span class="hljs-comment">// Exported from require of module</span>
+<span class="hljs-built_in">exports</span> = { <span class="hljs-attr">hello</span>: <span class="hljs-literal">false</span> };  <span class="hljs-comment">// Not exported, only available in the module</span></code></pre><p>When the <code>module.exports</code> property is being completely replaced by a new
+object, it is common to also reassign <code>exports</code>:</p><pre><code class="language-js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-built_in">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">Constructor</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// ... etc.</span>
+};</code></pre><p>To illustrate the behavior, imagine this hypothetical implementation of
+<code>require()</code>, which is quite similar to what is actually done by <code>require()</code>:</p><pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">require</span>(<span class="hljs-params"><span class="hljs-comment">/* ... */</span></span>) {
+  <span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = { <span class="hljs-attr">exports</span>: {} };
+  (<span class="hljs-function">(<span class="hljs-params"><span class="hljs-variable language_">module</span>, <span class="hljs-built_in">exports</span></span>) =&gt;</span> {
+    <span class="hljs-comment">// Module code here. In this example, define a function.</span>
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">someFunc</span>(<span class="hljs-params"></span>) {}
+    <span class="hljs-built_in">exports</span> = someFunc;
+    <span class="hljs-comment">// At this point, exports is no longer a shortcut to module.exports, and</span>
+    <span class="hljs-comment">// this module will still export an empty default object.</span>
+    <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = someFunc;
+    <span class="hljs-comment">// At this point, the module will now export someFunc, instead of the</span>
+    <span class="hljs-comment">// default object.</span>
+  })(<span class="hljs-variable language_">module</span>, <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>;
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

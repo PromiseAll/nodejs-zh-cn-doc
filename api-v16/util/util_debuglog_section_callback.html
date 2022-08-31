@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>util.debuglog(section[, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-util">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>util.debuglog(section[, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../util.html#util_util_debuglog_section_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/util/util_debuglog_section_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/util/util_debuglog_section_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/util/#utildebuglogsection-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.11.3</span>
+</div><ul class="">
+<li><code>section</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 标识正在为其创建 <code>debuglog</code> 函数的应用程序部分的字符串。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 第一次调用日志函数时调用的回调函数参数是更优化的日志函数。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 日志函数</li>
+</ul><p><code>util.debuglog()</code> 方法用于创建函数，该函数根据 <code>NODE_DEBUG</code> 环境变量的存在有条件地将调试消息写入 <code>stderr</code>。
+如果 <code>section</code> 名称出现在该环境变量的值中，则返回的函数的操作类似于 <a href="../console.html#consoleerrordata-args"><code>console.error()</code></a>。
+如果不是，则返回的函数是空操作。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> debuglog = util.<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'foo'</span>);
+
+<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'hello from foo [%d]'</span>, <span class="hljs-number">123</span>);</code></pre><p class="">如果这个程序在环境中与 <code>NODE_DEBUG=foo</code> 一起运行，则它会输出如下内容：</p><pre class=""><code class="language-console">FOO 3245: hello from foo [123]</code></pre><p class="">其中 <code>3245</code> 是进程 ID。
+如果它没有使用该环境变量集运行，则它不会打印任何内容。</p><p class=""><code>section</code> 还支持通配符：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> debuglog = util.<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'foo-bar'</span>);
+
+<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'hi there, it\'s foo-bar [%d]'</span>, <span class="hljs-number">2333</span>);</code></pre><p class="">如果它在环境中与 <code>NODE_DEBUG=foo*</code> 一起运行，则它将输出如下内容：</p><pre class=""><code class="language-console">FOO-BAR 3257: hi there, it's foo-bar [2333]</code></pre><p class="">可以在 <code>NODE_DEBUG</code> 环境变量中指定多个逗号分隔的 <code>section</code> 名称：<code>NODE_DEBUG=fs,net,tls</code>。</p><p class="">可选的 <code>callback</code> 参数可用于用一个不同的函数替换日志函数，该函数没有任何初始化或不必要的封装。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">let</span> debuglog = util.<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'internals'</span>, <span class="hljs-function">(<span class="hljs-params">debug</span>) =&gt;</span> {
+  <span class="hljs-comment">// 如果启用该部分，</span>
+  <span class="hljs-comment">// 则替换为优化测试的日志记录函数</span>
+  debuglog = debug;
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.11.3</span>
+</div><ul>
+<li><code>section</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A string identifying the portion of the application for
+which the <code>debuglog</code> function is being created.</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> A callback invoked the first time the logging function
+is called with a function argument that is a more optimized logging function.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The logging function</li>
+</ul><p>The <code>util.debuglog()</code> method is used to create a function that conditionally
+writes debug messages to <code>stderr</code> based on the existence of the <code>NODE_DEBUG</code>
+environment variable. If the <code>section</code> name appears within the value of that
+environment variable, then the returned function operates similar to
+<a href="../console.html#consoleerrordata-args"><code>console.error()</code></a>. If not, then the returned function is a no-op.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> debuglog = util.<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'foo'</span>);
+
+<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'hello from foo [%d]'</span>, <span class="hljs-number">123</span>);</code></pre><p>If this program is run with <code>NODE_DEBUG=foo</code> in the environment, then
+it will output something like:</p><pre><code class="language-console">FOO 3245: hello from foo [123]</code></pre><p>where <code>3245</code> is the process id. If it is not run with that
+environment variable set, then it will not print anything.</p><p>The <code>section</code> supports wildcard also:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> debuglog = util.<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'foo-bar'</span>);
+
+<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'hi there, it\'s foo-bar [%d]'</span>, <span class="hljs-number">2333</span>);</code></pre><p>if it is run with <code>NODE_DEBUG=foo*</code> in the environment, then it will output
+something like:</p><pre><code class="language-console">FOO-BAR 3257: hi there, it's foo-bar [2333]</code></pre><p>Multiple comma-separated <code>section</code> names may be specified in the <code>NODE_DEBUG</code>
+environment variable: <code>NODE_DEBUG=fs,net,tls</code>.</p><p>The optional <code>callback</code> argument can be used to replace the logging function
+with a different function that doesn't have any initialization or
+unnecessary wrapping.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">let</span> debuglog = util.<span class="hljs-title function_">debuglog</span>(<span class="hljs-string">'internals'</span>, <span class="hljs-function">(<span class="hljs-params">debug</span>) =&gt;</span> {
+  <span class="hljs-comment">// Replace with a logging function that optimizes out</span>
+  <span class="hljs-comment">// testing if the section is enabled</span>
+  debuglog = debug;
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

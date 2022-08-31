@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>在可写流中解码缓冲区 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>在可写流中解码缓冲区</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_decoding_buffers_in_a_writable_stream" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/decoding_buffers_in_a_writable_stream.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/decoding_buffers_in_a_writable_stream.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#decoding-buffers-in-a-writable-stream.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>解码缓冲区是一项常见任务，例如，在使用输入为字符串的转换器时。
+在使用多字节字符编码（例如 UTF-8）时，这不是一个简单的过程。
+以下示例显示如何使用 <code>StringDecoder</code> 和 <a href="../stream.html#class-streamwritable"><code>Writable</code></a> 解码多字节字符串。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">StringDecoder</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'string_decoder'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">StringWritable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Writable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">options</span>) {
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_decoder</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringDecoder</span>(options &amp;&amp; options.<span class="hljs-property">defaultEncoding</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = <span class="hljs-string">''</span>;
+  }
+  <span class="hljs-title function_">_write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-keyword">if</span> (encoding === <span class="hljs-string">'buffer'</span>) {
+      chunk = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_decoder</span>.<span class="hljs-title function_">write</span>(chunk);
+    }
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> += chunk;
+    <span class="hljs-title function_">callback</span>();
+  }
+  <span class="hljs-title function_">_final</span>(<span class="hljs-params">callback</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> += <span class="hljs-variable language_">this</span>.<span class="hljs-property">_decoder</span>.<span class="hljs-title function_">end</span>();
+    <span class="hljs-title function_">callback</span>();
+  }
+}
+
+<span class="hljs-keyword">const</span> euro = [[<span class="hljs-number">0xE2</span>, <span class="hljs-number">0x82</span>], [<span class="hljs-number">0xAC</span>]].<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-property">from</span>);
+<span class="hljs-keyword">const</span> w = <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringWritable</span>();
+
+w.<span class="hljs-title function_">write</span>(<span class="hljs-string">'currency: '</span>);
+w.<span class="hljs-title function_">write</span>(euro[<span class="hljs-number">0</span>]);
+w.<span class="hljs-title function_">end</span>(euro[<span class="hljs-number">1</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(w.<span class="hljs-property">data</span>); <span class="hljs-comment">// currency: €</span></code></pre></div>
+          <div id="content_right"><p>Decoding buffers is a common task, for instance, when using transformers whose
+input is a string. This is not a trivial process when using multi-byte
+characters encoding, such as UTF-8. The following example shows how to decode
+multi-byte strings using <code>StringDecoder</code> and <a href="../stream.html#class-streamwritable"><code>Writable</code></a>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">StringDecoder</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'string_decoder'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">StringWritable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Writable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">options</span>) {
+    <span class="hljs-variable language_">super</span>(options);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_decoder</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringDecoder</span>(options &amp;&amp; options.<span class="hljs-property">defaultEncoding</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = <span class="hljs-string">''</span>;
+  }
+  <span class="hljs-title function_">_write</span>(<span class="hljs-params">chunk, encoding, callback</span>) {
+    <span class="hljs-keyword">if</span> (encoding === <span class="hljs-string">'buffer'</span>) {
+      chunk = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_decoder</span>.<span class="hljs-title function_">write</span>(chunk);
+    }
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> += chunk;
+    <span class="hljs-title function_">callback</span>();
+  }
+  <span class="hljs-title function_">_final</span>(<span class="hljs-params">callback</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> += <span class="hljs-variable language_">this</span>.<span class="hljs-property">_decoder</span>.<span class="hljs-title function_">end</span>();
+    <span class="hljs-title function_">callback</span>();
+  }
+}
+
+<span class="hljs-keyword">const</span> euro = [[<span class="hljs-number">0xE2</span>, <span class="hljs-number">0x82</span>], [<span class="hljs-number">0xAC</span>]].<span class="hljs-title function_">map</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-property">from</span>);
+<span class="hljs-keyword">const</span> w = <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringWritable</span>();
+
+w.<span class="hljs-title function_">write</span>(<span class="hljs-string">'currency: '</span>);
+w.<span class="hljs-title function_">write</span>(euro[<span class="hljs-number">0</span>]);
+w.<span class="hljs-title function_">end</span>(euro[<span class="hljs-number">1</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(w.<span class="hljs-property">data</span>); <span class="hljs-comment">// currency: €</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

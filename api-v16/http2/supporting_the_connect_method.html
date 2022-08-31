@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>支持 CONNECT 方法 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>支持 CONNECT 方法</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_supporting_the_connect_method" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/supporting_the_connect_method.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/supporting_the_connect_method.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#supporting-the-connect-method.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>CONNECT</code> 方法用于允许 HTTP/2 服务器用作 TCP/IP 连接的代理。</p><p class="">简单的 TCP 服务器：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+
+<span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  <span class="hljs-keyword">let</span> name = <span class="hljs-string">''</span>;
+  socket.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> name += chunk);
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">`hello <span class="hljs-subst">${name}</span>`</span>));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre><p class="">HTTP/2 CONNECT 代理：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">NGHTTP2</span>_REFUSED_STREAM } = http2.<span class="hljs-property">constants</span>;
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+
+<span class="hljs-keyword">const</span> proxy = http2.<span class="hljs-title function_">createServer</span>();
+proxy.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream, headers</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (headers[<span class="hljs-string">':method'</span>] !== <span class="hljs-string">'CONNECT'</span>) {
+    <span class="hljs-comment">// 只接受 CONNECT 请求</span>
+    stream.<span class="hljs-title function_">close</span>(<span class="hljs-title class_">NGHTTP2</span>_REFUSED_STREAM);
+    <span class="hljs-keyword">return</span>;
+  }
+  <span class="hljs-keyword">const</span> auth = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">`tcp://<span class="hljs-subst">${headers[<span class="hljs-string">':authority'</span>]}</span>`</span>);
+  <span class="hljs-comment">// 验证主机名和端口是此代理应该连接的对象</span>
+  <span class="hljs-comment">// 是一个很好的主意。</span>
+  <span class="hljs-keyword">const</span> socket = net.<span class="hljs-title function_">connect</span>(auth.<span class="hljs-property">port</span>, auth.<span class="hljs-property">hostname</span>, <span class="hljs-function">() =&gt;</span> {
+    stream.<span class="hljs-title function_">respond</span>();
+    socket.<span class="hljs-title function_">pipe</span>(stream);
+    stream.<span class="hljs-title function_">pipe</span>(socket);
+  });
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+    stream.<span class="hljs-title function_">close</span>(http2.<span class="hljs-property">constants</span>.<span class="hljs-property">NGHTTP2_CONNECT_ERROR</span>);
+  });
+});
+
+proxy.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8001</span>);</code></pre><p class="">HTTP/2 CONNECT 客户端：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+
+<span class="hljs-keyword">const</span> client = http2.<span class="hljs-title function_">connect</span>(<span class="hljs-string">'http://localhost:8001'</span>);
+
+<span class="hljs-comment">// 不得为 CONNECT 请求指定 ':path' 和 ':scheme' 标头，</span>
+<span class="hljs-comment">// 否则将引发错误。</span>
+<span class="hljs-keyword">const</span> req = client.<span class="hljs-title function_">request</span>({
+  <span class="hljs-string">':method'</span>: <span class="hljs-string">'CONNECT'</span>,
+  <span class="hljs-string">':authority'</span>: <span class="hljs-string">`localhost:<span class="hljs-subst">${port}</span>`</span>
+});
+
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'response'</span>, <span class="hljs-function">(<span class="hljs-params">headers</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers[http2.<span class="hljs-property">constants</span>.<span class="hljs-property">HTTP2_HEADER_STATUS</span>]);
+});
+<span class="hljs-keyword">let</span> data = <span class="hljs-string">''</span>;
+req.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> data += chunk);
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`The server says: <span class="hljs-subst">${data}</span>`</span>);
+  client.<span class="hljs-title function_">close</span>();
+});
+req.<span class="hljs-title function_">end</span>(<span class="hljs-string">'Jane'</span>);</code></pre></div>
+          <div id="content_right"><p>The <code>CONNECT</code> method is used to allow an HTTP/2 server to be used as a proxy
+for TCP/IP connections.</p><p>A simple TCP Server:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+
+<span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  <span class="hljs-keyword">let</span> name = <span class="hljs-string">''</span>;
+  socket.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> name += chunk);
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">`hello <span class="hljs-subst">${name}</span>`</span>));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre><p>An HTTP/2 CONNECT proxy:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">NGHTTP2</span>_REFUSED_STREAM } = http2.<span class="hljs-property">constants</span>;
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+
+<span class="hljs-keyword">const</span> proxy = http2.<span class="hljs-title function_">createServer</span>();
+proxy.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream, headers</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (headers[<span class="hljs-string">':method'</span>] !== <span class="hljs-string">'CONNECT'</span>) {
+    <span class="hljs-comment">// Only accept CONNECT requests</span>
+    stream.<span class="hljs-title function_">close</span>(<span class="hljs-title class_">NGHTTP2</span>_REFUSED_STREAM);
+    <span class="hljs-keyword">return</span>;
+  }
+  <span class="hljs-keyword">const</span> auth = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">`tcp://<span class="hljs-subst">${headers[<span class="hljs-string">':authority'</span>]}</span>`</span>);
+  <span class="hljs-comment">// It's a very good idea to verify that hostname and port are</span>
+  <span class="hljs-comment">// things this proxy should be connecting to.</span>
+  <span class="hljs-keyword">const</span> socket = net.<span class="hljs-title function_">connect</span>(auth.<span class="hljs-property">port</span>, auth.<span class="hljs-property">hostname</span>, <span class="hljs-function">() =&gt;</span> {
+    stream.<span class="hljs-title function_">respond</span>();
+    socket.<span class="hljs-title function_">pipe</span>(stream);
+    stream.<span class="hljs-title function_">pipe</span>(socket);
+  });
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+    stream.<span class="hljs-title function_">close</span>(http2.<span class="hljs-property">constants</span>.<span class="hljs-property">NGHTTP2_CONNECT_ERROR</span>);
+  });
+});
+
+proxy.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8001</span>);</code></pre><p>An HTTP/2 CONNECT client:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+
+<span class="hljs-keyword">const</span> client = http2.<span class="hljs-title function_">connect</span>(<span class="hljs-string">'http://localhost:8001'</span>);
+
+<span class="hljs-comment">// Must not specify the ':path' and ':scheme' headers</span>
+<span class="hljs-comment">// for CONNECT requests or an error will be thrown.</span>
+<span class="hljs-keyword">const</span> req = client.<span class="hljs-title function_">request</span>({
+  <span class="hljs-string">':method'</span>: <span class="hljs-string">'CONNECT'</span>,
+  <span class="hljs-string">':authority'</span>: <span class="hljs-string">`localhost:<span class="hljs-subst">${port}</span>`</span>
+});
+
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'response'</span>, <span class="hljs-function">(<span class="hljs-params">headers</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers[http2.<span class="hljs-property">constants</span>.<span class="hljs-property">HTTP2_HEADER_STATUS</span>]);
+});
+<span class="hljs-keyword">let</span> data = <span class="hljs-string">''</span>;
+req.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> data += chunk);
+req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`The server says: <span class="hljs-subst">${data}</span>`</span>);
+  client.<span class="hljs-title function_">close</span>();
+});
+req.<span class="hljs-title function_">end</span>(<span class="hljs-string">'Jane'</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

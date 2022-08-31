@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new Console(options) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-console">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>new Console(options)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../console.html#console_new_console_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/console/new_console_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/console/new_console_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/console/#new-consoleoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.2.0, v12.17.0</td>
+<td><p>引入了 <code>groupIndentation</code> 选项。</p></td></tr>
+<tr><td>v11.7.0</td>
+<td><p>引入了 <code>inspectOptions</code> 选项。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>构造函数 <code>Console</code> 现在支持 <code>options</code> 参数，并引入了 <code>colorMode</code> 选项。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>引入了 <code>ignoreErrors</code> 选项。</p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>stdout</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a></li>
+<li><code>stderr</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a></li>
+<li><code>ignoreErrors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 写入底层流时忽略错误。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>colorMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 为此 <code>Console</code> 实例设置颜色支持。
+设置为 <code>true</code> 可在检查值时进行着色。
+设置为 <code>false</code> 会在检查值时禁用着色。
+设置为 <code>'auto'</code> 使颜色支持取决于 <code>isTTY</code> 属性的值和 <code>getColorDepth()</code> 在相应流上返回的值。
+如果同时设置了 <code>inspectOptions.colors</code>，则无法使用此选项。
+<strong>默认值:</strong> <code>'auto'</code>。</li>
+<li><code>inspectOptions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 指定传给 <a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a> 的选项。</li>
+<li><code>groupIndentation</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置组缩进。
+<strong>默认值:</strong> <code>2</code>。</li>
+</ul>
+</li>
+</ul><p>使用一个或两个可写流实例创建新的 <code>Console</code>。
+<code>stdout</code> 是用于打印日志或信息输出的可写流。
+<code>stderr</code> 用于警告或错误输出。
+如果未提供 <code>stderr</code>，则 <code>stdout</code> 用于 <code>stderr</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> output = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'./stdout.log'</span>);
+<span class="hljs-keyword">const</span> errorOutput = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'./stderr.log'</span>);
+<span class="hljs-comment">// 自定义的简单记录器</span>
+<span class="hljs-keyword">const</span> logger = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Console</span>({ <span class="hljs-attr">stdout</span>: output, <span class="hljs-attr">stderr</span>: errorOutput });
+<span class="hljs-comment">// 像控制台一样使用它</span>
+<span class="hljs-keyword">const</span> count = <span class="hljs-number">5</span>;
+logger.<span class="hljs-title function_">log</span>(<span class="hljs-string">'count: %d'</span>, count);
+<span class="hljs-comment">// 在 stdout.log 中：count 5</span></code></pre><p class="">全局的 <code>console</code> 是特殊的 <code>Console</code>，它的输出被发送到 <a href="../process.html#processstdout"><code>process.stdout</code></a> 和 <a href="../process.html#processstderr"><code>process.stderr</code></a>。
+它相当于调用：</p><pre class=""><code class="language-js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Console</span>({ <span class="hljs-attr">stdout</span>: process.<span class="hljs-property">stdout</span>, <span class="hljs-attr">stderr</span>: process.<span class="hljs-property">stderr</span> });</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.2.0, v12.17.0</td>
+<td><p>The <code>groupIndentation</code> option was introduced.</p></td></tr>
+<tr><td>v11.7.0</td>
+<td><p>The <code>inspectOptions</code> option is introduced.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>Console</code> constructor now supports an <code>options</code> argument, and the <code>colorMode</code> option was introduced.</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>The <code>ignoreErrors</code> option was introduced.</p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>stdout</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a></li>
+<li><code>stderr</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a></li>
+<li><code>ignoreErrors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Ignore errors when writing to the underlying
+streams. <strong>Default:</strong> <code>true</code>.</li>
+<li><code>colorMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Set color support for this <code>Console</code> instance.
+Setting to <code>true</code> enables coloring while inspecting values. Setting to
+<code>false</code> disables coloring while inspecting values. Setting to
+<code>'auto'</code> makes color support depend on the value of the <code>isTTY</code> property
+and the value returned by <code>getColorDepth()</code> on the respective stream. This
+option can not be used, if <code>inspectOptions.colors</code> is set as well.
+<strong>Default:</strong> <code>'auto'</code>.</li>
+<li><code>inspectOptions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Specifies options that are passed along to
+<a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a>.</li>
+<li><code>groupIndentation</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Set group indentation.
+<strong>Default:</strong> <code>2</code>.</li>
+</ul>
+</li>
+</ul><p>Creates a new <code>Console</code> with one or two writable stream instances. <code>stdout</code> is a
+writable stream to print log or info output. <code>stderr</code> is used for warning or
+error output. If <code>stderr</code> is not provided, <code>stdout</code> is used for <code>stderr</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> output = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'./stdout.log'</span>);
+<span class="hljs-keyword">const</span> errorOutput = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'./stderr.log'</span>);
+<span class="hljs-comment">// Custom simple logger</span>
+<span class="hljs-keyword">const</span> logger = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Console</span>({ <span class="hljs-attr">stdout</span>: output, <span class="hljs-attr">stderr</span>: errorOutput });
+<span class="hljs-comment">// use it like console</span>
+<span class="hljs-keyword">const</span> count = <span class="hljs-number">5</span>;
+logger.<span class="hljs-title function_">log</span>(<span class="hljs-string">'count: %d'</span>, count);
+<span class="hljs-comment">// In stdout.log: count 5</span></code></pre><p>The global <code>console</code> is a special <code>Console</code> whose output is sent to
+<a href="../process.html#processstdout"><code>process.stdout</code></a> and <a href="../process.html#processstderr"><code>process.stderr</code></a>. It is equivalent to calling:</p><pre><code class="language-js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Console</span>({ <span class="hljs-attr">stdout</span>: process.<span class="hljs-property">stdout</span>, <span class="hljs-attr">stderr</span>: process.<span class="hljs-property">stderr</span> });</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

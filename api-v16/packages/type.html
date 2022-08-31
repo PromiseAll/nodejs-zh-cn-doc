@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>"type" | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>"type"</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_type" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/type.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/type.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#type.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.2.0, v12.17.0</td>
+<td><p>取消标记 <code>--experimental-modules</code>。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p><span>新增于: v12.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p><code>"type"</code> 字段定义了 Node.js 用于所有 <code>.js</code> 文件的模块格式，这些 <code>.js</code> 文件将该 <code>package.json</code> 文件作为其最近的父文件。</p><p class="">当最近的父 <code>package.json</code> 文件包含值为 <code>"module"</code> 的顶级字段 <code>"type"</code> 时，以 <code>.js</code> 结尾的文件将作为 ES 模块加载。</p><p class="">最近的父 <code>package.json</code> 被定义为在当前文件夹中搜索时找到的第一个 <code>package.json</code>，该文件夹的父文件夹，依此类推，直到到达 node_modules 文件夹或卷根。</p><pre class=""><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span>
+<span class="hljs-punctuation">}</span></code></pre><pre class=""><code class="language-bash"><span class="hljs-comment"># 在与前面的 package.json 相同的文件夹中</span>
+node my-app.js <span class="hljs-comment"># 作为 ES 模块运行</span></code></pre><p class="">如果最近的父 <code>package.json</code> 缺少 <code>"type"</code> 字段，或包含 <code>"type": "commonjs"</code>，则 <code>.js</code> 文件将被视为 <a href="../modules.html">CommonJS</a>。
+如果到达卷根目录但未找到 <code>package.json</code>，则将 <code>.js</code> 文件视为 <a href="../modules.html">CommonJS</a>。</p><p class="">如果最近的父 <code>package.json</code> 包含 <code>"type": "module"</code>，则 <code>.js</code> 文件的 <code>import</code> 语句被视为 ES 模块。</p><pre class=""><code class="language-js"><span class="hljs-comment">// my-app.js, 同上示例的一部分</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./startup.js'</span>; <span class="hljs-comment">// 由于 package.json 加载为 ES 模块</span></code></pre><p class="">无论 <code>"type"</code> 字段的值如何，<code>.mjs</code> 文件始终被视为 ES 模块，而 <code>.cjs</code> 文件始终被视为 CommonJS。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v13.2.0, v12.17.0</td>
+<td><p>Unflag <code>--experimental-modules</code>.</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p><span>Added in: v12.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li>Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>The <code>"type"</code> field defines the module format that Node.js uses for all
+<code>.js</code> files that have that <code>package.json</code> file as their nearest parent.</p><p>Files ending with <code>.js</code> are loaded as ES modules when the nearest parent
+<code>package.json</code> file contains a top-level field <code>"type"</code> with a value of
+<code>"module"</code>.</p><p>The nearest parent <code>package.json</code> is defined as the first <code>package.json</code> found
+when searching in the current folder, that folder’s parent, and so on up
+until a node_modules folder or the volume root is reached.</p><pre><code class="language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span>
+<span class="hljs-punctuation">}</span></code></pre><pre><code class="language-bash"><span class="hljs-comment"># In same folder as preceding package.json</span>
+node my-app.js <span class="hljs-comment"># Runs as ES module</span></code></pre><p>If the nearest parent <code>package.json</code> lacks a <code>"type"</code> field, or contains
+<code>"type": "commonjs"</code>, <code>.js</code> files are treated as <a href="../modules.html">CommonJS</a>. If the volume
+root is reached and no <code>package.json</code> is found, <code>.js</code> files are treated as
+<a href="../modules.html">CommonJS</a>.</p><p><code>import</code> statements of <code>.js</code> files are treated as ES modules if the nearest
+parent <code>package.json</code> contains <code>"type": "module"</code>.</p><pre><code class="language-js"><span class="hljs-comment">// my-app.js, part of the same example as above</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./startup.js'</span>; <span class="hljs-comment">// Loaded as ES module because of package.json</span></code></pre><p>Regardless of the value of the <code>"type"</code> field, <code>.mjs</code> files are always treated
+as ES modules and <code>.cjs</code> files are always treated as CommonJS.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

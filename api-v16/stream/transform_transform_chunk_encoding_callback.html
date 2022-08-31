@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>transform._transform(chunk, encoding, callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>transform._transform(chunk, encoding, callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_transform_transform_chunk_encoding_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/transform_transform_chunk_encoding_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/transform_transform_chunk_encoding_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#transform_transformchunk-encoding-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><code>chunk</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 要转换的 <code>Buffer</code>，从 <code>string</code> 转换为 <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a>。
+如果流的 <code>decodeStrings</code> 选项是 <code>false</code> 或者流在对象模式下运行，则块将不会被转换，而是传给 <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a> 的任何内容。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果块是字符串，则这是编码类型。
+如果块是缓冲区，则这是特殊值 <code>'buffer'</code>。
+在这种情况下忽略它。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在处理提供的 <code>chunk</code> 后调用的回调函数（可选地带有错误参数和数据）。</li>
+</ul><p>此函数不得由应用程序代码直接调用。
+它应该由子类实现，并且只能由内部 <code>Readable</code> 类方法调用。</p><p class="">所有 <code>Transform</code> 流实现都必须提供 <code>_transform()</code> 方法来接受输入并产生输出。
+<code>transform._transform()</code> 实现处理写入的字节，计算输出，然后使用 <code>transform.push()</code> 方法将该输出传给可读部分。</p><p class=""><code>transform.push()</code> 方法可以被调用零次或多次以从单个输入块生成输出，这取决于作为块的结果要输出多少。</p><p class="">任何给定的输入数据块都可能不会产生任何输出。</p><p class=""><code>callback</code> 函数必须在当前块被完全消耗时才被调用。
+如果在处理输入时发生错误，则传给 <code>callback</code> 的第一个参数必须是 <code>Error</code> 对象，否则传给 <code>null</code>。
+如果将第二个参数传给 <code>callback</code>，它将被转发到 <code>transform.push()</code> 方法。
+换句话说，以下内容是等效的：</p><pre class=""><code class="language-js">transform.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">_transform</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">data, encoding, callback</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(data);
+  <span class="hljs-title function_">callback</span>();
+};
+
+transform.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">_transform</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">data, encoding, callback</span>) {
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, data);
+};</code></pre><p class=""><code>transform._transform()</code> 方法以下划线为前缀，因为它是定义它的类的内部方法，不应由用户程序直接调用。</p><p class=""><code>transform._transform()</code> 永远不会被并行调用；流实现了一个队列机制，为了接收下一个块，必须同步或异步调用 <code>callback</code>。</p></div>
+          <div id="content_right"><ul>
+<li><code>chunk</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> The <code>Buffer</code> to be transformed, converted from
+the <code>string</code> passed to <a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a>. If the stream's
+<code>decodeStrings</code> option is <code>false</code> or the stream is operating in object mode,
+the chunk will not be converted &amp; will be whatever was passed to
+<a href="../stream.html#writablewritechunk-encoding-callback"><code>stream.write()</code></a>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If the chunk is a string, then this is the
+encoding type. If chunk is a buffer, then this is the special
+value <code>'buffer'</code>. Ignore it in that case.</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> A callback function (optionally with an error
+argument and data) to be called after the supplied <code>chunk</code> has been
+processed.</li>
+</ul><p>This function MUST NOT be called by application code directly. It should be
+implemented by child classes, and called by the internal <code>Readable</code> class
+methods only.</p><p>All <code>Transform</code> stream implementations must provide a <code>_transform()</code>
+method to accept input and produce output. The <code>transform._transform()</code>
+implementation handles the bytes being written, computes an output, then passes
+that output off to the readable portion using the <code>transform.push()</code> method.</p><p>The <code>transform.push()</code> method may be called zero or more times to generate
+output from a single input chunk, depending on how much is to be output
+as a result of the chunk.</p><p>It is possible that no output is generated from any given chunk of input data.</p><p>The <code>callback</code> function must be called only when the current chunk is completely
+consumed. The first argument passed to the <code>callback</code> must be an <code>Error</code> object
+if an error occurred while processing the input or <code>null</code> otherwise. If a second
+argument is passed to the <code>callback</code>, it will be forwarded on to the
+<code>transform.push()</code> method. In other words, the following are equivalent:</p><pre><code class="language-js">transform.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">_transform</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">data, encoding, callback</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(data);
+  <span class="hljs-title function_">callback</span>();
+};
+
+transform.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">_transform</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">data, encoding, callback</span>) {
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, data);
+};</code></pre><p>The <code>transform._transform()</code> method is prefixed with an underscore because it
+is internal to the class that defines it, and should never be called directly by
+user programs.</p><p><code>transform._transform()</code> is never called in parallel; streams implement a
+queue mechanism, and to receive the next chunk, <code>callback</code> must be
+called, either synchronously or asynchronously.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable._construct(callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable._construct(callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_construct_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_construct_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readable_constructcallback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div><ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当流完成初始化时调用此函数（可选地带有错误参数）。</li>
+</ul><p>不得直接调用 <code>_construct()</code> 方法。
+它可以由子类实现，如果是，则只能由内部 <code>Readable</code> 类方法调用。</p><p class="">这个可选函数将由流的构造函数在下一个滴答中调度，延迟任何 <code>_read()</code> 和 <code>_destroy()</code> 调用，直到调用 <code>callback</code>。
+这对于在使用流之前初始化状态或异步初始化资源很有用。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Readable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ReadStream</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Readable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">filename</span>) {
+    <span class="hljs-variable language_">super</span>();
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">filename</span> = filename;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span> = <span class="hljs-literal">null</span>;
+  }
+  <span class="hljs-title function_">_construct</span>(<span class="hljs-params">callback</span>) {
+    fs.<span class="hljs-title function_">open</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">filename</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-title function_">callback</span>(err);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span> = fd;
+        <span class="hljs-title function_">callback</span>();
+      }
+    });
+  }
+  <span class="hljs-title function_">_read</span>(<span class="hljs-params">n</span>) {
+    <span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(n);
+    fs.<span class="hljs-title function_">read</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span>, buf, <span class="hljs-number">0</span>, n, <span class="hljs-literal">null</span>, <span class="hljs-function">(<span class="hljs-params">err, bytesRead</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">destroy</span>(err);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(bytesRead &gt; <span class="hljs-number">0</span> ? buf.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, bytesRead) : <span class="hljs-literal">null</span>);
+      }
+    });
+  }
+  <span class="hljs-title function_">_destroy</span>(<span class="hljs-params">err, callback</span>) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span>) {
+      fs.<span class="hljs-title function_">close</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span>, <span class="hljs-function">(<span class="hljs-params">er</span>) =&gt;</span> <span class="hljs-title function_">callback</span>(er || err));
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-title function_">callback</span>(err);
+    }
+  }
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v15.0.0</span>
+</div><ul>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Call this function (optionally with an error
+argument) when the stream has finished initializing.</li>
+</ul><p>The <code>_construct()</code> method MUST NOT be called directly. It may be implemented
+by child classes, and if so, will be called by the internal <code>Readable</code>
+class methods only.</p><p>This optional function will be scheduled in the next tick by the stream
+constructor, delaying any <code>_read()</code> and <code>_destroy()</code> calls until <code>callback</code> is
+called. This is useful to initialize state or asynchronously initialize
+resources before the stream can be used.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Readable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ReadStream</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Readable</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">filename</span>) {
+    <span class="hljs-variable language_">super</span>();
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">filename</span> = filename;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span> = <span class="hljs-literal">null</span>;
+  }
+  <span class="hljs-title function_">_construct</span>(<span class="hljs-params">callback</span>) {
+    fs.<span class="hljs-title function_">open</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">filename</span>, <span class="hljs-function">(<span class="hljs-params">err, fd</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-title function_">callback</span>(err);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span> = fd;
+        <span class="hljs-title function_">callback</span>();
+      }
+    });
+  }
+  <span class="hljs-title function_">_read</span>(<span class="hljs-params">n</span>) {
+    <span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(n);
+    fs.<span class="hljs-title function_">read</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span>, buf, <span class="hljs-number">0</span>, n, <span class="hljs-literal">null</span>, <span class="hljs-function">(<span class="hljs-params">err, bytesRead</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">destroy</span>(err);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">push</span>(bytesRead &gt; <span class="hljs-number">0</span> ? buf.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, bytesRead) : <span class="hljs-literal">null</span>);
+      }
+    });
+  }
+  <span class="hljs-title function_">_destroy</span>(<span class="hljs-params">err, callback</span>) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span>) {
+      fs.<span class="hljs-title function_">close</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">fd</span>, <span class="hljs-function">(<span class="hljs-params">er</span>) =&gt;</span> <span class="hljs-title function_">callback</span>(er || err));
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-title function_">callback</span>(err);
+    }
+  }
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

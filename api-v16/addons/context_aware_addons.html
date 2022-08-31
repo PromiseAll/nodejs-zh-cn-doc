@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>上下文感知的插件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>上下文感知的插件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_context_aware_addons" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/context_aware_addons.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/context_aware_addons.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#context-aware-addons.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在某些环境中，可能需要在多个上下文中多次加载 Node.js 插件。
+例如，<a href="https://electronjs.org/" rel="nofollow">Electron</a> 运行时在单个进程中运行多个 Node.js 实例。
+每个实例都有自己的 <code>require()</code> 缓存，因此当通过 <code>require()</code> 加载时，每个实例都需要原生插件才能正确运行。
+这意味着插件必须支持多个初始化。</p><p class="">可以使用宏 <code>NODE_MODULE_INITIALIZER</code> 构建上下文感知插件，该宏扩展为 Node.js 在加载插件时期望找到的函数的名称。
+因此可以像下面的示例一样初始化插件：</p><pre class=""><code class="language-cpp"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> v8;
+
+<span class="hljs-keyword">extern</span> <span class="hljs-string">"C"</span> <span class="hljs-function">NODE_MODULE_EXPORT <span class="hljs-type">void</span>
+<span class="hljs-title">NODE_MODULE_INITIALIZER</span><span class="hljs-params">(Local&lt;Object&gt; exports,
+                        Local&lt;Value&gt; <span class="hljs-keyword">module</span>,
+                        Local&lt;Context&gt; context)</span> </span>{
+  <span class="hljs-comment">/* 在此处执行插件初始化步骤。 */</span>
+}</code></pre><p class="">另一种选择是使用宏 <code>NODE_MODULE_INIT()</code>，它也将构建上下文感知插件。
+与 <code>NODE_MODULE()</code> 不同，<code>NODE_MODULE()</code> 用于围绕给定的 addon 初始化函数构造插件，而 <code>NODE_MODULE_INIT()</code> 用作此类初始化器的声明，然后是函数体。</p><p class="">在调用 <code>NODE_MODULE_INIT()</code> 之后，可以在函数体内使用以下三个变量：</p><ul class="">
+<li><code>Local&lt;Object&gt; exports</code>，</li>
+<li><code>Local&lt;Value&gt; module</code>，和</li>
+<li><code>Local&lt;Context&gt; context</code></li>
+</ul><p class="">选择构建上下文感知插件承担着仔细管理全局静态数据的责任。
+由于插件可能被多次加载，甚至可能来自不同的线程，因此必须适当保护存储在插件中的任何全局静态数据，并且不得包含对 JavaScript 对象的任何持久引用。
+这样做的原因是 JavaScript 对象仅在上下文中有效，并且当从错误的上下文或从与创建它们的线程不同的线程访问时，可能会导致崩溃。</p><p class="">通过执行以下步骤，可以构造上下文感知插件以避免全局静态数据：</p><ul class="">
+<li>定义一个类，该类将保存每个插件实例数据并具有该形式的静态成员
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">DeleteInstance</span><span class="hljs-params">(<span class="hljs-type">void</span>* data)</span> </span>{
+  <span class="hljs-comment">// 将 `data` 转换为类的实例并将其删除。</span>
+}</code></pre>
+</li>
+<li>在插件初始值设定项中堆分配此类的实例。
+这可以使用 <code>new</code> 关键字来完成。</li>
+<li>调用 <code>node::AddEnvironmentCleanupHook()</code>，将上面创建的实例和指向 <code>DeleteInstance()</code> 的指针传给它。
+这将确保在拆除环境时删除实例。</li>
+<li>将类的实例存储在 <code>v8::External</code> 中，并且</li>
+<li>通过将 <code>v8::External</code> 传给创建原生支持的 ​​JavaScript 函数的 <code>v8::FunctionTemplate::New()</code> 或 <code>v8::Function::New()</code>，将 <code>v8::External</code> 传给所有暴露给 JavaScript 的方法。
+<code>v8::FunctionTemplate::New()</code> 或 <code>v8::Function::New()</code> 的第三个参数接受 <code>v8::External</code> 并使用 <code>v8::FunctionCallbackInfo::Data()</code> 方法使其在原生回调中可用。</li>
+</ul><p class="">这将确保每个插件实例数据到达可以从 JavaScript 调用的每个绑定。
+每个插件实例数据还必须传入到插件可能创建的任何异步回调中。</p><p class="">以下示例说明了上下文感知插件的实现：</p><pre class=""><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> v8;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">AddonData</span> {
+ <span class="hljs-keyword">public</span>:
+  <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">AddonData</span><span class="hljs-params">(Isolate* isolate)</span>:
+      call_count(<span class="hljs-number">0</span>) {</span>
+    <span class="hljs-comment">// 确保在环境清理时删除此每个插件实例的数据。</span>
+    node::<span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, DeleteInstance, <span class="hljs-keyword">this</span>);
+  }
+
+  <span class="hljs-comment">// 每个插件的数据。</span>
+  <span class="hljs-type">int</span> call_count;
+
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">DeleteInstance</span><span class="hljs-params">(<span class="hljs-type">void</span>* data)</span> </span>{
+    <span class="hljs-keyword">delete</span> <span class="hljs-built_in">static_cast</span>&lt;AddonData*&gt;(data);
+  }
+};
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">Method</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; info)</span> </span>{
+  <span class="hljs-comment">// 检索每个插件实例的数据。</span>
+  AddonData* data =
+      <span class="hljs-built_in">reinterpret_cast</span>&lt;AddonData*&gt;(info.<span class="hljs-built_in">Data</span>().<span class="hljs-built_in">As</span>&lt;External&gt;()-&gt;<span class="hljs-built_in">Value</span>());
+  data-&gt;call_count++;
+  info.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>((<span class="hljs-type">double</span>)data-&gt;call_count);
+}
+
+<span class="hljs-comment">// 将此插件初始化为上下文感知。</span>
+<span class="hljs-built_in">NODE_MODULE_INIT</span>(<span class="hljs-comment">/* exports, module, context */</span>) {
+  Isolate* isolate = context-&gt;<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-comment">// 为该插件实例创建新的 `AddonData` 实例，</span>
+  <span class="hljs-comment">// 并将其生命周期与 Node.js 环境的生命周期联系起来。</span>
+  AddonData* data = <span class="hljs-keyword">new</span> <span class="hljs-built_in">AddonData</span>(isolate);
+
+  <span class="hljs-comment">// 将数据包装在 `v8::External` 中，</span>
+  <span class="hljs-comment">// 以便可以将其传给暴露的方法。</span>
+  Local&lt;External&gt; external = External::<span class="hljs-built_in">New</span>(isolate, data);
+
+  <span class="hljs-comment">// 将方法 `Method` 暴露给 JavaScript，</span>
+  <span class="hljs-comment">// 并通过将 `external` 作为第三个参数传给 `FunctionTemplate` 构造函数</span>
+  <span class="hljs-comment">// 来确保它接收到上面创建的每个插件实例的数据。</span>
+  exports-&gt;<span class="hljs-built_in">Set</span>(context,
+               String::<span class="hljs-built_in">NewFromUtf8</span>(isolate, <span class="hljs-string">"method"</span>).<span class="hljs-built_in">ToLocalChecked</span>(),
+               FunctionTemplate::<span class="hljs-built_in">New</span>(isolate, Method, external)
+                  -&gt;<span class="hljs-built_in">GetFunction</span>(context).<span class="hljs-built_in">ToLocalChecked</span>()).<span class="hljs-built_in">FromJust</span>();
+}</code></pre></div>
+          <div id="content_right"><p>There are environments in which Node.js addons may need to be loaded multiple
+times in multiple contexts. For example, the <a href="https://electronjs.org/" rel="nofollow">Electron</a> runtime runs multiple
+instances of Node.js in a single process. Each instance will have its own
+<code>require()</code> cache, and thus each instance will need a native addon to behave
+correctly when loaded via <code>require()</code>. This means that the addon
+must support multiple initializations.</p><p>A context-aware addon can be constructed by using the macro
+<code>NODE_MODULE_INITIALIZER</code>, which expands to the name of a function which Node.js
+will expect to find when it loads an addon. An addon can thus be initialized as
+in the following example:</p><pre><code class="language-cpp"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> v8;
+
+<span class="hljs-keyword">extern</span> <span class="hljs-string">"C"</span> <span class="hljs-function">NODE_MODULE_EXPORT <span class="hljs-type">void</span>
+<span class="hljs-title">NODE_MODULE_INITIALIZER</span><span class="hljs-params">(Local&lt;Object&gt; exports,
+                        Local&lt;Value&gt; <span class="hljs-keyword">module</span>,
+                        Local&lt;Context&gt; context)</span> </span>{
+  <span class="hljs-comment">/* Perform addon initialization steps here. */</span>
+}</code></pre><p>Another option is to use the macro <code>NODE_MODULE_INIT()</code>, which will also
+construct a context-aware addon. Unlike <code>NODE_MODULE()</code>, which is used to
+construct an addon around a given addon initializer function,
+<code>NODE_MODULE_INIT()</code> serves as the declaration of such an initializer to be
+followed by a function body.</p><p>The following three variables may be used inside the function body following an
+invocation of <code>NODE_MODULE_INIT()</code>:</p><ul>
+<li><code>Local&lt;Object&gt; exports</code>,</li>
+<li><code>Local&lt;Value&gt; module</code>, and</li>
+<li><code>Local&lt;Context&gt; context</code></li>
+</ul><p>The choice to build a context-aware addon carries with it the responsibility of
+carefully managing global static data. Since the addon may be loaded multiple
+times, potentially even from different threads, any global static data stored
+in the addon must be properly protected, and must not contain any persistent
+references to JavaScript objects. The reason for this is that JavaScript
+objects are only valid in one context, and will likely cause a crash when
+accessed from the wrong context or from a different thread than the one on which
+they were created.</p><p>The context-aware addon can be structured to avoid global static data by
+performing the following steps:</p><ul>
+<li>Define a class which will hold per-addon-instance data and which has a static
+member of the form
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">DeleteInstance</span><span class="hljs-params">(<span class="hljs-type">void</span>* data)</span> </span>{
+  <span class="hljs-comment">// Cast `data` to an instance of the class and delete it.</span>
+}</code></pre>
+</li>
+<li>Heap-allocate an instance of this class in the addon initializer. This can be
+accomplished using the <code>new</code> keyword.</li>
+<li>Call <code>node::AddEnvironmentCleanupHook()</code>, passing it the above-created
+instance and a pointer to <code>DeleteInstance()</code>. This will ensure the instance is
+deleted when the environment is torn down.</li>
+<li>Store the instance of the class in a <code>v8::External</code>, and</li>
+<li>Pass the <code>v8::External</code> to all methods exposed to JavaScript by passing it
+to <code>v8::FunctionTemplate::New()</code> or <code>v8::Function::New()</code> which creates the
+native-backed JavaScript functions. The third parameter of
+<code>v8::FunctionTemplate::New()</code> or <code>v8::Function::New()</code>  accepts the
+<code>v8::External</code> and makes it available in the native callback using the
+<code>v8::FunctionCallbackInfo::Data()</code> method.</li>
+</ul><p>This will ensure that the per-addon-instance data reaches each binding that can
+be called from JavaScript. The per-addon-instance data must also be passed into
+any asynchronous callbacks the addon may create.</p><p>The following example illustrates the implementation of a context-aware addon:</p><pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> v8;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">AddonData</span> {
+ <span class="hljs-keyword">public</span>:
+  <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">AddonData</span><span class="hljs-params">(Isolate* isolate)</span>:
+      call_count(<span class="hljs-number">0</span>) {</span>
+    <span class="hljs-comment">// Ensure this per-addon-instance data is deleted at environment cleanup.</span>
+    node::<span class="hljs-built_in">AddEnvironmentCleanupHook</span>(isolate, DeleteInstance, <span class="hljs-keyword">this</span>);
+  }
+
+  <span class="hljs-comment">// Per-addon data.</span>
+  <span class="hljs-type">int</span> call_count;
+
+  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">DeleteInstance</span><span class="hljs-params">(<span class="hljs-type">void</span>* data)</span> </span>{
+    <span class="hljs-keyword">delete</span> <span class="hljs-built_in">static_cast</span>&lt;AddonData*&gt;(data);
+  }
+};
+
+<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">Method</span><span class="hljs-params">(<span class="hljs-type">const</span> v8::FunctionCallbackInfo&lt;v8::Value&gt;&amp; info)</span> </span>{
+  <span class="hljs-comment">// Retrieve the per-addon-instance data.</span>
+  AddonData* data =
+      <span class="hljs-built_in">reinterpret_cast</span>&lt;AddonData*&gt;(info.<span class="hljs-built_in">Data</span>().<span class="hljs-built_in">As</span>&lt;External&gt;()-&gt;<span class="hljs-built_in">Value</span>());
+  data-&gt;call_count++;
+  info.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>((<span class="hljs-type">double</span>)data-&gt;call_count);
+}
+
+<span class="hljs-comment">// Initialize this addon to be context-aware.</span>
+<span class="hljs-built_in">NODE_MODULE_INIT</span>(<span class="hljs-comment">/* exports, module, context */</span>) {
+  Isolate* isolate = context-&gt;<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-comment">// Create a new instance of `AddonData` for this instance of the addon and</span>
+  <span class="hljs-comment">// tie its life cycle to that of the Node.js environment.</span>
+  AddonData* data = <span class="hljs-keyword">new</span> <span class="hljs-built_in">AddonData</span>(isolate);
+
+  <span class="hljs-comment">// Wrap the data in a `v8::External` so we can pass it to the method we</span>
+  <span class="hljs-comment">// expose.</span>
+  Local&lt;External&gt; external = External::<span class="hljs-built_in">New</span>(isolate, data);
+
+  <span class="hljs-comment">// Expose the method `Method` to JavaScript, and make sure it receives the</span>
+  <span class="hljs-comment">// per-addon-instance data we created above by passing `external` as the</span>
+  <span class="hljs-comment">// third parameter to the `FunctionTemplate` constructor.</span>
+  exports-&gt;<span class="hljs-built_in">Set</span>(context,
+               String::<span class="hljs-built_in">NewFromUtf8</span>(isolate, <span class="hljs-string">"method"</span>).<span class="hljs-built_in">ToLocalChecked</span>(),
+               FunctionTemplate::<span class="hljs-built_in">New</span>(isolate, Method, external)
+                  -&gt;<span class="hljs-built_in">GetFunction</span>(context).<span class="hljs-built_in">ToLocalChecked</span>()).<span class="hljs-built_in">FromJust</span>();
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

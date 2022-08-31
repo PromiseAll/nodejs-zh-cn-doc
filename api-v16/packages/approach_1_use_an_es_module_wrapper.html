@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>方法1：使用 ES 模块封装器 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>方法1：使用 ES 模块封装器</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_approach_1_use_an_es_module_wrapper" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/approach_1_use_an_es_module_wrapper.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/approach_1_use_an_es_module_wrapper.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#approach-1-use-an-es-module-wrapper.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在 CommonJS 中编写包或将 ES 模块源代码转换为 CommonJS，并创建定义命名导出的 ES 模块封装文件。
+使用<a href="../packages.html#conditional-exports">条件导出</a>, <code>import</code> 使用 ES 模块封装器，<code>require</code> 使用 CommonJS 入口点。</p><pre class=""><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./wrapper.mjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"require"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">前面的示例使用显式扩展 <code>.mjs</code> 和 <code>.cjs</code>。
+如果你的文件使用 <code>.js</code> 扩展名，<code>"type": "module"</code> 会导致这些文件被视为 ES 模块，就像 <code>"type": "commonjs"</code> 会导致它们被视为 CommonJS。
+参阅<a href="../esm.html#enabling">启用</a>。</p><pre class=""><code class="language-js cjs"><span class="hljs-comment">// ./node_modules/pkg/index.cjs</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">name</span> = <span class="hljs-string">'value'</span>;</code></pre><pre class=""><code class="language-js"><span class="hljs-comment">// ./node_modules/pkg/wrapper.mjs</span>
+<span class="hljs-keyword">import</span> cjsModule <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.cjs'</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = cjsModule.<span class="hljs-property">name</span>;</code></pre><p class="">在这个例子中，<code>import { name } from 'pkg'</code> 中的 <code>name</code> 与 <code>const { name } = require('pkg')</code> 中的 <code>name</code> 是相同的单例。
+因此，当比较两个 <code>name</code> 时，<code>===</code> 返回 <code>true</code>，避免了发散说明符的危险。</p><p class="">如果模块不是简单的命名导出列表，而是包含独特的函数或对象导出，如 <code>module.exports = function () { ... }</code>，或者如果需要封装器支持 <code>import pkg from 'pkg'</code> 模式，则封装器将被编写为可选地导出默认值以及任何命名的导出：</p><pre class=""><code class="language-js"><span class="hljs-keyword">import</span> cjsModule <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.cjs'</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = cjsModule.<span class="hljs-property">name</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> cjsModule;</code></pre><p class="">此方法适用于以下任何用例：</p><ul class="">
+<li>该包目前是用 CommonJS 编写的，作者不希望将其重构为 ES 模块语法，而是希望为 ES 模块使用者提供命名导出。</li>
+<li>该包还有其他依赖它的包，最终用户可能会同时安装这个包和那些其他包。
+比如 <code>utilities</code> 包直接在应用中使用，<code>utilities-plus</code> 包给 <code>utilities</code> 增加了一些功能。
+因为封装器会导出底层的 CommonJS 文件，所以 <code>utilities-plus</code> 是用 CommonJS 还是 ES 模块语法编写的并不重要；它会以任何一种方式工作。</li>
+<li>包存储内部状态，包作者宁愿不重构包以隔离其状态管理。
+请参阅下一章节。</li>
+</ul><p class="">此方法的变体不需要消费者有条件导出，可以添加一个导出，例如 <code>"./module"</code>，指向包的全 ES 模块语法版本。
+这可以通过 <code>import 'pkg/module'</code> 由确定 CommonJS 版本不会在应用程序中的任何地方加载的用户使用，例如通过依赖项；或者如果 CommonJS 版本可以加载但不影响 ES 模块版本（例如, 因为包是无状态的）：</p><pre class=""><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./module"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./wrapper.mjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre></div>
+          <div id="content_right"><p>Write the package in CommonJS or transpile ES module sources into CommonJS, and
+create an ES module wrapper file that defines the named exports. Using
+<a href="../packages.html#conditional-exports">Conditional exports</a>, the ES module wrapper is used for <code>import</code> and the
+CommonJS entry point for <code>require</code>.</p><pre><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./wrapper.mjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"require"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>The preceding example uses explicit extensions <code>.mjs</code> and <code>.cjs</code>.
+If your files use the <code>.js</code> extension, <code>"type": "module"</code> will cause such files
+to be treated as ES modules, just as <code>"type": "commonjs"</code> would cause them
+to be treated as CommonJS.
+See <a href="../esm.html#enabling">Enabling</a>.</p><pre><code class="language-js cjs"><span class="hljs-comment">// ./node_modules/pkg/index.cjs</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">name</span> = <span class="hljs-string">'value'</span>;</code></pre><pre><code class="language-js"><span class="hljs-comment">// ./node_modules/pkg/wrapper.mjs</span>
+<span class="hljs-keyword">import</span> cjsModule <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.cjs'</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = cjsModule.<span class="hljs-property">name</span>;</code></pre><p>In this example, the <code>name</code> from <code>import { name } from 'pkg'</code> is the same
+singleton as the <code>name</code> from <code>const { name } = require('pkg')</code>. Therefore <code>===</code>
+returns <code>true</code> when comparing the two <code>name</code>s and the divergent specifier hazard
+is avoided.</p><p>If the module is not simply a list of named exports, but rather contains a
+unique function or object export like <code>module.exports = function () { ... }</code>,
+or if support in the wrapper for the <code>import pkg from 'pkg'</code> pattern is desired,
+then the wrapper would instead be written to export the default optionally
+along with any named exports as well:</p><pre><code class="language-js"><span class="hljs-keyword">import</span> cjsModule <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.cjs'</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = cjsModule.<span class="hljs-property">name</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> cjsModule;</code></pre><p>This approach is appropriate for any of the following use cases:</p><ul>
+<li>The package is currently written in CommonJS and the author would prefer not
+to refactor it into ES module syntax, but wishes to provide named exports for
+ES module consumers.</li>
+<li>The package has other packages that depend on it, and the end user might
+install both this package and those other packages. For example a <code>utilities</code>
+package is used directly in an application, and a <code>utilities-plus</code> package
+adds a few more functions to <code>utilities</code>. Because the wrapper exports
+underlying CommonJS files, it doesn’t matter if <code>utilities-plus</code> is written in
+CommonJS or ES module syntax; it will work either way.</li>
+<li>The package stores internal state, and the package author would prefer not to
+refactor the package to isolate its state management. See the next section.</li>
+</ul><p>A variant of this approach not requiring conditional exports for consumers could
+be to add an export, e.g. <code>"./module"</code>, to point to an all-ES module-syntax
+version of the package. This could be used via <code>import 'pkg/module'</code> by users
+who are certain that the CommonJS version will not be loaded anywhere in the
+application, such as by dependencies; or if the CommonJS version can be loaded
+but doesn’t affect the ES module version (for example, because the package is
+stateless):</p><pre><code class="language-json"><span class="hljs-comment">// ./node_modules/pkg/package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./index.cjs"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./module"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./wrapper.mjs"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

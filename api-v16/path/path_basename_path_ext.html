@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>path.basename(path[, ext]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-path">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>path.basename(path[, ext])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../path.html#path_path_basename_path_ext" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/path/path_basename_path_ext.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/path/path_basename_path_ext.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/path/#pathbasenamepath-ext.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v6.0.0</td>
+<td><p>传入非字符串作为 <code>path</code> 参数现在将抛出错误。</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>新增于: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>ext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 可选的文件扩展名</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p><code>path.basename()</code> 方法返回 <code>path</code> 的最后一部分，类似于 Unix <code>basename</code> 命令。
+尾随的目录分隔符被忽略，见 <a href="../path.html#pathsep"><code>path.sep</code></a>。</p><pre class=""><code class="language-js">path.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'/foo/bar/baz/asdf/quux.html'</span>);
+<span class="hljs-comment">// 返回: 'quux.html'</span>
+
+path.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'/foo/bar/baz/asdf/quux.html'</span>, <span class="hljs-string">'.html'</span>);
+<span class="hljs-comment">// 返回: 'quux'</span></code></pre><p class="">尽管 Windows 通常以不区分大小写的方式处理文件名（包括文件扩展名），但此函数不会。
+例如，<code>C:\\foo.html</code> 和 <code>C:\\foo.HTML</code> 指的是同一个文件，但 <code>basename</code> 将扩展名视为区分大小写的字符串：</p><pre class=""><code class="language-js">path.<span class="hljs-property">win32</span>.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'C:\\foo.html'</span>, <span class="hljs-string">'.html'</span>);
+<span class="hljs-comment">// 返回: 'foo'</span>
+
+path.<span class="hljs-property">win32</span>.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'C:\\foo.HTML'</span>, <span class="hljs-string">'.html'</span>);
+<span class="hljs-comment">// 返回: 'foo.HTML'</span></code></pre><p class="">如果 <code>path</code> 不是字符串，或者如果给定 <code>ext</code> 并且不是字符串，则抛出 <a href="../errors.html#class-typeerror"><code>TypeError</code></a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v6.0.0</td>
+<td><p>Passing a non-string as the <code>path</code> argument will throw now.</p></td></tr>
+<tr><td>v0.1.25</td>
+<td><p><span>Added in: v0.1.25</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>ext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> An optional file extension</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>The <code>path.basename()</code> method returns the last portion of a <code>path</code>, similar to
+the Unix <code>basename</code> command. Trailing directory separators are ignored, see
+<a href="../path.html#pathsep"><code>path.sep</code></a>.</p><pre><code class="language-js">path.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'/foo/bar/baz/asdf/quux.html'</span>);
+<span class="hljs-comment">// Returns: 'quux.html'</span>
+
+path.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'/foo/bar/baz/asdf/quux.html'</span>, <span class="hljs-string">'.html'</span>);
+<span class="hljs-comment">// Returns: 'quux'</span></code></pre><p>Although Windows usually treats file names, including file extensions, in a
+case-insensitive manner, this function does not. For example, <code>C:\\foo.html</code> and
+<code>C:\\foo.HTML</code> refer to the same file, but <code>basename</code> treats the extension as a
+case-sensitive string:</p><pre><code class="language-js">path.<span class="hljs-property">win32</span>.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'C:\\foo.html'</span>, <span class="hljs-string">'.html'</span>);
+<span class="hljs-comment">// Returns: 'foo'</span>
+
+path.<span class="hljs-property">win32</span>.<span class="hljs-title function_">basename</span>(<span class="hljs-string">'C:\\foo.HTML'</span>, <span class="hljs-string">'.html'</span>);
+<span class="hljs-comment">// Returns: 'foo.HTML'</span></code></pre><p>A <a href="../errors.html#class-typeerror"><code>TypeError</code></a> is thrown if <code>path</code> is not a string or if <code>ext</code> is given
+and is not a string.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

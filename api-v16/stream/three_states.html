@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>三种状态 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>三种状态</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_three_states" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/three_states.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/three_states.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#three-states.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>Readable</code> 流的操作的"两种模式"是对 <code>Readable</code> 流实现中发生的更复杂的内部状态管理的简化抽象。</p><p class="">具体来说，在任何给定的时间点，每个 <code>Readable</code> 都处于三种可能的状态之一：</p><ul class="">
+<li><code>readable.readableFlowing === null</code></li>
+<li><code>readable.readableFlowing === false</code></li>
+<li><code>readable.readableFlowing === true</code></li>
+</ul><p class="">当 <code>readable.readableFlowing</code> 为 <code>null</code> 时，则不提供消费流数据的机制。
+因此，流不会生成数据。
+在此状态下，为 <code>'data'</code> 事件绑定监听器、调用 <code>readable.pipe()</code> 方法、或调用 <code>readable.resume()</code> 方法会将 <code>readable.readableFlowing</code> 切换到 <code>true</code>，从而使 <code>Readable</code> 在生成数据时开始主动触发事件。</p><p class="">调用<code>readable.pause()</code>、<code>readable.unpipe()</code>、或者接收背压都会导致 <code>readable.readableFlowing</code> 被设置为 <code>false</code>，暂时停止事件的流动，但不会停止数据的生成。
+在此状态下，为 <code>'data'</code> 事件绑定监听器不会将 <code>readable.readableFlowing</code> 切换到 <code>true</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">PassThrough</span>, <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> pass = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PassThrough</span>();
+<span class="hljs-keyword">const</span> writable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Writable</span>();
+
+pass.<span class="hljs-title function_">pipe</span>(writable);
+pass.<span class="hljs-title function_">unpipe</span>(writable);
+<span class="hljs-comment">// readableFlowing 现在为 false。</span>
+
+pass.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> { <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(chunk.<span class="hljs-title function_">toString</span>()); });
+pass.<span class="hljs-title function_">write</span>(<span class="hljs-string">'ok'</span>);  <span class="hljs-comment">// 不会触发 'data'。</span>
+pass.<span class="hljs-title function_">resume</span>();     <span class="hljs-comment">// 必须调用才能使流触发 'data'。</span></code></pre><p class="">虽然 <code>readable.readableFlowing</code> 是 <code>false</code>，但数据可能会在流的内部缓冲区中累积。</p></div>
+          <div id="content_right"><p>The "two modes" of operation for a <code>Readable</code> stream are a simplified
+abstraction for the more complicated internal state management that is happening
+within the <code>Readable</code> stream implementation.</p><p>Specifically, at any given point in time, every <code>Readable</code> is in one of three
+possible states:</p><ul>
+<li><code>readable.readableFlowing === null</code></li>
+<li><code>readable.readableFlowing === false</code></li>
+<li><code>readable.readableFlowing === true</code></li>
+</ul><p>When <code>readable.readableFlowing</code> is <code>null</code>, no mechanism for consuming the
+stream's data is provided. Therefore, the stream will not generate data.
+While in this state, attaching a listener for the <code>'data'</code> event, calling the
+<code>readable.pipe()</code> method, or calling the <code>readable.resume()</code> method will switch
+<code>readable.readableFlowing</code> to <code>true</code>, causing the <code>Readable</code> to begin actively
+emitting events as data is generated.</p><p>Calling <code>readable.pause()</code>, <code>readable.unpipe()</code>, or receiving backpressure
+will cause the <code>readable.readableFlowing</code> to be set as <code>false</code>,
+temporarily halting the flowing of events but <em>not</em> halting the generation of
+data. While in this state, attaching a listener for the <code>'data'</code> event
+will not switch <code>readable.readableFlowing</code> to <code>true</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">PassThrough</span>, <span class="hljs-title class_">Writable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> pass = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PassThrough</span>();
+<span class="hljs-keyword">const</span> writable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Writable</span>();
+
+pass.<span class="hljs-title function_">pipe</span>(writable);
+pass.<span class="hljs-title function_">unpipe</span>(writable);
+<span class="hljs-comment">// readableFlowing is now false.</span>
+
+pass.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> { <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(chunk.<span class="hljs-title function_">toString</span>()); });
+pass.<span class="hljs-title function_">write</span>(<span class="hljs-string">'ok'</span>);  <span class="hljs-comment">// Will not emit 'data'.</span>
+pass.<span class="hljs-title function_">resume</span>();     <span class="hljs-comment">// Must be called to make stream emit 'data'.</span></code></pre><p>While <code>readable.readableFlowing</code> is <code>false</code>, data may be accumulating
+within the stream's internal buffer.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

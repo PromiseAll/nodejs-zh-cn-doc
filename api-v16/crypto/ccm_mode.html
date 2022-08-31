@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>CCM 模式 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>CCM 模式</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_ccm_mode" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/ccm_mode.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/crypto/ccm_mode.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#ccm-mode.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>CCM 是支持的 <a href="https://en.wikipedia.org/wiki/Authenticated_encryption" rel="nofollow">AEAD 算法</a>之一。
+使用此模式的应用程序在使用密码 API 时必须遵守某些限制：</p><ul class="">
+<li>身份验证标签长度必须在密码创建期间通过设置 <code>authTagLength</code> 选项指定，并且必须是 4、6、8、10、12、14 或 16 字节之一。</li>
+<li>初始化向量 (nonce) <code>N</code> 的长度必须介于 7 到 13 个字节 (<code>7 ≤ N ≤ 13</code>) 之间。</li>
+<li>明文的长度限制为 <code>2 ** (8 * (15 - N))</code> 个字节。</li>
+<li>解密时，必须在调用 <code>update()</code> 之前通过 <code>setAuthTag()</code> 设置认证标签。
+否则，解密将失败并且 <code>final()</code> 将根据 <a href="https://www.rfc-editor.org/rfc/rfc3610.txt" rel="nofollow">RFC 3610</a> 的第 2.6 节抛出错误。</li>
+<li>在 CCM 模式下使用 <code>write(data)</code>、<code>end(data)</code> 或 <code>pipe()</code> 等流方法可能会失败，因为 CCM 无法处理每个实例的多个数据块。</li>
+<li>当传入额外的认证数据 (AAD) 时，必须通过 <code>plaintextLength</code> 选项将实际消息的长度（以字节为单位）传递给 <code>setAAD()</code>。
+许多加密库在密文中包含认证标签，这意味着它们产生长度为 <code>plaintextLength + authTagLength</code> 的密文。
+Node.js 不包含认证标签，所以密文长度始终为 <code>plaintextLength</code>。
+如果没有使用 AAD，则这不是必需的。</li>
+<li>由于 CCM 一次处理整个消息，因此必须恰好调用 <code>update()</code> 一次。</li>
+<li>即使调用 <code>update()</code> 足以加密/解密消息，应用程序必须调用 <code>final()</code> 来计算或验证身份验证标签。</li>
+</ul><pre class="with-32-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+<span class="hljs-keyword">const</span> {
+  createCipheriv,
+  createDecipheriv,
+  randomBytes
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-string">'keykeykeykeykeykeykeykey'</span>;
+<span class="hljs-keyword">const</span> nonce = <span class="hljs-title function_">randomBytes</span>(<span class="hljs-number">12</span>);
+
+<span class="hljs-keyword">const</span> aad = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'0123456789'</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-keyword">const</span> cipher = <span class="hljs-title function_">createCipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+<span class="hljs-keyword">const</span> plaintext = <span class="hljs-string">'Hello world'</span>;
+cipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">byteLength</span>(plaintext)
+});
+<span class="hljs-keyword">const</span> ciphertext = cipher.<span class="hljs-title function_">update</span>(plaintext, <span class="hljs-string">'utf8'</span>);
+cipher.<span class="hljs-title function_">final</span>();
+<span class="hljs-keyword">const</span> tag = cipher.<span class="hljs-title function_">getAuthTag</span>();
+
+<span class="hljs-comment">// 现在传输 { ciphertext, nonce, tag }。</span>
+
+<span class="hljs-keyword">const</span> decipher = <span class="hljs-title function_">createDecipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+decipher.<span class="hljs-title function_">setAuthTag</span>(tag);
+decipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: ciphertext.<span class="hljs-property">length</span>
+});
+<span class="hljs-keyword">const</span> receivedPlaintext = decipher.<span class="hljs-title function_">update</span>(ciphertext, <span class="hljs-literal">null</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-keyword">try</span> {
+  decipher.<span class="hljs-title function_">final</span>();
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Authentication failed!'</span>, { <span class="hljs-attr">cause</span>: err });
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(receivedPlaintext);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  createCipheriv,
+  createDecipheriv,
+  randomBytes,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-string">'keykeykeykeykeykeykeykey'</span>;
+<span class="hljs-keyword">const</span> nonce = <span class="hljs-title function_">randomBytes</span>(<span class="hljs-number">12</span>);
+
+<span class="hljs-keyword">const</span> aad = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'0123456789'</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-keyword">const</span> cipher = <span class="hljs-title function_">createCipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+<span class="hljs-keyword">const</span> plaintext = <span class="hljs-string">'Hello world'</span>;
+cipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">byteLength</span>(plaintext)
+});
+<span class="hljs-keyword">const</span> ciphertext = cipher.<span class="hljs-title function_">update</span>(plaintext, <span class="hljs-string">'utf8'</span>);
+cipher.<span class="hljs-title function_">final</span>();
+<span class="hljs-keyword">const</span> tag = cipher.<span class="hljs-title function_">getAuthTag</span>();
+
+<span class="hljs-comment">// 现在传输 { ciphertext, nonce, tag }。</span>
+
+<span class="hljs-keyword">const</span> decipher = <span class="hljs-title function_">createDecipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+decipher.<span class="hljs-title function_">setAuthTag</span>(tag);
+decipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: ciphertext.<span class="hljs-property">length</span>
+});
+<span class="hljs-keyword">const</span> receivedPlaintext = decipher.<span class="hljs-title function_">update</span>(ciphertext, <span class="hljs-literal">null</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-keyword">try</span> {
+  decipher.<span class="hljs-title function_">final</span>();
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Authentication failed!'</span>, { <span class="hljs-attr">cause</span>: err });
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(receivedPlaintext);</code></pre></div>
+          <div id="content_right"><p>CCM is one of the supported <a href="https://en.wikipedia.org/wiki/Authenticated_encryption" rel="nofollow">AEAD algorithms</a>. Applications which use this
+mode must adhere to certain restrictions when using the cipher API:</p><ul>
+<li>The authentication tag length must be specified during cipher creation by
+setting the <code>authTagLength</code> option and must be one of 4, 6, 8, 10, 12, 14 or
+16 bytes.</li>
+<li>The length of the initialization vector (nonce) <code>N</code> must be between 7 and 13
+bytes (<code>7 ≤ N ≤ 13</code>).</li>
+<li>The length of the plaintext is limited to <code>2 ** (8 * (15 - N))</code> bytes.</li>
+<li>When decrypting, the authentication tag must be set via <code>setAuthTag()</code> before
+calling <code>update()</code>.
+Otherwise, decryption will fail and <code>final()</code> will throw an error in
+compliance with section 2.6 of <a href="https://www.rfc-editor.org/rfc/rfc3610.txt" rel="nofollow">RFC 3610</a>.</li>
+<li>Using stream methods such as <code>write(data)</code>, <code>end(data)</code> or <code>pipe()</code> in CCM
+mode might fail as CCM cannot handle more than one chunk of data per instance.</li>
+<li>When passing additional authenticated data (AAD), the length of the actual
+message in bytes must be passed to <code>setAAD()</code> via the <code>plaintextLength</code>
+option.
+Many crypto libraries include the authentication tag in the ciphertext,
+which means that they produce ciphertexts of the length
+<code>plaintextLength + authTagLength</code>. Node.js does not include the authentication
+tag, so the ciphertext length is always <code>plaintextLength</code>.
+This is not necessary if no AAD is used.</li>
+<li>As CCM processes the whole message at once, <code>update()</code> must be called exactly
+once.</li>
+<li>Even though calling <code>update()</code> is sufficient to encrypt/decrypt the message,
+applications <em>must</em> call <code>final()</code> to compute or verify the
+authentication tag.</li>
+</ul><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+<span class="hljs-keyword">const</span> {
+  createCipheriv,
+  createDecipheriv,
+  randomBytes
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-string">'keykeykeykeykeykeykeykey'</span>;
+<span class="hljs-keyword">const</span> nonce = <span class="hljs-title function_">randomBytes</span>(<span class="hljs-number">12</span>);
+
+<span class="hljs-keyword">const</span> aad = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'0123456789'</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-keyword">const</span> cipher = <span class="hljs-title function_">createCipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+<span class="hljs-keyword">const</span> plaintext = <span class="hljs-string">'Hello world'</span>;
+cipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">byteLength</span>(plaintext)
+});
+<span class="hljs-keyword">const</span> ciphertext = cipher.<span class="hljs-title function_">update</span>(plaintext, <span class="hljs-string">'utf8'</span>);
+cipher.<span class="hljs-title function_">final</span>();
+<span class="hljs-keyword">const</span> tag = cipher.<span class="hljs-title function_">getAuthTag</span>();
+
+<span class="hljs-comment">// Now transmit { ciphertext, nonce, tag }.</span>
+
+<span class="hljs-keyword">const</span> decipher = <span class="hljs-title function_">createDecipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+decipher.<span class="hljs-title function_">setAuthTag</span>(tag);
+decipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: ciphertext.<span class="hljs-property">length</span>
+});
+<span class="hljs-keyword">const</span> receivedPlaintext = decipher.<span class="hljs-title function_">update</span>(ciphertext, <span class="hljs-literal">null</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-keyword">try</span> {
+  decipher.<span class="hljs-title function_">final</span>();
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Authentication failed!'</span>, { <span class="hljs-attr">cause</span>: err });
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(receivedPlaintext);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  createCipheriv,
+  createDecipheriv,
+  randomBytes,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-string">'keykeykeykeykeykeykeykey'</span>;
+<span class="hljs-keyword">const</span> nonce = <span class="hljs-title function_">randomBytes</span>(<span class="hljs-number">12</span>);
+
+<span class="hljs-keyword">const</span> aad = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'0123456789'</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-keyword">const</span> cipher = <span class="hljs-title function_">createCipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+<span class="hljs-keyword">const</span> plaintext = <span class="hljs-string">'Hello world'</span>;
+cipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">byteLength</span>(plaintext)
+});
+<span class="hljs-keyword">const</span> ciphertext = cipher.<span class="hljs-title function_">update</span>(plaintext, <span class="hljs-string">'utf8'</span>);
+cipher.<span class="hljs-title function_">final</span>();
+<span class="hljs-keyword">const</span> tag = cipher.<span class="hljs-title function_">getAuthTag</span>();
+
+<span class="hljs-comment">// Now transmit { ciphertext, nonce, tag }.</span>
+
+<span class="hljs-keyword">const</span> decipher = <span class="hljs-title function_">createDecipheriv</span>(<span class="hljs-string">'aes-192-ccm'</span>, key, nonce, {
+  <span class="hljs-attr">authTagLength</span>: <span class="hljs-number">16</span>
+});
+decipher.<span class="hljs-title function_">setAuthTag</span>(tag);
+decipher.<span class="hljs-title function_">setAAD</span>(aad, {
+  <span class="hljs-attr">plaintextLength</span>: ciphertext.<span class="hljs-property">length</span>
+});
+<span class="hljs-keyword">const</span> receivedPlaintext = decipher.<span class="hljs-title function_">update</span>(ciphertext, <span class="hljs-literal">null</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-keyword">try</span> {
+  decipher.<span class="hljs-title function_">final</span>();
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Authentication failed!'</span>, { <span class="hljs-attr">cause</span>: err });
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(receivedPlaintext);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

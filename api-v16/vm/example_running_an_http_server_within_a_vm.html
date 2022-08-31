@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>示例：在 VM 中运行 HTTP Server | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>示例：在 VM 中运行 HTTP Server</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_example_running_an_http_server_within_a_vm" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/example_running_an_http_server_within_a_vm.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/example_running_an_http_server_within_a_vm.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#example-running-an-http-server-within-a-vm.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当使用 <a href="../vm.html#scriptruninthiscontextoptions"><code>script.runInThisContext()</code></a> 或 <a href="../vm.html#vmruninthiscontextcode-options"><code>vm.runInThisContext()</code></a> 时，代码在当前 V8 全局上下文中执行。
+传给此 VM 上下文的代码将有自己的隔离作用域。</p><p class="">为了使用 <code>http</code> 模块运行简单的 web 服务器，传给上下文的代码必须要么自己调用 <code>require('http')</code>，要么有对传给它的 <code>http</code> 模块的引用。
+例如：</p><pre class=""><code class="language-js"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-keyword">const</span> code = <span class="hljs-string">`
+((require) =&gt; {
+  const http = require('http');
+
+  http.createServer((request, response) =&gt; {
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    response.end('Hello World\\n');
+  }).listen(8124);
+
+  console.log('Server running at http://127.0.0.1:8124/');
+})`</span>;
+
+vm.<span class="hljs-title function_">runInThisContext</span>(code)(<span class="hljs-built_in">require</span>);</code></pre><p class="">上述案例中的 <code>require()</code> 与其传入的上下文共享状态。
+当执行不受信任的代码时，这可能会带来风险，例如以不需要的方式更改上下文中的对象。</p></div>
+          <div id="content_right"><p>When using either <a href="../vm.html#scriptruninthiscontextoptions"><code>script.runInThisContext()</code></a> or
+<a href="../vm.html#vmruninthiscontextcode-options"><code>vm.runInThisContext()</code></a>, the code is executed within the current V8 global
+context. The code passed to this VM context will have its own isolated scope.</p><p>In order to run a simple web server using the <code>http</code> module the code passed to
+the context must either call <code>require('http')</code> on its own, or have a reference
+to the <code>http</code> module passed to it. For instance:</p><pre><code class="language-js"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+
+<span class="hljs-keyword">const</span> code = <span class="hljs-string">`
+((require) =&gt; {
+  const http = require('http');
+
+  http.createServer((request, response) =&gt; {
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    response.end('Hello World\\n');
+  }).listen(8124);
+
+  console.log('Server running at http://127.0.0.1:8124/');
+})`</span>;
+
+vm.<span class="hljs-title function_">runInThisContext</span>(code)(<span class="hljs-built_in">require</span>);</code></pre><p>The <code>require()</code> in the above case shares the state with the context it is
+passed from. This may introduce risks when untrusted code is executed, e.g.
+altering objects in the context in unwanted ways.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

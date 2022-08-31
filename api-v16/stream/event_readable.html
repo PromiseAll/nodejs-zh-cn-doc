@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'readable' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'readable' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_event_readable" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/event_readable.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/event_readable.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#event-readable.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p><code>'readable'</code> 总是在调用 <code>.push()</code> 后的下一个滴答中触发。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>使用 <code>'readable'</code> 需要调用 <code>.read()</code>。</p></td></tr>
+<tr><td>v0.9.4</td>
+<td><p><span>新增于: v0.9.4</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p>当有可从流中读取的数据或已到达流的末尾时，则将触发 <code>'readable'</code> 事件。
+实际上，<code>'readable'</code> 事件表明流有新的信息。
+如果数据可用，则 <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> 将返回该数据。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// 现在有一些数据要读取。</span>
+  <span class="hljs-keyword">let</span> data;
+
+  <span class="hljs-keyword">while</span> ((data = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">read</span>()) !== <span class="hljs-literal">null</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);
+  }
+});</code></pre><p class="">如果已经到达流的末尾，则调用 <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> 将返回 <code>null</code> 并触发 <code>'end'</code> 事件。
+如果从未读取任何数据，则也是如此。
+例如，在以下示例中，<code>foo.txt</code> 是一个空文件：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> rr = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'foo.txt'</span>);
+rr.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`readable: <span class="hljs-subst">${rr.read()}</span>`</span>);
+});
+rr.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'end'</span>);
+});</code></pre><p class="">运行此脚本的输出是：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node test.js</span>
+readable: null
+end</code></pre><p class="">在某些情况下，为 <code>'readable'</code> 事件绑定监听器会导致一些数据被读入内部缓冲区。</p><p class="">一般来说，<code>readable.pipe()</code> 和 <code>'data'</code> 事件机制比 <code>'readable'</code> 事件更容易理解。
+但是，处理 <code>'readable'</code> 可能会导致吞吐量增加。</p><p class="">如果同时使用 <code>'readable'</code> 和 <a href="../stream.html#event-data"><code>'data'</code></a>，则 <code>'readable'</code> 优先控制流，即只有在调用 <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> 时才会触发 <code>'data'</code>。
+<code>readableFlowing</code> 属性将变为 <code>false</code>。
+如果在移除 <code>'readable'</code> 时有 <code>'data'</code> 个监听器，则流将开始流动，即 <code>'data'</code> 事件将在不调用 <code>.resume()</code> 的情况下触发。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>'readable'</code> is always emitted in the next tick after <code>.push()</code> is called.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>Using <code>'readable'</code> requires calling <code>.read()</code>.</p></td></tr>
+<tr><td>v0.9.4</td>
+<td><p><span>Added in: v0.9.4</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p>The <code>'readable'</code> event is emitted when there is data available to be read from
+the stream or when the end of the stream has been reached. Effectively, the
+<code>'readable'</code> event indicates that the stream has new information. If data is
+available, <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> will return that data.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+readable.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// There is some data to read now.</span>
+  <span class="hljs-keyword">let</span> data;
+
+  <span class="hljs-keyword">while</span> ((data = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">read</span>()) !== <span class="hljs-literal">null</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);
+  }
+});</code></pre><p>If the end of the stream has been reached, calling
+<a href="../stream.html#readablereadsize"><code>stream.read()</code></a> will return <code>null</code> and trigger the <code>'end'</code>
+event. This is also true if there never was any data to be read. For instance,
+in the following example, <code>foo.txt</code> is an empty file:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> rr = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'foo.txt'</span>);
+rr.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`readable: <span class="hljs-subst">${rr.read()}</span>`</span>);
+});
+rr.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'end'</span>);
+});</code></pre><p>The output of running this script is:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node test.js</span>
+readable: null
+end</code></pre><p>In some cases, attaching a listener for the <code>'readable'</code> event will cause some
+amount of data to be read into an internal buffer.</p><p>In general, the <code>readable.pipe()</code> and <code>'data'</code> event mechanisms are easier to
+understand than the <code>'readable'</code> event. However, handling <code>'readable'</code> might
+result in increased throughput.</p><p>If both <code>'readable'</code> and <a href="../stream.html#event-data"><code>'data'</code></a> are used at the same time, <code>'readable'</code>
+takes precedence in controlling the flow, i.e. <code>'data'</code> will be emitted
+only when <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> is called. The
+<code>readableFlowing</code> property would become <code>false</code>.
+If there are <code>'data'</code> listeners when <code>'readable'</code> is removed, the stream
+will start flowing, i.e. <code>'data'</code>&nbsp;events will be emitted without calling
+<code>.resume()</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

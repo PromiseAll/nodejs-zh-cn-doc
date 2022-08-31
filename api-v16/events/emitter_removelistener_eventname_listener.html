@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>emitter.removeListener(eventName, listener) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>emitter.removeListener(eventName, listener)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_emitter_removelistener_eventname_listener" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/emitter_removelistener_eventname_listener.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/emitter_removelistener_eventname_listener.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#emitterremovelistenereventname-listener.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.26</span>
+</div><ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul><p>从名为 <code>eventName</code> 的事件的监听器数组中移除指定的 <code>listener</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title function_">callback</span> = (<span class="hljs-params">stream</span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+};
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, callback);
+<span class="hljs-comment">// ...</span>
+server.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'connection'</span>, callback);</code></pre><p class=""><code>removeListener()</code> 最多从监听器数组中删除一个监听器实例。
+如果任何单个监听器已多次添加到指定 <code>eventName</code> 的监听器数组中，则必须多次调用 <code>removeListener()</code> 以删除每个实例。</p><p class="">一旦事件被触发，则所有在触发时绑定到它的监听器都会被依次调用。
+这意味着在触发之后和最后一个监听器完成执行之前的任何 <code>removeListener()</code> 或 <code>removeAllListeners()</code> 调用都不会从正在进行的 <code>emit()</code> 中删除它们。
+后续事件按预期运行。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">callbackA</span> = (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'A'</span>);
+  myEmitter.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'event'</span>, callbackB);
+};
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">callbackB</span> = (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'B'</span>);
+};
+
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, callbackA);
+
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, callbackB);
+
+<span class="hljs-comment">// callbackA 删除监听器 callbackB，但它仍将被调用。</span>
+<span class="hljs-comment">// 触发时的内部监听器数组 [callbackA, callbackB]</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   A</span>
+<span class="hljs-comment">//   B</span>
+
+<span class="hljs-comment">// callbackB 现在被删除了。</span>
+<span class="hljs-comment">// 内部监听器数组 [callbackA]</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   A</span></code></pre><p class="">由于使用内部数组管理监听器，因此调用此方法将更改在移除监听器后注册的任何监听器的位置索引。
+这不会影响调用监听器的顺序，但这意味着需要重新创建 <code>emitter.listeners()</code> 方法返回的监听器数组的任何副本。</p><p class="">当单个函数被多次添加为单个事件的句柄时（如下例所示），则 <code>removeListener()</code> 将删除最近添加的实例。
+在示例中，删除了 <code>once('ping')</code> 监听器：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">pong</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'pong'</span>);
+}
+
+ee.<span class="hljs-title function_">on</span>(<span class="hljs-string">'ping'</span>, pong);
+ee.<span class="hljs-title function_">once</span>(<span class="hljs-string">'ping'</span>, pong);
+ee.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'ping'</span>, pong);
+
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'ping'</span>);
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'ping'</span>);</code></pre><p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.26</span>
+</div><ul>
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>Returns: <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul><p>Removes the specified <code>listener</code> from the listener array for the event named
+<code>eventName</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title function_">callback</span> = (<span class="hljs-params">stream</span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+};
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, callback);
+<span class="hljs-comment">// ...</span>
+server.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'connection'</span>, callback);</code></pre><p><code>removeListener()</code> will remove, at most, one instance of a listener from the
+listener array. If any single listener has been added multiple times to the
+listener array for the specified <code>eventName</code>, then <code>removeListener()</code> must be
+called multiple times to remove each instance.</p><p>Once an event is emitted, all listeners attached to it at the
+time of emitting are called in order. This implies that any
+<code>removeListener()</code> or <code>removeAllListeners()</code> calls <em>after</em> emitting and
+<em>before</em> the last listener finishes execution will not remove them from
+<code>emit()</code> in progress. Subsequent events behave as expected.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">callbackA</span> = (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'A'</span>);
+  myEmitter.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'event'</span>, callbackB);
+};
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">callbackB</span> = (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'B'</span>);
+};
+
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, callbackA);
+
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, callbackB);
+
+<span class="hljs-comment">// callbackA removes listener callbackB but it will still be called.</span>
+<span class="hljs-comment">// Internal listener array at time of emit [callbackA, callbackB]</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// Prints:</span>
+<span class="hljs-comment">//   A</span>
+<span class="hljs-comment">//   B</span>
+
+<span class="hljs-comment">// callbackB is now removed.</span>
+<span class="hljs-comment">// Internal listener array [callbackA]</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// Prints:</span>
+<span class="hljs-comment">//   A</span></code></pre><p>Because listeners are managed using an internal array, calling this will
+change the position indices of any listener registered <em>after</em> the listener
+being removed. This will not impact the order in which listeners are called,
+but it means that any copies of the listener array as returned by
+the <code>emitter.listeners()</code> method will need to be recreated.</p><p>When a single function has been added as a handler multiple times for a single
+event (as in the example below), <code>removeListener()</code> will remove the most
+recently added instance. In the example the <code>once('ping')</code>
+listener is removed:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">pong</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'pong'</span>);
+}
+
+ee.<span class="hljs-title function_">on</span>(<span class="hljs-string">'ping'</span>, pong);
+ee.<span class="hljs-title function_">once</span>(<span class="hljs-string">'ping'</span>, pong);
+ee.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'ping'</span>, pong);
+
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'ping'</span>);
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'ping'</span>);</code></pre><p>Returns a reference to the <code>EventEmitter</code>, so that calls can be chained.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

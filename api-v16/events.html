@@ -1,0 +1,1964 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>events 事件触发器 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_events" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="" class="nav-events active" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="events" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_2"><a href="#events">events 事件触发器</a></span>
+<ul>
+<li><a href="#passing-arguments-and-this-to-listeners">将参数和 this 传给监听器</a></li>
+<li><a href="#asynchronous-vs-synchronous">异步 VS 同步</a></li>
+<li><a href="#handling-events-only-once">仅处理事件一次</a></li>
+<li><a href="#error-events">错误事件</a></li>
+<li><a href="#capture-rejections-of-promises">捕捉 Promise 拒绝</a></li>
+<li><a href="#class-eventemitter"><code>EventEmitter</code> 类</a>
+<ul>
+<li><a href="#event-newlistener"><code>'newListener'</code> 事件</a></li>
+<li><a href="#event-removelistener"><code>'removeListener'</code> 事件</a></li>
+<li><a href="#emitteraddlistenereventname-listener"><code>emitter.addListener(eventName, listener)</code></a></li>
+<li><a href="#emitteremiteventname-args"><code>emitter.emit(eventName[, ...args])</code></a></li>
+<li><a href="#emittereventnames"><code>emitter.eventNames()</code></a></li>
+<li><a href="#emittergetmaxlisteners"><code>emitter.getMaxListeners()</code></a></li>
+<li><a href="#emitterlistenercounteventname"><code>emitter.listenerCount(eventName)</code></a></li>
+<li><a href="#emitterlistenerseventname"><code>emitter.listeners(eventName)</code></a></li>
+<li><a href="#emitteroffeventname-listener"><code>emitter.off(eventName, listener)</code></a></li>
+<li><a href="#emitteroneventname-listener"><code>emitter.on(eventName, listener)</code></a></li>
+<li><a href="#emitteronceeventname-listener"><code>emitter.once(eventName, listener)</code></a></li>
+<li><a href="#emitterprependlistenereventname-listener"><code>emitter.prependListener(eventName, listener)</code></a></li>
+<li><a href="#emitterprependoncelistenereventname-listener"><code>emitter.prependOnceListener(eventName, listener)</code></a></li>
+<li><a href="#emitterremovealllistenerseventname"><code>emitter.removeAllListeners([eventName])</code></a></li>
+<li><a href="#emitterremovelistenereventname-listener"><code>emitter.removeListener(eventName, listener)</code></a></li>
+<li><a href="#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a></li>
+<li><a href="#emitterrawlistenerseventname"><code>emitter.rawListeners(eventName)</code></a></li>
+<li><a href="#emittersymbolfornodejsrejectionerr-eventname-args"><code>emitter[Symbol.for('nodejs.rejection')](err, eventName[, ...args])</code></a></li>
+</ul>
+</li>
+<li><a href="#eventsdefaultmaxlisteners"><code>events.defaultMaxListeners</code></a></li>
+<li><a href="#eventserrormonitor"><code>events.errorMonitor</code></a></li>
+<li><a href="#eventsgeteventlistenersemitterortarget-eventname"><code>events.getEventListeners(emitterOrTarget, eventName)</code></a></li>
+<li><a href="#eventsonceemitter-name-options"><code>events.once(emitter, name[, options])</code></a>
+<ul>
+<li><a href="#awaiting-multiple-events-emitted-on-processnexttick">等待 process.nextTick() 上触发的多个事件</a></li>
+</ul>
+</li>
+<li><a href="#eventscapturerejections"><code>events.captureRejections</code></a></li>
+<li><a href="#eventscapturerejectionsymbol"><code>events.captureRejectionSymbol</code></a></li>
+<li><span class="stability_0"><a href="#eventslistenercountemitter-eventname"><code>events.listenerCount(emitter, eventName)</code></a></span></li>
+<li><a href="#eventsonemitter-eventname-options"><code>events.on(emitter, eventName[, options])</code></a></li>
+<li><a href="#eventssetmaxlistenersn-eventtargets"><code>events.setMaxListeners(n[, ...eventTargets])</code></a></li>
+<li><a href="#class-eventseventemitterasyncresource-extends-eventemitter">events.EventEmitterAsyncResource 类继承 EventEmitter 类</a>
+<ul>
+<li><a href="#new-eventseventemitterasyncresourceoptions"><code>new events.EventEmitterAsyncResource(options)</code></a></li>
+<li><a href="#eventemitterasyncresourceasyncid"><code>eventemitterasyncresource.asyncId</code></a></li>
+<li><a href="#eventemitterasyncresourceasyncresource"><code>eventemitterasyncresource.asyncResource</code></a></li>
+<li><a href="#eventemitterasyncresourceemitdestroy"><code>eventemitterasyncresource.emitDestroy()</code></a></li>
+<li><a href="#eventemitterasyncresourcetriggerasyncid"><code>eventemitterasyncresource.triggerAsyncId</code></a></li>
+</ul>
+</li>
+<li><a href="#eventtarget-and-event-api">EventTarget 与 Event API</a>
+<ul>
+<li><a href="#nodejs-eventtarget-vs-dom-eventtarget">Node.js EventTarget 对比 DOM EventTarge</a></li>
+<li><a href="#nodeeventtarget-vs-eventemitter">NodeEventTarget 对比 EventEmitter</a></li>
+<li><a href="#event-listener">事件监听器</a></li>
+<li><a href="#eventtarget-error-handling">EventTarget 的错误处理</a></li>
+<li><a href="#class-event"><code>Event</code> 类</a>
+<ul>
+<li><a href="#eventbubbles"><code>event.bubbles</code></a></li>
+<li><a href="#eventcancelbubble"><code>event.cancelBubble()</code></a></li>
+<li><a href="#eventcancelable"><code>event.cancelable</code></a></li>
+<li><a href="#eventcomposed"><code>event.composed</code></a></li>
+<li><a href="#eventcomposedpath"><code>event.composedPath()</code></a></li>
+<li><a href="#eventcurrenttarget"><code>event.currentTarget</code></a></li>
+<li><a href="#eventdefaultprevented"><code>event.defaultPrevented</code></a></li>
+<li><a href="#eventeventphase"><code>event.eventPhase</code></a></li>
+<li><a href="#eventistrusted"><code>event.isTrusted</code></a></li>
+<li><a href="#eventpreventdefault"><code>event.preventDefault()</code></a></li>
+<li><a href="#eventreturnvalue"><code>event.returnValue</code></a></li>
+<li><a href="#eventsrcelement"><code>event.srcElement</code></a></li>
+<li><a href="#eventstopimmediatepropagation"><code>event.stopImmediatePropagation()</code></a></li>
+<li><a href="#eventstoppropagation"><code>event.stopPropagation()</code></a></li>
+<li><a href="#eventtarget"><code>event.target</code></a></li>
+<li><a href="#eventtimestamp"><code>event.timeStamp</code></a></li>
+<li><a href="#eventtype"><code>event.type</code></a></li>
+</ul>
+</li>
+<li><a href="#class-eventtarget"><code>EventTarget</code> 类</a>
+<ul>
+<li><a href="#eventtargetaddeventlistenertype-listener-options"><code>eventTarget.addEventListener(type, listener[, options])</code></a></li>
+<li><a href="#eventtargetdispatcheventevent"><code>eventTarget.dispatchEvent(event)</code></a></li>
+<li><a href="#eventtargetremoveeventlistenertype-listener"><code>eventTarget.removeEventListener(type, listener)</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodeeventtarget"><code>NodeEventTarget</code> 类</a>
+<ul>
+<li><a href="#nodeeventtargetaddlistenertype-listener-options"><code>nodeEventTarget.addListener(type, listener[, options])</code></a></li>
+<li><a href="#nodeeventtargeteventnames"><code>nodeEventTarget.eventNames()</code></a></li>
+<li><a href="#nodeeventtargetlistenercounttype"><code>nodeEventTarget.listenerCount(type)</code></a></li>
+<li><a href="#nodeeventtargetofftype-listener"><code>nodeEventTarget.off(type, listener)</code></a></li>
+<li><a href="#nodeeventtargetontype-listener-options"><code>nodeEventTarget.on(type, listener[, options])</code></a></li>
+<li><a href="#nodeeventtargetoncetype-listener-options"><code>nodeEventTarget.once(type, listener[, options])</code></a></li>
+<li><a href="#nodeeventtargetremovealllistenerstype"><code>nodeEventTarget.removeAllListeners([type])</code></a></li>
+<li><a href="#nodeeventtargetremovelistenertype-listener"><code>nodeEventTarget.removeListener(type, listener)</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="" class="nav-events active">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/events.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/events.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_2"><a href="#events">events 事件触发器</a></span>
+<ul>
+<li><a href="#passing-arguments-and-this-to-listeners">将参数和 this 传给监听器</a></li>
+<li><a href="#asynchronous-vs-synchronous">异步 VS 同步</a></li>
+<li><a href="#handling-events-only-once">仅处理事件一次</a></li>
+<li><a href="#error-events">错误事件</a></li>
+<li><a href="#capture-rejections-of-promises">捕捉 Promise 拒绝</a></li>
+<li><a href="#class-eventemitter"><code>EventEmitter</code> 类</a>
+<ul>
+<li><a href="#event-newlistener"><code>'newListener'</code> 事件</a></li>
+<li><a href="#event-removelistener"><code>'removeListener'</code> 事件</a></li>
+<li><a href="#emitteraddlistenereventname-listener"><code>emitter.addListener(eventName, listener)</code></a></li>
+<li><a href="#emitteremiteventname-args"><code>emitter.emit(eventName[, ...args])</code></a></li>
+<li><a href="#emittereventnames"><code>emitter.eventNames()</code></a></li>
+<li><a href="#emittergetmaxlisteners"><code>emitter.getMaxListeners()</code></a></li>
+<li><a href="#emitterlistenercounteventname"><code>emitter.listenerCount(eventName)</code></a></li>
+<li><a href="#emitterlistenerseventname"><code>emitter.listeners(eventName)</code></a></li>
+<li><a href="#emitteroffeventname-listener"><code>emitter.off(eventName, listener)</code></a></li>
+<li><a href="#emitteroneventname-listener"><code>emitter.on(eventName, listener)</code></a></li>
+<li><a href="#emitteronceeventname-listener"><code>emitter.once(eventName, listener)</code></a></li>
+<li><a href="#emitterprependlistenereventname-listener"><code>emitter.prependListener(eventName, listener)</code></a></li>
+<li><a href="#emitterprependoncelistenereventname-listener"><code>emitter.prependOnceListener(eventName, listener)</code></a></li>
+<li><a href="#emitterremovealllistenerseventname"><code>emitter.removeAllListeners([eventName])</code></a></li>
+<li><a href="#emitterremovelistenereventname-listener"><code>emitter.removeListener(eventName, listener)</code></a></li>
+<li><a href="#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a></li>
+<li><a href="#emitterrawlistenerseventname"><code>emitter.rawListeners(eventName)</code></a></li>
+<li><a href="#emittersymbolfornodejsrejectionerr-eventname-args"><code>emitter[Symbol.for('nodejs.rejection')](err, eventName[, ...args])</code></a></li>
+</ul>
+</li>
+<li><a href="#eventsdefaultmaxlisteners"><code>events.defaultMaxListeners</code></a></li>
+<li><a href="#eventserrormonitor"><code>events.errorMonitor</code></a></li>
+<li><a href="#eventsgeteventlistenersemitterortarget-eventname"><code>events.getEventListeners(emitterOrTarget, eventName)</code></a></li>
+<li><a href="#eventsonceemitter-name-options"><code>events.once(emitter, name[, options])</code></a>
+<ul>
+<li><a href="#awaiting-multiple-events-emitted-on-processnexttick">等待 process.nextTick() 上触发的多个事件</a></li>
+</ul>
+</li>
+<li><a href="#eventscapturerejections"><code>events.captureRejections</code></a></li>
+<li><a href="#eventscapturerejectionsymbol"><code>events.captureRejectionSymbol</code></a></li>
+<li><span class="stability_0"><a href="#eventslistenercountemitter-eventname"><code>events.listenerCount(emitter, eventName)</code></a></span></li>
+<li><a href="#eventsonemitter-eventname-options"><code>events.on(emitter, eventName[, options])</code></a></li>
+<li><a href="#eventssetmaxlistenersn-eventtargets"><code>events.setMaxListeners(n[, ...eventTargets])</code></a></li>
+<li><a href="#class-eventseventemitterasyncresource-extends-eventemitter">events.EventEmitterAsyncResource 类继承 EventEmitter 类</a>
+<ul>
+<li><a href="#new-eventseventemitterasyncresourceoptions"><code>new events.EventEmitterAsyncResource(options)</code></a></li>
+<li><a href="#eventemitterasyncresourceasyncid"><code>eventemitterasyncresource.asyncId</code></a></li>
+<li><a href="#eventemitterasyncresourceasyncresource"><code>eventemitterasyncresource.asyncResource</code></a></li>
+<li><a href="#eventemitterasyncresourceemitdestroy"><code>eventemitterasyncresource.emitDestroy()</code></a></li>
+<li><a href="#eventemitterasyncresourcetriggerasyncid"><code>eventemitterasyncresource.triggerAsyncId</code></a></li>
+</ul>
+</li>
+<li><a href="#eventtarget-and-event-api">EventTarget 与 Event API</a>
+<ul>
+<li><a href="#nodejs-eventtarget-vs-dom-eventtarget">Node.js EventTarget 对比 DOM EventTarge</a></li>
+<li><a href="#nodeeventtarget-vs-eventemitter">NodeEventTarget 对比 EventEmitter</a></li>
+<li><a href="#event-listener">事件监听器</a></li>
+<li><a href="#eventtarget-error-handling">EventTarget 的错误处理</a></li>
+<li><a href="#class-event"><code>Event</code> 类</a>
+<ul>
+<li><a href="#eventbubbles"><code>event.bubbles</code></a></li>
+<li><a href="#eventcancelbubble"><code>event.cancelBubble()</code></a></li>
+<li><a href="#eventcancelable"><code>event.cancelable</code></a></li>
+<li><a href="#eventcomposed"><code>event.composed</code></a></li>
+<li><a href="#eventcomposedpath"><code>event.composedPath()</code></a></li>
+<li><a href="#eventcurrenttarget"><code>event.currentTarget</code></a></li>
+<li><a href="#eventdefaultprevented"><code>event.defaultPrevented</code></a></li>
+<li><a href="#eventeventphase"><code>event.eventPhase</code></a></li>
+<li><a href="#eventistrusted"><code>event.isTrusted</code></a></li>
+<li><a href="#eventpreventdefault"><code>event.preventDefault()</code></a></li>
+<li><a href="#eventreturnvalue"><code>event.returnValue</code></a></li>
+<li><a href="#eventsrcelement"><code>event.srcElement</code></a></li>
+<li><a href="#eventstopimmediatepropagation"><code>event.stopImmediatePropagation()</code></a></li>
+<li><a href="#eventstoppropagation"><code>event.stopPropagation()</code></a></li>
+<li><a href="#eventtarget"><code>event.target</code></a></li>
+<li><a href="#eventtimestamp"><code>event.timeStamp</code></a></li>
+<li><a href="#eventtype"><code>event.type</code></a></li>
+</ul>
+</li>
+<li><a href="#class-eventtarget"><code>EventTarget</code> 类</a>
+<ul>
+<li><a href="#eventtargetaddeventlistenertype-listener-options"><code>eventTarget.addEventListener(type, listener[, options])</code></a></li>
+<li><a href="#eventtargetdispatcheventevent"><code>eventTarget.dispatchEvent(event)</code></a></li>
+<li><a href="#eventtargetremoveeventlistenertype-listener"><code>eventTarget.removeEventListener(type, listener)</code></a></li>
+</ul>
+</li>
+<li><a href="#class-nodeeventtarget"><code>NodeEventTarget</code> 类</a>
+<ul>
+<li><a href="#nodeeventtargetaddlistenertype-listener-options"><code>nodeEventTarget.addListener(type, listener[, options])</code></a></li>
+<li><a href="#nodeeventtargeteventnames"><code>nodeEventTarget.eventNames()</code></a></li>
+<li><a href="#nodeeventtargetlistenercounttype"><code>nodeEventTarget.listenerCount(type)</code></a></li>
+<li><a href="#nodeeventtargetofftype-listener"><code>nodeEventTarget.off(type, listener)</code></a></li>
+<li><a href="#nodeeventtargetontype-listener-options"><code>nodeEventTarget.on(type, listener[, options])</code></a></li>
+<li><a href="#nodeeventtargetoncetype-listener-options"><code>nodeEventTarget.once(type, listener[, options])</code></a></li>
+<li><a href="#nodeeventtargetremovealllistenerstype"><code>nodeEventTarget.removeAllListeners([type])</code></a></li>
+<li><a href="#nodeeventtargetremovelistenertype-listener"><code>nodeEventTarget.removeListener(type, listener)</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>events 事件触发器<span><a class="mark" href="#events" id="events">#</a></span><a aria-hidden="true" class="legacy" id="events_events"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="">
+                <a href="events/events.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v0.10.0-->
+<p></p><div class="api_stability api_stability_2"><a href="documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p>
+<!--type=module-->
+<p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/events.js">lib/events.js</a></p>
+<p>Node.js 的大部分核心 API 都是围绕惯用的异步事件驱动架构构建的，在该架构中，某些类型的对象（称为"触发器"）触发命名事件，使 <code>Function</code> 对象（"监听器"）被调用。</p>
+<p class="">例如：<a href="net.html#class-netserver"><code>net.Server</code></a> 对象在每次有连接时触发事件；<a href="fs.html#class-fsreadstream"><code>fs.ReadStream</code></a> 在打开文件时触发事件；<a href="stream.html">流</a>在每当有数据可供读取时触发事件。</p>
+<p class="">所有触发事件的对象都是 <code>EventEmitter</code> 类的实例。
+这些对象暴露了 <code>eventEmitter.on()</code> 函数，允许将一个或多个函数绑定到对象触发的命名事件。
+通常，事件名称是驼峰式字符串，但也可以使用任何有效的 JavaScript 属性键。</p>
+<p class="">当 <code>EventEmitter</code> 对象触发事件时，所有绑定到该特定事件的函数都会被同步地调用。
+被调用的监听器返回的任何值都将被忽略和丢弃。</p>
+<p class="">以下示例展示了使用单个监听器的简单的 <code>EventEmitter</code> 实例。
+<code>eventEmitter.on()</code> 方法用于注册监听器，<code>eventEmitter.emit()</code> 方法用于触发事件。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEmitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {}
+
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'an event occurred!'</span>);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);</code></pre>
+<section><h3>将参数和 this 传给监听器<span><a class="mark" href="#passing-arguments-and-this-to-listeners" id="passing-arguments-and-this-to-listeners">#</a></span><a aria-hidden="true" class="legacy" id="events_passing_arguments_and_this_to_listeners"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#passing-arguments-and-this-to-listeners">
+                <a href="events/passing_arguments_and_this_to_listeners.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>eventEmitter.emit()</code> 方法允许将任意一组参数传给监听器函数。
+记住，当调用普通的监听器函数时，标准的 <code>this</code> 关键字会被有意地设置为引用监听器绑定到的 <code>EventEmitter</code> 实例。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a, b, <span class="hljs-variable language_">this</span>, <span class="hljs-variable language_">this</span> === myEmitter);
+  <span class="hljs-comment">// 打印:</span>
+  <span class="hljs-comment">//   a b MyEmitter {</span>
+  <span class="hljs-comment">//     domain: null,</span>
+  <span class="hljs-comment">//     _events: { event: [Function] },</span>
+  <span class="hljs-comment">//     _eventsCount: 1,</span>
+  <span class="hljs-comment">//     _maxListeners: undefined } true</span>
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);</code></pre>
+<p class="">可以使用 ES6 箭头函数作为监听器，但是，这样做时，<code>this</code> 关键字将不再引用 <code>EventEmitter</code> 实例：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a, b, <span class="hljs-variable language_">this</span>);
+  <span class="hljs-comment">// 打印: a b {}</span>
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);</code></pre>
+</section><section><h3>异步 VS 同步<span><a class="mark" href="#asynchronous-vs-synchronous" id="asynchronous-vs-synchronous">#</a></span><a aria-hidden="true" class="legacy" id="events_asynchronous_vs_synchronous"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#asynchronous-vs-synchronous">
+                <a href="events/asynchronous_vs_synchronous.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>EventEmitter</code> 按照注册的顺序同步地调用所有监听器。
+这确保了事件的正确排序，并有助于避免竞争条件和逻辑错误。
+在适当的时候，监听器函数可以使用 <code>setImmediate()</code> 或 <code>process.nextTick()</code> 方法切换到异步的操作模式：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> {
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'this happens asynchronously'</span>);
+  });
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);</code></pre>
+</section><section><h3>仅处理事件一次<span><a class="mark" href="#handling-events-only-once" id="handling-events-only-once">#</a></span><a aria-hidden="true" class="legacy" id="events_handling_events_only_once"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#handling-events-only-once">
+                <a href="events/handling_events_only_once.html" class="tip_trans">中英对照</a>
+                </p>
+<p>当使用 <code>eventEmitter.on()</code> 方法注册监听器时，每次触发命名事件时都会调用该监听器。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+<span class="hljs-keyword">let</span> m = <span class="hljs-number">0</span>;
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(++m);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印: 1</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印: 2</span></code></pre>
+<p class="">使用 <code>eventEmitter.once()</code> 方法，可以注册一个监听器，该监听器最多为特定事件调用一次。
+一旦事件被触发，则监听器就会被注销然后被调用。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+<span class="hljs-keyword">let</span> m = <span class="hljs-number">0</span>;
+myEmitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(++m);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印: 1</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 忽略</span></code></pre>
+</section><section><h3>错误事件<span><a class="mark" href="#error-events" id="error-events">#</a></span><a aria-hidden="true" class="legacy" id="events_error_events"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#error-events">
+                <a href="events/error_events.html" class="tip_trans">中英对照</a>
+                </p>
+<p>当 <code>EventEmitter</code> 实例中发生错误时，典型的操作是触发 <code>'error'</code> 事件。
+这些在 Node.js 中被视为特殊情况。</p>
+<p class="">如果 <code>EventEmitter</code> 没有为 <code>'error'</code> 事件注册至少一个监听器，并且触发 <code>'error'</code> 事件，则会抛出错误，打印堆栈跟踪，然后退出 Node.js 进程。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'whoops!'</span>));
+<span class="hljs-comment">// 抛出错误并使 Node.js 崩溃</span></code></pre>
+<p class="">为了防止 Node.js 进程崩溃，可以使用 <a href="domain.html"><code>domain</code></a> 模块。
+（但请注意，不推荐使用 <code>domain</code> 模块。）</p>
+<p class="">作为最佳实践，应始终为 <code>'error'</code> 事件添加监听器。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'whoops! there was an error'</span>);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'whoops!'</span>));
+<span class="hljs-comment">// 打印: whoops! there was an error</span></code></pre>
+<p class="">通过使用符号 <code>events.errorMonitor</code> 安装监听器，可以在不消费触发的错误的情况下监视 <code>'error'</code> 事件。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, errorMonitor } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(errorMonitor, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-title class_">MyMonitoringTool</span>.<span class="hljs-title function_">log</span>(err);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'whoops!'</span>));
+<span class="hljs-comment">// 仍然抛出错误并使 Node.js 崩溃</span></code></pre>
+</section><section><h3>捕捉 Promise 拒绝<span><a class="mark" href="#capture-rejections-of-promises" id="capture-rejections-of-promises">#</a></span><a aria-hidden="true" class="legacy" id="events_capture_rejections_of_promises"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#capture-rejections-of-promises">
+                <a href="events/capture_rejections_of_promises.html" class="tip_trans">中英对照</a>
+                </p>
+<p>将 <code>async</code> 函数与事件句柄一起使用是有问题的，因为它会在抛出异常的情况下导致未处理的拒绝：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+ee.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});</code></pre>
+<p class=""><code>EventEmitter</code> 构造函数中的 <code>captureRejections</code> 选项或全局的设置可以改变这种行为，在 <code>Promise</code> 上安装 <code>.then(undefined, handler)</code> 句柄。
+此句柄将异常异步地路由到 <a href="#emittersymbolfornodejsrejectionerr-eventname-args"><code>Symbol.for('nodejs.rejection')</code></a> 方法（如果有）或 <a href="#error-events"><code>'error'</code></a> 事件句柄（如果没有）。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>({ <span class="hljs-attr">captureRejections</span>: <span class="hljs-literal">true</span> });
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);
+
+<span class="hljs-keyword">const</span> ee2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>({ <span class="hljs-attr">captureRejections</span>: <span class="hljs-literal">true</span> });
+ee2.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee2[<span class="hljs-title class_">Symbol</span>.<span class="hljs-title function_">for</span>(<span class="hljs-string">'nodejs.rejection'</span>)] = <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>;</code></pre>
+<p class="">设置 <code>events.captureRejections = true</code> 将更改 <code>EventEmitter</code> 的所有新实例的默认值。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> events = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+events.<span class="hljs-property">captureRejections</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> events.<span class="hljs-title class_">EventEmitter</span>();
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'something'</span>, <span class="hljs-keyword">async</span> (value) =&gt; {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+});
+
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);</code></pre>
+<p class="">由 <code>captureRejections</code> 行为生成的 <code>'error'</code> 事件没有捕获句柄以避免无限的错误循环：建议不要使用 <code>async</code> 函数作为 <code>'error'</code> 事件句柄。</p>
+</section><section><h3><code>EventEmitter</code> 类<span><a class="mark" href="#class-eventemitter" id="class-eventemitter">#</a></span><a aria-hidden="true" class="legacy" id="events_class_eventemitter"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-eventemitter">
+                <a href="events/class_eventemitter.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.4.0, v12.16.0</td>
+<td><p>添加了捕获拒绝的选项。</p></td></tr>
+<tr><td>v0.1.26</td>
+<td><p><span>新增于: v0.1.26</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p><code>EventEmitter</code> 类由 <code>events</code> 模块定义和暴露：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);</code></pre>
+<p class="">所有的 <code>EventEmitter</code>，当添加新的监听器时触发事件 <code>'newListener'</code>，当删除现有的监听器时触发事件 <code>'removeListener'</code>。</p>
+<p class="">它支持以下的选项：</p>
+<ul class="">
+<li><code>captureRejections</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 启用<a href="#capture-rejections-of-promises">自动捕获 promise 拒绝</a>。
+<strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+<h4><code>'newListener'</code> 事件<span><a class="mark" href="#event-newlistener" id="event-newlistener">#</a></span><a aria-hidden="true" class="legacy" id="events_event_newlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-newlistener">
+                <a href="events/event_newlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.26</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 正在监听的事件的名称</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 事件处理函数</li>
+</ul>
+<p>在将监听器添加到其内部监听器数组之前，<code>EventEmitter</code> 实例将触发自身的 <code>'newListener'</code> 事件。</p>
+<p class="">为 <code>'newListener'</code> 事件注册的监听器会传入事件名称和对正在添加的监听器的引用。</p>
+<p class="">在添加监听器之前触发事件这一事实有一个微妙但重要的副作用：在 <code>'newListener'</code> 回调中注册到同一个 <code>name</code> 的任何其他监听器都会在正在添加的监听器之前插入。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEmitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {}
+
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+<span class="hljs-comment">// 只做一次，这样就不会永远循环</span>
+myEmitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'newListener'</span>, <span class="hljs-function">(<span class="hljs-params">event, listener</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (event === <span class="hljs-string">'event'</span>) {
+    <span class="hljs-comment">// 在前面插入新的监听器</span>
+    myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'B'</span>);
+    });
+  }
+});
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'A'</span>);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   B</span>
+<span class="hljs-comment">//   A</span></code></pre>
+<h4><code>'removeListener'</code> 事件<span><a class="mark" href="#event-removelistener" id="event-removelistener">#</a></span><a aria-hidden="true" class="legacy" id="events_event_removelistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-removelistener">
+                <a href="events/event_removelistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v6.1.0, v4.7.0</td>
+<td><p>对于使用 <code>.once()</code> 绑定的监听器，<code>listener</code> 参数现在生成原始的监听器函数。</p></td></tr>
+<tr><td>v0.9.3</td>
+<td><p><span>新增于: v0.9.3</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 事件名称</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 事件处理函数</li>
+</ul>
+<p>在移除 <code>listener</code> 后触发 <code>'removeListener'</code> 事件。</p>
+<h4><code>emitter.addListener(eventName, listener)</code><span><a class="mark" href="#emitteraddlistenereventname-listener" id="emitteraddlistenereventname-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_addlistener_eventname_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitteraddlistenereventname-listener">
+                <a href="events/emitter_addlistener_eventname_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.26</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<p><code>emitter.on(eventName, listener)</code> 的别名。</p>
+<h4><code>emitter.emit(eventName[, ...args])</code><span><a class="mark" href="#emitteremiteventname-args" id="emitteremiteventname-args">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_emit_eventname_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitteremiteventname-args">
+                <a href="events/emitter_emit_eventname_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.26</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>按注册顺序同步地调用为名为 <code>eventName</code> 的事件注册的每个监听器，并将提供的参数传给每个监听器。</p>
+<p class="">如果事件有监听器，则返回 <code>true</code>，否则返回 <code>false</code>。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-comment">// 第一个监听器</span>
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-keyword">function</span> <span class="hljs-title function_">firstListener</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Helloooo! first listener'</span>);
+});
+<span class="hljs-comment">// 第二个监听器</span>
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-keyword">function</span> <span class="hljs-title function_">secondListener</span>(<span class="hljs-params">arg1, arg2</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`event with parameters <span class="hljs-subst">${arg1}</span>, <span class="hljs-subst">${arg2}</span> in second listener`</span>);
+});
+<span class="hljs-comment">// 第三个监听器</span>
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-keyword">function</span> <span class="hljs-title function_">thirdListener</span>(<span class="hljs-params">...args</span>) {
+  <span class="hljs-keyword">const</span> parameters = args.<span class="hljs-title function_">join</span>(<span class="hljs-string">', '</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`event with parameters <span class="hljs-subst">${parameters}</span> in third listener`</span>);
+});
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myEmitter.<span class="hljs-title function_">listeners</span>(<span class="hljs-string">'event'</span>));
+
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>);
+
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   [Function: firstListener],</span>
+<span class="hljs-comment">//   [Function: secondListener],</span>
+<span class="hljs-comment">//   [Function: thirdListener]</span>
+<span class="hljs-comment">// ]</span>
+<span class="hljs-comment">// Helloooo! first listener</span>
+<span class="hljs-comment">// event with parameters 1, 2 in second listener</span>
+<span class="hljs-comment">// event with parameters 1, 2, 3, 4, 5 in third listener</span></code></pre>
+<h4><code>emitter.eventNames()</code><span><a class="mark" href="#emittereventnames" id="emittereventnames">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_eventnames"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emittereventnames">
+                <a href="events/emitter_eventnames.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a></li>
+</ul>
+<p>返回列出触发器已为其注册监听器的事件的数组。
+数组中的值是字符串或 <code>Symbol</code>。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+myEE.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> {});
+myEE.<span class="hljs-title function_">on</span>(<span class="hljs-string">'bar'</span>, <span class="hljs-function">() =&gt;</span> {});
+
+<span class="hljs-keyword">const</span> sym = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">'symbol'</span>);
+myEE.<span class="hljs-title function_">on</span>(sym, <span class="hljs-function">() =&gt;</span> {});
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myEE.<span class="hljs-title function_">eventNames</span>());
+<span class="hljs-comment">// 打印: [ 'foo', 'bar', Symbol(symbol) ]</span></code></pre>
+<h4><code>emitter.getMaxListeners()</code><span><a class="mark" href="#emittergetmaxlisteners" id="emittergetmaxlisteners">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_getmaxlisteners"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emittergetmaxlisteners">
+                <a href="events/emitter_getmaxlisteners.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v1.0.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>返回 <code>EventEmitter</code> 的当前最大监听器数的值，该值由 <a href="#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a> 设置或默认为 <a href="#eventsdefaultmaxlisteners"><code>events.defaultMaxListeners</code></a>。</p>
+<h4><code>emitter.listenerCount(eventName)</code><span><a class="mark" href="#emitterlistenercounteventname" id="emitterlistenercounteventname">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_listenercount_eventname"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitterlistenercounteventname">
+                <a href="events/emitter_listenercount_eventname.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v3.2.0</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 正在监听的事件的名称</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>返回监听名为 <code>eventName</code> 的事件的监听器数量。</p>
+<h4><code>emitter.listeners(eventName)</code><span><a class="mark" href="#emitterlistenerseventname" id="emitterlistenerseventname">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_listeners_eventname"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitterlistenerseventname">
+                <a href="events/emitter_listeners_eventname.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.0.0</td>
+<td><p>对于使用 <code>.once()</code> 绑定的监听器，现在返回原始监听器而不是封装函数。</p></td></tr>
+<tr><td>v0.1.26</td>
+<td><p><span>新增于: v0.1.26</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function[]&gt;</a></li>
+</ul>
+<p>返回名为 <code>eventName</code> 的事件的监听器数组的副本。</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">inspect</span>(server.<span class="hljs-title function_">listeners</span>(<span class="hljs-string">'connection'</span>)));
+<span class="hljs-comment">// 打印: [ [Function] ]</span></code></pre>
+<h4><code>emitter.off(eventName, listener)</code><span><a class="mark" href="#emitteroffeventname-listener" id="emitteroffeventname-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_off_eventname_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitteroffeventname-listener">
+                <a href="events/emitter_off_eventname_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p><a href="#emitterremovelistenereventname-listener"><code>emitter.removeListener()</code></a> 的别名。</p>
+<h4><code>emitter.on(eventName, listener)</code><span><a class="mark" href="#emitteroneventname-listener" id="emitteroneventname-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_on_eventname_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitteroneventname-listener">
+                <a href="events/emitter_on_eventname_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.101</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 事件的名称。</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 回调函数</li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>将 <code>listener</code> 函数添加到名为 <code>eventName</code> 的事件的监听器数组的末尾。
+不检查是否已添加 <code>listener</code>。
+多次调用传入相同的 <code>eventName</code> 和 <code>listener</code> 组合将导致多次添加和调用 <code>listener</code>。</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+});</code></pre>
+<p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p>
+<p class="">默认情况下，事件监听器按添加顺序调用。
+<code>emitter.prependListener()</code> 方法可用作将事件监听器添加到监听器数组开头的替代方法。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+myEE.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a'</span>));
+myEE.<span class="hljs-title function_">prependListener</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'b'</span>));
+myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   b</span>
+<span class="hljs-comment">//   a</span></code></pre>
+<h4><code>emitter.once(eventName, listener)</code><span><a class="mark" href="#emitteronceeventname-listener" id="emitteronceeventname-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_once_eventname_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitteronceeventname-listener">
+                <a href="events/emitter_once_eventname_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.0</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 事件的名称。</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 回调函数</li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>为名为 <code>eventName</code> 的事件添加单次的 <code>listener</code> 函数。
+下次触发 <code>eventName</code> 时，将移除此监听器，然后再调用。</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">once</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Ah, we have our first user!'</span>);
+});</code></pre>
+<p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p>
+<p class="">默认情况下，事件监听器按添加顺序调用。
+<code>emitter.prependOnceListener()</code> 方法可用作将事件监听器添加到监听器数组开头的替代方法。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+myEE.<span class="hljs-title function_">once</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a'</span>));
+myEE.<span class="hljs-title function_">prependOnceListener</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'b'</span>));
+myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   b</span>
+<span class="hljs-comment">//   a</span></code></pre>
+<h4><code>emitter.prependListener(eventName, listener)</code><span><a class="mark" href="#emitterprependlistenereventname-listener" id="emitterprependlistenereventname-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_prependlistener_eventname_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitterprependlistenereventname-listener">
+                <a href="events/emitter_prependlistener_eventname_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 事件的名称。</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 回调函数</li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>将 <code>listener</code> 函数添加到名为 <code>eventName</code> 的事件的监听器数组的开头。
+不检查是否已添加 <code>listener</code>。
+多次调用传入相同的 <code>eventName</code> 和 <code>listener</code> 组合将导致多次添加和调用 <code>listener</code>。</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">prependListener</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+});</code></pre>
+<p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p>
+<h4><code>emitter.prependOnceListener(eventName, listener)</code><span><a class="mark" href="#emitterprependoncelistenereventname-listener" id="emitterprependoncelistenereventname-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_prependoncelistener_eventname_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitterprependoncelistenereventname-listener">
+                <a href="events/emitter_prependoncelistener_eventname_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 事件的名称。</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 回调函数</li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>将名为 <code>eventName</code> 的事件的单次 <code>listener</code> 函数添加到监听器数组的开头。
+下次触发 <code>eventName</code> 时，将移除此监听器，然后再调用。</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">prependOnceListener</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Ah, we have our first user!'</span>);
+});</code></pre>
+<p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p>
+<h4><code>emitter.removeAllListeners([eventName])</code><span><a class="mark" href="#emitterremovealllistenerseventname" id="emitterremovealllistenerseventname">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_removealllisteners_eventname"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitterremovealllistenerseventname">
+                <a href="events/emitter_removealllisteners_eventname.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.26</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>删除所有监听器，或指定 <code>eventName</code> 的监听器。</p>
+<p class="">删除在代码其他地方添加的监听器是不好的做法，特别是当 <code>EventEmitter</code> 实例是由其他组件或模块（例如套接字或文件流）创建时。</p>
+<p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p>
+<h4><code>emitter.removeListener(eventName, listener)</code><span><a class="mark" href="#emitterremovelistenereventname-listener" id="emitterremovelistenereventname-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_removelistener_eventname_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitterremovelistenereventname-listener">
+                <a href="events/emitter_removelistener_eventname_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.26</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>从名为 <code>eventName</code> 的事件的监听器数组中移除指定的 <code>listener</code>。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title function_">callback</span> = (<span class="hljs-params">stream</span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+};
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, callback);
+<span class="hljs-comment">// ...</span>
+server.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'connection'</span>, callback);</code></pre>
+<p class=""><code>removeListener()</code> 最多从监听器数组中删除一个监听器实例。
+如果任何单个监听器已多次添加到指定 <code>eventName</code> 的监听器数组中，则必须多次调用 <code>removeListener()</code> 以删除每个实例。</p>
+<p class="">一旦事件被触发，则所有在触发时绑定到它的监听器都会被依次调用。
+这意味着在触发之后和最后一个监听器完成执行之前的任何 <code>removeListener()</code> 或 <code>removeAllListeners()</code> 调用都不会从正在进行的 <code>emit()</code> 中删除它们。
+后续事件按预期运行。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">callbackA</span> = (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'A'</span>);
+  myEmitter.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'event'</span>, callbackB);
+};
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">callbackB</span> = (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'B'</span>);
+};
+
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, callbackA);
+
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, callbackB);
+
+<span class="hljs-comment">// callbackA 删除监听器 callbackB，但它仍将被调用。</span>
+<span class="hljs-comment">// 触发时的内部监听器数组 [callbackA, callbackB]</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   A</span>
+<span class="hljs-comment">//   B</span>
+
+<span class="hljs-comment">// callbackB 现在被删除了。</span>
+<span class="hljs-comment">// 内部监听器数组 [callbackA]</span>
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   A</span></code></pre>
+<p class="">由于使用内部数组管理监听器，因此调用此方法将更改在移除监听器后注册的任何监听器的位置索引。
+这不会影响调用监听器的顺序，但这意味着需要重新创建 <code>emitter.listeners()</code> 方法返回的监听器数组的任何副本。</p>
+<p class="">当单个函数被多次添加为单个事件的句柄时（如下例所示），则 <code>removeListener()</code> 将删除最近添加的实例。
+在示例中，删除了 <code>once('ping')</code> 监听器：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">pong</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'pong'</span>);
+}
+
+ee.<span class="hljs-title function_">on</span>(<span class="hljs-string">'ping'</span>, pong);
+ee.<span class="hljs-title function_">once</span>(<span class="hljs-string">'ping'</span>, pong);
+ee.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'ping'</span>, pong);
+
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'ping'</span>);
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'ping'</span>);</code></pre>
+<p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p>
+<h4><code>emitter.setMaxListeners(n)</code><span><a class="mark" href="#emittersetmaxlistenersn" id="emittersetmaxlistenersn">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_setmaxlisteners_n"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emittersetmaxlistenersn">
+                <a href="events/emitter_setmaxlisteners_n.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.5</span>
+</div>
+<ul class="">
+<li><code>n</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li>返回: <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>默认情况下，如果为特定事件添加了 <code>10</code> 个以上的监听器，则 <code>EventEmitter</code> 将打印警告。
+这是一个有用的默认值，有助于查找内存泄漏。
+<code>emitter.setMaxListeners()</code> 方法允许修改此特定 <code>EventEmitter</code> 实例的限制。
+该值可以设置为 <code>Infinity</code>（或 <code>0</code>）以指示无限数量的监听器。</p>
+<p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p>
+<h4><code>emitter.rawListeners(eventName)</code><span><a class="mark" href="#emitterrawlistenerseventname" id="emitterrawlistenerseventname">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_rawlisteners_eventname"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emitterrawlistenerseventname">
+                <a href="events/emitter_rawlisteners_eventname.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v9.4.0</span>
+</div>
+<ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function[]&gt;</a></li>
+</ul>
+<p>返回名为 <code>eventName</code> 的事件的监听器数组的副本，包括任何封装器（例如由 <code>.once()</code> 创建的封装器）。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+emitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'log'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'log once'</span>));
+
+<span class="hljs-comment">// 返回具有函数 `onceWrapper` 的新数组，</span>
+<span class="hljs-comment">// 该函数具有属性 `listener`，其中包含上面绑定的原始监听器</span>
+<span class="hljs-keyword">const</span> listeners = emitter.<span class="hljs-title function_">rawListeners</span>(<span class="hljs-string">'log'</span>);
+<span class="hljs-keyword">const</span> logFnWrapper = listeners[<span class="hljs-number">0</span>];
+
+<span class="hljs-comment">// 将"log once"记录到控制台并且不会解除 `once` 事件的绑定</span>
+logFnWrapper.<span class="hljs-title function_">listener</span>();
+
+<span class="hljs-comment">// 将"log once"记录到控制台并删除监听器</span>
+<span class="hljs-title function_">logFnWrapper</span>();
+
+emitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'log'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'log persistently'</span>));
+<span class="hljs-comment">// 将返回新数组，其中包含由上面的 `.on()` 绑定的函数</span>
+<span class="hljs-keyword">const</span> newListeners = emitter.<span class="hljs-title function_">rawListeners</span>(<span class="hljs-string">'log'</span>);
+
+<span class="hljs-comment">// 记录"log persistently"两次</span>
+newListeners[<span class="hljs-number">0</span>]();
+emitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'log'</span>);</code></pre>
+<h4><code>emitter[Symbol.for('nodejs.rejection')](err, eventName[, ...args])</code><span><a class="mark" href="#emittersymbolfornodejsrejectionerr-eventname-args" id="emittersymbolfornodejsrejectionerr-eventname-args">#</a></span><a aria-hidden="true" class="legacy" id="events_emitter_symbol_for_nodejs_rejection_err_eventname_args"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#emittersymbolfornodejsrejectionerr-eventname-args">
+                <a href="events/emitter_symbol_for_nodejs_rejection_err_eventname_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>不再是实验的。</p></td></tr>
+<tr><td>v13.4.0, v12.16.0</td>
+<td><p><span>新增于: v13.4.0, v12.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>err</code> 错误</li>
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p><code>Symbol.for('nodejs.rejection')</code> 方法被调用，以防在触发事件时发生 promise 拒绝，并且在触发器上启用了 <a href="#capture-rejections-of-promises"><code>captureRejections</code></a>。
+可以使用 <a href="#eventscapturerejectionsymbol"><code>events.captureRejectionSymbol</code></a> 代替 <code>Symbol.for('nodejs.rejection')</code>。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, captureRejectionSymbol } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>({ <span class="hljs-attr">captureRejections</span>: <span class="hljs-literal">true</span> });
+  }
+
+  [captureRejectionSymbol](err, event, ...args) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'rejection happened for'</span>, event, <span class="hljs-string">'with'</span>, err, ...args);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">destroy</span>(err);
+  }
+
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">err</span>) {
+    <span class="hljs-comment">// 把这里的资源卸除。</span>
+  }
+}</code></pre>
+</section><section><h3><code>events.defaultMaxListeners</code><span><a class="mark" href="#eventsdefaultmaxlisteners" id="eventsdefaultmaxlisteners">#</a></span><a aria-hidden="true" class="legacy" id="events_events_defaultmaxlisteners"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventsdefaultmaxlisteners">
+                <a href="events/events_defaultmaxlisteners.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.11.2</span>
+</div>
+<p>默认情况下，最多可为任何单个事件注册 <code>10</code> 个监听器。
+可以使用 <a href="#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a> 方法为单个 <code>EventEmitter</code> 实例更改此限制。
+要更改所有 <code>EventEmitter</code> 实例的默认值，则可以使用 <code>events.defaultMaxListeners</code> 属性。
+如果该值不是正数，则抛出 <code>RangeError</code>。</p>
+<p class="">设置 <code>events.defaultMaxListeners</code> 时要小心，因为更改会影响所有 <code>EventEmitter</code> 实例，包括在进行更改之前创建的实例。
+但是，调用 <a href="#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a> 仍然优先于 <code>events.defaultMaxListeners</code>。</p>
+<p class="">这不是硬性限制。
+<code>EventEmitter</code> 实例将允许添加更多监听器，但会向标准错误输出跟踪警告，指示已检测到"可能的 EventEmitter 内存泄漏"。
+对于任何单个 <code>EventEmitter</code>，可以使用 <code>emitter.getMaxListeners()</code> 和 <code>emitter.setMaxListeners()</code> 方法来暂时避免此警告：</p>
+<pre class=""><code class="language-js">emitter.<span class="hljs-title function_">setMaxListeners</span>(emitter.<span class="hljs-title function_">getMaxListeners</span>() + <span class="hljs-number">1</span>);
+emitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 做些事情</span>
+  emitter.<span class="hljs-title function_">setMaxListeners</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(emitter.<span class="hljs-title function_">getMaxListeners</span>() - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+});</code></pre>
+<p class=""><a href="cli.html#--trace-warnings"><code>--trace-warnings</code></a> 命令行标志可用于显示此类警告的堆栈跟踪。</p>
+<p class="">触发的警告可以使用 <a href="process.html#event-warning"><code>process.on('warning')</code></a> 进行检查，并将具有额外的 <code>emitter</code>、<code>type</code> 和 <code>count</code> 属性，分别是指事件触发器实例、事件名称和绑定监听器的数量。
+其 <code>name</code> 属性设置为 <code>'MaxListenersExceededWarning'</code>。</p>
+</section><section><h3><code>events.errorMonitor</code><span><a class="mark" href="#eventserrormonitor" id="eventserrormonitor">#</a></span><a aria-hidden="true" class="legacy" id="events_events_errormonitor"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventserrormonitor">
+                <a href="events/events_errormonitor.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.6.0, v12.17.0</span>
+</div>
+<p>此符号应用于安装仅监视 <code>'error'</code> 事件的监听器。
+在调用常规 <code>'error'</code> 监听器之前调用使用此符号安装的监听器。</p>
+<p class="">一旦触发 <code>'error'</code> 事件，使用此符号安装监听器不会改变行为，因此如果未安装常规 <code>'error'</code> 监听器，则进程仍将崩溃。</p>
+</section><section><h3><code>events.getEventListeners(emitterOrTarget, eventName)</code><span><a class="mark" href="#eventsgeteventlistenersemitterortarget-eventname" id="eventsgeteventlistenersemitterortarget-eventname">#</a></span><a aria-hidden="true" class="legacy" id="events_events_geteventlisteners_emitterortarget_eventname"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventsgeteventlistenersemitterortarget-eventname">
+                <a href="events/events_geteventlisteners_emitterortarget_eventname.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.2.0</span>
+</div>
+<ul class="">
+<li><code>emitterOrTarget</code> <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a> | <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a></li>
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function[]&gt;</a></li>
+</ul>
+<p>返回名为 <code>eventName</code> 的事件的监听器数组的副本。</p>
+<p class="">对于 <code>EventEmitter</code>，这与在触发器上调用 <code>.listeners</code> 的行为完全相同。</p>
+<p class="">对于 <code>EventTarget</code>，这是获取事件目标的事件监听器的唯一方法。
+这对于调试和诊断目的很有用。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { getEventListeners, <span class="hljs-title class_">EventEmitter</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+{
+  <span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">listener</span> = (<span class="hljs-params"></span>) =&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Events are fun'</span>);
+  ee.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, listener);
+  <span class="hljs-title function_">getEventListeners</span>(ee, <span class="hljs-string">'foo'</span>); <span class="hljs-comment">// [listener]</span>
+}
+{
+  <span class="hljs-keyword">const</span> et = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventTarget</span>();
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">listener</span> = (<span class="hljs-params"></span>) =&gt; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Events are fun'</span>);
+  et.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, listener);
+  <span class="hljs-title function_">getEventListeners</span>(et, <span class="hljs-string">'foo'</span>); <span class="hljs-comment">// [listener]</span>
+}</code></pre>
+</section><section><h3><code>events.once(emitter, name[, options])</code><span><a class="mark" href="#eventsonceemitter-name-options" id="eventsonceemitter-name-options">#</a></span><a aria-hidden="true" class="legacy" id="events_events_once_emitter_name_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventsonceemitter-name-options">
+                <a href="events/events_once_emitter_name_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>现在支持 <code>signal</code> 选项。</p></td></tr>
+<tr><td>v11.13.0, v10.16.0</td>
+<td><p><span>新增于: v11.13.0, v10.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>emitter</code> <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于取消等待事件。</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul>
+<p>创建 <code>Promise</code>，其在 <code>EventEmitter</code> 触发给定事件时被履行，或者如果 <code>EventEmitter</code> 在等待时触发 <code>'error'</code> 则被拒绝。
+<code>Promise</code> 将使用触发给定事件的所有参数的数组解决。</p>
+<p class="">此方法有意通用，与 Web 平台 <a href="https://dom.spec.whatwg.org/#interface-eventtarget" rel="nofollow">EventTarget</a> 接口配合使用，该接口没有特殊的 <code>'error'</code> 事件语义，也不监听 <code>'error'</code> 事件。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { once, <span class="hljs-title class_">EventEmitter</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'myevent'</span>, <span class="hljs-number">42</span>);
+  });
+
+  <span class="hljs-keyword">const</span> [value] = <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'myevent'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);
+
+  <span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'kaboom'</span>);
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, err);
+  });
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'myevent'</span>);
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'error happened'</span>, err);
+  }
+}
+
+<span class="hljs-title function_">run</span>();</code></pre>
+<p class=""><code>'error'</code> 事件的特殊处理仅在 <code>events.once()</code> 用于等待另一个事件时使用。
+如果 <code>events.once()</code> 用于等待 <code>error'</code> 事件本身，则它将被视为任何其他类型的事件而无需特殊处理：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-title function_">once</span>(ee, <span class="hljs-string">'error'</span>)
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">[err]</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'ok'</span>, err.<span class="hljs-property">message</span>))
+  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'error'</span>, err.<span class="hljs-property">message</span>));
+
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'error'</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'boom'</span>));
+
+<span class="hljs-comment">// 打印: ok boom</span></code></pre>
+<p class=""><a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于取消等待事件：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+<span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">emitter, event, signal</span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(emitter, event, { signal });
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'event emitted!'</span>);
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">if</span> (error.<span class="hljs-property">name</span> === <span class="hljs-string">'AbortError'</span>) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'Waiting for the event was canceled!'</span>);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'There was an error'</span>, error.<span class="hljs-property">message</span>);
+    }
+  }
+}
+
+<span class="hljs-title function_">foo</span>(ee, <span class="hljs-string">'foo'</span>, ac.<span class="hljs-property">signal</span>);
+ac.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// 中止等待事件</span>
+ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>); <span class="hljs-comment">// 打印: Waiting for the event was canceled!</span></code></pre>
+<h4>等待 process.nextTick() 上触发的多个事件<span><a class="mark" href="#awaiting-multiple-events-emitted-on-processnexttick" id="awaiting-multiple-events-emitted-on-processnexttick">#</a></span><a aria-hidden="true" class="legacy" id="events_awaiting_multiple_events_emitted_on_process_nexttick"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#awaiting-multiple-events-emitted-on-processnexttick">
+                <a href="events/awaiting_multiple_events_emitted_on_process_nexttick.html" class="tip_trans">中英对照</a>
+                </p>
+<p>当使用 <code>events.once()</code> 函数等待在同一批 <code>process.nextTick()</code> 操作中触发的多个事件时，或者同步触发多个事件时，有一个边缘情况值得注意。
+具体来说，因为 <code>process.nextTick()</code> 队列在 <code>Promise</code> 微任务队列之前被排空，并且因为 <code>EventEmitter</code> 同步触发所有事件，所以 <code>events.once()</code> 有可能错过事件。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'bar'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'bar'</span>);
+
+  <span class="hljs-comment">// 此 Promise 永远不会被解决，</span>
+  <span class="hljs-comment">// 因为 'foo' 事件在 Promise 被创建之前就已经触发了。</span>
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'foo'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'foo'</span>);
+}
+
+process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'bar'</span>);
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});
+
+<span class="hljs-title function_">foo</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>));</code></pre>
+<p class="">要捕获这两个事件，则在等待其中一个之前创建每个 Promise，然后可以使用 <code>Promise.all()</code>、<code>Promise.race()</code> 或 <code>Promise.allSettled()</code>：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([<span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'bar'</span>), <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'foo'</span>)]);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>);
+}
+
+process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'bar'</span>);
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});
+
+<span class="hljs-title function_">foo</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>));</code></pre>
+</section><section><h3><code>events.captureRejections</code><span><a class="mark" href="#eventscapturerejections" id="eventscapturerejections">#</a></span><a aria-hidden="true" class="legacy" id="events_events_capturerejections"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventscapturerejections">
+                <a href="events/events_capturerejections.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>不再是实验的。</p></td></tr>
+<tr><td>v13.4.0, v12.16.0</td>
+<td><p><span>新增于: v13.4.0, v12.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>值: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></p>
+<p class="">更改所有新的 <code>EventEmitter</code> 对象的默认 <code>captureRejections</code> 选项。</p>
+</section><section><h3><code>events.captureRejectionSymbol</code><span><a class="mark" href="#eventscapturerejectionsymbol" id="eventscapturerejectionsymbol">#</a></span><a aria-hidden="true" class="legacy" id="events_events_capturerejectionsymbol"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventscapturerejectionsymbol">
+                <a href="events/events_capturerejectionsymbol.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>不再是实验的。</p></td></tr>
+<tr><td>v13.4.0, v12.16.0</td>
+<td><p><span>新增于: v13.4.0, v12.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>值: <code>Symbol.for('nodejs.rejection')</code></p>
+<p class="">了解如何编写自定义的<a href="#emittersymbolfornodejsrejectionerr-eventname-args">拒绝句柄</a>。</p>
+</section><section><h3><code>events.listenerCount(emitter, eventName)</code><span><a class="mark" href="#eventslistenercountemitter-eventname" id="eventslistenercountemitter-eventname">#</a></span><a aria-hidden="true" class="legacy" id="events_events_listenercount_emitter_eventname"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventslistenercountemitter-eventname">
+                <a href="events/events_listenercount_emitter_eventname.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.12</span><span>弃用于: v3.2.0</span>
+</div>
+<p></p><div class="api_stability api_stability_0"><a href="documentation.html#stability-index">稳定性: 0</a> - 弃用: 改为使用 <a href="#emitterlistenercounteventname"><code>emitter.listenerCount()</code></a> 。</div><p></p>
+<ul class="">
+<li><code>emitter</code> <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a> 要查询的触发器</li>
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 事件名称</li>
+</ul>
+<p>返回在给定 <code>emitter</code> 上注册的给定 <code>eventName</code> 的监听器数量的类方法。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, listenerCount } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {});
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">listenerCount</span>(myEmitter, <span class="hljs-string">'event'</span>));
+<span class="hljs-comment">// 打印: 2</span></code></pre>
+</section><section><h3><code>events.on(emitter, eventName[, options])</code><span><a class="mark" href="#eventsonemitter-eventname-options" id="eventsonemitter-eventname-options">#</a></span><a aria-hidden="true" class="legacy" id="events_events_on_emitter_eventname_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventsonemitter-eventname-options">
+                <a href="events/events_on_emitter_eventname_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.6.0, v12.16.0</span>
+</div>
+<ul class="">
+<li><code>emitter</code> <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 正在监听的事件的名称</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于取消等待事件。</li>
+</ul>
+</li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-asynciterator-interface" rel="nofollow" class="type">&lt;AsyncIterator&gt;</a> 迭代由 <code>emitter</code> 触发的 <code>eventName</code> 事件</li>
+</ul>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { on, <span class="hljs-title class_">EventEmitter</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+  <span class="hljs-comment">// 稍后触发</span>
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>);
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-number">42</span>);
+  });
+
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> event <span class="hljs-keyword">of</span> <span class="hljs-title function_">on</span>(ee, <span class="hljs-string">'foo'</span>)) {
+    <span class="hljs-comment">// 此内部块的执行是同步的，</span>
+    <span class="hljs-comment">// 且每次处理一个事件（即使有等待）。</span>
+    <span class="hljs-comment">// 如果需要并发执行，则不要使用。</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event); <span class="hljs-comment">// 打印 ['bar'] [42]</span>
+  }
+  <span class="hljs-comment">// 此处无法到达</span>
+})();</code></pre>
+<p>返回迭代 <code>eventName</code> 事件的 <code>AsyncIterator</code>。
+如果 <code>EventEmitter</code> 触发 <code>'error'</code>，则将抛出错误。
+它在退出循环时删除所有监听器。
+每次迭代返回的 <code>value</code> 是由触发的事件参数组成的数组。</p>
+<p class=""><a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于取消对事件的等待：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { on, <span class="hljs-title class_">EventEmitter</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> ee = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+  <span class="hljs-comment">// 稍后触发</span>
+  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>);
+    ee.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-number">42</span>);
+  });
+
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> event <span class="hljs-keyword">of</span> <span class="hljs-title function_">on</span>(ee, <span class="hljs-string">'foo'</span>, { <span class="hljs-attr">signal</span>: ac.<span class="hljs-property">signal</span> })) {
+    <span class="hljs-comment">// 此内部块的执行是同步的，</span>
+    <span class="hljs-comment">// 且每次处理一个事件（即使有等待）。</span>
+    <span class="hljs-comment">// 如果需要并发执行，则不要使用。</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event); <span class="hljs-comment">// 打印 ['bar'] [42]</span>
+  }
+  <span class="hljs-comment">// 此处无法到达</span>
+})();
+
+process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> ac.<span class="hljs-title function_">abort</span>());</code></pre>
+</section><section><h3><code>events.setMaxListeners(n[, ...eventTargets])</code><span><a class="mark" href="#eventssetmaxlistenersn-eventtargets" id="eventssetmaxlistenersn-eventtargets">#</a></span><a aria-hidden="true" class="legacy" id="events_events_setmaxlisteners_n_eventtargets"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventssetmaxlistenersn-eventtargets">
+                <a href="events/events_setmaxlisteners_n_eventtargets.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.4.0</span>
+</div>
+<ul class="">
+<li><code>n</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 非负的数值。
+每个 <code>EventTarget</code> 事件的最大监听器数。</li>
+<li><code>...eventsTargets</code> <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget[]&gt;</a> | <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter[]&gt;</a> 零个或多个 <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 或 <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a> 实例。
+如果没有指定，则 <code>n</code> 被设置为所有新创建的 <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 和 <a href="#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a> 对象的默认最大值。</li>
+</ul>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> {
+  setMaxListeners,
+  <span class="hljs-title class_">EventEmitter</span>
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> target = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventTarget</span>();
+<span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-title function_">setMaxListeners</span>(<span class="hljs-number">5</span>, target, emitter);</code></pre>
+</section><section><h3>events.EventEmitterAsyncResource 类继承 EventEmitter 类<span><a class="mark" href="#class-eventseventemitterasyncresource-extends-eventemitter" id="class-eventseventemitterasyncresource-extends-eventemitter">#</a></span><a aria-hidden="true" class="legacy" id="events_class_events_eventemitterasyncresource_extends_eventemitter"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-eventseventemitterasyncresource-extends-eventemitter">
+                <a href="events/class_events_eventemitterasyncresource_extends_eventemitter.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<p>为需要手动异步跟踪的 <code>EventEmitter</code> 集成 <code>EventEmitter</code> 和 <a href="async_hooks.html#class-asyncresource" rel="nofollow" class="type">&lt;AsyncResource&gt;</a>。
+具体来说，<code>events.EventEmitterAsyncResource</code> 实例触发的所有事件都将在其<a href="async_context.html">异步上下文</a>中运行。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitterAsyncResource</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-keyword">const</span> { notStrictEqual, strictEqual } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">const</span> { executionAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-comment">// 异步跟踪工具会将其识别为 'Q'。</span>
+<span class="hljs-keyword">const</span> ee1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitterAsyncResource</span>({ <span class="hljs-attr">name</span>: <span class="hljs-string">'Q'</span> });
+
+<span class="hljs-comment">// 'foo' 监听器将在 EventEmitter 异步上下文中运行。</span>
+ee1.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">strictEqual</span>(<span class="hljs-title function_">executionAsyncId</span>(), ee1.<span class="hljs-property">asyncId</span>);
+  <span class="hljs-title function_">strictEqual</span>(<span class="hljs-title function_">triggerAsyncId</span>(), ee1.<span class="hljs-property">triggerAsyncId</span>);
+});
+
+<span class="hljs-keyword">const</span> ee2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-comment">// 普通 EventEmitter 上的 'foo' 监听器不跟踪异步上下文，</span>
+<span class="hljs-comment">// 但是，在与 emit() 相同的异步上下文中运行。</span>
+ee2.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-title function_">executionAsyncId</span>(), ee2.<span class="hljs-property">asyncId</span>);
+  <span class="hljs-title function_">notStrictEqual</span>(<span class="hljs-title function_">triggerAsyncId</span>(), ee2.<span class="hljs-property">triggerAsyncId</span>);
+});
+
+<span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> {
+  ee1.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+  ee2.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});</code></pre>
+<p class=""><code>EventEmitterAsyncResource</code> 类具有与 <code>EventEmitter</code> 和 <code>AsyncResource</code> 本身相同的方法和选项。</p>
+<h4><code>new events.EventEmitterAsyncResource(options)</code><span><a class="mark" href="#new-eventseventemitterasyncresourceoptions" id="new-eventseventemitterasyncresourceoptions">#</a></span><a aria-hidden="true" class="legacy" id="events_new_events_eventemitterasyncresource_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#new-eventseventemitterasyncresourceoptions">
+                <a href="events/new_events_eventemitterasyncresource_options.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>captureRejections</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 启用<a href="#capture-rejections-of-promises">自动捕获 promise 拒绝</a>。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 异步事件的类型。
+<strong>默认值::</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target"><code>new.target.name</code></a>。</li>
+<li><code>triggerAsyncId</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 创建此异步事件的执行上下文的 ID。 <strong>默认值:</strong> <code>executionAsyncId()</code>。</li>
+<li><code>requireManualDestroy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则当对象被垃圾回收时禁用 <code>emitDestroy</code>。
+这通常不需要设置（即使手动调用 <code>emitDestroy</code>），除非检索到资源的 <code>asyncId</code> 并调用敏感 API 的 <code>emitDestroy</code>。
+当设置为 <code>false</code> 时，则只有在至少有一个活动的 <code>destroy</code> 钩子时才会调用 <code>emitDestroy</code> 垃圾回收。
+<strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+</li>
+</ul>
+<h4><code>eventemitterasyncresource.asyncId</code><span><a class="mark" href="#eventemitterasyncresourceasyncid" id="eventemitterasyncresourceasyncid">#</a></span><a aria-hidden="true" class="legacy" id="events_eventemitterasyncresource_asyncid"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#eventemitterasyncresourceasyncid">
+                <a href="events/eventemitterasyncresource_asyncid.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 分配给资源的唯一 <code>asyncId</code>。</li>
+</ul>
+<h4><code>eventemitterasyncresource.asyncResource</code><span><a class="mark" href="#eventemitterasyncresourceasyncresource" id="eventemitterasyncresourceasyncresource">#</a></span><a aria-hidden="true" class="legacy" id="events_eventemitterasyncresource_asyncresource"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#eventemitterasyncresourceasyncresource">
+                <a href="events/eventemitterasyncresource_asyncresource.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>类型：底层的 <a href="async_hooks.html#class-asyncresource" rel="nofollow" class="type">&lt;AsyncResource&gt;</a>。</li>
+</ul>
+<p>返回的 <code>AsyncResource</code> 对象具有额外的 <code>eventEmitter</code> 属性，提供对此 <code>EventEmitterAsyncResource</code> 的引用。</p>
+<h4><code>eventemitterasyncresource.emitDestroy()</code><span><a class="mark" href="#eventemitterasyncresourceemitdestroy" id="eventemitterasyncresourceemitdestroy">#</a></span><a aria-hidden="true" class="legacy" id="events_eventemitterasyncresource_emitdestroy"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#eventemitterasyncresourceemitdestroy">
+                <a href="events/eventemitterasyncresource_emitdestroy.html" class="tip_trans">中英对照</a>
+                </p>
+<p>调用所有的 <code>destroy</code> 钩子。
+这应该只被调用一次。
+如果多次调用，则会报错。
+这个<strong>必须</strong>手动调用。
+如果资源留给 GC 收集，则永远不会调用 <code>destroy</code> 钩子。</p>
+<h4><code>eventemitterasyncresource.triggerAsyncId</code><span><a class="mark" href="#eventemitterasyncresourcetriggerasyncid" id="eventemitterasyncresourcetriggerasyncid">#</a></span><a aria-hidden="true" class="legacy" id="events_eventemitterasyncresource_triggerasyncid"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#eventemitterasyncresourcetriggerasyncid">
+                <a href="events/eventemitterasyncresource_triggerasyncid.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 传给 <code>AsyncResource</code> 构造函数的同一个 <code>triggerAsyncId</code>。</li>
+</ul>
+<p><a id="event-target-and-event-api"></a></p>
+</section><section><h3>EventTarget 与 Event API<span><a class="mark" href="#eventtarget-and-event-api" id="eventtarget-and-event-api">#</a></span><a aria-hidden="true" class="legacy" id="events_eventtarget_and_event_api"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtarget-and-event-api">
+                <a href="events/eventtarget_and_event_api.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>更改了 EventTarget 的错误处理。</p></td></tr>
+<tr><td>v15.4.0</td>
+<td><p>不再是实验的。</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p><code>EventTarget</code> 和 <code>Event</code> 类现在可用作全局变量。</p></td></tr>
+<tr><td>v14.5.0</td>
+<td><p><span>新增于: v14.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p><code>EventTarget</code> 和 <code>Event</code> 对象是一些 Node.js 核心 API 暴露的 <a href="https://dom.spec.whatwg.org/#eventtarget" rel="nofollow"><code>EventTarget</code> Web API</a> 的特定于 Node.js 的实现。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> target = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventTarget</span>();
+
+target.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'foo event happened!'</span>);
+});</code></pre>
+<h4>Node.js EventTarget 对比 DOM EventTarge<span><a class="mark" href="#nodejs-eventtarget-vs-dom-eventtarget" id="nodejs-eventtarget-vs-dom-eventtarget">#</a></span><a aria-hidden="true" class="legacy" id="events_node_js_eventtarget_vs_dom_eventtarget"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#nodejs-eventtarget-vs-dom-eventtarget">
+                <a href="events/node_js_eventtarget_vs_dom_eventtarget.html" class="tip_trans">中英对照</a>
+                </p>
+<p>Node.js <code>EventTarget</code> 和 <a href="https://dom.spec.whatwg.org/#eventtarget" rel="nofollow"><code>EventTarget</code> Web API</a> 之间有两个主要区别：</p>
+<ol class="">
+<li>尽管 DOM <code>EventTarget</code> 实例可能是分层的，但 Node.js 中没有层次和事件传播的概念。
+也就是说，调度到 <code>EventTarget</code> 的事件不会通过嵌套目标对象的层次结构传播，这些目标对象可能每个都有自己的事件句柄集。</li>
+<li>在 Node.js <code>EventTarget</code> 中，如果事件监听器是异步的函数或者返回 <code>Promise</code>，并且返回的 <code>Promise</code> 拒绝，则该拒绝会被自动捕获并按照同步抛出的监听器的方式处理（详见 <a href="#eventtarget-error-handling"><code>EventTarget</code> 错误处理</a>）。</li>
+</ol>
+<h4>NodeEventTarget 对比 EventEmitter<span><a class="mark" href="#nodeeventtarget-vs-eventemitter" id="nodeeventtarget-vs-eventemitter">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_vs_eventemitter"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtarget-vs-eventemitter">
+                <a href="events/nodeeventtarget_vs_eventemitter.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>NodeEventTarget</code> 对象实现了 <code>EventEmitter</code> API 的修改子集，允许它在某些情况下接近地模拟 <code>EventEmitter</code>。
+<code>NodeEventTarget</code> 不是 <code>EventEmitter</code> 的实例，在大多数情况下不能代替 <code>EventEmitter</code>。</p>
+<ol class="">
+<li>与 <code>EventEmitter</code> 不同，任何给定的 <code>listener</code> 最多可以在每个事件 <code>type</code> 中注册一次。
+尝试多次注册 <code>listener</code> 将被忽略。</li>
+<li><code>NodeEventTarget</code> 不模拟完整的 <code>EventEmitter</code> API。
+特别是 <code>prependListener()</code>、<code>prependOnceListener()</code>、<code>rawListeners()</code>、<code>setMaxListeners()</code>、<code>getMaxListeners()</code> 和 <code>errorMonitor</code> API 没有被模拟。
+<code>'newListener'</code> 和 <code>'removeListener'</code> 事件也不会触发。</li>
+<li><code>NodeEventTarget</code> 没有为类型为 <code>'error'</code> 的事件实现任何特殊的默认行为。</li>
+<li><code>NodeEventTarget</code> 支持 <code>EventListener</code> 对象以及作为所有事件类型句柄的函数。</li>
+</ol>
+<h4>事件监听器<span><a class="mark" href="#event-listener" id="event-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_event_listener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-listener">
+                <a href="events/event_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<p>为事件 <code>type</code> 注册的事件监听器可以是 JavaScript 函数，也可以是具有值为函数的 <code>handleEvent</code> 属性的对象。</p>
+<p class="">在任何一种情况下，句柄函数都是通过传给 <code>eventTarget.dispatchEvent()</code> 函数的 <code>event</code> 参数调用的。</p>
+<p class="">异步函数可用作事件监听器。
+如果异步的句柄函数拒绝，则会按照 <a href="#eventtarget-error-handling"><code>EventTarget</code> 错误处理</a>中的描述捕获和处理拒绝。</p>
+<p class="">句柄函数抛出的错误不会阻止其他句柄被调用。</p>
+<p class="">句柄函数的返回值会被忽略。</p>
+<p class="">句柄始终按照其添加的顺序被调用。</p>
+<p class="">句柄函数可能会改变 <code>event</code> 对象。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">handler1</span>(<span class="hljs-params">event</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">type</span>);  <span class="hljs-comment">// 打印 'foo'</span>
+  event.<span class="hljs-property">a</span> = <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handler2</span>(<span class="hljs-params">event</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">type</span>);  <span class="hljs-comment">// 打印 'foo'</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">a</span>);  <span class="hljs-comment">// 打印 1</span>
+}
+
+<span class="hljs-keyword">const</span> handler3 = {
+  <span class="hljs-title function_">handleEvent</span>(<span class="hljs-params">event</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">type</span>);  <span class="hljs-comment">// 打印 'foo'</span>
+  }
+};
+
+<span class="hljs-keyword">const</span> handler4 = {
+  <span class="hljs-keyword">async</span> <span class="hljs-title function_">handleEvent</span>(<span class="hljs-params">event</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">type</span>);  <span class="hljs-comment">// 打印 'foo'</span>
+  }
+};
+
+<span class="hljs-keyword">const</span> target = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventTarget</span>();
+
+target.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, handler1);
+target.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, handler2);
+target.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, handler3);
+target.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, handler4, { <span class="hljs-attr">once</span>: <span class="hljs-literal">true</span> });</code></pre>
+<h4>EventTarget 的错误处理<span><a class="mark" href="#eventtarget-error-handling" id="eventtarget-error-handling">#</a></span><a aria-hidden="true" class="legacy" id="events_eventtarget_error_handling"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtarget-error-handling">
+                <a href="events/eventtarget_error_handling.html" class="tip_trans">中英对照</a>
+                </p>
+<p>当注册的事件监听器抛出错误（或返回拒绝的 Promise）时，默认情况下，错误将被视为 <code>process.nextTick()</code> 上的未捕获异常。
+这意味着 <code>EventTarget</code> 中未捕获的异常将默认终止 Node.js 进程。</p>
+<p class="">在事件监听器中抛出错误不会阻止其他注册的句柄被调用。</p>
+<p class=""><code>EventTarget</code> 没有为 <code>'error'</code> 类型的事件（如 <code>EventEmitter</code>）实现任何特殊的默认处理。</p>
+<p class="">当前错误在到达 <code>process.on('uncaughtException')</code> 之前首先转发到 <code>process.on('error')</code> 事件。
+此行为已弃用，并将在未来版本中更改，以使 <code>EventTarget</code> 与其他 Node.js API 保持一致。
+任何依赖 <code>process.on('error')</code> 事件的代码都应与新行为保持一致。</p>
+<h4><code>Event</code> 类<span><a class="mark" href="#class-event" id="class-event">#</a></span><a aria-hidden="true" class="legacy" id="events_class_event"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#class-event">
+                <a href="events/class_event.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p><code>Event</code> 类现在可通过全局对象使用。</p></td></tr>
+<tr><td>v14.5.0</td>
+<td><p><span>新增于: v14.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p><code>Event</code> 对象是对 <a href="https://dom.spec.whatwg.org/#event" rel="nofollow"><code>Event</code> Web API</a> 的改写。
+实例由 Node.js 在内部创建。</p>
+<h5><code>event.bubbles</code><span><a class="mark" href="#eventbubbles" id="eventbubbles">#</a></span><a aria-hidden="true" class="legacy" id="events_event_bubbles"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventbubbles">
+                <a href="events/event_bubbles.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 总是返回 <code>false</code>。</li>
+</ul>
+<p>这在 Node.js 中没有使用，纯粹是为了完整性而提供的。</p>
+<h5><code>event.cancelBubble()</code><span><a class="mark" href="#eventcancelbubble" id="eventcancelbubble">#</a></span><a aria-hidden="true" class="legacy" id="events_event_cancelbubble"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventcancelbubble">
+                <a href="events/event_cancelbubble.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<p><code>event.stopPropagation()</code> 的别名。
+这在 Node.js 中没有使用，纯粹是为了完整性而提供的。</p>
+<h5><code>event.cancelable</code><span><a class="mark" href="#eventcancelable" id="eventcancelable">#</a></span><a aria-hidden="true" class="legacy" id="events_event_cancelable"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventcancelable">
+                <a href="events/event_cancelable.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果事件是使用 <code>cancelable</code> 选项创建的，则为真。</li>
+</ul>
+<h5><code>event.composed</code><span><a class="mark" href="#eventcomposed" id="eventcomposed">#</a></span><a aria-hidden="true" class="legacy" id="events_event_composed"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventcomposed">
+                <a href="events/event_composed.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 总是返回 <code>false</code>。</li>
+</ul>
+<p>这在 Node.js 中没有使用，纯粹是为了完整性而提供的。</p>
+<h5><code>event.composedPath()</code><span><a class="mark" href="#eventcomposedpath" id="eventcomposedpath">#</a></span><a aria-hidden="true" class="legacy" id="events_event_composedpath"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventcomposedpath">
+                <a href="events/event_composedpath.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<p>返回包含当前 <code>EventTarget</code> 作为唯一条目的数组，如果未调度事件则返回空数组。
+这在 Node.js 中没有使用，纯粹是为了完整性而提供的。</p>
+<h5><code>event.currentTarget</code><span><a class="mark" href="#eventcurrenttarget" id="eventcurrenttarget">#</a></span><a aria-hidden="true" class="legacy" id="events_event_currenttarget"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventcurrenttarget">
+                <a href="events/event_currenttarget.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 调度事件的 <code>EventTarget</code>。</li>
+</ul>
+<p><code>event.target</code> 的别名。</p>
+<h5><code>event.defaultPrevented</code><span><a class="mark" href="#eventdefaultprevented" id="eventdefaultprevented">#</a></span><a aria-hidden="true" class="legacy" id="events_event_defaultprevented"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventdefaultprevented">
+                <a href="events/event_defaultprevented.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>如果 <code>cancelable</code> 为 <code>true</code> 且 <code>event.preventDefault()</code> 已被调用，则为 <code>true</code>。</p>
+<h5><code>event.eventPhase</code><span><a class="mark" href="#eventeventphase" id="eventeventphase">#</a></span><a aria-hidden="true" class="legacy" id="events_event_eventphase"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventeventphase">
+                <a href="events/event_eventphase.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 事件未被调度时返回 <code>0</code>，事件被调度时返回 <code>2</code>。</li>
+</ul>
+<p>这在 Node.js 中没有使用，纯粹是为了完整性而提供的。</p>
+<h5><code>event.isTrusted</code><span><a class="mark" href="#eventistrusted" id="eventistrusted">#</a></span><a aria-hidden="true" class="legacy" id="events_event_istrusted"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventistrusted">
+                <a href="events/event_istrusted.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p><a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> <code>"abort"</code> 事件是在 <code>isTrusted</code> 设置为 <code>true</code> 的情况下触发的。
+在所有其他情况下，该值为 <code>false</code>。</p>
+<h5><code>event.preventDefault()</code><span><a class="mark" href="#eventpreventdefault" id="eventpreventdefault">#</a></span><a aria-hidden="true" class="legacy" id="events_event_preventdefault"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventpreventdefault">
+                <a href="events/event_preventdefault.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<p>如果 <code>cancelable</code> 是 <code>true</code>，则将 <code>defaultPrevented</code> 属性设置为 <code>true</code>。</p>
+<h5><code>event.returnValue</code><span><a class="mark" href="#eventreturnvalue" id="eventreturnvalue">#</a></span><a aria-hidden="true" class="legacy" id="events_event_returnvalue"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventreturnvalue">
+                <a href="events/event_returnvalue.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果事件尚未取消，则为真。</li>
+</ul>
+<p>这在 Node.js 中没有使用，纯粹是为了完整性而提供的。</p>
+<h5><code>event.srcElement</code><span><a class="mark" href="#eventsrcelement" id="eventsrcelement">#</a></span><a aria-hidden="true" class="legacy" id="events_event_srcelement"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventsrcelement">
+                <a href="events/event_srcelement.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 调度事件的 <code>EventTarget</code>。</li>
+</ul>
+<p><code>event.target</code> 的别名。</p>
+<h5><code>event.stopImmediatePropagation()</code><span><a class="mark" href="#eventstopimmediatepropagation" id="eventstopimmediatepropagation">#</a></span><a aria-hidden="true" class="legacy" id="events_event_stopimmediatepropagation"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventstopimmediatepropagation">
+                <a href="events/event_stopimmediatepropagation.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<p>当前事件监听器完成后停止调用。</p>
+<h5><code>event.stopPropagation()</code><span><a class="mark" href="#eventstoppropagation" id="eventstoppropagation">#</a></span><a aria-hidden="true" class="legacy" id="events_event_stoppropagation"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventstoppropagation">
+                <a href="events/event_stoppropagation.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<p>这在 Node.js 中没有使用，纯粹是为了完整性而提供的。</p>
+<h5><code>event.target</code><span><a class="mark" href="#eventtarget" id="eventtarget">#</a></span><a aria-hidden="true" class="legacy" id="events_event_target"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtarget">
+                <a href="events/event_target.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 调度事件的 <code>EventTarget</code>。</li>
+</ul>
+<h5><code>event.timeStamp</code><span><a class="mark" href="#eventtimestamp" id="eventtimestamp">#</a></span><a aria-hidden="true" class="legacy" id="events_event_timestamp"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtimestamp">
+                <a href="events/event_timestamp.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>创建 <code>Event</code> 对象时的毫秒时间戳。</p>
+<h5><code>event.type</code><span><a class="mark" href="#eventtype" id="eventtype">#</a></span><a aria-hidden="true" class="legacy" id="events_event_type"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtype">
+                <a href="events/event_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>事件类型标识符。</p>
+<h4><code>EventTarget</code> 类<span><a class="mark" href="#class-eventtarget" id="class-eventtarget">#</a></span><a aria-hidden="true" class="legacy" id="events_class_eventtarget"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#class-eventtarget">
+                <a href="events/class_eventtarget.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p><code>EventTarget</code> 类现在可通过全局对象使用。</p></td></tr>
+<tr><td>v14.5.0</td>
+<td><p><span>新增于: v14.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<h5><code>eventTarget.addEventListener(type, listener[, options])</code><span><a class="mark" href="#eventtargetaddeventlistenertype-listener-options" id="eventtargetaddeventlistenertype-listener-options">#</a></span><a aria-hidden="true" class="legacy" id="events_eventtarget_addeventlistener_type_listener_options"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtargetaddeventlistenertype-listener-options">
+                <a href="events/eventtarget_addeventlistener_type_listener_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="#event-listener" rel="nofollow" class="type">&lt;EventListener&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>once</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，监听器在第一次调用时自动移除。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>passive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，提示监听器不会调用 <code>Event</code> 对象的 <code>preventDefault()</code> 方法。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>capture</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Node.js 不直接使用。
+为 API 完整性而添加。 <strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+</li>
+</ul>
+<p>为 <code>type</code> 事件添加新的句柄。
+对于每个 <code>type</code> 和每个 <code>capture</code> 选项值，任何给定的 <code>listener</code> 仅添加一次。</p>
+<p class="">如果 <code>once</code> 选项为 <code>true</code>，则在下一次调度 <code>type</code> 事件后移除 <code>listener</code>。</p>
+<p class="">除了按照 <code>EventTarget</code> 规范跟踪注册的事件监听器之外，Node.js 不会以任何功能方式使用 <code>capture</code> 选项。
+具体来说，<code>capture</code> 选项在注册 <code>listener</code> 时用作键的一部分。
+任何单独的 <code>listener</code> 都可以与 <code>capture = false</code> 添加一次，与 <code>capture = true</code> 添加一次。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">handler</span>(<span class="hljs-params">event</span>) {}
+
+<span class="hljs-keyword">const</span> target = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventTarget</span>();
+target.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, handler, { <span class="hljs-attr">capture</span>: <span class="hljs-literal">true</span> });  <span class="hljs-comment">// 第一次</span>
+target.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'foo'</span>, handler, { <span class="hljs-attr">capture</span>: <span class="hljs-literal">false</span> }); <span class="hljs-comment">// 第二次</span>
+
+<span class="hljs-comment">// 删除句柄的第二个实例</span>
+target.<span class="hljs-title function_">removeEventListener</span>(<span class="hljs-string">'foo'</span>, handler);
+
+<span class="hljs-comment">// 删除句柄的第一个实例</span>
+target.<span class="hljs-title function_">removeEventListener</span>(<span class="hljs-string">'foo'</span>, handler, { <span class="hljs-attr">capture</span>: <span class="hljs-literal">true</span> });</code></pre>
+<h5><code>eventTarget.dispatchEvent(event)</code><span><a class="mark" href="#eventtargetdispatcheventevent" id="eventtargetdispatcheventevent">#</a></span><a aria-hidden="true" class="legacy" id="events_eventtarget_dispatchevent_event"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtargetdispatcheventevent">
+                <a href="events/eventtarget_dispatchevent_event.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li><code>event</code> <a href="#class-event" rel="nofollow" class="type">&lt;Event&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果任一事件的 <code>cancelable</code> 属性值为 false 或未调用其 <code>preventDefault()</code> 方法，则为 <code>true</code>，否则为 <code>false</code>。</li>
+</ul>
+<p>将 <code>event</code> 调度到 <code>event.type</code> 的句柄列表。</p>
+<p class="">注册的事件监听器按照注册的顺序同步地调用。</p>
+<h5><code>eventTarget.removeEventListener(type, listener)</code><span><a class="mark" href="#eventtargetremoveeventlistenertype-listener" id="eventtargetremoveeventlistenertype-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_eventtarget_removeeventlistener_type_listener"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtargetremoveeventlistenertype-listener">
+                <a href="events/eventtarget_removeeventlistener_type_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="#event-listener" rel="nofollow" class="type">&lt;EventListener&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>capture</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+</li>
+</ul>
+<p>从事件 <code>type</code> 的句柄列表中删除 <code>listener</code>。</p>
+<h4><code>NodeEventTarget</code> 类<span><a class="mark" href="#class-nodeeventtarget" id="class-nodeeventtarget">#</a></span><a aria-hidden="true" class="legacy" id="events_class_nodeeventtarget"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#class-nodeeventtarget">
+                <a href="events/class_nodeeventtarget.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>继承自: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a></li>
+</ul>
+<p><code>NodeEventTarget</code> 是 <code>EventTarget</code> 的 Node.js 特定扩展，它模拟了 <code>EventEmitter</code> API 的子集。</p>
+<h5><code>nodeEventTarget.addListener(type, listener[, options])</code><span><a class="mark" href="#nodeeventtargetaddlistenertype-listener-options" id="nodeeventtargetaddlistenertype-listener-options">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_addlistener_type_listener_options"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargetaddlistenertype-listener-options">
+                <a href="events/nodeeventtarget_addlistener_type_listener_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></p>
+</li>
+<li>
+<p><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="#event-listener" rel="nofollow" class="type">&lt;EventListener&gt;</a></p>
+</li>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>once</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+</li>
+<li>
+<p>返回: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 自身</p>
+</li>
+</ul>
+<p><code>EventTarget</code> 类的 Node.js 特定扩展，可模拟等效的 <code>EventEmitter</code> API。
+<code>addListener()</code> 和 <code>addEventListener()</code> 之间的唯一区别是 <code>addListener()</code> 将返回对 <code>EventTarget</code> 的引用。</p>
+<h5><code>nodeEventTarget.eventNames()</code><span><a class="mark" href="#nodeeventtargeteventnames" id="nodeeventtargeteventnames">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_eventnames"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargeteventnames">
+                <a href="events/nodeeventtarget_eventnames.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a></li>
+</ul>
+<p>Node.js 特定于 <code>EventTarget</code> 类的扩展，它返回事件 <code>type</code> 名称的数组，事件监听器注册了这些名称。</p>
+<h5><code>nodeEventTarget.listenerCount(type)</code><span><a class="mark" href="#nodeeventtargetlistenercounttype" id="nodeeventtargetlistenercounttype">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_listenercount_type"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargetlistenercounttype">
+                <a href="events/nodeeventtarget_listenercount_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></p>
+</li>
+<li>
+<p>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></p>
+</li>
+</ul>
+<p><code>EventTarget</code> 类的 Node.js 特定扩展，返回为 <code>type</code> 注册的事件监听器的数量。</p>
+<h5><code>nodeEventTarget.off(type, listener)</code><span><a class="mark" href="#nodeeventtargetofftype-listener" id="nodeeventtargetofftype-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_off_type_listener"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargetofftype-listener">
+                <a href="events/nodeeventtarget_off_type_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></p>
+</li>
+<li>
+<p><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="#event-listener" rel="nofollow" class="type">&lt;EventListener&gt;</a></p>
+</li>
+<li>
+<p>返回: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 自身</p>
+</li>
+</ul>
+<p><code>eventTarget.removeListener()</code> 的 Node.js 特定别名。</p>
+<h5><code>nodeEventTarget.on(type, listener[, options])</code><span><a class="mark" href="#nodeeventtargetontype-listener-options" id="nodeeventtargetontype-listener-options">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_on_type_listener_options"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargetontype-listener-options">
+                <a href="events/nodeeventtarget_on_type_listener_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></p>
+</li>
+<li>
+<p><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="#event-listener" rel="nofollow" class="type">&lt;EventListener&gt;</a></p>
+</li>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>once</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+</li>
+<li>
+<p>返回: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 自身</p>
+</li>
+</ul>
+<p><code>eventTarget.addListener()</code> 的 Node.js 特定别名。</p>
+<h5><code>nodeEventTarget.once(type, listener[, options])</code><span><a class="mark" href="#nodeeventtargetoncetype-listener-options" id="nodeeventtargetoncetype-listener-options">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_once_type_listener_options"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargetoncetype-listener-options">
+                <a href="events/nodeeventtarget_once_type_listener_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></p>
+</li>
+<li>
+<p><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="#event-listener" rel="nofollow" class="type">&lt;EventListener&gt;</a></p>
+</li>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+</li>
+<li>
+<p>返回: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 自身</p>
+</li>
+</ul>
+<p><code>EventTarget</code> 类的 Node.js 特定扩展，它为给定的事件 <code>type</code> 添加了 <code>once</code> 监听器。
+这相当于调用 <code>on</code> 并将 <code>once</code> 选项设置为 <code>true</code>。</p>
+<h5><code>nodeEventTarget.removeAllListeners([type])</code><span><a class="mark" href="#nodeeventtargetremovealllistenerstype" id="nodeeventtargetremovealllistenerstype">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_removealllisteners_type"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargetremovealllistenerstype">
+                <a href="events/nodeeventtarget_removealllisteners_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></p>
+</li>
+<li>
+<p>返回: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 自身</p>
+</li>
+</ul>
+<p><code>EventTarget</code> 类的 Node.js 特定扩展。
+如果指定了 <code>type</code>，则删除 <code>type</code> 的所有注册监听器，否则删除所有注册的监听器。</p>
+<h5><code>nodeEventTarget.removeListener(type, listener)</code><span><a class="mark" href="#nodeeventtargetremovelistenertype-listener" id="nodeeventtargetremovelistenertype-listener">#</a></span><a aria-hidden="true" class="legacy" id="events_nodeeventtarget_removelistener_type_listener"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#nodeeventtargetremovelistenertype-listener">
+                <a href="events/nodeeventtarget_removelistener_type_listener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></p>
+</li>
+<li>
+<p><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="#event-listener" rel="nofollow" class="type">&lt;EventListener&gt;</a></p>
+</li>
+<li>
+<p>返回: <a href="#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a> 自身</p>
+</li>
+</ul>
+<p>Node.js 特定于 <code>EventTarget</code> 类的扩展，用于删除给定 <code>type</code> 的 <code>listener</code>。
+<code>removeListener()</code> 和 <code>removeEventListener()</code> 之间的唯一区别是 <code>removeListener()</code> 将返回对 <code>EventTarget</code> 的引用。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

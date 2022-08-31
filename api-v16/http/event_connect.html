@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'connect' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'connect' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_event_connect" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/event_connect.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/event_connect.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#event-connect.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.7.0</span>
+</div><ul class="">
+<li><code>response</code> <a href="../http.html#class-httpincomingmessage" rel="nofollow" class="type">&lt;http.IncomingMessage&gt;</a></li>
+<li><code>socket</code> <a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a></li>
+<li><code>head</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul><p>每次服务器使用 <code>CONNECT</code> 方法响应请求时触发。
+如果未监听此事件，则接收 <code>CONNECT</code> 方法的客户端将关闭其连接。</p><p class="">除非用户指定 <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 以外的套接字类型，否则此事件保证传入 <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 类（<a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a> 的子类）的实例。</p><p class="">演示如何监听 <code>'connect'</code> 事件的客户端和服务器对：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-variable constant_">URL</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+
+<span class="hljs-comment">// 创建 HTTP 隧道代理</span>
+<span class="hljs-keyword">const</span> proxy = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'okay'</span>);
+});
+proxy.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connect'</span>, <span class="hljs-function">(<span class="hljs-params">req, clientSocket, head</span>) =&gt;</span> {
+  <span class="hljs-comment">// 连接到源服务器</span>
+  <span class="hljs-keyword">const</span> { port, hostname } = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">`http://<span class="hljs-subst">${req.url}</span>`</span>);
+  <span class="hljs-keyword">const</span> serverSocket = net.<span class="hljs-title function_">connect</span>(port || <span class="hljs-number">80</span>, hostname, <span class="hljs-function">() =&gt;</span> {
+    clientSocket.<span class="hljs-title function_">write</span>(<span class="hljs-string">'HTTP/1.1 200 Connection Established\r\n'</span> +
+                    <span class="hljs-string">'Proxy-agent: Node.js-Proxy\r\n'</span> +
+                    <span class="hljs-string">'\r\n'</span>);
+    serverSocket.<span class="hljs-title function_">write</span>(head);
+    serverSocket.<span class="hljs-title function_">pipe</span>(clientSocket);
+    clientSocket.<span class="hljs-title function_">pipe</span>(serverSocket);
+  });
+});
+
+<span class="hljs-comment">// 现在代理正在运行</span>
+proxy.<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>, <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-function">() =&gt;</span> {
+
+  <span class="hljs-comment">// 向隧道代理发出请求</span>
+  <span class="hljs-keyword">const</span> options = {
+    <span class="hljs-attr">port</span>: <span class="hljs-number">1337</span>,
+    <span class="hljs-attr">host</span>: <span class="hljs-string">'127.0.0.1'</span>,
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'CONNECT'</span>,
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'www.google.com:80'</span>
+  };
+
+  <span class="hljs-keyword">const</span> req = http.<span class="hljs-title function_">request</span>(options);
+  req.<span class="hljs-title function_">end</span>();
+
+  req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connect'</span>, <span class="hljs-function">(<span class="hljs-params">res, socket, head</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'got connected!'</span>);
+
+    <span class="hljs-comment">// 通过 HTTP 隧道发出请求</span>
+    socket.<span class="hljs-title function_">write</span>(<span class="hljs-string">'GET / HTTP/1.1\r\n'</span> +
+                 <span class="hljs-string">'Host: www.google.com:80\r\n'</span> +
+                 <span class="hljs-string">'Connection: close\r\n'</span> +
+                 <span class="hljs-string">'\r\n'</span>);
+    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(chunk.<span class="hljs-title function_">toString</span>());
+    });
+    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+      proxy.<span class="hljs-title function_">close</span>();
+    });
+  });
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.7.0</span>
+</div><ul>
+<li><code>response</code> <a href="../http.html#class-httpincomingmessage" rel="nofollow" class="type">&lt;http.IncomingMessage&gt;</a></li>
+<li><code>socket</code> <a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a></li>
+<li><code>head</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul><p>Emitted each time a server responds to a request with a <code>CONNECT</code> method. If
+this event is not being listened for, clients receiving a <code>CONNECT</code> method will
+have their connections closed.</p><p>This event is guaranteed to be passed an instance of the <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> class,
+a subclass of <a href="../stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a>, unless the user specifies a socket
+type other than <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a>.</p><p>A client and server pair demonstrating how to listen for the <code>'connect'</code> event:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-variable constant_">URL</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+
+<span class="hljs-comment">// Create an HTTP tunneling proxy</span>
+<span class="hljs-keyword">const</span> proxy = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'okay'</span>);
+});
+proxy.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connect'</span>, <span class="hljs-function">(<span class="hljs-params">req, clientSocket, head</span>) =&gt;</span> {
+  <span class="hljs-comment">// Connect to an origin server</span>
+  <span class="hljs-keyword">const</span> { port, hostname } = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">`http://<span class="hljs-subst">${req.url}</span>`</span>);
+  <span class="hljs-keyword">const</span> serverSocket = net.<span class="hljs-title function_">connect</span>(port || <span class="hljs-number">80</span>, hostname, <span class="hljs-function">() =&gt;</span> {
+    clientSocket.<span class="hljs-title function_">write</span>(<span class="hljs-string">'HTTP/1.1 200 Connection Established\r\n'</span> +
+                    <span class="hljs-string">'Proxy-agent: Node.js-Proxy\r\n'</span> +
+                    <span class="hljs-string">'\r\n'</span>);
+    serverSocket.<span class="hljs-title function_">write</span>(head);
+    serverSocket.<span class="hljs-title function_">pipe</span>(clientSocket);
+    clientSocket.<span class="hljs-title function_">pipe</span>(serverSocket);
+  });
+});
+
+<span class="hljs-comment">// Now that proxy is running</span>
+proxy.<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>, <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-function">() =&gt;</span> {
+
+  <span class="hljs-comment">// Make a request to a tunneling proxy</span>
+  <span class="hljs-keyword">const</span> options = {
+    <span class="hljs-attr">port</span>: <span class="hljs-number">1337</span>,
+    <span class="hljs-attr">host</span>: <span class="hljs-string">'127.0.0.1'</span>,
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'CONNECT'</span>,
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'www.google.com:80'</span>
+  };
+
+  <span class="hljs-keyword">const</span> req = http.<span class="hljs-title function_">request</span>(options);
+  req.<span class="hljs-title function_">end</span>();
+
+  req.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connect'</span>, <span class="hljs-function">(<span class="hljs-params">res, socket, head</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'got connected!'</span>);
+
+    <span class="hljs-comment">// Make a request over an HTTP tunnel</span>
+    socket.<span class="hljs-title function_">write</span>(<span class="hljs-string">'GET / HTTP/1.1\r\n'</span> +
+                 <span class="hljs-string">'Host: www.google.com:80\r\n'</span> +
+                 <span class="hljs-string">'Connection: close\r\n'</span> +
+                 <span class="hljs-string">'\r\n'</span>);
+    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(chunk.<span class="hljs-title function_">toString</span>());
+    });
+    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+      proxy.<span class="hljs-title function_">close</span>();
+    });
+  });
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

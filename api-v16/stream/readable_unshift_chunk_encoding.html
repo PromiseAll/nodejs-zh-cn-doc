@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.unshift(chunk[, encoding]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.unshift(chunk[, encoding])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_unshift_chunk_encoding" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_unshift_chunk_encoding.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/readable_unshift_chunk_encoding.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readableunshiftchunk-encoding.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>chunk</code> 现在可以是 <code>Uint8Array</code> 实例。</p></td></tr>
+<tr><td>v0.9.11</td>
+<td><p><span>新增于: v0.9.11</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>chunk</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 要取消转移到读取队列的数据块。
+对于不在对象模式下操作的流，<code>chunk</code> 必须是字符串、<code>Buffer</code>、<code>Uint8Array</code>、或 <code>null</code>。
+对于对象模式的流，<code>chunk</code> 可以是任何 JavaScript 值。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 字符串块的编码。
+必须是有效的 <code>Buffer</code> 编码，例如 <code>'utf8'</code> 或 <code>'ascii'</code>。</li>
+</ul><p>将 <code>chunk</code> 作为 <code>null</code> 传入信号流结束 (EOF)，其行为与 <code>readable.push(null)</code> 相同，之后无法写入更多数据。
+EOF 信号放在缓冲区的末尾，任何缓冲的数据仍将被刷新。</p><p class=""><code>readable.unshift()</code> 方法将数据块推回内部缓冲区。
+这在某些情况下很有用，其中流被代码消费，需要"取消消耗"它已经从源中提取的一定数量的数据，以便数据可以传给其他方。</p><p class=""><a href="../stream.html#event-end"><code>'end'</code></a> 事件触发后不能调用 <code>stream.unshift(chunk)</code> 方法，否则会抛出运行时错误。</p><p class="">使用 <code>stream.unshift()</code> 的开发者通常应该考虑改用 <a href="../stream.html#class-streamtransform"><code>Transform</code></a> 流。
+有关更多信息，请参阅<a href="../stream.html#api-for-stream-implementers">流实现者的 API</a> 章节。</p><pre class=""><code class="language-js"><span class="hljs-comment">// 拉出由 \n\n 分隔的标题。</span>
+<span class="hljs-comment">// 如果获取太多，则使用 unshift()。</span>
+<span class="hljs-comment">// 使用 (error, header, stream) 调用回调。</span>
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">StringDecoder</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'string_decoder'</span>);
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">parseHeader</span>(<span class="hljs-params">stream, callback</span>) {
+  stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, callback);
+  stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, onReadable);
+  <span class="hljs-keyword">const</span> decoder = <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringDecoder</span>(<span class="hljs-string">'utf8'</span>);
+  <span class="hljs-keyword">let</span> header = <span class="hljs-string">''</span>;
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">onReadable</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">let</span> chunk;
+    <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (chunk = stream.<span class="hljs-title function_">read</span>())) {
+      <span class="hljs-keyword">const</span> str = decoder.<span class="hljs-title function_">write</span>(chunk);
+      <span class="hljs-keyword">if</span> (str.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'\n\n'</span>)) {
+        <span class="hljs-comment">// 找到标题边界。</span>
+        <span class="hljs-keyword">const</span> split = str.<span class="hljs-title function_">split</span>(<span class="hljs-regexp">/\n\n/</span>);
+        header += split.<span class="hljs-title function_">shift</span>();
+        <span class="hljs-keyword">const</span> remaining = split.<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n\n'</span>);
+        <span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(remaining, <span class="hljs-string">'utf8'</span>);
+        stream.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'error'</span>, callback);
+        <span class="hljs-comment">// 在取消移位之前删除 'readable' 监听器。</span>
+        stream.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'readable'</span>, onReadable);
+        <span class="hljs-keyword">if</span> (buf.<span class="hljs-property">length</span>)
+          stream.<span class="hljs-title function_">unshift</span>(buf);
+        <span class="hljs-comment">// 现在可以从流中读取消息的正文。</span>
+        <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, header, stream);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// 仍在阅读标题。</span>
+      header += str;
+    }
+  }
+}</code></pre><p class="">与 <a href="../stream.html#readablepushchunk-encoding"><code>stream.push(chunk)</code></a> 不同，<code>stream.unshift(chunk)</code> 不会通过重置流的内部读取状态来结束读取过程。
+如果在读取期间调用 <code>readable.unshift()</code>（即从自定义流上的 <a href="../stream.html#readable_readsize"><code>stream._read()</code></a> 实现中调用），这可能会导致意外结果。
+在立即调用 <a href="../stream.html#readablepushchunk-encoding"><code>stream.push('')</code></a> 之后调用 <code>readable.unshift()</code> 将适当地重置读取状态，但是最好避免在执行读取过程中调用 <code>readable.unshift()</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v8.0.0</td>
+<td><p>The <code>chunk</code> argument can now be a <code>Uint8Array</code> instance.</p></td></tr>
+<tr><td>v0.9.11</td>
+<td><p><span>Added in: v0.9.11</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>chunk</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> Chunk of data to unshift onto the
+read queue. For streams not operating in object mode, <code>chunk</code> must be a
+string, <code>Buffer</code>, <code>Uint8Array</code> or <code>null</code>. For object mode streams, <code>chunk</code>
+may be any JavaScript value.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Encoding of string chunks. Must be a valid
+<code>Buffer</code> encoding, such as <code>'utf8'</code> or <code>'ascii'</code>.</li>
+</ul><p>Passing <code>chunk</code> as <code>null</code> signals the end of the stream (EOF) and behaves the
+same as <code>readable.push(null)</code>, after which no more data can be written. The EOF
+signal is put at the end of the buffer and any buffered data will still be
+flushed.</p><p>The <code>readable.unshift()</code> method pushes a chunk of data back into the internal
+buffer. This is useful in certain situations where a stream is being consumed by
+code that needs to "un-consume" some amount of data that it has optimistically
+pulled out of the source, so that the data can be passed on to some other party.</p><p>The <code>stream.unshift(chunk)</code> method cannot be called after the <a href="../stream.html#event-end"><code>'end'</code></a> event
+has been emitted or a runtime error will be thrown.</p><p>Developers using <code>stream.unshift()</code> often should consider switching to
+use of a <a href="../stream.html#class-streamtransform"><code>Transform</code></a> stream instead. See the <a href="../stream.html#api-for-stream-implementers">API for stream implementers</a>
+section for more information.</p><pre><code class="language-js"><span class="hljs-comment">// Pull off a header delimited by \n\n.</span>
+<span class="hljs-comment">// Use unshift() if we get too much.</span>
+<span class="hljs-comment">// Call the callback with (error, header, stream).</span>
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">StringDecoder</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'string_decoder'</span>);
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">parseHeader</span>(<span class="hljs-params">stream, callback</span>) {
+  stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, callback);
+  stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, onReadable);
+  <span class="hljs-keyword">const</span> decoder = <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringDecoder</span>(<span class="hljs-string">'utf8'</span>);
+  <span class="hljs-keyword">let</span> header = <span class="hljs-string">''</span>;
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">onReadable</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">let</span> chunk;
+    <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (chunk = stream.<span class="hljs-title function_">read</span>())) {
+      <span class="hljs-keyword">const</span> str = decoder.<span class="hljs-title function_">write</span>(chunk);
+      <span class="hljs-keyword">if</span> (str.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'\n\n'</span>)) {
+        <span class="hljs-comment">// Found the header boundary.</span>
+        <span class="hljs-keyword">const</span> split = str.<span class="hljs-title function_">split</span>(<span class="hljs-regexp">/\n\n/</span>);
+        header += split.<span class="hljs-title function_">shift</span>();
+        <span class="hljs-keyword">const</span> remaining = split.<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n\n'</span>);
+        <span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(remaining, <span class="hljs-string">'utf8'</span>);
+        stream.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'error'</span>, callback);
+        <span class="hljs-comment">// Remove the 'readable' listener before unshifting.</span>
+        stream.<span class="hljs-title function_">removeListener</span>(<span class="hljs-string">'readable'</span>, onReadable);
+        <span class="hljs-keyword">if</span> (buf.<span class="hljs-property">length</span>)
+          stream.<span class="hljs-title function_">unshift</span>(buf);
+        <span class="hljs-comment">// Now the body of the message can be read from the stream.</span>
+        <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, header, stream);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// Still reading the header.</span>
+      header += str;
+    }
+  }
+}</code></pre><p>Unlike <a href="../stream.html#readablepushchunk-encoding"><code>stream.push(chunk)</code></a>, <code>stream.unshift(chunk)</code> will not
+end the reading process by resetting the internal reading state of the stream.
+This can cause unexpected results if <code>readable.unshift()</code> is called during a
+read (i.e. from within a <a href="../stream.html#readable_readsize"><code>stream._read()</code></a> implementation on a
+custom stream). Following the call to <code>readable.unshift()</code> with an immediate
+<a href="../stream.html#readablepushchunk-encoding"><code>stream.push('')</code></a> will reset the reading state appropriately,
+however it is best to simply avoid calling <code>readable.unshift()</code> while in the
+process of performing a read.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

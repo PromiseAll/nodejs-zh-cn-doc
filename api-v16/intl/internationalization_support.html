@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Intl 国际化 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-intl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Intl 国际化</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../intl.html#intl_internationalization_support" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/intl/internationalization_support.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/intl/internationalization_support.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/intl/#internationalization-support.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>Node.js 有很多特性可以让编写国际化程序变得更容易。
+它们之中有一些是：</p><ul class="">
+<li><a href="https://tc39.github.io/ecma262/" rel="nofollow">ECMAScript 语言规范</a>中的区域设置敏感或 Unicode 感知函数：
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" rel="nofollow"><code>String.prototype.normalize()</code></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase" rel="nofollow"><code>String.prototype.toLowerCase()</code></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase" rel="nofollow"><code>String.prototype.toUpperCase()</code></a></li>
+</ul>
+</li>
+<li><a href="https://tc39.github.io/ecma402/" rel="nofollow">ECMAScript 国际化 API 规范</a>（又名 ECMA-402）中描述的所有功能：
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl" rel="nofollow"><code>Intl</code></a> 对象</li>
+<li>像 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare" rel="nofollow"><code>String.prototype.localeCompare()</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString" rel="nofollow"><code>Date.prototype.toLocaleString()</code></a> 这样的区域敏感方法</li>
+</ul>
+</li>
+<li><a href="../url.html#the-whatwg-url-api">WHATWG 网址解析器</a>的<a href="https://en.wikipedia.org/wiki/Internationalized_domain_name" rel="nofollow">国际化域名</a>（IDN）支持</li>
+<li><a href="../buffer.html#buffertranscodesource-fromenc-toenc"><code>require('buffer').transcode()</code></a></li>
+<li>更准确的<a href="../repl.html#repl">交互式解释器</a>行编辑</li>
+<li><a href="../util.html#class-utiltextdecoder"><code>require('util').TextDecoder</code></a></li>
+<li><a href="https://github.com/tc39/proposal-regexp-unicode-property-escapes" rel="nofollow"><code>RegExp</code> Unicode 属性转义</a></li>
+</ul><p class="">Node.js 和底层 V8 引擎使用 <a href="http://site.icu-project.org/" rel="nofollow">Unicode 国际组件（ICU）</a> 在原生 C/C++ 代码中实现这些特性。
+默认情况下，Node.js 提供了完整的 ICU 数据集。
+但是，由于 ICU 数据文件的大小，在构建或运行 Node.js 时提供了几个用于自定义 ICU 数据集的选项。</p></div>
+          <div id="content_right"><p>Node.js has many features that make it easier to write internationalized
+programs. Some of them are:</p><ul>
+<li>Locale-sensitive or Unicode-aware functions in the <a href="https://tc39.github.io/ecma262/" rel="nofollow">ECMAScript Language
+Specification</a>:
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" rel="nofollow"><code>String.prototype.normalize()</code></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase" rel="nofollow"><code>String.prototype.toLowerCase()</code></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase" rel="nofollow"><code>String.prototype.toUpperCase()</code></a></li>
+</ul>
+</li>
+<li>All functionality described in the <a href="https://tc39.github.io/ecma402/" rel="nofollow">ECMAScript Internationalization API
+Specification</a> (aka ECMA-402):
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl" rel="nofollow"><code>Intl</code></a> object</li>
+<li>Locale-sensitive methods like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare" rel="nofollow"><code>String.prototype.localeCompare()</code></a> and
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString" rel="nofollow"><code>Date.prototype.toLocaleString()</code></a></li>
+</ul>
+</li>
+<li>The <a href="../url.html#the-whatwg-url-api">WHATWG URL parser</a>'s <a href="https://en.wikipedia.org/wiki/Internationalized_domain_name" rel="nofollow">internationalized domain names</a> (IDNs) support</li>
+<li><a href="../buffer.html#buffertranscodesource-fromenc-toenc"><code>require('buffer').transcode()</code></a></li>
+<li>More accurate <a href="../repl.html#repl">REPL</a> line editing</li>
+<li><a href="../util.html#class-utiltextdecoder"><code>require('util').TextDecoder</code></a></li>
+<li><a href="https://github.com/tc39/proposal-regexp-unicode-property-escapes" rel="nofollow"><code>RegExp</code> Unicode Property Escapes</a></li>
+</ul><p>Node.js and the underlying V8 engine use
+<a href="http://site.icu-project.org/" rel="nofollow">International Components for Unicode (ICU)</a> to implement these features
+in native C/C++ code. The full ICU data set is provided by Node.js by default.
+However, due to the size of the ICU data file, several
+options are provided for customizing the ICU data set either when
+building or running Node.js.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

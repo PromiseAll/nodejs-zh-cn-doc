@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>events 事件触发器 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>events 事件触发器</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_events" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/events.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/events.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p><p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/events.js">lib/events.js</a></p><p>Node.js 的大部分核心 API 都是围绕惯用的异步事件驱动架构构建的，在该架构中，某些类型的对象（称为"触发器"）触发命名事件，使 <code>Function</code> 对象（"监听器"）被调用。</p><p class="">例如：<a href="../net.html#class-netserver"><code>net.Server</code></a> 对象在每次有连接时触发事件；<a href="../fs.html#class-fsreadstream"><code>fs.ReadStream</code></a> 在打开文件时触发事件；<a href="../stream.html">流</a>在每当有数据可供读取时触发事件。</p><p class="">所有触发事件的对象都是 <code>EventEmitter</code> 类的实例。
+这些对象暴露了 <code>eventEmitter.on()</code> 函数，允许将一个或多个函数绑定到对象触发的命名事件。
+通常，事件名称是驼峰式字符串，但也可以使用任何有效的 JavaScript 属性键。</p><p class="">当 <code>EventEmitter</code> 对象触发事件时，所有绑定到该特定事件的函数都会被同步地调用。
+被调用的监听器返回的任何值都将被忽略和丢弃。</p><p class="">以下示例展示了使用单个监听器的简单的 <code>EventEmitter</code> 实例。
+<code>eventEmitter.on()</code> 方法用于注册监听器，<code>eventEmitter.emit()</code> 方法用于触发事件。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEmitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {}
+
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'an event occurred!'</span>);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);</code></pre></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">Stability: 2</a> - Stable</div><p></p><p><strong>Source Code:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.15.0/lib/events.js">lib/events.js</a></p><p>Much of the Node.js core API is built around an idiomatic asynchronous
+event-driven architecture in which certain kinds of objects (called "emitters")
+emit named events that cause <code>Function</code> objects ("listeners") to be called.</p><p>For instance: a <a href="../net.html#class-netserver"><code>net.Server</code></a> object emits an event each time a peer
+connects to it; a <a href="../fs.html#class-fsreadstream"><code>fs.ReadStream</code></a> emits an event when the file is opened;
+a <a href="../stream.html">stream</a> emits an event whenever data is available to be read.</p><p>All objects that emit events are instances of the <code>EventEmitter</code> class. These
+objects expose an <code>eventEmitter.on()</code> function that allows one or more
+functions to be attached to named events emitted by the object. Typically,
+event names are camel-cased strings but any valid JavaScript property key
+can be used.</p><p>When the <code>EventEmitter</code> object emits an event, all of the functions attached
+to that specific event are called <em>synchronously</em>. Any values returned by the
+called listeners are <em>ignored</em> and discarded.</p><p>The following example shows a simple <code>EventEmitter</code> instance with a single
+listener. The <code>eventEmitter.on()</code> method is used to register listeners, while
+the <code>eventEmitter.emit()</code> method is used to trigger the event.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEmitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {}
+
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyEmitter</span>();
+myEmitter.<span class="hljs-title function_">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'an event occurred!'</span>);
+});
+myEmitter.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'event'</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

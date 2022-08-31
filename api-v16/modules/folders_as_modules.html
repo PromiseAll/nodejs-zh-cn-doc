@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>目录作为模块 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-modules">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>目录作为模块</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../modules.html#modules_folders_as_modules" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/modules/folders_as_modules.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/modules/folders_as_modules.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/modules/#folders-as-modules.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">稳定性: 3</a> - 旧版: 改用<a href="../packages.html#subpath-exports">子路径导出</a>或<a href="../packages.html#subpath-imports">子路径导入</a>。</div><p></p><p>可以通过三种方式将文件夹作为参数传给 <code>require()</code>。</p><p class="">首先是在文件夹的根目录创建 <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> 文件，指定 <code>main</code> 模块。
+一个示例 <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> 文件可能如下所示：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span> <span class="hljs-attr">"name"</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">"some-library"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/some-library.js"</span> <span class="hljs-punctuation">}</span></code></pre><p class="">如果这是在 <code>./some-library</code> 的文件夹中，则 <code>require('./some-library')</code> 将尝试加载 <code>./some-library/lib/some-library.js</code>。</p><p class="">如果目录中不存在 <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> 文件，或者 <a href="../packages.html#main"><code>"main"</code></a> 条目丢失或无法解析，则 Node.js 将尝试从该目录中加载 <code>index.js</code> 或 <code>index.node</code> 文件。
+例如，如果前面的示例中没有 <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> 文件，则 <code>require('./some-library')</code> 将尝试加载：</p><ul class="">
+<li><code>./some-library/index.js</code></li>
+<li><code>./some-library/index.node</code></li>
+</ul><p class="">如果这些尝试失败，Node.js 将报告整个模块丢失，并显示默认错误：</p><pre class=""><code class="language-console">Error: Cannot find module 'some-library'</code></pre><p class="">在上述所有三种情况下，<code>import('./some-library')</code> 调用都将导致 <a href="../errors.html#err_unsupported_dir_import"><code>ERR_UNSUPPORTED_DIR_IMPORT</code></a> 错误。
+使用包<a href="../packages.html#subpath-exports">子路径导出</a>或<a href="../packages.html#subpath-imports">子路径导入</a>可以提供与文件夹作为模块相同的包含组织优势，并且适用于 <code>require</code> 和 <code>import</code>。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">Stability: 3</a> - Legacy: Use <a href="../packages.html#subpath-exports">subpath exports</a> or <a href="../packages.html#subpath-imports">subpath imports</a> instead.</div><p></p><p>There are three ways in which a folder may be passed to <code>require()</code> as
+an argument.</p><p>The first is to create a <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> file in the root of the folder,
+which specifies a <code>main</code> module. An example <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> file might
+look like this:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span> <span class="hljs-attr">"name"</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">"some-library"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">"./lib/some-library.js"</span> <span class="hljs-punctuation">}</span></code></pre><p>If this was in a folder at <code>./some-library</code>, then
+<code>require('./some-library')</code> would attempt to load
+<code>./some-library/lib/some-library.js</code>.</p><p>If there is no <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> file present in the directory, or if the
+<a href="../packages.html#main"><code>"main"</code></a> entry is missing or cannot be resolved, then Node.js
+will attempt to load an <code>index.js</code> or <code>index.node</code> file out of that
+directory. For example, if there was no <a href="../packages.html#nodejs-packagejson-field-definitions"><code>package.json</code></a> file in the previous
+example, then <code>require('./some-library')</code> would attempt to load:</p><ul>
+<li><code>./some-library/index.js</code></li>
+<li><code>./some-library/index.node</code></li>
+</ul><p>If these attempts fail, then Node.js will report the entire module as missing
+with the default error:</p><pre><code class="language-console">Error: Cannot find module 'some-library'</code></pre><p>In all three above cases, an <code>import('./some-library')</code> call would result in a
+<a href="../errors.html#err_unsupported_dir_import"><code>ERR_UNSUPPORTED_DIR_IMPORT</code></a> error. Using package <a href="../packages.html#subpath-exports">subpath exports</a> or
+<a href="../packages.html#subpath-imports">subpath imports</a> can provide the same containment organization benefits as
+folders as modules, and work for both <code>require</code> and <code>import</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

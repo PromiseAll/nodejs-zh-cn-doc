@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>函数的参数 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>函数的参数</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_function_arguments" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/function_arguments.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/function_arguments.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#function-arguments.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>插件通常会暴露可以从 Node.js 中运行的 JavaScript 访问的对象和函数。
+当从 JavaScript 调用函数时，输入参数和返回值必须映射到 C/C++ 代码和从 C/C++ 代码映射。</p><p class="">以下示例说明了如何读取从 JavaScript 传入的函数参数以及如何返回结果：</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::Exception;
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Number;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-comment">// 这是 "add" 方法的实现</span>
+<span class="hljs-comment">// 输入参数使用</span>
+<span class="hljs-comment">// const FunctionCallbackInfo&lt;Value&gt;&amp; args 结构传入</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Add</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-comment">// 检查传入的参数数量。</span>
+  <span class="hljs-keyword">if</span> (args.<span class="hljs-built_in">Length</span>() &lt; <span class="hljs-number">2</span>) {
+    <span class="hljs-comment">// 抛出传回 JavaScript 的错误</span>
+    isolate-&gt;<span class="hljs-built_in">ThrowException</span>(Exception::<span class="hljs-built_in">TypeError</span>(
+        String::<span class="hljs-built_in">NewFromUtf8</span>(isolate,
+                            <span class="hljs-string">"Wrong number of arguments"</span>).<span class="hljs-built_in">ToLocalChecked</span>()));
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-comment">// 检查参数类型</span>
+  <span class="hljs-keyword">if</span> (!args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">IsNumber</span>() || !args[<span class="hljs-number">1</span>]-&gt;<span class="hljs-built_in">IsNumber</span>()) {
+    isolate-&gt;<span class="hljs-built_in">ThrowException</span>(Exception::<span class="hljs-built_in">TypeError</span>(
+        String::<span class="hljs-built_in">NewFromUtf8</span>(isolate,
+                            <span class="hljs-string">"Wrong arguments"</span>).<span class="hljs-built_in">ToLocalChecked</span>()));
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-comment">// 执行操作</span>
+  <span class="hljs-type">double</span> value =
+      args[<span class="hljs-number">0</span>].<span class="hljs-built_in">As</span>&lt;Number&gt;()-&gt;<span class="hljs-built_in">Value</span>() + args[<span class="hljs-number">1</span>].<span class="hljs-built_in">As</span>&lt;Number&gt;()-&gt;<span class="hljs-built_in">Value</span>();
+  Local&lt;Number&gt; num = Number::<span class="hljs-built_in">New</span>(isolate, value);
+
+  <span class="hljs-comment">// 设置返回值</span>
+  <span class="hljs-comment">// （使用传入的 FunctionCallbackInfo&lt;Value&gt;&amp;）</span>
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(num);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Init</span><span class="hljs-params">(Local&lt;Object&gt; exports)</span> </span>{
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(exports, <span class="hljs-string">"add"</span>, Add);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Init)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p class="">编译后，可以在 Node.js 中加载和使用示例插件：</p><pre class=""><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-keyword">const</span> addon = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This should be eight:'</span>, addon.<span class="hljs-title function_">add</span>(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>));</code></pre></div>
+          <div id="content_right"><p>Addons will typically expose objects and functions that can be accessed from
+JavaScript running within Node.js. When functions are invoked from JavaScript,
+the input arguments and return value must be mapped to and from the C/C++
+code.</p><p>The following example illustrates how to read function arguments passed from
+JavaScript and how to return a result:</p><pre><code class="language-cpp"><span class="hljs-comment">// addon.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-keyword">using</span> v8::Exception;
+<span class="hljs-keyword">using</span> v8::FunctionCallbackInfo;
+<span class="hljs-keyword">using</span> v8::Isolate;
+<span class="hljs-keyword">using</span> v8::Local;
+<span class="hljs-keyword">using</span> v8::Number;
+<span class="hljs-keyword">using</span> v8::Object;
+<span class="hljs-keyword">using</span> v8::String;
+<span class="hljs-keyword">using</span> v8::Value;
+
+<span class="hljs-comment">// This is the implementation of the "add" method</span>
+<span class="hljs-comment">// Input arguments are passed using the</span>
+<span class="hljs-comment">// const FunctionCallbackInfo&lt;Value&gt;&amp; args struct</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Add</span><span class="hljs-params">(<span class="hljs-type">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>{
+  Isolate* isolate = args.<span class="hljs-built_in">GetIsolate</span>();
+
+  <span class="hljs-comment">// Check the number of arguments passed.</span>
+  <span class="hljs-keyword">if</span> (args.<span class="hljs-built_in">Length</span>() &lt; <span class="hljs-number">2</span>) {
+    <span class="hljs-comment">// Throw an Error that is passed back to JavaScript</span>
+    isolate-&gt;<span class="hljs-built_in">ThrowException</span>(Exception::<span class="hljs-built_in">TypeError</span>(
+        String::<span class="hljs-built_in">NewFromUtf8</span>(isolate,
+                            <span class="hljs-string">"Wrong number of arguments"</span>).<span class="hljs-built_in">ToLocalChecked</span>()));
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-comment">// Check the argument types</span>
+  <span class="hljs-keyword">if</span> (!args[<span class="hljs-number">0</span>]-&gt;<span class="hljs-built_in">IsNumber</span>() || !args[<span class="hljs-number">1</span>]-&gt;<span class="hljs-built_in">IsNumber</span>()) {
+    isolate-&gt;<span class="hljs-built_in">ThrowException</span>(Exception::<span class="hljs-built_in">TypeError</span>(
+        String::<span class="hljs-built_in">NewFromUtf8</span>(isolate,
+                            <span class="hljs-string">"Wrong arguments"</span>).<span class="hljs-built_in">ToLocalChecked</span>()));
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-comment">// Perform the operation</span>
+  <span class="hljs-type">double</span> value =
+      args[<span class="hljs-number">0</span>].<span class="hljs-built_in">As</span>&lt;Number&gt;()-&gt;<span class="hljs-built_in">Value</span>() + args[<span class="hljs-number">1</span>].<span class="hljs-built_in">As</span>&lt;Number&gt;()-&gt;<span class="hljs-built_in">Value</span>();
+  Local&lt;Number&gt; num = Number::<span class="hljs-built_in">New</span>(isolate, value);
+
+  <span class="hljs-comment">// Set the return value (using the passed in</span>
+  <span class="hljs-comment">// FunctionCallbackInfo&lt;Value&gt;&amp;)</span>
+  args.<span class="hljs-built_in">GetReturnValue</span>().<span class="hljs-built_in">Set</span>(num);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Init</span><span class="hljs-params">(Local&lt;Object&gt; exports)</span> </span>{
+  <span class="hljs-built_in">NODE_SET_METHOD</span>(exports, <span class="hljs-string">"add"</span>, Add);
+}
+
+<span class="hljs-built_in">NODE_MODULE</span>(NODE_GYP_MODULE_NAME, Init)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p>Once compiled, the example addon can be required and used from within Node.js:</p><pre><code class="language-js"><span class="hljs-comment">// test.js</span>
+<span class="hljs-keyword">const</span> addon = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/Release/addon'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This should be eight:'</span>, addon.<span class="hljs-title function_">add</span>(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>));</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

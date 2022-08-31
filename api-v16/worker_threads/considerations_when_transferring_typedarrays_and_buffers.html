@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>传输 TypedArray 和 Buffer 时的注意事项 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-worker_threads">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>传输 TypedArray 和 Buffer 时的注意事项</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../worker_threads.html#worker_threads_considerations_when_transferring_typedarrays_and_buffers" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/worker_threads/considerations_when_transferring_typedarrays_and_buffers.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/worker_threads/considerations_when_transferring_typedarrays_and_buffers.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/worker_threads/#considerations-when-transferring-typedarrays-and-buffers.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>所有 <code>TypedArray</code> 和 <code>Buffer</code> 实例都是对底层 <code>ArrayBuffer</code> 的视图。
+也就是说，实际存储原始数据的是 <code>ArrayBuffer</code>，而 <code>TypedArray</code> 和 <code>Buffer</code> 对象提供了查看和操作数据的方式。
+在同一个 <code>ArrayBuffer</code> 实例上创建多个视图是可能且常见的。
+使用传输列表传输 <code>ArrayBuffer</code> 时必须非常小心，因为这样做会导致共享同一个 <code>ArrayBuffer</code> 的所有 <code>TypedArray</code> 和 <code>Buffer</code> 实例变得不可用。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ab = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-keyword">const</span> u1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(ab);
+<span class="hljs-keyword">const</span> u2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint16Array</span>(ab);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(u2.<span class="hljs-property">length</span>);  <span class="hljs-comment">// 打印 5</span>
+
+port.<span class="hljs-title function_">postMessage</span>(u1, [u1.<span class="hljs-property">buffer</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(u2.<span class="hljs-property">length</span>);  <span class="hljs-comment">// 打印 0</span></code></pre><p class="">对于 <code>Buffer</code> 实例，具体来说，底层 <code>ArrayBuffer</code> 是否可以被传输或克隆完全取决于实例是如何创建的，这通常无法可靠地确定。</p><p class=""><code>ArrayBuffer</code> 可以用 <a href="../worker_threads.html#workermarkasuntransferableobject"><code>markAsUntransferable()</code></a> 标记来表示它应该总是被克隆并且永远不会被传输。</p><p class="">根据 <code>Buffer</code> 实例的创建方式，它可能拥有也可能不拥有其底层 <code>ArrayBuffer</code>。
+除非知道 <code>Buffer</code> 实例拥有它，否则不得传输 <code>ArrayBuffer</code>。
+特别是，对于从内部 <code>Buffer</code> 池（使用，例如 <code>Buffer.from()</code> 或 <code>Buffer.allocUnsafe()</code>）创建的 <code>Buffer</code>，传输它们是不可能的，它们总是被克隆，这会发送整个 <code>Buffer</code> 池的副本。
+此行为可能会带来意想不到的更高内存使用率和可能的安全问题。</p><p class="">有关 <code>Buffer</code> 池化的更多详细信息，请参阅 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a>。</p><p class="">使用 <code>Buffer.alloc()</code> 或 <code>Buffer.allocUnsafeSlow()</code> 创建的 <code>Buffer</code> 实例的 <code>ArrayBuffer</code> 始终可以传输，但这样做会使那些 <code>ArrayBuffer</code> 的所有其他现有视图无法使用。</p></div>
+          <div id="content_right"><p>All <code>TypedArray</code> and <code>Buffer</code> instances are views over an underlying
+<code>ArrayBuffer</code>. That is, it is the <code>ArrayBuffer</code> that actually stores
+the raw data while the <code>TypedArray</code> and <code>Buffer</code> objects provide a
+way of viewing and manipulating the data. It is possible and common
+for multiple views to be created over the same <code>ArrayBuffer</code> instance.
+Great care must be taken when using a transfer list to transfer an
+<code>ArrayBuffer</code> as doing so causes all <code>TypedArray</code> and <code>Buffer</code>
+instances that share that same <code>ArrayBuffer</code> to become unusable.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> ab = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-keyword">const</span> u1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(ab);
+<span class="hljs-keyword">const</span> u2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint16Array</span>(ab);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(u2.<span class="hljs-property">length</span>);  <span class="hljs-comment">// prints 5</span>
+
+port.<span class="hljs-title function_">postMessage</span>(u1, [u1.<span class="hljs-property">buffer</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(u2.<span class="hljs-property">length</span>);  <span class="hljs-comment">// prints 0</span></code></pre><p>For <code>Buffer</code> instances, specifically, whether the underlying
+<code>ArrayBuffer</code> can be transferred or cloned depends entirely on how
+instances were created, which often cannot be reliably determined.</p><p>An <code>ArrayBuffer</code> can be marked with <a href="../worker_threads.html#workermarkasuntransferableobject"><code>markAsUntransferable()</code></a> to indicate
+that it should always be cloned and never transferred.</p><p>Depending on how a <code>Buffer</code> instance was created, it may or may
+not own its underlying <code>ArrayBuffer</code>. An <code>ArrayBuffer</code> must not
+be transferred unless it is known that the <code>Buffer</code> instance
+owns it. In particular, for <code>Buffer</code>s created from the internal
+<code>Buffer</code> pool (using, for instance <code>Buffer.from()</code> or <code>Buffer.allocUnsafe()</code>),
+transferring them is not possible and they are always cloned,
+which sends a copy of the entire <code>Buffer</code> pool.
+This behavior may come with unintended higher memory
+usage and possible security concerns.</p><p>See <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> for more details on <code>Buffer</code> pooling.</p><p>The <code>ArrayBuffer</code>s for <code>Buffer</code> instances created using
+<code>Buffer.alloc()</code> or <code>Buffer.allocUnsafeSlow()</code> can always be
+transferred but doing so renders all other existing views of
+those <code>ArrayBuffer</code>s unusable.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

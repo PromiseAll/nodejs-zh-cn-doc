@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>可用性 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>可用性</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_availability" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/availability.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/availability.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#availability.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>此功能取决于底层操作系统提供了一种通知文件系统更改的方法。</p><ul class="">
+<li>在 Linux 系统上，这使用 <a href="https://man7.org/linux/man-pages/man7/inotify.7.html" rel="nofollow"><code>inotify(7)</code></a>。</li>
+<li>在 BSD 系统上，这使用 <a href="https://www.freebsd.org/cgi/man.cgi" rel="nofollow"><code>kqueue(2)</code></a>。</li>
+<li>在 macOS 上，这对文件使用 <a href="https://www.freebsd.org/cgi/man.cgi" rel="nofollow"><code>kqueue(2)</code></a>，对目录使用 <a href="https://developer.apple.com/documentation/coreservices/file_system_events" rel="nofollow"><code>FSEvents</code></a>。</li>
+<li>在 SunOS 系统（包括 Solaris 和 SmartOS）上，这使用 <a href="https://illumos.org/man/port_create" rel="nofollow"><code>event ports</code></a>。</li>
+<li>在 Windows 系统上，此功能取决于 <a href="https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-readdirectorychangesw" rel="nofollow"><code>ReadDirectoryChangesW</code></a>。</li>
+<li>在 AIX 系统上，此功能依赖于必须启用的 <a href="https://developer.ibm.com/articles/au-aix_event_infrastructure/" rel="nofollow"><code>AHAFS</code></a>。</li>
+<li>在 IBM i 系统上，不支持此功能。</li>
+</ul><p class="">如果底层功能由于某种原因不可用，则 <code>fs.watch()</code> 将无法运行并可能抛出异常。
+例如，使用虚拟化软件（例如 Vagrant 或 Docker）时，在网络文件系统（NFS、SMB等）或主机文件系统上监视文件或目录可能不可靠，在某些情况下甚至是不可能的。</p><p class="">仍然可以使用 <code>fs.watchFile()</code>，它使用 stat 轮询，但这种方法较慢且不太可靠。</p></div>
+          <div id="content_right"><p>This feature depends on the underlying operating system providing a way
+to be notified of filesystem changes.</p><ul>
+<li>On Linux systems, this uses <a href="https://man7.org/linux/man-pages/man7/inotify.7.html" rel="nofollow"><code>inotify(7)</code></a>.</li>
+<li>On BSD systems, this uses <a href="https://www.freebsd.org/cgi/man.cgi" rel="nofollow"><code>kqueue(2)</code></a>.</li>
+<li>On macOS, this uses <a href="https://www.freebsd.org/cgi/man.cgi" rel="nofollow"><code>kqueue(2)</code></a> for files and <a href="https://developer.apple.com/documentation/coreservices/file_system_events" rel="nofollow"><code>FSEvents</code></a> for
+directories.</li>
+<li>On SunOS systems (including Solaris and SmartOS), this uses <a href="https://illumos.org/man/port_create" rel="nofollow"><code>event ports</code></a>.</li>
+<li>On Windows systems, this feature depends on <a href="https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-readdirectorychangesw" rel="nofollow"><code>ReadDirectoryChangesW</code></a>.</li>
+<li>On AIX systems, this feature depends on <a href="https://developer.ibm.com/articles/au-aix_event_infrastructure/" rel="nofollow"><code>AHAFS</code></a>, which must be enabled.</li>
+<li>On IBM i systems, this feature is not supported.</li>
+</ul><p>If the underlying functionality is not available for some reason, then
+<code>fs.watch()</code> will not be able to function and may throw an exception.
+For example, watching files or directories can be unreliable, and in some
+cases impossible, on network file systems (NFS, SMB, etc) or host file systems
+when using virtualization software such as Vagrant or Docker.</p><p>It is still possible to use <code>fs.watchFile()</code>, which uses stat polling, but
+this method is slower and less reliable.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

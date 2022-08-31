@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>vm.measureMemory([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>vm.measureMemory([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_vm_measurememory_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/vm_measurememory_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/vm_measurememory_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#vmmeasurememoryoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v13.10.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><p>测量 V8 已知的内存并被当前 V8 隔离已知的所有上下文或主上下文使用。</p><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 可选的。
+<ul>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'summary'</code> 或 <code>'detailed'</code>。
+在摘要模式下，只会返回为主上下文测量的内存。
+在详细模式下，将返回为当前 V8 隔离已知的所有上下文测量的内存。
+<strong>默认值:</strong> <code>'summary'</code></li>
+<li><code>execution</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'default'</code> 或 <code>'eager'</code>。
+在默认执行情况下，promise 将在下一次计划的垃圾收集开始后才会解决，这可能需要一段时间（如果程序在下一次 GC 之前退出，则永远不会）。
+在快速执行情况下，GC 将立即启动以测量内存。
+<strong>默认值:</strong> <code>'default'</code></li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 如果成功测量内存，则 promise 将使用包含内存使用信息的对象进行解决。</li>
+</ul><p class="">返回的 Promise 可以解决的对象的格式特定于 V8 引擎，并且可能会从 V8 的一个版本更改为下一个版本。</p><p class="">返回的结果与 <code>v8.getHeapSpaceStatistics()</code> 返回的统计数据不同，<code>vm.measureMemory()</code> 测量的是 V8 引擎当前实例中每个 V8 特定上下文可访问的内存，而 <code>v8.getHeapSpaceStatistics()</code> 的结果测量的是当前V8中每个堆空间占用的内存实例。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+<span class="hljs-comment">// 测量主上下文使用的内存。</span>
+vm.<span class="hljs-title function_">measureMemory</span>({ <span class="hljs-attr">mode</span>: <span class="hljs-string">'summary'</span> })
+  <span class="hljs-comment">// 这和 vm.measureMemory() 一样</span>
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+    <span class="hljs-comment">// 当前格式为：</span>
+    <span class="hljs-comment">// {</span>
+    <span class="hljs-comment">//   total: {</span>
+    <span class="hljs-comment">//      jsMemoryEstimate: 2418479, jsMemoryRange: [ 2418479, 2745799 ]</span>
+    <span class="hljs-comment">//    }</span>
+    <span class="hljs-comment">// }</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);
+  });
+
+<span class="hljs-keyword">const</span> context = vm.<span class="hljs-title function_">createContext</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> });
+vm.<span class="hljs-title function_">measureMemory</span>({ <span class="hljs-attr">mode</span>: <span class="hljs-string">'detailed'</span>, <span class="hljs-attr">execution</span>: <span class="hljs-string">'eager'</span> })
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+    <span class="hljs-comment">// 在此处引用上下文，</span>
+    <span class="hljs-comment">// 以便在测量完成之前不会对其进行 GC。</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(context.<span class="hljs-property">a</span>);
+    <span class="hljs-comment">// {</span>
+    <span class="hljs-comment">//   total: {</span>
+    <span class="hljs-comment">//     jsMemoryEstimate: 2574732,</span>
+    <span class="hljs-comment">//     jsMemoryRange: [ 2574732, 2904372 ]</span>
+    <span class="hljs-comment">//   },</span>
+    <span class="hljs-comment">//   current: {</span>
+    <span class="hljs-comment">//     jsMemoryEstimate: 2438996,</span>
+    <span class="hljs-comment">//     jsMemoryRange: [ 2438996, 2768636 ]</span>
+    <span class="hljs-comment">//   },</span>
+    <span class="hljs-comment">//   other: [</span>
+    <span class="hljs-comment">//     {</span>
+    <span class="hljs-comment">//       jsMemoryEstimate: 135736,</span>
+    <span class="hljs-comment">//       jsMemoryRange: [ 135736, 465376 ]</span>
+    <span class="hljs-comment">//     }</span>
+    <span class="hljs-comment">//   ]</span>
+    <span class="hljs-comment">// }</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);
+  });</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v13.10.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><p>Measure the memory known to V8 and used by all contexts known to the
+current V8 isolate, or the main context.</p><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Optional.
+<ul>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Either <code>'summary'</code> or <code>'detailed'</code>. In summary mode,
+only the memory measured for the main context will be returned. In
+detailed mode, the memory measured for all contexts known to the
+current V8 isolate will be returned.
+<strong>Default:</strong> <code>'summary'</code></li>
+<li><code>execution</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Either <code>'default'</code> or <code>'eager'</code>. With default
+execution, the promise will not resolve until after the next scheduled
+garbage collection starts, which may take a while (or never if the program
+exits before the next GC). With eager execution, the GC will be started
+right away to measure the memory.
+<strong>Default:</strong> <code>'default'</code></li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> If the memory is successfully measured the promise will
+resolve with an object containing information about the memory usage.</li>
+</ul><p>The format of the object that the returned Promise may resolve with is
+specific to the V8 engine and may change from one version of V8 to the next.</p><p>The returned result is different from the statistics returned by
+<code>v8.getHeapSpaceStatistics()</code> in that <code>vm.measureMemory()</code> measure the
+memory reachable by each V8 specific contexts in the current instance of
+the V8 engine, while the result of <code>v8.getHeapSpaceStatistics()</code> measure
+the memory occupied by each heap space in the current V8 instance.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+<span class="hljs-comment">// Measure the memory used by the main context.</span>
+vm.<span class="hljs-title function_">measureMemory</span>({ <span class="hljs-attr">mode</span>: <span class="hljs-string">'summary'</span> })
+  <span class="hljs-comment">// This is the same as vm.measureMemory()</span>
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+    <span class="hljs-comment">// The current format is:</span>
+    <span class="hljs-comment">// {</span>
+    <span class="hljs-comment">//   total: {</span>
+    <span class="hljs-comment">//      jsMemoryEstimate: 2418479, jsMemoryRange: [ 2418479, 2745799 ]</span>
+    <span class="hljs-comment">//    }</span>
+    <span class="hljs-comment">// }</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);
+  });
+
+<span class="hljs-keyword">const</span> context = vm.<span class="hljs-title function_">createContext</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> });
+vm.<span class="hljs-title function_">measureMemory</span>({ <span class="hljs-attr">mode</span>: <span class="hljs-string">'detailed'</span>, <span class="hljs-attr">execution</span>: <span class="hljs-string">'eager'</span> })
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+    <span class="hljs-comment">// Reference the context here so that it won't be GC'ed</span>
+    <span class="hljs-comment">// until the measurement is complete.</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(context.<span class="hljs-property">a</span>);
+    <span class="hljs-comment">// {</span>
+    <span class="hljs-comment">//   total: {</span>
+    <span class="hljs-comment">//     jsMemoryEstimate: 2574732,</span>
+    <span class="hljs-comment">//     jsMemoryRange: [ 2574732, 2904372 ]</span>
+    <span class="hljs-comment">//   },</span>
+    <span class="hljs-comment">//   current: {</span>
+    <span class="hljs-comment">//     jsMemoryEstimate: 2438996,</span>
+    <span class="hljs-comment">//     jsMemoryRange: [ 2438996, 2768636 ]</span>
+    <span class="hljs-comment">//   },</span>
+    <span class="hljs-comment">//   other: [</span>
+    <span class="hljs-comment">//     {</span>
+    <span class="hljs-comment">//       jsMemoryEstimate: 135736,</span>
+    <span class="hljs-comment">//       jsMemoryRange: [ 135736, 465376 ]</span>
+    <span class="hljs-comment">//     }</span>
+    <span class="hljs-comment">//   ]</span>
+    <span class="hljs-comment">// }</span>
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);
+  });</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

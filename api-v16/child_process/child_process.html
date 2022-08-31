@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>child_process 子进程 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>child_process 子进程</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_child_process" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/child_process.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/child_process.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#child-process.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p><p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/child_process.js">lib/child_process.js</a></p><p><code>child_process</code> 模块提供了以与 <a href="http://man7.org/linux/man-pages/man3/popen.3.html" rel="nofollow"><code>popen(3)</code></a> 类似但不完全相同的方式衍生子进程的能力。
+此功能主要由 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 函数提供：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> ls = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ls'</span>, [<span class="hljs-string">'-lh'</span>, <span class="hljs-string">'/usr'</span>]);
+
+ls.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stdout: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`child process exited with code <span class="hljs-subst">${code}</span>`</span>);
+});</code></pre><p class="">默认情况下，会在父 Node.js 进程和衍生的子进程之间建立 <code>stdin</code>、<code>stdout</code> 和 <code>stderr</code> 的管道。
+这些管道的容量有限（且特定于平台）。
+如果子进程在没有捕获输出的情况下写入标准输出超过该限制，则子进程会阻塞等待管道缓冲区接受更多数据。
+这与 shell 中管道的行为相同。
+如果不消费输出，则使用 <code>{ stdio: 'ignore' }</code> 选项。</p><p class="">如果 <code>env</code> 在 <code>options</code> 对象中，则使用 <code>options.env.PATH</code> 环境变量执行命令查找。
+否则，使用 <code>process.env.PATH</code>。
+如果设置了 <code>options.env</code> 而没有设置 <code>PATH</code>，则在 Unix 上的查找是在默认搜索路径搜索 <code>/usr/bin:/bin</code> 上执行的（请参阅操作系统手册中的 execvpe/execvp），在 Windows 上使用当前进程环境变量 <code>PATH</code>。</p><p class="">在 Windows 上，环境变量不区分大小写。
+Node.js 按字典顺序对 <code>env</code> 键进行排序，并使用不区分大小写匹配的第一个键。
+只有第一个（按字典顺序）条目将传给子流程。
+当传给 <code>env</code> 选项的对象具有多个相同键名的变体时（例如 <code>PATH</code> 和 <code>Path</code>），在 Windows 上可能会导致出现问题。</p><p class=""><a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 方法异步衍生子进程，不会阻塞 Node.js 事件循环。
+<a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a> 函数以同步方式提供等效的功能，其会阻塞事件循环，直到衍生的进程退出或终止。</p><p class="">为方便起见，<code>child_process</code> 模块提供了一些同步和异步方法替代 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 和 <a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a>。
+这些替代方法中的每一个都是基于 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 或 <a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a> 实现。</p><ul class="">
+<li><a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a>: 衍生 shell 并在该 shell 中运行命令，完成后将 <code>stdout</code> 和 <code>stderr</code> 传给回调函数。</li>
+<li><a href="../child_process.html#child_processexecfilefile-args-options-callback"><code>child_process.execFile()</code></a>: 与 <a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> 类似，不同之处在于，默认情况下，它直接衍生命令，而不先衍生 shell。</li>
+<li><a href="../child_process.html#child_processforkmodulepath-args-options"><code>child_process.fork()</code></a>: 衍生新的 Node.js 进程并使用建立的 IPC 通信通道（其允许在父子进程之间发送消息）调用指定的模块。</li>
+<li><a href="../child_process.html#child_processexecsynccommand-options"><code>child_process.execSync()</code></a>: <a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> 的同步版本，其将阻塞 Node.js 事件循环。</li>
+<li><a href="../child_process.html#child_processexecfilesyncfile-args-options"><code>child_process.execFileSync()</code></a>: <a href="../child_process.html#child_processexecfilefile-args-options-callback"><code>child_process.execFile()</code></a> 的同步版本，其将阻塞 Node.js 事件循环。</li>
+</ul><p class="">对于某些情况，例如自动化 shell 脚本，<a href="../child_process.html#synchronous-process-creation">同步的方法</a>可能更方便。
+但是，在许多情况下，由于在衍生的进程完成前会停止事件循环，同步方法会对性能产生重大影响。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">Stability: 2</a> - Stable</div><p></p><p><strong>Source Code:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.15.0/lib/child_process.js">lib/child_process.js</a></p><p>The <code>child_process</code> module provides the ability to spawn subprocesses in
+a manner that is similar, but not identical, to <a href="http://man7.org/linux/man-pages/man3/popen.3.html" rel="nofollow"><code>popen(3)</code></a>. This capability
+is primarily provided by the <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> function:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> ls = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'ls'</span>, [<span class="hljs-string">'-lh'</span>, <span class="hljs-string">'/usr'</span>]);
+
+ls.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`stdout: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`stderr: <span class="hljs-subst">${data}</span>`</span>);
+});
+
+ls.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`child process exited with code <span class="hljs-subst">${code}</span>`</span>);
+});</code></pre><p>By default, pipes for <code>stdin</code>, <code>stdout</code>, and <code>stderr</code> are established between
+the parent Node.js process and the spawned subprocess. These pipes have
+limited (and platform-specific) capacity. If the subprocess writes to
+stdout in excess of that limit without the output being captured, the
+subprocess blocks waiting for the pipe buffer to accept more data. This is
+identical to the behavior of pipes in the shell. Use the <code>{ stdio: 'ignore' }</code>
+option if the output will not be consumed.</p><p>The command lookup is performed using the <code>options.env.PATH</code> environment
+variable if <code>env</code> is in the <code>options</code> object. Otherwise, <code>process.env.PATH</code> is
+used. If <code>options.env</code> is set without <code>PATH</code>, lookup on Unix is performed
+on a default search path search of <code>/usr/bin:/bin</code> (see your operating system's
+manual for execvpe/execvp), on Windows the current processes environment
+variable <code>PATH</code> is used.</p><p>On Windows, environment variables are case-insensitive. Node.js
+lexicographically sorts the <code>env</code> keys and uses the first one that
+case-insensitively matches. Only first (in lexicographic order) entry will be
+passed to the subprocess. This might lead to issues on Windows when passing
+objects to the <code>env</code> option that have multiple variants of the same key, such as
+<code>PATH</code> and <code>Path</code>.</p><p>The <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> method spawns the child process asynchronously,
+without blocking the Node.js event loop. The <a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a>
+function provides equivalent functionality in a synchronous manner that blocks
+the event loop until the spawned process either exits or is terminated.</p><p>For convenience, the <code>child_process</code> module provides a handful of synchronous
+and asynchronous alternatives to <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> and
+<a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a>. Each of these alternatives are implemented on
+top of <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> or <a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a>.</p><ul>
+<li><a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a>: spawns a shell and runs a command within that
+shell, passing the <code>stdout</code> and <code>stderr</code> to a callback function when
+complete.</li>
+<li><a href="../child_process.html#child_processexecfilefile-args-options-callback"><code>child_process.execFile()</code></a>: similar to <a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> except
+that it spawns the command directly without first spawning a shell by
+default.</li>
+<li><a href="../child_process.html#child_processforkmodulepath-args-options"><code>child_process.fork()</code></a>: spawns a new Node.js process and invokes a
+specified module with an IPC communication channel established that allows
+sending messages between parent and child.</li>
+<li><a href="../child_process.html#child_processexecsynccommand-options"><code>child_process.execSync()</code></a>: a synchronous version of
+<a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> that will block the Node.js event loop.</li>
+<li><a href="../child_process.html#child_processexecfilesyncfile-args-options"><code>child_process.execFileSync()</code></a>: a synchronous version of
+<a href="../child_process.html#child_processexecfilefile-args-options-callback"><code>child_process.execFile()</code></a> that will block the Node.js event loop.</li>
+</ul><p>For certain use cases, such as automating shell scripts, the
+<a href="../child_process.html#synchronous-process-creation">synchronous counterparts</a> may be more convenient. In many cases, however,
+the synchronous methods can have significant impact on performance due to
+stalling the event loop while spawned processes complete.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

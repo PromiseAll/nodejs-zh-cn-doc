@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>rl.line | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-readline">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>rl.line</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../readline.html#readline_rl_line" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/readline/rl_line.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/readline/rl_line.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/readline/#rlline.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.8.0</td>
+<td><p>值将始终是字符串，永远不会未定义。</p></td></tr>
+<tr><td>v0.1.98</td>
+<td><p><span>新增于: v0.1.98</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>节点正在处理的当前输入数据。</p><p class="">这可用于从 TTY 流中收集输入以检索迄今为止（在 <code>line</code> 事件触发之前）已处理的当前值。
+一旦触发 <code>line</code> 事件，则此属性将是空字符串。</p><p class="">请注意，如果 <code>rl.cursor</code> 也不受控制，则在实例运行时修改该值可能会产生意想不到的后果。</p><p class=""><strong>如果不使用 TTY 流进行输入，则使用 <a href="../readline.html#event-line"><code>'line'</code></a> 事件。</strong></p><p class="">一个可能的用例如下：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> values = [<span class="hljs-string">'lorem ipsum'</span>, <span class="hljs-string">'dolor sit amet'</span>];
+<span class="hljs-keyword">const</span> rl = readline.<span class="hljs-title function_">createInterface</span>(process.<span class="hljs-property">stdin</span>);
+<span class="hljs-keyword">const</span> showResults = <span class="hljs-title function_">debounce</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(
+    <span class="hljs-string">'\n'</span>,
+    values.<span class="hljs-title function_">filter</span>(<span class="hljs-function">(<span class="hljs-params">val</span>) =&gt;</span> val.<span class="hljs-title function_">startsWith</span>(rl.<span class="hljs-property">line</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">' '</span>)
+  );
+}, <span class="hljs-number">300</span>);
+process.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'keypress'</span>, <span class="hljs-function">(<span class="hljs-params">c, k</span>) =&gt;</span> {
+  <span class="hljs-title function_">showResults</span>();
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.8.0</td>
+<td><p>Value will always be a string, never undefined.</p></td></tr>
+<tr><td>v0.1.98</td>
+<td><p><span>Added in: v0.1.98</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>The current input data being processed by node.</p><p>This can be used when collecting input from a TTY stream to retrieve the
+current value that has been processed thus far, prior to the <code>line</code> event
+being emitted. Once the <code>line</code> event has been emitted, this property will
+be an empty string.</p><p>Be aware that modifying the value during the instance runtime may have
+unintended consequences if <code>rl.cursor</code> is not also controlled.</p><p><strong>If not using a TTY stream for input, use the <a href="../readline.html#event-line"><code>'line'</code></a> event.</strong></p><p>One possible use case would be as follows:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> values = [<span class="hljs-string">'lorem ipsum'</span>, <span class="hljs-string">'dolor sit amet'</span>];
+<span class="hljs-keyword">const</span> rl = readline.<span class="hljs-title function_">createInterface</span>(process.<span class="hljs-property">stdin</span>);
+<span class="hljs-keyword">const</span> showResults = <span class="hljs-title function_">debounce</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(
+    <span class="hljs-string">'\n'</span>,
+    values.<span class="hljs-title function_">filter</span>(<span class="hljs-function">(<span class="hljs-params">val</span>) =&gt;</span> val.<span class="hljs-title function_">startsWith</span>(rl.<span class="hljs-property">line</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">' '</span>)
+  );
+}, <span class="hljs-number">300</span>);
+process.<span class="hljs-property">stdin</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">'keypress'</span>, <span class="hljs-function">(<span class="hljs-params">c, k</span>) =&gt;</span> {
+  <span class="hljs-title function_">showResults</span>();
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

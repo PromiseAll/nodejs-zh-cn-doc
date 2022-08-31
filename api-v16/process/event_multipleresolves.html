@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'multipleResolves' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'multipleResolves' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_event_multipleresolves" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/event_multipleresolves.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/event_multipleresolves.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#event-multipleresolves.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v10.12.0</span><span>弃用于: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_0"><a href="../documentation.html#stability-index">稳定性: 0</a> - 弃用</div><p></p><ul class="">
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 解决类型
+<code>'resolve'</code> 或 <code>'reject'</code> 之一。</li>
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 不止一次解决或拒绝的 promise。</li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 在原始解决之后解决或拒绝 promise 的值。</li>
+</ul><p>每当 <code>Promise</code> 满足以下任一条件时，就会触发 <code>'multipleResolves'</code> 事件：</p><ul class="">
+<li>解决了不止一次。</li>
+<li>拒绝了不止一次。</li>
+<li>解决后拒绝。</li>
+<li>拒绝后解决。</li>
+</ul><p class="">这对于在使用 <code>Promise</code> 构造函数时跟踪应用程序中的潜在错误很有用，因为多个解决被静默吞下。
+但是，此事件的发生并不一定表示错误。
+例如，<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race" rel="nofollow"><code>Promise.race()</code></a> 可以触发 <code>'multipleResolves'</code> 事件。</p><p class="">由于在上面的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race" rel="nofollow"><code>Promise.race()</code></a> 示例这样的情况下事件的不可靠性，它已被弃用。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'multipleResolves'</span>, <span class="hljs-function">(<span class="hljs-params">type, promise, reason</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(type, promise, reason);
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> process.<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>));
+});
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">main</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'First call'</span>);
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'Swallowed resolve'</span>);
+      <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Swallowed reject'</span>));
+    });
+  } <span class="hljs-keyword">catch</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Failed'</span>);
+  }
+}
+
+<span class="hljs-title function_">main</span>().<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);
+<span class="hljs-comment">// resolve: Promise { 'First call' } 'Swallowed resolve'</span>
+<span class="hljs-comment">// reject: Promise { 'First call' } Error: Swallowed reject</span>
+<span class="hljs-comment">//     at Promise (*)</span>
+<span class="hljs-comment">//     at new Promise (&lt;anonymous&gt;)</span>
+<span class="hljs-comment">//     at main (*)</span>
+<span class="hljs-comment">// First call</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'multipleResolves'</span>, <span class="hljs-function">(<span class="hljs-params">type, promise, reason</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(type, promise, reason);
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> process.<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>));
+});
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">main</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'First call'</span>);
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'Swallowed resolve'</span>);
+      <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Swallowed reject'</span>));
+    });
+  } <span class="hljs-keyword">catch</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Failed'</span>);
+  }
+}
+
+<span class="hljs-title function_">main</span>().<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);
+<span class="hljs-comment">// resolve: Promise { 'First call' } 'Swallowed resolve'</span>
+<span class="hljs-comment">// reject: Promise { 'First call' } Error: Swallowed reject</span>
+<span class="hljs-comment">//     at Promise (*)</span>
+<span class="hljs-comment">//     at new Promise (&lt;anonymous&gt;)</span>
+<span class="hljs-comment">//     at main (*)</span>
+<span class="hljs-comment">// First call</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v10.12.0</span><span>Deprecated since: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_0"><a href="../documentation.html#stability-index">Stability: 0</a> - Deprecated</div><p></p><ul>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The resolution type. One of <code>'resolve'</code> or <code>'reject'</code>.</li>
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> The promise that resolved or rejected more than once.</li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> The value with which the promise was either resolved or
+rejected after the original resolve.</li>
+</ul><p>The <code>'multipleResolves'</code> event is emitted whenever a <code>Promise</code> has been either:</p><ul>
+<li>Resolved more than once.</li>
+<li>Rejected more than once.</li>
+<li>Rejected after resolve.</li>
+<li>Resolved after reject.</li>
+</ul><p>This is useful for tracking potential errors in an application while using the
+<code>Promise</code> constructor, as multiple resolutions are silently swallowed. However,
+the occurrence of this event does not necessarily indicate an error. For
+example, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race" rel="nofollow"><code>Promise.race()</code></a> can trigger a <code>'multipleResolves'</code> event.</p><p>Because of the unreliability of the event in cases like the
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race" rel="nofollow"><code>Promise.race()</code></a> example above it has been deprecated.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'multipleResolves'</span>, <span class="hljs-function">(<span class="hljs-params">type, promise, reason</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(type, promise, reason);
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> process.<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>));
+});
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">main</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'First call'</span>);
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'Swallowed resolve'</span>);
+      <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Swallowed reject'</span>));
+    });
+  } <span class="hljs-keyword">catch</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Failed'</span>);
+  }
+}
+
+<span class="hljs-title function_">main</span>().<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);
+<span class="hljs-comment">// resolve: Promise { 'First call' } 'Swallowed resolve'</span>
+<span class="hljs-comment">// reject: Promise { 'First call' } Error: Swallowed reject</span>
+<span class="hljs-comment">//     at Promise (*)</span>
+<span class="hljs-comment">//     at new Promise (&lt;anonymous&gt;)</span>
+<span class="hljs-comment">//     at main (*)</span>
+<span class="hljs-comment">// First call</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'multipleResolves'</span>, <span class="hljs-function">(<span class="hljs-params">type, promise, reason</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(type, promise, reason);
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> process.<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>));
+});
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">main</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'First call'</span>);
+      <span class="hljs-title function_">resolve</span>(<span class="hljs-string">'Swallowed resolve'</span>);
+      <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Swallowed reject'</span>));
+    });
+  } <span class="hljs-keyword">catch</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Failed'</span>);
+  }
+}
+
+<span class="hljs-title function_">main</span>().<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>);
+<span class="hljs-comment">// resolve: Promise { 'First call' } 'Swallowed resolve'</span>
+<span class="hljs-comment">// reject: Promise { 'First call' } Error: Swallowed reject</span>
+<span class="hljs-comment">//     at Promise (*)</span>
+<span class="hljs-comment">//     at new Promise (&lt;anonymous&gt;)</span>
+<span class="hljs-comment">//     at main (*)</span>
+<span class="hljs-comment">// First call</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

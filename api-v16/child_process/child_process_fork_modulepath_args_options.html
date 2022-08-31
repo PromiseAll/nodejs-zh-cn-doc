@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>child_process.fork(modulePath[, args][, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>child_process.fork(modulePath[, args][, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_child_process_fork_modulepath_args_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/child_process_fork_modulepath_args_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/child_process_fork_modulepath_args_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#child_processforkmodulepath-args-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>参数 <code>modulePath</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v15.13.0</td>
+<td><p>添加了超时。</p></td></tr>
+<tr><td>v15.11.0</td>
+<td><p>添加了中止信号的杀死信号。</p></td></tr>
+<tr><td>v15.6.0</td>
+<td><p>添加了中止信号支持。</p></td></tr>
+<tr><td>v16.4.0, v14.18.0</td>
+<td><p>选项 <code>cwd</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>现在支持 <code>serialization</code> 选项。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>选项 <code>stdio</code> 现在可以是字符串。</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>现在支持 <code>stdio</code> 选项。</p></td></tr>
+<tr><td>v0.5.0</td>
+<td><p><span>新增于: v0.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>modulePath</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 要在子进程中运行的模块。</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 字符串参数列表。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 子进程的当前工作目录。</li>
+<li><code>detached</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 准备子进程独立于其父进程运行。
+具体行为取决于平台，参见 <a href="../child_process.html#optionsdetached"><code>options.detached</code></a>。</li>
+<li><code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 环境变量键值对。 <strong>默认值:</strong> <code>process.env</code>。</li>
+<li><code>execPath</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 用于创建子进程的可执行文件。</li>
+<li><code>execArgv</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 传给可执行文件的字符串参数列表。
+<strong>默认值:</strong> <code>process.execArgv</code>。</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的群组标识（参见 <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>）。</li>
+<li><code>serialization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指定用于在进程之间发送消息的序列化类型。
+可能的值为 <code>'json'</code> 和 <code>'advanced'</code>。
+有关更多详细信息，请参阅<a href="../child_process.html#advanced-serialization">高级序列化</a>。 <strong>默认值:</strong> <code>'json'</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 允许使用中止信号关闭子进程。</li>
+<li><code>killSignal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 当衍生的进程将被超时或中止信号杀死时要使用的信号值。 <strong>默认值:</strong> <code>'SIGTERM'</code>。</li>
+<li><code>silent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则子进程的标准输入、标准输出和标准错误将通过管道传输到父进程，否则它们将从父进程继承，有关详细信息，请参阅 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 的 <a href="../child_process.html#optionsstdio"><code>stdio</code></a> 的 <code>'pipe'</code> 和 <code>'inherit'</code> 选项。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 参见 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 的 <a href="../child_process.html#optionsstdio"><code>stdio</code></a>。
+提供此选项时，它会覆盖 <code>silent</code>。
+如果使用数组变体，则它必须恰好包含一个值为 <code>'ipc'</code> 的条目，否则将抛出错误。
+例如 <code>[0, 1, 2, 'ipc']</code>。</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的用户标识（参见 <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>）。</li>
+<li><code>windowsVerbatimArguments</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 在 Windows 上不为参数加上引号或转义。
+在 Unix 上被忽略。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 允许进程运行的最长时间（以毫秒为单位）。 <strong>默认值:</strong> <code>undefined</code>。</li>
+</ul>
+</li>
+<li>返回: <a href="../child_process.html#class-childprocess" rel="nofollow" class="type">&lt;ChildProcess&gt;</a></li>
+</ul><p><code>child_process.fork()</code> 方法是 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 的特例，专门用于衍生新的 Node.js 进程。
+与 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 一样，返回 <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> 对象。
+返回的 <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> 将有额外的内置通信通道，允许消息在父进程和子进程之间来回传递。
+详见 <a href="../child_process.html#subprocesssendmessage-sendhandle-options-callback"><code>subprocess.send()</code></a>。</p><p class="">请记住，衍生的 Node.js 子进程独立于父进程，除了两者之间建立的 IPC 通信通道。
+每个进程都有自己的内存，具有自己的 V8 实例。
+由于需要额外的资源分配，不建议衍生大量子 Node.js 进程。</p><p class="">默认情况下，<code>child_process.fork()</code> 将使用父进程的 <a href="../process.html#processexecpath"><code>process.execPath</code></a> 衍生新的 Node.js 实例。
+<code>options</code> 对象中的 <code>execPath</code> 属性允许使用替代的执行路径。</p><p class="">使用自定义 <code>execPath</code> 启动的 Node.js 进程将使用在子进程上使用环境变量 <code>NODE_CHANNEL_FD</code> 标识的文件描述符与父进程通信。</p><p class="">与 <a href="http://man7.org/linux/man-pages/man2/fork.2.html" rel="nofollow"><code>fork(2)</code></a> POSIX 系统调用不同，<code>child_process.fork()</code> 不克隆当前进程。</p><p class=""><code>child_process.fork()</code> 不支持 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 中可用的 <code>shell</code> 选项，如果设置将被忽略。</p><p class="">如果启用了 <code>signal</code> 选项，则在相应的 <code>AbortController</code> 上调用 <code>.abort()</code> 与在子进程上调用 <code>.kill()</code> 类似，只是传给回调的错误将是 <code>AbortError</code>：</p><pre class=""><code class="language-js"><span class="hljs-keyword">if</span> (process.<span class="hljs-property">argv</span>[<span class="hljs-number">2</span>] === <span class="hljs-string">'child'</span>) {
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello from <span class="hljs-subst">${process.argv[<span class="hljs-number">2</span>]}</span>!`</span>);
+  }, <span class="hljs-number">1_000</span>);
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> { fork } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+  <span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+  <span class="hljs-keyword">const</span> { signal } = controller;
+  <span class="hljs-keyword">const</span> child = <span class="hljs-title function_">fork</span>(__filename, [<span class="hljs-string">'child'</span>], { signal });
+  child.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-comment">// 如果控制器中止，则这将在 err 为 AbortError 的情况下被调用</span>
+  });
+  controller.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// 停止子进程</span>
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>The <code>modulePath</code> parameter can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v15.13.0</td>
+<td><p>timeout was added.</p></td></tr>
+<tr><td>v15.11.0</td>
+<td><p>killSignal for AbortSignal was added.</p></td></tr>
+<tr><td>v15.6.0</td>
+<td><p>AbortSignal support was added.</p></td></tr>
+<tr><td>v16.4.0, v14.18.0</td>
+<td><p>The <code>cwd</code> option can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>The <code>serialization</code> option is supported now.</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>The <code>stdio</code> option can now be a string.</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>The <code>stdio</code> option is supported now.</p></td></tr>
+<tr><td>v0.5.0</td>
+<td><p><span>Added in: v0.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>modulePath</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> The module to run in the child.</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> List of string arguments.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> Current working directory of the child process.</li>
+<li><code>detached</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Prepare child to run independently of its parent
+process. Specific behavior depends on the platform, see
+<a href="../child_process.html#optionsdetached"><code>options.detached</code></a>).</li>
+<li><code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Environment key-value pairs. <strong>Default:</strong> <code>process.env</code>.</li>
+<li><code>execPath</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Executable used to create the child process.</li>
+<li><code>execArgv</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> List of string arguments passed to the executable.
+<strong>Default:</strong> <code>process.execArgv</code>.</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the group identity of the process (see <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>).</li>
+<li><code>serialization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Specify the kind of serialization used for sending
+messages between processes. Possible values are <code>'json'</code> and <code>'advanced'</code>.
+See <a href="../child_process.html#advanced-serialization">Advanced serialization</a> for more details. <strong>Default:</strong> <code>'json'</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> Allows closing the child process using an
+AbortSignal.</li>
+<li><code>killSignal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The signal value to be used when the spawned
+process will be killed by timeout or abort signal. <strong>Default:</strong> <code>'SIGTERM'</code>.</li>
+<li><code>silent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, stdin, stdout, and stderr of the child will be
+piped to the parent, otherwise they will be inherited from the parent, see
+the <code>'pipe'</code> and <code>'inherit'</code> options for <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a>'s
+<a href="../child_process.html#optionsstdio"><code>stdio</code></a> for more details. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> See <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a>'s <a href="../child_process.html#optionsstdio"><code>stdio</code></a>.
+When this option is provided, it overrides <code>silent</code>. If the array variant
+is used, it must contain exactly one item with value <code>'ipc'</code> or an error
+will be thrown. For instance <code>[0, 1, 2, 'ipc']</code>.</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the user identity of the process (see <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>).</li>
+<li><code>windowsVerbatimArguments</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> No quoting or escaping of arguments is
+done on Windows. Ignored on Unix. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> In milliseconds the maximum amount of time the process
+is allowed to run. <strong>Default:</strong> <code>undefined</code>.</li>
+</ul>
+</li>
+<li>Returns: <a href="../child_process.html#class-childprocess" rel="nofollow" class="type">&lt;ChildProcess&gt;</a></li>
+</ul><p>The <code>child_process.fork()</code> method is a special case of
+<a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> used specifically to spawn new Node.js processes.
+Like <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a>, a <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> object is returned. The
+returned <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> will have an additional communication channel
+built-in that allows messages to be passed back and forth between the parent and
+child. See <a href="../child_process.html#subprocesssendmessage-sendhandle-options-callback"><code>subprocess.send()</code></a> for details.</p><p>Keep in mind that spawned Node.js child processes are
+independent of the parent with exception of the IPC communication channel
+that is established between the two. Each process has its own memory, with
+their own V8 instances. Because of the additional resource allocations
+required, spawning a large number of child Node.js processes is not
+recommended.</p><p>By default, <code>child_process.fork()</code> will spawn new Node.js instances using the
+<a href="../process.html#processexecpath"><code>process.execPath</code></a> of the parent process. The <code>execPath</code> property in the
+<code>options</code> object allows for an alternative execution path to be used.</p><p>Node.js processes launched with a custom <code>execPath</code> will communicate with the
+parent process using the file descriptor (fd) identified using the
+environment variable <code>NODE_CHANNEL_FD</code> on the child process.</p><p>Unlike the <a href="http://man7.org/linux/man-pages/man2/fork.2.html" rel="nofollow"><code>fork(2)</code></a> POSIX system call, <code>child_process.fork()</code> does not clone the
+current process.</p><p>The <code>shell</code> option available in <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> is not supported by
+<code>child_process.fork()</code> and will be ignored if set.</p><p>If the <code>signal</code> option is enabled, calling <code>.abort()</code> on the corresponding
+<code>AbortController</code> is similar to calling <code>.kill()</code> on the child process except
+the error passed to the callback will be an <code>AbortError</code>:</p><pre><code class="language-js"><span class="hljs-keyword">if</span> (process.<span class="hljs-property">argv</span>[<span class="hljs-number">2</span>] === <span class="hljs-string">'child'</span>) {
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello from <span class="hljs-subst">${process.argv[<span class="hljs-number">2</span>]}</span>!`</span>);
+  }, <span class="hljs-number">1_000</span>);
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> { fork } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+  <span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+  <span class="hljs-keyword">const</span> { signal } = controller;
+  <span class="hljs-keyword">const</span> child = <span class="hljs-title function_">fork</span>(__filename, [<span class="hljs-string">'child'</span>], { signal });
+  child.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-comment">// This will be called with err being an AbortError if the controller aborts</span>
+  });
+  controller.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// Stops the child process</span>
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

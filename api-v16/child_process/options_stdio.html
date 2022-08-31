@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>options.stdio | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>options.stdio</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_options_stdio" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/options_stdio.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/options_stdio.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#optionsstdio.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.6.0</td>
+<td><p>添加了 <code>overlapped</code> 标准输入输出标志。</p></td></tr>
+<tr><td>v3.3.1</td>
+<td><p>现在接受值 <code>0</code> 作为文件描述符。</p></td></tr>
+<tr><td>v0.7.10</td>
+<td><p><span>新增于: v0.7.10</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p><code>options.stdio</code> 选项用于配置在父进程和子进程之间建立的管道。
+默认情况下，子进程的标准输入、标准输出和标准错误被重定向到 <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> 对象上相应的 <a href="../child_process.html#subprocessstdin"><code>subprocess.stdin</code></a>、<a href="../child_process.html#subprocessstdout"><code>subprocess.stdout</code></a> 和 <a href="../child_process.html#subprocessstderr"><code>subprocess.stderr</code></a> 流。
+这相当于将 <code>options.stdio</code> 设置为等于 <code>['pipe', 'pipe', 'pipe']</code>。</p><p class="">为方便起见，<code>options.stdio</code> 可能是以下字符串之一：</p><ul class="">
+<li><code>'pipe'</code>: 相当于 <code>['pipe', 'pipe', 'pipe']</code>（默认）</li>
+<li><code>'overlapped'</code>: 相当于 <code>['overlapped', 'overlapped', 'overlapped']</code></li>
+<li><code>'ignore'</code>: 相当于 <code>['ignore', 'ignore', 'ignore']</code></li>
+<li><code>'inherit'</code>: 相当于 <code>['inherit', 'inherit', 'inherit']</code> 或 <code>[0, 1, 2]</code></li>
+</ul><p class="">否则，<code>options.stdio</code> 的值是一个数组，其中每个索引对应于子进程中的文件描述符。
+文件描述符 0、1 和 2 分别对应于标准输入、标准输出和标准错误。
+可以指定额外的文件描述符以在父进程和子进程之间创建额外的管道。
+该值是以下之一：</p><ol class="">
+<li>
+<p><code>'pipe'</code>：在子进程和父进程之间创建管道。
+管道的父端作为 <a href="../child_process.html#subprocessstdio"><code>subprocess.stdio[fd]</code></a> 的 <code>child_process</code> 对象的属性暴露给父进程。
+为文件描述符 0、1 和 2 创建的管道也可分别用作 <a href="../child_process.html#subprocessstdin"><code>subprocess.stdin</code></a>、<a href="../child_process.html#subprocessstdout"><code>subprocess.stdout</code></a> 和 <a href="../child_process.html#subprocessstderr"><code>subprocess.stderr</code></a>。
+目前，这些不是实际的 Unix 管道，因此子进程不能通过它们的描述符文件使用它们，例如 <code>/dev/fd/2</code> 或 <code>/dev/stdout</code>。</p>
+</li>
+<li>
+<p><code>'overlapped'</code>：与 <code>'pipe'</code> 相同，只是在句柄上设置了 <code>FILE_FLAG_OVERLAPPED</code> 标志。
+这对于子进程的标准输入输出句柄上的重叠 I/O 是必需的。
+有关更多详细信息，请参阅<a href="https://docs.microsoft.com/en-us/windows/win32/fileio/synchronous-and-asynchronous-i-o" rel="nofollow">文档</a>。
+这与非 Windows 系统上的 <code>'pipe'</code> 完全相同。</p>
+</li>
+<li>
+<p><code>'ipc'</code>：创建 IPC 通道，用于在父子进程之间传递消息/文件描述符。
+一个 <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> 最多可以有一个 IPC 标准输入输出文件描述符。
+设置此选项将启用 <a href="../child_process.html#subprocesssendmessage-sendhandle-options-callback"><code>subprocess.send()</code></a> 方法。
+如果子进程是 Node.js 进程，则 IPC 通道的存在将启用 <a href="../process.html#processsendmessage-sendhandle-options-callback"><code>process.send()</code></a> 和 <a href="../process.html#processdisconnect"><code>process.disconnect()</code></a> 方法，以及子进程中的 <a href="../process.html#event-disconnect"><code>'disconnect'</code></a> 和 <a href="../process.html#event-message"><code>'message'</code></a> 事件。</p>
+<p>不支持以 <a href="../process.html#processsendmessage-sendhandle-options-callback"><code>process.send()</code></a> 以外的任何方式访问 IPC 通道文件描述符、或者将 IPC 通道与非 Node.js 实例的子进程一起使用。</p>
+</li>
+<li>
+<p><code>'ignore'</code>：指示 Node.js 忽略子进程中的文件描述符。
+虽然 Node.js 将始终为其衍生的进程打开文件描述符 0、1 和 2，但将文件描述符设置为 <code>'ignore'</code> 将导致 Node.js 打开 <code>/dev/null</code> 并将其附加到子进程的文件描述符。</p>
+</li>
+<li>
+<p><code>'inherit'</code>：通过相应的标准输入输出流传入/传出父进程。
+在前三个位置，这分别相当于 <code>process.stdin</code>、<code>process.stdout</code> 和 <code>process.stderr</code>。
+在任何其他位置，相当于 <code>'ignore'</code>。</p>
+</li>
+<li>
+<p><a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> 对象：与子进程共享引用终端、文件、套接字或管道的可读或可写流。
+流的底层文件描述符在子进程中复制到对应于 <code>stdio</code> 数组中的索引的文件描述符。
+流必须有底层描述符（文件流在 <code>'open'</code> 事件发生之前没有）。</p>
+</li>
+<li>
+<p>正整数：该整数值被解释为当前在父进程中打开的文件描述符。
+它与子进程共享，类似于共享 <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> 对象的方式。
+Windows 不支持传入套接字。</p>
+</li>
+<li>
+<p><code>null</code>、<code>undefined</code>：使用默认值。
+对于标准输入输出文件描述符 0、1 和 2（换句话说，标准输入、标准输出和标准错误），创建管道。
+对于文件描述符 3 及以上，默认值为 <code>'ignore'</code>。</p>
+</li>
+</ol><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-comment">// 子进程将使用父进程的标准输入输出。</span>
+<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'prg'</span>, [], { <span class="hljs-attr">stdio</span>: <span class="hljs-string">'inherit'</span> });
+
+<span class="hljs-comment">// 衍生仅共享标准错误的子进程。</span>
+<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'prg'</span>, [], { <span class="hljs-attr">stdio</span>: [<span class="hljs-string">'pipe'</span>, <span class="hljs-string">'pipe'</span>, process.<span class="hljs-property">stderr</span>] });
+
+<span class="hljs-comment">// 打开额外的文件描述符=4，以与呈现 startd 风格界面的程序进行交互。</span>
+<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'prg'</span>, [], { <span class="hljs-attr">stdio</span>: [<span class="hljs-string">'pipe'</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">'pipe'</span>] });</code></pre><p class=""><em>值得注意的是，当父子进程之间建立了 IPC 通道，并且子进程是 Node.js 进程时，则子进程会在未引用 IPC 通道的情况下启动（使用 <code>unref()</code> ），直到子进程为 <a href="../process.html#event-disconnect"><code>'disconnect'</code></a> 事件或 <a href="../process.html#event-message"><code>'message'</code></a> 事件注册事件句柄。
+这允许子进程正常退出，而进程不会被打开的 IPC 通道保持打开状态。</em></p><p class="">在类 Unix 操作系统上，<a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 方法在将事件循环与子进程分离之前同步执行内存操作。
+具有大量内存占用的应用程序可能会发现频繁的 <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> 调用是一个瓶颈。
+有关更多信息，请参阅 <a href="https://bugs.chromium.org/p/v8/issues/detail" rel="nofollow">V8 问题 7381</a>。</p><p class="">另见：<a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> 和 <a href="../child_process.html#child_processforkmodulepath-args-options"><code>child_process.fork()</code></a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.6.0</td>
+<td><p>Added the <code>overlapped</code> stdio flag.</p></td></tr>
+<tr><td>v3.3.1</td>
+<td><p>The value <code>0</code> is now accepted as a file descriptor.</p></td></tr>
+<tr><td>v0.7.10</td>
+<td><p><span>Added in: v0.7.10</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p>The <code>options.stdio</code> option is used to configure the pipes that are established
+between the parent and child process. By default, the child's stdin, stdout,
+and stderr are redirected to corresponding <a href="../child_process.html#subprocessstdin"><code>subprocess.stdin</code></a>,
+<a href="../child_process.html#subprocessstdout"><code>subprocess.stdout</code></a>, and <a href="../child_process.html#subprocessstderr"><code>subprocess.stderr</code></a> streams on the
+<a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> object. This is equivalent to setting the <code>options.stdio</code>
+equal to <code>['pipe', 'pipe', 'pipe']</code>.</p><p>For convenience, <code>options.stdio</code> may be one of the following strings:</p><ul>
+<li><code>'pipe'</code>: equivalent to <code>['pipe', 'pipe', 'pipe']</code> (the default)</li>
+<li><code>'overlapped'</code>: equivalent to <code>['overlapped', 'overlapped', 'overlapped']</code></li>
+<li><code>'ignore'</code>: equivalent to <code>['ignore', 'ignore', 'ignore']</code></li>
+<li><code>'inherit'</code>: equivalent to <code>['inherit', 'inherit', 'inherit']</code> or <code>[0, 1, 2]</code></li>
+</ul><p>Otherwise, the value of <code>options.stdio</code> is an array where each index corresponds
+to an fd in the child. The fds 0, 1, and 2 correspond to stdin, stdout,
+and stderr, respectively. Additional fds can be specified to create additional
+pipes between the parent and child. The value is one of the following:</p><ol>
+<li>
+<p><code>'pipe'</code>: Create a pipe between the child process and the parent process.
+The parent end of the pipe is exposed to the parent as a property on the
+<code>child_process</code> object as <a href="../child_process.html#subprocessstdio"><code>subprocess.stdio[fd]</code></a>. Pipes
+created for fds 0, 1, and 2 are also available as <a href="../child_process.html#subprocessstdin"><code>subprocess.stdin</code></a>,
+<a href="../child_process.html#subprocessstdout"><code>subprocess.stdout</code></a> and <a href="../child_process.html#subprocessstderr"><code>subprocess.stderr</code></a>, respectively.
+Currently, these are not actual Unix pipes and therefore the child process
+can not use them by their descriptor files,
+e.g. <code>/dev/fd/2</code> or <code>/dev/stdout</code>.</p>
+</li>
+<li>
+<p><code>'overlapped'</code>: Same as <code>'pipe'</code> except that the <code>FILE_FLAG_OVERLAPPED</code> flag
+is set on the handle. This is necessary for overlapped I/O on the child
+process's stdio handles. See the
+<a href="https://docs.microsoft.com/en-us/windows/win32/fileio/synchronous-and-asynchronous-i-o" rel="nofollow">docs</a>
+for more details. This is exactly the same as <code>'pipe'</code> on non-Windows
+systems.</p>
+</li>
+<li>
+<p><code>'ipc'</code>: Create an IPC channel for passing messages/file descriptors
+between parent and child. A <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> may have at most one IPC
+stdio file descriptor. Setting this option enables the
+<a href="../child_process.html#subprocesssendmessage-sendhandle-options-callback"><code>subprocess.send()</code></a> method. If the child is a Node.js process, the
+presence of an IPC channel will enable <a href="../process.html#processsendmessage-sendhandle-options-callback"><code>process.send()</code></a> and
+<a href="../process.html#processdisconnect"><code>process.disconnect()</code></a> methods, as well as <a href="../process.html#event-disconnect"><code>'disconnect'</code></a> and
+<a href="../process.html#event-message"><code>'message'</code></a> events within the child.</p>
+<p>Accessing the IPC channel fd in any way other than <a href="../process.html#processsendmessage-sendhandle-options-callback"><code>process.send()</code></a>
+or using the IPC channel with a child process that is not a Node.js instance
+is not supported.</p>
+</li>
+<li>
+<p><code>'ignore'</code>: Instructs Node.js to ignore the fd in the child. While Node.js
+will always open fds 0, 1, and 2 for the processes it spawns, setting the fd
+to <code>'ignore'</code> will cause Node.js to open <code>/dev/null</code> and attach it to the
+child's fd.</p>
+</li>
+<li>
+<p><code>'inherit'</code>: Pass through the corresponding stdio stream to/from the
+parent process. In the first three positions, this is equivalent to
+<code>process.stdin</code>, <code>process.stdout</code>, and <code>process.stderr</code>, respectively. In
+any other position, equivalent to <code>'ignore'</code>.</p>
+</li>
+<li>
+<p><a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> object: Share a readable or writable stream that refers to a tty,
+file, socket, or a pipe with the child process. The stream's underlying
+file descriptor is duplicated in the child process to the fd that
+corresponds to the index in the <code>stdio</code> array. The stream must have an
+underlying descriptor (file streams do not until the <code>'open'</code> event has
+occurred).</p>
+</li>
+<li>
+<p>Positive integer: The integer value is interpreted as a file descriptor
+that is currently open in the parent process. It is shared with the child
+process, similar to how <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> objects can be shared. Passing sockets
+is not supported on Windows.</p>
+</li>
+<li>
+<p><code>null</code>, <code>undefined</code>: Use default value. For stdio fds 0, 1, and 2 (in other
+words, stdin, stdout, and stderr) a pipe is created. For fd 3 and up, the
+default is <code>'ignore'</code>.</p>
+</li>
+</ol><pre><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-comment">// Child will use parent's stdios.</span>
+<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'prg'</span>, [], { <span class="hljs-attr">stdio</span>: <span class="hljs-string">'inherit'</span> });
+
+<span class="hljs-comment">// Spawn child sharing only stderr.</span>
+<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'prg'</span>, [], { <span class="hljs-attr">stdio</span>: [<span class="hljs-string">'pipe'</span>, <span class="hljs-string">'pipe'</span>, process.<span class="hljs-property">stderr</span>] });
+
+<span class="hljs-comment">// Open an extra fd=4, to interact with programs presenting a</span>
+<span class="hljs-comment">// startd-style interface.</span>
+<span class="hljs-title function_">spawn</span>(<span class="hljs-string">'prg'</span>, [], { <span class="hljs-attr">stdio</span>: [<span class="hljs-string">'pipe'</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">'pipe'</span>] });</code></pre><p><em>It is worth noting that when an IPC channel is established between the
+parent and child processes, and the child is a Node.js process, the child
+is launched with the IPC channel unreferenced (using <code>unref()</code>) until the
+child registers an event handler for the <a href="../process.html#event-disconnect"><code>'disconnect'</code></a> event
+or the <a href="../process.html#event-message"><code>'message'</code></a> event. This allows the child to exit
+normally without the process being held open by the open IPC channel.</em></p><p>On Unix-like operating systems, the <a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> method
+performs memory operations synchronously before decoupling the event loop
+from the child. Applications with a large memory footprint may find frequent
+<a href="../child_process.html#child_processspawncommand-args-options"><code>child_process.spawn()</code></a> calls to be a bottleneck. For more information,
+see <a href="https://bugs.chromium.org/p/v8/issues/detail" rel="nofollow">V8 issue 7381</a>.</p><p>See also: <a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> and <a href="../child_process.html#child_processforkmodulepath-args-options"><code>child_process.fork()</code></a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>util.parseArgs([config]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-util">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>util.parseArgs([config])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../util.html#util_util_parseargs_config" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/util/#utilparseargsconfig.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v18.3.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><ul class="">
+<li>
+<p><code>config</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 用于提供解析参数和配置解析器。
+<code>config</code> 支持以下属性：</p>
+<ul>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 参数字符串数组。 <strong>默认值:</strong> <code>process.argv</code>
+删除了 <code>execPath</code> 和 <code>filename</code>。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 用于描述解析器已知的参数。
+<code>options</code> 的键是选项的长名称，值是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>，接受以下属性：
+<ul>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 参数类型，必须是 <code>boolean</code> 或 <code>string</code>。</li>
+<li><code>multiple</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 是否可以多次提供该选项。
+如果为 <code>true</code>，则所有的值都会被收集到一个数组中。
+如果为 <code>false</code>，则选项的值是最后获胜的。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>short</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 选项的单个字符别名。</li>
+</ul>
+</li>
+<li><code>strict</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 遇到未知参数，或者传入的参数与 <code>options</code> 中配置的 <code>type</code> 不匹配时是否应该抛出错误。
+<strong>默认值:</strong> <code>true</code>。</li>
+<li><code>allowPositionals</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 此命令是否接受位置参数。
+<strong>默认值:</strong> <code>false</code> 如果 <code>strict</code> 是 <code>true</code>，否则 <code>true</code>。</li>
+</ul>
+</li>
+<li>
+<p>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 解析后的命令行参数：</p>
+<ul>
+<li><code>values</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 解析的选项名称与其 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 或 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 值的映射。</li>
+<li><code>positionals</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 位置参数。</li>
+</ul>
+</li>
+</ul><p>为命令行参数解析提供比直接与 <code>process.argv</code> 交互更高级别的 API。
+采用预期参数的规范并返回带有解析选项和位置的结构化对象。</p><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { parseArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:util'</span>;
+<span class="hljs-keyword">const</span> args = [<span class="hljs-string">'-f'</span>, <span class="hljs-string">'--bar'</span>, <span class="hljs-string">'b'</span>];
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">foo</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'boolean'</span>,
+    <span class="hljs-attr">short</span>: <span class="hljs-string">'f'</span>
+  },
+  <span class="hljs-attr">bar</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'string'</span>
+  }
+};
+<span class="hljs-keyword">const</span> {
+  values,
+  positionals
+} = <span class="hljs-title function_">parseArgs</span>({ args, options });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(values, positionals);
+<span class="hljs-comment">// 打印: [Object: null prototype] { foo: true, bar: 'b' } []</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { parseArgs } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node:util'</span>);
+<span class="hljs-keyword">const</span> args = [<span class="hljs-string">'-f'</span>, <span class="hljs-string">'--bar'</span>, <span class="hljs-string">'b'</span>];
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">foo</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'boolean'</span>,
+    <span class="hljs-attr">short</span>: <span class="hljs-string">'f'</span>
+  },
+  <span class="hljs-attr">bar</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'string'</span>
+  }
+};
+<span class="hljs-keyword">const</span> {
+  values,
+  positionals
+} = <span class="hljs-title function_">parseArgs</span>({ args, options });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(values, positionals);
+<span class="hljs-comment">// 打印: [Object: null prototype] { foo: true, bar: 'b' } []</span></code></pre><p class=""><code>util.parseArgs</code> 是实验性的，行为可能会改变。
+加入 <a href="https://github.com/pkgjs/parseargs">pkgjs/parseargs</a> 中的对话，为设计做出贡献。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v18.3.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><ul>
+<li>
+<p><code>config</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Used to provide arguments for parsing and to configure
+the parser. <code>config</code> supports the following properties:</p>
+<ul>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> array of argument strings. <strong>Default:</strong> <code>process.argv</code>
+with <code>execPath</code> and <code>filename</code> removed.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Used to describe arguments known to the parser.
+Keys of <code>options</code> are the long names of options and values are an
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> accepting the following properties:
+<ul>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Type of argument, which must be either <code>boolean</code> or <code>string</code>.</li>
+<li><code>multiple</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether this option can be provided multiple
+times. If <code>true</code>, all values will be collected in an array. If
+<code>false</code>, values for the option are last-wins. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>short</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> A single character alias for the option.</li>
+</ul>
+</li>
+<li><code>strict</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Should an error be thrown when unknown arguments
+are encountered, or when arguments are passed that do not match the
+<code>type</code> configured in <code>options</code>.
+<strong>Default:</strong> <code>true</code>.</li>
+<li><code>allowPositionals</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether this command accepts positional
+arguments.
+<strong>Default:</strong> <code>false</code> if <code>strict</code> is <code>true</code>, otherwise <code>true</code>.</li>
+</ul>
+</li>
+<li>
+<p>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The parsed command line arguments:</p>
+<ul>
+<li><code>values</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> A mapping of parsed option names with their <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> values.</li>
+<li><code>positionals</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> Positional arguments.</li>
+</ul>
+</li>
+</ul><p>Provides a higher level API for command-line argument parsing than interacting
+with <code>process.argv</code> directly. Takes a specification for the expected arguments
+and returns a structured object with the parsed options and positionals.</p><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { parseArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'node:util'</span>;
+<span class="hljs-keyword">const</span> args = [<span class="hljs-string">'-f'</span>, <span class="hljs-string">'--bar'</span>, <span class="hljs-string">'b'</span>];
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">foo</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'boolean'</span>,
+    <span class="hljs-attr">short</span>: <span class="hljs-string">'f'</span>
+  },
+  <span class="hljs-attr">bar</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'string'</span>
+  }
+};
+<span class="hljs-keyword">const</span> {
+  values,
+  positionals
+} = <span class="hljs-title function_">parseArgs</span>({ args, options });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(values, positionals);
+<span class="hljs-comment">// Prints: [Object: null prototype] { foo: true, bar: 'b' } []</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { parseArgs } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node:util'</span>);
+<span class="hljs-keyword">const</span> args = [<span class="hljs-string">'-f'</span>, <span class="hljs-string">'--bar'</span>, <span class="hljs-string">'b'</span>];
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">foo</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'boolean'</span>,
+    <span class="hljs-attr">short</span>: <span class="hljs-string">'f'</span>
+  },
+  <span class="hljs-attr">bar</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'string'</span>
+  }
+};
+<span class="hljs-keyword">const</span> {
+  values,
+  positionals
+} = <span class="hljs-title function_">parseArgs</span>({ args, options });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(values, positionals);
+<span class="hljs-comment">// Prints: [Object: null prototype] { foo: true, bar: 'b' } []</span></code></pre><p><code>util.parseArgs</code> is experimental and behavior may change. Join the
+conversation in <a href="https://github.com/pkgjs/parseargs">pkgjs/parseargs</a> to contribute to the design.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

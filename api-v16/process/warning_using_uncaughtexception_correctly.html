@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>注意: 正确使用 'uncaughtException' | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>注意: 正确使用 'uncaughtException'</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_warning_using_uncaughtexception_correctly" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/warning_using_uncaughtexception_correctly.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/warning_using_uncaughtexception_correctly.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#warning-using-uncaughtexception-correctly.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>'uncaughtException'</code> 是用于异常处理的粗略机制，仅用作最后的手段。
+事件_不应该_用作 <code>On Error Resume Next</code> 的等价物。
+未处理的异常本质上意味着应用程序处于未定义状态。
+在没有从异常中正确恢复的情况下尝试恢复应用程序代码可能会导致其他不可预见和不可预测的问题。</p><p class="">从事件句柄中抛出的异常将不会被捕获。
+而是，该进程将以非零退出码退出，并将打印堆栈跟踪。
+这是为了避免无限递归。</p><p class="">尝试在未捕获异常后正常恢复类似于升级计算机时拔掉电源线。
+十有八九，什么都没有发生。
+但是第十次，系统损坏了。</p><p class=""><code>'uncaughtException'</code> 的正确用法是在关闭进程之前对分配的资源（例如文件描述符、句柄等）执行同步清理。
+<strong>在 <code>'uncaughtException'</code> 之后恢复正常操作是不安全的。</strong></p><p class="">为了以更可靠的方式重新启动崩溃的应用程序，无论 <code>'uncaughtException'</code> 是否触发，都应该在单独的进程中使用外部监视器来检测应用程序故障并根据需要恢复或重新启动。</p></div>
+          <div id="content_right"><p><code>'uncaughtException'</code> is a crude mechanism for exception handling
+intended to be used only as a last resort. The event <em>should not</em> be used as
+an equivalent to <code>On Error Resume Next</code>. Unhandled exceptions inherently mean
+that an application is in an undefined state. Attempting to resume application
+code without properly recovering from the exception can cause additional
+unforeseen and unpredictable issues.</p><p>Exceptions thrown from within the event handler will not be caught. Instead the
+process will exit with a non-zero exit code and the stack trace will be printed.
+This is to avoid infinite recursion.</p><p>Attempting to resume normally after an uncaught exception can be similar to
+pulling out the power cord when upgrading a computer. Nine out of ten
+times, nothing happens. But the tenth time, the system becomes corrupted.</p><p>The correct use of <code>'uncaughtException'</code> is to perform synchronous cleanup
+of allocated resources (e.g. file descriptors, handles, etc) before shutting
+down the process. <strong>It is not safe to resume normal operation after
+<code>'uncaughtException'</code>.</strong></p><p>To restart a crashed application in a more reliable way, whether
+<code>'uncaughtException'</code> is emitted or not, an external monitor should be employed
+in a separate process to detect application failures and recover or restart as
+needed.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

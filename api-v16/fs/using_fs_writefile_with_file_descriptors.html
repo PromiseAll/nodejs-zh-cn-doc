@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>将 fs.writeFile() 与文件描述符一起使用 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>将 fs.writeFile() 与文件描述符一起使用</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_using_fs_writefile_with_file_descriptors" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/using_fs_writefile_with_file_descriptors.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/using_fs_writefile_with_file_descriptors.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#using-fswritefile-with-file-descriptors.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当 <code>file</code> 是文件描述符时，其行为几乎与直接调用 <code>fs.write()</code> 相同，例如：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { write } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-title function_">write</span>(fd, <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(data, options.<span class="hljs-property">encoding</span>), callback);</code></pre><p class="">与直接调用 <code>fs.write()</code> 不同的是，在一些异常情况下，<code>fs.write()</code> 可能只写入缓冲区的一部分，需要重试写入剩余的数据，而 <code>fs.writeFile()</code> 会重试直到数据完全写入（或发生错误）。</p><p class="">其含义是常见的混淆来源。
+在文件描述符的情况下，文件不会被替换！
+数据不一定写入文件的开头，文件的原始数据可以保留在新写入的数据之前和/或之后。</p><p class="">例如，如果连续调用 <code>fs.writeFile()</code> 两次，首先写入字符串 <code>'Hello'</code>，然后写入字符串 <code>', World'</code>，该文件将包含 <code>'Hello, World'</code>，并且可能包含文件的一些原始数据（这取决于原始文件的大小和文件描述符的位置）。
+如果使用文件名而不是描述符，则文件将保证仅包含 <code>', World'</code>。</p></div>
+          <div id="content_right"><p>When <code>file</code> is a file descriptor, the behavior is almost identical to directly
+calling <code>fs.write()</code> like:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { write } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-title function_">write</span>(fd, <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(data, options.<span class="hljs-property">encoding</span>), callback);</code></pre><p>The difference from directly calling <code>fs.write()</code> is that under some unusual
+conditions, <code>fs.write()</code> might write only part of the buffer and need to be
+retried to write the remaining data, whereas <code>fs.writeFile()</code> retries until
+the data is entirely written (or an error occurs).</p><p>The implications of this are a common source of confusion. In
+the file descriptor case, the file is not replaced! The data is not necessarily
+written to the beginning of the file, and the file's original data may remain
+before and/or after the newly written data.</p><p>For example, if <code>fs.writeFile()</code> is called twice in a row, first to write the
+string <code>'Hello'</code>, then to write the string <code>', World'</code>, the file would contain
+<code>'Hello, World'</code>, and might contain some of the file's original data (depending
+on the size of the original file, and the position of the file descriptor). If
+a file name had been used instead of a descriptor, the file would be guaranteed
+to contain only <code>', World'</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

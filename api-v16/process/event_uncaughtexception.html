@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'uncaughtException' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'uncaughtException' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_event_uncaughtexception" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/event_uncaughtexception.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/event_uncaughtexception.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#event-uncaughtexception.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v12.0.0, v10.17.0</td>
+<td><p>添加了 <code>origin</code> 参数。</p></td></tr>
+<tr><td>v0.1.18</td>
+<td><p><span>新增于: v0.1.18</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> 未捕获的异常。</li>
+<li><code>origin</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指示异常是源自未处理的拒绝还是源自同步错误。
+可以是 <code>'uncaughtException'</code> 或 <code>'unhandledRejection'</code>。
+后者用于在基于 <code>Promise</code> 的异步上下文中发生异常（或者如果 <code>Promise</code> 被拒绝）并且 <a href="../cli.html#--unhandled-rejectionsmode"><code>--unhandled-rejections</code></a> 标志设置为 <code>strict</code> 或 <code>throw</code>（这是默认值）并且拒绝未处理，或者发生拒绝时 在命令行入口点的 ES 模块静态加载阶段。</li>
+</ul><p>当未捕获的 JavaScript 异常一直冒泡回到事件循环时，则会触发 <code>'uncaughtException'</code> 事件。
+默认情况下，Node.js 通过将堆栈跟踪打印到 <code>stderr</code> 并以代码 1 退出，覆盖任何先前设置的 <a href="../process.html#processexitcode"><code>process.exitCode</code></a> 来处理此类异常。
+为 <code>'uncaughtException'</code> 事件添加句柄会覆盖此默认行为。
+或者，更改 <code>'uncaughtException'</code> 处理程序中的 <a href="../process.html#processexitcode"><code>process.exitCode</code></a>，这将导致进程以提供的退出码退出。
+否则，在存在此类句柄的情况下，进程将以 0 退出。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'uncaughtException'</span>, <span class="hljs-function">(<span class="hljs-params">err, origin</span>) =&gt;</span> {
+  fs.<span class="hljs-title function_">writeSync</span>(
+    process.<span class="hljs-property">stderr</span>.<span class="hljs-property">fd</span>,
+    <span class="hljs-string">`Caught exception: <span class="hljs-subst">${err}</span>\n`</span> +
+    <span class="hljs-string">`Exception origin: <span class="hljs-subst">${origin}</span>`</span>
+  );
+});
+
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will still run.'</span>);
+}, <span class="hljs-number">500</span>);
+
+<span class="hljs-comment">// 故意引发异常，但不捕获。</span>
+<span class="hljs-title function_">nonexistentFunc</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will not run.'</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'uncaughtException'</span>, <span class="hljs-function">(<span class="hljs-params">err, origin</span>) =&gt;</span> {
+  fs.<span class="hljs-title function_">writeSync</span>(
+    process.<span class="hljs-property">stderr</span>.<span class="hljs-property">fd</span>,
+    <span class="hljs-string">`Caught exception: <span class="hljs-subst">${err}</span>\n`</span> +
+    <span class="hljs-string">`Exception origin: <span class="hljs-subst">${origin}</span>`</span>
+  );
+});
+
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will still run.'</span>);
+}, <span class="hljs-number">500</span>);
+
+<span class="hljs-comment">// 故意引发异常，但不捕获。</span>
+<span class="hljs-title function_">nonexistentFunc</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will not run.'</span>);</code></pre><p class="">通过安装 <code>'uncaughtExceptionMonitor'</code> 监听器，可以在不覆盖退出进程的默认行为的情况下监视 <code>'uncaughtException'</code> 事件。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v12.0.0, v10.17.0</td>
+<td><p>Added the <code>origin</code> argument.</p></td></tr>
+<tr><td>v0.1.18</td>
+<td><p><span>Added in: v0.1.18</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> The uncaught exception.</li>
+<li><code>origin</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Indicates if the exception originates from an unhandled
+rejection or from a synchronous error. Can either be <code>'uncaughtException'</code> or
+<code>'unhandledRejection'</code>. The latter is used when in an exception happens in a
+<code>Promise</code> based async context (or if a <code>Promise</code> is rejected) and
+<a href="../cli.html#--unhandled-rejectionsmode"><code>--unhandled-rejections</code></a> flag set to <code>strict</code> or <code>throw</code> (which is the
+default) and the rejection is not handled, or when a rejection happens during
+the command line entry point's ES module static loading phase.</li>
+</ul><p>The <code>'uncaughtException'</code> event is emitted when an uncaught JavaScript
+exception bubbles all the way back to the event loop. By default, Node.js
+handles such exceptions by printing the stack trace to <code>stderr</code> and exiting
+with code 1, overriding any previously set <a href="../process.html#processexitcode"><code>process.exitCode</code></a>.
+Adding a handler for the <code>'uncaughtException'</code> event overrides this default
+behavior. Alternatively, change the <a href="../process.html#processexitcode"><code>process.exitCode</code></a> in the
+<code>'uncaughtException'</code> handler which will result in the process exiting with the
+provided exit code. Otherwise, in the presence of such handler the process will
+exit with 0.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'uncaughtException'</span>, <span class="hljs-function">(<span class="hljs-params">err, origin</span>) =&gt;</span> {
+  fs.<span class="hljs-title function_">writeSync</span>(
+    process.<span class="hljs-property">stderr</span>.<span class="hljs-property">fd</span>,
+    <span class="hljs-string">`Caught exception: <span class="hljs-subst">${err}</span>\n`</span> +
+    <span class="hljs-string">`Exception origin: <span class="hljs-subst">${origin}</span>`</span>
+  );
+});
+
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will still run.'</span>);
+}, <span class="hljs-number">500</span>);
+
+<span class="hljs-comment">// Intentionally cause an exception, but don't catch it.</span>
+<span class="hljs-title function_">nonexistentFunc</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will not run.'</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'uncaughtException'</span>, <span class="hljs-function">(<span class="hljs-params">err, origin</span>) =&gt;</span> {
+  fs.<span class="hljs-title function_">writeSync</span>(
+    process.<span class="hljs-property">stderr</span>.<span class="hljs-property">fd</span>,
+    <span class="hljs-string">`Caught exception: <span class="hljs-subst">${err}</span>\n`</span> +
+    <span class="hljs-string">`Exception origin: <span class="hljs-subst">${origin}</span>`</span>
+  );
+});
+
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will still run.'</span>);
+}, <span class="hljs-number">500</span>);
+
+<span class="hljs-comment">// Intentionally cause an exception, but don't catch it.</span>
+<span class="hljs-title function_">nonexistentFunc</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'This will not run.'</span>);</code></pre><p>It is possible to monitor <code>'uncaughtException'</code> events without overriding the
+default behavior to exit the process by installing a
+<code>'uncaughtExceptionMonitor'</code> listener.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

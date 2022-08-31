@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http2stream.pushStream(headers[, options], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http2stream.pushStream(headers[, options], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_http2stream_pushstream_headers_options_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/http2stream_pushstream_headers_options_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/http2stream_pushstream_headers_options_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#http2streampushstreamheaders-options-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v8.4.0</span>
+</div><ul class="">
+<li><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当 <code>true</code> 和 <code>parent</code> 标识父流时，创建的流将成为父流的唯一直接依赖项，所有其他现有依赖项都成为新创建流的依赖项。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>parent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定新创建的流所依赖的流的数字标识符。</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 推送流启动后调用的回调。
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>pushStream</code> <a href="../http2.html#class-serverhttp2stream" rel="nofollow" class="type">&lt;ServerHttp2Stream&gt;</a> 返回的 <code>pushStream</code> 对象。</li>
+<li><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a> 用于启动 <code>pushStream</code> 的标头对象。</li>
+</ul>
+</li>
+</ul><p>启动推送流。
+使用为作为第二个参数传入的推送流创建的新 <code>Http2Stream</code> 实例或作为第一个参数传入的 <code>Error</code> 调用回调。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  stream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> });
+  stream.<span class="hljs-title function_">pushStream</span>({ <span class="hljs-string">':path'</span>: <span class="hljs-string">'/'</span> }, <span class="hljs-function">(<span class="hljs-params">err, pushStream, headers</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    pushStream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> });
+    pushStream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some pushed data'</span>);
+  });
+  stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some data'</span>);
+});</code></pre><p class=""><code>HEADERS</code> 帧中不允许设置推流的权重。
+将 <code>weight</code> 值传给 <code>http2stream.priority</code>，并将 <code>silent</code> 选项设置为 <code>true</code>，以启用并发流之间的服务器端带宽平衡。</p><p class="">不允许从推送的流中调用 <code>http2stream.pushStream()</code> 并且会抛出错误。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v8.4.0</span>
+</div><ul>
+<li><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code> and <code>parent</code> identifies a parent Stream,
+the created stream is made the sole direct dependency of the parent, with
+all other existing dependents made a dependent of the newly created stream.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>parent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the numeric identifier of a stream the newly
+created stream is dependent on.</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Callback that is called once the push stream has been
+initiated.
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>pushStream</code> <a href="../http2.html#class-serverhttp2stream" rel="nofollow" class="type">&lt;ServerHttp2Stream&gt;</a> The returned <code>pushStream</code> object.</li>
+<li><code>headers</code> <a href="../http2.html#headers-object" rel="nofollow" class="type">&lt;HTTP/2 Headers Object&gt;</a> Headers object the <code>pushStream</code> was
+initiated with.</li>
+</ul>
+</li>
+</ul><p>Initiates a push stream. The callback is invoked with the new <code>Http2Stream</code>
+instance created for the push stream passed as the second argument, or an
+<code>Error</code> passed as the first argument.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  stream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> });
+  stream.<span class="hljs-title function_">pushStream</span>({ <span class="hljs-string">':path'</span>: <span class="hljs-string">'/'</span> }, <span class="hljs-function">(<span class="hljs-params">err, pushStream, headers</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    pushStream.<span class="hljs-title function_">respond</span>({ <span class="hljs-string">':status'</span>: <span class="hljs-number">200</span> });
+    pushStream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some pushed data'</span>);
+  });
+  stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">'some data'</span>);
+});</code></pre><p>Setting the weight of a push stream is not allowed in the <code>HEADERS</code> frame. Pass
+a <code>weight</code> value to <code>http2stream.priority</code> with the <code>silent</code> option set to
+<code>true</code> to enable server-side bandwidth balancing between concurrent streams.</p><p>Calling <code>http2stream.pushStream()</code> from within a pushed stream is not permitted
+and will throw an error.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

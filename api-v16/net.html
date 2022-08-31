@@ -1,0 +1,1780 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>net 网络 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_net" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="" class="nav-net active" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="net" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_2"><a href="#net">net 网络</a></span>
+<ul>
+<li><a href="#ipc-support">IPC 支持</a>
+<ul>
+<li><a href="#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a></li>
+</ul>
+</li>
+<li><a href="#class-netblocklist"><code>net.BlockList</code> 类</a>
+<ul>
+<li><a href="#blocklistaddaddressaddress-type"><code>blockList.addAddress(address[, type])</code></a></li>
+<li><a href="#blocklistaddrangestart-end-type"><code>blockList.addRange(start, end[, type])</code></a></li>
+<li><a href="#blocklistaddsubnetnet-prefix-type"><code>blockList.addSubnet(net, prefix[, type])</code></a></li>
+<li><a href="#blocklistcheckaddress-type"><code>blockList.check(address[, type])</code></a></li>
+<li><a href="#blocklistrules"><code>blockList.rules</code></a></li>
+</ul>
+</li>
+<li><a href="#class-netsocketaddress"><code>net.SocketAddress</code> 类</a>
+<ul>
+<li><a href="#new-netsocketaddressoptions"><code>new net.SocketAddress([options])</code></a></li>
+<li><a href="#socketaddressaddress"><code>socketaddress.address</code></a></li>
+<li><a href="#socketaddressfamily"><code>socketaddress.family</code></a></li>
+<li><a href="#socketaddressflowlabel"><code>socketaddress.flowlabel</code></a></li>
+<li><a href="#socketaddressport"><code>socketaddress.port</code></a></li>
+</ul>
+</li>
+<li><a href="#class-netserver"><code>net.Server</code> 类</a>
+<ul>
+<li><a href="#new-netserveroptions-connectionlistener"><code>new net.Server([options][, connectionListener])</code></a></li>
+<li><a href="#event-close"><code>'close'</code> 事件</a></li>
+<li><a href="#event-connection"><code>'connection'</code> 事件</a></li>
+<li><a href="#event-error"><code>'error'</code> 事件</a></li>
+<li><a href="#event-listening"><code>'listening'</code> 事件</a></li>
+<li><a href="#serveraddress"><code>server.address()</code></a></li>
+<li><a href="#serverclosecallback"><code>server.close([callback])</code></a></li>
+<li><a href="#servergetconnectionscallback"><code>server.getConnections(callback)</code></a></li>
+<li><a href="#serverlisten"><code>server.listen()</code></a>
+<ul>
+<li><a href="#serverlistenhandle-backlog-callback"><code>server.listen(handle[, backlog][, callback])</code></a></li>
+<li><a href="#serverlistenoptions-callback"><code>server.listen(options[, callback])</code></a></li>
+<li><a href="#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a></li>
+<li><a href="#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a></li>
+</ul>
+</li>
+<li><a href="#serverlistening"><code>server.listening</code></a></li>
+<li><a href="#servermaxconnections"><code>server.maxConnections</code></a></li>
+<li><a href="#serverref"><code>server.ref()</code></a></li>
+<li><a href="#serverunref"><code>server.unref()</code></a></li>
+</ul>
+</li>
+<li><a href="#class-netsocket"><code>net.Socket</code> 类</a>
+<ul>
+<li><a href="#new-netsocketoptions"><code>new net.Socket([options])</code></a></li>
+<li><a href="#event-close_1"><code>'close'</code> 事件</a></li>
+<li><a href="#event-connect"><code>'connect'</code> 事件</a></li>
+<li><a href="#event-data"><code>'data'</code> 事件</a></li>
+<li><a href="#event-drain"><code>'drain'</code> 事件</a></li>
+<li><a href="#event-end"><code>'end'</code> 事件</a></li>
+<li><a href="#event-error_1"><code>'error'</code> 事件</a></li>
+<li><a href="#event-lookup"><code>'lookup'</code> 事件</a></li>
+<li><a href="#event-ready"><code>'ready'</code> 事件</a></li>
+<li><a href="#event-timeout"><code>'timeout'</code> 事件</a></li>
+<li><a href="#socketaddress"><code>socket.address()</code></a></li>
+<li><span class="stability_0"><a href="#socketbuffersize"><code>socket.bufferSize</code></a></span></li>
+<li><a href="#socketbytesread"><code>socket.bytesRead</code></a></li>
+<li><a href="#socketbyteswritten"><code>socket.bytesWritten</code></a></li>
+<li><a href="#socketconnect"><code>socket.connect()</code></a>
+<ul>
+<li><a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a></li>
+<li><a href="#socketconnectpath-connectlistener"><code>socket.connect(path[, connectListener])</code></a></li>
+<li><a href="#socketconnectport-host-connectlistener"><code>socket.connect(port[, host][, connectListener])</code></a></li>
+</ul>
+</li>
+<li><a href="#socketconnecting"><code>socket.connecting</code></a></li>
+<li><a href="#socketdestroyerror"><code>socket.destroy([error])</code></a></li>
+<li><a href="#socketdestroyed"><code>socket.destroyed</code></a></li>
+<li><a href="#socketenddata-encoding-callback"><code>socket.end([data[, encoding]][, callback])</code></a></li>
+<li><a href="#socketlocaladdress"><code>socket.localAddress</code></a></li>
+<li><a href="#socketlocalport"><code>socket.localPort</code></a></li>
+<li><a href="#socketpause"><code>socket.pause()</code></a></li>
+<li><a href="#socketpending"><code>socket.pending</code></a></li>
+<li><a href="#socketref"><code>socket.ref()</code></a></li>
+<li><a href="#socketremoteaddress"><code>socket.remoteAddress</code></a></li>
+<li><a href="#socketremotefamily"><code>socket.remoteFamily</code></a></li>
+<li><a href="#socketremoteport"><code>socket.remotePort</code></a></li>
+<li><a href="#socketresume"><code>socket.resume()</code></a></li>
+<li><a href="#socketsetencodingencoding"><code>socket.setEncoding([encoding])</code></a></li>
+<li><a href="#socketsetkeepaliveenable-initialdelay"><code>socket.setKeepAlive([enable][, initialDelay])</code></a></li>
+<li><a href="#socketsetnodelaynodelay"><code>socket.setNoDelay([noDelay])</code></a></li>
+<li><a href="#socketsettimeouttimeout-callback"><code>socket.setTimeout(timeout[, callback])</code></a></li>
+<li><a href="#sockettimeout"><code>socket.timeout</code></a></li>
+<li><a href="#socketunref"><code>socket.unref()</code></a></li>
+<li><a href="#socketwritedata-encoding-callback"><code>socket.write(data[, encoding][, callback])</code></a></li>
+<li><a href="#socketreadystate"><code>socket.readyState</code></a></li>
+</ul>
+</li>
+<li><a href="#netconnect"><code>net.connect()</code></a>
+<ul>
+<li><a href="#netconnectoptions-connectlistener"><code>net.connect(options[, connectListener])</code></a></li>
+<li><a href="#netconnectpath-connectlistener"><code>net.connect(path[, connectListener])</code></a></li>
+<li><a href="#netconnectport-host-connectlistener"><code>net.connect(port[, host][, connectListener])</code></a></li>
+</ul>
+</li>
+<li><a href="#netcreateconnection"><code>net.createConnection()</code></a>
+<ul>
+<li><a href="#netcreateconnectionoptions-connectlistener"><code>net.createConnection(options[, connectListener])</code></a></li>
+<li><a href="#netcreateconnectionpath-connectlistener"><code>net.createConnection(path[, connectListener])</code></a></li>
+<li><a href="#netcreateconnectionport-host-connectlistener"><code>net.createConnection(port[, host][, connectListener])</code></a></li>
+</ul>
+</li>
+<li><a href="#netcreateserveroptions-connectionlistener"><code>net.createServer([options][, connectionListener])</code></a></li>
+<li><a href="#netisipinput"><code>net.isIP(input)</code></a></li>
+<li><a href="#netisipv4input"><code>net.isIPv4(input)</code></a></li>
+<li><a href="#netisipv6input"><code>net.isIPv6(input)</code></a></li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="" class="nav-net active">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/net.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/net.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_2"><a href="#net">net 网络</a></span>
+<ul>
+<li><a href="#ipc-support">IPC 支持</a>
+<ul>
+<li><a href="#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a></li>
+</ul>
+</li>
+<li><a href="#class-netblocklist"><code>net.BlockList</code> 类</a>
+<ul>
+<li><a href="#blocklistaddaddressaddress-type"><code>blockList.addAddress(address[, type])</code></a></li>
+<li><a href="#blocklistaddrangestart-end-type"><code>blockList.addRange(start, end[, type])</code></a></li>
+<li><a href="#blocklistaddsubnetnet-prefix-type"><code>blockList.addSubnet(net, prefix[, type])</code></a></li>
+<li><a href="#blocklistcheckaddress-type"><code>blockList.check(address[, type])</code></a></li>
+<li><a href="#blocklistrules"><code>blockList.rules</code></a></li>
+</ul>
+</li>
+<li><a href="#class-netsocketaddress"><code>net.SocketAddress</code> 类</a>
+<ul>
+<li><a href="#new-netsocketaddressoptions"><code>new net.SocketAddress([options])</code></a></li>
+<li><a href="#socketaddressaddress"><code>socketaddress.address</code></a></li>
+<li><a href="#socketaddressfamily"><code>socketaddress.family</code></a></li>
+<li><a href="#socketaddressflowlabel"><code>socketaddress.flowlabel</code></a></li>
+<li><a href="#socketaddressport"><code>socketaddress.port</code></a></li>
+</ul>
+</li>
+<li><a href="#class-netserver"><code>net.Server</code> 类</a>
+<ul>
+<li><a href="#new-netserveroptions-connectionlistener"><code>new net.Server([options][, connectionListener])</code></a></li>
+<li><a href="#event-close"><code>'close'</code> 事件</a></li>
+<li><a href="#event-connection"><code>'connection'</code> 事件</a></li>
+<li><a href="#event-error"><code>'error'</code> 事件</a></li>
+<li><a href="#event-listening"><code>'listening'</code> 事件</a></li>
+<li><a href="#serveraddress"><code>server.address()</code></a></li>
+<li><a href="#serverclosecallback"><code>server.close([callback])</code></a></li>
+<li><a href="#servergetconnectionscallback"><code>server.getConnections(callback)</code></a></li>
+<li><a href="#serverlisten"><code>server.listen()</code></a>
+<ul>
+<li><a href="#serverlistenhandle-backlog-callback"><code>server.listen(handle[, backlog][, callback])</code></a></li>
+<li><a href="#serverlistenoptions-callback"><code>server.listen(options[, callback])</code></a></li>
+<li><a href="#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a></li>
+<li><a href="#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a></li>
+</ul>
+</li>
+<li><a href="#serverlistening"><code>server.listening</code></a></li>
+<li><a href="#servermaxconnections"><code>server.maxConnections</code></a></li>
+<li><a href="#serverref"><code>server.ref()</code></a></li>
+<li><a href="#serverunref"><code>server.unref()</code></a></li>
+</ul>
+</li>
+<li><a href="#class-netsocket"><code>net.Socket</code> 类</a>
+<ul>
+<li><a href="#new-netsocketoptions"><code>new net.Socket([options])</code></a></li>
+<li><a href="#event-close_1"><code>'close'</code> 事件</a></li>
+<li><a href="#event-connect"><code>'connect'</code> 事件</a></li>
+<li><a href="#event-data"><code>'data'</code> 事件</a></li>
+<li><a href="#event-drain"><code>'drain'</code> 事件</a></li>
+<li><a href="#event-end"><code>'end'</code> 事件</a></li>
+<li><a href="#event-error_1"><code>'error'</code> 事件</a></li>
+<li><a href="#event-lookup"><code>'lookup'</code> 事件</a></li>
+<li><a href="#event-ready"><code>'ready'</code> 事件</a></li>
+<li><a href="#event-timeout"><code>'timeout'</code> 事件</a></li>
+<li><a href="#socketaddress"><code>socket.address()</code></a></li>
+<li><span class="stability_0"><a href="#socketbuffersize"><code>socket.bufferSize</code></a></span></li>
+<li><a href="#socketbytesread"><code>socket.bytesRead</code></a></li>
+<li><a href="#socketbyteswritten"><code>socket.bytesWritten</code></a></li>
+<li><a href="#socketconnect"><code>socket.connect()</code></a>
+<ul>
+<li><a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a></li>
+<li><a href="#socketconnectpath-connectlistener"><code>socket.connect(path[, connectListener])</code></a></li>
+<li><a href="#socketconnectport-host-connectlistener"><code>socket.connect(port[, host][, connectListener])</code></a></li>
+</ul>
+</li>
+<li><a href="#socketconnecting"><code>socket.connecting</code></a></li>
+<li><a href="#socketdestroyerror"><code>socket.destroy([error])</code></a></li>
+<li><a href="#socketdestroyed"><code>socket.destroyed</code></a></li>
+<li><a href="#socketenddata-encoding-callback"><code>socket.end([data[, encoding]][, callback])</code></a></li>
+<li><a href="#socketlocaladdress"><code>socket.localAddress</code></a></li>
+<li><a href="#socketlocalport"><code>socket.localPort</code></a></li>
+<li><a href="#socketpause"><code>socket.pause()</code></a></li>
+<li><a href="#socketpending"><code>socket.pending</code></a></li>
+<li><a href="#socketref"><code>socket.ref()</code></a></li>
+<li><a href="#socketremoteaddress"><code>socket.remoteAddress</code></a></li>
+<li><a href="#socketremotefamily"><code>socket.remoteFamily</code></a></li>
+<li><a href="#socketremoteport"><code>socket.remotePort</code></a></li>
+<li><a href="#socketresume"><code>socket.resume()</code></a></li>
+<li><a href="#socketsetencodingencoding"><code>socket.setEncoding([encoding])</code></a></li>
+<li><a href="#socketsetkeepaliveenable-initialdelay"><code>socket.setKeepAlive([enable][, initialDelay])</code></a></li>
+<li><a href="#socketsetnodelaynodelay"><code>socket.setNoDelay([noDelay])</code></a></li>
+<li><a href="#socketsettimeouttimeout-callback"><code>socket.setTimeout(timeout[, callback])</code></a></li>
+<li><a href="#sockettimeout"><code>socket.timeout</code></a></li>
+<li><a href="#socketunref"><code>socket.unref()</code></a></li>
+<li><a href="#socketwritedata-encoding-callback"><code>socket.write(data[, encoding][, callback])</code></a></li>
+<li><a href="#socketreadystate"><code>socket.readyState</code></a></li>
+</ul>
+</li>
+<li><a href="#netconnect"><code>net.connect()</code></a>
+<ul>
+<li><a href="#netconnectoptions-connectlistener"><code>net.connect(options[, connectListener])</code></a></li>
+<li><a href="#netconnectpath-connectlistener"><code>net.connect(path[, connectListener])</code></a></li>
+<li><a href="#netconnectport-host-connectlistener"><code>net.connect(port[, host][, connectListener])</code></a></li>
+</ul>
+</li>
+<li><a href="#netcreateconnection"><code>net.createConnection()</code></a>
+<ul>
+<li><a href="#netcreateconnectionoptions-connectlistener"><code>net.createConnection(options[, connectListener])</code></a></li>
+<li><a href="#netcreateconnectionpath-connectlistener"><code>net.createConnection(path[, connectListener])</code></a></li>
+<li><a href="#netcreateconnectionport-host-connectlistener"><code>net.createConnection(port[, host][, connectListener])</code></a></li>
+</ul>
+</li>
+<li><a href="#netcreateserveroptions-connectionlistener"><code>net.createServer([options][, connectionListener])</code></a></li>
+<li><a href="#netisipinput"><code>net.isIP(input)</code></a></li>
+<li><a href="#netisipv4input"><code>net.isIPv4(input)</code></a></li>
+<li><a href="#netisipv6input"><code>net.isIPv6(input)</code></a></li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>net 网络<span><a class="mark" href="#net" id="net">#</a></span><a aria-hidden="true" class="legacy" id="net_net"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="">
+                <a href="net/net.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v0.10.0-->
+<!--lint disable maximum-line-length-->
+<p></p><div class="api_stability api_stability_2"><a href="documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p>
+<p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/net.js">lib/net.js</a></p>
+<p><code>net</code> 模块提供了异步的网络 API，用于创建基于流的 TCP 或 <a href="#ipc-support">IPC</a> 服务器 (<a href="#netcreateserveroptions-connectionlistener"><code>net.createServer()</code></a>) 和客户端 (<a href="#netcreateconnection"><code>net.createConnection()</code></a>)。</p>
+<p class="">可以使用以下方式访问它：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);</code></pre>
+<section><h3>IPC 支持<span><a class="mark" href="#ipc-support" id="ipc-support">#</a></span><a aria-hidden="true" class="legacy" id="net_ipc_support"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#ipc-support">
+                <a href="net/ipc_support.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>net</code> 模块在 Windows 上使用命名管道支持 IPC，在其他操作系统上则使用 Unix 域套接字。</p>
+<h4>标识 IPC 连接的路径<span><a class="mark" href="#identifying-paths-for-ipc-connections" id="identifying-paths-for-ipc-connections">#</a></span><a aria-hidden="true" class="legacy" id="net_identifying_paths_for_ipc_connections"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#identifying-paths-for-ipc-connections">
+                <a href="net/identifying_paths_for_ipc_connections.html" class="tip_trans">中英对照</a>
+                </p>
+<p><a href="#netconnect"><code>net.connect()</code></a>、<a href="#netcreateconnection"><code>net.createConnection()</code></a>、<a href="#serverlisten"><code>server.listen()</code></a> 和 <a href="#socketconnect"><code>socket.connect()</code></a> 采用 <code>path</code> 参数来标识 IPC 端点。</p>
+<p class="">在 Unix 上，本地域也称为 Unix 域。
+路径是文件系统路径名。
+它被截断为与操作系统相关的 <code>sizeof(sockaddr_un.sun_path) - 1</code> 长度。
+典型的值为 Linux 上的 107 字节和 macOS 上的 103 字节。
+如果 Node.js API 抽象创建了 Unix 域套接字，则它也会取消链接 Unix 域套接字。
+例如，<a href="#netcreateserveroptions-connectionlistener"><code>net.createServer()</code></a> 可以会创建 Unix 域套接字，而 <a href="#serverclosecallback"><code>server.close()</code></a> 将取消链接它。
+但是如果用户在这些抽象之外创建了 Unix 域套接字，则用户将需要删除它。
+这同样适用于 Node.js API 创建 Unix 域套接字但程序随后崩溃的情况。
+简而言之，Unix 域套接字将在文件系统中可见，并且会一直存在，直到取消链接。</p>
+<p class="">在 Windows 上，本地域是使用命名管道实现的。
+路径必须引用 <code>\\?\pipe\</code> 或 <code>\\.\pipe\</code> 中的条目。
+允许使用任何字符，但后者可能会对管道名称进行一些处理，例如解析 <code>..</code> 序列。
+不管它看起来如何，管道命名空间是扁平的。
+管道不会持续存在。
+当对它们的最后一个引用关闭时，它们将被删除。
+与 Unix 域套接字不同，Windows 将在拥有进程退出时关闭并删除管道。</p>
+<p class="">JavaScript 字符串转义需要使用额外的反斜杠转义来指定路径，例如：</p>
+<pre class=""><code class="language-js">net.<span class="hljs-title function_">createServer</span>().<span class="hljs-title function_">listen</span>(
+  path.<span class="hljs-title function_">join</span>(<span class="hljs-string">'\\\\?\\pipe'</span>, process.<span class="hljs-title function_">cwd</span>(), <span class="hljs-string">'myctl'</span>));</code></pre>
+</section><section><h3><code>net.BlockList</code> 类<span><a class="mark" href="#class-netblocklist" id="class-netblocklist">#</a></span><a aria-hidden="true" class="legacy" id="net_class_net_blocklist"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-netblocklist">
+                <a href="net/class_net_blocklist.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p><code>BlockList</code> 对象可与一些网络 API 一起使用，以指定用于禁用对特定 IP 地址、IP 范围或 IP 子网的入站或出站访问的规则。</p>
+<h4><code>blockList.addAddress(address[, type])</code><span><a class="mark" href="#blocklistaddaddressaddress-type" id="blocklistaddaddressaddress-type">#</a></span><a aria-hidden="true" class="legacy" id="net_blocklist_addaddress_address_type"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#blocklistaddaddressaddress-type">
+                <a href="net/blocklist_addaddress_address_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="#class-netsocketaddress" rel="nofollow" class="type">&lt;net.SocketAddress&gt;</a> IPv4 或 IPv6 地址。</li>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'ipv4'</code> 或 <code>'ipv6'</code>。 <strong>默认值:</strong> <code>'ipv4'</code>。</li>
+</ul>
+<p>添加规则以阻止给定的 IP 地址。</p>
+<h4><code>blockList.addRange(start, end[, type])</code><span><a class="mark" href="#blocklistaddrangestart-end-type" id="blocklistaddrangestart-end-type">#</a></span><a aria-hidden="true" class="legacy" id="net_blocklist_addrange_start_end_type"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#blocklistaddrangestart-end-type">
+                <a href="net/blocklist_addrange_start_end_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="#class-netsocketaddress" rel="nofollow" class="type">&lt;net.SocketAddress&gt;</a> 范围内的起始 IPv4 或 IPv6 地址。</li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="#class-netsocketaddress" rel="nofollow" class="type">&lt;net.SocketAddress&gt;</a> 范围内的结束 IPv4 或 IPv6 地址。</li>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'ipv4'</code> 或 <code>'ipv6'</code>。 <strong>默认值:</strong> <code>'ipv4'</code>。</li>
+</ul>
+<p>添加规则以阻止从 <code>start</code>（包含）到 <code>end</code>（包含）的 IP 地址范围。</p>
+<h4><code>blockList.addSubnet(net, prefix[, type])</code><span><a class="mark" href="#blocklistaddsubnetnet-prefix-type" id="blocklistaddsubnetnet-prefix-type">#</a></span><a aria-hidden="true" class="legacy" id="net_blocklist_addsubnet_net_prefix_type"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#blocklistaddsubnetnet-prefix-type">
+                <a href="net/blocklist_addsubnet_net_prefix_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li><code>net</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="#class-netsocketaddress" rel="nofollow" class="type">&lt;net.SocketAddress&gt;</a> 网络 IPv4 或 IPv6 地址。</li>
+<li><code>prefix</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> CIDR 前缀位数。
+对于 IPv4，这必须是 <code>0</code> 和 <code>32</code> 之间的值。
+对于 IPv6，它必须在 <code>0</code> 和 <code>128</code> 之间。</li>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'ipv4'</code> 或 <code>'ipv6'</code>。 <strong>默认值:</strong> <code>'ipv4'</code>。</li>
+</ul>
+<p>添加规则以阻止指定为子网掩码的 IP 地址范围。</p>
+<h4><code>blockList.check(address[, type])</code><span><a class="mark" href="#blocklistcheckaddress-type" id="blocklistcheckaddress-type">#</a></span><a aria-hidden="true" class="legacy" id="net_blocklist_check_address_type"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#blocklistcheckaddress-type">
+                <a href="net/blocklist_check_address_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="#class-netsocketaddress" rel="nofollow" class="type">&lt;net.SocketAddress&gt;</a> 要检查的 IP 地址</li>
+<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'ipv4'</code> 或 <code>'ipv6'</code>。 <strong>默认值:</strong> <code>'ipv4'</code>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>如果给定的 IP 地址与添加到 <code>BlockList</code> 的任何规则匹配，则返回 <code>true</code>。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> blockList = <span class="hljs-keyword">new</span> net.<span class="hljs-title class_">BlockList</span>();
+blockList.<span class="hljs-title function_">addAddress</span>(<span class="hljs-string">'123.123.123.123'</span>);
+blockList.<span class="hljs-title function_">addRange</span>(<span class="hljs-string">'10.0.0.1'</span>, <span class="hljs-string">'10.0.0.10'</span>);
+blockList.<span class="hljs-title function_">addSubnet</span>(<span class="hljs-string">'8592:757c:efae:4e45::'</span>, <span class="hljs-number">64</span>, <span class="hljs-string">'ipv6'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(blockList.<span class="hljs-title function_">check</span>(<span class="hljs-string">'123.123.123.123'</span>));  <span class="hljs-comment">// 打印: true</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(blockList.<span class="hljs-title function_">check</span>(<span class="hljs-string">'10.0.0.3'</span>));  <span class="hljs-comment">// 打印: true</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(blockList.<span class="hljs-title function_">check</span>(<span class="hljs-string">'222.111.111.222'</span>));  <span class="hljs-comment">// 打印: false</span>
+
+<span class="hljs-comment">// IPv4 地址的 IPv6 表示法有效：</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(blockList.<span class="hljs-title function_">check</span>(<span class="hljs-string">'::ffff:7b7b:7b7b'</span>, <span class="hljs-string">'ipv6'</span>)); <span class="hljs-comment">// 打印: true</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(blockList.<span class="hljs-title function_">check</span>(<span class="hljs-string">'::ffff:123.123.123.123'</span>, <span class="hljs-string">'ipv6'</span>)); <span class="hljs-comment">// 打印: true</span></code></pre>
+<h4><code>blockList.rules</code><span><a class="mark" href="#blocklistrules" id="blocklistrules">#</a></span><a aria-hidden="true" class="legacy" id="net_blocklist_rules"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#blocklistrules">
+                <a href="net/blocklist_rules.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a></li>
+</ul>
+<p>添加到阻止列表的规则列表。</p>
+</section><section><h3><code>net.SocketAddress</code> 类<span><a class="mark" href="#class-netsocketaddress" id="class-netsocketaddress">#</a></span><a aria-hidden="true" class="legacy" id="net_class_net_socketaddress"></a></h3><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.14.0</span>
+</div>
+<h4><code>new net.SocketAddress([options])</code><span><a class="mark" href="#new-netsocketaddressoptions" id="new-netsocketaddressoptions">#</a></span><a aria-hidden="true" class="legacy" id="net_new_net_socketaddress_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#new-netsocketaddressoptions">
+                <a href="net/new_net_socketaddress_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.14.0</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 作为 IPv4 或 IPv6 字符串的网络地址。
+<strong>默认值</strong>: 如果 <code>family</code> 为 <code>'ipv4'</code>，则为 <code>'127.0.0.1'</code>；如果 <code>family</code> 是 <code>'ipv6'</code>，则为 <code>'::'</code>。</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'ipv4'</code> 或 <code>'ipv6'</code> 之一。
+<strong>默认值</strong>: <code>'ipv4'</code>.</li>
+<li><code>flowlabel</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 仅当 <code>family</code> 为 <code>'ipv6'</code> 时才使用的 IPv6 流标签。</li>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> IP 端口。</li>
+</ul>
+</li>
+</ul>
+<h4><code>socketaddress.address</code><span><a class="mark" href="#socketaddressaddress" id="socketaddressaddress">#</a></span><a aria-hidden="true" class="legacy" id="net_socketaddress_address"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddressaddress">
+                <a href="net/socketaddress_address.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.14.0</span>
+</div>
+<ul class="">
+<li>类型 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<h4><code>socketaddress.family</code><span><a class="mark" href="#socketaddressfamily" id="socketaddressfamily">#</a></span><a aria-hidden="true" class="legacy" id="net_socketaddress_family"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddressfamily">
+                <a href="net/socketaddress_family.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.14.0</span>
+</div>
+<ul class="">
+<li>类型 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>'ipv4'</code> 或 <code>'ipv6'</code>。</li>
+</ul>
+<h4><code>socketaddress.flowlabel</code><span><a class="mark" href="#socketaddressflowlabel" id="socketaddressflowlabel">#</a></span><a aria-hidden="true" class="legacy" id="net_socketaddress_flowlabel"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddressflowlabel">
+                <a href="net/socketaddress_flowlabel.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.14.0</span>
+</div>
+<ul class="">
+<li>类型 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<h4><code>socketaddress.port</code><span><a class="mark" href="#socketaddressport" id="socketaddressport">#</a></span><a aria-hidden="true" class="legacy" id="net_socketaddress_port"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddressport">
+                <a href="net/socketaddress_port.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.14.0</span>
+</div>
+<ul class="">
+<li>类型 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+</section><section><h3><code>net.Server</code> 类<span><a class="mark" href="#class-netserver" id="class-netserver">#</a></span><a aria-hidden="true" class="legacy" id="net_class_net_server"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-netserver">
+                <a href="net/class_net_server.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li>继承自: <a href="events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul>
+<p>此类用于创建 TCP 或 <a href="#ipc-support">IPC</a> 服务器。</p>
+<h4><code>new net.Server([options][, connectionListener])</code><span><a class="mark" href="#new-netserveroptions-connectionlistener" id="new-netserveroptions-connectionlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_new_net_server_options_connectionlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#new-netserveroptions-connectionlistener">
+                <a href="net/new_net_server_options_connectionlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 参见 <a href="#netcreateserveroptions-connectionlistener"><code>net.createServer([options][, connectionListener])</code></a>。</li>
+<li><code>connectionListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 自动设置为 <a href="#event-connection"><code>'connection'</code></a> 事件的监听器。</li>
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p><code>net.Server</code> 是具有以下事件的 <a href="events.html#class-eventemitter"><code>EventEmitter</code></a>：</p>
+<h4><code>'close'</code> 事件<span><a class="mark" href="#event-close" id="event-close">#</a></span><a aria-hidden="true" class="legacy" id="net_event_close"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-close">
+                <a href="net/event_close.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.0</span>
+</div>
+<p>服务器关闭时触发。
+如果连接存在，则在所有连接结束之前不会触发此事件。</p>
+<h4><code>'connection'</code> 事件<span><a class="mark" href="#event-connection" id="event-connection">#</a></span><a aria-hidden="true" class="legacy" id="net_event_connection"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-connection">
+                <a href="net/event_connection.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 连接对象</li>
+</ul>
+<p>建立新连接时触发。
+<code>socket</code> 是 <code>net.Socket</code> 的实例。</p>
+<h4><code>'error'</code> 事件<span><a class="mark" href="#event-error" id="event-error">#</a></span><a aria-hidden="true" class="legacy" id="net_event_error"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-error">
+                <a href="net/event_error.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>发生错误时触发。
+与 <a href="#class-netsocket"><code>net.Socket</code></a> 不同，除非手动调用 <a href="#serverclosecallback"><code>server.close()</code></a>，否则 <a href="#event-close"><code>'close'</code></a> 事件不会在此事件之后直接触发。
+参见 <a href="#serverlisten"><code>server.listen()</code></a> 讨论中的示例。</p>
+<h4><code>'listening'</code> 事件<span><a class="mark" href="#event-listening" id="event-listening">#</a></span><a aria-hidden="true" class="legacy" id="net_event_listening"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-listening">
+                <a href="net/event_listening.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<p>在调用 <a href="#serverlisten"><code>server.listen()</code></a> 后绑定服务器时触发。</p>
+<h4><code>server.address()</code><span><a class="mark" href="#serveraddress" id="serveraddress">#</a></span><a aria-hidden="true" class="legacy" id="net_server_address"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#serveraddress">
+                <a href="net/server_address.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a></li>
+</ul>
+<p>如果监听 IP 套接字，则返回操作系统报告的服务器的绑定 <code>address</code>、地址 <code>family</code> 名称和 <code>port</code>（用于在获取操作系统分配的地址时查找分配的端口）：<code>{ port: 12346, family: 'IPv4', address: '127.0.0.1' }</code>。</p>
+<p class="">对于监听管道或 Unix 域套接字的服务器，名称作为字符串返回。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'goodbye\n'</span>);
+}).<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-comment">// 在这里处理错误。</span>
+  <span class="hljs-keyword">throw</span> err;
+});
+
+<span class="hljs-comment">// 获取任意未使用的端口。</span>
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'opened server on'</span>, server.<span class="hljs-title function_">address</span>());
+});</code></pre>
+<p class=""><code>server.address()</code> 在 <code>'listening'</code> 事件触发之前或调用 <code>server.close()</code> 之后返回 <code>null</code>。</p>
+<h4><code>server.close([callback])</code><span><a class="mark" href="#serverclosecallback" id="serverclosecallback">#</a></span><a aria-hidden="true" class="legacy" id="net_server_close_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#serverclosecallback">
+                <a href="net/server_close_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 服务器关闭时调用。</li>
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>停止服务器接受新连接并保持现有连接。
+该函数是异步的，当所有连接都结束并且服务器触发 <a href="#event-close"><code>'close'</code></a> 事件时，则服务器最终关闭。
+一旦 <code>'close'</code> 事件发生，则可选的 <code>callback</code> 将被调用。
+与该事件不同，如果服务器在关闭时未打开，它将以 <code>Error</code> 作为唯一参数被调用。</p>
+<h4><code>server.getConnections(callback)</code><span><a class="mark" href="#servergetconnectionscallback" id="servergetconnectionscallback">#</a></span><a aria-hidden="true" class="legacy" id="net_server_getconnections_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#servergetconnectionscallback">
+                <a href="net/server_getconnections_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.7</span>
+</div>
+<ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>异步获取服务器上的并发连接数。
+当套接字被发送到分叉时工作。</p>
+<p class="">回调应该采用两个参数 <code>err</code> 和 <code>count</code>。</p>
+<h4><code>server.listen()</code><span><a class="mark" href="#serverlisten" id="serverlisten">#</a></span><a aria-hidden="true" class="legacy" id="net_server_listen"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#serverlisten">
+                <a href="net/server_listen.html" class="tip_trans">中英对照</a>
+                </p>
+<p>启动监听连接的服务器。
+<code>net.Server</code> 可以是 TCP 或 <a href="#ipc-support">IPC</a> 服务器，这取决于它监听什么。</p>
+<p class="">可能的语法有：</p>
+<ul class="">
+<li><a href="#serverlistenhandle-backlog-callback"><code>server.listen(handle[, backlog][, callback])</code></a></li>
+<li><a href="#serverlistenoptions-callback"><code>server.listen(options[, callback])</code></a></li>
+<li><a href="#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a> 用于 <a href="#ipc-support">IPC</a> 服务器</li>
+<li><a href="#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a> 用于 TCP 服务器</li>
+</ul>
+<p class="">此函数是异步的。
+当服务器开始监听时，将触发 <a href="#event-listening"><code>'listening'</code></a> 事件。
+最后一个参数 <code>callback</code> 将被添加为 <a href="#event-listening"><code>'listening'</code></a> 事件的监听器。</p>
+<p class="">所有 <code>listen()</code> 方法都可以采用 <code>backlog</code> 参数来指定待处理连接队列的最大长度。
+实际长度将由操作系统通过 sysctl 设置确定，例如 Linux 上的 <code>tcp_max_syn_backlog</code> 和 <code>somaxconn</code>。
+此参数的默认值为 511（不是 512）。</p>
+<p class="">所有 <a href="#class-netsocket"><code>net.Socket</code></a> 都设置为 <code>SO_REUSEADDR</code>（详见 <a href="https://man7.org/linux/man-pages/man7/socket.7.html" rel="nofollow"><code>socket(7)</code></a>）。</p>
+<p class="">当且仅当在第一次调用 <code>server.listen()</code> 期间出现错误或调用 <code>server.close()</code> 时，才能再次调用 <code>server.listen()</code> 方法。
+否则，将抛出 <code>ERR_SERVER_ALREADY_LISTEN</code> 错误。</p>
+<p class="">监听时最常见的错误之一是 <code>EADDRINUSE</code>。
+当另一个服务器已经在监听请求的 <code>port</code>/<code>path</code>/<code>handle</code> 时会发生这种情况。
+处理此问题的方法之一是在一定时间后重试：</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">code</span> === <span class="hljs-string">'EADDRINUSE'</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Address in use, retrying...'</span>);
+    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+      server.<span class="hljs-title function_">close</span>();
+      server.<span class="hljs-title function_">listen</span>(<span class="hljs-variable constant_">PORT</span>, <span class="hljs-variable constant_">HOST</span>);
+    }, <span class="hljs-number">1000</span>);
+  }
+});</code></pre>
+<h5><code>server.listen(handle[, backlog][, callback])</code><span><a class="mark" href="#serverlistenhandle-backlog-callback" id="serverlistenhandle-backlog-callback">#</a></span><a aria-hidden="true" class="legacy" id="net_server_listen_handle_backlog_callback"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serverlistenhandle-backlog-callback">
+                <a href="net/server_listen_handle_backlog_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.10</span>
+</div>
+<ul class="">
+<li><code>handle</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>backlog</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <a href="#serverlisten"><code>server.listen()</code></a> 函数的通用参数</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>启动服务器，监听已绑定到端口、Unix 域套接字或 Windows 命名管道的给定 <code>handle</code> 上的连接。</p>
+<p class=""><code>handle</code> 对象可以是服务器、套接字（任何具有底层 <code>_handle</code> 成员的对象），也可以是具有有效文件描述符的 <code>fd</code> 成员的对象。</p>
+<p class="">Windows 上不支持监听文件描述符。</p>
+<h5><code>server.listen(options[, callback])</code><span><a class="mark" href="#serverlistenoptions-callback" id="serverlistenoptions-callback">#</a></span><a aria-hidden="true" class="legacy" id="net_server_listen_options_callback"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serverlistenoptions-callback">
+                <a href="net/server_listen_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.6.0</td>
+<td><p>添加了中止信号支持。</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>支持 <code>ipv6Only</code> 选项。</p></td></tr>
+<tr><td>v0.11.14</td>
+<td><p><span>新增于: v0.11.14</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 必需的。
+支持以下属性：
+<ul>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果指定了 <code>port</code>，则将被忽略。
+请参阅<a href="#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a>。</li>
+<li><code>backlog</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <a href="#serverlisten"><code>server.listen()</code></a> 函数的通用参数。</li>
+<li><code>exclusive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>false</code></li>
+<li><code>readableAll</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 对于 IPC 服务器，使管道对所有用户都可读。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>writableAll</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 对于 IPC 服务器，使管道对所有用户都可写。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>ipv6Only</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 对于 TCP 服务器，将 <code>ipv6Only</code> 设置为 <code>true</code> 将禁用双栈支持，即绑定到主机 <code>::</code> 不会绑定 <code>0.0.0.0</code>。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>signal</code> <a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于关闭监听服务器的中止信号。</li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+函数。</li>
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>如果指定了 <code>port</code>，则其行为与 <a href="#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a> 相同。
+否则，如果指定了 <code>path</code>，则其行为与 <a href="#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a> 相同。
+如果未指定任何一个，则会抛出错误。</p>
+<p class="">如果 <code>exclusive</code> 是 <code>false</code>（默认），则集群工作进程将使用相同的底层句柄，允许共享连接处理职责。
+当 <code>exclusive</code> 为 <code>true</code> 时，句柄不共享，尝试共享端口会导致错误。
+下面展示了监听独占端口的示例。</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">listen</span>({
+  <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">exclusive</span>: <span class="hljs-literal">true</span>
+});</code></pre>
+<p class="">当 <code>exclusive</code> 为 <code>true</code> 且底层句柄共享时，可能有多个工作进程查询具有不同积压的句柄。
+在这种情况下，将使用传给主进程的第一个 <code>backlog</code>。</p>
+<p class="">以 root 身份启动 IPC 服务器可能会导致非特权用户无法访问服务器路径。
+使用 <code>readableAll</code> 和 <code>writableAll</code> 将使所有用户都可以访问服务器。</p>
+<p class="">如果启用了 <code>signal</code> 选项，则在对应的 <code>AbortController</code> 上调用 <code>.abort()</code> 类似于在服务器上调用 <code>.close()</code>：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+server.<span class="hljs-title function_">listen</span>({
+  <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">signal</span>: controller.<span class="hljs-property">signal</span>
+});
+<span class="hljs-comment">// 稍后，当要关闭服务器时。</span>
+controller.<span class="hljs-title function_">abort</span>();</code></pre>
+<h5><code>server.listen(path[, backlog][, callback])</code><span><a class="mark" href="#serverlistenpath-backlog-callback" id="serverlistenpath-backlog-callback">#</a></span><a aria-hidden="true" class="legacy" id="net_server_listen_path_backlog_callback"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serverlistenpath-backlog-callback">
+                <a href="net/server_listen_path_backlog_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 服务器应该监听的路径。
+请参阅<a href="#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a>。</li>
+<li><code>backlog</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <a href="#serverlisten"><code>server.listen()</code></a> 函数的通用参数。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>.</li>
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>启动 <a href="#ipc-support">IPC</a> 服务器，监听给定 <code>path</code> 上的连接。</p>
+<h5><code>server.listen([port[, host[, backlog]]][, callback])</code><span><a class="mark" href="#serverlistenport-host-backlog-callback" id="serverlistenport-host-backlog-callback">#</a></span><a aria-hidden="true" class="legacy" id="net_server_listen_port_host_backlog_callback"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#serverlistenport-host-backlog-callback">
+                <a href="net/server_listen_port_host_backlog_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>backlog</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <a href="#serverlisten"><code>server.listen()</code></a> 函数的通用参数。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>.</li>
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>启动 TCP 服务器，监听给定 <code>port</code> 和 <code>host</code> 上的连接。</p>
+<p class="">如果 <code>port</code> 被省略或为 0，则操作系统将分配任意未使用的端口，可以在 <a href="#event-listening"><code>'listening'</code></a> 事件触发后使用 <code>server.address().port</code> 检索该端口。</p>
+<p class="">如果省略 <code>host</code>，则当 IPv6 可用时，服务器将接受<a href="https://en.wikipedia.org/wiki/IPv6_address#Unspecified_address" rel="nofollow">未指定的 IPv6 地址</a> (<code>::</code>) 上的连接，否则接受<a href="https://en.wikipedia.org/wiki/0.0.0.0" rel="nofollow">未指定的 IPv4 地址</a> (<code>0.0.0.0</code>) 上的连接。</p>
+<p class="">在大多数操作系统中，监听<a href="https://en.wikipedia.org/wiki/IPv6_address#Unspecified_address" rel="nofollow">未指定的 IPv6 地址</a> (<code>::</code>) 可能会导致 <code>net.Server</code> 也监听<a href="https://en.wikipedia.org/wiki/0.0.0.0" rel="nofollow">未指定的 IPv4 地址</a> (<code>0.0.0.0</code>)。</p>
+<h4><code>server.listening</code><span><a class="mark" href="#serverlistening" id="serverlistening">#</a></span><a aria-hidden="true" class="legacy" id="net_server_listening"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#serverlistening">
+                <a href="net/server_listening.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v5.7.0</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示服务器是否正在监听连接。</li>
+</ul>
+<h4><code>server.maxConnections</code><span><a class="mark" href="#servermaxconnections" id="servermaxconnections">#</a></span><a aria-hidden="true" class="legacy" id="net_server_maxconnections"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#servermaxconnections">
+                <a href="net/server_maxconnections.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.2.0</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>设置此属性以在服务器的连接计数变高时拒绝连接。</p>
+<p class="">一旦套接字已发送给具有 <a href="child_process.html#child_processforkmodulepath-args-options"><code>child_process.fork()</code></a> 的子进程，则不建议使用此选项。</p>
+<h4><code>server.ref()</code><span><a class="mark" href="#serverref" id="serverref">#</a></span><a aria-hidden="true" class="legacy" id="net_server_ref"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#serverref">
+                <a href="net/server_ref.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<ul class="">
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>与 <code>unref()</code> 相反，如果它是唯一剩下的服务器（默认行为），则在以前的 <code>unref</code> 的服务器上调用 <code>ref()</code> 不会让程序退出。
+如果服务器被 <code>ref</code>，则再次调用 <code>ref()</code> 将无效。</p>
+<h4><code>server.unref()</code><span><a class="mark" href="#serverunref" id="serverunref">#</a></span><a aria-hidden="true" class="legacy" id="net_server_unref"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#serverunref">
+                <a href="net/server_unref.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<ul class="">
+<li>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></li>
+</ul>
+<p>如果服务器是事件系统中唯一的活动服务器，则在服务器上调用 <code>unref()</code> 将允许程序退出。
+如果服务器已经被 <code>unref</code>，则再次调用 <code>unref()</code> 将无效。</p>
+</section><section><h3><code>net.Socket</code> 类<span><a class="mark" href="#class-netsocket" id="class-netsocket">#</a></span><a aria-hidden="true" class="legacy" id="net_class_net_socket"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-netsocket">
+                <a href="net/class_net_socket.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.4</span>
+</div>
+<ul class="">
+<li>继承自: <a href="stream.html#class-streamduplex" rel="nofollow" class="type">&lt;stream.Duplex&gt;</a></li>
+</ul>
+<p>此类是 TCP 套接字或流式 <a href="#ipc-support">IPC</a> 端点（在 Windows 上使用命名管道，否则使用 Unix 域套接字）的抽象。
+它也是 <a href="events.html#class-eventemitter"><code>EventEmitter</code></a>。</p>
+<p class=""><code>net.Socket</code> 可以由用户创建并直接用于与服务器交互。
+例如，通过 <a href="#netcreateconnection"><code>net.createConnection()</code></a> 返回它，因此用户可以使用它与服务器对话。</p>
+<p class="">它也可以由 Node.js 创建并在接收到连接时传给用户。
+例如，它被传给在 <a href="#class-netserver"><code>net.Server</code></a> 上触发的 <a href="#event-connection"><code>'connection'</code></a> 事件的监听器，因此用户可以使用它与客户端进行交互。</p>
+<h4><code>new net.Socket([options])</code><span><a class="mark" href="#new-netsocketoptions" id="new-netsocketoptions">#</a></span><a aria-hidden="true" class="legacy" id="net_new_net_socket_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#new-netsocketoptions">
+                <a href="net/new_net_socket_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.14.0</td>
+<td><p>添加了中止信号支持。</p></td></tr>
+<tr><td>v0.3.4</td>
+<td><p><span>新增于: v0.3.4</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 可用的选项有：
+<ul>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果指定，则使用给定的文件描述符封装现有的套接字，否则将创建新的套接字。</li>
+<li><code>allowHalfOpen</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>false</code>，则当可读端结束时，套接字将自动结束可写端。
+有关详细信息，请参阅 <a href="#netcreateserveroptions-connectionlistener"><code>net.createServer()</code></a> 和 <a href="#event-end"><code>'end'</code></a> 事件。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>readable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当传入 <code>fd</code> 时，则允许在套接字上读取，否则将被忽略。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>writable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当传入 <code>fd</code> 时，则允许在套接字上写入，否则将被忽略。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>signal</code> <a href="globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 可用于销毁套接字的中止信号。</li>
+</ul>
+</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a></li>
+</ul>
+<p>创建新的套接字对象。</p>
+<p class="">新创建的套接字可以是 TCP 套接字或流式 <a href="#ipc-support">IPC</a> 端点，这取决于它 <a href="#socketconnect"><code>connect()</code></a> 什么。</p>
+<h4><code>'close'</code> 事件<span><a class="mark" href="#event-close_1" id="event-close_1">#</a></span><a aria-hidden="true" class="legacy" id="net_event_close_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-close_1">
+                <a href="net/event_close_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>hadError</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果套接字有传输错误，则为 <code>true</code>。</li>
+</ul>
+<p>一旦套接字完全关闭就触发。
+参数 <code>hadError</code> 是布尔值，表示套接字是否由于传输错误而关闭。</p>
+<h4><code>'connect'</code> 事件<span><a class="mark" href="#event-connect" id="event-connect">#</a></span><a aria-hidden="true" class="legacy" id="net_event_connect"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-connect">
+                <a href="net/event_connect.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<p>当成功建立套接字连接时触发。
+参见 <a href="#netcreateconnection"><code>net.createConnection()</code></a>。</p>
+<h4><code>'data'</code> 事件<span><a class="mark" href="#event-data" id="event-data">#</a></span><a aria-hidden="true" class="legacy" id="net_event_data"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-data">
+                <a href="net/event_data.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>接收到数据时触发。
+参数 <code>data</code> 将是 <code>Buffer</code> 或 <code>String</code>。
+数据的编码由 <a href="#socketsetencodingencoding"><code>socket.setEncoding()</code></a> 设置。</p>
+<p class="">如果 <code>Socket</code> 触发 <code>'data'</code> 事件时没有监听器，则数据将丢失。</p>
+<h4><code>'drain'</code> 事件<span><a class="mark" href="#event-drain" id="event-drain">#</a></span><a aria-hidden="true" class="legacy" id="net_event_drain"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-drain">
+                <a href="net/event_drain.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<p>当写缓冲区变空时触发。
+可用于限制上传。</p>
+<p class="">另请参阅：<code>socket.write()</code> 的返回值。</p>
+<h4><code>'end'</code> 事件<span><a class="mark" href="#event-end" id="event-end">#</a></span><a aria-hidden="true" class="legacy" id="net_event_end"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-end">
+                <a href="net/event_end.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<p>当套接字的另一端表示传输结束时触发，从而结束套接字的可读端。</p>
+<p class="">默认情况下（<code>allowHalfOpen</code> 是 <code>false</code>）套接字将发送传输结束数据包，并在写出其挂起的写入队列后销毁其文件描述符。
+但是，如果 <code>allowHalfOpen</code> 设置为 <code>true</code>，套接字将不会自动将其可写端 <a href="#socketenddata-encoding-callback"><code>end()</code></a>，从而允许用户写入任意数量的数据。
+用户必须显式调用 <a href="#socketenddata-encoding-callback"><code>end()</code></a> 来关闭连接（即发回一个 FIN 数据包）。</p>
+<h4><code>'error'</code> 事件<span><a class="mark" href="#event-error_1" id="event-error_1">#</a></span><a aria-hidden="true" class="legacy" id="net_event_error_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-error_1">
+                <a href="net/event_error_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul>
+<p>发生错误时触发。
+<code>'close'</code> 事件将在此事件之后直接调用。</p>
+<h4><code>'lookup'</code> 事件<span><a class="mark" href="#event-lookup" id="event-lookup">#</a></span><a aria-hidden="true" class="legacy" id="net_event_lookup"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-lookup">
+                <a href="net/event_lookup.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v5.10.0</td>
+<td><p>现在支持 <code>host</code> 参数。</p></td></tr>
+<tr><td>v0.11.3</td>
+<td><p><span>新增于: v0.11.3</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>在解析主机名之后但在连接之前触发。
+不适用于 Unix 套接字。</p>
+<ul class="">
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> 错误对象。
+参见 <a href="dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a>。</li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> IP 地址。</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> 地址类型。
+参见 <a href="dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a>。</li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 主机名。</li>
+</ul>
+<h4><code>'ready'</code> 事件<span><a class="mark" href="#event-ready" id="event-ready">#</a></span><a aria-hidden="true" class="legacy" id="net_event_ready"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-ready">
+                <a href="net/event_ready.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v9.11.0</span>
+</div>
+<p>当套接字准备好使用时触发。</p>
+<p class=""><code>'connect'</code> 后立即触发。</p>
+<h4><code>'timeout'</code> 事件<span><a class="mark" href="#event-timeout" id="event-timeout">#</a></span><a aria-hidden="true" class="legacy" id="net_event_timeout"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#event-timeout">
+                <a href="net/event_timeout.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<p>如果套接字因不活动而超时则触发。
+这只是通知套接字已空闲。
+用户必须手动关闭连接。</p>
+<p class="">另见: <a href="#socketsettimeouttimeout-callback"><code>socket.setTimeout()</code></a>。</p>
+<h4><code>socket.address()</code><span><a class="mark" href="#socketaddress" id="socketaddress">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_address"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketaddress">
+                <a href="net/socket_address.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>返回操作系统报告的绑定 <code>address</code>、地址 <code>family</code> 名称和套接字的 <code>port</code>：<code>{ port: 12346, family: 'IPv4', address: '127.0.0.1' }</code></p>
+<h4><code>socket.bufferSize</code><span><a class="mark" href="#socketbuffersize" id="socketbuffersize">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_buffersize"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketbuffersize">
+                <a href="net/socket_buffersize.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.8</span><span>弃用于: v14.6.0</span>
+</div>
+<p></p><div class="api_stability api_stability_0"><a href="documentation.html#stability-index">稳定性: 0</a> - 弃用: 改为使用 <a href="stream.html#writablewritablelength"><code>writable.writableLength</code></a> 。</div><p></p>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>此属性显示为写入而缓冲的字符数。
+缓冲区可能包含编码后长度未知的字符串。
+所以这个数字只是缓冲区中字节数的近似值。</p>
+<p class=""><code>net.Socket</code> 具有 <code>socket.write()</code> 始终有效的特性。
+这是为了帮助用户快速启动和运行。
+计算机无法始终跟上写入套接字的数据量。
+网络连接可能太慢了。
+Node.js 将在内部对写入套接字的数据进行排队，并在可能的情况下通过网络将其发送出去。</p>
+<p class="">这种内部缓冲的结果是内存可能会增长。
+经历过大型或不断增长的 <code>bufferSize</code> 的用户应该尝试使用 <a href="#socketpause"><code>socket.pause()</code></a> 和 <a href="#socketresume"><code>socket.resume()</code></a> 来"节流"他们程序中的数据流。</p>
+<h4><code>socket.bytesRead</code><span><a class="mark" href="#socketbytesread" id="socketbytesread">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_bytesread"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketbytesread">
+                <a href="net/socket_bytesread.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.3</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>接收的字节数。</p>
+<h4><code>socket.bytesWritten</code><span><a class="mark" href="#socketbyteswritten" id="socketbyteswritten">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_byteswritten"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketbyteswritten">
+                <a href="net/socket_byteswritten.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.3</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>发送的字节数。</p>
+<h4><code>socket.connect()</code><span><a class="mark" href="#socketconnect" id="socketconnect">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_connect"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketconnect">
+                <a href="net/socket_connect.html" class="tip_trans">中英对照</a>
+                </p>
+<p>在给定的套接字上发起连接。</p>
+<p class="">可能的语法有：</p>
+<ul class="">
+<li><a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a></li>
+<li><a href="#socketconnectpath-connectlistener"><code>socket.connect(path[, connectListener])</code></a> 用于 <a href="#ipc-support">IPC</a> 连接。</li>
+<li><a href="#socketconnectport-host-connectlistener"><code>socket.connect(port[, host][, connectListener])</code></a> 用于 TCP 连接。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p class="">此函数是异步的。
+建立连接后，将触发 <a href="#event-connect"><code>'connect'</code></a> 事件。
+如果连接出现问题，则将触发 <a href="#event-error_1"><code>'error'</code></a> 事件并将错误传给 <a href="#event-error_1"><code>'error'</code></a> 监听器，而不是触发 <a href="#event-connect"><code>'connect'</code></a> 事件。
+最后一个参数 <code>connectListener</code>（如果提供）将作为 <a href="#event-connect"><code>'connect'</code></a> 事件的监听器添加一次。</p>
+<p class="">此函数仅用于在触发 <code>'close'</code> 之后重新连接套接字，否则可能导致未定义的行为。</p>
+<h5><code>socket.connect(options[, connectListener])</code><span><a class="mark" href="#socketconnectoptions-connectlistener" id="socketconnectoptions-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_connect_options_connectlistener"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#socketconnectoptions-connectlistener">
+                <a href="net/socket_connect_options_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.15.0</td>
+<td><p>现在支持 <code>noDelay</code>、<code>keepAlive</code> 和 <code>keepAliveInitialDelay</code> 选项。</p></td></tr>
+<tr><td>v12.10.0</td>
+<td><p>添加了 <code>onread</code> 选项。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>选项 <code>hints</code> 现在在所有情况下都默认为 <code>0</code>。 以前，如果没有 <code>family</code> 选项，它将默认为 <code>dns.ADDRCONFIG | dns.V4MAPPED</code>。</p></td></tr>
+<tr><td>v5.11.0</td>
+<td><p>现在支持 <code>hints</code> 选项。</p></td></tr>
+<tr><td>v0.1.90</td>
+<td><p><span>新增于: v0.1.90</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#socketconnect"><code>socket.connect()</code></a> 方法的常用参数。
+将被添加为 <a href="#event-connect"><code>'connect'</code></a> 事件的监听器一次。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>在给定的套接字上发起连接。
+一般不需要这个方法，套接字应该用 <a href="#netcreateconnection"><code>net.createConnection()</code></a> 创建和打开。
+仅在实现自定义套接字时使用它。</p>
+<p class="">对于 TCP 连接，可用的 <code>options</code> 是：</p>
+<ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 必需的。
+套接字应连接到的端口。</li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 套接字应连接到的主机。 <strong>默认值:</strong> <code>'localhost'</code>。</li>
+<li><code>localAddress</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 套接字应该连接的本地地址。</li>
+<li><code>localPort</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 套接字应连接的本地端口。</li>
+<li><code>family</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a>: IP 堆栈的版本。
+必须是 <code>4</code>、<code>6</code> 或 <code>0</code>。
+值 <code>0</code> 表示允许 IPv4 和 IPv6 地址。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>hints</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 可选的 <a href="dns.html#supported-getaddrinfo-flags"><code>dns.lookup()</code> 提示</a>。</li>
+<li><code>lookup</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 自定义查找函数。 <strong>默认值:</strong> <a href="dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a>.</li>
+<li><code>noDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在套接字建立后立即禁用 Nagle 算法。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAlive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在连接建立后立即在套接字上启用保持活动功能，类似于在 <a href="#socketsetkeepaliveenable-initialdelay"><code>socket.setKeepAlive([enable][, initialDelay])</code></a> 中所做的。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAliveInitialDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果设置为正数，则它会设置在空闲套接字上发送第一个保持活跃探测之前的初始延迟。<strong>默认值:</strong> <code>0</code>。</li>
+</ul>
+<p class="">对于 <a href="#ipc-support">IPC</a> 连接，可用的 <code>options</code> 是：</p>
+<ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 必需的。
+客户端应该连接到的路径。
+请参阅<a href="#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a>。
+如果提供，则忽略上面特定于 TCP 的选项。</li>
+</ul>
+<p class="">对于这两种类型，可用的 <code>options</code> 包括：</p>
+<ul class="">
+<li><code>onread</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 如果指定，传入的数据存储在单个 <code>buffer</code> 中，并在数据到达套接字时传给提供的 <code>callback</code>。
+这将导致流功能不提供任何数据。
+套接字将像往常一样触发 <code>'error'</code>、<code>'end'</code> 和 <code>'close'</code> 等事件。
+<code>pause()</code> 和 <code>resume()</code> 等方法也将按预期运行。
+<ul>
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 用于存储传入数据的可重用内存块或返回此类数据的函数。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 为每个传入数据块调用此函数。
+传给它的有两个参数：写入 <code>buffer</code> 的字节数和对 <code>buffer</code> 的引用。
+从此函数返回 <code>false</code> 以隐式 <code>pause()</code> 套接字。
+该函数将在全局上下文中执行。</li>
+</ul>
+</li>
+</ul>
+<p class="">以下是使用 <code>onread</code> 选项的客户端示例：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+net.<span class="hljs-title function_">connect</span>({
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">onread</span>: {
+    <span class="hljs-comment">// 每次从套接字读取时重用 4KiB 缓冲区。</span>
+    <span class="hljs-attr">buffer</span>: <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">4</span> * <span class="hljs-number">1024</span>),
+    <span class="hljs-attr">callback</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">nread, buf</span>) {
+      <span class="hljs-comment">// 接收到的数据在 `buf` 中可用，从 0 到 `nread`。</span>
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">0</span>, nread));
+    }
+  }
+});</code></pre>
+<h5><code>socket.connect(path[, connectListener])</code><span><a class="mark" href="#socketconnectpath-connectlistener" id="socketconnectpath-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_connect_path_connectlistener"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#socketconnectpath-connectlistener">
+                <a href="net/socket_connect_path_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 客户端应该连接到的路径。
+请参阅<a href="#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a>。</li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#socketconnect"><code>socket.connect()</code></a> 方法的常用参数。
+将被添加为 <a href="#event-connect"><code>'connect'</code></a> 事件的监听器一次。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>在给定的套接字上发起 <a href="#ipc-support">IPC</a> 连接。</p>
+<p class=""><a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a> 的别名被称为 <code>{ path: path }</code> 作为 <code>options</code>。</p>
+<h5><code>socket.connect(port[, host][, connectListener])</code><span><a class="mark" href="#socketconnectport-host-connectlistener" id="socketconnectport-host-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_connect_port_host_connectlistener"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#socketconnectport-host-connectlistener">
+                <a href="net/socket_connect_port_host_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 客户端应该连接到的端口。</li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 客户端应该连接到的主机。</li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#socketconnect"><code>socket.connect()</code></a> 方法的常用参数。
+将被添加为 <a href="#event-connect"><code>'connect'</code></a> 事件的监听器一次。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>在给定的套接字上发起 TCP 连接。</p>
+<p class=""><a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a> 的别名被称为 <code>{port: port, host: host}</code> 作为 <code>options</code>。</p>
+<h4><code>socket.connecting</code><span><a class="mark" href="#socketconnecting" id="socketconnecting">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_connecting"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketconnecting">
+                <a href="net/socket_connecting.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.1.0</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>如果 <code>true</code>，则 <a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a> 已被调用且尚未完成。
+它将保持 <code>true</code> 直到套接字连接，然后将其设置为 <code>false</code> 并触发 <code>'connect'</code> 事件。
+请注意，<a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a> 回调是 <code>'connect'</code> 事件的监听器。</p>
+<h4><code>socket.destroy([error])</code><span><a class="mark" href="#socketdestroyerror" id="socketdestroyerror">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_destroy_error"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketdestroyerror">
+                <a href="net/socket_destroy_error.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a></li>
+</ul>
+<p>确保此套接字上不再发生 I/O 活动。
+销毁流并关闭连接。</p>
+<p class="">有关详细信息，请参阅 <a href="stream.html#writabledestroyerror"><code>writable.destroy()</code></a>。</p>
+<h4><code>socket.destroyed</code><span><a class="mark" href="#socketdestroyed" id="socketdestroyed">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_destroyed"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketdestroyed">
+                <a href="net/socket_destroyed.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示连接是否被破坏。
+一旦连接被破坏，就不能再使用它传输数据。</li>
+</ul>
+<p>有关详细信息，请参阅 <a href="stream.html#writabledestroyed"><code>writable.destroyed</code></a>。</p>
+<h4><code>socket.end([data[, encoding]][, callback])</code><span><a class="mark" href="#socketenddata-encoding-callback" id="socketenddata-encoding-callback">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_end_data_encoding_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketenddata-encoding-callback">
+                <a href="net/socket_end_data_encoding_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 仅当数据为 <code>string</code> 时使用。 <strong>默认值:</strong> <code>'utf8'</code>。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 套接字完成时的可选回调。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>半关闭套接字。
+即，它发送一个 FIN 数据包。
+服务器可能仍会发送一些数据。</p>
+<p class="">有关详细信息，请参阅 <a href="stream.html#writableendchunk-encoding-callback"><code>writable.end()</code></a>。</p>
+<h4><code>socket.localAddress</code><span><a class="mark" href="#socketlocaladdress" id="socketlocaladdress">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_localaddress"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketlocaladdress">
+                <a href="net/socket_localaddress.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.6</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>远程客户端连接的本地 IP 地址的字符串表示形式。
+例如，在监听 <code>'0.0.0.0'</code> 的服务器中，如果客户端连接到 <code>'192.168.1.1'</code>，则 <code>socket.localAddress</code> 的值将是 <code>'192.168.1.1'</code>。</p>
+<h4><code>socket.localPort</code><span><a class="mark" href="#socketlocalport" id="socketlocalport">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_localport"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketlocalport">
+                <a href="net/socket_localport.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.6</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>本地端口的数字表示。
+例如，<code>80</code> 或 <code>21</code>。</p>
+<h4><code>socket.pause()</code><span><a class="mark" href="#socketpause" id="socketpause">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_pause"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketpause">
+                <a href="net/socket_pause.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>暂停读取数据。
+也就是说，不会触发 <a href="#event-data"><code>'data'</code></a> 事件。
+用于限制上传。</p>
+<h4><code>socket.pending</code><span><a class="mark" href="#socketpending" id="socketpending">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_pending"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketpending">
+                <a href="net/socket_pending.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.2.0, v10.16.0</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>如果套接字尚未连接，则为 <code>true</code>，要么是因为 <code>.connect()</code> 尚未被调用，要么是因为它仍在连接过程中（参见 <a href="#socketconnecting"><code>socket.connecting</code></a>）。</p>
+<h4><code>socket.ref()</code><span><a class="mark" href="#socketref" id="socketref">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_ref"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketref">
+                <a href="net/socket_ref.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<ul class="">
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>与 <code>unref()</code> 相反，如果它是唯一剩下的套接字（默认行为），则在以前的 <code>unref</code> 套接字上调用 <code>ref()</code> 不会让程序退出。
+如果套接字是 <code>ref</code> 的，再次调用 <code>ref</code> 将无效。</p>
+<h4><code>socket.remoteAddress</code><span><a class="mark" href="#socketremoteaddress" id="socketremoteaddress">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_remoteaddress"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketremoteaddress">
+                <a href="net/socket_remoteaddress.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.10</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>远程 IP 地址的字符串表示形式。
+例如，<code>'74.125.127.100'</code> 或 <code>'2001:4860:a005::68'</code>。
+如果套接字被破坏（例如，如果客户端断开连接），则值可能是 <code>undefined</code>。</p>
+<h4><code>socket.remoteFamily</code><span><a class="mark" href="#socketremotefamily" id="socketremotefamily">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_remotefamily"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketremotefamily">
+                <a href="net/socket_remotefamily.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.11.14</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>远程 IP 系列的字符串表示形式。
+<code>'IPv4'</code> 或 <code>'IPv6'</code>。</p>
+<h4><code>socket.remotePort</code><span><a class="mark" href="#socketremoteport" id="socketremoteport">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_remoteport"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketremoteport">
+                <a href="net/socket_remoteport.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.10</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>远程端口的数字表示。
+例如，<code>80</code> 或 <code>21</code>。</p>
+<h4><code>socket.resume()</code><span><a class="mark" href="#socketresume" id="socketresume">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_resume"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketresume">
+                <a href="net/socket_resume.html" class="tip_trans">中英对照</a>
+                </p>
+<ul class="">
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>调用 <a href="#socketpause"><code>socket.pause()</code></a> 后继续读取。</p>
+<h4><code>socket.setEncoding([encoding])</code><span><a class="mark" href="#socketsetencodingencoding" id="socketsetencodingencoding">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_setencoding_encoding"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetencodingencoding">
+                <a href="net/socket_setencoding_encoding.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>将套接字的编码设置为<a href="stream.html#class-streamreadable">可读流</a>。
+有关详细信息，请参阅 <a href="stream.html#readablesetencodingencoding"><code>readable.setEncoding()</code></a>。</p>
+<h4><code>socket.setKeepAlive([enable][, initialDelay])</code><span><a class="mark" href="#socketsetkeepaliveenable-initialdelay" id="socketsetkeepaliveenable-initialdelay">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_setkeepalive_enable_initialdelay"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetkeepaliveenable-initialdelay">
+                <a href="net/socket_setkeepalive_enable_initialdelay.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>添加了 <code>TCP_KEEPCNT</code> 和 <code>TCP_KEEPINTVL</code> 套接字选项的新默认值。</p></td></tr>
+<tr><td>v0.1.92</td>
+<td><p><span>新增于: v0.1.92</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>enable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>false</code></li>
+<li><code>initialDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <strong>默认值:</strong> <code>0</code></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>启用/禁用保持活动功能，并可选择在空闲套接字上发送第一个保持活动探测之前设置初始延迟。</p>
+<p class="">设置 <code>initialDelay</code>（以毫秒为单位）以设置接收到的最后一个数据包和第一个保持活动探测之间的延迟。
+将 <code>0</code> 设置为 <code>initialDelay</code> 将使该值与默认（或先前）设置保持不变。</p>
+<p class="">启用保持活动功能将设置以下套接字选项：</p>
+<ul class="">
+<li><code>SO_KEEPALIVE=1</code></li>
+<li><code>TCP_KEEPIDLE=initialDelay</code></li>
+<li><code>TCP_KEEPCNT=10</code></li>
+<li><code>TCP_KEEPINTVL=1</code></li>
+</ul>
+<h4><code>socket.setNoDelay([noDelay])</code><span><a class="mark" href="#socketsetnodelaynodelay" id="socketsetnodelaynodelay">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_setnodelay_nodelay"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsetnodelaynodelay">
+                <a href="net/socket_setnodelay_nodelay.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>noDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>true</code></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>启用/禁用 Nagle 算法的使用。</p>
+<p class="">创建 TCP 连接时，它将启用 Nagle 算法。</p>
+<p class="">Nagle 的算法在数据通过网络发送之前延迟数据。
+它试图以延迟为代价来优化吞吐量。</p>
+<p class="">为 <code>noDelay</code> 传入 <code>true</code> 或不传入参数将禁用套接字的 Nagle 算法。
+为 <code>noDelay</code> 传入 <code>false</code> 将启用 Nagle 的算法。</p>
+<h4><code>socket.setTimeout(timeout[, callback])</code><span><a class="mark" href="#socketsettimeouttimeout-callback" id="socketsettimeouttimeout-callback">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_settimeout_timeout_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketsettimeouttimeout-callback">
+                <a href="net/socket_settimeout_timeout_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>将套接字设置为在套接字上 <code>timeout</code> 毫秒不活动后超时。
+默认情况下 <code>net.Socket</code> 没有超时。</p>
+<p class="">当空闲超时被触发时，套接字将收到 <a href="#event-timeout"><code>'timeout'</code></a> 事件，但连接不会被切断。
+用户必须手动调用 <a href="#socketenddata-encoding-callback"><code>socket.end()</code></a> 或 <a href="#socketdestroyerror"><code>socket.destroy()</code></a> 才能结束连接。</p>
+<pre class=""><code class="language-js">socket.<span class="hljs-built_in">setTimeout</span>(<span class="hljs-number">3000</span>);
+socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'timeout'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'socket timeout'</span>);
+  socket.<span class="hljs-title function_">end</span>();
+});</code></pre>
+<p class="">如果 <code>timeout</code> 为 0，则禁用现有空闲超时。</p>
+<p class="">可选的 <code>callback</code> 参数将被添加为 <a href="#event-timeout"><code>'timeout'</code></a> 事件的单次监听器。</p>
+<h4><code>socket.timeout</code><span><a class="mark" href="#sockettimeout" id="sockettimeout">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_timeout"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#sockettimeout">
+                <a href="net/socket_timeout.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.7.0</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a></li>
+</ul>
+<p>由 <a href="#socketsettimeouttimeout-callback"><code>socket.setTimeout()</code></a> 设置的套接字超时（以毫秒为单位）。
+如果未设置超时，则为 <code>undefined</code>。</p>
+<h4><code>socket.unref()</code><span><a class="mark" href="#socketunref" id="socketunref">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_unref"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketunref">
+                <a href="net/socket_unref.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<ul class="">
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul>
+<p>如果这是事件系统中唯一的活动套接字，则在套接字上调用 <code>unref()</code> 将允许程序退出。
+如果套接字已经被 <code>unref</code>，则再次调用 <code>unref()</code> 将无效。</p>
+<h4><code>socket.write(data[, encoding][, callback])</code><span><a class="mark" href="#socketwritedata-encoding-callback" id="socketwritedata-encoding-callback">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_write_data_encoding_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketwritedata-encoding-callback">
+                <a href="net/socket_write_data_encoding_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 仅当数据为 <code>string</code> 时使用。 <strong>默认值:</strong> <code>utf8</code>。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>在套接字上发送数据。
+第二个参数指定字符串情况下的编码。
+它默认为 UTF8 编码。</p>
+<p class="">如果整个数据被成功刷新到内核缓冲区，则返回 <code>true</code>。
+如果所有或部分数据在用户内存中排队，则返回 <code>false</code>。
+当缓冲区再次空闲时，将触发 <a href="#event-drain"><code>'drain'</code></a>。</p>
+<p class="">可选的 <code>callback</code> 参数将在数据最终写完时执行（可能不会立即执行）。</p>
+<p class="">有关更多信息，请参阅 <code>Writable</code> 流 <a href="stream.html#writablewritechunk-encoding-callback"><code>write()</code></a> 方法。</p>
+<h4><code>socket.readyState</code><span><a class="mark" href="#socketreadystate" id="socketreadystate">#</a></span><a aria-hidden="true" class="legacy" id="net_socket_readystate"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#socketreadystate">
+                <a href="net/socket_readystate.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.0</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+<p>此属性将连接状态表示为字符串。</p>
+<ul class="">
+<li>如果流正在连接，则 <code>socket.readyState</code> 是 <code>opening</code>。</li>
+<li>如果流可读可写，则为 <code>open</code>。</li>
+<li>如果流可读不可写，则为 <code>readOnly</code>。</li>
+<li>如果流不可读写，则为 <code>writeOnly</code>。</li>
+</ul>
+</section><section><h3><code>net.connect()</code><span><a class="mark" href="#netconnect" id="netconnect">#</a></span><a aria-hidden="true" class="legacy" id="net_net_connect"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#netconnect">
+                <a href="net/net_connect.html" class="tip_trans">中英对照</a>
+                </p>
+<p><a href="#netcreateconnection"><code>net.createConnection()</code></a> 的别名。</p>
+<p class="">可能的语法有：</p>
+<ul class="">
+<li><a href="#netconnectoptions-connectlistener"><code>net.connect(options[, connectListener])</code></a></li>
+<li><a href="#netconnectpath-connectlistener"><code>net.connect(path[, connectListener])</code></a> 用于 <a href="#ipc-support">IPC</a> 连接。</li>
+<li><a href="#netconnectport-host-connectlistener"><code>net.connect(port[, host][, connectListener])</code></a> 用于 TCP 连接。</li>
+</ul>
+<h4><code>net.connect(options[, connectListener])</code><span><a class="mark" href="#netconnectoptions-connectlistener" id="netconnectoptions-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_net_connect_options_connectlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#netconnectoptions-connectlistener">
+                <a href="net/net_connect_options_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.7.0</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a></li>
+</ul>
+<p><a href="#netcreateconnectionoptions-connectlistener"><code>net.createConnection(options[, connectListener])</code></a> 的别名。</p>
+<h4><code>net.connect(path[, connectListener])</code><span><a class="mark" href="#netconnectpath-connectlistener" id="netconnectpath-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_net_connect_path_connectlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#netconnectpath-connectlistener">
+                <a href="net/net_connect_path_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a></li>
+</ul>
+<p><a href="#netcreateconnectionpath-connectlistener"><code>net.createConnection(path[, connectListener])</code></a> 的别名。</p>
+<h4><code>net.connect(port[, host][, connectListener])</code><span><a class="mark" href="#netconnectport-host-connectlistener" id="netconnectport-host-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_net_connect_port_host_connectlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#netconnectport-host-connectlistener">
+                <a href="net/net_connect_port_host_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a></li>
+</ul>
+<p><a href="#netcreateconnectionport-host-connectlistener"><code>net.createConnection(port[, host][, connectListener])</code></a> 的别名。</p>
+</section><section><h3><code>net.createConnection()</code><span><a class="mark" href="#netcreateconnection" id="netcreateconnection">#</a></span><a aria-hidden="true" class="legacy" id="net_net_createconnection"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#netcreateconnection">
+                <a href="net/net_createconnection.html" class="tip_trans">中英对照</a>
+                </p>
+<p>工厂函数，其创建新的 <a href="#class-netsocket"><code>net.Socket</code></a>，并立即使用 <a href="#socketconnect"><code>socket.connect()</code></a> 发起连接，然后返回启动连接的 <code>net.Socket</code>。</p>
+<p class="">建立连接后，将在返回的套接字上触发 <a href="#event-connect"><code>'connect'</code></a> 事件。
+最后一个参数 <code>connectListener</code>（如果提供）将作为 <a href="#event-connect"><code>'connect'</code></a> 事件的监听器添加一次。</p>
+<p class="">可能的语法有：</p>
+<ul class="">
+<li><a href="#netcreateconnectionoptions-connectlistener"><code>net.createConnection(options[, connectListener])</code></a></li>
+<li><a href="#netcreateconnectionpath-connectlistener"><code>net.createConnection(path[, connectListener])</code></a> 用于 <a href="#ipc-support">IPC</a> 连接。</li>
+<li><a href="#netcreateconnectionport-host-connectlistener"><code>net.createConnection(port[, host][, connectListener])</code></a> 用于 TCP 连接。</li>
+</ul>
+<p class=""><a href="#netconnect"><code>net.connect()</code></a> 函数是此函数的别名。</p>
+<h4><code>net.createConnection(options[, connectListener])</code><span><a class="mark" href="#netcreateconnectionoptions-connectlistener" id="netcreateconnectionoptions-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_net_createconnection_options_connectlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#netcreateconnectionoptions-connectlistener">
+                <a href="net/net_createconnection_options_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 必需的。
+将传给 <a href="#new-netsocketoptions"><code>new net.Socket([options])</code></a> 调用和 <a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a> 方法。</li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#netcreateconnection"><code>net.createConnection()</code></a> 函数的通用参数。
+如果提供，则将被添加为返回套接字上的 <a href="#event-connect"><code>'connect'</code></a> 事件的监听器一次。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 用于启动连接的新创建的套接字。</li>
+</ul>
+<p>有关可用的选项，请参阅 <a href="#new-netsocketoptions"><code>new net.Socket([options])</code></a> 和 <a href="#socketconnectoptions-connectlistener"><code>socket.connect(options[, connectListener])</code></a>。</p>
+<p class="">其他选项：</p>
+<ul class="">
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果设置，则将用于在创建套接字之后但在开始连接之前调用 <a href="#socketsettimeouttimeout-callback"><code>socket.setTimeout(timeout)</code></a>。</li>
+</ul>
+<p class="">以下是 <a href="#netcreateserveroptions-connectionlistener"><code>net.createServer()</code></a> 部分中描述的回显服务器的客户端示例：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> client = net.<span class="hljs-title function_">createConnection</span>({ <span class="hljs-attr">port</span>: <span class="hljs-number">8124</span> }, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 'connect' 监听器。</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'connected to server!'</span>);
+  client.<span class="hljs-title function_">write</span>(<span class="hljs-string">'world!\r\n'</span>);
+});
+client.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-title function_">toString</span>());
+  client.<span class="hljs-title function_">end</span>();
+});
+client.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'disconnected from server'</span>);
+});</code></pre>
+<p class="">连接套接字 <code>/tmp/echo.sock</code>：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> client = net.<span class="hljs-title function_">createConnection</span>({ <span class="hljs-attr">path</span>: <span class="hljs-string">'/tmp/echo.sock'</span> });</code></pre>
+<h4><code>net.createConnection(path[, connectListener])</code><span><a class="mark" href="#netcreateconnectionpath-connectlistener" id="netcreateconnectionpath-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_net_createconnection_path_connectlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#netcreateconnectionpath-connectlistener">
+                <a href="net/net_createconnection_path_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 套接字应连接到的路径。
+将传给 <a href="#socketconnectpath-connectlistener"><code>socket.connect(path[, connectListener])</code></a>。
+请参阅<a href="#identifying-paths-for-ipc-connections">标识 IPC 连接的路径</a>。</li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#netcreateconnection"><code>net.createConnection()</code></a> 函数的通用参数，对发起套接字上的 <code>'connect'</code> 事件的单次监听器。
+将传给 <a href="#socketconnectpath-connectlistener"><code>socket.connect(path[, connectListener])</code></a>。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 用于启动连接的新创建的套接字。</li>
+</ul>
+<p>发起 <a href="#ipc-support">IPC</a> 连接。</p>
+<p class="">此函数创建新的 <a href="#class-netsocket"><code>net.Socket</code></a>，所有选项都设置为默认值，立即启动与 <a href="#socketconnectpath-connectlistener"><code>socket.connect(path[, connectListener])</code></a> 的连接，然后返回启动连接的 <code>net.Socket</code>。</p>
+<h4><code>net.createConnection(port[, host][, connectListener])</code><span><a class="mark" href="#netcreateconnectionport-host-connectlistener" id="netcreateconnectionport-host-connectlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_net_createconnection_port_host_connectlistener"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#netcreateconnectionport-host-connectlistener">
+                <a href="net/net_createconnection_port_host_connectlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div>
+<ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 套接字应连接到的端口。
+将传给 <a href="#socketconnectport-host-connectlistener"><code>socket.connect(port[, host][, connectListener])</code></a>。</li>
+<li><code>host</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 套接字应连接到的主机。
+将传给 <a href="#socketconnectport-host-connectlistener"><code>socket.connect(port[, host][, connectListener])</code></a>。
+<strong>默认值:</strong> <code>'localhost'</code>。</li>
+<li><code>connectListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="#netcreateconnection"><code>net.createConnection()</code></a> 函数的通用参数，对发起套接字上的 <code>'connect'</code> 事件的单次监听器。
+将传给 <a href="#socketconnectport-host-connectlistener"><code>socket.connect(port[, host][, connectListener])</code></a>。</li>
+<li>返回: <a href="#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 用于启动连接的新创建的套接字。</li>
+</ul>
+<p>发起 TCP 连接。</p>
+<p class="">此函数创建新的 <a href="#class-netsocket"><code>net.Socket</code></a>，所有选项都设置为默认值，立即启动与 <a href="#socketconnectport-host-connectlistener"><code>socket.connect(port[, host][, connectListener])</code></a> 的连接，然后返回启动连接的 <code>net.Socket</code>。</p>
+</section><section><h3><code>net.createServer([options][, connectionListener])</code><span><a class="mark" href="#netcreateserveroptions-connectionlistener" id="netcreateserveroptions-connectionlistener">#</a></span><a aria-hidden="true" class="legacy" id="net_net_createserver_options_connectionlistener"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#netcreateserveroptions-connectionlistener">
+                <a href="net/net_createserver_options_connectionlistener.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.0</span>
+</div>
+<ul class="">
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>allowHalfOpen</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>false</code>，则当可读端结束时，套接字将自动结束可写端。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>pauseOnConnect</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示是否应在传入连接上暂停套接字。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>noDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在收到新的传入连接后立即禁用 Nagle 算法。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAlive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在接收到新的传入连接后立即在套接字上启用保持活动功能，类似于在 <a href="#socketsetkeepaliveenable-initialdelay"><code>socket.setKeepAlive([enable][, initialDelay])</code></a> 中所做的。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAliveInitialDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果设置为正数，则它会设置在空闲套接字上发送第一个保持活跃探测之前的初始延迟。<strong>默认值:</strong> <code>0</code>。</li>
+</ul>
+</li>
+<li>
+<p><code>connectionListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 自动设置为 <a href="#event-connection"><code>'connection'</code></a> 事件的监听器。</p>
+</li>
+<li>
+<p>返回: <a href="#class-netserver" rel="nofollow" class="type">&lt;net.Server&gt;</a></p>
+</li>
+</ul>
+<p>创建新的 TCP 或 <a href="#ipc-support">IPC</a> 服务器。</p>
+<p class="">如果 <code>allowHalfOpen</code> 设置为 <code>true</code>，则当套接字的另一端发出传输结束信号时，服务器仅在显式调用 <a href="#socketenddata-encoding-callback"><code>socket.end()</code></a> 时才发回传输结束。
+例如，在 TCP 上下文中，当接收到 FIN 数据包时，只有在显式调用 <a href="#socketenddata-encoding-callback"><code>socket.end()</code></a> 时才会发送回 FIN 数据包。
+在此之前，连接是半关闭的（不可读但仍可写）。
+有关更多信息，请参阅 <a href="#event-end"><code>'end'</code></a> 事件和 <a href="https://tools.ietf.org/html/rfc1122" rel="nofollow">RFC 1122</a>（第 4.2.2.13 章节）。</p>
+<p class="">如果 <code>pauseOnConnect</code> 设置为 <code>true</code>，则与每个传入连接关联的套接字将被暂停，并且不会从其句柄读取数据。
+这允许在进程之间传递连接，而原始进程不会读取任何数据。
+要开始从暂停的套接字读取数据，则调用 <a href="#socketresume"><code>socket.resume()</code></a>。</p>
+<p class="">服务器可以是 TCP 服务器或 <a href="#ipc-support">IPC</a> 服务器，这取决于其 <a href="#serverlisten"><code>listen()</code></a> 什么。</p>
+<p class="">这是一个 TCP 回显服务器的示例，它监听端口 8124 上的连接：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> {
+  <span class="hljs-comment">// 'connection' 监听器。</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'client connected'</span>);
+  c.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'client disconnected'</span>);
+  });
+  c.<span class="hljs-title function_">write</span>(<span class="hljs-string">'hello\r\n'</span>);
+  c.<span class="hljs-title function_">pipe</span>(c);
+});
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">throw</span> err;
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8124</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'server bound'</span>);
+});</code></pre>
+<p class="">使用 <code>telnet</code> 对此进行测试：</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">telnet localhost 8124</span></code></pre>
+<p class="">要监听套接字 <code>/tmp/echo.sock</code>：</p>
+<pre class=""><code class="language-js">server.<span class="hljs-title function_">listen</span>(<span class="hljs-string">'/tmp/echo.sock'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'server bound'</span>);
+});</code></pre>
+<p class="">使用 <code>nc</code> 连接到 Unix 域套接字服务器：</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">nc -U /tmp/echo.sock</span></code></pre>
+</section><section><h3><code>net.isIP(input)</code><span><a class="mark" href="#netisipinput" id="netisipinput">#</a></span><a aria-hidden="true" class="legacy" id="net_net_isip_input"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#netisipinput">
+                <a href="net/net_isip_input.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.0</span>
+</div>
+<ul class="">
+<li><code>input</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+<p>如果 <code>input</code> 是 IPv6 地址，则返回 <code>6</code>。
+如果 <code>input</code> 是<a href="https://en.wikipedia.org/wiki/Dot-decimal_notation">点十进制表示法</a>中没有前导零的 IPv4 地址，则返回 <code>4</code>。
+否则，返回 <code>0</code>。</p>
+<pre class=""><code class="language-js">net.<span class="hljs-title function_">isIP</span>(<span class="hljs-string">'::1'</span>); <span class="hljs-comment">// 返回 6</span>
+net.<span class="hljs-title function_">isIP</span>(<span class="hljs-string">'127.0.0.1'</span>); <span class="hljs-comment">// 返回 4</span>
+net.<span class="hljs-title function_">isIP</span>(<span class="hljs-string">'127.000.000.001'</span>); <span class="hljs-comment">// 返回 0</span>
+net.<span class="hljs-title function_">isIP</span>(<span class="hljs-string">'127.0.0.1/24'</span>); <span class="hljs-comment">// 返回 0</span>
+net.<span class="hljs-title function_">isIP</span>(<span class="hljs-string">'fhqwhgads'</span>); <span class="hljs-comment">// 返回 0</span></code></pre>
+</section><section><h3><code>net.isIPv4(input)</code><span><a class="mark" href="#netisipv4input" id="netisipv4input">#</a></span><a aria-hidden="true" class="legacy" id="net_net_isipv4_input"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#netisipv4input">
+                <a href="net/net_isipv4_input.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.0</span>
+</div>
+<ul class="">
+<li><code>input</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>如果 <code>input</code> 是<a href="https://en.wikipedia.org/wiki/Dot-decimal_notation">点十进制表示法</a>中没有前导零的 IPv4 地址，则返回 <code>true</code>。
+否则，返回 <code>false</code>。</p>
+<pre class=""><code class="language-js">net.<span class="hljs-title function_">isIPv4</span>(<span class="hljs-string">'127.0.0.1'</span>); <span class="hljs-comment">// 返回 true</span>
+net.<span class="hljs-title function_">isIPv4</span>(<span class="hljs-string">'127.000.000.001'</span>); <span class="hljs-comment">// 返回 false</span>
+net.<span class="hljs-title function_">isIPv4</span>(<span class="hljs-string">'127.0.0.1/24'</span>); <span class="hljs-comment">// 返回 false</span>
+net.<span class="hljs-title function_">isIPv4</span>(<span class="hljs-string">'fhqwhgads'</span>); <span class="hljs-comment">// 返回 false</span></code></pre>
+</section><section><h3><code>net.isIPv6(input)</code><span><a class="mark" href="#netisipv6input" id="netisipv6input">#</a></span><a aria-hidden="true" class="legacy" id="net_net_isipv6_input"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#netisipv6input">
+                <a href="net/net_isipv6_input.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.0</span>
+</div>
+<ul class="">
+<li><code>input</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul>
+<p>如果 <code>input</code> 是 IPv6 地址，则返回 <code>true</code>。
+否则，返回 <code>false</code>。</p>
+<pre class=""><code class="language-js">net.<span class="hljs-title function_">isIPv6</span>(<span class="hljs-string">'::1'</span>); <span class="hljs-comment">// 返回 true</span>
+net.<span class="hljs-title function_">isIPv6</span>(<span class="hljs-string">'fhqwhgads'</span>); <span class="hljs-comment">// 返回 false</span></code></pre></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

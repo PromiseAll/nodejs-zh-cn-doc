@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>subprocess.kill([signal]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>subprocess.kill([signal])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_subprocess_kill_signal" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/subprocess_kill_signal.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/subprocess_kill_signal.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#subprocesskillsignal.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div><ul class="">
+<li><code>signal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul><p><code>subprocess.kill()</code> 方法向子进程发送信号。
+如果没有给定参数，则进程将被发送 <code>'SIGTERM'</code> 信号。
+有关可用信号的列表，请参阅 <a href="http://man7.org/linux/man-pages/man7/signal.7.html" rel="nofollow"><code>signal(7)</code></a>。
+如果 <a href="http://man7.org/linux/man-pages/man2/kill.2.html" rel="nofollow"><code>kill(2)</code></a> 成功，则此函数返回 <code>true</code>，否则返回 <code>false</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> grep = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'grep'</span>, [<span class="hljs-string">'ssh'</span>]);
+
+grep.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code, signal</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(
+    <span class="hljs-string">`child process terminated due to receipt of signal <span class="hljs-subst">${signal}</span>`</span>);
+});
+
+<span class="hljs-comment">// 发送 SIGHUP 到进程。</span>
+grep.<span class="hljs-title function_">kill</span>(<span class="hljs-string">'SIGHUP'</span>);</code></pre><p class="">如果信号无法传达，则 <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> 对象可能会触发 <a href="../child_process.html#event-error"><code>'error'</code></a> 事件。
+向已经退出的子进程发送信号不是错误，但可能会产生不可预见的结果。
+具体来说，如果进程标识符 (PID) 已重新分配给另一个进程，则信号将传给该进程，而这可能会产生意外结果。</p><p class="">虽然该函数被称为 <code>kill</code>，但传给子进程的信号实际上可能不会终止该进程。</p><p class="">请参阅 <a href="http://man7.org/linux/man-pages/man2/kill.2.html" rel="nofollow"><code>kill(2)</code></a> 以供参考。</p><p class="">在不存在 POSIX 信号的 Windows 上，<code>signal</code> 参数将被忽略，并且进程将被强制且突然地终止（类似于 <code>'SIGKILL'</code>）。
+有关更多详细信息，请参阅<a href="../process.html#signal-events">信号事件</a>。</p><p class="">在 Linux 上，子进程的子进程在试图杀死其父进程时不会被终止。
+当在 shell 中运行新进程或使用 <code>ChildProcess</code> 的 <code>shell</code> 选项时，可能会发生这种情况：</p><pre class=""><code class="language-js"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-keyword">const</span> subprocess = <span class="hljs-title function_">spawn</span>(
+  <span class="hljs-string">'sh'</span>,
+  [
+    <span class="hljs-string">'-c'</span>,
+    <span class="hljs-string">`node -e "setInterval(() =&gt; {
+      console.log(process.pid, 'is alive')
+    }, 500);"`</span>,
+  ], {
+    <span class="hljs-attr">stdio</span>: [<span class="hljs-string">'inherit'</span>, <span class="hljs-string">'inherit'</span>, <span class="hljs-string">'inherit'</span>]
+  }
+);
+
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  subprocess.<span class="hljs-title function_">kill</span>(); <span class="hljs-comment">// 不会终止 shell 中的 Node.js 进程。</span>
+}, <span class="hljs-number">2000</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.90</span>
+</div><ul>
+<li><code>signal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul><p>The <code>subprocess.kill()</code> method sends a signal to the child process. If no
+argument is given, the process will be sent the <code>'SIGTERM'</code> signal. See
+<a href="http://man7.org/linux/man-pages/man7/signal.7.html" rel="nofollow"><code>signal(7)</code></a> for a list of available signals. This function returns <code>true</code> if
+<a href="http://man7.org/linux/man-pages/man2/kill.2.html" rel="nofollow"><code>kill(2)</code></a> succeeds, and <code>false</code> otherwise.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> grep = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">'grep'</span>, [<span class="hljs-string">'ssh'</span>]);
+
+grep.<span class="hljs-title function_">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function">(<span class="hljs-params">code, signal</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(
+    <span class="hljs-string">`child process terminated due to receipt of signal <span class="hljs-subst">${signal}</span>`</span>);
+});
+
+<span class="hljs-comment">// Send SIGHUP to process.</span>
+grep.<span class="hljs-title function_">kill</span>(<span class="hljs-string">'SIGHUP'</span>);</code></pre><p>The <a href="../child_process.html#class-childprocess"><code>ChildProcess</code></a> object may emit an <a href="../child_process.html#event-error"><code>'error'</code></a> event if the signal
+cannot be delivered. Sending a signal to a child process that has already exited
+is not an error but may have unforeseen consequences. Specifically, if the
+process identifier (PID) has been reassigned to another process, the signal will
+be delivered to that process instead which can have unexpected results.</p><p>While the function is called <code>kill</code>, the signal delivered to the child process
+may not actually terminate the process.</p><p>See <a href="http://man7.org/linux/man-pages/man2/kill.2.html" rel="nofollow"><code>kill(2)</code></a> for reference.</p><p>On Windows, where POSIX signals do not exist, the <code>signal</code> argument will be
+ignored, and the process will be killed forcefully and abruptly (similar to
+<code>'SIGKILL'</code>).
+See <a href="../process.html#signal-events">Signal Events</a> for more details.</p><p>On Linux, child processes of child processes will not be terminated
+when attempting to kill their parent. This is likely to happen when running a
+new process in a shell or with the use of the <code>shell</code> option of <code>ChildProcess</code>:</p><pre><code class="language-js"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> { spawn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-keyword">const</span> subprocess = <span class="hljs-title function_">spawn</span>(
+  <span class="hljs-string">'sh'</span>,
+  [
+    <span class="hljs-string">'-c'</span>,
+    <span class="hljs-string">`node -e "setInterval(() =&gt; {
+      console.log(process.pid, 'is alive')
+    }, 500);"`</span>,
+  ], {
+    <span class="hljs-attr">stdio</span>: [<span class="hljs-string">'inherit'</span>, <span class="hljs-string">'inherit'</span>, <span class="hljs-string">'inherit'</span>]
+  }
+);
+
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  subprocess.<span class="hljs-title function_">kill</span>(); <span class="hljs-comment">// Does not terminate the Node.js process in the shell.</span>
+}, <span class="hljs-number">2000</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'session' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'session' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_event_session" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/event_session.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/event_session.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#event-session.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v11.10.0</span>
+</div><ul class="">
+<li><code>session</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul><p>当新会话或 TLS 票证可用时，则客户端 <code>tls.TLSSocket</code> 上会触发 <code>'session'</code> 事件。
+这可能会也可能不会在握手完成之前发生，具体取决于协商的 TLS 协议版本。
+该事件未在服务器上触发，或者未创建新会话，例如，当连接恢复时。
+对于某些 TLS 协议版本，事件可能会多次发出，在这种情况下，所有会话都可以用于恢复。</p><p class="">在客户端，可以将 <code>session</code> 提供给 <a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a> 的 <code>session</code> 选项来恢复连接。</p><p class="">请参阅<a href="../tls.html#session-resumption">会话恢复</a>了解更多信息。</p><p class="">对于 TLSv1.2 及以下版本，握手完成后可以调用 <a href="../tls.html#tlssocketgetsession"><code>tls.TLSSocket.getSession()</code></a>。
+对于 TLSv1.3，协议只允许基于票证的恢复，发送多张票证，直到握手完成后才发送票证。
+所以需要等待 <code>'session'</code> 事件才能得到可恢复的会话。
+应用程序应该使用 <code>'session'</code> 事件而不是 <code>getSession()</code> 来确保它们适用于所有 TLS 版本。
+只希望获得或使用一个会话的应用程序应该只监听此事件一次：</p><pre class=""><code class="language-js">tlsSocket.<span class="hljs-title function_">once</span>(<span class="hljs-string">'session'</span>, <span class="hljs-function">(<span class="hljs-params">session</span>) =&gt;</span> {
+  <span class="hljs-comment">// 会话可以立即或稍后使用。</span>
+  tls.<span class="hljs-title function_">connect</span>({
+    <span class="hljs-attr">session</span>: session,
+    <span class="hljs-comment">// 其他连接选项...</span>
+  });
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v11.10.0</span>
+</div><ul>
+<li><code>session</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul><p>The <code>'session'</code> event is emitted on a client <code>tls.TLSSocket</code> when a new session
+or TLS ticket is available. This may or may not be before the handshake is
+complete, depending on the TLS protocol version that was negotiated. The event
+is not emitted on the server, or if a new session was not created, for example,
+when the connection was resumed. For some TLS protocol versions the event may be
+emitted multiple times, in which case all the sessions can be used for
+resumption.</p><p>On the client, the <code>session</code> can be provided to the <code>session</code> option of
+<a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a> to resume the connection.</p><p>See <a href="../tls.html#session-resumption">Session Resumption</a> for more information.</p><p>For TLSv1.2 and below, <a href="../tls.html#tlssocketgetsession"><code>tls.TLSSocket.getSession()</code></a> can be called once
+the handshake is complete. For TLSv1.3, only ticket-based resumption is allowed
+by the protocol, multiple tickets are sent, and the tickets aren't sent until
+after the handshake completes. So it is necessary to wait for the
+<code>'session'</code> event to get a resumable session. Applications
+should use the <code>'session'</code> event instead of <code>getSession()</code> to ensure
+they will work for all TLS versions. Applications that only expect to
+get or use one session should listen for this event only once:</p><pre><code class="language-js">tlsSocket.<span class="hljs-title function_">once</span>(<span class="hljs-string">'session'</span>, <span class="hljs-function">(<span class="hljs-params">session</span>) =&gt;</span> {
+  <span class="hljs-comment">// The session can be used immediately or later.</span>
+  tls.<span class="hljs-title function_">connect</span>({
+    <span class="hljs-attr">session</span>: session,
+    <span class="hljs-comment">// Other connect options...</span>
+  });
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

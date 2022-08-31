@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.open(path[, flags[, mode]], callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.open(path[, flags[, mode]], callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_open_path_flags_mode_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_open_path_flags_mode_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_open_path_flags_mode_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fsopenpath-flags-mode-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v11.1.0</td>
+<td><p>参数 <code>flags</code> 现在是可选的，默认为 <code>'r'</code>。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>现在支持 <code>as</code> 和 <code>as+</code> 标志。</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>参数 <code>path</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v0.0.2</td>
+<td><p><span>新增于: v0.0.2</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>flags</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 请参阅<a href="../fs.html#file-system-flags">对文件系统 <code>flags</code> 的支持</a>。
+<strong>默认值:</strong> <code>'r'</code>。</li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>0o666</code> （可读可写）</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+</li>
+</ul><p>异步地打开文件。
+有关更多详细信息，请参阅 POSIX <a href="http://man7.org/linux/man-pages/man2/open.2.html" rel="nofollow"><code>open(2)</code></a> 文档。</p><p class=""><code>mode</code> 设置文件模式（权限和粘滞位），但前提是文件已创建。
+在 Windows 上，只能操作写入权限；请参阅 <a href="../fs.html#fschmodpath-mode-callback"><code>fs.chmod()</code></a>。</p><p class="">回调有两个参数 <code>(err, fd)</code>。</p><p class="">在 Windows 上预留了一些字符（<code>&lt; &gt; : " / \ | ? *</code>），如<a href="https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file" rel="nofollow">命名文件、路径和命名空间</a>所记录。
+在 NTFS 下，如果文件名包含冒号，则 Node.js 将打开文件系统流，如<a href="https://docs.microsoft.com/en-us/windows/desktop/FileIO/using-streams" rel="nofollow">此 MSDN 页面</a>所述。</p><p class="">基于 <code>fs.open()</code> 的函数也表现出这种行为：<code>fs.writeFile()</code>、<code>fs.readFile()</code> 等。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v11.1.0</td>
+<td><p>The <code>flags</code> argument is now optional and defaults to <code>'r'</code>.</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>The <code>as</code> and <code>as+</code> flags are supported now.</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>The <code>path</code> parameter can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v0.0.2</td>
+<td><p><span>Added in: v0.0.2</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>flags</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> See <a href="../fs.html#file-system-flags">support of file system <code>flags</code></a>.
+<strong>Default:</strong> <code>'r'</code>.</li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>Default:</strong> <code>0o666</code> (readable and writable)</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+</ul>
+</li>
+</ul><p>Asynchronous file open. See the POSIX <a href="http://man7.org/linux/man-pages/man2/open.2.html" rel="nofollow"><code>open(2)</code></a> documentation for more details.</p><p><code>mode</code> sets the file mode (permission and sticky bits), but only if the file was
+created. On Windows, only the write permission can be manipulated; see
+<a href="../fs.html#fschmodpath-mode-callback"><code>fs.chmod()</code></a>.</p><p>The callback gets two arguments <code>(err, fd)</code>.</p><p>Some characters (<code>&lt; &gt; : " / \ | ? *</code>) are reserved under Windows as documented
+by <a href="https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file" rel="nofollow">Naming Files, Paths, and Namespaces</a>. Under NTFS, if the filename contains
+a colon, Node.js will open a file system stream, as described by
+<a href="https://docs.microsoft.com/en-us/windows/desktop/FileIO/using-streams" rel="nofollow">this MSDN page</a>.</p><p>Functions based on <code>fs.open()</code> exhibit this behavior as well:
+<code>fs.writeFile()</code>, <code>fs.readFile()</code>, etc.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

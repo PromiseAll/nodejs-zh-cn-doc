@@ -1,0 +1,475 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>比较详情 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-assert">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>比较详情</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../assert.html#assert_comparison_details_1" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/assert/comparison_details_1.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/assert/comparison_details_1.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/assert/#comparison-details_1.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li>使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is" rel="nofollow"><code>Object.is()</code></a> 比较原始值。</li>
+<li>对象的<a href="https://tc39.github.io/ecma262/#sec-object.prototype.tostring" rel="nofollow">类型标签</a>应该是一样的。</li>
+<li>对象的 <a href="https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots" rel="nofollow"><code>[[Prototype]]</code></a> 使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality"><code>===</code> 运算符</a>进行比较。</li>
+<li>仅考虑<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties" rel="nofollow">自有属性</a>。</li>
+<li><a href="../errors.html#class-error"><code>Error</code></a> 名称和消息总是被比较，即使它们不是可枚举的属性。</li>
+<li>也比较了可枚举的自有 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" rel="nofollow"><code>Symbol</code></a> 属性。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive#Primitive_wrapper_objects_in_JavaScript" rel="nofollow">对象封装器</a>作为对象和未封装的值进行比较。</li>
+<li><code>Object</code> 属性是无序比较的。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" rel="nofollow"><code>Map</code></a> 键和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" rel="nofollow"><code>Set</code></a> 项是无序比较的。</li>
+<li>当双方不同或双方遇到循环引用时，则递归停止。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" rel="nofollow"><code>WeakMap</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" rel="nofollow"><code>WeakSet</code></a> 的比较不依赖于它们的值。
+有关更多详细信息，请参见下文。</li>
+</ul><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-comment">// 这失败了，因为 1 !== '1'。</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">// +   a: 1</span>
+<span class="hljs-comment">// -   a: '1'</span>
+<span class="hljs-comment">//   }</span>
+
+<span class="hljs-comment">// 以下对象没有自有的属性</span>
+<span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-keyword">const</span> object = {};
+<span class="hljs-keyword">const</span> fakeDate = {};
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(fakeDate, <span class="hljs-title class_">Date</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>);
+
+<span class="hljs-comment">// 不同的原型：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(object, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + {}</span>
+<span class="hljs-comment">// - Date {}</span>
+
+<span class="hljs-comment">// 不同的类型标签：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(date, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 2018-04-26T00:49:08.604Z</span>
+<span class="hljs-comment">// - Date {}</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK，因为 Object.is(NaN, NaN) 为 true。</span>
+
+<span class="hljs-comment">// 不同的解封装数字：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">2</span>));
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + [Number: 1]</span>
+<span class="hljs-comment">// - [Number: 2]</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">'foo'</span>), <span class="hljs-title class_">Object</span>(<span class="hljs-string">'foo'</span>));
+<span class="hljs-comment">// OK，因为对象和字符串在解封装时是相同的。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(-<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// 不同的零：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 0</span>
+<span class="hljs-comment">// - -0</span>
+
+<span class="hljs-keyword">const</span> symbol1 = <span class="hljs-title class_">Symbol</span>();
+<span class="hljs-keyword">const</span> symbol2 = <span class="hljs-title class_">Symbol</span>();
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol1]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// OK，因为它是两个对象上的相同符号。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol2]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Inputs identical but not reference equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   [Symbol()]: 1</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-keyword">const</span> weakMap1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+<span class="hljs-keyword">const</span> weakMap2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>([[{}, {}]]);
+<span class="hljs-keyword">const</span> weakMap3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+weakMap3.<span class="hljs-property">unequal</span> = <span class="hljs-literal">true</span>;
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap2);
+<span class="hljs-comment">// OK，因为无法比较条目</span>
+
+<span class="hljs-comment">// 失败，因为 weakMap3 有一个 weakMap1 不包含的属性：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap3);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   WeakMap {</span>
+<span class="hljs-comment">// +   [items unknown]</span>
+<span class="hljs-comment">// -   [items unknown],</span>
+<span class="hljs-comment">// -   unequal: true</span>
+<span class="hljs-comment">//   }</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-comment">// 这失败了，因为 1 !== '1'。</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">// +   a: 1</span>
+<span class="hljs-comment">// -   a: '1'</span>
+<span class="hljs-comment">//   }</span>
+
+<span class="hljs-comment">// 以下对象没有自有的属性</span>
+<span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-keyword">const</span> object = {};
+<span class="hljs-keyword">const</span> fakeDate = {};
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(fakeDate, <span class="hljs-title class_">Date</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>);
+
+<span class="hljs-comment">// 不同的原型：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(object, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + {}</span>
+<span class="hljs-comment">// - Date {}</span>
+
+<span class="hljs-comment">// 不同的类型标签：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(date, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 2018-04-26T00:49:08.604Z</span>
+<span class="hljs-comment">// - Date {}</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK，因为 Object.is(NaN, NaN) 为 true。</span>
+
+<span class="hljs-comment">// 不同的解封装数字：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">2</span>));
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + [Number: 1]</span>
+<span class="hljs-comment">// - [Number: 2]</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">'foo'</span>), <span class="hljs-title class_">Object</span>(<span class="hljs-string">'foo'</span>));
+<span class="hljs-comment">// OK，因为对象和字符串在解封装时是相同的。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(-<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// 不同的零：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 0</span>
+<span class="hljs-comment">// - -0</span>
+
+<span class="hljs-keyword">const</span> symbol1 = <span class="hljs-title class_">Symbol</span>();
+<span class="hljs-keyword">const</span> symbol2 = <span class="hljs-title class_">Symbol</span>();
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol1]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// OK，因为它是两个对象上的相同符号。</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol2]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Inputs identical but not reference equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   [Symbol()]: 1</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-keyword">const</span> weakMap1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+<span class="hljs-keyword">const</span> weakMap2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>([[{}, {}]]);
+<span class="hljs-keyword">const</span> weakMap3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+weakMap3.<span class="hljs-property">unequal</span> = <span class="hljs-literal">true</span>;
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap2);
+<span class="hljs-comment">// OK，因为无法比较条目</span>
+
+<span class="hljs-comment">// 失败，因为 weakMap3 有一个 weakMap1 不包含的属性：</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap3);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   WeakMap {</span>
+<span class="hljs-comment">// +   [items unknown]</span>
+<span class="hljs-comment">// -   [items unknown],</span>
+<span class="hljs-comment">// -   unequal: true</span>
+<span class="hljs-comment">//   }</span></code></pre><p>如果值不相等，则抛出 <a href="../assert.html#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="../errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。</p></div>
+          <div id="content_right"><ul>
+<li>Primitive values are compared using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is" rel="nofollow"><code>Object.is()</code></a>.</li>
+<li><a href="https://tc39.github.io/ecma262/#sec-object.prototype.tostring" rel="nofollow">Type tags</a> of objects should be the same.</li>
+<li><a href="https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots" rel="nofollow"><code>[[Prototype]]</code></a> of objects are compared using
+the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality"><code>===</code> operator</a>.</li>
+<li>Only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties" rel="nofollow">enumerable "own" properties</a> are considered.</li>
+<li><a href="../errors.html#class-error"><code>Error</code></a> names and messages are always compared, even if these are not
+enumerable properties.</li>
+<li>Enumerable own <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" rel="nofollow"><code>Symbol</code></a> properties are compared as well.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive#Primitive_wrapper_objects_in_JavaScript" rel="nofollow">Object wrappers</a> are compared both as objects and unwrapped values.</li>
+<li><code>Object</code> properties are compared unordered.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" rel="nofollow"><code>Map</code></a> keys and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" rel="nofollow"><code>Set</code></a> items are compared unordered.</li>
+<li>Recursion stops when both sides differ or both sides encounter a circular
+reference.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" rel="nofollow"><code>WeakMap</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" rel="nofollow"><code>WeakSet</code></a> comparison does not rely on their values. See
+below for further details.</li>
+</ul><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-comment">// This fails because 1 !== '1'.</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">// +   a: 1</span>
+<span class="hljs-comment">// -   a: '1'</span>
+<span class="hljs-comment">//   }</span>
+
+<span class="hljs-comment">// The following objects don't have own properties</span>
+<span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-keyword">const</span> object = {};
+<span class="hljs-keyword">const</span> fakeDate = {};
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(fakeDate, <span class="hljs-title class_">Date</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>);
+
+<span class="hljs-comment">// Different [[Prototype]]:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(object, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + {}</span>
+<span class="hljs-comment">// - Date {}</span>
+
+<span class="hljs-comment">// Different type tags:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(date, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 2018-04-26T00:49:08.604Z</span>
+<span class="hljs-comment">// - Date {}</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK because Object.is(NaN, NaN) is true.</span>
+
+<span class="hljs-comment">// Different unwrapped numbers:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">2</span>));
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + [Number: 1]</span>
+<span class="hljs-comment">// - [Number: 2]</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">'foo'</span>), <span class="hljs-title class_">Object</span>(<span class="hljs-string">'foo'</span>));
+<span class="hljs-comment">// OK because the object and the string are identical when unwrapped.</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(-<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// Different zeros:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 0</span>
+<span class="hljs-comment">// - -0</span>
+
+<span class="hljs-keyword">const</span> symbol1 = <span class="hljs-title class_">Symbol</span>();
+<span class="hljs-keyword">const</span> symbol2 = <span class="hljs-title class_">Symbol</span>();
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol1]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// OK, because it is the same symbol on both objects.</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol2]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Inputs identical but not reference equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   [Symbol()]: 1</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-keyword">const</span> weakMap1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+<span class="hljs-keyword">const</span> weakMap2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>([[{}, {}]]);
+<span class="hljs-keyword">const</span> weakMap3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+weakMap3.<span class="hljs-property">unequal</span> = <span class="hljs-literal">true</span>;
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap2);
+<span class="hljs-comment">// OK, because it is impossible to compare the entries</span>
+
+<span class="hljs-comment">// Fails because weakMap3 has a property that weakMap1 does not contain:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap3);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   WeakMap {</span>
+<span class="hljs-comment">// +   [items unknown]</span>
+<span class="hljs-comment">// -   [items unknown],</span>
+<span class="hljs-comment">// -   unequal: true</span>
+<span class="hljs-comment">//   }</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-comment">// This fails because 1 !== '1'.</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'1'</span> });
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   {</span>
+<span class="hljs-comment">// +   a: 1</span>
+<span class="hljs-comment">// -   a: '1'</span>
+<span class="hljs-comment">//   }</span>
+
+<span class="hljs-comment">// The following objects don't have own properties</span>
+<span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+<span class="hljs-keyword">const</span> object = {};
+<span class="hljs-keyword">const</span> fakeDate = {};
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(fakeDate, <span class="hljs-title class_">Date</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>);
+
+<span class="hljs-comment">// Different [[Prototype]]:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(object, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + {}</span>
+<span class="hljs-comment">// - Date {}</span>
+
+<span class="hljs-comment">// Different type tags:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(date, fakeDate);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 2018-04-26T00:49:08.604Z</span>
+<span class="hljs-comment">// - Date {}</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK because Object.is(NaN, NaN) is true.</span>
+
+<span class="hljs-comment">// Different unwrapped numbers:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">2</span>));
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + [Number: 1]</span>
+<span class="hljs-comment">// - [Number: 2]</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">'foo'</span>), <span class="hljs-title class_">Object</span>(<span class="hljs-string">'foo'</span>));
+<span class="hljs-comment">// OK because the object and the string are identical when unwrapped.</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(-<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// Different zeros:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(<span class="hljs-number">0</span>, -<span class="hljs-number">0</span>);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// + 0</span>
+<span class="hljs-comment">// - -0</span>
+
+<span class="hljs-keyword">const</span> symbol1 = <span class="hljs-title class_">Symbol</span>();
+<span class="hljs-keyword">const</span> symbol2 = <span class="hljs-title class_">Symbol</span>();
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol1]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// OK, because it is the same symbol on both objects.</span>
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>({ [symbol1]: <span class="hljs-number">1</span> }, { [symbol2]: <span class="hljs-number">1</span> });
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Inputs identical but not reference equal:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   [Symbol()]: 1</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-keyword">const</span> weakMap1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+<span class="hljs-keyword">const</span> weakMap2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>([[{}, {}]]);
+<span class="hljs-keyword">const</span> weakMap3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();
+weakMap3.<span class="hljs-property">unequal</span> = <span class="hljs-literal">true</span>;
+
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap2);
+<span class="hljs-comment">// OK, because it is impossible to compare the entries</span>
+
+<span class="hljs-comment">// Fails because weakMap3 has a property that weakMap1 does not contain:</span>
+assert.<span class="hljs-title function_">deepStrictEqual</span>(weakMap1, weakMap3);
+<span class="hljs-comment">// AssertionError: Expected inputs to be strictly deep-equal:</span>
+<span class="hljs-comment">// + actual - expected</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//   WeakMap {</span>
+<span class="hljs-comment">// +   [items unknown]</span>
+<span class="hljs-comment">// -   [items unknown],</span>
+<span class="hljs-comment">// -   unequal: true</span>
+<span class="hljs-comment">//   }</span></code></pre><p>If the values are not equal, an <a href="../assert.html#class-assertassertionerror"><code>AssertionError</code></a> is thrown with a <code>message</code>
+property set equal to the value of the <code>message</code> parameter. If the <code>message</code>
+parameter is undefined, a default error message is assigned. If the <code>message</code>
+parameter is an instance of an <a href="../errors.html#class-error"><code>Error</code></a> then it will be thrown instead of the
+<code>AssertionError</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

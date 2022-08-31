@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>outgoingMessage.write(chunk[, encoding][, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>outgoingMessage.write(chunk[, encoding][, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_outgoingmessage_write_chunk_encoding_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/outgoingmessage_write_chunk_encoding_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/outgoingmessage_write_chunk_encoding_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#outgoingmessagewritechunk-encoding-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v0.11.6</td>
+<td><p>添加 <code>callback</code> 参数。</p></td></tr>
+<tr><td>v0.1.29</td>
+<td><p><span>新增于: v0.1.29</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>chunk</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值</strong>: <code>utf8</code></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul><p>如果调用这个方法并且没有发送标头，则会调用 <code>this._implicitHeader</code> 来刷新隐式标头。
+如果消息不应该有正文（由 <code>this._hasBody</code> 指示），则忽略调用并且不会发送 <code>chunk</code>。
+在处理不能包含正文的特定消息时，它可能很有用。
+例如响应 <code>HEAD</code> 请求，<code>204</code> 和 <code>304</code> 响应。</p><p class=""><code>chunk</code> 可以是字符串或缓冲区。
+当 <code>chunk</code> 为字符串时，则 <code>encoding</code> 参数指定如何将 <code>chunk</code> 编码为字节流。
+<code>callback</code> 将在 <code>chunk</code> 被刷新时被调用。</p><p class="">如果消息以块编码（由 <code>this.chunkedEncoding</code> 表示）传输，则 <code>chunk</code> 将作为块流中的一个块被刷新。
+否则，它将作为消息正文刷新。</p><p class="">此方法处理 HTTP 消息的原始正文，与可能使用的更高级别的多部分正文编码无关。</p><p class="">如果是第一次调用消息的这个方法，则会先发送缓冲的标头，然后如上所述刷新 <code>chunk</code>。</p><p class="">对该方法的第二次和后续调用将假定数据将被流式传输并单独发送新数据。
+这意味着响应被缓冲到正文的第一个块。</p><p class="">如果整个数据被成功刷新到内核缓冲区，则返回 <code>true</code>。
+如果所有或部分数据在用户内存中排队，则返回 <code>false</code>。
+当缓冲区再次空闲时，将触发事件 <code>drain</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v0.11.6</td>
+<td><p>add <code>callback</code> argument.</p></td></tr>
+<tr><td>v0.1.29</td>
+<td><p><span>Added in: v0.1.29</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>chunk</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>Default</strong>: <code>utf8</code></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>Returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul><p>If this method is called and the header is not sent, it will call
+<code>this._implicitHeader</code> to flush implicit header.
+If the message should not have a body (indicated by <code>this._hasBody</code>),
+the call is ignored and <code>chunk</code> will not be sent. It could be useful
+when handling a particular message which must not include a body.
+e.g. response to <code>HEAD</code> request, <code>204</code> and <code>304</code> response.</p><p><code>chunk</code> can be a string or a buffer. When <code>chunk</code> is a string, the
+<code>encoding</code> parameter specifies how to encode <code>chunk</code> into a byte stream.
+<code>callback</code> will be called when the <code>chunk</code> is flushed.</p><p>If the message is transferred in chucked encoding
+(indicated by <code>this.chunkedEncoding</code>), <code>chunk</code> will be flushed as
+one chunk among a stream of chunks. Otherwise, it will be flushed as the
+body of message.</p><p>This method handles the raw body of the HTTP message and has nothing to do
+with higher-level multi-part body encodings that may be used.</p><p>If it is the first call to this method of a message, it will send the
+buffered header first, then flush the <code>chunk</code> as described above.</p><p>The second and successive calls to this method will assume the data
+will be streamed and send the new data separately. It means that the response
+is buffered up to the first chunk of the body.</p><p>Returns <code>true</code> if the entire data was flushed successfully to the kernel
+buffer. Returns <code>false</code> if all or part of the data was queued in the user
+memory. Event <code>drain</code> will be emitted when the buffer is free again.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

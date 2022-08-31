@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>示例：发送套接字对象 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>示例：发送套接字对象</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_example_sending_a_socket_object" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/example_sending_a_socket_object.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/example_sending_a_socket_object.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#example-sending-a-socket-object.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>同样，<code>sendHandler</code> 参数可用于将套接字的句柄传给子进程。
+下面的例子产生了两个子进程，每个子进程都处理具有“normal”或“special”优先级的连接：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { fork } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> normal = <span class="hljs-title function_">fork</span>(<span class="hljs-string">'subprocess.js'</span>, [<span class="hljs-string">'normal'</span>]);
+<span class="hljs-keyword">const</span> special = <span class="hljs-title function_">fork</span>(<span class="hljs-string">'subprocess.js'</span>, [<span class="hljs-string">'special'</span>]);
+
+<span class="hljs-comment">// 打开服务器并将套接字发送给子进程。</span>
+<span class="hljs-comment">// 使用 pauseOnConnect 防止套接字在发送到子进程之前被读取。</span>
+<span class="hljs-keyword">const</span> server = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>).<span class="hljs-title function_">createServer</span>({ <span class="hljs-attr">pauseOnConnect</span>: <span class="hljs-literal">true</span> });
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+
+  <span class="hljs-comment">// 如果这是 special 优先级...</span>
+  <span class="hljs-keyword">if</span> (socket.<span class="hljs-property">remoteAddress</span> === <span class="hljs-string">'74.125.127.100'</span>) {
+    special.<span class="hljs-title function_">send</span>(<span class="hljs-string">'socket'</span>, socket);
+    <span class="hljs-keyword">return</span>;
+  }
+  <span class="hljs-comment">// 这是 normal 优先级。</span>
+  normal.<span class="hljs-title function_">send</span>(<span class="hljs-string">'socket'</span>, socket);
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p class=""><code>subprocess.js</code> 将接收套接字句柄作为传给事件回调函数的第二个参数：</p><pre class=""><code class="language-js">process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">m, socket</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (m === <span class="hljs-string">'socket'</span>) {
+    <span class="hljs-keyword">if</span> (socket) {
+      <span class="hljs-comment">// 检查客户端套接字是否存在。</span>
+      <span class="hljs-comment">// 套接字可能会在发送和在子进程中接收到它之间关闭。</span>
+      socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">`Request handled with <span class="hljs-subst">${process.argv[<span class="hljs-number">2</span>]}</span> priority`</span>);
+    }
+  }
+});</code></pre><p class="">不要在已传给子进程的套接字上使用 <code>.maxConnections</code>。
+父进程无法跟踪套接字何时被销毁。</p><p class="">子进程中的任何 <code>'message'</code> 句柄都应验证 <code>socket</code> 是否存在，因为在将连接发送到子进程所需的时间内，连接可能已关闭。</p></div>
+          <div id="content_right"><p>Similarly, the <code>sendHandler</code> argument can be used to pass the handle of a
+socket to the child process. The example below spawns two children that each
+handle connections with "normal" or "special" priority:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { fork } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> normal = <span class="hljs-title function_">fork</span>(<span class="hljs-string">'subprocess.js'</span>, [<span class="hljs-string">'normal'</span>]);
+<span class="hljs-keyword">const</span> special = <span class="hljs-title function_">fork</span>(<span class="hljs-string">'subprocess.js'</span>, [<span class="hljs-string">'special'</span>]);
+
+<span class="hljs-comment">// Open up the server and send sockets to child. Use pauseOnConnect to prevent</span>
+<span class="hljs-comment">// the sockets from being read before they are sent to the child process.</span>
+<span class="hljs-keyword">const</span> server = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>).<span class="hljs-title function_">createServer</span>({ <span class="hljs-attr">pauseOnConnect</span>: <span class="hljs-literal">true</span> });
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+
+  <span class="hljs-comment">// If this is special priority...</span>
+  <span class="hljs-keyword">if</span> (socket.<span class="hljs-property">remoteAddress</span> === <span class="hljs-string">'74.125.127.100'</span>) {
+    special.<span class="hljs-title function_">send</span>(<span class="hljs-string">'socket'</span>, socket);
+    <span class="hljs-keyword">return</span>;
+  }
+  <span class="hljs-comment">// This is normal priority.</span>
+  normal.<span class="hljs-title function_">send</span>(<span class="hljs-string">'socket'</span>, socket);
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p>The <code>subprocess.js</code> would receive the socket handle as the second argument
+passed to the event callback function:</p><pre><code class="language-js">process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">m, socket</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (m === <span class="hljs-string">'socket'</span>) {
+    <span class="hljs-keyword">if</span> (socket) {
+      <span class="hljs-comment">// Check that the client socket exists.</span>
+      <span class="hljs-comment">// It is possible for the socket to be closed between the time it is</span>
+      <span class="hljs-comment">// sent and the time it is received in the child process.</span>
+      socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">`Request handled with <span class="hljs-subst">${process.argv[<span class="hljs-number">2</span>]}</span> priority`</span>);
+    }
+  }
+});</code></pre><p>Do not use <code>.maxConnections</code> on a socket that has been passed to a subprocess.
+The parent cannot track when the socket is destroyed.</p><p>Any <code>'message'</code> handlers in the subprocess should verify that <code>socket</code> exists,
+as the connection may have been closed during the time it takes to send the
+connection to the child.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

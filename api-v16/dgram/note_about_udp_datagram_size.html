@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>关于 UDP 数据报大小的说明 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dgram">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>关于 UDP 数据报大小的说明</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dgram.html#dgram_note_about_udp_datagram_size" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dgram/note_about_udp_datagram_size.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dgram/note_about_udp_datagram_size.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dgram/#note-about-udp-datagram-size.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>IPv4/v6 数据报的最大大小取决于 <code>MTU</code>（最大传输单元）和 <code>Payload Length</code> 字段大小。</p><ul class="">
+<li>
+<p><code>Payload Length</code> 字段是 16 位宽，这意味着正常的有效载荷不能超过 64K 八位字节，包括互联网标头和数据（65,507 字节 = 65,535 − 8 字节 UDP 标头 − 20 字节 IP 标头）；这对于环回接口通常是正确的，但是如此长的数据报消息对于大多数主机和网络来说是不切实际的。</p>
+</li>
+<li>
+<p><code>MTU</code> 是给定链路层技术可以支持数据报消息的最大尺寸。
+对于任何链接，IPv4 要求至少 <code>MTU</code> 为 68 个八位字节，而建议 IPv4 的 <code>MTU</code> 为 576（通常建议为拨号类型应用程序的 <code>MTU</code>），无论它们是完整的还是分段的。</p>
+<p>对于 IPv6，最小 <code>MTU</code> 是 1280 个八位字节。
+但是，强制的最小片段重组缓冲区大小是 1500 个八位字节。
+68 个八位字节的值非常小，因为大多数当前的链路层技术，如以太网，最小 <code>MTU</code> 为 1500。</p>
+</li>
+</ul><p class="">不可能事先知道数据包可能通过的每个链路的 MTU。
+发送大于接收方 <code>MTU</code> 的数据报将不起作用，因为数据包将被悄悄丢弃，而不会通知源数据未到达其预期接收方。</p></div>
+          <div id="content_right"><p>The maximum size of an IPv4/v6 datagram depends on the <code>MTU</code>
+(Maximum Transmission Unit) and on the <code>Payload Length</code> field size.</p><ul>
+<li>
+<p>The <code>Payload Length</code> field is 16 bits wide, which means that a normal
+payload cannot exceed 64K octets including the internet header and data
+(65,507 bytes = 65,535 − 8 bytes UDP header − 20 bytes IP header);
+this is generally true for loopback interfaces, but such long datagram
+messages are impractical for most hosts and networks.</p>
+</li>
+<li>
+<p>The <code>MTU</code> is the largest size a given link layer technology can support for
+datagram messages. For any link, IPv4 mandates a minimum <code>MTU</code> of 68
+octets, while the recommended <code>MTU</code> for IPv4 is 576 (typically recommended
+as the <code>MTU</code> for dial-up type applications), whether they arrive whole or in
+fragments.</p>
+<p>For IPv6, the minimum <code>MTU</code> is 1280 octets. However, the mandatory minimum
+fragment reassembly buffer size is 1500 octets. The value of 68 octets is
+very small, since most current link layer technologies, like Ethernet, have a
+minimum <code>MTU</code> of 1500.</p>
+</li>
+</ul><p>It is impossible to know in advance the MTU of each link through which
+a packet might travel. Sending a datagram greater than the receiver <code>MTU</code> will
+not work because the packet will get silently dropped without informing the
+source that the data did not reach its intended recipient.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>配置 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-report">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>配置</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../report.html#report_configuration" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/report/configuration.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/report/configuration.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/report/#configuration.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>报告生成的其他运行时配置可通过 <code>process.report</code> 的以下属性获得：</p><p class="">当为 <code>true</code> 时，<code>reportOnFatalError</code> 触发致命错误的诊断报告。
+默认为 <code>false</code>。</p><p class="">当为 <code>true</code> 时，<code>reportOnSignal</code> 触发信号的诊断报告。
+Windows 不支持此。
+默认为 <code>false</code>。</p><p class="">当为 <code>true</code> 时，<code>reportOnUncaughtException</code> 触发未捕获异常的诊断报告。
+默认为 <code>false</code>。</p><p class=""><code>signal</code> 指定将用于拦截外部触发器以生成报告的 POSIX 信号标识符
+默认为 <code>'SIGUSR2'</code>。</p><p class=""><code>filename</code> 指定文件系统中输出文件的名称。
+<code>stdout</code> 和 <code>stderr</code> 附有特殊含义。
+使用这些将导致报告被写入相关的标准流。
+在使用标准流的情况下，<code>directory</code> 中的值将被忽略。
+不支持网址。
+默认为包含时间戳、进程标识、以及序列号的复合文件名。</p><p class=""><code>directory</code> 指定将写入报告的文件系统目录。
+不支持网址。
+默认为 Node.js 进程的当前工作目录。</p><pre class=""><code class="language-js"><span class="hljs-comment">// 仅触发未捕获异常上的报告。</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// 触发内部错误和外部信号的报告。</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">false</span>;
+
+<span class="hljs-comment">// 将默认信号更改为 'SIGQUIT' 并启用。</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">signal</span> = <span class="hljs-string">'SIGQUIT'</span>;</code></pre><p class="">模块初始化的配置也可以通过环境变量获得：</p><pre class=""><code class="language-bash">NODE_OPTIONS=<span class="hljs-string">"--report-uncaught-exception \
+  --report-on-fatalerror --report-on-signal \
+  --report-signal=SIGUSR2  --report-filename=./report.json \
+  --report-directory=/home/nodeuser"</span></code></pre><p class="">具体的 API 文档可以在 <a href="../process.html"><code>process API documentation</code></a> 章节下找到。</p></div>
+          <div id="content_right"><p>Additional runtime configuration of report generation is available via
+the following properties of <code>process.report</code>:</p><p><code>reportOnFatalError</code> triggers diagnostic reporting on fatal errors when <code>true</code>.
+Defaults to <code>false</code>.</p><p><code>reportOnSignal</code> triggers diagnostic reporting on signal when <code>true</code>. This is
+not supported on Windows. Defaults to <code>false</code>.</p><p><code>reportOnUncaughtException</code> triggers diagnostic reporting on uncaught exception
+when <code>true</code>. Defaults to <code>false</code>.</p><p><code>signal</code> specifies the POSIX signal identifier that will be used
+to intercept external triggers for report generation. Defaults to
+<code>'SIGUSR2'</code>.</p><p><code>filename</code> specifies the name of the output file in the file system.
+Special meaning is attached to <code>stdout</code> and <code>stderr</code>. Usage of these
+will result in report being written to the associated standard streams.
+In cases where standard streams are used, the value in <code>directory</code> is ignored.
+URLs are not supported. Defaults to a composite filename that contains
+timestamp, PID and sequence number.</p><p><code>directory</code> specifies the filesystem directory where the report will be written.
+URLs are not supported. Defaults to the current working directory of the
+Node.js process.</p><pre><code class="language-js"><span class="hljs-comment">// Trigger report only on uncaught exceptions.</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Trigger report for both internal errors as well as external signal.</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">false</span>;
+
+<span class="hljs-comment">// Change the default signal to 'SIGQUIT' and enable it.</span>
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnFatalError</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnUncaughtException</span> = <span class="hljs-literal">false</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">reportOnSignal</span> = <span class="hljs-literal">true</span>;
+process.<span class="hljs-property">report</span>.<span class="hljs-property">signal</span> = <span class="hljs-string">'SIGQUIT'</span>;</code></pre><p>Configuration on module initialization is also available via
+environment variables:</p><pre><code class="language-bash">NODE_OPTIONS=<span class="hljs-string">"--report-uncaught-exception \
+  --report-on-fatalerror --report-on-signal \
+  --report-signal=SIGUSR2  --report-filename=./report.json \
+  --report-directory=/home/nodeuser"</span></code></pre><p>Specific API documentation can be found under
+<a href="../process.html"><code>process API documentation</code></a> section.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

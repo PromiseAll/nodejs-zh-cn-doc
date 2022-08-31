@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>作用域 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-policy">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>作用域</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../policy.html#policy_scopes" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/policy/scopes.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/policy/scopes.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/policy/#scopes.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>使用清单的 <code>"scopes"</code> 字段一次设置多个资源的配置。
+<code>"scopes"</code> 字段的工作原理是按片段匹配资源。
+如果范围或资源包含 <code>"cascade": true</code>，则将在其包含范围内搜索未知说明符。
+通过删除<a href="https://url.spec.whatwg.org/#special-scheme" rel="nofollow">特殊方案</a>的片段、保留尾随 <code>"/"</code> 后缀、以及删除查询和哈希片段来递归地减少资源 URL，可以找到级联的包含范围。
+这导致 URL 最终减少到其来源。
+如果 URL 是非特殊的，则范围将由 URL 的来源定位。
+如果没有找到源的范围或在不透明源的情况下，可以使用协议字符串作为范围。
+如果没有找到 URL 协议的范围，将使用最终的空字符串 <code>""</code> 范围。</p><p class="">注意，<code>blob:</code> URL 采用它们包含的路径的来源，因此 <code>"blob:https://nodejs.org"</code> 的范围将无效，因为没有 URL 可以具有 <code>blob:https://nodejs.org</code> 的来源；以 <code>blob:https://nodejs.org/</code> 开头的 URL 将使用 <code>https://nodejs.org</code> 作为其来源，因此 <code>https:</code> 作为其协议范围。
+对于不透明的来源 <code>blob:</code> URL，它们的协议范围将具有 <code>blob:</code>，因为它们不采用来源。</p></div>
+          <div id="content_right"><p>Use the <code>"scopes"</code> field of a manifest to set configuration for many resources
+at once. The <code>"scopes"</code> field works by matching resources by their segments.
+If a scope or resource includes <code>"cascade": true</code>, unknown specifiers will
+be searched for in their containing scope. The containing scope for cascading
+is found by recursively reducing the resource URL by removing segments for
+<a href="https://url.spec.whatwg.org/#special-scheme" rel="nofollow">special schemes</a>, keeping trailing <code>"/"</code> suffixes, and removing the query and
+hash fragment. This leads to the eventual reduction of the URL to its origin.
+If the URL is non-special the scope will be located by the URL's origin. If no
+scope is found for the origin or in the case of opaque origins, a protocol
+string can be used as a scope. If no scope is found for the URL's protocol, a
+final empty string <code>""</code> scope will be used.</p><p>Note, <code>blob:</code> URLs adopt their origin from the path they contain, and so a scope
+of <code>"blob:https://nodejs.org"</code> will have no effect since no URL can have an
+origin of <code>blob:https://nodejs.org</code>; URLs starting with
+<code>blob:https://nodejs.org/</code> will use <code>https://nodejs.org</code> for its origin and
+thus <code>https:</code> for its protocol scope. For opaque origin <code>blob:</code> URLs they will
+have <code>blob:</code> for their protocol scope since they do not adopt origins.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

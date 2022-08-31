@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>DiffieHellmanGroup 类 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>DiffieHellmanGroup 类</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_class_diffiehellmangroup" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/class_diffiehellmangroup.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/crypto/class_diffiehellmangroup.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#class-diffiehellmangroup.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.7.5</span>
+</div><p><code>DiffieHellmanGroup</code> 类以著名的 modp 组为参数。
+它的工作原理与 <code>DiffieHellman</code> 相同，不同之处在于它不允许在创建后更改其密钥。
+换句话说，它没有实现 <code>setPublicKey()</code> 或 <code>setPrivateKey()</code> 方法。</p><pre class="with-60-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">const</span> { createDiffieHellmanGroup } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> dh = <span class="hljs-title function_">createDiffieHellmanGroup</span>(<span class="hljs-string">'modp1'</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createDiffieHellmanGroup } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> dh = <span class="hljs-title function_">createDiffieHellmanGroup</span>(<span class="hljs-string">'modp1'</span>);</code></pre><p class="">名称（例如 <code>'modp1'</code>）取自 <a href="https://www.rfc-editor.org/rfc/rfc2412.txt" rel="nofollow">RFC 2412</a>（modp1 和 2）和 <a href="https://www.rfc-editor.org/rfc/rfc3526.txt" rel="nofollow">RFC 3526</a>：</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">perl -ne <span class="hljs-string">'print "$1\n" if /"(modp\d+)"/'</span> src/node_crypto_groups.h</span>
+modp1  #  768 位
+modp2  # 1024 位
+modp5  # 1536 位
+modp14 # 2048 位
+modp15 # 等等。
+modp16
+modp17
+modp18</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.7.5</span>
+</div><p>The <code>DiffieHellmanGroup</code> class takes a well-known modp group as its argument.
+It works the same as <code>DiffieHellman</code>, except that it does not allow changing
+its keys after creation. In other words, it does not implement <code>setPublicKey()</code>
+or <code>setPrivateKey()</code> methods.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">const</span> { createDiffieHellmanGroup } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> dh = <span class="hljs-title function_">createDiffieHellmanGroup</span>(<span class="hljs-string">'modp1'</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createDiffieHellmanGroup } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> dh = <span class="hljs-title function_">createDiffieHellmanGroup</span>(<span class="hljs-string">'modp1'</span>);</code></pre><p>The name (e.g. <code>'modp1'</code>) is taken from <a href="https://www.rfc-editor.org/rfc/rfc2412.txt" rel="nofollow">RFC 2412</a> (modp1 and 2) and
+<a href="https://www.rfc-editor.org/rfc/rfc3526.txt" rel="nofollow">RFC 3526</a>:</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">perl -ne <span class="hljs-string">'print "$1\n" if /"(modp\d+)"/'</span> src/node_crypto_groups.h</span>
+modp1  #  768 bits
+modp2  # 1024 bits
+modp5  # 1536 bits
+modp14 # 2048 bits
+modp15 # etc.
+modp16
+modp17
+modp18</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

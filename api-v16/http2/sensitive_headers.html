@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>敏感的标头 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>敏感的标头</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_sensitive_headers" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/sensitive_headers.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/sensitive_headers.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#sensitive-headers.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>HTTP2 标头可以标记为敏感，这意味着 HTTP/2 标头压缩算法永远不会索引它们。
+这对于低熵的标头值是有意义的，并且可能被认为对攻击者有价值，例如 <code>Cookie</code> 或 <code>Authorization</code>。
+要实现这一点，请将标头名称作为数组添加到 <code>[http2.sensitiveHeaders]</code> 属性中：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> headers = {
+  <span class="hljs-string">':status'</span>: <span class="hljs-string">'200'</span>,
+  <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'text-plain'</span>,
+  <span class="hljs-string">'cookie'</span>: <span class="hljs-string">'some-cookie'</span>,
+  <span class="hljs-string">'other-sensitive-header'</span>: <span class="hljs-string">'very secret data'</span>,
+  [http2.<span class="hljs-property">sensitiveHeaders</span>]: [<span class="hljs-string">'cookie'</span>, <span class="hljs-string">'other-sensitive-header'</span>]
+};
+
+stream.<span class="hljs-title function_">respond</span>(headers);</code></pre><p class="">对于某些标头，例如 <code>Authorization</code> 和短 <code>Cookie</code> 标题，此标志会自动设置。</p><p class="">此属性也为接收到的标头设置。
+它将包含所有标记为敏感的标头的名称，包括自动标记为敏感的标头。</p></div>
+          <div id="content_right"><p>HTTP2 headers can be marked as sensitive, which means that the HTTP/2
+header compression algorithm will never index them. This can make sense for
+header values with low entropy and that may be considered valuable to an
+attacker, for example <code>Cookie</code> or <code>Authorization</code>. To achieve this, add
+the header name to the <code>[http2.sensitiveHeaders]</code> property as an array:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> headers = {
+  <span class="hljs-string">':status'</span>: <span class="hljs-string">'200'</span>,
+  <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'text-plain'</span>,
+  <span class="hljs-string">'cookie'</span>: <span class="hljs-string">'some-cookie'</span>,
+  <span class="hljs-string">'other-sensitive-header'</span>: <span class="hljs-string">'very secret data'</span>,
+  [http2.<span class="hljs-property">sensitiveHeaders</span>]: [<span class="hljs-string">'cookie'</span>, <span class="hljs-string">'other-sensitive-header'</span>]
+};
+
+stream.<span class="hljs-title function_">respond</span>(headers);</code></pre><p>For some headers, such as <code>Authorization</code> and short <code>Cookie</code> headers,
+this flag is set automatically.</p><p>This property is also set for received headers. It will contain the names of
+all headers marked as sensitive, including ones marked that way automatically.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>child_process.execSync(command[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>child_process.execSync(command[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_child_process_execsync_command_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/child_process_execsync_command_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/child_process_execsync_command_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#child_processexecsynccommand-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.4.0</td>
+<td><p>选项 <code>cwd</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p>选项 <code>input</code> 现在可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.8.0</td>
+<td><p>现在支持 <code>windowsHide</code> 选项。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>选项 <code>input</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>command</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要运行的命令。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 子进程的当前工作目录。</li>
+<li><code>input</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> 将作为标准输入传给衍生进程的值。
+提供此值将覆盖 <code>stdio[0]</code>。</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> 子进程的标准输入输出配置。
+除非指定 <code>stdio</code>，否则默认情况下 <code>stderr</code> 将输出到父进程的标准错误。
+<strong>默认值:</strong> <code>'pipe'</code>。</li>
+<li><code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 环境变量键值对。 <strong>默认值:</strong> <code>process.env</code>。</li>
+<li><code>shell</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 用于执行命令的 shell。
+请参阅 <a href="../child_process.html#shell-requirements">shell 的要求</a>和<a href="../child_process.html#default-windows-shell">默认的 Windows shell</a>。 <strong>默认值:</strong>
+Unix 上是 <code>'/bin/sh'</code>，Windows 上是 <code>process.env.ComSpec</code>。</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的用户标识。
+（参见 <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>）。</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的群组标识。
+（参见 <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>）。</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 允许进程运行的最长时间（以毫秒为单位）。 <strong>默认值:</strong> <code>undefined</code>。</li>
+<li><code>killSignal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 衍生的进程将被终止时要使用的信号值。 <strong>默认值:</strong> <code>'SIGTERM'</code>。</li>
+<li><code>maxBuffer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 标准输出或标准错误上允许的最大数据量（以字节为单位）。
+如果超过，则子进程将终止并截断任何输出。
+请参阅 <a href="../child_process.html#maxbuffer-and-unicode">maxBuffer 和 Unicode</a> 的注意事项。
+<strong>默认值:</strong> <code>1024 * 1024</code>。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 用于所有标准输入输出的输入和输出的编码。
+<strong>默认值:</strong> <code>'buffer'</code>。</li>
+<li><code>windowsHide</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 隐藏通常在 Windows 系统上创建的子进程控制台窗口。 <strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+</li>
+<li>返回: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 命令的标准输出。</li>
+</ul><p><code>child_process.execSync()</code> 方法通常与 <a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> 相同，不同之处在于该方法在子进程完全关闭之前不会返回。
+当遇到超时并发送 <code>killSignal</code> 时，该方法在进程完全退出之前不会返回。
+如果子进程拦截并处理了 <code>SIGTERM</code> 信号且没有退出，则父进程会一直等到子进程退出。</p><p class="">如果进程超时或具有非零退出码，则此方法将抛出错误。
+<a href="../errors.html#class-error"><code>Error</code></a> 对象将包含 <a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a> 的整个结果。</p><p class=""><strong>切勿将未经处理的用户输入传给此函数。
+任何包含 shell 元字符的输入都可用于触发任意命令执行。</strong></p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.4.0</td>
+<td><p>The <code>cwd</code> option can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p>The <code>input</code> option can now be any <code>TypedArray</code> or a <code>DataView</code>.</p></td></tr>
+<tr><td>v8.8.0</td>
+<td><p>The <code>windowsHide</code> option is supported now.</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>The <code>input</code> option can now be a <code>Uint8Array</code>.</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>Added in: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>command</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The command to run.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> Current working directory of the child process.</li>
+<li><code>input</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> The value which will be passed
+as stdin to the spawned process. Supplying this value will override
+<code>stdio[0]</code>.</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> Child's stdio configuration. <code>stderr</code> by default will
+be output to the parent process' stderr unless <code>stdio</code> is specified.
+<strong>Default:</strong> <code>'pipe'</code>.</li>
+<li><code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Environment key-value pairs. <strong>Default:</strong> <code>process.env</code>.</li>
+<li><code>shell</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Shell to execute the command with. See
+<a href="../child_process.html#shell-requirements">Shell requirements</a> and <a href="../child_process.html#default-windows-shell">Default Windows shell</a>. <strong>Default:</strong>
+<code>'/bin/sh'</code> on Unix, <code>process.env.ComSpec</code> on Windows.</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the user identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>).</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the group identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>).</li>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> In milliseconds the maximum amount of time the process
+is allowed to run. <strong>Default:</strong> <code>undefined</code>.</li>
+<li><code>killSignal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The signal value to be used when the spawned
+process will be killed. <strong>Default:</strong> <code>'SIGTERM'</code>.</li>
+<li><code>maxBuffer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Largest amount of data in bytes allowed on stdout or
+stderr. If exceeded, the child process is terminated and any output is
+truncated. See caveat at <a href="../child_process.html#maxbuffer-and-unicode"><code>maxBuffer</code> and Unicode</a>.
+<strong>Default:</strong> <code>1024 * 1024</code>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The encoding used for all stdio inputs and outputs.
+<strong>Default:</strong> <code>'buffer'</code>.</li>
+<li><code>windowsHide</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Hide the subprocess console window that would
+normally be created on Windows systems. <strong>Default:</strong> <code>false</code>.</li>
+</ul>
+</li>
+<li>Returns: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The stdout from the command.</li>
+</ul><p>The <code>child_process.execSync()</code> method is generally identical to
+<a href="../child_process.html#child_processexeccommand-options-callback"><code>child_process.exec()</code></a> with the exception that the method will not return
+until the child process has fully closed. When a timeout has been encountered
+and <code>killSignal</code> is sent, the method won't return until the process has
+completely exited. If the child process intercepts and handles the <code>SIGTERM</code>
+signal and doesn't exit, the parent process will wait until the child process
+has exited.</p><p>If the process times out or has a non-zero exit code, this method will throw.
+The <a href="../errors.html#class-error"><code>Error</code></a> object will contain the entire result from
+<a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a>.</p><p><strong>Never pass unsanitized user input to this function. Any input containing shell
+metacharacters may be used to trigger arbitrary command execution.</strong></p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

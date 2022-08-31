@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Node-API | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-addons">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Node-API</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../addons.html#addons_node_api" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/addons/node_api.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/addons/node_api.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/addons/#node-api.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p><p>Node-API 是用于构建原生插件的 API。
+它独立于底层 JavaScript 运行时（例如 V8），并作为 Node.js 自身的一部分进行维护。
+此 API 将在 Node.js 的各个版本中保持稳定的应用程序二进制接口 (ABI)。
+它旨在将插件与底层 JavaScript 引擎中的更改隔离开来，并允许为一个版本编译的模块无需重新编译即可在更高版本的 Node.js 上运行。
+插件是使用本文档中概述的相同方法/工具（node-gyp 等）构建/打包的。唯一的区别是原生代码使用的 API 集。
+使用 Node-API 中可用的函数，而不是使用 V8 或 <a href="https://github.com/nodejs/nan" rel="nofollow">Node.js 原生抽象</a>的 API。</p><p class="">创建和维护受益于 Node-API 提供的 ABI 稳定性的插件会带来某些<a href="../n-api.html#implications-of-abi-stability">实现的注意事项</a>。</p><p class="">要在上面的 "Hello world" 示例中使用 Node-API，则将 <code>hello.cc</code> 的内容替换为以下内容。
+所有其他指令保持不变。</p><pre class=""><code class="language-cpp"><span class="hljs-comment">// 使用 Node-API 的 hello.cc</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node_api.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-function">napi_value <span class="hljs-title">Method</span><span class="hljs-params">(napi_env env, napi_callback_info args)</span> </span>{
+  napi_value greeting;
+  napi_status status;
+
+  status = <span class="hljs-built_in">napi_create_string_utf8</span>(env, <span class="hljs-string">"world"</span>, NAPI_AUTO_LENGTH, &amp;greeting);
+  <span class="hljs-keyword">if</span> (status != napi_ok) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+  <span class="hljs-keyword">return</span> greeting;
+}
+
+<span class="hljs-function">napi_value <span class="hljs-title">init</span><span class="hljs-params">(napi_env env, napi_value exports)</span> </span>{
+  napi_status status;
+  napi_value fn;
+
+  status = <span class="hljs-built_in">napi_create_function</span>(env, <span class="hljs-literal">nullptr</span>, <span class="hljs-number">0</span>, Method, <span class="hljs-literal">nullptr</span>, &amp;fn);
+  <span class="hljs-keyword">if</span> (status != napi_ok) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+  status = <span class="hljs-built_in">napi_set_named_property</span>(env, exports, <span class="hljs-string">"hello"</span>, fn);
+  <span class="hljs-keyword">if</span> (status != napi_ok) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+  <span class="hljs-keyword">return</span> exports;
+}
+
+<span class="hljs-built_in">NAPI_MODULE</span>(NODE_GYP_MODULE_NAME, init)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p class="">可用的函数以及如何使用它们记录在<a href="../n-api.html">使用 Node-API 的 C/C++ 插件</a>中。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">Stability: 2</a> - Stable</div><p></p><p>Node-API is an API for building native addons. It is independent from
+the underlying JavaScript runtime (e.g. V8) and is maintained as part of
+Node.js itself. This API will be Application Binary Interface (ABI) stable
+across versions of Node.js. It is intended to insulate addons from
+changes in the underlying JavaScript engine and allow modules
+compiled for one version to run on later versions of Node.js without
+recompilation. Addons are built/packaged with the same approach/tools
+outlined in this document (node-gyp, etc.). The only difference is the
+set of APIs that are used by the native code. Instead of using the V8
+or <a href="https://github.com/nodejs/nan" rel="nofollow">Native Abstractions for Node.js</a> APIs, the functions available
+in the Node-API are used.</p><p>Creating and maintaining an addon that benefits from the ABI stability
+provided by Node-API carries with it certain
+<a href="../n-api.html#implications-of-abi-stability">implementation considerations</a>.</p><p>To use Node-API in the above "Hello world" example, replace the content of
+<code>hello.cc</code> with the following. All other instructions remain the same.</p><pre><code class="language-cpp"><span class="hljs-comment">// hello.cc using Node-API</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;node_api.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> demo {
+
+<span class="hljs-function">napi_value <span class="hljs-title">Method</span><span class="hljs-params">(napi_env env, napi_callback_info args)</span> </span>{
+  napi_value greeting;
+  napi_status status;
+
+  status = <span class="hljs-built_in">napi_create_string_utf8</span>(env, <span class="hljs-string">"world"</span>, NAPI_AUTO_LENGTH, &amp;greeting);
+  <span class="hljs-keyword">if</span> (status != napi_ok) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+  <span class="hljs-keyword">return</span> greeting;
+}
+
+<span class="hljs-function">napi_value <span class="hljs-title">init</span><span class="hljs-params">(napi_env env, napi_value exports)</span> </span>{
+  napi_status status;
+  napi_value fn;
+
+  status = <span class="hljs-built_in">napi_create_function</span>(env, <span class="hljs-literal">nullptr</span>, <span class="hljs-number">0</span>, Method, <span class="hljs-literal">nullptr</span>, &amp;fn);
+  <span class="hljs-keyword">if</span> (status != napi_ok) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+  status = <span class="hljs-built_in">napi_set_named_property</span>(env, exports, <span class="hljs-string">"hello"</span>, fn);
+  <span class="hljs-keyword">if</span> (status != napi_ok) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+  <span class="hljs-keyword">return</span> exports;
+}
+
+<span class="hljs-built_in">NAPI_MODULE</span>(NODE_GYP_MODULE_NAME, init)
+
+}  <span class="hljs-comment">// namespace demo</span></code></pre><p>The functions available and how to use them are documented in
+<a href="../n-api.html">C/C++ addons with Node-API</a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

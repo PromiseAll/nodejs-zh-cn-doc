@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>path.format(pathObject) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-path">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>path.format(pathObject)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../path.html#path_path_format_pathobject" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/path/path_format_pathobject.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/path/path_format_pathobject.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/path/#pathformatpathobject.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.11.15</span>
+</div><ul class="">
+<li><code>pathObject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 任何具有以下属性的 JavaScript 对象：
+<ul>
+<li><code>dir</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>root</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>base</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>ext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p><code>path.format()</code> 方法从对象返回路径字符串。
+这与 <a href="../path.html#pathparsepath"><code>path.parse()</code></a> 相反。</p><p class="">当向 <code>pathObject</code> 提供属性时，存在一个属性优先于另一个属性的组合：</p><ul class="">
+<li>如果提供 <code>pathObject.dir</code>，则忽略 <code>pathObject.root</code></li>
+<li>如果 <code>pathObject.base</code> 存在，则忽略 <code>pathObject.ext</code> 和 <code>pathObject.name</code></li>
+</ul><p class="">例如，在 POSIX 上：</p><pre class=""><code class="language-js"><span class="hljs-comment">// 如果提供 `dir`、`root` 和 `base`，</span>
+<span class="hljs-comment">// 则将返回 `${dir}${path.sep}${base}`。</span>
+<span class="hljs-comment">// `root` 将被忽略。</span>
+path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">root</span>: <span class="hljs-string">'/ignored'</span>,
+  <span class="hljs-attr">dir</span>: <span class="hljs-string">'/home/user/dir'</span>,
+  <span class="hljs-attr">base</span>: <span class="hljs-string">'file.txt'</span>
+});
+<span class="hljs-comment">// 返回: '/home/user/dir/file.txt'</span>
+
+<span class="hljs-comment">// 如果未指定 `dir`，则将使用 `root`。</span>
+<span class="hljs-comment">// 如果仅提供 `root` 或 `dir` 等于 `root`，则将不包括平台分隔符。</span>
+<span class="hljs-comment">// `ext` 将被忽略。</span>
+path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">root</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">base</span>: <span class="hljs-string">'file.txt'</span>,
+  <span class="hljs-attr">ext</span>: <span class="hljs-string">'ignored'</span>
+});
+<span class="hljs-comment">// 返回: '/file.txt'</span>
+
+<span class="hljs-comment">// 如果未指定 `base`，则将使用 `name` + `ext`。</span>
+path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">root</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'file'</span>,
+  <span class="hljs-attr">ext</span>: <span class="hljs-string">'.txt'</span>
+});
+<span class="hljs-comment">// 返回: '/file.txt'</span></code></pre><p class="">在 Windows 上：</p><pre class=""><code class="language-js">path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">dir</span>: <span class="hljs-string">'C:\\path\\dir'</span>,
+  <span class="hljs-attr">base</span>: <span class="hljs-string">'file.txt'</span>
+});
+<span class="hljs-comment">// 返回: 'C:\\path\\dir\\file.txt'</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.11.15</span>
+</div><ul>
+<li><code>pathObject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Any JavaScript object having the following properties:
+<ul>
+<li><code>dir</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>root</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>base</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>ext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>The <code>path.format()</code> method returns a path string from an object. This is the
+opposite of <a href="../path.html#pathparsepath"><code>path.parse()</code></a>.</p><p>When providing properties to the <code>pathObject</code> remember that there are
+combinations where one property has priority over another:</p><ul>
+<li><code>pathObject.root</code> is ignored if <code>pathObject.dir</code> is provided</li>
+<li><code>pathObject.ext</code> and <code>pathObject.name</code> are ignored if <code>pathObject.base</code> exists</li>
+</ul><p>For example, on POSIX:</p><pre><code class="language-js"><span class="hljs-comment">// If `dir`, `root` and `base` are provided,</span>
+<span class="hljs-comment">// `${dir}${path.sep}${base}`</span>
+<span class="hljs-comment">// will be returned. `root` is ignored.</span>
+path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">root</span>: <span class="hljs-string">'/ignored'</span>,
+  <span class="hljs-attr">dir</span>: <span class="hljs-string">'/home/user/dir'</span>,
+  <span class="hljs-attr">base</span>: <span class="hljs-string">'file.txt'</span>
+});
+<span class="hljs-comment">// Returns: '/home/user/dir/file.txt'</span>
+
+<span class="hljs-comment">// `root` will be used if `dir` is not specified.</span>
+<span class="hljs-comment">// If only `root` is provided or `dir` is equal to `root` then the</span>
+<span class="hljs-comment">// platform separator will not be included. `ext` will be ignored.</span>
+path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">root</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">base</span>: <span class="hljs-string">'file.txt'</span>,
+  <span class="hljs-attr">ext</span>: <span class="hljs-string">'ignored'</span>
+});
+<span class="hljs-comment">// Returns: '/file.txt'</span>
+
+<span class="hljs-comment">// `name` + `ext` will be used if `base` is not specified.</span>
+path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">root</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'file'</span>,
+  <span class="hljs-attr">ext</span>: <span class="hljs-string">'.txt'</span>
+});
+<span class="hljs-comment">// Returns: '/file.txt'</span></code></pre><p>On Windows:</p><pre><code class="language-js">path.<span class="hljs-title function_">format</span>({
+  <span class="hljs-attr">dir</span>: <span class="hljs-string">'C:\\path\\dir'</span>,
+  <span class="hljs-attr">base</span>: <span class="hljs-string">'file.txt'</span>
+});
+<span class="hljs-comment">// Returns: 'C:\\path\\dir\\file.txt'</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

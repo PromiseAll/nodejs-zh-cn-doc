@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>triggerAsyncId | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>triggerAsyncId</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_triggerasyncid" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/triggerasyncid.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/triggerasyncid.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#triggerasyncid.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>triggerAsyncId</code> 是导致（或“触发”）新资源初始化并导致 <code>init</code> 调用的资源的 <code>asyncId</code>。
+这与 <code>async_hooks.executionAsyncId()</code> 不同，<code>async_hooks.executionAsyncId()</code> 只显示何时创建资源，而 <code>triggerAsyncId</code> 显示创建资源的原因。</p><p class="">下面是 <code>triggerAsyncId</code> 的简单演示：</p><pre class="with-64-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createHook, executionAsyncId } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+<span class="hljs-keyword">import</span> { stdout } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+<span class="hljs-keyword">import</span> net <span class="hljs-keyword">from</span> <span class="hljs-string">'net'</span>;
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId</span>) {
+    <span class="hljs-keyword">const</span> eid = <span class="hljs-title function_">executionAsyncId</span>();
+    fs.<span class="hljs-title function_">writeSync</span>(
+      stdout.<span class="hljs-property">fd</span>,
+      <span class="hljs-string">`<span class="hljs-subst">${type}</span>(<span class="hljs-subst">${asyncId}</span>): trigger: <span class="hljs-subst">${triggerAsyncId}</span> execution: <span class="hljs-subst">${eid}</span>\n`</span>);
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">conn</span>) =&gt;</span> {}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">8080</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createHook, executionAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+<span class="hljs-keyword">const</span> { stdout } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId</span>) {
+    <span class="hljs-keyword">const</span> eid = <span class="hljs-title function_">executionAsyncId</span>();
+    fs.<span class="hljs-title function_">writeSync</span>(
+      stdout.<span class="hljs-property">fd</span>,
+      <span class="hljs-string">`<span class="hljs-subst">${type}</span>(<span class="hljs-subst">${asyncId}</span>): trigger: <span class="hljs-subst">${triggerAsyncId}</span> execution: <span class="hljs-subst">${eid}</span>\n`</span>);
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">conn</span>) =&gt;</span> {}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">8080</span>);</code></pre><p class="">当使用 <code>nc localhost 8080</code> 访问服务器时的输出：</p><pre class=""><code class="language-console">TCPSERVERWRAP(5): trigger: 1 execution: 1
+TCPWRAP(7): trigger: 5 execution: 0</code></pre><p class=""><code>TCPSERVERWRAP</code> 是接收连接的服务器。</p><p class=""><code>TCPWRAP</code> 是来自客户端的新连接。
+当建立新连接时，则立即构造 <code>TCPWrap</code> 实例。
+这发生在任何 JavaScript 堆栈之外。
+（<code>0</code> 的 <code>executionAsyncId()</code> 表示其是从 C++ 执行的，上面没有 JavaScript 堆栈。）只有这些信息，就不可能将资源链接在一起，因为它们是什么导致它们被创建，所以 <code>triggerAsyncId</code> 被赋予传播什么资源对新资源的存在负责的任务。</p></div>
+          <div id="content_right"><p><code>triggerAsyncId</code> is the <code>asyncId</code> of the resource that caused (or "triggered")
+the new resource to initialize and that caused <code>init</code> to call. This is different
+from <code>async_hooks.executionAsyncId()</code> that only shows <em>when</em> a resource was
+created, while <code>triggerAsyncId</code> shows <em>why</em> a resource was created.</p><p>The following is a simple demonstration of <code>triggerAsyncId</code>:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createHook, executionAsyncId } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+<span class="hljs-keyword">import</span> { stdout } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+<span class="hljs-keyword">import</span> net <span class="hljs-keyword">from</span> <span class="hljs-string">'net'</span>;
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId</span>) {
+    <span class="hljs-keyword">const</span> eid = <span class="hljs-title function_">executionAsyncId</span>();
+    fs.<span class="hljs-title function_">writeSync</span>(
+      stdout.<span class="hljs-property">fd</span>,
+      <span class="hljs-string">`<span class="hljs-subst">${type}</span>(<span class="hljs-subst">${asyncId}</span>): trigger: <span class="hljs-subst">${triggerAsyncId}</span> execution: <span class="hljs-subst">${eid}</span>\n`</span>);
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">conn</span>) =&gt;</span> {}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">8080</span>);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { createHook, executionAsyncId } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+<span class="hljs-keyword">const</span> { stdout } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+
+<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId</span>) {
+    <span class="hljs-keyword">const</span> eid = <span class="hljs-title function_">executionAsyncId</span>();
+    fs.<span class="hljs-title function_">writeSync</span>(
+      stdout.<span class="hljs-property">fd</span>,
+      <span class="hljs-string">`<span class="hljs-subst">${type}</span>(<span class="hljs-subst">${asyncId}</span>): trigger: <span class="hljs-subst">${triggerAsyncId}</span> execution: <span class="hljs-subst">${eid}</span>\n`</span>);
+  }
+}).<span class="hljs-title function_">enable</span>();
+
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">conn</span>) =&gt;</span> {}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">8080</span>);</code></pre><p>Output when hitting the server with <code>nc localhost 8080</code>:</p><pre><code class="language-console">TCPSERVERWRAP(5): trigger: 1 execution: 1
+TCPWRAP(7): trigger: 5 execution: 0</code></pre><p>The <code>TCPSERVERWRAP</code> is the server which receives the connections.</p><p>The <code>TCPWRAP</code> is the new connection from the client. When a new
+connection is made, the <code>TCPWrap</code> instance is immediately constructed. This
+happens outside of any JavaScript stack. (An <code>executionAsyncId()</code> of <code>0</code> means
+that it is being executed from C++ with no JavaScript stack above it.) With only
+that information, it would be impossible to link resources together in
+terms of what caused them to be created, so <code>triggerAsyncId</code> is given the task
+of propagating what resource is responsible for the new resource's existence.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

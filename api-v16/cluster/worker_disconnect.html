@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>worker.disconnect() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cluster">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>worker.disconnect()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cluster.html#cluster_worker_disconnect" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cluster/worker_disconnect.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/cluster/worker_disconnect.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cluster/#workerdisconnect.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.3.0</td>
+<td><p>此方法现在返回对 <code>worker</code> 的引用。</p></td></tr>
+<tr><td>v0.7.7</td>
+<td><p><span>新增于: v0.7.7</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li>返回: <a href="../cluster.html#class-worker" rel="nofollow" class="type">&lt;cluster.Worker&gt;</a> <code>worker</code> 的引用。</li>
+</ul><p>在工作进程中，此函数将关闭所有服务器，等待那些服务器上的 <code>'close'</code> 事件，然后断开 IPC 通道。</p><p class="">在主进程中，内部的消息被发送给工作进程，使其调用自身的 <code>.disconnect()</code>。</p><p class="">使 <code>.exitedAfterDisconnect</code> 被设置。</p><p class="">服务器关闭后，它将不再接受新连接，但连接可能会被任何其他监听的工作进程接受。
+现有的连接将被允许像往常一样关闭。
+当不再存在连接时（参见 <a href="../net.html#event-close"><code>server.close()</code></a>），到工作进程的 IPC 通道将关闭，允许其正常地死亡。</p><p class="">以上仅适用于服务器连接，客户端连接不会被工作进程自动关闭，并且断开连接不会等待它们关闭才退出。</p><p class="">在工作进程中，<code>process.disconnect</code> 是存在的，但不是这个函数；它是 <a href="../child_process.html#subprocessdisconnect"><code>disconnect()</code></a>。</p><p class="">因为长期存在的服务器连接可能会阻止工作进程断开连接，所以发送消息可能很有用，因此可以采取特定于应用程序的操作来关闭它们。
+实现超时也可能很有用，如果 <code>'disconnect'</code> 事件在一段时间后没有触发，则杀死工作进程。</p><pre class=""><code class="language-js"><span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  <span class="hljs-keyword">const</span> worker = cluster.<span class="hljs-title function_">fork</span>();
+  <span class="hljs-keyword">let</span> timeout;
+
+  worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">(<span class="hljs-params">address</span>) =&gt;</span> {
+    worker.<span class="hljs-title function_">send</span>(<span class="hljs-string">'shutdown'</span>);
+    worker.<span class="hljs-title function_">disconnect</span>();
+    timeout = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+      worker.<span class="hljs-title function_">kill</span>();
+    }, <span class="hljs-number">2000</span>);
+  });
+
+  worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'disconnect'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-built_in">clearTimeout</span>(timeout);
+  });
+
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isWorker</span>) {
+  <span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+  <span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+    <span class="hljs-comment">// 连接永远不会结束</span>
+  });
+
+  server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);
+
+  process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (msg === <span class="hljs-string">'shutdown'</span>) {
+      <span class="hljs-comment">// 发起正常关闭与服务器的任何连接</span>
+    }
+  });
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v7.3.0</td>
+<td><p>This method now returns a reference to <code>worker</code>.</p></td></tr>
+<tr><td>v0.7.7</td>
+<td><p><span>Added in: v0.7.7</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li>Returns: <a href="../cluster.html#class-worker" rel="nofollow" class="type">&lt;cluster.Worker&gt;</a> A reference to <code>worker</code>.</li>
+</ul><p>In a worker, this function will close all servers, wait for the <code>'close'</code> event
+on those servers, and then disconnect the IPC channel.</p><p>In the primary, an internal message is sent to the worker causing it to call
+<code>.disconnect()</code> on itself.</p><p>Causes <code>.exitedAfterDisconnect</code> to be set.</p><p>After a server is closed, it will no longer accept new connections,
+but connections may be accepted by any other listening worker. Existing
+connections will be allowed to close as usual. When no more connections exist,
+see <a href="../net.html#event-close"><code>server.close()</code></a>, the IPC channel to the worker will close allowing it
+to die gracefully.</p><p>The above applies <em>only</em> to server connections, client connections are not
+automatically closed by workers, and disconnect does not wait for them to close
+before exiting.</p><p>In a worker, <code>process.disconnect</code> exists, but it is not this function;
+it is <a href="../child_process.html#subprocessdisconnect"><code>disconnect()</code></a>.</p><p>Because long living server connections may block workers from disconnecting, it
+may be useful to send a message, so application specific actions may be taken to
+close them. It also may be useful to implement a timeout, killing a worker if
+the <code>'disconnect'</code> event has not been emitted after some time.</p><pre><code class="language-js"><span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isPrimary</span>) {
+  <span class="hljs-keyword">const</span> worker = cluster.<span class="hljs-title function_">fork</span>();
+  <span class="hljs-keyword">let</span> timeout;
+
+  worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">(<span class="hljs-params">address</span>) =&gt;</span> {
+    worker.<span class="hljs-title function_">send</span>(<span class="hljs-string">'shutdown'</span>);
+    worker.<span class="hljs-title function_">disconnect</span>();
+    timeout = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+      worker.<span class="hljs-title function_">kill</span>();
+    }, <span class="hljs-number">2000</span>);
+  });
+
+  worker.<span class="hljs-title function_">on</span>(<span class="hljs-string">'disconnect'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-built_in">clearTimeout</span>(timeout);
+  });
+
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cluster.<span class="hljs-property">isWorker</span>) {
+  <span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+  <span class="hljs-keyword">const</span> server = net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+    <span class="hljs-comment">// Connections never end</span>
+  });
+
+  server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);
+
+  process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (msg === <span class="hljs-string">'shutdown'</span>) {
+      <span class="hljs-comment">// Initiate graceful close of any connections to server</span>
+    }
+  });
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

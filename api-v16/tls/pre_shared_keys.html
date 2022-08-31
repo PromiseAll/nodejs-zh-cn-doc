@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>预共享的密钥 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>预共享的密钥</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_pre_shared_keys" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/pre_shared_keys.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/pre_shared_keys.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#pre-shared-keys.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>TLS-PSK 支持可作为普通基于证书的身份验证的替代方法。
+它使用预共享密钥而不是证书来验证 TLS 连接，提供相互验证。
+TLS-PSK 和公钥基础设施并不相互排斥。
+客户端和服务器可以同时容纳两者，在正常的密码协商步骤中选择它们中的任何一个。</p><p class="">TLS-PSK 只是一个不错的选择，因为存在与每台连接机器安全共享密钥的方法，因此它不会取代大多数 TLS 使用的公钥基础设施（PKI）。
+OpenSSL 中的 TLS-PSK 实现近年来出现了许多安全漏洞，主要是因为它仅被少数应用程序使用。
+在切换到 PSK 密码之前，请考虑所有替代解决方案。
+在生成 PSK 时，使用 <a href="https://tools.ietf.org/html/rfc4086" rel="nofollow">RFC 4086</a> 中讨论的足够熵至关重要。
+从密码或其他低熵来源导出共享秘密是不安全的。</p><p class="">默认情况下禁用 PSK 密码，因此使用 TLS-PSK 需要使用 <code>ciphers</code> 选项明确指定密码套件。
+可用密码列表可以通过 <code>openssl ciphers -v 'PSK'</code> 检索。
+所有 TLS 1.3 密码都有资格使用 PSK，但目前仅支持使用 SHA256 摘要的密码，它们可以通过 <code>openssl ciphers -v -s -tls1_3 -psk</code> 检索。</p><p class="">根据 <a href="https://tools.ietf.org/html/rfc4279" rel="nofollow">RFC 4279</a>，必须支持最长 128 个字节的 PSK 标识和最长 64 个字节的 PSK。
+从 OpenSSL 1.1.0 开始，最大身份大小为 128 字节，最大 PSK 长度为 256 字节。</p><p class="">由于底层 OpenSSL API 的限制，当前的实现不支持异步 PSK 回调。</p></div>
+          <div id="content_right"><p>TLS-PSK support is available as an alternative to normal certificate-based
+authentication. It uses a pre-shared key instead of certificates to
+authenticate a TLS connection, providing mutual authentication.
+TLS-PSK and public key infrastructure are not mutually exclusive. Clients and
+servers can accommodate both, choosing either of them during the normal cipher
+negotiation step.</p><p>TLS-PSK is only a good choice where means exist to securely share a
+key with every connecting machine, so it does not replace the public key
+infrastructure (PKI) for the majority of TLS uses.
+The TLS-PSK implementation in OpenSSL has seen many security flaws in
+recent years, mostly because it is used only by a minority of applications.
+Please consider all alternative solutions before switching to PSK ciphers.
+Upon generating PSK it is of critical importance to use sufficient entropy as
+discussed in <a href="https://tools.ietf.org/html/rfc4086" rel="nofollow">RFC 4086</a>. Deriving a shared secret from a password or other
+low-entropy sources is not secure.</p><p>PSK ciphers are disabled by default, and using TLS-PSK thus requires explicitly
+specifying a cipher suite with the <code>ciphers</code> option. The list of available
+ciphers can be retrieved via <code>openssl ciphers -v 'PSK'</code>. All TLS 1.3
+ciphers are eligible for PSK but currently only those that use SHA256 digest are
+supported they can be retrieved via <code>openssl ciphers -v -s -tls1_3 -psk</code>.</p><p>According to the <a href="https://tools.ietf.org/html/rfc4279" rel="nofollow">RFC 4279</a>, PSK identities up to 128 bytes in length and
+PSKs up to 64 bytes in length must be supported. As of OpenSSL 1.1.0
+maximum identity size is 128 bytes, and maximum PSK length is 256 bytes.</p><p>The current implementation doesn't support asynchronous PSK callbacks due to the
+limitations of the underlying OpenSSL API.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

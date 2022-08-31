@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Buffer.from()、Buffer.alloc() 与 Buffer.allocUnsafe() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Buffer.from()、Buffer.alloc() 与 Buffer.allocUnsafe()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buffer_from_buffer_alloc_and_buffer_allocunsafe" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buffer_from_buffer_alloc_and_buffer_allocunsafe.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buffer_from_buffer_alloc_and_buffer_allocunsafe.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#bufferfrom-bufferalloc-and-bufferallocunsafe.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在 Node.js 6.0.0 之前的版本中，<code>Buffer</code> 实例是使用 <code>Buffer</code> 构造函数创建的，它根据提供的参数以不同的方式分配返回的 <code>Buffer</code>：</p><ul class="">
+<li>将数字作为第一个参数传给 <code>Buffer()</code>（例如 <code>new Buffer(10)</code>）会分配指定大小的新 <code>Buffer</code> 对象。
+在 Node.js 8.0.0 之前，为此类 <code>Buffer</code> 实例分配的内存未初始化并且可能包含敏感数据。
+在从 <code>Buffer</code> 读取数据之前，此类 <code>Buffer</code> 实例必须随后通过使用 <a href="../buffer.html#buffillvalue-offset-end-encoding"><code>buf.fill(0)</code></a> 或写入整个 <code>Buffer</code> 进行初始化。
+虽然此行为是为了提高性能，但开发经验表明，在创建快速但未初始化的 <code>Buffer</code> 与创建较慢但更安全的 <code>Buffer</code> 之间需要更明确的区别。
+从 Node.js 8.0.0 开始，<code>Buffer(num)</code> 和 <code>new Buffer(num)</code> 返回带有初始化内存的 <code>Buffer</code>。</li>
+<li>传入字符串、数组或 <code>Buffer</code> 作为第一个参数会将传入的对象的数据复制到 <code>Buffer</code>。</li>
+<li>传入 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a> 或 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a> 返回 <code>Buffer</code>，它与给定的数组缓冲区共享分配的内存。</li>
+</ul><p class="">由于 <code>new Buffer()</code> 的行为因第一个参数的类型而异，因此当未执行参数验证或 <code>Buffer</code> 初始化时，可能会无意中将安全性和可靠性问题引入到应用程序中。</p><p class="">例如，如果攻击者可以使应用程序接收到预期为字符串的数字，则应用程序可能会调用 <code>new Buffer(100)</code> 而不是 <code>new Buffer("100")</code>，从而导致它分配 100 字节的缓冲区，而不是分配内容为 <code>"100"</code> 的 3 字节缓冲区。
+这通常可以使用 JSON API 调用实现。
+由于 JSON 区分数字和字符串类型，因此它允许在未充分验证其输入的天真编写的应用程序可能期望始终接收字符串的情况下注入数字。
+在 Node.js 8.0.0 之前，100 字节的缓冲区可能包含任意预先存在的内存数据，因此可用于向远程攻击者公开内存机密。
+从 Node.js 8.0.0 开始，不会发生内存暴露，因为数据是零填充的。
+但是，其他攻击仍然是可能的，例如导致服务器分配非常大的缓冲区，导致性能下降或因内存耗尽而崩溃。</p><p class="">为了使 <code>Buffer</code> 实例的创建更可靠且不易出错，<code>new Buffer()</code> 构造函数的各种形式已被弃用，并由单独的 <code>Buffer.from()</code>、<a href="../buffer.html#static-method-bufferallocsize-fill-encoding"><code>Buffer.alloc()</code></a> 和 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> 方法取代。</p><p class=""><em>开发者应将 <code>new Buffer()</code> 构造函数的所有现有用途迁移到这些新的 API 之一。</em></p><ul class="">
+<li><a href="../buffer.html#static-method-bufferfromarray"><code>Buffer.from(array)</code></a> 返回新的 <code>Buffer</code>，其中包含所提供八位字节的副本。</li>
+<li><a href="../buffer.html#static-method-bufferfromarraybuffer-byteoffset-length"><code>Buffer.from(arrayBuffer[, byteOffset[, length]])</code></a> 返回新的 <code>Buffer</code>，其与给定的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a> 共享相同的分配内存。</li>
+<li><a href="../buffer.html#static-method-bufferfrombuffer"><code>Buffer.from(buffer)</code></a> 返回新的 <code>Buffer</code>，其中包含给定 <code>Buffer</code> 内容的副本。</li>
+<li><a href="../buffer.html#static-method-bufferfromstring-encoding"><code>Buffer.from(string[, encoding])</code></a> 返回新的 <code>Buffer</code>，其中包含所提供字符串的副本。</li>
+<li><a href="../buffer.html#static-method-bufferallocsize-fill-encoding"><code>Buffer.alloc(size[, fill[, encoding]])</code></a> 返回指定大小的新初始化 <code>Buffer</code>。
+此方法比 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe(size)</code></a> 慢，但保证新创建的 <code>Buffer</code> 实例永远不会包含可能敏感的旧数据。
+如果 <code>size</code> 不是数值，则会抛出 <code>TypeError</code>。</li>
+<li><a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe(size)</code></a> 和 <a href="../buffer.html#static-method-bufferallocunsafeslowsize"><code>Buffer.allocUnsafeSlow(size)</code></a> 分别返回指定 <code>size</code> 的新的未初始化的 <code>Buffer</code>。
+由于 <code>Buffer</code> 未初始化，分配的内存段可能包含潜在敏感的旧数据。</li>
+</ul><p class="">如果 <code>size</code> 小于或等于 <a href="../buffer.html#class-property-bufferpoolsize"><code>Buffer.poolSize</code></a> 的一半，则 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> 和 <a href="../buffer.html#static-method-bufferfromarray"><code>Buffer.from(array)</code></a> 返回的 <code>Buffer</code> 实例可以从共享的内部内存池中分配。
+<a href="../buffer.html#static-method-bufferallocunsafeslowsize"><code>Buffer.allocUnsafeSlow()</code></a> 返回的实例从不使用共享的内部内存池。</p></div>
+          <div id="content_right"><p>In versions of Node.js prior to 6.0.0, <code>Buffer</code> instances were created using the
+<code>Buffer</code> constructor function, which allocates the returned <code>Buffer</code>
+differently based on what arguments are provided:</p><ul>
+<li>Passing a number as the first argument to <code>Buffer()</code> (e.g. <code>new Buffer(10)</code>)
+allocates a new <code>Buffer</code> object of the specified size. Prior to Node.js 8.0.0,
+the memory allocated for such <code>Buffer</code> instances is <em>not</em> initialized and
+<em>can contain sensitive data</em>. Such <code>Buffer</code> instances <em>must</em> be subsequently
+initialized by using either <a href="../buffer.html#buffillvalue-offset-end-encoding"><code>buf.fill(0)</code></a> or by writing to the
+entire <code>Buffer</code> before reading data from the <code>Buffer</code>.
+While this behavior is <em>intentional</em> to improve performance,
+development experience has demonstrated that a more explicit distinction is
+required between creating a fast-but-uninitialized <code>Buffer</code> versus creating a
+slower-but-safer <code>Buffer</code>. Since Node.js 8.0.0, <code>Buffer(num)</code> and <code>new Buffer(num)</code> return a <code>Buffer</code> with initialized memory.</li>
+<li>Passing a string, array, or <code>Buffer</code> as the first argument copies the
+passed object's data into the <code>Buffer</code>.</li>
+<li>Passing an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a> or a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a> returns a <code>Buffer</code>
+that shares allocated memory with the given array buffer.</li>
+</ul><p>Because the behavior of <code>new Buffer()</code> is different depending on the type of the
+first argument, security and reliability issues can be inadvertently introduced
+into applications when argument validation or <code>Buffer</code> initialization is not
+performed.</p><p>For example, if an attacker can cause an application to receive a number where
+a string is expected, the application may call <code>new Buffer(100)</code>
+instead of <code>new Buffer("100")</code>, leading it to allocate a 100 byte buffer instead
+of allocating a 3 byte buffer with content <code>"100"</code>. This is commonly possible
+using JSON API calls. Since JSON distinguishes between numeric and string types,
+it allows injection of numbers where a naively written application that does not
+validate its input sufficiently might expect to always receive a string.
+Before Node.js 8.0.0, the 100 byte buffer might contain
+arbitrary pre-existing in-memory data, so may be used to expose in-memory
+secrets to a remote attacker. Since Node.js 8.0.0, exposure of memory cannot
+occur because the data is zero-filled. However, other attacks are still
+possible, such as causing very large buffers to be allocated by the server,
+leading to performance degradation or crashing on memory exhaustion.</p><p>To make the creation of <code>Buffer</code> instances more reliable and less error-prone,
+the various forms of the <code>new Buffer()</code> constructor have been <strong>deprecated</strong>
+and replaced by separate <code>Buffer.from()</code>, <a href="../buffer.html#static-method-bufferallocsize-fill-encoding"><code>Buffer.alloc()</code></a>, and
+<a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> methods.</p><p><em>Developers should migrate all existing uses of the <code>new Buffer()</code> constructors
+to one of these new APIs.</em></p><ul>
+<li><a href="../buffer.html#static-method-bufferfromarray"><code>Buffer.from(array)</code></a> returns a new <code>Buffer</code> that <em>contains a copy</em> of the
+provided octets.</li>
+<li><a href="../buffer.html#static-method-bufferfromarraybuffer-byteoffset-length"><code>Buffer.from(arrayBuffer[, byteOffset[, length]])</code></a>
+returns a new <code>Buffer</code> that <em>shares the same allocated memory</em> as the given
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>.</li>
+<li><a href="../buffer.html#static-method-bufferfrombuffer"><code>Buffer.from(buffer)</code></a> returns a new <code>Buffer</code> that <em>contains a copy</em> of the
+contents of the given <code>Buffer</code>.</li>
+<li><a href="../buffer.html#static-method-bufferfromstring-encoding"><code>Buffer.from(string[, encoding])</code></a> returns a new
+<code>Buffer</code> that <em>contains a copy</em> of the provided string.</li>
+<li><a href="../buffer.html#static-method-bufferallocsize-fill-encoding"><code>Buffer.alloc(size[, fill[, encoding]])</code></a> returns a new
+initialized <code>Buffer</code> of the specified size. This method is slower than
+<a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe(size)</code></a> but guarantees that newly
+created <code>Buffer</code> instances never contain old data that is potentially
+sensitive. A <code>TypeError</code> will be thrown if <code>size</code> is not a number.</li>
+<li><a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe(size)</code></a> and
+<a href="../buffer.html#static-method-bufferallocunsafeslowsize"><code>Buffer.allocUnsafeSlow(size)</code></a> each return a
+new uninitialized <code>Buffer</code> of the specified <code>size</code>. Because the <code>Buffer</code> is
+uninitialized, the allocated segment of memory might contain old data that is
+potentially sensitive.</li>
+</ul><p><code>Buffer</code> instances returned by <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> and
+<a href="../buffer.html#static-method-bufferfromarray"><code>Buffer.from(array)</code></a> <em>may</em> be allocated off a shared internal memory pool
+if <code>size</code> is less than or equal to half <a href="../buffer.html#class-property-bufferpoolsize"><code>Buffer.poolSize</code></a>. Instances
+returned by <a href="../buffer.html#static-method-bufferallocunsafeslowsize"><code>Buffer.allocUnsafeSlow()</code></a> <em>never</em> use the shared internal
+memory pool.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

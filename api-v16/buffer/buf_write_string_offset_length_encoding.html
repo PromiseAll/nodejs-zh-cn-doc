@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>buf.write(string[, offset[, length]][, encoding]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>buf.write(string[, offset[, length]][, encoding])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buf_write_string_offset_length_encoding" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buf_write_string_offset_length_encoding.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buf_write_string_offset_length_encoding.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#bufwritestring-offset-length-encoding.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div><ul class="">
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要写入 <code>buf</code> 的字符串。</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 开始写入 <code>string</code> 之前要跳过的字节数。
+<strong>默认值:</strong> <code>0</code>。</li>
+<li><code>length</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 要写入的最大字节数（写入的字节数不会超过 <code>buf.length - offset</code>）。 <strong>默认值:</strong> <code>buf.length - offset</code>。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>string</code> 的字符编码。 <strong>默认值:</strong> <code>'utf8'</code>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 写入的字节数。</li>
+</ul><p>根据 <code>encoding</code> 中的字符编码将 <code>string</code> 写入 <code>buf</code> 的 <code>offset</code> 处。
+<code>length</code> 参数是要写入的字节数。
+如果 <code>buf</code> 没有足够的空间来容纳整个字符串，则只会写入 <code>string</code> 的一部分。
+但是，不会写入部分编码的字符。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">256</span>);
+
+<span class="hljs-keyword">const</span> len = buf.<span class="hljs-title function_">write</span>(<span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${len}</span> bytes: <span class="hljs-subst">${buf.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">0</span>, len)}</span>`</span>);
+<span class="hljs-comment">// 打印: 12 bytes: ½ + ¼ = ¾</span>
+
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-keyword">const</span> length = buffer.<span class="hljs-title function_">write</span>(<span class="hljs-string">'abcd'</span>, <span class="hljs-number">8</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${length}</span> bytes: <span class="hljs-subst">${buffer.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span>)}</span>`</span>);
+<span class="hljs-comment">// 打印: 2 bytes : ab</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">256</span>);
+
+<span class="hljs-keyword">const</span> len = buf.<span class="hljs-title function_">write</span>(<span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${len}</span> bytes: <span class="hljs-subst">${buf.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">0</span>, len)}</span>`</span>);
+<span class="hljs-comment">// 打印: 12 bytes: ½ + ¼ = ¾</span>
+
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-keyword">const</span> length = buffer.<span class="hljs-title function_">write</span>(<span class="hljs-string">'abcd'</span>, <span class="hljs-number">8</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${length}</span> bytes: <span class="hljs-subst">${buffer.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span>)}</span>`</span>);
+<span class="hljs-comment">// 打印: 2 bytes : ab</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.90</span>
+</div><ul>
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> String to write to <code>buf</code>.</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Number of bytes to skip before starting to write <code>string</code>.
+<strong>Default:</strong> <code>0</code>.</li>
+<li><code>length</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Maximum number of bytes to write (written bytes will not
+exceed <code>buf.length - offset</code>). <strong>Default:</strong> <code>buf.length - offset</code>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The character encoding of <code>string</code>. <strong>Default:</strong> <code>'utf8'</code>.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Number of bytes written.</li>
+</ul><p>Writes <code>string</code> to <code>buf</code> at <code>offset</code> according to the character encoding in
+<code>encoding</code>. The <code>length</code> parameter is the number of bytes to write. If <code>buf</code> did
+not contain enough space to fit the entire string, only part of <code>string</code> will be
+written. However, partially encoded characters will not be written.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">256</span>);
+
+<span class="hljs-keyword">const</span> len = buf.<span class="hljs-title function_">write</span>(<span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${len}</span> bytes: <span class="hljs-subst">${buf.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">0</span>, len)}</span>`</span>);
+<span class="hljs-comment">// Prints: 12 bytes: ½ + ¼ = ¾</span>
+
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-keyword">const</span> length = buffer.<span class="hljs-title function_">write</span>(<span class="hljs-string">'abcd'</span>, <span class="hljs-number">8</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${length}</span> bytes: <span class="hljs-subst">${buffer.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span>)}</span>`</span>);
+<span class="hljs-comment">// Prints: 2 bytes : ab</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">256</span>);
+
+<span class="hljs-keyword">const</span> len = buf.<span class="hljs-title function_">write</span>(<span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>, <span class="hljs-number">0</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${len}</span> bytes: <span class="hljs-subst">${buf.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">0</span>, len)}</span>`</span>);
+<span class="hljs-comment">// Prints: 12 bytes: ½ + ¼ = ¾</span>
+
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">alloc</span>(<span class="hljs-number">10</span>);
+
+<span class="hljs-keyword">const</span> length = buffer.<span class="hljs-title function_">write</span>(<span class="hljs-string">'abcd'</span>, <span class="hljs-number">8</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${length}</span> bytes: <span class="hljs-subst">${buffer.toString(<span class="hljs-string">'utf8'</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span>)}</span>`</span>);
+<span class="hljs-comment">// Prints: 2 bytes : ab</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.pipe(destination[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.pipe(destination[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_pipe_destination_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_pipe_destination_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/readable_pipe_destination_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readablepipedestination-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.4</span>
+</div><ul class="">
+<li><code>destination</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> 写入数据的目标</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 管道选项
+<ul>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当读取结束时结束写入。 <strong>默认值:</strong> <code>true</code>。</li>
+</ul>
+</li>
+<li>返回: <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> 目标，如果它是 <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> 或 <a href="../stream.html#class-streamtransform"><code>Transform</code></a> 流，则允许使用管道链</li>
+</ul><p><code>readable.pipe()</code> 方法将 <a href="../stream.html#class-streamwritable"><code>Writable</code></a> 流绑定到 <code>readable</code>，使其自动切换到流动模式并将其所有数据推送到绑定的 <a href="../stream.html#class-streamwritable"><code>Writable</code></a>。
+数据流将被自动管理，以便目标 <code>Writable</code> 流不会被更快的 <code>Readable</code> 流漫过。</p><p class="">以下示例将 <code>readable</code> 中的所有数据通过管道传输到名为 <code>file.txt</code> 的文件中：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+<span class="hljs-keyword">const</span> writable = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-comment">// 可读流的所有数据进入 'file.txt'。</span>
+readable.<span class="hljs-title function_">pipe</span>(writable);</code></pre><p class="">可以将多个 <code>Writable</code> 流绑定到单个 <code>Readable</code> 流。</p><p class=""><code>readable.pipe()</code> 方法返回对目标流的引用，从而可以建立管道流链：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> r = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-keyword">const</span> z = zlib.<span class="hljs-title function_">createGzip</span>();
+<span class="hljs-keyword">const</span> w = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'file.txt.gz'</span>);
+r.<span class="hljs-title function_">pipe</span>(z).<span class="hljs-title function_">pipe</span>(w);</code></pre><p class="">默认情况下，当源 <code>Readable</code> 流触发 <a href="../stream.html#event-end"><code>'end'</code></a> 时，则在目标 <code>Writable</code> 流上调用 <a href="../stream.html#writableendchunk-encoding-callback"><code>stream.end()</code></a>，因此目标不再可写。
+要禁用此默认行为，可以将 <code>end</code> 选项作为 <code>false</code> 传入，从而使目标流保持打开状态：</p><pre class=""><code class="language-js">reader.<span class="hljs-title function_">pipe</span>(writer, { <span class="hljs-attr">end</span>: <span class="hljs-literal">false</span> });
+reader.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  writer.<span class="hljs-title function_">end</span>(<span class="hljs-string">'Goodbye\n'</span>);
+});</code></pre><p class="">有个重要的注意事项，如果 <code>Readable</code> 流在处理过程中触发错误，则 <code>Writable</code> 目标不会自动关闭。
+如果发生错误，则需要手动关闭每个流以防止内存泄漏。</p><p class=""><a href="../process.html#processstderr"><code>process.stderr</code></a> 和 <a href="../process.html#processstdout"><code>process.stdout</code></a> <code>Writable</code> 流在 Node.js 进程退出之前永远不会关闭，无论指定的选项如何。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.4</span>
+</div><ul>
+<li><code>destination</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> The destination for writing data</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Pipe options
+<ul>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> End the writer when the reader ends. <strong>Default:</strong> <code>true</code>.</li>
+</ul>
+</li>
+<li>Returns: <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> The <em>destination</em>, allowing for a chain of pipes if
+it is a <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> or a <a href="../stream.html#class-streamtransform"><code>Transform</code></a> stream</li>
+</ul><p>The <code>readable.pipe()</code> method attaches a <a href="../stream.html#class-streamwritable"><code>Writable</code></a> stream to the <code>readable</code>,
+causing it to switch automatically into flowing mode and push all of its data
+to the attached <a href="../stream.html#class-streamwritable"><code>Writable</code></a>. The flow of data will be automatically managed
+so that the destination <code>Writable</code> stream is not overwhelmed by a faster
+<code>Readable</code> stream.</p><p>The following example pipes all of the data from the <code>readable</code> into a file
+named <code>file.txt</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> readable = <span class="hljs-title function_">getReadableStreamSomehow</span>();
+<span class="hljs-keyword">const</span> writable = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-comment">// All the data from readable goes into 'file.txt'.</span>
+readable.<span class="hljs-title function_">pipe</span>(writable);</code></pre><p>It is possible to attach multiple <code>Writable</code> streams to a single <code>Readable</code>
+stream.</p><p>The <code>readable.pipe()</code> method returns a reference to the <em>destination</em> stream
+making it possible to set up chains of piped streams:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> r = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-keyword">const</span> z = zlib.<span class="hljs-title function_">createGzip</span>();
+<span class="hljs-keyword">const</span> w = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'file.txt.gz'</span>);
+r.<span class="hljs-title function_">pipe</span>(z).<span class="hljs-title function_">pipe</span>(w);</code></pre><p>By default, <a href="../stream.html#writableendchunk-encoding-callback"><code>stream.end()</code></a> is called on the destination <code>Writable</code>
+stream when the source <code>Readable</code> stream emits <a href="../stream.html#event-end"><code>'end'</code></a>, so that the
+destination is no longer writable. To disable this default behavior, the <code>end</code>
+option can be passed as <code>false</code>, causing the destination stream to remain open:</p><pre><code class="language-js">reader.<span class="hljs-title function_">pipe</span>(writer, { <span class="hljs-attr">end</span>: <span class="hljs-literal">false</span> });
+reader.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+  writer.<span class="hljs-title function_">end</span>(<span class="hljs-string">'Goodbye\n'</span>);
+});</code></pre><p>One important caveat is that if the <code>Readable</code> stream emits an error during
+processing, the <code>Writable</code> destination <em>is not closed</em> automatically. If an
+error occurs, it will be necessary to <em>manually</em> close each stream in order
+to prevent memory leaks.</p><p>The <a href="../process.html#processstderr"><code>process.stderr</code></a> and <a href="../process.html#processstdout"><code>process.stdout</code></a> <code>Writable</code> streams are never
+closed until the Node.js process exits, regardless of the specified options.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

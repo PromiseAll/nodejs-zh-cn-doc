@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Promise 钩子 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-v8">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Promise 钩子</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../v8.html#v8_promise_hooks" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/v8/promise_hooks.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/v8/#promise-hooks.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>promiseHooks</code> 接口可用于跟踪 promise 生命周期事件。
+要跟踪所有的异步活动，则参阅 <a href="../async_hooks.html"><code>async_hooks</code></a>，其在内部使用此模块生成 promise 生命周期事件以及其他异步资源的事件。
+请求的上下文管理参阅 <a href="../async_context.html#class-asynclocalstorage"><code>AsyncLocalStorage</code></a>。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-comment">// promise 产生了四个生命周期事件：</span>
+
+<span class="hljs-comment">// `init` 事件代表了 promise 的创建。</span>
+<span class="hljs-comment">// 这可以是直接创建，例如使用 `new Promise(...)`，</span>
+<span class="hljs-comment">// 或者是继续，例如 `then()` 或 `catch()`。</span>
+<span class="hljs-comment">// 每当调用异步函数或执行“等待”时，也会发生这种情况。</span>
+<span class="hljs-comment">// 如果创建了继续 promise，则 `parent` 将是它作为继续的 promise。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">init</span>(<span class="hljs-params">promise, parent</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise was created'</span>, { promise, parent });
+}
+
+<span class="hljs-comment">// `settled` 事件在 promise 收到解决或拒绝值时发生。</span>
+<span class="hljs-comment">// 这可能会同步地发生，</span>
+<span class="hljs-comment">// 例如在非 promise 输入上使用 `Promise.resolve()` 时。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">settled</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise resolved or rejected'</span>, { promise });
+}
+
+<span class="hljs-comment">// `before` 事件在 `then()` 或 `catch()` 句柄运行</span>
+<span class="hljs-comment">// 或 `await` 恢复执行之前立即运行。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">before</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise is about to call a then handler'</span>, { promise });
+}
+
+<span class="hljs-comment">// `after` 事件在 `then()` 句柄运行之后</span>
+<span class="hljs-comment">// 或 `await` 从另一个句柄恢复之后立即运行。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">after</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise is done calling a then handler'</span>, { promise });
+}
+
+<span class="hljs-comment">// 生命周期钩子可以单独启动和停止</span>
+<span class="hljs-keyword">const</span> stopWatchingInits = promiseHooks.<span class="hljs-title function_">onInit</span>(init);
+<span class="hljs-keyword">const</span> stopWatchingSettleds = promiseHooks.<span class="hljs-title function_">onSettled</span>(settled);
+<span class="hljs-keyword">const</span> stopWatchingBefores = promiseHooks.<span class="hljs-title function_">onBefore</span>(before);
+<span class="hljs-keyword">const</span> stopWatchingAfters = promiseHooks.<span class="hljs-title function_">onAfter</span>(after);
+
+<span class="hljs-comment">// 或者它们可以分组启动和停止</span>
+<span class="hljs-keyword">const</span> stopHookSet = promiseHooks.<span class="hljs-title function_">createHook</span>({
+  init,
+  settled,
+  before,
+  after
+});
+
+<span class="hljs-comment">// 要停止钩子，则调用创建时返回的函数。</span>
+<span class="hljs-title function_">stopWatchingInits</span>();
+<span class="hljs-title function_">stopWatchingSettleds</span>();
+<span class="hljs-title function_">stopWatchingBefores</span>();
+<span class="hljs-title function_">stopWatchingAfters</span>();
+<span class="hljs-title function_">stopHookSet</span>();</code></pre></div>
+          <div id="content_right"><p>The <code>promiseHooks</code> interface can be used to track promise lifecycle events.
+To track <em>all</em> async activity, see <a href="../async_hooks.html"><code>async_hooks</code></a> which internally uses this
+module to produce promise lifecycle events in addition to events for other
+async resources. For request context management, see <a href="../async_context.html#class-asynclocalstorage"><code>AsyncLocalStorage</code></a>.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { promiseHooks } <span class="hljs-keyword">from</span> <span class="hljs-string">'v8'</span>;
+
+<span class="hljs-comment">// There are four lifecycle events produced by promises:</span>
+
+<span class="hljs-comment">// The `init` event represents the creation of a promise. This could be a</span>
+<span class="hljs-comment">// direct creation such as with `new Promise(...)` or a continuation such</span>
+<span class="hljs-comment">// as `then()` or `catch()`. It also happens whenever an async function is</span>
+<span class="hljs-comment">// called or does an `await`. If a continuation promise is created, the</span>
+<span class="hljs-comment">// `parent` will be the promise it is a continuation from.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">init</span>(<span class="hljs-params">promise, parent</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise was created'</span>, { promise, parent });
+}
+
+<span class="hljs-comment">// The `settled` event happens when a promise receives a resolution or</span>
+<span class="hljs-comment">// rejection value. This may happen synchronously such as when using</span>
+<span class="hljs-comment">// `Promise.resolve()` on non-promise input.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">settled</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise resolved or rejected'</span>, { promise });
+}
+
+<span class="hljs-comment">// The `before` event runs immediately before a `then()` or `catch()` handler</span>
+<span class="hljs-comment">// runs or an `await` resumes execution.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">before</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise is about to call a then handler'</span>, { promise });
+}
+
+<span class="hljs-comment">// The `after` event runs immediately after a `then()` handler runs or when</span>
+<span class="hljs-comment">// an `await` begins after resuming from another.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">after</span>(<span class="hljs-params">promise</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a promise is done calling a then handler'</span>, { promise });
+}
+
+<span class="hljs-comment">// Lifecycle hooks may be started and stopped individually</span>
+<span class="hljs-keyword">const</span> stopWatchingInits = promiseHooks.<span class="hljs-title function_">onInit</span>(init);
+<span class="hljs-keyword">const</span> stopWatchingSettleds = promiseHooks.<span class="hljs-title function_">onSettled</span>(settled);
+<span class="hljs-keyword">const</span> stopWatchingBefores = promiseHooks.<span class="hljs-title function_">onBefore</span>(before);
+<span class="hljs-keyword">const</span> stopWatchingAfters = promiseHooks.<span class="hljs-title function_">onAfter</span>(after);
+
+<span class="hljs-comment">// Or they may be started and stopped in groups</span>
+<span class="hljs-keyword">const</span> stopHookSet = promiseHooks.<span class="hljs-title function_">createHook</span>({
+  init,
+  settled,
+  before,
+  after
+});
+
+<span class="hljs-comment">// To stop a hook, call the function returned at its creation.</span>
+<span class="hljs-title function_">stopWatchingInits</span>();
+<span class="hljs-title function_">stopWatchingSettleds</span>();
+<span class="hljs-title function_">stopWatchingBefores</span>();
+<span class="hljs-title function_">stopWatchingAfters</span>();
+<span class="hljs-title function_">stopHookSet</span>();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

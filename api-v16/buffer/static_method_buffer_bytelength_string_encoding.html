@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Buffer.byteLength(string[, encoding]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Buffer.byteLength(string[, encoding])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_static_method_buffer_bytelength_string_encoding" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/static_method_buffer_bytelength_string_encoding.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/static_method_buffer_bytelength_string_encoding.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#static-method-bufferbytelengthstring-encoding.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.0.0</td>
+<td><p>传入无效输入现在将抛出错误。</p></td></tr>
+<tr><td>v5.10.0</td>
+<td><p>参数 <code>string</code> 现在可以是任何 <code>TypedArray</code>、<code>DataView</code> 或 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v0.1.90</td>
+<td><p><span>新增于: v0.1.90</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow" class="type">&lt;SharedArrayBuffer&gt;</a> 用于计算长度的值。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果 <code>string</code> 是字符串，则这就是它的编码。
+<strong>默认值:</strong> <code>'utf8'</code>。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <code>string</code> 中包含的字节数。</li>
+</ul><p>使用 <code>encoding</code> 编码时返回字符串的字节长度。
+这与 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length" rel="nofollow"><code>String.prototype.length</code></a> 不同，<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length" rel="nofollow"><code>String.prototype.length</code></a> 不考虑用于将字符串转换为字节的编码。</p><p class="">对于 <code>'base64'</code>、<code>'base64url'</code> 和 <code>'hex'</code>，此函数假定输入有效。
+对于包含非 base64/hex 编码数据（例如空格）的字符串，返回值可能大于从字符串创建的 <code>Buffer</code> 的长度。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> str = <span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${str}</span>: <span class="hljs-subst">${str.length}</span> characters, `</span> +
+            <span class="hljs-string">`<span class="hljs-subst">${Buffer.byteLength(str, <span class="hljs-string">'utf8'</span>)}</span> bytes`</span>);
+<span class="hljs-comment">// 打印: ½ + ¼ = ¾: 9 characters, 12 bytes</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> str = <span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${str}</span>: <span class="hljs-subst">${str.length}</span> characters, `</span> +
+            <span class="hljs-string">`<span class="hljs-subst">${Buffer.byteLength(str, <span class="hljs-string">'utf8'</span>)}</span> bytes`</span>);
+<span class="hljs-comment">// 打印: ½ + ¼ = ¾: 9 characters, 12 bytes</span></code></pre><p class="">当 <code>string</code> 为 <code>Buffer</code>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow"><code>DataView</code></a>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a> 时，返回 <code>.byteLength</code> 报告的字节长度。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v7.0.0</td>
+<td><p>Passing invalid input will now throw an error.</p></td></tr>
+<tr><td>v5.10.0</td>
+<td><p>The <code>string</code> parameter can now be any <code>TypedArray</code>, <code>DataView</code> or <code>ArrayBuffer</code>.</p></td></tr>
+<tr><td>v0.1.90</td>
+<td><p><span>Added in: v0.1.90</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>string</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow" class="type">&lt;SharedArrayBuffer&gt;</a> A
+value to calculate the length of.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> If <code>string</code> is a string, this is its encoding.
+<strong>Default:</strong> <code>'utf8'</code>.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The number of bytes contained within <code>string</code>.</li>
+</ul><p>Returns the byte length of a string when encoded using <code>encoding</code>.
+This is not the same as <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length" rel="nofollow"><code>String.prototype.length</code></a>, which does not account
+for the encoding that is used to convert the string into bytes.</p><p>For <code>'base64'</code>, <code>'base64url'</code>, and <code>'hex'</code>, this function assumes valid input.
+For strings that contain non-base64/hex-encoded data (e.g. whitespace), the
+return value might be greater than the length of a <code>Buffer</code> created from the
+string.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> str = <span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${str}</span>: <span class="hljs-subst">${str.length}</span> characters, `</span> +
+            <span class="hljs-string">`<span class="hljs-subst">${Buffer.byteLength(str, <span class="hljs-string">'utf8'</span>)}</span> bytes`</span>);
+<span class="hljs-comment">// Prints: ½ + ¼ = ¾: 9 characters, 12 bytes</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> str = <span class="hljs-string">'\u00bd + \u00bc = \u00be'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${str}</span>: <span class="hljs-subst">${str.length}</span> characters, `</span> +
+            <span class="hljs-string">`<span class="hljs-subst">${Buffer.byteLength(str, <span class="hljs-string">'utf8'</span>)}</span> bytes`</span>);
+<span class="hljs-comment">// Prints: ½ + ¼ = ¾: 9 characters, 12 bytes</span></code></pre><p>When <code>string</code> is a <code>Buffer</code>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow"><code>DataView</code></a>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>/
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a>, the byte length as reported by <code>.byteLength</code>
+is returned.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

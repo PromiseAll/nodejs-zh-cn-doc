@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fsPromises.cp(src, dest[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fsPromises.cp(src, dest[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fspromises_cp_src_dest_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fspromises_cp_src_dest_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fspromisescpsrc-dest-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.15.0</td>
+<td><p>接受额外的 <code>verbatimSymlinks</code> 选项来指定是否为符号链接执行路径解析。</p></td></tr>
+<tr><td>v16.7.0</td>
+<td><p><span>新增于: v16.7.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><ul class="">
+<li><code>src</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 要复制的源路径。</li>
+<li><code>dest</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 要复制到的目标路径。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>dereference</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 取消引用符号链接。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>errorOnExist</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当 <code>force</code> 为 <code>false</code> 且目标存在时，则抛出错误。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>filter</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 过滤复制文件/目录的函数。
+返回 <code>true</code> 则复制条目，返回 <code>false</code> 则忽略它。
+也可以返回解决为 <code>true</code> 或 <code>false</code> 的 <code>Promise</code> <strong>默认值:</strong> <code>undefined</code>。</li>
+<li><code>force</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 覆盖现有的文件或目录。
+如果将此设置为 false 并且目标存在，则复制操作将忽略错误。
+使用 <code>errorOnExist</code> 选项更改此行为。
+<strong>默认值:</strong> <code>true</code>。</li>
+<li><code>preserveTimestamps</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，则 <code>src</code> 的时间戳将被保留。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>recursive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 递归地复制目录 <strong>默认值:</strong> <code>false</code></li>
+<li><code>verbatimSymlinks</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当为 <code>true</code> 时，则符号链接的路径解析将被跳过。 <strong>默认值:</strong> <code>false</code></li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 成功时将使用 <code>undefined</code> 履行。</li>
+</ul><p>将整个目录结构从 <code>src</code> 异步地复制到 <code>dest</code>，包括子目录和文件。</p><p class="">当将目录复制到另一个目录时，不支持 globs，并且行为类似于 <code>cp dir1/ dir2/</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.15.0</td>
+<td><p>Accepts an additional <code>verbatimSymlinks</code> option to specify whether to perform path resolution for symlinks.</p></td></tr>
+<tr><td>v16.7.0</td>
+<td><p><span>Added in: v16.7.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><ul>
+<li><code>src</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> source path to copy.</li>
+<li><code>dest</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> destination path to copy to.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>dereference</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> dereference symlinks. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>errorOnExist</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> when <code>force</code> is <code>false</code>, and the destination
+exists, throw an error. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>filter</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Function to filter copied files/directories. Return
+<code>true</code> to copy the item, <code>false</code> to ignore it. Can also return a <code>Promise</code>
+that resolves to <code>true</code> or <code>false</code> <strong>Default:</strong> <code>undefined</code>.</li>
+<li><code>force</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> overwrite existing file or directory. The copy
+operation will ignore errors if you set this to false and the destination
+exists. Use the <code>errorOnExist</code> option to change this behavior.
+<strong>Default:</strong> <code>true</code>.</li>
+<li><code>preserveTimestamps</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code> timestamps from <code>src</code> will
+be preserved. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>recursive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> copy directories recursively <strong>Default:</strong> <code>false</code></li>
+<li><code>verbatimSymlinks</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> When <code>true</code>, path resolution for symlinks will
+be skipped. <strong>Default:</strong> <code>false</code></li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> Fulfills with <code>undefined</code> upon success.</li>
+</ul><p>Asynchronously copies the entire directory structure from <code>src</code> to <code>dest</code>,
+including subdirectories and files.</p><p>When copying a directory to another directory, globs are not supported and
+behavior is similar to <code>cp dir1/ dir2/</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readline.createInterface(options) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-readline">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readline.createInterface(options)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../readline.html#readline_readline_createinterface_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/readline/readline_createinterface_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/readline/readline_createinterface_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/readline/#readlinecreateinterfaceoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.14.0</td>
+<td><p>现在支持 <code>signal</code> 选项。</p></td></tr>
+<tr><td>v15.8.0</td>
+<td><p>现在支持 <code>history</code> 选项。</p></td></tr>
+<tr><td>v13.9.0</td>
+<td><p>现在支持 <code>tabSize</code> 选项。</p></td></tr>
+<tr><td>v8.3.0, v6.11.4</td>
+<td><p>删除 <code>crlfDelay</code> 选项的最大限制。</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p>现在支持 <code>crlfDelay</code> 选项。</p></td></tr>
+<tr><td>v6.3.0</td>
+<td><p>现在支持 <code>prompt</code> 选项。</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>选项 <code>historySize</code> 现在可以是 <code>0</code>。</p></td></tr>
+<tr><td>v0.1.98</td>
+<td><p><span>新增于: v0.1.98</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>input</code> <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;stream.Readable&gt;</a> 要监听的<a href="../stream.html#readable-streams">可读</a>流。
+此选项是必需的。</li>
+<li><code>output</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> 要将逐行读取的数据写入的<a href="../stream.html#writable-streams">可写</a>流。</li>
+<li><code>completer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 可选的用于制表符自动补全的函数。</li>
+<li><code>terminal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果 <code>input</code> 和 <code>output</code> 流应该被视为终端，并且写入了 ANSI/VT100 转义码，则为 <code>true</code>。
+<strong>默认值:</strong> 在实例化时检查 <code>output</code> 流上的 <code>isTTY</code>。</li>
+<li><code>history</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 历史行的初始列表。
+仅当 <code>terminal</code> 由用户或内部的 <code>output</code> 检查设置为 <code>true</code> 时，此选项才有意义，否则历史缓存机制根本不会初始化。
+<strong>默认值:</strong> <code>[]</code>。</li>
+<li><code>historySize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 保留的最大历史行数。
+要禁用历史记录，则将此值设置为 <code>0</code>。
+仅当 <code>terminal</code> 由用户或内部的 <code>output</code> 检查设置为 <code>true</code> 时，此选项才有意义，否则历史缓存机制根本不会初始化。
+<strong>默认值:</strong> <code>30</code>。</li>
+<li><code>removeHistoryDuplicates</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则当添加到历史列表的新输入行与旧输入行重复时，这将从列表中删除旧行。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>prompt</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要使用的提示字符串。 <strong>默认值:</strong> <code>'&gt; '</code>。</li>
+<li><code>crlfDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果 <code>\r</code> 和 <code>\n</code> 之间的延迟超过 <code>crlfDelay</code> 毫秒，则 <code>\r</code> 和 <code>\n</code> 都将被视为单独的行尾输入。
+<code>crlfDelay</code> 将被强制为不小于 <code>100</code> 的数字。
+它可以设置为 <code>Infinity</code>，在这种情况下，<code>\r</code> 后跟 <code>\n</code> 将始终被视为单个换行符（这对于具有 <code>\r\n</code> 行分隔符的<a href="../readline.html#example-read-file-stream-line-by-line">文件读取</a>可能是合理的）。 <strong>默认值:</strong> <code>100</code>。</li>
+<li><code>escapeCodeTimeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> <code>readline</code> 将等待字符的时长（当以毫秒为单位读取不明确的键序列时，既可以使用目前读取的输入形成完整的键序列，又可以采用额外的输入来完成更长的键序列）。
+<strong>默认值:</strong> <code>500</code>。</li>
+<li><code>tabSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 一个制表符等于的空格数（最小为 1）。
+<strong>默认值:</strong> <code>8</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 允许使用中止信号关闭接口。
+中止信号将在内部调用接口上的 <code>close</code>。</li>
+</ul>
+</li>
+<li>返回: <a href="../readline.html#class-readlineinterface" rel="nofollow" class="type">&lt;readline.Interface&gt;</a></li>
+</ul><p><code>readline.createInterface()</code> 方法创建新的 <code>readline.Interface</code> 实例。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> readline = <span class="hljs-built_in">require</span>(<span class="hljs-string">'readline'</span>);
+<span class="hljs-keyword">const</span> rl = readline.<span class="hljs-title function_">createInterface</span>({
+  <span class="hljs-attr">input</span>: process.<span class="hljs-property">stdin</span>,
+  <span class="hljs-attr">output</span>: process.<span class="hljs-property">stdout</span>
+});</code></pre><p class="">一旦创建了 <code>readline.Interface</code> 实例，则最常见的场景就是监听 <code>'line'</code> 事件：</p><pre class=""><code class="language-js">rl.<span class="hljs-title function_">on</span>(<span class="hljs-string">'line'</span>, <span class="hljs-function">(<span class="hljs-params">line</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received: <span class="hljs-subst">${line}</span>`</span>);
+});</code></pre><p class="">如果此实例的 <code>terminal</code> 是 <code>true</code>，则如果它定义了 <code>output.columns</code> 属性，并且如果或当列发生变化时（<a href="../process.html#processstdout"><code>process.stdout</code></a> 会当其是终端时自动执行此操作）在 <code>output</code> 上触发 <code>'resize'</code> 事件，则 <code>output</code> 流将获得最佳的兼容性。</p><p class="">当使用 <code>stdin</code> 作为输入创建 <code>readline.Interface</code> 时，则程序在收到 <a href="https://en.wikipedia.org/wiki/End-of-file#EOF_character">EOF 字符</a>之前不会终止。
+要在不等待用户输入的情况下退出，则调用 <code>process.stdin.unref()</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.14.0</td>
+<td><p>The <code>signal</code> option is supported now.</p></td></tr>
+<tr><td>v15.8.0</td>
+<td><p>The <code>history</code> option is supported now.</p></td></tr>
+<tr><td>v13.9.0</td>
+<td><p>The <code>tabSize</code> option is supported now.</p></td></tr>
+<tr><td>v8.3.0, v6.11.4</td>
+<td><p>Remove max limit of <code>crlfDelay</code> option.</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p>The <code>crlfDelay</code> option is supported now.</p></td></tr>
+<tr><td>v6.3.0</td>
+<td><p>The <code>prompt</code> option is supported now.</p></td></tr>
+<tr><td>v6.0.0</td>
+<td><p>The <code>historySize</code> option can be <code>0</code> now.</p></td></tr>
+<tr><td>v0.1.98</td>
+<td><p><span>Added in: v0.1.98</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>input</code> <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;stream.Readable&gt;</a> The <a href="../stream.html#readable-streams">Readable</a> stream to listen to. This option
+is <em>required</em>.</li>
+<li><code>output</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> The <a href="../stream.html#writable-streams">Writable</a> stream to write readline data
+to.</li>
+<li><code>completer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> An optional function used for Tab autocompletion.</li>
+<li><code>terminal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <code>true</code> if the <code>input</code> and <code>output</code> streams should be
+treated like a TTY, and have ANSI/VT100 escape codes written to it.
+<strong>Default:</strong> checking <code>isTTY</code> on the <code>output</code> stream upon instantiation.</li>
+<li><code>history</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> Initial list of history lines. This option makes sense
+only if <code>terminal</code> is set to <code>true</code> by the user or by an internal <code>output</code>
+check, otherwise the history caching mechanism is not initialized at all.
+<strong>Default:</strong> <code>[]</code>.</li>
+<li><code>historySize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Maximum number of history lines retained. To disable
+the history set this value to <code>0</code>. This option makes sense only if
+<code>terminal</code> is set to <code>true</code> by the user or by an internal <code>output</code> check,
+otherwise the history caching mechanism is not initialized at all.
+<strong>Default:</strong> <code>30</code>.</li>
+<li><code>removeHistoryDuplicates</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, when a new input line added
+to the history list duplicates an older one, this removes the older line
+from the list. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>prompt</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The prompt string to use. <strong>Default:</strong> <code>'&gt; '</code>.</li>
+<li><code>crlfDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> If the delay between <code>\r</code> and <code>\n</code> exceeds
+<code>crlfDelay</code> milliseconds, both <code>\r</code> and <code>\n</code> will be treated as separate
+end-of-line input. <code>crlfDelay</code> will be coerced to a number no less than
+<code>100</code>. It can be set to <code>Infinity</code>, in which case <code>\r</code> followed by <code>\n</code>
+will always be considered a single newline (which may be reasonable for
+<a href="../readline.html#example-read-file-stream-line-by-line">reading files</a> with <code>\r\n</code> line delimiter). <strong>Default:</strong> <code>100</code>.</li>
+<li><code>escapeCodeTimeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The duration <code>readline</code> will wait for a
+character (when reading an ambiguous key sequence in milliseconds one that
+can both form a complete key sequence using the input read so far and can
+take additional input to complete a longer key sequence).
+<strong>Default:</strong> <code>500</code>.</li>
+<li><code>tabSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The number of spaces a tab is equal to (minimum 1).
+<strong>Default:</strong> <code>8</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> Allows closing the interface using an AbortSignal.
+Aborting the signal will internally call <code>close</code> on the interface.</li>
+</ul>
+</li>
+<li>Returns: <a href="../readline.html#class-readlineinterface" rel="nofollow" class="type">&lt;readline.Interface&gt;</a></li>
+</ul><p>The <code>readline.createInterface()</code> method creates a new <code>readline.Interface</code>
+instance.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> readline = <span class="hljs-built_in">require</span>(<span class="hljs-string">'readline'</span>);
+<span class="hljs-keyword">const</span> rl = readline.<span class="hljs-title function_">createInterface</span>({
+  <span class="hljs-attr">input</span>: process.<span class="hljs-property">stdin</span>,
+  <span class="hljs-attr">output</span>: process.<span class="hljs-property">stdout</span>
+});</code></pre><p>Once the <code>readline.Interface</code> instance is created, the most common case is to
+listen for the <code>'line'</code> event:</p><pre><code class="language-js">rl.<span class="hljs-title function_">on</span>(<span class="hljs-string">'line'</span>, <span class="hljs-function">(<span class="hljs-params">line</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received: <span class="hljs-subst">${line}</span>`</span>);
+});</code></pre><p>If <code>terminal</code> is <code>true</code> for this instance then the <code>output</code> stream will get
+the best compatibility if it defines an <code>output.columns</code> property and emits
+a <code>'resize'</code> event on the <code>output</code> if or when the columns ever change
+(<a href="../process.html#processstdout"><code>process.stdout</code></a> does this automatically when it is a TTY).</p><p>When creating a <code>readline.Interface</code> using <code>stdin</code> as input, the program
+will not terminate until it receives an <a href="https://en.wikipedia.org/wiki/End-of-file#EOF_character">EOF character</a>. To exit without
+waiting for user input, call <code>process.stdin.unref()</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

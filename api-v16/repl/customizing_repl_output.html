@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>自定义 REPL 输出 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-repl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>自定义 REPL 输出</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../repl.html#repl_customizing_repl_output" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/repl/customizing_repl_output.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/repl/customizing_repl_output.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/repl/#customizing-repl-output.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>默认情况下，<a href="../repl.html#class-replserver"><code>repl.REPLServer</code></a> 实例在将输出写入提供的 <code>Writable</code> 流（默认为 <code>process.stdout</code>）之前使用 <a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a> 方法格式化输出。
+<code>showProxy</code> 检查选项默认设置为 true，<code>colors</code> 选项设置为 true，具体取决于 REPL 的 <code>useColors</code> 选项。</p><p class="">可以在构造时指定 <code>useColors</code> 布尔选项，以指示默认编写器使用 ANSI 风格的代码为 <code>util.inspect()</code> 方法的输出着色。</p><p class="">如果 REPL 作为独立程序运行，也可以通过使用 <code>inspect.replDefaults</code> 属性（反映了 <a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a> 中的 <code>defaultOptions</code>）从 REPL 内部更改 REPL 的<a href="../util.html#utilinspectobject-options">检查默认值</a>。</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">util.inspect.replDefaults.compact = <span class="hljs-literal">false</span>;</span>
+false
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">[1]</span>
+[
+  1
+]
+<span class="hljs-meta prompt_">&gt;</span></code></pre><p class="">要完全自定义 <a href="../repl.html#class-replserver"><code>repl.REPLServer</code></a> 实例的输出，则在构建时为 <code>writer</code> 选项传入新函数。
+例如，下面的示例只是将任何输入文本转换为大写：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+
+<span class="hljs-keyword">const</span> r = repl.<span class="hljs-title function_">start</span>({ <span class="hljs-attr">prompt</span>: <span class="hljs-string">'&gt; '</span>, <span class="hljs-attr">eval</span>: myEval, <span class="hljs-attr">writer</span>: myWriter });
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">myEval</span>(<span class="hljs-params">cmd, context, filename, callback</span>) {
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, cmd);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">myWriter</span>(<span class="hljs-params">output</span>) {
+  <span class="hljs-keyword">return</span> output.<span class="hljs-title function_">toUpperCase</span>();
+}</code></pre></div>
+          <div id="content_right"><p>By default, <a href="../repl.html#class-replserver"><code>repl.REPLServer</code></a> instances format output using the
+<a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a> method before writing the output to the provided <code>Writable</code>
+stream (<code>process.stdout</code> by default). The <code>showProxy</code> inspection option is set
+to true by default and the <code>colors</code> option is set to true depending on the
+REPL's <code>useColors</code> option.</p><p>The <code>useColors</code> boolean option can be specified at construction to instruct the
+default writer to use ANSI style codes to colorize the output from the
+<code>util.inspect()</code> method.</p><p>If the REPL is run as standalone program, it is also possible to change the
+REPL's <a href="../util.html#utilinspectobject-options">inspection defaults</a> from inside the REPL by using the
+<code>inspect.replDefaults</code> property which mirrors the <code>defaultOptions</code> from
+<a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a>.</p><pre><code class="language-console"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">util.inspect.replDefaults.compact = <span class="hljs-literal">false</span>;</span>
+false
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">[1]</span>
+[
+  1
+]
+<span class="hljs-meta prompt_">&gt;</span></code></pre><p>To fully customize the output of a <a href="../repl.html#class-replserver"><code>repl.REPLServer</code></a> instance pass in a new
+function for the <code>writer</code> option on construction. The following example, for
+instance, simply converts any input text to upper case:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+
+<span class="hljs-keyword">const</span> r = repl.<span class="hljs-title function_">start</span>({ <span class="hljs-attr">prompt</span>: <span class="hljs-string">'&gt; '</span>, <span class="hljs-attr">eval</span>: myEval, <span class="hljs-attr">writer</span>: myWriter });
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">myEval</span>(<span class="hljs-params">cmd, context, filename, callback</span>) {
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, cmd);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">myWriter</span>(<span class="hljs-params">output</span>) {
+  <span class="hljs-keyword">return</span> output.<span class="hljs-title function_">toUpperCase</span>();
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

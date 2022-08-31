@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'change' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'change' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_event_change" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/event_change.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/event_change.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#event-change.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div><ul class="">
+<li><code>eventType</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 发生的变更事件的类型</li>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 更改的文件名（如果相关/可用）</li>
+</ul><p>当监视的目录或文件中的某些内容发生更改时触发。
+在 <a href="../fs.html#fswatchfilename-options-listener"><code>fs.watch()</code></a> 中查看更多详细信息。</p><p class="">根据操作系统支持，可能不提供 <code>filename</code> 参数。
+如果提供了 <code>filename</code>，如果 <code>fs.watch()</code> 在其 <code>encoding</code> 选项设置为 <code>'buffer'</code> 的情况下被调用，它将作为 <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 提供，否则 <code>filename</code> 将是 UTF-8 字符串。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { watch } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-comment">// 通过 fs.watch() 监听器处理的示例</span>
+<span class="hljs-title function_">watch</span>(<span class="hljs-string">'./tmp'</span>, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'buffer'</span> }, <span class="hljs-function">(<span class="hljs-params">eventType, filename</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (filename) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(filename);
+    <span class="hljs-comment">// 打印: &lt;Buffer ...&gt;</span>
+  }
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.5.8</span>
+</div><ul>
+<li><code>eventType</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The type of change event that has occurred</li>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The filename that changed (if relevant/available)</li>
+</ul><p>Emitted when something changes in a watched directory or file.
+See more details in <a href="../fs.html#fswatchfilename-options-listener"><code>fs.watch()</code></a>.</p><p>The <code>filename</code> argument may not be provided depending on operating system
+support. If <code>filename</code> is provided, it will be provided as a <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> if
+<code>fs.watch()</code> is called with its <code>encoding</code> option set to <code>'buffer'</code>, otherwise
+<code>filename</code> will be a UTF-8 string.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { watch } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-comment">// Example when handled through fs.watch() listener</span>
+<span class="hljs-title function_">watch</span>(<span class="hljs-string">'./tmp'</span>, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'buffer'</span> }, <span class="hljs-function">(<span class="hljs-params">eventType, filename</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (filename) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(filename);
+    <span class="hljs-comment">// Prints: &lt;Buffer ...&gt;</span>
+  }
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

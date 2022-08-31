@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>domain.intercept(callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-domain">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>domain.intercept(callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../domain.html#domain_domain_intercept_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/domain/domain_intercept_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/domain/domain_intercept_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/domain/#domaininterceptcallback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 回调函数</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 截获的函数</li>
+</ul><p>此方法和 <a href="../domain.html#domainbindcallback"><code>domain.bind(callback)</code></a> 差不多。
+但是，除了捕获抛出的错误外，它还会拦截作为第一个参数发送给函数的 <a href="../errors.html#class-error"><code>Error</code></a> 对象。</p><p class="">这样，常见的 <code>if (err) return callback(err);</code> 模式可以在一个地方用单个错误句柄替换。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> d = domain.<span class="hljs-title function_">create</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">readSomeFile</span>(<span class="hljs-params">filename, cb</span>) {
+  fs.<span class="hljs-title function_">readFile</span>(filename, <span class="hljs-string">'utf8'</span>, d.<span class="hljs-title function_">intercept</span>(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+    <span class="hljs-comment">// 注意，第一个参数永远不会传给回调，</span>
+    <span class="hljs-comment">// 因为它被假定为 'Error' 参数，</span>
+    <span class="hljs-comment">// 因此被域拦截。</span>
+
+    <span class="hljs-comment">// 如果这抛出，</span>
+    <span class="hljs-comment">// 则它也将被传到域，</span>
+    <span class="hljs-comment">// 因此错误处理逻辑可以移动到域上的 'error' 事件，</span>
+    <span class="hljs-comment">// 而不是在整个程序中重复。</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">cb</span>(<span class="hljs-literal">null</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(data));
+  }));
+}
+
+d.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">er</span>) =&gt;</span> {
+  <span class="hljs-comment">// 某处发生了错误。如果我们现在抛出，</span>
+  <span class="hljs-comment">// 则其会以正常的行号和堆栈消息使程序崩溃。</span>
+});</code></pre></div>
+          <div id="content_right"><ul>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The callback function</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The intercepted function</li>
+</ul><p>This method is almost identical to <a href="../domain.html#domainbindcallback"><code>domain.bind(callback)</code></a>. However, in
+addition to catching thrown errors, it will also intercept <a href="../errors.html#class-error"><code>Error</code></a>
+objects sent as the first argument to the function.</p><p>In this way, the common <code>if (err) return callback(err);</code> pattern can be replaced
+with a single error handler in a single place.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> d = domain.<span class="hljs-title function_">create</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">readSomeFile</span>(<span class="hljs-params">filename, cb</span>) {
+  fs.<span class="hljs-title function_">readFile</span>(filename, <span class="hljs-string">'utf8'</span>, d.<span class="hljs-title function_">intercept</span>(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+    <span class="hljs-comment">// Note, the first argument is never passed to the</span>
+    <span class="hljs-comment">// callback since it is assumed to be the 'Error' argument</span>
+    <span class="hljs-comment">// and thus intercepted by the domain.</span>
+
+    <span class="hljs-comment">// If this throws, it will also be passed to the domain</span>
+    <span class="hljs-comment">// so the error-handling logic can be moved to the 'error'</span>
+    <span class="hljs-comment">// event on the domain instead of being repeated throughout</span>
+    <span class="hljs-comment">// the program.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">cb</span>(<span class="hljs-literal">null</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(data));
+  }));
+}
+
+d.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">er</span>) =&gt;</span> {
+  <span class="hljs-comment">// An error occurred somewhere. If we throw it now, it will crash the program</span>
+  <span class="hljs-comment">// with the normal line number and stack message.</span>
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

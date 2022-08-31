@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>completer 函数的使用 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-readline">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>completer 函数的使用</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../readline.html#readline_use_of_the_completer_function" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/readline/use_of_the_completer_function.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/readline/use_of_the_completer_function.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/readline/#use-of-the-completer-function.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>completer</code> 函数将用户输入的当前行作为参数，并返回包含 2 个条目的 <code>Array</code>：</p><ul class="">
+<li>使用匹配条目的 <code>Array</code> 补全。</li>
+<li>用于匹配的子字符串。</li>
+</ul><p class="">例如：<code>[[substr1, substr2, ...], originalsubstring]</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">completer</span>(<span class="hljs-params">line</span>) {
+  <span class="hljs-keyword">const</span> completions = <span class="hljs-string">'.help .error .exit .quit .q'</span>.<span class="hljs-title function_">split</span>(<span class="hljs-string">' '</span>);
+  <span class="hljs-keyword">const</span> hits = completions.<span class="hljs-title function_">filter</span>(<span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> c.<span class="hljs-title function_">startsWith</span>(line));
+  <span class="hljs-comment">// 如果没有找到，则显示所有补全</span>
+  <span class="hljs-keyword">return</span> [hits.<span class="hljs-property">length</span> ? hits : completions, line];
+}</code></pre><p class="">如果 <code>completer</code> 函数接受两个参数，则可以异步地调用它：</p><pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">completer</span>(<span class="hljs-params">linePartial, callback</span>) {
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, [[<span class="hljs-string">'123'</span>], linePartial]);
+}</code></pre></div>
+          <div id="content_right"><p>The <code>completer</code> function takes the current line entered by the user
+as an argument, and returns an <code>Array</code> with 2 entries:</p><ul>
+<li>An <code>Array</code> with matching entries for the completion.</li>
+<li>The substring that was used for the matching.</li>
+</ul><p>For instance: <code>[[substr1, substr2, ...], originalsubstring]</code>.</p><pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">completer</span>(<span class="hljs-params">line</span>) {
+  <span class="hljs-keyword">const</span> completions = <span class="hljs-string">'.help .error .exit .quit .q'</span>.<span class="hljs-title function_">split</span>(<span class="hljs-string">' '</span>);
+  <span class="hljs-keyword">const</span> hits = completions.<span class="hljs-title function_">filter</span>(<span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> c.<span class="hljs-title function_">startsWith</span>(line));
+  <span class="hljs-comment">// Show all completions if none found</span>
+  <span class="hljs-keyword">return</span> [hits.<span class="hljs-property">length</span> ? hits : completions, line];
+}</code></pre><p>The <code>completer</code> function can be called asynchronously if it accepts two
+arguments:</p><pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">completer</span>(<span class="hljs-params">linePartial, callback</span>) {
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, [[<span class="hljs-string">'123'</span>], linePartial]);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

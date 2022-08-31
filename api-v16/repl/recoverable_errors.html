@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>可恢复的错误 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-repl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>可恢复的错误</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../repl.html#repl_recoverable_errors" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/repl/recoverable_errors.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/repl/recoverable_errors.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/repl/#recoverable-errors.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在 REPL 提示符下，按 <kbd>Enter</kbd> 将当前输入行发送到 <code>eval</code> 函数。
+为了支持多行输入，<code>eval</code> 函数可以返回 <code>repl.Recoverable</code> 的实例给提供的回调函数：</p><pre class=""><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">myEval</span>(<span class="hljs-params">cmd, context, filename, callback</span>) {
+  <span class="hljs-keyword">let</span> result;
+  <span class="hljs-keyword">try</span> {
+    result = vm.<span class="hljs-title function_">runInThisContext</span>(cmd);
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isRecoverableError</span>(e)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-title function_">callback</span>(<span class="hljs-keyword">new</span> repl.<span class="hljs-title class_">Recoverable</span>(e));
+    }
+  }
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, result);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">isRecoverableError</span>(<span class="hljs-params">error</span>) {
+  <span class="hljs-keyword">if</span> (error.<span class="hljs-property">name</span> === <span class="hljs-string">'SyntaxError'</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-regexp">/^(Unexpected end of input|Unexpected token)/</span>.<span class="hljs-title function_">test</span>(error.<span class="hljs-property">message</span>);
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}</code></pre></div>
+          <div id="content_right"><p>At the REPL prompt, pressing <kbd>Enter</kbd> sends the current line of input to
+the <code>eval</code> function. In order to support multi-line input, the <code>eval</code> function
+can return an instance of <code>repl.Recoverable</code> to the provided callback function:</p><pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">myEval</span>(<span class="hljs-params">cmd, context, filename, callback</span>) {
+  <span class="hljs-keyword">let</span> result;
+  <span class="hljs-keyword">try</span> {
+    result = vm.<span class="hljs-title function_">runInThisContext</span>(cmd);
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isRecoverableError</span>(e)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-title function_">callback</span>(<span class="hljs-keyword">new</span> repl.<span class="hljs-title class_">Recoverable</span>(e));
+    }
+  }
+  <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, result);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">isRecoverableError</span>(<span class="hljs-params">error</span>) {
+  <span class="hljs-keyword">if</span> (error.<span class="hljs-property">name</span> === <span class="hljs-string">'SyntaxError'</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-regexp">/^(Unexpected end of input|Unexpected token)/</span>.<span class="hljs-title function_">test</span>(error.<span class="hljs-property">message</span>);
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

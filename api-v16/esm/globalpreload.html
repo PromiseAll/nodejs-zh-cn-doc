@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>globalPreload() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-esm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>globalPreload()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../esm.html#esm_globalpreload" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/esm/globalpreload.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/esm/#globalpreload.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><blockquote class="">
+<p>加载器 API 正在重新设计。 这个钩子可能会消失，或者它的签名可能会改变。 不要依赖下面描述的 API。</p>
+</blockquote><blockquote class="">
+<p>在此 API 的先前版本中，此钩子被命名为 <code>getGlobalPreloadCode</code>。</p>
+</blockquote><ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>有时可能需要在应用程序运行所在的同一全局范围内运行一些代码。
+此钩子允许返回在启动时作为宽松模式脚本运行的字符串。</p><p class="">类似于 CommonJS 封装器的工作方式，代码在隐式函数范围内运行。
+唯一的参数是类似 <code>require</code> 的函数，可用于加载内置函数，如 "fs"：<code>getBuiltin(request: string)</code>。</p><p class="">如果代码需要更高级的 <code>require</code> 特性，则必须使用 <code>module.createRequire()</code> 构建自己的 <code>require</code>。</p><pre class=""><code class="language-js"><span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">{
+     port: MessagePort,
+   </span>}} utilities Things that preload code might find useful
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">string</span>} 在应用程序启动之前运行的代码
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">globalPreload</span>(<span class="hljs-params">utilities</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">`\
+globalThis.someInjectedProperty = 42;
+console.log('I just set some globals!');
+
+const { createRequire } = getBuiltin('module');
+const { cwd } = getBuiltin('process');
+
+const require = createRequire(cwd() + '/&lt;preload&gt;');
+// [...]
+`</span>;
+}</code></pre><p class="">为了允许应用程序和加载程序之间进行通信，预加载代码中提供了另一个参数：<code>port</code>。
+这可以作为加载器钩子的参数和钩子返回的源文本内部。
+必须注意正确调用 <a href="https://nodejs.org/dist/latest-v17.x/docs/api/worker_threads.html#portref"><code>port.ref()</code></a> 和 <a href="https://nodejs.org/dist/latest-v17.x/docs/api/worker_threads.html#portunref"><code>port.unref()</code></a> 以防止进程处于无法正常关闭的状态。</p><pre class=""><code class="language-js"><span class="hljs-comment">/**
+ * This example has the application context send a message to the loader
+ * and sends the message back to the application context
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">{
+     port: MessagePort,
+   </span>}} utilities Things that preload code might find useful
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">string</span>} 在应用程序启动之前运行的代码
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">globalPreload</span>(<span class="hljs-params">{ port }</span>) {
+  port.<span class="hljs-property">onmessage</span> = <span class="hljs-function">(<span class="hljs-params">evt</span>) =&gt;</span> {
+    port.<span class="hljs-title function_">postMessage</span>(evt.<span class="hljs-property">data</span>);
+  };
+  <span class="hljs-keyword">return</span> <span class="hljs-string">`\
+    port.postMessage('console.log("I went to the Loader and back");');
+    port.onmessage = (evt) =&gt; {
+      eval(evt.data);
+    };
+  `</span>;
+}</code></pre></div>
+          <div id="content_right"><blockquote>
+<p>The loaders API is being redesigned. This hook may disappear or its
+signature may change. Do not rely on the API described below.</p>
+</blockquote><blockquote>
+<p>In a previous version of this API, this hook was named
+<code>getGlobalPreloadCode</code>.</p>
+</blockquote><ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>Sometimes it might be necessary to run some code inside of the same global
+scope that the application runs in. This hook allows the return of a string
+that is run as a sloppy-mode script on startup.</p><p>Similar to how CommonJS wrappers work, the code runs in an implicit function
+scope. The only argument is a <code>require</code>-like function that can be used to load
+builtins like "fs": <code>getBuiltin(request: string)</code>.</p><p>If the code needs more advanced <code>require</code> features, it has to construct
+its own <code>require</code> using  <code>module.createRequire()</code>.</p><pre><code class="language-js"><span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">{
+     port: MessagePort,
+   </span>}} utilities Things that preload code might find useful
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">string</span>} Code to run before application startup
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">globalPreload</span>(<span class="hljs-params">utilities</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">`\
+globalThis.someInjectedProperty = 42;
+console.log('I just set some globals!');
+
+const { createRequire } = getBuiltin('module');
+const { cwd } = getBuiltin('process');
+
+const require = createRequire(cwd() + '/&lt;preload&gt;');
+// [...]
+`</span>;
+}</code></pre><p>In order to allow communication between the application and the loader, another
+argument is provided to the preload code: <code>port</code>. This is available as a
+parameter to the loader hook and inside of the source text returned by the hook.
+Some care must be taken in order to properly call <a href="https://nodejs.org/dist/latest-v17.x/docs/api/worker_threads.html#portref"><code>port.ref()</code></a> and
+<a href="https://nodejs.org/dist/latest-v17.x/docs/api/worker_threads.html#portunref"><code>port.unref()</code></a> to prevent a process from being in a state where it won't
+close normally.</p><pre><code class="language-js"><span class="hljs-comment">/**
+ * This example has the application context send a message to the loader
+ * and sends the message back to the application context
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">{
+     port: MessagePort,
+   </span>}} utilities Things that preload code might find useful
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">string</span>} Code to run before application startup
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">globalPreload</span>(<span class="hljs-params">{ port }</span>) {
+  port.<span class="hljs-property">onmessage</span> = <span class="hljs-function">(<span class="hljs-params">evt</span>) =&gt;</span> {
+    port.<span class="hljs-title function_">postMessage</span>(evt.<span class="hljs-property">data</span>);
+  };
+  <span class="hljs-keyword">return</span> <span class="hljs-string">`\
+    port.postMessage('console.log("I went to the Loader and back");');
+    port.onmessage = (evt) =&gt; {
+      eval(evt.data);
+    };
+  `</span>;
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

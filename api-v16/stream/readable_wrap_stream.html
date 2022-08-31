@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.wrap(stream) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.wrap(stream)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_wrap_stream" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_wrap_stream.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/readable_wrap_stream.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readablewrapstream.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.4</span>
+</div><ul class="">
+<li><code>stream</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> “旧式”的可读流</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p>在 Node.js 0.10 之前，流没有实现当前定义的整个 <code>stream</code> 模块 API。
+（有关更多信息，请参阅<a href="../stream.html#compatibility-with-older-nodejs-versions">兼容性</a>。）</p><p class="">当使用旧的 Node.js 库，它触发 <a href="../stream.html#event-data"><code>'data'</code></a> 事件并且有一个 <a href="../stream.html#readablepause"><code>stream.pause()</code></a> 方法只是建议性的，<code>readable.wrap()</code> 方法可用于创建一个使用旧流作为其数据源的 <a href="../stream.html#class-streamreadable"><code>Readable</code></a> 流。</p><p class="">很少需要使用 <code>readable.wrap()</code>，但提供该方法是为了方便与较旧的 Node.js 应用程序和库进行交互。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">OldReader</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./old-api-module.js'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Readable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> oreader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">OldReader</span>();
+<span class="hljs-keyword">const</span> myReader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Readable</span>().<span class="hljs-title function_">wrap</span>(oreader);
+
+myReader.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  myReader.<span class="hljs-title function_">read</span>(); <span class="hljs-comment">// 等等。</span>
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.4</span>
+</div><ul>
+<li><code>stream</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> An "old style" readable stream</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" rel="nofollow" class="type">&lt;this&gt;</a></li>
+</ul><p>Prior to Node.js 0.10, streams did not implement the entire <code>stream</code> module API
+as it is currently defined. (See <a href="../stream.html#compatibility-with-older-nodejs-versions">Compatibility</a> for more information.)</p><p>When using an older Node.js library that emits <a href="../stream.html#event-data"><code>'data'</code></a> events and has a
+<a href="../stream.html#readablepause"><code>stream.pause()</code></a> method that is advisory only, the
+<code>readable.wrap()</code> method can be used to create a <a href="../stream.html#class-streamreadable"><code>Readable</code></a> stream that uses
+the old stream as its data source.</p><p>It will rarely be necessary to use <code>readable.wrap()</code> but the method has been
+provided as a convenience for interacting with older Node.js applications and
+libraries.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">OldReader</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./old-api-module.js'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-title class_">Readable</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> oreader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">OldReader</span>();
+<span class="hljs-keyword">const</span> myReader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Readable</span>().<span class="hljs-title function_">wrap</span>(oreader);
+
+myReader.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  myReader.<span class="hljs-title function_">read</span>(); <span class="hljs-comment">// etc.</span>
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>dns.lookup() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dns">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>dns.lookup()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dns.html#dns_dns_lookup" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dns/dns_lookup.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dns/dns_lookup.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dns/#dnslookup.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在幕后，<a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> 使用与大多数其他程序相同的操作系统设施。
+例如，<a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> 几乎总是以与 <code>ping</code> 命令相同的方式解析给定名称。
+在大多数类似 POSIX 的操作系统上，可以通过更改 <a href="http://man7.org/linux/man-pages/man5/nsswitch.conf.5.html" rel="nofollow"><code>nsswitch.conf(5)</code></a> 和/或 <a href="http://man7.org/linux/man-pages/man5/resolv.conf.5.html" rel="nofollow"><code>resolv.conf(5)</code></a> 中的设置来修改 <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> 函数的行为，但更改这些文件将更改在同一操作系统上运行的所有其他程序的行为。</p><p class="">尽管对 <code>dns.lookup()</code> 的调用从 JavaScript 的角度来看是异步的，但它被实现为对运行在 libuv 线程池上的 <a href="http://man7.org/linux/man-pages/man3/getaddrinfo.3.html" rel="nofollow"><code>getaddrinfo(3)</code></a> 的同步调用。
+这可能会对某些应用程序产生令人惊讶的负面性能影响，有关更多信息，请参阅 <a href="../cli.html#uv_threadpool_sizesize"><code>UV_THREADPOOL_SIZE</code></a> 文档。</p><p class="">各种网络 API 将在内部调用 <code>dns.lookup()</code> 来解析主机名。
+如果这是一个问题，则考虑使用 <code>dns.resolve()</code> 并使用地址而不是主机名将主机名解析为地址。
+此外，某些网络 API（例如 <a href="../net.html#socketconnectoptions-connectlistener"><code>socket.connect()</code></a> 和 <a href="../dgram.html#dgramcreatesocketoptions-callback"><code>dgram.createSocket()</code></a>）允许替换默认解析器 <code>dns.lookup()</code>。</p></div>
+          <div id="content_right"><p>Under the hood, <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> uses the same operating system facilities
+as most other programs. For instance, <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> will almost always
+resolve a given name the same way as the <code>ping</code> command. On most POSIX-like
+operating systems, the behavior of the <a href="../dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> function can be
+modified by changing settings in <a href="http://man7.org/linux/man-pages/man5/nsswitch.conf.5.html" rel="nofollow"><code>nsswitch.conf(5)</code></a> and/or <a href="http://man7.org/linux/man-pages/man5/resolv.conf.5.html" rel="nofollow"><code>resolv.conf(5)</code></a>,
+but changing these files will change the behavior of all other
+programs running on the same operating system.</p><p>Though the call to <code>dns.lookup()</code> will be asynchronous from JavaScript's
+perspective, it is implemented as a synchronous call to <a href="http://man7.org/linux/man-pages/man3/getaddrinfo.3.html" rel="nofollow"><code>getaddrinfo(3)</code></a> that runs
+on libuv's threadpool. This can have surprising negative performance
+implications for some applications, see the <a href="../cli.html#uv_threadpool_sizesize"><code>UV_THREADPOOL_SIZE</code></a>
+documentation for more information.</p><p>Various networking APIs will call <code>dns.lookup()</code> internally to resolve
+host names. If that is an issue, consider resolving the host name to an address
+using <code>dns.resolve()</code> and using the address instead of a host name. Also, some
+networking APIs (such as <a href="../net.html#socketconnectoptions-connectlistener"><code>socket.connect()</code></a> and <a href="../dgram.html#dgramcreatesocketoptions-callback"><code>dgram.createSocket()</code></a>)
+allow the default resolver, <code>dns.lookup()</code>, to be replaced.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

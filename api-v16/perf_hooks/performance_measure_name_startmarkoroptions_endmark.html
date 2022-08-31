@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>performance.measure(name[, startMarkOrOptions[, endMark]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-perf_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>performance.measure(name[, startMarkOrOptions[, endMark]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../perf_hooks.html#perf_hooks_performance_measure_name_startmarkoroptions_endmark" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/perf_hooks/performance_measure_name_startmarkoroptions_endmark.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/perf_hooks/#performancemeasurename-startmarkoroptions-endmark.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>已更新以符合用户计时级别 3 规范。</p></td></tr>
+<tr><td>v13.13.0, v12.16.3</td>
+<td><p>使 <code>startMark</code> 和 <code>endMark</code> 参数可选。</p></td></tr>
+<tr><td>v8.5.0</td>
+<td><p><span>新增于: v8.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>startMarkOrOptions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 可选的。
+<ul>
+<li><code>detail</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 要包含在度量中的其他可选细节。</li>
+<li><code>duration</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 开始和结束时间之间的持续时间。</li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 用作结束时间的时间戳，或标识先前记录标记的字符串。</li>
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 用作开始时间的时间戳，或标识先前记录标记的字符串。</li>
+</ul>
+</li>
+<li><code>endMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 可选的。
+如果 <code>startMarkOrOptions</code> 是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>，则必须省略。</li>
+</ul><p>在性能时间轴中创建新的 <code>PerformanceMeasure</code> 条目。
+<code>PerformanceMeasure</code> 是 <code>PerformanceEntry</code> 的子类，其 <code>performanceEntry.entryType</code> 始终为 <code>'measure'</code>，其 <code>performanceEntry.duration</code> 测量自 <code>startMark</code> 和 <code>endMark</code> 以来经过的毫秒数。</p><p class=""><code>startMark</code> 参数可以标识性能时间轴中的任何现有的 <code>PerformanceMark</code>，或者可能标识由 <code>PerformanceNodeTiming</code> 类提供的任何时间戳属性。
+如果指定的 <code>startMark</code> 不存在，则抛出错误。</p><p class="">可选的 <code>endMark</code> 参数必须标识性能时间轴中的任何现有的 <code>PerformanceMark</code> 或 <code>PerformanceNodeTiming</code> 类提供的任何时间戳属性。
+不传入参数则 <code>endMark</code> 为 <code>performance.now()</code>，否则如果命名的 <code>endMark</code> 不存在，则抛出错误。</p><p class="">创建的 <code>PerformanceMeasure</code> 条目放入全局的性能时间轴，可以用 <code>performance.getEntries</code>、<code>performance.getEntriesByName</code>、<code>performance.getEntriesByType</code> 查询。
+当执行观察时，应使用 <code>performance.clearMeasures</code> 手动从全局的性能时间轴中清除条目。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>Updated to conform to the User Timing Level 3 specification.</p></td></tr>
+<tr><td>v13.13.0, v12.16.3</td>
+<td><p>Make <code>startMark</code> and <code>endMark</code> parameters optional.</p></td></tr>
+<tr><td>v8.5.0</td>
+<td><p><span>Added in: v8.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>startMarkOrOptions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> Optional.
+<ul>
+<li><code>detail</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> Additional optional detail to include with the measure.</li>
+<li><code>duration</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Duration between start and end times.</li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Timestamp to be used as the end time, or a string
+identifying a previously recorded mark.</li>
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Timestamp to be used as the start time, or a string
+identifying a previously recorded mark.</li>
+</ul>
+</li>
+<li><code>endMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Optional. Must be omitted if <code>startMarkOrOptions</code> is an
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>.</li>
+</ul><p>Creates a new <code>PerformanceMeasure</code> entry in the Performance Timeline. A
+<code>PerformanceMeasure</code> is a subclass of <code>PerformanceEntry</code> whose
+<code>performanceEntry.entryType</code> is always <code>'measure'</code>, and whose
+<code>performanceEntry.duration</code> measures the number of milliseconds elapsed since
+<code>startMark</code> and <code>endMark</code>.</p><p>The <code>startMark</code> argument may identify any <em>existing</em> <code>PerformanceMark</code> in the
+Performance Timeline, or <em>may</em> identify any of the timestamp properties
+provided by the <code>PerformanceNodeTiming</code> class. If the named <code>startMark</code> does
+not exist, an error is thrown.</p><p>The optional <code>endMark</code> argument must identify any <em>existing</em> <code>PerformanceMark</code>
+in the Performance Timeline or any of the timestamp properties provided by the
+<code>PerformanceNodeTiming</code> class. <code>endMark</code> will be <code>performance.now()</code>
+if no parameter is passed, otherwise if the named <code>endMark</code> does not exist, an
+error will be thrown.</p><p>The created <code>PerformanceMeasure</code> entry is put in the global Performance Timeline
+and can be queried with <code>performance.getEntries</code>,
+<code>performance.getEntriesByName</code>, and <code>performance.getEntriesByType</code>. When the
+observation is performed, the entries should be cleared from the global
+Performance Timeline manually with <code>performance.clearMeasures</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

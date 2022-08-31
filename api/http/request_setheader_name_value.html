@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>request.setHeader(name, value) | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>request.setHeader(name, value)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../http.html#http_request_setheader_name_value" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="">18.6.0</a></li><li><a href="../../api-v16/http/request_setheader_name_value.html">16.16.0</a></li><li><a href="../../api-v14/http/request_setheader_name_value.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#requestsetheadername-value.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v1.6.0</span>
+</div><ul class="">
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul><p>为标头对象设置单个标头值。
+如果该标头已经存在于待发送的标头中，则其值将被替换。
+在此处使用字符串数组发送具有相同名称的多个标头。
+非字符串值将不加修改地存储。
+因此，<a href="../http.html#requestgetheadername"><code>request.getHeader()</code></a> 可能返回非字符串值。
+但是，非字符串值将转换为字符串以进行网络传输。</p><pre class=""><code class="language-js">request.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'application/json'</span>);</code></pre><p class="">或者</p><pre class=""><code class="language-js">request.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Cookie'</span>, [<span class="hljs-string">'type=ninja'</span>, <span class="hljs-string">'language=javascript'</span>]);</code></pre><p class="">当值为字符串时，如果它包含 <code>latin1</code> 编码之外的字符，则会抛出异常。</p><p class="">如果您需要在值中传递 UTF-8 字符，则使用 <a href="https://www.rfc-editor.org/rfc/rfc8187.txt">RFC 8187</a> 标准对值进行编码。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> filename = <span class="hljs-string">'Rock 🎵.txt'</span>;
+request.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Disposition'</span>, <span class="hljs-string">`attachment; filename*=utf-8''<span class="hljs-subst">${<span class="hljs-built_in">encodeURIComponent</span>(filename)}</span>`</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v1.6.0</span>
+</div><ul>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul><p>Sets a single header value for headers object. If this header already exists in
+the to-be-sent headers, its value will be replaced. Use an array of strings
+here to send multiple headers with the same name. Non-string values will be
+stored without modification. Therefore, <a href="../http.html#requestgetheadername"><code>request.getHeader()</code></a> may return
+non-string values. However, the non-string values will be converted to strings
+for network transmission.</p><pre><code class="language-js">request.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'application/json'</span>);</code></pre><p>or</p><pre><code class="language-js">request.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Cookie'</span>, [<span class="hljs-string">'type=ninja'</span>, <span class="hljs-string">'language=javascript'</span>]);</code></pre><p>When the value is a string an exception will be thrown if it contains
+characters outside the <code>latin1</code> encoding.</p><p>If you need to pass UTF-8 characters in the value please encode the value
+using the <a href="https://www.rfc-editor.org/rfc/rfc8187.txt">RFC 8187</a> standard.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> filename = <span class="hljs-string">'Rock 🎵.txt'</span>;
+request.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Disposition'</span>, <span class="hljs-string">`attachment; filename*=utf-8''<span class="hljs-subst">${<span class="hljs-built_in">encodeURIComponent</span>(filename)}</span>`</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

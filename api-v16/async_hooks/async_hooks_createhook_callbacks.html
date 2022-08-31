@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>async_hooks.createHook(callbacks) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>async_hooks.createHook(callbacks)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_async_hooks_createhook_callbacks" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/async_hooks_createhook_callbacks.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/async_hooks_createhook_callbacks.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#async_hookscreatehookcallbacks.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v8.1.0</span>
+</div><ul class="">
+<li><code>callbacks</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 要注册的<a href="../async_hooks.html#hook-callbacks">钩子回调</a>
+<ul>
+<li><code>init</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../async_hooks.html#initasyncid-type-triggerasyncid-resource"><code>init</code> 回调</a>。</li>
+<li><code>before</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../async_hooks.html#beforeasyncid"><code>before</code> 回调</a>。</li>
+<li><code>after</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../async_hooks.html#afterasyncid"><code>after</code> 回调</a>。</li>
+<li><code>destroy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../async_hooks.html#destroyasyncid"><code>destroy</code> 回调</a>。</li>
+<li><code>promiseResolve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> <a href="../async_hooks.html#promiseresolveasyncid"><code>promiseResolve</code> 回调</a>。</li>
+</ul>
+</li>
+<li>返回: <a href="../async_hooks.html#async_hookscreatehookcallbacks" rel="nofollow" class="type">&lt;AsyncHook&gt;</a> 用于禁用和启用钩子的实例</li>
+</ul><p>为每个异步操作的不同生命周期事件注册要调用的函数。</p><p class="">回调 <code>init()</code>/<code>before()</code>/<code>after()</code>/<code>destroy()</code> 在资源的生命周期内为相应的异步事件调用。</p><p class="">所有回调都是可选的。
+比如，如果只需要跟踪资源清理，则只需要传入 <code>destroy</code> 回调。
+可以传给 <code>callbacks</code> 的所有函数的细节都在<a href="../async_hooks.html#hook-callbacks">钩子回调</a>章节。</p><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createHook } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-keyword">const</span> asyncHook = <span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { },
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> async_hooks = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-keyword">const</span> asyncHook = async_hooks.<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { },
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+});</code></pre><p class="">回调将通过原型链继承：</p><pre class=""><code class="language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAsyncCallbacks</span> {
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { }
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) {}
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAddedCallbacks</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">MyAsyncCallbacks</span> {
+  <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) { }
+  <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) { }
+}
+
+<span class="hljs-keyword">const</span> asyncHook = async_hooks.<span class="hljs-title function_">createHook</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">MyAddedCallbacks</span>());</code></pre><p class="">因为 promise 是异步的资源，其生命周期通过异步钩子机制进行跟踪，所以 <code>init()</code>、<code>before()</code>、<code>after()</code> 和 <code>destroy()</code> 回调不能是返回 promise 的异步函数。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v8.1.0</span>
+</div><ul>
+<li><code>callbacks</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The <a href="../async_hooks.html#hook-callbacks">Hook Callbacks</a> to register
+<ul>
+<li><code>init</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The <a href="../async_hooks.html#initasyncid-type-triggerasyncid-resource"><code>init</code> callback</a>.</li>
+<li><code>before</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The <a href="../async_hooks.html#beforeasyncid"><code>before</code> callback</a>.</li>
+<li><code>after</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The <a href="../async_hooks.html#afterasyncid"><code>after</code> callback</a>.</li>
+<li><code>destroy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The <a href="../async_hooks.html#destroyasyncid"><code>destroy</code> callback</a>.</li>
+<li><code>promiseResolve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The <a href="../async_hooks.html#promiseresolveasyncid"><code>promiseResolve</code> callback</a>.</li>
+</ul>
+</li>
+<li>Returns: <a href="../async_hooks.html#async_hookscreatehookcallbacks" rel="nofollow" class="type">&lt;AsyncHook&gt;</a> Instance used for disabling and enabling hooks</li>
+</ul><p>Registers functions to be called for different lifetime events of each async
+operation.</p><p>The callbacks <code>init()</code>/<code>before()</code>/<code>after()</code>/<code>destroy()</code> are called for the
+respective asynchronous event during a resource's lifetime.</p><p>All callbacks are optional. For example, if only resource cleanup needs to
+be tracked, then only the <code>destroy</code> callback needs to be passed. The
+specifics of all functions that can be passed to <code>callbacks</code> is in the
+<a href="../async_hooks.html#hook-callbacks">Hook Callbacks</a> section.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { createHook } <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-keyword">const</span> asyncHook = <span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { },
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> async_hooks = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-keyword">const</span> asyncHook = async_hooks.<span class="hljs-title function_">createHook</span>({
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { },
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+});</code></pre><p>The callbacks will be inherited via the prototype chain:</p><pre><code class="language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAsyncCallbacks</span> {
+  <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { }
+  <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) {}
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAddedCallbacks</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">MyAsyncCallbacks</span> {
+  <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) { }
+  <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) { }
+}
+
+<span class="hljs-keyword">const</span> asyncHook = async_hooks.<span class="hljs-title function_">createHook</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">MyAddedCallbacks</span>());</code></pre><p>Because promises are asynchronous resources whose lifecycle is tracked
+via the async hooks mechanism, the <code>init()</code>, <code>before()</code>, <code>after()</code>, and
+<code>destroy()</code> callbacks <em>must not</em> be async functions that return promises.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

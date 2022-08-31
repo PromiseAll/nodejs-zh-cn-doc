@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>resolve(specifier, context, defaultResolve) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-esm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>resolve(specifier, context, defaultResolve)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../esm.html#esm_resolve_specifier_context_defaultresolve" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="">16.16.0</a></li><li><a href="../../api-v14/esm/resolve_specifier_context_defaultresolve.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/esm/#resolvespecifier-context-defaultresolve.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>添加对导入断言的支持。</p></td></tr>
+</tbody></table>
+</details>
+</div><blockquote class="">
+<p>加载器 API 正在重新设计。 这个钩子可能会消失，或者它的签名可能会改变。 不要依赖下面描述的 API。</p>
+</blockquote><ul class="">
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>context</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>conditions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>parentURL</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a></li>
+</ul>
+</li>
+<li><code>defaultResolve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Node.js 默认解析器。</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>format</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a>
+<code>'builtin' | 'commonjs' | 'json' | 'module' | 'wasm'</code></li>
+<li><code>url</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 导入目标的绝对网址（例如 <code>file://…</code>）</li>
+</ul>
+</li>
+</ul><p><code>resolve</code> 钩子返回给定模块说明符和父 URL 的解析文件 URL，以及可选的格式（例如 <code>'module'</code>）作为对 <code>load</code> 钩子的提示。
+如果指定了格式，则 <code>load</code> 钩子最终负责提供最终的 <code>format</code> 值（可以随意忽略 <code>resolve</code> 提供的提示）；如果 <code>resolve</code> 提供了 <code>format</code>，则需要自定义 <code>load</code> 钩子，即使只是通过 Node.js 默认 <code>load</code> 钩子的值。</p><p class="">模块说明符是 <code>import</code> 语句或 <code>import()</code> 表达式中的字符串，父 URL 是导入此模块的 URL，如果这是应用程序的主要入口点，则为 <code>undefined</code></p><p class=""><code>context</code> 中的 <code>conditions</code> 属性是适用于此解析请求的<a href="../packages.html#conditional-exports">包导出条件</a>的条件数组。
+它们可用于在别处查找条件映射或在调用默认解析逻辑时修改列表。</p><p class="">当前的<a href="../packages.html#conditional-exports">包导出条件</a>始终在传入钩子的 <code>context.conditions</code> 数组中。
+为了在调用 <code>defaultResolve</code> 时保证默认的 Node.js 模块说明符解析行为，传给它的 <code>context.conditions</code> 数组必须包含最初传到 <code>resolve</code> 钩子的 <code>context.conditions</code> 数组的所有元素。</p><pre class=""><code class="language-js"><span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} <span class="hljs-variable">specifier</span>
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">{
+ *   conditions: string[],
+ *   parentURL: string | undefined,
+ * </span>}} context
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">Function</span>} <span class="hljs-variable">defaultResolve</span>
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">Promise&lt;{ url: string </span>}&gt;}
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-params">specifier, context, defaultResolve</span>) {
+  <span class="hljs-keyword">const</span> { parentURL = <span class="hljs-literal">null</span> } = context;
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &gt; <span class="hljs-number">0.5</span>) { <span class="hljs-comment">// 一些条件。</span>
+    <span class="hljs-comment">// 对于部分或全部说明符，做一些自定义逻辑来解决。</span>
+    <span class="hljs-comment">// 总是返回 {url: &lt;string&gt;} 形式的对象。</span>
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">url</span>: parentURL ?
+        <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(specifier, parentURL).<span class="hljs-property">href</span> :
+        <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(specifier).<span class="hljs-property">href</span>,
+    };
+  }
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &lt; <span class="hljs-number">0.5</span>) { <span class="hljs-comment">// 另一个条件。</span>
+    <span class="hljs-comment">// 当调用 `defaultResolve` 时，可以修改参数。</span>
+    <span class="hljs-comment">// 在这种情况下，它为匹配条件导出添加了另一个值。</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultResolve</span>(specifier, {
+      ...context,
+      <span class="hljs-attr">conditions</span>: [...context.<span class="hljs-property">conditions</span>, <span class="hljs-string">'another-condition'</span>],
+    });
+  }
+  <span class="hljs-comment">// 对于所有其他说明符，请遵循 Node.js。</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultResolve</span>(specifier, context, defaultResolve);
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>Add support for import assertions.</p></td></tr>
+</tbody></table>
+</details>
+</div><blockquote>
+<p>The loaders API is being redesigned. This hook may disappear or its
+signature may change. Do not rely on the API described below.</p>
+</blockquote><ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>context</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>conditions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>parentURL</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a></li>
+</ul>
+</li>
+<li><code>defaultResolve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The Node.js default resolver.</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>format</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type" rel="nofollow" class="type">&lt;undefined&gt;</a>
+<code>'builtin' | 'commonjs' | 'json' | 'module' | 'wasm'</code></li>
+<li><code>url</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The absolute url to the import target (such as <code>file://…</code>)</li>
+</ul>
+</li>
+</ul><p>The <code>resolve</code> hook returns the resolved file URL for a given module specifier
+and parent URL, and optionally its format (such as <code>'module'</code>) as a hint to the
+<code>load</code> hook. If a format is specified, the <code>load</code> hook is ultimately responsible
+for providing the final <code>format</code> value (and it is free to ignore the hint
+provided by <code>resolve</code>); if <code>resolve</code> provides a <code>format</code>, a custom <code>load</code>
+hook is required even if only to pass the value to the Node.js default <code>load</code>
+hook.</p><p>The module specifier is the string in an <code>import</code> statement or
+<code>import()</code> expression, and the parent URL is the URL of the module that imported
+this one, or <code>undefined</code> if this is the main entry point for the application.</p><p>The <code>conditions</code> property in <code>context</code> is an array of conditions for
+<a href="../packages.html#conditional-exports">package exports conditions</a> that apply to this resolution
+request. They can be used for looking up conditional mappings elsewhere or to
+modify the list when calling the default resolution logic.</p><p>The current <a href="../packages.html#conditional-exports">package exports conditions</a> are always in
+the <code>context.conditions</code> array passed into the hook. To guarantee <em>default
+Node.js module specifier resolution behavior</em> when calling <code>defaultResolve</code>, the
+<code>context.conditions</code> array passed to it <em>must</em> include <em>all</em> elements of the
+<code>context.conditions</code> array originally passed into the <code>resolve</code> hook.</p><pre><code class="language-js"><span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} <span class="hljs-variable">specifier</span>
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">{
+ *   conditions: string[],
+ *   parentURL: string | undefined,
+ * </span>}} context
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">Function</span>} <span class="hljs-variable">defaultResolve</span>
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">Promise&lt;{ url: string </span>}&gt;}
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-params">specifier, context, defaultResolve</span>) {
+  <span class="hljs-keyword">const</span> { parentURL = <span class="hljs-literal">null</span> } = context;
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &gt; <span class="hljs-number">0.5</span>) { <span class="hljs-comment">// Some condition.</span>
+    <span class="hljs-comment">// For some or all specifiers, do some custom logic for resolving.</span>
+    <span class="hljs-comment">// Always return an object of the form {url: &lt;string&gt;}.</span>
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">url</span>: parentURL ?
+        <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(specifier, parentURL).<span class="hljs-property">href</span> :
+        <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(specifier).<span class="hljs-property">href</span>,
+    };
+  }
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &lt; <span class="hljs-number">0.5</span>) { <span class="hljs-comment">// Another condition.</span>
+    <span class="hljs-comment">// When calling `defaultResolve`, the arguments can be modified. In this</span>
+    <span class="hljs-comment">// case it's adding another value for matching conditional exports.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultResolve</span>(specifier, {
+      ...context,
+      <span class="hljs-attr">conditions</span>: [...context.<span class="hljs-property">conditions</span>, <span class="hljs-string">'another-condition'</span>],
+    });
+  }
+  <span class="hljs-comment">// Defer to Node.js for all other specifiers.</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultResolve</span>(specifier, context, defaultResolve);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

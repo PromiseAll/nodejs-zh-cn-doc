@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>request.write(chunk[, encoding][, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>request.write(chunk[, encoding][, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_request_write_chunk_encoding_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/request_write_chunk_encoding_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/request_write_chunk_encoding_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#requestwritechunk-encoding-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.29</span>
+</div><ul class="">
+<li><code>chunk</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul><p>发送一块正文。
+此方法可以被多次调用。
+如果没有设置 <code>Content-Length</code>，则数据将自动使用 HTTP 分块传输编码进行编码，以便服务器知道数据何时结束。
+<code>Transfer-Encoding: chunked</code> 标头会被添加。
+需要调用 <a href="../http.html#requestenddata-encoding-callback"><code>request.end()</code></a> 来完成发送请求。</p><p class=""><code>encoding</code> 参数是可选的，仅当 <code>chunk</code> 是字符串时才适用。
+默认为 <code>'utf8'</code>。</p><p class=""><code>callback</code> 参数是可选的，将在刷新此数据块时调用，但前提是该块非空。</p><p class="">如果整个数据被成功刷新到内核缓冲区，则返回 <code>true</code>。
+如果所有或部分数据在用户内存中排队，则返回 <code>false</code>。
+当缓冲区再次空闲时，则将触发 <code>'drain'</code>。</p><p class="">当使用空字符串或缓冲区调用 <code>write</code> 函数时，则什么都不做并等待更多输入。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.29</span>
+</div><ul>
+<li><code>chunk</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a></li>
+</ul><p>Sends a chunk of the body. This method can be called multiple times. If no
+<code>Content-Length</code> is set, data will automatically be encoded in HTTP Chunked
+transfer encoding, so that server knows when the data ends. The
+<code>Transfer-Encoding: chunked</code> header is added. Calling <a href="../http.html#requestenddata-encoding-callback"><code>request.end()</code></a>
+is necessary to finish sending the request.</p><p>The <code>encoding</code> argument is optional and only applies when <code>chunk</code> is a string.
+Defaults to <code>'utf8'</code>.</p><p>The <code>callback</code> argument is optional and will be called when this chunk of data
+is flushed, but only if the chunk is non-empty.</p><p>Returns <code>true</code> if the entire data was flushed successfully to the kernel
+buffer. Returns <code>false</code> if all or part of the data was queued in user memory.
+<code>'drain'</code> will be emitted when the buffer is free again.</p><p>When <code>write</code> function is called with empty string or buffer, it does
+nothing and waits for more input.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

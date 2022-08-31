@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'unhandledRejection' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'unhandledRejection' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_event_unhandledrejection" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/event_unhandledrejection.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/event_unhandledrejection.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#event-unhandledrejection.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.0.0</td>
+<td><p>不处理 <code>Promise</code> 拒绝已被弃用。</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p>未处理的 <code>Promise</code> 拒绝现在将触发进程警告。</p></td></tr>
+<tr><td>v1.4.1</td>
+<td><p><span>新增于: v1.4.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>reason</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> Promise 被拒绝的对象（通常是 <a href="../errors.html#class-error"><code>Error</code></a> 对象）。</li>
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 被拒绝的 promise。</li>
+</ul><p>每当 <code>Promise</code> 被拒绝并且在事件循环的一个轮询内没有错误句柄附加到承诺时，则会触发 <code>'unhandledRejection'</code> 事件。
+使用 Promise 进行编程时，异常被封装为“被拒绝的 promise”。
+拒绝可以使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch" rel="nofollow"><code>promise.catch()</code></a> 捕获和处理，并通过 <code>Promise</code> 链传播。
+<code>'unhandledRejection'</code> 事件对于检测和跟踪尚未处理的被拒绝的 promise 很有用。</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'unhandledRejection'</span>, <span class="hljs-function">(<span class="hljs-params">reason, promise</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Unhandled Rejection at:'</span>, promise, <span class="hljs-string">'reason:'</span>, reason);
+  <span class="hljs-comment">// 应用程序特定的日志记录，在此处抛出错误或其他逻辑</span>
+});
+
+somePromise.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">reportToUser</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">pasre</span>(res)); <span class="hljs-comment">// 注意错别字 (`pasre`)</span>
+}); <span class="hljs-comment">// 无 `.catch()` 或 `.then()`</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'unhandledRejection'</span>, <span class="hljs-function">(<span class="hljs-params">reason, promise</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Unhandled Rejection at:'</span>, promise, <span class="hljs-string">'reason:'</span>, reason);
+  <span class="hljs-comment">// 应用程序特定的日志记录，在此处抛出错误或其他逻辑</span>
+});
+
+somePromise.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">reportToUser</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">pasre</span>(res)); <span class="hljs-comment">// 注意错别字 (`pasre`)</span>
+}); <span class="hljs-comment">// 无 `.catch()` 或 `.then()`</span></code></pre><p class="">以下也将触发 <code>'unhandledRejection'</code> 事件被触发：</p><pre class="with-35-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">SomeResource</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// 最初将加载状态设置为被拒绝的 promise</span>
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">loaded</span> = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Resource not yet loaded!'</span>));
+}
+
+<span class="hljs-keyword">const</span> resource = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SomeResource</span>();
+<span class="hljs-comment">// resource.loaded 上没有 .catch 或 .then</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">SomeResource</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// 最初将加载状态设置为被拒绝的 promise</span>
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">loaded</span> = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Resource not yet loaded!'</span>));
+}
+
+<span class="hljs-keyword">const</span> resource = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SomeResource</span>();
+<span class="hljs-comment">// resource.loaded 上没有 .catch 或 .then</span></code></pre><p class="">在此示例情况下，可以将拒绝作为开发人员错误进行跟踪，这通常是其他 <code>'unhandledRejection'</code> 事件的情况。
+为了解决此类故障，可以将非操作 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch" rel="nofollow"><code>.catch(() =&gt; { })</code></a> 句柄附加到 <code>resource.loaded</code>，这将阻止触发 <code>'unhandledRejection'</code> 事件。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v7.0.0</td>
+<td><p>Not handling <code>Promise</code> rejections is deprecated.</p></td></tr>
+<tr><td>v6.6.0</td>
+<td><p>Unhandled <code>Promise</code> rejections will now emit a process warning.</p></td></tr>
+<tr><td>v1.4.1</td>
+<td><p><span>Added in: v1.4.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>reason</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> The object with which the promise was rejected
+(typically an <a href="../errors.html#class-error"><code>Error</code></a> object).</li>
+<li><code>promise</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> The rejected promise.</li>
+</ul><p>The <code>'unhandledRejection'</code> event is emitted whenever a <code>Promise</code> is rejected and
+no error handler is attached to the promise within a turn of the event loop.
+When programming with Promises, exceptions are encapsulated as "rejected
+promises". Rejections can be caught and handled using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch" rel="nofollow"><code>promise.catch()</code></a> and
+are propagated through a <code>Promise</code> chain. The <code>'unhandledRejection'</code> event is
+useful for detecting and keeping track of promises that were rejected whose
+rejections have not yet been handled.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'unhandledRejection'</span>, <span class="hljs-function">(<span class="hljs-params">reason, promise</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Unhandled Rejection at:'</span>, promise, <span class="hljs-string">'reason:'</span>, reason);
+  <span class="hljs-comment">// Application specific logging, throwing an error, or other logic here</span>
+});
+
+somePromise.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">reportToUser</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">pasre</span>(res)); <span class="hljs-comment">// Note the typo (`pasre`)</span>
+}); <span class="hljs-comment">// No `.catch()` or `.then()`</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'unhandledRejection'</span>, <span class="hljs-function">(<span class="hljs-params">reason, promise</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Unhandled Rejection at:'</span>, promise, <span class="hljs-string">'reason:'</span>, reason);
+  <span class="hljs-comment">// Application specific logging, throwing an error, or other logic here</span>
+});
+
+somePromise.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">reportToUser</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">pasre</span>(res)); <span class="hljs-comment">// Note the typo (`pasre`)</span>
+}); <span class="hljs-comment">// No `.catch()` or `.then()`</span></code></pre><p>The following will also trigger the <code>'unhandledRejection'</code> event to be
+emitted:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> process <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">SomeResource</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// Initially set the loaded status to a rejected promise</span>
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">loaded</span> = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Resource not yet loaded!'</span>));
+}
+
+<span class="hljs-keyword">const</span> resource = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SomeResource</span>();
+<span class="hljs-comment">// no .catch or .then on resource.loaded for at least a turn</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> process = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">SomeResource</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-comment">// Initially set the loaded status to a rejected promise</span>
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">loaded</span> = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Resource not yet loaded!'</span>));
+}
+
+<span class="hljs-keyword">const</span> resource = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SomeResource</span>();
+<span class="hljs-comment">// no .catch or .then on resource.loaded for at least a turn</span></code></pre><p>In this example case, it is possible to track the rejection as a developer error
+as would typically be the case for other <code>'unhandledRejection'</code> events. To
+address such failures, a non-operational
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch" rel="nofollow"><code>.catch(() =&gt; { })</code></a> handler may be attached to
+<code>resource.loaded</code>, which would prevent the <code>'unhandledRejection'</code> event from
+being emitted.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

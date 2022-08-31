@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>assert.throws(fn[, error][, message]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-assert">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>assert.throws(fn[, error][, message])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../assert.html#assert_assert_throws_fn_error_message" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/assert/assert_throws_fn_error_message.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/assert/assert_throws_fn_error_message.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/assert/#assertthrowsfn-error-message.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.2.0</td>
+<td><p>参数 <code>error</code> 现在可以是包含正则表达式的对象。</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>参数 <code>error</code> 现在也可以是对象。</p></td></tr>
+<tr><td>v4.2.0</td>
+<td><p>参数 <code>error</code> 现在可以是箭头函数。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>期望函数 <code>fn</code> 抛出错误。</p><p class="">如果指定，则 <code>error</code> 可以是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="nofollow"><code>Class</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a>、验证函数、其中每个属性都将进行严格深度相等测试的验证对象，或者其中每个属性（包括不可枚举的 <code>message</code>和 <code>name</code> 属性）都将进行严格深度相等测试的错误实例。
+使用对象时，也可以使用正则表达式来验证字符串属性。
+有关示例，请参见下文。</p><p class="">如果指定，且如果 <code>fn</code> 调用失败或错误验证失败，则 <code>message</code> 将附加到 <code>AssertionError</code> 提供的消息。</p><p class="">自定义验证对象/错误实例：</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+err.<span class="hljs-property">code</span> = <span class="hljs-number">404</span>;
+err.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+err.<span class="hljs-property">info</span> = {
+  <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+};
+err.<span class="hljs-property">reg</span> = <span class="hljs-regexp">/abc/i</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    }
+    <span class="hljs-comment">// 只会测试验证对象上的属性。</span>
+    <span class="hljs-comment">// 使用嵌套对象需要存在所有属性。</span>
+    <span class="hljs-comment">// 否则验证将失败。</span>
+  }
+);
+
+<span class="hljs-comment">// 使用正则表达式验证错误属性：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-comment">// `name` 和 `message` 属性是字符串，在这些属性上使用正则表达式将匹配字符串。</span>
+    <span class="hljs-comment">// 如果失败，则会抛出错误。</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-regexp">/^TypeError$/</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-regexp">/Wrong/</span>,
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// 不能对嵌套属性使用正则表达式！</span>
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    },
+    <span class="hljs-comment">// `reg` 属性包含正则表达式，只有当验证对象包含相同的正则表达式时，它才会通过。</span>
+    <span class="hljs-attr">reg</span>: <span class="hljs-regexp">/abc/i</span>
+  }
+);
+
+<span class="hljs-comment">// 由于不同的 `message` 和 `name` 属性而失败：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> otherErr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Not found'</span>);
+    <span class="hljs-comment">// 将所有可枚举属性从 `err` 复制到 `otherErr`。</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(err)) {
+      otherErr[key] = value;
+    }
+    <span class="hljs-keyword">throw</span> otherErr;
+  },
+  <span class="hljs-comment">// 当使用错误作为验证对象时，错误的 `message` 和 `name` 属性也将被检查。</span>
+  err
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+err.<span class="hljs-property">code</span> = <span class="hljs-number">404</span>;
+err.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+err.<span class="hljs-property">info</span> = {
+  <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+};
+err.<span class="hljs-property">reg</span> = <span class="hljs-regexp">/abc/i</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    }
+    <span class="hljs-comment">// 只会测试验证对象上的属性。</span>
+    <span class="hljs-comment">// 使用嵌套对象需要存在所有属性。</span>
+    <span class="hljs-comment">// 否则验证将失败。</span>
+  }
+);
+
+<span class="hljs-comment">// 使用正则表达式验证错误属性：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-comment">// `name` 和 `message` 属性是字符串，在这些属性上使用正则表达式将匹配字符串。</span>
+    <span class="hljs-comment">// 如果失败，则会抛出错误。</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-regexp">/^TypeError$/</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-regexp">/Wrong/</span>,
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// 不能对嵌套属性使用正则表达式！</span>
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    },
+    <span class="hljs-comment">// `reg` 属性包含正则表达式，只有当验证对象包含相同的正则表达式时，它才会通过。</span>
+    <span class="hljs-attr">reg</span>: <span class="hljs-regexp">/abc/i</span>
+  }
+);
+
+<span class="hljs-comment">// 由于不同的 `message` 和 `name` 属性而失败：</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> otherErr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Not found'</span>);
+    <span class="hljs-comment">// 将所有可枚举属性从 `err` 复制到 `otherErr`。</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(err)) {
+      otherErr[key] = value;
+    }
+    <span class="hljs-keyword">throw</span> otherErr;
+  },
+  <span class="hljs-comment">// 当使用错误作为验证对象时，错误的 `message` 和 `name` 属性也将被检查。</span>
+  err
+);</code></pre><p class="">使用构造函数验证 instanceof：</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">Error</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">Error</span>
+);</code></pre><p class="">使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a> 验证错误消息：</p><p class="">使用正则表达式在错误对象上运行 <code>.toString</code>，因此还将包含错误名称。</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/^Error: Wrong value$/</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/^Error: Wrong value$/</span>
+);</code></pre><p class="">自定义错误验证：</p><p class="">该函数必须返回 <code>true</code> 以指示通过了所有内部验证。
+否则它将因 <a href="../assert.html#class-assertassertionerror"><code>AssertionError</code></a> 而失败。</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Error</span>);
+    <span class="hljs-title function_">assert</span>(<span class="hljs-regexp">/value/</span>.<span class="hljs-title function_">test</span>(err));
+    <span class="hljs-comment">// 避免从验证函数返回除 `true` 之外的任何内容。</span>
+    <span class="hljs-comment">// 否则，不清楚验证的哪一部分失败。而是，抛出有关失败的特定验证的错误（如本示例中所做的那样），并尽可能多地向该错误添加有用的调试信息。</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  },
+  <span class="hljs-string">'unexpected error'</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Error</span>);
+    <span class="hljs-title function_">assert</span>(<span class="hljs-regexp">/value/</span>.<span class="hljs-title function_">test</span>(err));
+    <span class="hljs-comment">// 避免从验证函数返回除 `true` 之外的任何内容。</span>
+    <span class="hljs-comment">// 否则，不清楚验证的哪一部分失败。而是，抛出有关失败的特定验证的错误（如本示例中所做的那样），并尽可能多地向该错误添加有用的调试信息。</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  },
+  <span class="hljs-string">'unexpected error'</span>
+);</code></pre><p class=""><code>error</code> 不能是字符串。
+如果提供字符串作为第二个参数，则假定 <code>error</code> 被省略，而该字符串将用于 <code>message</code>。
+这可能会导致容易遗漏的错误。
+使用与抛出的错误消息相同的消息将导致 <code>ERR_AMBIGUOUS_ARGUMENT</code> 错误。
+如果考虑使用字符串作为第二个参数，则请仔细阅读下面的示例：</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingFirst</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'First'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingSecond</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Second'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">notThrowing</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 第二个参数是字符串，且输入函数抛出错误。</span>
+<span class="hljs-comment">// 第一种情况不会抛出错误，因为它与输入函数抛出的错误消息不匹配！</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// 在下一个示例中，该消息与错误消息相比没有任何好处，并且由于不清楚用户是否打算实际匹配错误消息，Node.js 会抛出 `ERR_AMBIGUOUS_ARGUMENT` 错误。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// TypeError [ERR_AMBIGUOUS_ARGUMENT]</span>
+
+<span class="hljs-comment">// 该字符串仅在函数不抛出的情况下（作为消息）使用：</span>
+assert.<span class="hljs-title function_">throws</span>(notThrowing, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Missing expected exception: Second</span>
+
+<span class="hljs-comment">// 如果它旨在匹配错误消息，则执行以下操作：</span>
+<span class="hljs-comment">// 它不会抛出错误，因为错误消息匹配。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-regexp">/Second$/</span>);
+
+<span class="hljs-comment">// 如果错误消息不匹配，则抛出 AssertionError。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-regexp">/Second$/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingFirst</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'First'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingSecond</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Second'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">notThrowing</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// 第二个参数是字符串，且输入函数抛出错误。</span>
+<span class="hljs-comment">// 第一种情况不会抛出错误，因为它与输入函数抛出的错误消息不匹配！</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// 在下一个示例中，该消息与错误消息相比没有任何好处，并且由于不清楚用户是否打算实际匹配错误消息，Node.js 会抛出 `ERR_AMBIGUOUS_ARGUMENT` 错误。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// TypeError [ERR_AMBIGUOUS_ARGUMENT]</span>
+
+<span class="hljs-comment">// 该字符串仅在函数不抛出的情况下（作为消息）使用：</span>
+assert.<span class="hljs-title function_">throws</span>(notThrowing, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Missing expected exception: Second</span>
+
+<span class="hljs-comment">// 如果它旨在匹配错误消息，则执行以下操作：</span>
+<span class="hljs-comment">// 它不会抛出错误，因为错误消息匹配。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-regexp">/Second$/</span>);
+
+<span class="hljs-comment">// 如果错误消息不匹配，则抛出 AssertionError。</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-regexp">/Second$/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]</span></code></pre><p class="">由于容易混淆的符号，请避免将字符串作为第二个参数。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v10.2.0</td>
+<td><p>The <code>error</code> parameter can be an object containing regular expressions now.</p></td></tr>
+<tr><td>v9.9.0</td>
+<td><p>The <code>error</code> parameter can now be an object as well.</p></td></tr>
+<tr><td>v4.2.0</td>
+<td><p>The <code>error</code> parameter can now be an arrow function.</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>Added in: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" class="type">&lt;RegExp&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul><p>Expects the function <code>fn</code> to throw an error.</p><p>If specified, <code>error</code> can be a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="nofollow"><code>Class</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a>, a validation function,
+a validation object where each property will be tested for strict deep equality,
+or an instance of error where each property will be tested for strict deep
+equality including the non-enumerable <code>message</code> and <code>name</code> properties. When
+using an object, it is also possible to use a regular expression, when
+validating against a string property. See below for examples.</p><p>If specified, <code>message</code> will be appended to the message provided by the
+<code>AssertionError</code> if the <code>fn</code> call fails to throw or in case the error validation
+fails.</p><p>Custom validation object/error instance:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+err.<span class="hljs-property">code</span> = <span class="hljs-number">404</span>;
+err.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+err.<span class="hljs-property">info</span> = {
+  <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+};
+err.<span class="hljs-property">reg</span> = <span class="hljs-regexp">/abc/i</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    }
+    <span class="hljs-comment">// Only properties on the validation object will be tested for.</span>
+    <span class="hljs-comment">// Using nested objects requires all properties to be present. Otherwise</span>
+    <span class="hljs-comment">// the validation is going to fail.</span>
+  }
+);
+
+<span class="hljs-comment">// Using regular expressions to validate error properties:</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-comment">// The `name` and `message` properties are strings and using regular</span>
+    <span class="hljs-comment">// expressions on those will match against the string. If they fail, an</span>
+    <span class="hljs-comment">// error is thrown.</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-regexp">/^TypeError$/</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-regexp">/Wrong/</span>,
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// It is not possible to use regular expressions for nested properties!</span>
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    },
+    <span class="hljs-comment">// The `reg` property contains a regular expression and only if the</span>
+    <span class="hljs-comment">// validation object contains an identical regular expression, it is going</span>
+    <span class="hljs-comment">// to pass.</span>
+    <span class="hljs-attr">reg</span>: <span class="hljs-regexp">/abc/i</span>
+  }
+);
+
+<span class="hljs-comment">// Fails due to the different `message` and `name` properties:</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> otherErr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Not found'</span>);
+    <span class="hljs-comment">// Copy all enumerable properties from `err` to `otherErr`.</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(err)) {
+      otherErr[key] = value;
+    }
+    <span class="hljs-keyword">throw</span> otherErr;
+  },
+  <span class="hljs-comment">// The error's `message` and `name` properties will also be checked when using</span>
+  <span class="hljs-comment">// an error as validation object.</span>
+  err
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">'Wrong value'</span>);
+err.<span class="hljs-property">code</span> = <span class="hljs-number">404</span>;
+err.<span class="hljs-property">foo</span> = <span class="hljs-string">'bar'</span>;
+err.<span class="hljs-property">info</span> = {
+  <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+};
+err.<span class="hljs-property">reg</span> = <span class="hljs-regexp">/abc/i</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'TypeError'</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Wrong value'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    }
+    <span class="hljs-comment">// Only properties on the validation object will be tested for.</span>
+    <span class="hljs-comment">// Using nested objects requires all properties to be present. Otherwise</span>
+    <span class="hljs-comment">// the validation is going to fail.</span>
+  }
+);
+
+<span class="hljs-comment">// Using regular expressions to validate error properties:</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> err;
+  },
+  {
+    <span class="hljs-comment">// The `name` and `message` properties are strings and using regular</span>
+    <span class="hljs-comment">// expressions on those will match against the string. If they fail, an</span>
+    <span class="hljs-comment">// error is thrown.</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-regexp">/^TypeError$/</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-regexp">/Wrong/</span>,
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">nested</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-comment">// It is not possible to use regular expressions for nested properties!</span>
+      <span class="hljs-attr">baz</span>: <span class="hljs-string">'text'</span>
+    },
+    <span class="hljs-comment">// The `reg` property contains a regular expression and only if the</span>
+    <span class="hljs-comment">// validation object contains an identical regular expression, it is going</span>
+    <span class="hljs-comment">// to pass.</span>
+    <span class="hljs-attr">reg</span>: <span class="hljs-regexp">/abc/i</span>
+  }
+);
+
+<span class="hljs-comment">// Fails due to the different `message` and `name` properties:</span>
+<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> otherErr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Not found'</span>);
+    <span class="hljs-comment">// Copy all enumerable properties from `err` to `otherErr`.</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(err)) {
+      otherErr[key] = value;
+    }
+    <span class="hljs-keyword">throw</span> otherErr;
+  },
+  <span class="hljs-comment">// The error's `message` and `name` properties will also be checked when using</span>
+  <span class="hljs-comment">// an error as validation object.</span>
+  err
+);</code></pre><p>Validate instanceof using constructor:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">Error</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-title class_">Error</span>
+);</code></pre><p>Validate error message using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" rel="nofollow"><code>RegExp</code></a>:</p><p>Using a regular expression runs <code>.toString</code> on the error object, and will
+therefore also include the error name.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/^Error: Wrong value$/</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-regexp">/^Error: Wrong value$/</span>
+);</code></pre><p>Custom error validation:</p><p>The function must return <code>true</code> to indicate all internal validations passed.
+It will otherwise fail with an <a href="../assert.html#class-assertassertionerror"><code>AssertionError</code></a>.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Error</span>);
+    <span class="hljs-title function_">assert</span>(<span class="hljs-regexp">/value/</span>.<span class="hljs-title function_">test</span>(err));
+    <span class="hljs-comment">// Avoid returning anything from validation functions besides `true`.</span>
+    <span class="hljs-comment">// Otherwise, it's not clear what part of the validation failed. Instead,</span>
+    <span class="hljs-comment">// throw an error about the specific validation that failed (as done in this</span>
+    <span class="hljs-comment">// example) and add as much helpful debugging information to that error as</span>
+    <span class="hljs-comment">// possible.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  },
+  <span class="hljs-string">'unexpected error'</span>
+);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+assert.<span class="hljs-title function_">throws</span>(
+  <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Wrong value'</span>);
+  },
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-title function_">assert</span>(err <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Error</span>);
+    <span class="hljs-title function_">assert</span>(<span class="hljs-regexp">/value/</span>.<span class="hljs-title function_">test</span>(err));
+    <span class="hljs-comment">// Avoid returning anything from validation functions besides `true`.</span>
+    <span class="hljs-comment">// Otherwise, it's not clear what part of the validation failed. Instead,</span>
+    <span class="hljs-comment">// throw an error about the specific validation that failed (as done in this</span>
+    <span class="hljs-comment">// example) and add as much helpful debugging information to that error as</span>
+    <span class="hljs-comment">// possible.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  },
+  <span class="hljs-string">'unexpected error'</span>
+);</code></pre><p><code>error</code> cannot be a string. If a string is provided as the second
+argument, then <code>error</code> is assumed to be omitted and the string will be used for
+<code>message</code> instead. This can lead to easy-to-miss mistakes. Using the same
+message as the thrown error message is going to result in an
+<code>ERR_AMBIGUOUS_ARGUMENT</code> error. Please read the example below carefully if using
+a string as the second argument gets considered:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert/strict'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingFirst</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'First'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingSecond</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Second'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">notThrowing</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// The second argument is a string and the input function threw an Error.</span>
+<span class="hljs-comment">// The first case will not throw as it does not match for the error message</span>
+<span class="hljs-comment">// thrown by the input function!</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// In the next example the message has no benefit over the message from the</span>
+<span class="hljs-comment">// error and since it is not clear if the user intended to actually match</span>
+<span class="hljs-comment">// against the error message, Node.js throws an `ERR_AMBIGUOUS_ARGUMENT` error.</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// TypeError [ERR_AMBIGUOUS_ARGUMENT]</span>
+
+<span class="hljs-comment">// The string is only used (as message) in case the function does not throw:</span>
+assert.<span class="hljs-title function_">throws</span>(notThrowing, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Missing expected exception: Second</span>
+
+<span class="hljs-comment">// If it was intended to match for the error message do this instead:</span>
+<span class="hljs-comment">// It does not throw because the error messages match.</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-regexp">/Second$/</span>);
+
+<span class="hljs-comment">// If the error message does not match, an AssertionError is thrown.</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-regexp">/Second$/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert/strict'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingFirst</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'First'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throwingSecond</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Second'</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">notThrowing</span>(<span class="hljs-params"></span>) {}
+
+<span class="hljs-comment">// The second argument is a string and the input function threw an Error.</span>
+<span class="hljs-comment">// The first case will not throw as it does not match for the error message</span>
+<span class="hljs-comment">// thrown by the input function!</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// In the next example the message has no benefit over the message from the</span>
+<span class="hljs-comment">// error and since it is not clear if the user intended to actually match</span>
+<span class="hljs-comment">// against the error message, Node.js throws an `ERR_AMBIGUOUS_ARGUMENT` error.</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// TypeError [ERR_AMBIGUOUS_ARGUMENT]</span>
+
+<span class="hljs-comment">// The string is only used (as message) in case the function does not throw:</span>
+assert.<span class="hljs-title function_">throws</span>(notThrowing, <span class="hljs-string">'Second'</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]: Missing expected exception: Second</span>
+
+<span class="hljs-comment">// If it was intended to match for the error message do this instead:</span>
+<span class="hljs-comment">// It does not throw because the error messages match.</span>
+assert.<span class="hljs-title function_">throws</span>(throwingSecond, <span class="hljs-regexp">/Second$/</span>);
+
+<span class="hljs-comment">// If the error message does not match, an AssertionError is thrown.</span>
+assert.<span class="hljs-title function_">throws</span>(throwingFirst, <span class="hljs-regexp">/Second$/</span>);
+<span class="hljs-comment">// AssertionError [ERR_ASSERTION]</span></code></pre><p>Due to the confusing error-prone notation, avoid a string as the second
+argument.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

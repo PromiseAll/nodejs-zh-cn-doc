@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>buf.fill(value[, offset[, end]][, encoding]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>buf.fill(value[, offset[, end]][, encoding])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buf_fill_value_offset_end_encoding" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buf_fill_value_offset_end_encoding.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buf_fill_value_offset_end_encoding.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#buffillvalue-offset-end-encoding.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v11.0.0</td>
+<td><p>抛出 <code>ERR_OUT_OF_RANGE</code> 而不是 <code>ERR_INDEX_OUT_OF_RANGE</code>。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>负的 <code>end</code> 值会抛出 <code>ERR_INDEX_OUT_OF_RANGE</code> 错误。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>尝试使用零长度缓冲区填充非零长度缓冲区，则会触发抛出异常。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>为 <code>value</code> 指定无效字符串，则会触发抛出异常。</p></td></tr>
+<tr><td>v5.7.0</td>
+<td><p>现在支持 <code>encoding</code> 参数。</p></td></tr>
+<tr><td>v0.5.0</td>
+<td><p><span>新增于: v0.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 用于填充 <code>buf</code> 的值。</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 在开始填充 <code>buf</code> 之前要跳过的字节数。
+<strong>默认值:</strong> <code>0</code>。</li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 停止填充 <code>buf</code>（不包括在内）的位置。 <strong>默认值:</strong>
+<a href="../buffer.html#buflength"><code>buf.length</code></a>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 如果 <code>value</code> 是字符串，则为 <code>value</code> 的编码。
+<strong>默认值:</strong> <code>'utf8'</code>。</li>
+<li>返回: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> <code>buf</code> 的引用。</li>
+</ul><p>用指定的 <code>value</code> 填充 <code>buf</code>。
+如果没有给定 <code>offset</code> 和 <code>end</code>，则整个 <code>buf</code> 都会被填满：</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// 用 ASCII 字符 'h' 填充 `Buffer`。</span>
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">50</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'h'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// 用 ASCII 字符 'h' 填充 `Buffer`。</span>
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">50</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'h'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// 打印: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</span></code></pre><p class="">如果 <code>value</code> 不是字符串、<code>Buffer</code> 或整数，则将其强制为 <code>uint32</code> 值。
+如果结果整数大于 <code>255</code>（十进制），则 <code>buf</code> 将填充 <code>value &amp; 255</code>。</p><p class="">如果 <code>fill()</code> 操作的最终写入落在多字节字符上，则仅写入适合 <code>buf</code> 的该字符的字节：</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// 用在 UTF-8 中占用两个字节的字符填充 `Buffer`。</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'\u0222'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer c8 a2 c8 a2 c8&gt;</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// 用在 UTF-8 中占用两个字节的字符填充 `Buffer`。</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'\u0222'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer c8 a2 c8 a2 c8&gt;</span></code></pre><p class="">如果 <code>value</code> 包含无效字符，则截断；如果没有有效的填充数据，则抛出异常：</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'a'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer 61 61 61 61 61&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'aazz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer aa aa aa aa aa&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'zz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// 抛出异常。</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'a'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer 61 61 61 61 61&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'aazz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// 打印: &lt;Buffer aa aa aa aa aa&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'zz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// 抛出异常。</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v11.0.0</td>
+<td><p>Throws <code>ERR_OUT_OF_RANGE</code> instead of <code>ERR_INDEX_OUT_OF_RANGE</code>.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>Negative <code>end</code> values throw an <code>ERR_INDEX_OUT_OF_RANGE</code> error.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>Attempting to fill a non-zero length buffer with a zero length buffer triggers a thrown exception.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>Specifying an invalid string for <code>value</code> triggers a thrown exception.</p></td></tr>
+<tr><td>v5.7.0</td>
+<td><p>The <code>encoding</code> parameter is supported now.</p></td></tr>
+<tr><td>v0.5.0</td>
+<td><p><span>Added in: v0.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow" class="type">&lt;Uint8Array&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The value with which to fill <code>buf</code>.</li>
+<li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Number of bytes to skip before starting to fill <code>buf</code>.
+<strong>Default:</strong> <code>0</code>.</li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Where to stop filling <code>buf</code> (not inclusive). <strong>Default:</strong>
+<a href="../buffer.html#buflength"><code>buf.length</code></a>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The encoding for <code>value</code> if <code>value</code> is a string.
+<strong>Default:</strong> <code>'utf8'</code>.</li>
+<li>Returns: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> A reference to <code>buf</code>.</li>
+</ul><p>Fills <code>buf</code> with the specified <code>value</code>. If the <code>offset</code> and <code>end</code> are not given,
+the entire <code>buf</code> will be filled:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// Fill a `Buffer` with the ASCII character 'h'.</span>
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">50</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'h'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// Fill a `Buffer` with the ASCII character 'h'.</span>
+
+<span class="hljs-keyword">const</span> b = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">50</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'h'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b.<span class="hljs-title function_">toString</span>());
+<span class="hljs-comment">// Prints: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</span></code></pre><p><code>value</code> is coerced to a <code>uint32</code> value if it is not a string, <code>Buffer</code>, or
+integer. If the resulting integer is greater than <code>255</code> (decimal), <code>buf</code> will be
+filled with <code>value &amp; 255</code>.</p><p>If the final write of a <code>fill()</code> operation falls on a multi-byte character,
+then only the bytes of that character that fit into <code>buf</code> are written:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// Fill a `Buffer` with character that takes up two bytes in UTF-8.</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'\u0222'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer c8 a2 c8 a2 c8&gt;</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// Fill a `Buffer` with character that takes up two bytes in UTF-8.</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-string">'\u0222'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer c8 a2 c8 a2 c8&gt;</span></code></pre><p>If <code>value</code> contains invalid characters, it is truncated; if no valid
+fill data remains, an exception is thrown:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'a'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer 61 61 61 61 61&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'aazz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer aa aa aa aa aa&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'zz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// Throws an exception.</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafe</span>(<span class="hljs-number">5</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'a'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer 61 61 61 61 61&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'aazz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// Prints: &lt;Buffer aa aa aa aa aa&gt;</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">fill</span>(<span class="hljs-string">'zz'</span>, <span class="hljs-string">'hex'</span>));
+<span class="hljs-comment">// Throws an exception.</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

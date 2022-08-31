@@ -1,0 +1,897 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>global 全局变量 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_globals" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="" class="nav-globals active" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="globals" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><a href="#global-objects">global 全局变量</a>
+<ul>
+<li><a href="#class-abortcontroller"><code>AbortController</code> 类</a>
+<ul>
+<li><a href="#abortcontrollerabortreason"><code>abortController.abort([reason])</code></a></li>
+<li><a href="#abortcontrollersignal"><code>abortController.signal</code></a></li>
+<li><a href="#class-abortsignal"><code>AbortSignal</code> 类</a>
+<ul>
+<li><a href="#static-method-abortsignalabortreason"><code>AbortSignal.abort([reason])</code></a></li>
+<li><a href="#static-method-abortsignaltimeoutdelay"><code>AbortSignal.timeout(delay)</code></a></li>
+<li><a href="#event-abort"><code>'abort'</code> 事件</a></li>
+<li><a href="#abortsignalaborted"><code>abortSignal.aborted</code></a></li>
+<li><a href="#abortsignalonabort"><code>abortSignal.onabort</code></a></li>
+<li><a href="#abortsignalreason"><code>abortSignal.reason</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#class-buffer"><code>Buffer</code> 类</a></li>
+<li><a href="#__dirname"><code>__dirname</code></a></li>
+<li><a href="#__filename"><code>__filename</code></a></li>
+<li><span class="stability_3"><a href="#atobdata"><code>atob(data)</code></a></span></li>
+<li><span class="stability_3"><a href="#btoadata"><code>btoa(data)</code></a></span></li>
+<li><a href="#clearimmediateimmediateobject"><code>clearImmediate(immediateObject)</code></a></li>
+<li><a href="#clearintervalintervalobject"><code>clearInterval(intervalObject)</code></a></li>
+<li><a href="#cleartimeouttimeoutobject"><code>clearTimeout(timeoutObject)</code></a></li>
+<li><a href="#console"><code>console</code></a></li>
+<li><span class="stability_1"><a href="#crypto"><code>Crypto</code></a></span></li>
+<li><span class="stability_1"><a href="#crypto_1"><code>crypto</code></a></span></li>
+<li><span class="stability_1"><a href="#cryptokey"><code>CryptoKey</code></a></span></li>
+<li><a href="#event"><code>Event</code></a></li>
+<li><a href="#eventtarget"><code>EventTarget</code></a></li>
+<li><a href="#exports"><code>exports</code></a></li>
+<li><span class="stability_1"><a href="#fetch"><code>fetch</code></a></span></li>
+<li><span class="stability_1"><a href="#class-formdata">FormData 类</a></span></li>
+<li><a href="#global"><code>global</code></a></li>
+<li><span class="stability_1"><a href="#class-headers">Headers 类</a></span></li>
+<li><a href="#messagechannel"><code>MessageChannel</code></a></li>
+<li><a href="#messageevent"><code>MessageEvent</code></a></li>
+<li><a href="#messageport"><code>MessagePort</code></a></li>
+<li><a href="#module"><code>module</code></a></li>
+<li><a href="#performance"><code>performance</code></a></li>
+<li><a href="#process"><code>process</code></a></li>
+<li><a href="#queuemicrotaskcallback"><code>queueMicrotask(callback)</code></a></li>
+<li><a href="#require"><code>require()</code></a></li>
+<li><span class="stability_1"><a href="#response"><code>Response</code></a></span></li>
+<li><span class="stability_1"><a href="#request"><code>Request</code></a></span></li>
+<li><a href="#setimmediatecallback-args"><code>setImmediate(callback[, ...args])</code></a></li>
+<li><a href="#setintervalcallback-delay-args"><code>setInterval(callback, delay[, ...args])</code></a></li>
+<li><a href="#settimeoutcallback-delay-args"><code>setTimeout(callback, delay[, ...args])</code></a></li>
+<li><span class="stability_1"><a href="#subtlecrypto"><code>SubtleCrypto</code></a></span></li>
+<li><a href="#textdecoder"><code>TextDecoder</code></a></li>
+<li><a href="#textencoder"><code>TextEncoder</code></a></li>
+<li><a href="#url"><code>URL</code></a></li>
+<li><a href="#urlsearchparams"><code>URLSearchParams</code></a></li>
+<li><a href="#webassembly"><code>WebAssembly</code></a></li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="" class="nav-globals active">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/globals.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/globals.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><a href="#global-objects">global 全局变量</a>
+<ul>
+<li><a href="#class-abortcontroller"><code>AbortController</code> 类</a>
+<ul>
+<li><a href="#abortcontrollerabortreason"><code>abortController.abort([reason])</code></a></li>
+<li><a href="#abortcontrollersignal"><code>abortController.signal</code></a></li>
+<li><a href="#class-abortsignal"><code>AbortSignal</code> 类</a>
+<ul>
+<li><a href="#static-method-abortsignalabortreason"><code>AbortSignal.abort([reason])</code></a></li>
+<li><a href="#static-method-abortsignaltimeoutdelay"><code>AbortSignal.timeout(delay)</code></a></li>
+<li><a href="#event-abort"><code>'abort'</code> 事件</a></li>
+<li><a href="#abortsignalaborted"><code>abortSignal.aborted</code></a></li>
+<li><a href="#abortsignalonabort"><code>abortSignal.onabort</code></a></li>
+<li><a href="#abortsignalreason"><code>abortSignal.reason</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#class-buffer"><code>Buffer</code> 类</a></li>
+<li><a href="#__dirname"><code>__dirname</code></a></li>
+<li><a href="#__filename"><code>__filename</code></a></li>
+<li><span class="stability_3"><a href="#atobdata"><code>atob(data)</code></a></span></li>
+<li><span class="stability_3"><a href="#btoadata"><code>btoa(data)</code></a></span></li>
+<li><a href="#clearimmediateimmediateobject"><code>clearImmediate(immediateObject)</code></a></li>
+<li><a href="#clearintervalintervalobject"><code>clearInterval(intervalObject)</code></a></li>
+<li><a href="#cleartimeouttimeoutobject"><code>clearTimeout(timeoutObject)</code></a></li>
+<li><a href="#console"><code>console</code></a></li>
+<li><span class="stability_1"><a href="#crypto"><code>Crypto</code></a></span></li>
+<li><span class="stability_1"><a href="#crypto_1"><code>crypto</code></a></span></li>
+<li><span class="stability_1"><a href="#cryptokey"><code>CryptoKey</code></a></span></li>
+<li><a href="#event"><code>Event</code></a></li>
+<li><a href="#eventtarget"><code>EventTarget</code></a></li>
+<li><a href="#exports"><code>exports</code></a></li>
+<li><span class="stability_1"><a href="#fetch"><code>fetch</code></a></span></li>
+<li><span class="stability_1"><a href="#class-formdata">FormData 类</a></span></li>
+<li><a href="#global"><code>global</code></a></li>
+<li><span class="stability_1"><a href="#class-headers">Headers 类</a></span></li>
+<li><a href="#messagechannel"><code>MessageChannel</code></a></li>
+<li><a href="#messageevent"><code>MessageEvent</code></a></li>
+<li><a href="#messageport"><code>MessagePort</code></a></li>
+<li><a href="#module"><code>module</code></a></li>
+<li><a href="#performance"><code>performance</code></a></li>
+<li><a href="#process"><code>process</code></a></li>
+<li><a href="#queuemicrotaskcallback"><code>queueMicrotask(callback)</code></a></li>
+<li><a href="#require"><code>require()</code></a></li>
+<li><span class="stability_1"><a href="#response"><code>Response</code></a></span></li>
+<li><span class="stability_1"><a href="#request"><code>Request</code></a></span></li>
+<li><a href="#setimmediatecallback-args"><code>setImmediate(callback[, ...args])</code></a></li>
+<li><a href="#setintervalcallback-delay-args"><code>setInterval(callback, delay[, ...args])</code></a></li>
+<li><a href="#settimeoutcallback-delay-args"><code>setTimeout(callback, delay[, ...args])</code></a></li>
+<li><span class="stability_1"><a href="#subtlecrypto"><code>SubtleCrypto</code></a></span></li>
+<li><a href="#textdecoder"><code>TextDecoder</code></a></li>
+<li><a href="#textencoder"><code>TextEncoder</code></a></li>
+<li><a href="#url"><code>URL</code></a></li>
+<li><a href="#urlsearchparams"><code>URLSearchParams</code></a></li>
+<li><a href="#webassembly"><code>WebAssembly</code></a></li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>global 全局变量<span><a class="mark" href="#global-objects" id="global-objects">#</a></span><a aria-hidden="true" class="legacy" id="globals_global_objects"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="#global-objects">
+                <a href="globals/global_objects.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v0.10.0-->
+<!-- type=misc -->
+<p>这些对象在所有模块中都可用。
+以下变量可能看起来是全局的，但实际上不是。
+它们只存在于模块的作用域中，参见<a href="modules.html">模块系统文档</a>：</p>
+<ul class="">
+<li><a href="modules.html#__dirname"><code>__dirname</code></a></li>
+<li><a href="modules.html#__filename"><code>__filename</code></a></li>
+<li><a href="modules.html#exports"><code>exports</code></a></li>
+<li><a href="modules.html#module"><code>module</code></a></li>
+<li><a href="modules.html#requireid"><code>require()</code></a></li>
+</ul>
+<p class="">此处列出的对象特定于 Node.js。
+有些<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects" rel="nofollow">内置对象</a>是 JavaScript 语言本身的一部分，它们也可以全局地访问。</p>
+<section><h3><code>AbortController</code> 类<span><a class="mark" href="#class-abortcontroller" id="class-abortcontroller">#</a></span><a aria-hidden="true" class="legacy" id="globals_class_abortcontroller"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-abortcontroller">
+                <a href="globals/class_abortcontroller.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.4.0</td>
+<td><p>不再是实验的。</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p><span>新增于: v15.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<!-- type=global -->
+<p>用于在选定的基于 <code>Promise</code> 的 API 中发出取消信号的实用工具类。
+该 API 基于 Web API <a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController" rel="nofollow"><code>AbortController</code></a>。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+
+ac.<span class="hljs-property">signal</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'abort'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Aborted!'</span>),
+                           { <span class="hljs-attr">once</span>: <span class="hljs-literal">true</span> });
+
+ac.<span class="hljs-title function_">abort</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(ac.<span class="hljs-property">signal</span>.<span class="hljs-property">aborted</span>);  <span class="hljs-comment">// 打印 true</span></code></pre>
+<h4><code>abortController.abort([reason])</code><span><a class="mark" href="#abortcontrollerabortreason" id="abortcontrollerabortreason">#</a></span><a aria-hidden="true" class="legacy" id="globals_abortcontroller_abort_reason"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#abortcontrollerabortreason">
+                <a href="globals/abortcontroller_abort_reason.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>添加了新的可选的原因参数。</p></td></tr>
+<tr><td>v15.0.0, v14.17.0</td>
+<td><p><span>新增于: v15.0.0, v14.17.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>reason</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 可选的原因，可在 <code>AbortSignal</code> 的 <code>reason</code> 属性中检索。</li>
+</ul>
+<p>触发中止信号，使 <code>abortController.signal</code> 触发 <code>'abort'</code> 事件。</p>
+<h4><code>abortController.signal</code><span><a class="mark" href="#abortcontrollersignal" id="abortcontrollersignal">#</a></span><a aria-hidden="true" class="legacy" id="globals_abortcontroller_signal"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul>
+<li>类型: <a href="#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a></li>
+</ul>
+<h4><code>AbortSignal</code> 类<span><a class="mark" href="#class-abortsignal" id="class-abortsignal">#</a></span><a aria-hidden="true" class="legacy" id="globals_class_abortsignal"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#class-abortsignal">
+                <a href="globals/class_abortsignal.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li>继承自: <a href="events.html#class-eventtarget" rel="nofollow" class="type">&lt;EventTarget&gt;</a></li>
+</ul>
+<p><code>AbortSignal</code> 用于在调用 <code>abortController.abort()</code> 方法时通知观察者。</p>
+<h5><code>AbortSignal.abort([reason])</code><span><a class="mark" href="#static-method-abortsignalabortreason" id="static-method-abortsignalabortreason">#</a></span><a aria-hidden="true" class="legacy" id="globals_static_method_abortsignal_abort_reason"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#static-method-abortsignalabortreason">
+                <a href="globals/static_method_abortsignal_abort_reason.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>添加了新的可选的原因参数。</p></td></tr>
+<tr><td>v15.12.0, v14.17.0</td>
+<td><p><span>新增于: v15.12.0, v14.17.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>reason</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li>返回: <a href="#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a></li>
+</ul>
+<p>返回新的已中止的 <code>AbortSignal</code>。</p>
+<h5><code>AbortSignal.timeout(delay)</code><span><a class="mark" href="#static-method-abortsignaltimeoutdelay" id="static-method-abortsignaltimeoutdelay">#</a></span><a aria-hidden="true" class="legacy" id="globals_static_method_abortsignal_timeout_delay"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#static-method-abortsignaltimeoutdelay">
+                <a href="globals/static_method_abortsignal_timeout_delay.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<ul class="">
+<li><code>delay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 触发 AbortSignal 之前等待的毫秒数。</li>
+</ul>
+<p>返回新的 <code>AbortSignal</code>，其将在 <code>delay</code> 毫秒内中止。</p>
+<h5><code>'abort'</code> 事件<span><a class="mark" href="#event-abort" id="event-abort">#</a></span><a aria-hidden="true" class="legacy" id="globals_event_abort"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#event-abort">
+                <a href="globals/event_abort.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p>当调用 <code>abortController.abort()</code> 方法时，则触发 <code>'abort'</code> 事件。
+使用单个对象参数调用回调，该对象具有被设置为 <code>'abort'</code> 的 <code>type</code> 属性：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+
+<span class="hljs-comment">// 使用 onabort 属性...</span>
+ac.<span class="hljs-property">signal</span>.<span class="hljs-property">onabort</span> = <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'aborted!'</span>);
+
+<span class="hljs-comment">// 或者 EventTarget API ...</span>
+ac.<span class="hljs-property">signal</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'abort'</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">type</span>);  <span class="hljs-comment">// 打印 'abort'</span>
+}, { <span class="hljs-attr">once</span>: <span class="hljs-literal">true</span> });
+
+ac.<span class="hljs-title function_">abort</span>();</code></pre>
+<p class="">与 <code>AbortSignal</code> 关联的 <code>AbortController</code> 只会触发一次 <code>'abort'</code> 事件。
+建议在添加 <code>'abort'</code> 事件监听器之前代码检查 <code>abortSignal.aborted</code> 属性是否为 <code>false</code>。</p>
+<p class="">任何绑定到 <code>AbortSignal</code> 的事件监听器都应使用 <code>{ once: true }</code> 选项（或者，如果使用 <code>EventEmitter</code> API 绑定监听器，则使用 <code>once()</code> 方法）以确保在处理 <code>'abort'</code> 事件后立即删除事件监听器。
+不这样做可能会导致内存泄漏。</p>
+<h5><code>abortSignal.aborted</code><span><a class="mark" href="#abortsignalaborted" id="abortsignalaborted">#</a></span><a aria-hidden="true" class="legacy" id="globals_abortsignal_aborted"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#abortsignalaborted">
+                <a href="globals/abortsignal_aborted.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 中止 <code>AbortController</code> 后为真。</li>
+</ul>
+<h5><code>abortSignal.onabort</code><span><a class="mark" href="#abortsignalonabort" id="abortsignalonabort">#</a></span><a aria-hidden="true" class="legacy" id="globals_abortsignal_onabort"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#abortsignalonabort">
+                <a href="globals/abortsignal_onabort.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<p>可选的回调函数，可以由用户代码设置，以便当调用 <code>abortController.abort()</code> 函数时得到通知。</p>
+<h5><code>abortSignal.reason</code><span><a class="mark" href="#abortsignalreason" id="abortsignalreason">#</a></span><a aria-hidden="true" class="legacy" id="globals_abortsignal_reason"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#abortsignalreason">
+                <a href="globals/abortsignal_reason.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.14.0</span>
+</div>
+<ul class="">
+<li>类型: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+</ul>
+<p>当触发 <code>AbortSignal</code> 时指定的可选的原因。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+ac.<span class="hljs-title function_">abort</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'boom!'</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(ac.<span class="hljs-property">signal</span>.<span class="hljs-property">reason</span>);  <span class="hljs-comment">// Error('boom!');</span></code></pre>
+</section><section><h3><code>Buffer</code> 类<span><a class="mark" href="#class-buffer" id="class-buffer">#</a></span><a aria-hidden="true" class="legacy" id="globals_class_buffer"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-buffer">
+                <a href="globals/class_buffer.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.103</span>
+</div>
+<!-- type=global -->
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<p>用于处理二进制数据。
+参阅<a href="buffer.html">缓冲区章节</a>。</p>
+</section><section><h3><code>__dirname</code><span><a class="mark" href="#__dirname" id="__dirname">#</a></span><a aria-hidden="true" class="legacy" id="globals_dirname"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#__dirname">
+                <a href="globals/dirname.html" class="tip_trans">中英对照</a>
+                </p>
+<p>此变量可能看起来是全局的，但实际上不是。
+参见 <a href="modules.html#__dirname"><code>__dirname</code></a>。</p>
+</section><section><h3><code>__filename</code><span><a class="mark" href="#__filename" id="__filename">#</a></span><a aria-hidden="true" class="legacy" id="globals_filename"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#__filename">
+                <a href="globals/filename.html" class="tip_trans">中英对照</a>
+                </p>
+<p>此变量可能看起来是全局的，但实际上不是。
+参见 <a href="modules.html#__filename"><code>__filename</code></a>。</p>
+</section><section><h3><code>atob(data)</code><span><a class="mark" href="#atobdata" id="atobdata">#</a></span><a aria-hidden="true" class="legacy" id="globals_atob_data"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#atobdata">
+                <a href="globals/atob_data.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.0.0</span>
+</div>
+<p></p><div class="api_stability api_stability_3"><a href="documentation.html#stability-index">稳定性: 3</a> - 旧版. 改为使用 <code>Buffer.from(data, 'base64')</code> 。</div><p></p>
+<p><a href="buffer.html#bufferatobdata"><code>buffer.atob()</code></a> 的全局别名。</p>
+</section><section><h3><code>btoa(data)</code><span><a class="mark" href="#btoadata" id="btoadata">#</a></span><a aria-hidden="true" class="legacy" id="globals_btoa_data"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#btoadata">
+                <a href="globals/btoa_data.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.0.0</span>
+</div>
+<p></p><div class="api_stability api_stability_3"><a href="documentation.html#stability-index">稳定性: 3</a> - 旧版. 改为使用 <code>buf.toString('base64')</code> 。</div><p></p>
+<p><a href="buffer.html#bufferbtoadata"><code>buffer.btoa()</code></a> 的全局别名。</p>
+</section><section><h3><code>clearImmediate(immediateObject)</code><span><a class="mark" href="#clearimmediateimmediateobject" id="clearimmediateimmediateobject">#</a></span><a aria-hidden="true" class="legacy" id="globals_clearimmediate_immediateobject"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#clearimmediateimmediateobject">
+                <a href="globals/clearimmediate_immediateobject.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<!--type=global-->
+<p><a href="timers.html#clearimmediateimmediate"><code>clearImmediate</code></a> 在<a href="timers.html">定时器</a>章节进行了描述。</p>
+</section><section><h3><code>clearInterval(intervalObject)</code><span><a class="mark" href="#clearintervalintervalobject" id="clearintervalintervalobject">#</a></span><a aria-hidden="true" class="legacy" id="globals_clearinterval_intervalobject"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#clearintervalintervalobject">
+                <a href="globals/clearinterval_intervalobject.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.0.1</span>
+</div>
+<!--type=global-->
+<p><a href="timers.html#clearintervaltimeout"><code>clearInterval</code></a> 在<a href="timers.html">定时器</a>章节进行了描述。</p>
+</section><section><h3><code>clearTimeout(timeoutObject)</code><span><a class="mark" href="#cleartimeouttimeoutobject" id="cleartimeouttimeoutobject">#</a></span><a aria-hidden="true" class="legacy" id="globals_cleartimeout_timeoutobject"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#cleartimeouttimeoutobject">
+                <a href="globals/cleartimeout_timeoutobject.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.0.1</span>
+</div>
+<!--type=global-->
+<p><a href="timers.html#cleartimeouttimeout"><code>clearTimeout</code></a> 在<a href="timers.html">定时器</a>章节进行了描述。</p>
+</section><section><h3><code>console</code><span><a class="mark" href="#console" id="console">#</a></span><a aria-hidden="true" class="legacy" id="globals_console"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#console">
+                <a href="globals/console.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.100</span>
+</div>
+<!-- type=global -->
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>用于打印到标准输出和标准错误。
+参阅 <a href="console.html"><code>console</code></a> 章节。</p>
+</section><section><h3><code>Crypto</code><span><a class="mark" href="#crypto" id="crypto">#</a></span><a aria-hidden="true" class="legacy" id="globals_crypto"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#crypto">
+                <a href="globals/crypto.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-global-webcrypto"><code>--experimental-global-webcrypto</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="webcrypto.html#class-crypto" rel="nofollow" class="type">&lt;Crypto&gt;</a> 的浏览器兼容实现。
+只有在编译 Node.js 二进制文件时包含对 <code>crypto</code> 模块的支持，此全局才可用。</p>
+</section><section><h3><code>crypto</code><span><a class="mark" href="#crypto_1" id="crypto_1">#</a></span><a aria-hidden="true" class="legacy" id="globals_crypto_1"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#crypto_1">
+                <a href="globals/crypto_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-global-webcrypto"><code>--experimental-global-webcrypto</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="webcrypto.html">Web 加密 API</a> 的浏览器兼容实现。</p>
+</section><section><h3><code>CryptoKey</code><span><a class="mark" href="#cryptokey" id="cryptokey">#</a></span><a aria-hidden="true" class="legacy" id="globals_cryptokey"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#cryptokey">
+                <a href="globals/cryptokey.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-global-webcrypto"><code>--experimental-global-webcrypto</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="webcrypto.html#class-cryptokey" rel="nofollow" class="type">&lt;CryptoKey&gt;</a> 的浏览器兼容实现。
+只有在编译 Node.js 二进制文件时包含对 <code>crypto</code> 模块的支持，此全局才可用。</p>
+</section><section><h3><code>Event</code><span><a class="mark" href="#event" id="event">#</a></span><a aria-hidden="true" class="legacy" id="globals_event"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#event">
+                <a href="globals/event.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.4.0</td>
+<td><p>不再是实验的。</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p><span>新增于: v15.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<!-- type=global -->
+<p><code>Event</code> 类的浏览器兼容的实现。
+有关更多详细信息，请参阅 <a href="events.html#eventtarget-and-event-api"><code>EventTarget</code> 和 <code>Event</code> API</a>。</p>
+</section><section><h3><code>EventTarget</code><span><a class="mark" href="#eventtarget" id="eventtarget">#</a></span><a aria-hidden="true" class="legacy" id="globals_eventtarget"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#eventtarget">
+                <a href="globals/eventtarget.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.4.0</td>
+<td><p>不再是实验的。</p></td></tr>
+<tr><td>v15.0.0</td>
+<td><p><span>新增于: v15.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<!-- type=global -->
+<p><code>EventTarget</code> 类的浏览器兼容的实现。
+有关更多详细信息，请参阅 <a href="events.html#eventtarget-and-event-api"><code>EventTarget</code> 和 <code>Event</code> API</a>。</p>
+</section><section><h3><code>exports</code><span><a class="mark" href="#exports" id="exports">#</a></span><a aria-hidden="true" class="legacy" id="globals_exports"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#exports">
+                <a href="globals/exports.html" class="tip_trans">中英对照</a>
+                </p>
+<p>此变量可能看起来是全局的，但实际上不是。
+参见 <a href="modules.html#exports"><code>exports</code></a>。</p>
+</section><section><h3><code>fetch</code><span><a class="mark" href="#fetch" id="fetch">#</a></span><a aria-hidden="true" class="legacy" id="globals_fetch"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#fetch">
+                <a href="globals/fetch.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-fetch"><code>--experimental-fetch</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch"><code>fetch()</code></a> 函数的浏览器兼容实现。</p>
+</section><section><h3>FormData 类<span><a class="mark" href="#class-formdata" id="class-formdata">#</a></span><a aria-hidden="true" class="legacy" id="globals_class_formdata"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-formdata">
+                <a href="globals/class_formdata.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-fetch"><code>--experimental-fetch</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData" rel="nofollow" class="type">&lt;FormData&gt;</a> 的浏览器兼容实现。</p>
+</section><section><h3><code>global</code><span><a class="mark" href="#global" id="global">#</a></span><a aria-hidden="true" class="legacy" id="globals_global"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#global">
+                <a href="globals/global.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.27</span>
+</div>
+<!-- type=global -->
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 全局的命名空间对象。</li>
+</ul>
+<p>在浏览器中，顶层的作用域是全局作用域。
+这意味着在浏览器中，<code>var something</code> 将定义新的全局变量。
+在 Node.js 中这是不同的。
+顶层作用域不是全局作用域；Node.js 模块内的 <code>var something</code> 将是该模块本地的。</p>
+</section><section><h3>Headers 类<span><a class="mark" href="#class-headers" id="class-headers">#</a></span><a aria-hidden="true" class="legacy" id="globals_class_headers"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-headers">
+                <a href="globals/class_headers.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-fetch"><code>--experimental-fetch</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Headers" rel="nofollow" class="type">&lt;Headers&gt;</a> 的浏览器兼容实现。</p>
+</section><section><h3><code>MessageChannel</code><span><a class="mark" href="#messagechannel" id="messagechannel">#</a></span><a aria-hidden="true" class="legacy" id="globals_messagechannel"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#messagechannel">
+                <a href="globals/messagechannel.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!-- type=global -->
+<p><code>MessageChannel</code> 类。
+有关详细信息，请参阅 <a href="worker_threads.html#class-messagechannel"><code>MessageChannel</code></a>。</p>
+</section><section><h3><code>MessageEvent</code><span><a class="mark" href="#messageevent" id="messageevent">#</a></span><a aria-hidden="true" class="legacy" id="globals_messageevent"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#messageevent">
+                <a href="globals/messageevent.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!-- type=global -->
+<p><code>MessageEvent</code> 类。
+有关详细信息，请参阅 <a href="https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent/MessageEvent" rel="nofollow"><code>MessageEvent</code></a>。</p>
+</section><section><h3><code>MessagePort</code><span><a class="mark" href="#messageport" id="messageport">#</a></span><a aria-hidden="true" class="legacy" id="globals_messageport"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#messageport">
+                <a href="globals/messageport.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<!-- type=global -->
+<p><code>MessagePort</code> 类。
+有关详细信息，请参阅 <a href="worker_threads.html#class-messageport"><code>MessagePort</code></a>。</p>
+</section><section><h3><code>module</code><span><a class="mark" href="#module" id="module">#</a></span><a aria-hidden="true" class="legacy" id="globals_module"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#module">
+                <a href="globals/module.html" class="tip_trans">中英对照</a>
+                </p>
+<p>此变量可能看起来是全局的，但实际上不是。
+参见 <a href="modules.html#module"><code>module</code></a>。</p>
+</section><section><h3><code>performance</code><span><a class="mark" href="#performance" id="performance">#</a></span><a aria-hidden="true" class="legacy" id="globals_performance"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#performance">
+                <a href="globals/performance.html" class="tip_trans">中英对照</a>
+                </p>
+<p><a href="perf_hooks.html#perf_hooksperformance"><code>perf_hooks.performance</code></a> 对象。</p>
+</section><section><h3><code>process</code><span><a class="mark" href="#process" id="process">#</a></span><a aria-hidden="true" class="legacy" id="globals_process"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#process">
+                <a href="globals/process.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.7</span>
+</div>
+<!-- type=global -->
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>进程对象。
+参阅 <a href="process.html#process"><code>process</code> 对象</a>章节。</p>
+</section><section><h3><code>queueMicrotask(callback)</code><span><a class="mark" href="#queuemicrotaskcallback" id="queuemicrotaskcallback">#</a></span><a aria-hidden="true" class="legacy" id="globals_queuemicrotask_callback"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#queuemicrotaskcallback">
+                <a href="globals/queuemicrotask_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.0.0</span>
+</div>
+<!-- type=global -->
+<ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 要排队的函数。</li>
+</ul>
+<p><code>queueMicrotask()</code> 方法将微任务排队以调用 <code>callback</code>。
+如果 <code>callback</code> 抛出异常，则将触发 <a href="process.html#process"><code>process</code> 对象</a>的 <code>'uncaughtException'</code> 事件。</p>
+<p class="">微任务队列由 V8 管理，并且可以以类似于 <a href="process.html#processnexttickcallback-args"><code>process.nextTick()</code></a> 队列的方式使用，后者由 Node.js 管理。
+在 Node.js 事件循环的每次轮询中，<code>process.nextTick()</code> 队列总是在微任务队列之前处理。</p>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 在这里，`queueMicrotask()` 用于确保 'load' 事件总是异步地触发，</span>
+<span class="hljs-comment">// 并且因此始终如一。</span>
+<span class="hljs-comment">// 在这里使用 `process.nextTick()` 会导致 'load' 事件</span>
+<span class="hljs-comment">// 总是在任何其他 promise 作业之前触发。</span>
+
+<span class="hljs-title class_">DataHandler</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">load</span> = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">load</span>(<span class="hljs-params">key</span>) {
+  <span class="hljs-keyword">const</span> hit = <span class="hljs-variable language_">this</span>.<span class="hljs-property">_cache</span>.<span class="hljs-title function_">get</span>(key);
+  <span class="hljs-keyword">if</span> (hit !== <span class="hljs-literal">undefined</span>) {
+    <span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'load'</span>, hit);
+    });
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetchData</span>(key);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">_cache</span>.<span class="hljs-title function_">set</span>(key, data);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'load'</span>, data);
+};</code></pre>
+</section><section><h3><code>require()</code><span><a class="mark" href="#require" id="require">#</a></span><a aria-hidden="true" class="legacy" id="globals_require"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#require">
+                <a href="globals/require.html" class="tip_trans">中英对照</a>
+                </p>
+<p>此变量可能看起来是全局的，但实际上不是。
+参见 <a href="modules.html#requireid"><code>require()</code></a>。</p>
+</section><section><h3><code>Response</code><span><a class="mark" href="#response" id="response">#</a></span><a aria-hidden="true" class="legacy" id="globals_response"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#response">
+                <a href="globals/response.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-fetch"><code>--experimental-fetch</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Response" rel="nofollow" class="type">&lt;Response&gt;</a> 的浏览器兼容实现。</p>
+</section><section><h3><code>Request</code><span><a class="mark" href="#request" id="request">#</a></span><a aria-hidden="true" class="legacy" id="globals_request"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#request">
+                <a href="globals/request.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-fetch"><code>--experimental-fetch</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Request" rel="nofollow" class="type">&lt;Request&gt;</a> 的浏览器兼容实现。</p>
+</section><section><h3><code>setImmediate(callback[, ...args])</code><span><a class="mark" href="#setimmediatecallback-args" id="setimmediatecallback-args">#</a></span><a aria-hidden="true" class="legacy" id="globals_setimmediate_callback_args"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#setimmediatecallback-args">
+                <a href="globals/setimmediate_callback_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.1</span>
+</div>
+<!-- type=global -->
+<p><a href="timers.html#setimmediatecallback-args"><code>setImmediate</code></a> 在<a href="timers.html">定时器</a>章节进行了描述。</p>
+</section><section><h3><code>setInterval(callback, delay[, ...args])</code><span><a class="mark" href="#setintervalcallback-delay-args" id="setintervalcallback-delay-args">#</a></span><a aria-hidden="true" class="legacy" id="globals_setinterval_callback_delay_args"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#setintervalcallback-delay-args">
+                <a href="globals/setinterval_callback_delay_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.0.1</span>
+</div>
+<!-- type=global -->
+<p><a href="timers.html#setintervalcallback-delay-args"><code>setInterval</code></a> 在<a href="timers.html">定时器</a>章节进行了描述。</p>
+</section><section><h3><code>setTimeout(callback, delay[, ...args])</code><span><a class="mark" href="#settimeoutcallback-delay-args" id="settimeoutcallback-delay-args">#</a></span><a aria-hidden="true" class="legacy" id="globals_settimeout_callback_delay_args"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#settimeoutcallback-delay-args">
+                <a href="globals/settimeout_callback_delay_args.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.0.1</span>
+</div>
+<!-- type=global -->
+<p><a href="timers.html#settimeoutcallback-delay-args"><code>setTimeout</code></a> 在<a href="timers.html">定时器</a>章节进行了描述。</p>
+</section><section><h3><code>SubtleCrypto</code><span><a class="mark" href="#subtlecrypto" id="subtlecrypto">#</a></span><a aria-hidden="true" class="legacy" id="globals_subtlecrypto"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#subtlecrypto">
+                <a href="globals/subtlecrypto.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验。
+使用 <a href="cli.html#--experimental-global-webcrypto"><code>--experimental-global-webcrypto</code></a> CLI 标志启用此 API。</div><p></p>
+<p><a href="webcrypto.html#class-subtlecrypto" rel="nofollow" class="type">&lt;SubtleCrypto&gt;</a> 的浏览器兼容实现。
+只有在编译 Node.js 二进制文件时包含对 <code>crypto</code> 模块的支持，此全局才可用。</p>
+</section><section><h3><code>TextDecoder</code><span><a class="mark" href="#textdecoder" id="textdecoder">#</a></span><a aria-hidden="true" class="legacy" id="globals_textdecoder"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#textdecoder">
+                <a href="globals/textdecoder.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.0.0</span>
+</div>
+<!-- type=global -->
+<p>WHATWG <code>TextDecoder</code> 类。
+参阅 <a href="util.html#class-utiltextdecoder"><code>TextDecoder</code></a> 章节。</p>
+</section><section><h3><code>TextEncoder</code><span><a class="mark" href="#textencoder" id="textencoder">#</a></span><a aria-hidden="true" class="legacy" id="globals_textencoder"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#textencoder">
+                <a href="globals/textencoder.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.0.0</span>
+</div>
+<!-- type=global -->
+<p>WHATWG <code>TextEncoder</code> 类。
+参阅 <a href="util.html#class-utiltextencoder"><code>TextEncoder</code></a> 章节。</p>
+</section><section><h3><code>URL</code><span><a class="mark" href="#url" id="url">#</a></span><a aria-hidden="true" class="legacy" id="globals_url"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#url">
+                <a href="globals/url.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div>
+<!-- type=global -->
+<p>WHATWG <code>URL</code> 类。
+参阅 <a href="url.html#class-url"><code>URL</code></a> 章节。</p>
+</section><section><h3><code>URLSearchParams</code><span><a class="mark" href="#urlsearchparams" id="urlsearchparams">#</a></span><a aria-hidden="true" class="legacy" id="globals_urlsearchparams"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#urlsearchparams">
+                <a href="globals/urlsearchparams.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div>
+<!-- type=global -->
+<p>WHATWG <code>URLSearchParams</code> 类。
+参阅 <a href="url.html#class-urlsearchparams"><code>URLSearchParams</code></a> 章节。</p>
+</section><section><h3><code>WebAssembly</code><span><a class="mark" href="#webassembly" id="webassembly">#</a></span><a aria-hidden="true" class="legacy" id="globals_webassembly"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#webassembly">
+                <a href="globals/webassembly.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<!-- type=global -->
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul>
+<p>该对象充当所有 W3C <a href="https://webassembly.org/" rel="nofollow">WebAssembly</a> 相关功能的命名空间。
+有关用法和兼容性，请参阅 <a href="https://developer.mozilla.org/en-US/docs/WebAssembly" rel="nofollow">Mozilla 开发者网络</a>。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

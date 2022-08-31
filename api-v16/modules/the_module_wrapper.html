@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>模块封装器 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-modules">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>模块封装器</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../modules.html#modules_the_module_wrapper" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/modules/the_module_wrapper.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/modules/the_module_wrapper.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/modules/#the-module-wrapper.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在执行模块代码之前，Node.js 将使用如下所示的函数封装器对其进行封装：</p><pre class=""><code class="language-js">(<span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-built_in">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname</span>) {
+<span class="hljs-comment">// 模块代码实际存在于此处</span>
+});</code></pre><p class="">通过这样做，Node.js 实现了以下几点：</p><ul class="">
+<li>它将顶层变量（用 <code>var</code>、<code>const</code> 或 <code>let</code> 定义）保持在模块而不是全局对象的范围内。</li>
+<li>它有助于提供一些实际特定于模块的全局变量，例如：
+<ul>
+<li><code>module</code> 和 <code>exports</code> 对象，实现者可以用来从模块中导出值。</li>
+<li>便利变量 <code>__filename</code> 和 <code>__dirname</code>，包含模块的绝对文件名和目录路径。</li>
+</ul>
+</li>
+</ul></div>
+          <div id="content_right"><p>Before a module's code is executed, Node.js will wrap it with a function
+wrapper that looks like the following:</p><pre><code class="language-js">(<span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-built_in">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname</span>) {
+<span class="hljs-comment">// Module code actually lives in here</span>
+});</code></pre><p>By doing this, Node.js achieves a few things:</p><ul>
+<li>It keeps top-level variables (defined with <code>var</code>, <code>const</code> or <code>let</code>) scoped to
+the module rather than the global object.</li>
+<li>It helps to provide some global-looking variables that are actually specific
+to the module, such as:
+<ul>
+<li>The <code>module</code> and <code>exports</code> objects that the implementor can use to export
+values from the module.</li>
+<li>The convenience variables <code>__filename</code> and <code>__dirname</code>, containing the
+module's absolute filename and directory path.</li>
+</ul>
+</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

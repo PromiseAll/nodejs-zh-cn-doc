@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>设置每个进程的状态 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-embedding">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>设置每个进程的状态</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../embedding.html#embedding_setting_up_per_process_state" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/embedding/setting_up_per_process_state.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/embedding/setting_up_per_process_state.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/embedding/#setting-up-per-process-state.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>Node.js 需要一些每个进程的状态管理才能运行：</p><ul class="">
+<li>为 Node.js <a href="../cli.html">命令行选项</a>解析的参数，</li>
+<li>V8 每个进程要求，例如 <code>v8::Platform</code> 实例。</li>
+</ul><p class="">下面的示例展示了如何设置这些。
+一些类名分别来自 <code>node</code> 和 <code>v8</code> C++ 命名空间。</p><pre class=""><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span> </span>{
+  argv = <span class="hljs-built_in">uv_setup_args</span>(argc, argv);
+  <span class="hljs-function">std::vector&lt;std::string&gt; <span class="hljs-title">args</span><span class="hljs-params">(argv, argv + argc)</span></span>;
+  std::vector&lt;std::string&gt; exec_args;
+  std::vector&lt;std::string&gt; errors;
+  <span class="hljs-comment">// 解析 Node.js 命令行选项，</span>
+  <span class="hljs-comment">// 并打印尝试解析它们时发生的任何错误。</span>
+  <span class="hljs-type">int</span> exit_code = node::<span class="hljs-built_in">InitializeNodeWithArgs</span>(&amp;args, &amp;exec_args, &amp;errors);
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> std::string&amp; error : errors)
+    <span class="hljs-built_in">fprintf</span>(stderr, <span class="hljs-string">"%s: %s\n"</span>, args[<span class="hljs-number">0</span>].<span class="hljs-built_in">c_str</span>(), error.<span class="hljs-built_in">c_str</span>());
+  <span class="hljs-keyword">if</span> (exit_code != <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> exit_code;
+  }
+
+  <span class="hljs-comment">// 创建 v8::Platform 实例。</span>
+  <span class="hljs-comment">// `MultiIsolatePlatform::Create()` 是一种创建 v8::Platform 实例的方法，Node.js 在创建时可以使用它</span>
+  <span class="hljs-comment">// 工作线程。当没有 `MultiIsolatePlatform` 实例时，</span>
+  <span class="hljs-comment">// 工作线程被禁用。</span>
+  std::unique_ptr&lt;MultiIsolatePlatform&gt; platform =
+      MultiIsolatePlatform::<span class="hljs-built_in">Create</span>(<span class="hljs-number">4</span>);
+  V8::<span class="hljs-built_in">InitializePlatform</span>(platform.<span class="hljs-built_in">get</span>());
+  V8::<span class="hljs-built_in">Initialize</span>();
+
+  <span class="hljs-comment">// 此函数的内容见下文。</span>
+  <span class="hljs-type">int</span> ret = <span class="hljs-built_in">RunNodeInstance</span>(platform.<span class="hljs-built_in">get</span>(), args, exec_args);
+
+  V8::<span class="hljs-built_in">Dispose</span>();
+  V8::<span class="hljs-built_in">ShutdownPlatform</span>();
+  <span class="hljs-keyword">return</span> ret;
+}</code></pre></div>
+          <div id="content_right"><p>Node.js requires some per-process state management in order to run:</p><ul>
+<li>Arguments parsing for Node.js <a href="../cli.html">CLI options</a>,</li>
+<li>V8 per-process requirements, such as a <code>v8::Platform</code> instance.</li>
+</ul><p>The following example shows how these can be set up. Some class names are from
+the <code>node</code> and <code>v8</code> C++ namespaces, respectively.</p><pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span> </span>{
+  argv = <span class="hljs-built_in">uv_setup_args</span>(argc, argv);
+  <span class="hljs-function">std::vector&lt;std::string&gt; <span class="hljs-title">args</span><span class="hljs-params">(argv, argv + argc)</span></span>;
+  std::vector&lt;std::string&gt; exec_args;
+  std::vector&lt;std::string&gt; errors;
+  <span class="hljs-comment">// Parse Node.js CLI options, and print any errors that have occurred while</span>
+  <span class="hljs-comment">// trying to parse them.</span>
+  <span class="hljs-type">int</span> exit_code = node::<span class="hljs-built_in">InitializeNodeWithArgs</span>(&amp;args, &amp;exec_args, &amp;errors);
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> std::string&amp; error : errors)
+    <span class="hljs-built_in">fprintf</span>(stderr, <span class="hljs-string">"%s: %s\n"</span>, args[<span class="hljs-number">0</span>].<span class="hljs-built_in">c_str</span>(), error.<span class="hljs-built_in">c_str</span>());
+  <span class="hljs-keyword">if</span> (exit_code != <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> exit_code;
+  }
+
+  <span class="hljs-comment">// Create a v8::Platform instance. `MultiIsolatePlatform::Create()` is a way</span>
+  <span class="hljs-comment">// to create a v8::Platform instance that Node.js can use when creating</span>
+  <span class="hljs-comment">// Worker threads. When no `MultiIsolatePlatform` instance is present,</span>
+  <span class="hljs-comment">// Worker threads are disabled.</span>
+  std::unique_ptr&lt;MultiIsolatePlatform&gt; platform =
+      MultiIsolatePlatform::<span class="hljs-built_in">Create</span>(<span class="hljs-number">4</span>);
+  V8::<span class="hljs-built_in">InitializePlatform</span>(platform.<span class="hljs-built_in">get</span>());
+  V8::<span class="hljs-built_in">Initialize</span>();
+
+  <span class="hljs-comment">// See below for the contents of this function.</span>
+  <span class="hljs-type">int</span> ret = <span class="hljs-built_in">RunNodeInstance</span>(platform.<span class="hljs-built_in">get</span>(), args, exec_args);
+
+  V8::<span class="hljs-built_in">Dispose</span>();
+  V8::<span class="hljs-built_in">ShutdownPlatform</span>();
+  <span class="hljs-keyword">return</span> ret;
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

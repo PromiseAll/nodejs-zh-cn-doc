@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>无关的异步活动 | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-test">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>无关的异步活动</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../test.html#test_extraneous_asynchronous_activity" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/test/#extraneous-asynchronous-activity.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>一旦测试函数完成执行，则 TAP 结果会尽快输出，同时保持测试的顺序。
+但是，测试函数可能会生成比测试本身寿命更长的异步活动。
+测试运行器处理此类活动，但不会延迟报告测试结果以适应它。</p><p class="">在下面的示例中，测试完成时仍然有两个 <code>setImmediate()</code> 操作未完成。
+第一个 <code>setImmediate()</code> 尝试创建新的子测试。
+因为父测试已经完成并输出结果，新的子测试立即被标记为失败，并在文件的 TAP 输出的顶层报告。</p><p class="">第二个 <code>setImmediate()</code> 创建了 <code>uncaughtException</code> 事件。
+源自已完成测试的 <code>uncaughtException</code> 和 <code>unhandledRejection</code> 事件由 <code>test</code> 模块处理，并在文件的 TAP 输出的顶层报告为诊断警告。</p><pre class=""><code class="language-js"><span class="hljs-title function_">test</span>(<span class="hljs-string">'a test that creates asynchronous activity'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+    t.<span class="hljs-title function_">test</span>(<span class="hljs-string">'subtest that is created too late'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'error1'</span>);
+    });
+  });
+
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'error2'</span>);
+  });
+
+  <span class="hljs-comment">// 此行之后测试结束。</span>
+});</code></pre></div>
+          <div id="content_right"><p>Once a test function finishes executing, the TAP results are output as quickly
+as possible while maintaining the order of the tests. However, it is possible
+for the test function to generate asynchronous activity that outlives the test
+itself. The test runner handles this type of activity, but does not delay the
+reporting of test results in order to accommodate it.</p><p>In the following example, a test completes with two <code>setImmediate()</code>
+operations still outstanding. The first <code>setImmediate()</code> attempts to create a
+new subtest. Because the parent test has already finished and output its
+results, the new subtest is immediately marked as failed, and reported in the
+top level of the file's TAP output.</p><p>The second <code>setImmediate()</code> creates an <code>uncaughtException</code> event.
+<code>uncaughtException</code> and <code>unhandledRejection</code> events originating from a completed
+test are handled by the <code>test</code> module and reported as diagnostic warnings in
+the top level of the file's TAP output.</p><pre><code class="language-js"><span class="hljs-title function_">test</span>(<span class="hljs-string">'a test that creates asynchronous activity'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+    t.<span class="hljs-title function_">test</span>(<span class="hljs-string">'subtest that is created too late'</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'error1'</span>);
+    });
+  });
+
+  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'error2'</span>);
+  });
+
+  <span class="hljs-comment">// The test finishes after this line.</span>
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

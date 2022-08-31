@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>异常处理 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>异常处理</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_error_handling" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/error_handling.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/error_handling.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#error-handling.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>如果任何 <code>AsyncHook</code> 回调抛出，则应用程序将打印堆栈跟踪并退出。
+退出路径确实遵循未捕获异常的路径，但所有 <code>'uncaughtException'</code> 监听器都被删除，从而强制进程退出。
+除非应用程序使用 <code>--abort-on-uncaught-exception</code> 运行，否则仍将调用 <code>'exit'</code> 回调，在这种情况下，将打印堆栈跟踪并且应用程序退出，留下核心文件。</p><p class="">这种错误处理行为的原因是这些回调在对象生命周期中的潜在不稳定点运行，例如在类构造和销毁期间。
+因此，认为有必要迅速关闭进程，以防止将来意外中止。
+如果进行综合分析以确保异常可以遵循正常的控制流程而不会产生意外的副作用，这可能会在未来发生变化。</p></div>
+          <div id="content_right"><p>If any <code>AsyncHook</code> callbacks throw, the application will print the stack trace
+and exit. The exit path does follow that of an uncaught exception, but
+all <code>'uncaughtException'</code> listeners are removed, thus forcing the process to
+exit. The <code>'exit'</code> callbacks will still be called unless the application is run
+with <code>--abort-on-uncaught-exception</code>, in which case a stack trace will be
+printed and the application exits, leaving a core file.</p><p>The reason for this error handling behavior is that these callbacks are running
+at potentially volatile points in an object's lifetime, for example during
+class construction and destruction. Because of this, it is deemed necessary to
+bring down the process quickly in order to prevent an unintentional abort in the
+future. This is subject to change in the future if a comprehensive analysis is
+performed to ensure an exception can follow the normal control flow without
+unintentional side effects.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

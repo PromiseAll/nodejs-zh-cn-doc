@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>assert.equal(actual, expected[, message]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-assert">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>assert.equal(actual, expected[, message])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../assert.html#assert_assert_equal_actual_expected_message" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/assert/assert_equal_actual_expected_message.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/assert/assert_equal_actual_expected_message.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/assert/#assertequalactual-expected-message.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>在旧版断言模式下，状态从弃用更改为旧版。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>如果双方都是 NaN，则现在 NaN 被视为相同。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul><p><strong>严格断言模式</strong></p><p class=""><a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 的别名。</p><p class=""><strong>旧版断言模式</strong></p><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 <a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> 。</div><p></p><p class="">使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality"><code>==</code> 运算符</a>测试 <code>actual</code> 和 <code>expected</code> 参数之间的浅层强制相等。
+<code>NaN</code> 是特殊处理的，如果双方都是 <code>NaN</code>，则视为相同。</p><pre class="with-33-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK, 1 == 1</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK, 1 == '1'</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError: 1 == 2</span>
+assert.<span class="hljs-title function_">equal</span>({ <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } }, { <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } });
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } == { a: { b: 1 } }</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK, 1 == 1</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK, 1 == '1'</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError: 1 == 2</span>
+assert.<span class="hljs-title function_">equal</span>({ <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } }, { <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } });
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } == { a: { b: 1 } }</span></code></pre><p class="">如果值不相等，则抛出 <a href="../assert.html#class-assertassertionerror"><code>AssertionError</code></a>，其 <code>message</code> 属性设置为等于 <code>message</code> 参数的值。
+如果未定义 <code>message</code> 参数，则分配默认错误消息。
+如果 <code>message</code> 参数是 <a href="../errors.html#class-error"><code>Error</code></a> 的实例，则将抛出错误而不是 <code>AssertionError</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>In Legacy assertion mode, changed status from Deprecated to Legacy.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>NaN is now treated as being identical if both sides are NaN.</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>Added in: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>actual</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>expected</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+</ul><p><strong>Strict assertion mode</strong></p><p>An alias of <a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a>.</p><p><strong>Legacy assertion mode</strong></p><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">Stability: 3</a> - Legacy: Use <a href="../assert.html#assertstrictequalactual-expected-message"><code>assert.strictEqual()</code></a> instead.</div><p></p><p>Tests shallow, coercive equality between the <code>actual</code> and <code>expected</code> parameters
+using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality"><code>==</code> operator</a>. <code>NaN</code> is specially handled
+and treated as being identical if both sides are <code>NaN</code>.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> assert <span class="hljs-keyword">from</span> <span class="hljs-string">'assert'</span>;
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK, 1 == 1</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK, 1 == '1'</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError: 1 == 2</span>
+assert.<span class="hljs-title function_">equal</span>({ <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } }, { <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } });
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } == { a: { b: 1 } }</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// OK, 1 == 1</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// OK, 1 == '1'</span>
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-title class_">NaN</span>, <span class="hljs-title class_">NaN</span>);
+<span class="hljs-comment">// OK</span>
+
+assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// AssertionError: 1 == 2</span>
+assert.<span class="hljs-title function_">equal</span>({ <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } }, { <span class="hljs-attr">a</span>: { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> } });
+<span class="hljs-comment">// AssertionError: { a: { b: 1 } } == { a: { b: 1 } }</span></code></pre><p>If the values are not equal, an <a href="../assert.html#class-assertassertionerror"><code>AssertionError</code></a> is thrown with a <code>message</code>
+property set equal to the value of the <code>message</code> parameter. If the <code>message</code>
+parameter is undefined, a default error message is assigned. If the <code>message</code>
+parameter is an instance of an <a href="../errors.html#class-error"><code>Error</code></a> then it will be thrown instead of the
+<code>AssertionError</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

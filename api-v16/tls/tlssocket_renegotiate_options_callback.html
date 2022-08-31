@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>tlsSocket.renegotiate(options, callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>tlsSocket.renegotiate(options, callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_tlssocket_renegotiate_options_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/tlssocket_renegotiate_options_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/tlssocket_renegotiate_options_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#tlssocketrenegotiateoptions-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.11.8</span>
+</div><ul class="">
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>rejectUnauthorized</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果不是 <code>false</code>，则服务器证书将根据提供的 CA 列表进行验证。
+如果验证失败，则会触发 <code>'error'</code> 事件；<code>err.code</code> 包含 OpenSSL 错误代码。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>requestCert</code></li>
+</ul>
+</li>
+<li>
+<p><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 如果 <code>renegotiate()</code> 返回 <code>true</code>，则回调将绑定到 <code>'secure'</code> 事件。
+如果 <code>renegotiate()</code> 返回 <code>false</code>, 则 <code>callback</code> 将在下一个滴答中被调用并出错, 除非 <code>tlsSocket</code> 已被销毁, 在这种情况下根本不会调用 <code>callback</code>。</p>
+</li>
+<li>
+<p>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果重新协商已启动则为 <code>true</code>，否则为 <code>false</code>。</p>
+</li>
+</ul><p><code>tlsSocket.renegotiate()</code> 方法启动 TLS 重新协商过程。
+当完成后，<code>callback</code> 函数将传入一个参数，该参数是 <code>Error</code>（如果请求失败）或 <code>null</code>。</p><p class="">此方法可用于在建立安全连接后请求对等方的证书。</p><p class="">当作为服务器运行时，套接字将在 <code>handshakeTimeout</code> 超时后销毁并出现错误。</p><p class="">对于 TLSv1.3，无法发起重协商，协议不支持。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.11.8</span>
+</div><ul>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>rejectUnauthorized</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If not <code>false</code>, the server certificate is
+verified against the list of supplied CAs. An <code>'error'</code> event is emitted if
+verification fails; <code>err.code</code> contains the OpenSSL error code. <strong>Default:</strong>
+<code>true</code>.</li>
+<li><code>requestCert</code></li>
+</ul>
+</li>
+<li>
+<p><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> If <code>renegotiate()</code> returned <code>true</code>, callback is
+attached once to the <code>'secure'</code> event. If <code>renegotiate()</code> returned <code>false</code>,
+<code>callback</code> will be called in the next tick with an error, unless the
+<code>tlsSocket</code> has been destroyed, in which case <code>callback</code> will not be called
+at all.</p>
+</li>
+<li>
+<p>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <code>true</code> if renegotiation was initiated, <code>false</code> otherwise.</p>
+</li>
+</ul><p>The <code>tlsSocket.renegotiate()</code> method initiates a TLS renegotiation process.
+Upon completion, the <code>callback</code> function will be passed a single argument
+that is either an <code>Error</code> (if the request failed) or <code>null</code>.</p><p>This method can be used to request a peer's certificate after the secure
+connection has been established.</p><p>When running as the server, the socket will be destroyed with an error after
+<code>handshakeTimeout</code> timeout.</p><p>For TLSv1.3, renegotiation cannot be initiated, it is not supported by the
+protocol.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

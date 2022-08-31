@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>repl.start([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-repl">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>repl.start([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../repl.html#repl_repl_start_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/repl/repl_start_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/repl/repl_start_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/repl/#replstartoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.4.0, v12.17.0</td>
+<td><p>选项 <code>preview</code> 现在可用。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>选项 <code>terminal</code> 现在在所有情况下都遵循默认描述，如果可用，则 <code>useColors</code> 会检查 <code>hasColors()</code>。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>移除 <code>REPL_MAGIC_MODE</code> <code>replMode</code>。</p></td></tr>
+<tr><td>v6.3.0</td>
+<td><p>现在支持 <code>breakEvalOnSigint</code> 选项。</p></td></tr>
+<tr><td>v5.8.0</td>
+<td><p>参数 <code>options</code> 现在是可选的。</p></td></tr>
+<tr><td>v0.1.91</td>
+<td><p><span>新增于: v0.1.91</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>prompt</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要显示的输入提示。 <strong>默认值:</strong> <code>'&gt; '</code>
+（带有尾随空格）。</li>
+<li><code>input</code> <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;stream.Readable&gt;</a> 将从中读取 REPL 输入的 <code>Readable</code> 流。 <strong>默认值:</strong> <code>process.stdin</code>。</li>
+<li><code>output</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> REPL 输出将写入的 <code>Writable</code> 流。 <strong>默认值:</strong> <code>process.stdout</code>。</li>
+<li><code>terminal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果 <code>true</code>，则指定 <code>output</code> 应被视为 TTY 终端。
+<strong>默认:</strong> 在实例化时检查 <code>output</code> 流上 <code>isTTY</code> 属性的值。</li>
+<li><code>eval</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当评估每一给定输入行时要使用的函数。
+<strong>默认:</strong> JavaScript <code>eval()</code> 函数的异步封装器。
+<code>eval</code> 函数可能会出现 <code>repl.Recoverable</code> 错误，表明输入不完整并提示输入额外的行。</li>
+<li><code>useColors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则指定默认的 <code>writer</code> 函数应在 REPL 输出中包含 ANSI 颜色样式。
+如果提供了自定义 <code>writer</code> 函数，则此功能无效。
+<strong>默认:</strong> 如果 REPL 实例的 <code>terminal</code> 值为 <code>true</code>，则检查 <code>output</code> 流上的颜色支持。</li>
+<li><code>useGlobal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则指定默认评估函数将使用 JavaScript <code>global</code> 作为上下文，而不是为 REPL 实例创建新的单独上下文。
+node CLI REPL 将此值设置为 <code>true</code>。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>ignoreUndefined</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则指定默认编写器在计算结果为 <code>undefined</code> 时不会输出命令的返回值。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>writer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在写入 <code>output</code> 之前调用以格式化每个命令的输出的函数。 <strong>默认值:</strong> <a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a>.</li>
+<li><code>completer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 用于自定义 Tab 自动完成的可选函数。
+有关示例，请参见 <a href="../readline.html#use-of-the-completer-function"><code>readline.InterfaceCompleter</code></a>。</li>
+<li><code>replMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 指定默认求值器是在严格模式还是默认（宽松）模式下执行所有 JavaScript 命令的标志。
+可接受的值是：
+<ul>
+<li><code>repl.REPL_MODE_SLOPPY</code> 在宽松模式下计算表达式。</li>
+<li><code>repl.REPL_MODE_STRICT</code> 在严格模式下计算表达式。
+这相当于在每个 repl 语句前面加上 <code>'use strict'</code>。</li>
+</ul>
+</li>
+<li><code>breakEvalOnSigint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 当接收到 <code>SIGINT</code> 时停止计算当前代码段，例如按下 <kbd>Ctrl</kbd>+<kbd>C</kbd>。
+这不能与自定义 <code>eval</code> 函数一起使用。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>preview</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 定义 repl 是否打印自动完成和输出预览。 <strong>默认值:</strong> <code>true</code> 使用默认 eval 函数和 <code>false</code>，以防使用自定义 eval 函数。
+如果 <code>terminal</code> 为假，则没有预览，<code>preview</code> 的值没有影响。</li>
+</ul>
+</li>
+<li>返回: <a href="../repl.html#class-replserver" rel="nofollow" class="type">&lt;repl.REPLServer&gt;</a></li>
+</ul><p><code>repl.start()</code> 方法创建并启动了一个 <a href="../repl.html#class-replserver"><code>repl.REPLServer</code></a> 实例。</p><p class="">如果 <code>options</code> 是字符串，则指定输入提示：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+
+<span class="hljs-comment">// Unix 风格的提示</span>
+repl.<span class="hljs-title function_">start</span>(<span class="hljs-string">'$ '</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v13.4.0, v12.17.0</td>
+<td><p>The <code>preview</code> option is now available.</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>The <code>terminal</code> option now follows the default description in all cases and <code>useColors</code> checks <code>hasColors()</code> if available.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p>The <code>REPL_MAGIC_MODE</code> <code>replMode</code> was removed.</p></td></tr>
+<tr><td>v6.3.0</td>
+<td><p>The <code>breakEvalOnSigint</code> option is supported now.</p></td></tr>
+<tr><td>v5.8.0</td>
+<td><p>The <code>options</code> parameter is optional now.</p></td></tr>
+<tr><td>v0.1.91</td>
+<td><p><span>Added in: v0.1.91</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a>
+<ul>
+<li><code>prompt</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The input prompt to display. <strong>Default:</strong> <code>'&gt; '</code>
+(with a trailing space).</li>
+<li><code>input</code> <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;stream.Readable&gt;</a> The <code>Readable</code> stream from which REPL input will
+be read. <strong>Default:</strong> <code>process.stdin</code>.</li>
+<li><code>output</code> <a href="../stream.html#class-streamwritable" rel="nofollow" class="type">&lt;stream.Writable&gt;</a> The <code>Writable</code> stream to which REPL output will
+be written. <strong>Default:</strong> <code>process.stdout</code>.</li>
+<li><code>terminal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, specifies that the <code>output</code> should be
+treated as a TTY terminal.
+<strong>Default:</strong> checking the value of the <code>isTTY</code> property on the <code>output</code>
+stream upon instantiation.</li>
+<li><code>eval</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The function to be used when evaluating each given line
+of input. <strong>Default:</strong> an async wrapper for the JavaScript <code>eval()</code>
+function. An <code>eval</code> function can error with <code>repl.Recoverable</code> to indicate
+the input was incomplete and prompt for additional lines.</li>
+<li><code>useColors</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, specifies that the default <code>writer</code>
+function should include ANSI color styling to REPL output. If a custom
+<code>writer</code> function is provided then this has no effect. <strong>Default:</strong> checking
+color support on the <code>output</code> stream if the REPL instance's <code>terminal</code> value
+is <code>true</code>.</li>
+<li><code>useGlobal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, specifies that the default evaluation
+function will use the JavaScript <code>global</code> as the context as opposed to
+creating a new separate context for the REPL instance. The node CLI REPL
+sets this value to <code>true</code>. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>ignoreUndefined</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, specifies that the default writer
+will not output the return value of a command if it evaluates to
+<code>undefined</code>. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>writer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The function to invoke to format the output of each
+command before writing to <code>output</code>. <strong>Default:</strong> <a href="../util.html#utilinspectobject-options"><code>util.inspect()</code></a>.</li>
+<li><code>completer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> An optional function used for custom Tab auto
+completion. See <a href="../readline.html#use-of-the-completer-function"><code>readline.InterfaceCompleter</code></a> for an example.</li>
+<li><code>replMode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> A flag that specifies whether the default evaluator
+executes all JavaScript commands in strict mode or default (sloppy) mode.
+Acceptable values are:
+<ul>
+<li><code>repl.REPL_MODE_SLOPPY</code> to evaluate expressions in sloppy mode.</li>
+<li><code>repl.REPL_MODE_STRICT</code> to evaluate expressions in strict mode. This is
+equivalent to prefacing every repl statement with <code>'use strict'</code>.</li>
+</ul>
+</li>
+<li><code>breakEvalOnSigint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Stop evaluating the current piece of code when
+<code>SIGINT</code> is received, such as when <kbd>Ctrl</kbd>+<kbd>C</kbd> is pressed.
+This cannot be used
+together with a custom <code>eval</code> function. <strong>Default:</strong> <code>false</code>.</li>
+<li><code>preview</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Defines if the repl prints autocomplete and output
+previews or not. <strong>Default:</strong> <code>true</code> with the default eval function and
+<code>false</code> in case a custom eval function is used. If <code>terminal</code> is falsy, then
+there are no previews and the value of <code>preview</code> has no effect.</li>
+</ul>
+</li>
+<li>Returns: <a href="../repl.html#class-replserver" rel="nofollow" class="type">&lt;repl.REPLServer&gt;</a></li>
+</ul><p>The <code>repl.start()</code> method creates and starts a <a href="../repl.html#class-replserver"><code>repl.REPLServer</code></a> instance.</p><p>If <code>options</code> is a string, then it specifies the input prompt:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">'repl'</span>);
+
+<span class="hljs-comment">// a Unix style prompt</span>
+repl.<span class="hljs-title function_">start</span>(<span class="hljs-string">'$ '</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

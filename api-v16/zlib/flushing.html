@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>刷新 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-zlib">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>刷新</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../zlib.html#zlib_flushing" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/zlib/flushing.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/zlib/flushing.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/zlib/#flushing.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在压缩流上调用 <a href="../zlib.html#zlibflushkind-callback"><code>.flush()</code></a> 将使 <code>zlib</code> 返回尽可能多的当前输出。
+这可能以降低压缩质量为代价，但在需要尽快提供数据时非常有用。</p><p class="">在以下示例中，<code>flush()</code> 用于将压缩的部分 HTTP 响应写入客户端：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+  <span class="hljs-comment">// 为了简单起见，省略了接受编码检查。</span>
+  response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'content-encoding'</span>: <span class="hljs-string">'gzip'</span> });
+  <span class="hljs-keyword">const</span> output = zlib.<span class="hljs-title function_">createGzip</span>();
+  <span class="hljs-keyword">let</span> i;
+
+  <span class="hljs-title function_">pipeline</span>(output, response, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-comment">// 如果发生错误，则无能为力，</span>
+      <span class="hljs-comment">// 因为服务器已经发送了 200 响应代码，</span>
+      <span class="hljs-comment">// 并且已经向客户端发送了一些数据。</span>
+      <span class="hljs-comment">// 能做的最好的事情</span>
+      <span class="hljs-comment">// 就是立即终止响应并记录错误。</span>
+      <span class="hljs-built_in">clearInterval</span>(i);
+      response.<span class="hljs-title function_">end</span>();
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    }
+  });
+
+  i = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+    output.<span class="hljs-title function_">write</span>(<span class="hljs-string">`The current time is <span class="hljs-subst">${<span class="hljs-built_in">Date</span>()}</span>\n`</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-comment">// 数据已传给 zlib，</span>
+      <span class="hljs-comment">// 但压缩算法可能已决定缓冲数据以进行更有效的压缩。</span>
+      <span class="hljs-comment">// 一旦客户端准备好接收数据，</span>
+      <span class="hljs-comment">// 调用 .flush() 将使数据可用。</span>
+      output.<span class="hljs-title function_">flush</span>();
+    });
+  }, <span class="hljs-number">1000</span>);
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre></div>
+          <div id="content_right"><p>Calling <a href="../zlib.html#zlibflushkind-callback"><code>.flush()</code></a> on a compression stream will make <code>zlib</code> return as much
+output as currently possible. This may come at the cost of degraded compression
+quality, but can be useful when data needs to be available as soon as possible.</p><p>In the following example, <code>flush()</code> is used to write a compressed partial
+HTTP response to the client:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+  <span class="hljs-comment">// For the sake of simplicity, the Accept-Encoding checks are omitted.</span>
+  response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'content-encoding'</span>: <span class="hljs-string">'gzip'</span> });
+  <span class="hljs-keyword">const</span> output = zlib.<span class="hljs-title function_">createGzip</span>();
+  <span class="hljs-keyword">let</span> i;
+
+  <span class="hljs-title function_">pipeline</span>(output, response, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-comment">// If an error occurs, there's not much we can do because</span>
+      <span class="hljs-comment">// the server has already sent the 200 response code and</span>
+      <span class="hljs-comment">// some amount of data has already been sent to the client.</span>
+      <span class="hljs-comment">// The best we can do is terminate the response immediately</span>
+      <span class="hljs-comment">// and log the error.</span>
+      <span class="hljs-built_in">clearInterval</span>(i);
+      response.<span class="hljs-title function_">end</span>();
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    }
+  });
+
+  i = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+    output.<span class="hljs-title function_">write</span>(<span class="hljs-string">`The current time is <span class="hljs-subst">${<span class="hljs-built_in">Date</span>()}</span>\n`</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-comment">// The data has been passed to zlib, but the compression algorithm may</span>
+      <span class="hljs-comment">// have decided to buffer the data for more efficient compression.</span>
+      <span class="hljs-comment">// Calling .flush() will make the data available as soon as the client</span>
+      <span class="hljs-comment">// is ready to receive it.</span>
+      output.<span class="hljs-title function_">flush</span>();
+    });
+  }, <span class="hljs-number">1000</span>);
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

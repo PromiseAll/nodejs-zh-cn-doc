@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>stream.pipeline(streams, callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>stream.pipeline(streams, callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_stream_pipeline_streams_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/stream_pipeline_streams_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/stream_pipeline_streams_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#streampipelinestreams-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.0.0</td>
+<td><p><code>pipeline(..., cb)</code> 将在调用回调之前等待 <code>'close'</code> 事件。 该实现尝试检测旧版的流，并且仅将此行为应用于预计会触发 <code>'close'</code> 的流。</p></td></tr>
+<tr><td>v13.10.0</td>
+<td><p>添加对异步生成器的支持。</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p><span>新增于: v10.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>streams</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable[]&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function[]&gt;</a></li>
+<li><code>source</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+</ul>
+</li>
+<li><code>...transforms</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>source</code> <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+</ul>
+</li>
+<li><code>destination</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>source</code> <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 当管道完全完成时调用。
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>val</code> <code>destination</code> 返回的 <code>Promise</code> 的解析值。</li>
+</ul>
+</li>
+<li>返回: <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a></li>
+</ul><p>模块方法，用于在流和生成器之间进行管道转发错误并正确清理并在管道完成时提供回调。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+
+<span class="hljs-comment">// 使用管道 API 可以轻松地将一系列流传输到一起，</span>
+<span class="hljs-comment">// 并在管道完全完成时收到通知。</span>
+
+<span class="hljs-comment">// 有效地 gzip 潜在巨大的 tar 文件的管道：</span>
+
+<span class="hljs-title function_">pipeline</span>(
+  fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'archive.tar'</span>),
+  zlib.<span class="hljs-title function_">createGzip</span>(),
+  fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'archive.tar.gz'</span>),
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'Pipeline failed.'</span>, err);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+    }
+  }
+);</code></pre><p class=""><code>pipeline</code> API 提供了 promise 版本，它也可以接收一选项参数作为带有 <code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 属性的最后一个参数。
+当信号中止时，将在底层管道上调用 <code>destroy</code>，并带有 <code>中止错误</code>。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'archive.tar'</span>),
+    zlib.<span class="hljs-title function_">createGzip</span>(),
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'archive.tar.gz'</span>)
+  );
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>);</code></pre><p class="">要使用 <code>AbortSignal</code>，则将其作为最后一个参数传到选项对象中：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+  <span class="hljs-keyword">const</span> signal = ac.<span class="hljs-property">signal</span>;
+
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> ac.<span class="hljs-title function_">abort</span>(), <span class="hljs-number">1</span>);
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'archive.tar'</span>),
+    zlib.<span class="hljs-title function_">createGzip</span>(),
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'archive.tar.gz'</span>),
+    { signal },
+  );
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>); <span class="hljs-comment">// AbortError</span></code></pre><p class=""><code>pipeline</code> API 还支持异步生成器：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'lowercase.txt'</span>),
+    <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* (source, { signal }) {
+      source.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);  <span class="hljs-comment">// 使用字符串而不是 `Buffer`。</span>
+      <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> chunk <span class="hljs-keyword">of</span> source) {
+        <span class="hljs-keyword">yield</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">processChunk</span>(chunk, { signal });
+      }
+    },
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'uppercase.txt'</span>)
+  );
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>);</code></pre><p class="">记得处理传入异步生成器的 <code>signal</code> 参数。
+特别是在异步生成器是管道的来源（即第一个参数）或管道永远不会完成的情况下。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* ({ signal }) {
+      <span class="hljs-keyword">await</span> <span class="hljs-title function_">someLongRunningfn</span>({ signal });
+      <span class="hljs-keyword">yield</span> <span class="hljs-string">'asd'</span>;
+    },
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'uppercase.txt'</span>)
+  );
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>);</code></pre><p class=""><code>stream.pipeline()</code> 将在所有流上调用 <code>stream.destroy(err)</code>，除了：</p><ul class="">
+<li>已触发 <code>'end'</code> 或 <code>'close'</code> 的 <code>Readable</code> 流。</li>
+<li>已触发 <code>'finish'</code> 或 <code>'close'</code> 的 <code>Writable</code> 流。</li>
+</ul><p class="">在调用 <code>callback</code> 后，<code>stream.pipeline()</code> 在流上留下悬空事件监听器。
+在失败后重用流的情况下，这可能会导致事件监听器泄漏和吞下错误。</p><p class=""><code>stream.pipeline()</code> 在出现错误时关闭所有流。
+<code>IncomingRequest</code> 与 <code>pipeline</code> 一起使用可能会导致意外行为，一旦发生它会销毁套接字且不发送预期的响应。
+参见以下示例：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> fileStream = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'./fileNotExist.txt'</span>);
+  <span class="hljs-title function_">pipeline</span>(fileStream, res, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err); <span class="hljs-comment">// 没有这样的文件</span>
+      <span class="hljs-comment">// 一旦 `pipeline` 已经销毁了套接字，则无法发送此消息</span>
+      <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'error!!!'</span>);
+    }
+  });
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v14.0.0</td>
+<td><p>The <code>pipeline(..., cb)</code> will wait for the <code>'close'</code> event before invoking the callback. The implementation tries to detect legacy streams and only apply this behavior to streams which are expected to emit <code>'close'</code>.</p></td></tr>
+<tr><td>v13.10.0</td>
+<td><p>Add support for async generators.</p></td></tr>
+<tr><td>v10.0.0</td>
+<td><p><span>Added in: v10.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>streams</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable[]&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable[]&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function[]&gt;</a></li>
+<li><code>source</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol" rel="nofollow" class="type">&lt;Iterable&gt;</a> | <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+</ul>
+</li>
+<li><code>...transforms</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>source</code> <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+</ul>
+</li>
+<li><code>destination</code> <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li><code>source</code> <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a></li>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-asynciterable-interface" rel="nofollow" class="type">&lt;AsyncIterable&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul>
+</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Called when the pipeline is fully done.
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>val</code> Resolved value of <code>Promise</code> returned by <code>destination</code>.</li>
+</ul>
+</li>
+<li>Returns: <a href="../stream.html#stream" rel="nofollow" class="type">&lt;Stream&gt;</a></li>
+</ul><p>A module method to pipe between streams and generators forwarding errors and
+properly cleaning up and provide a callback when the pipeline is complete.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+
+<span class="hljs-comment">// Use the pipeline API to easily pipe a series of streams</span>
+<span class="hljs-comment">// together and get notified when the pipeline is fully done.</span>
+
+<span class="hljs-comment">// A pipeline to gzip a potentially huge tar file efficiently:</span>
+
+<span class="hljs-title function_">pipeline</span>(
+  fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'archive.tar'</span>),
+  zlib.<span class="hljs-title function_">createGzip</span>(),
+  fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'archive.tar.gz'</span>),
+  <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'Pipeline failed.'</span>, err);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+    }
+  }
+);</code></pre><p>The <code>pipeline</code> API provides a promise version, which can also
+receive an options argument as the last parameter with a
+<code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> property. When the signal is aborted,
+<code>destroy</code> will be called on the underlying pipeline, with an
+<code>AbortError</code>.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'archive.tar'</span>),
+    zlib.<span class="hljs-title function_">createGzip</span>(),
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'archive.tar.gz'</span>)
+  );
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>);</code></pre><p>To use an <code>AbortSignal</code>, pass it inside an options object,
+as the last argument:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+  <span class="hljs-keyword">const</span> signal = ac.<span class="hljs-property">signal</span>;
+
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> ac.<span class="hljs-title function_">abort</span>(), <span class="hljs-number">1</span>);
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'archive.tar'</span>),
+    zlib.<span class="hljs-title function_">createGzip</span>(),
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'archive.tar.gz'</span>),
+    { signal },
+  );
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>); <span class="hljs-comment">// AbortError</span></code></pre><p>The <code>pipeline</code> API also supports async generators:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'lowercase.txt'</span>),
+    <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* (source, { signal }) {
+      source.<span class="hljs-title function_">setEncoding</span>(<span class="hljs-string">'utf8'</span>);  <span class="hljs-comment">// Work with strings rather than `Buffer`s.</span>
+      <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> chunk <span class="hljs-keyword">of</span> source) {
+        <span class="hljs-keyword">yield</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">processChunk</span>(chunk, { signal });
+      }
+    },
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'uppercase.txt'</span>)
+  );
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>);</code></pre><p>Remember to handle the <code>signal</code> argument passed into the async generator.
+Especially in the case where the async generator is the source for the
+pipeline (i.e. first argument) or the pipeline will never complete.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream/promises'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipeline</span>(
+    <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* ({ signal }) {
+      <span class="hljs-keyword">await</span> <span class="hljs-title function_">someLongRunningfn</span>({ signal });
+      <span class="hljs-keyword">yield</span> <span class="hljs-string">'asd'</span>;
+    },
+    fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'uppercase.txt'</span>)
+  );
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Pipeline succeeded.'</span>);
+}
+
+<span class="hljs-title function_">run</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">error</span>);</code></pre><p><code>stream.pipeline()</code> will call <code>stream.destroy(err)</code> on all streams except:</p><ul>
+<li><code>Readable</code> streams which have emitted <code>'end'</code> or <code>'close'</code>.</li>
+<li><code>Writable</code> streams which have emitted <code>'finish'</code> or <code>'close'</code>.</li>
+</ul><p><code>stream.pipeline()</code> leaves dangling event listeners on the streams
+after the <code>callback</code> has been invoked. In the case of reuse of streams after
+failure, this can cause event listener leaks and swallowed errors.</p><p><code>stream.pipeline()</code> closes all the streams when an error is raised.
+The <code>IncomingRequest</code> usage with <code>pipeline</code> could lead to an unexpected behavior
+once it would destroy the socket without sending the expected response.
+See the example below:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> fileStream = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'./fileNotExist.txt'</span>);
+  <span class="hljs-title function_">pipeline</span>(fileStream, res, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err); <span class="hljs-comment">// No such file</span>
+      <span class="hljs-comment">// this message can't be sent once `pipeline` already destroyed the socket</span>
+      <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'error!!!'</span>);
+    }
+  });
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>压缩器选项 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-zlib">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>压缩器选项</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../zlib.html#zlib_compressor_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/zlib/compressor_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/zlib/compressor_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/zlib/#compressor-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>可以在 Brotli 编码器上设置几个选项，影响压缩效率和速度。
+键和值都可以作为 <code>zlib.constants</code> 对象的属性访问。</p><p class="">最重要的选项是：</p><ul class="">
+<li><code>BROTLI_PARAM_MODE</code>
+<ul>
+<li><code>BROTLI_MODE_GENERIC</code>（默认）</li>
+<li><code>BROTLI_MODE_TEXT</code>，针对 UTF-8 文本进行了调整</li>
+<li><code>BROTLI_MODE_FONT</code>，针对 WOFF 2.0 字体进行了调整</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_QUALITY</code>
+<ul>
+<li>范围从 <code>BROTLI_MIN_QUALITY</code> 到 <code>BROTLI_MAX_QUALITY</code>，默认为 <code>BROTLI_DEFAULT_QUALITY</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_SIZE_HINT</code>
+<ul>
+<li>表示预期输入大小的整数值；对于未知的输入大小，默认为 <code>0</code>。</li>
+</ul>
+</li>
+</ul><p class="">可以设置以下标志以对压缩算法和内存使用调整进行高级控制：</p><ul class="">
+<li><code>BROTLI_PARAM_LGWIN</code>
+<ul>
+<li>范围从 <code>BROTLI_MIN_WINDOW_BITS</code> 到 <code>BROTLI_MAX_WINDOW_BITS</code>，默认为 <code>BROTLI_DEFAULT_WINDOW</code>，如果设置了 <code>BROTLI_PARAM_LARGE_WINDOW</code> 标志，则最高可达 <code>BROTLI_LARGE_MAX_WINDOW_BITS</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_LGBLOCK</code>
+<ul>
+<li>范围从 <code>BROTLI_MIN_INPUT_BLOCK_BITS</code> 到 <code>BROTLI_MAX_INPUT_BLOCK_BITS</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_DISABLE_LITERAL_CONTEXT_MODELING</code>
+<ul>
+<li>降低压缩率以提高解压速度的布尔标志。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_LARGE_WINDOW</code>
+<ul>
+<li>启用“大窗口 Brotli”模式的布尔标志（与 <a href="https://www.rfc-editor.org/rfc/rfc7932.txt" rel="nofollow">RFC 7932</a> 中标准化的 Brotli 格式不兼容）。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_NPOSTFIX</code>
+<ul>
+<li>范围从 <code>0</code> 到 <code>BROTLI_MAX_NPOSTFIX</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_NDIRECT</code>
+<ul>
+<li>范围从 <code>0</code> 到 <code>15 &lt;&lt; NPOSTFIX</code>，步长为 <code>1 &lt;&lt; NPOSTFIX</code>。</li>
+</ul>
+</li>
+</ul></div>
+          <div id="content_right"><p>There are several options that can be set on Brotli encoders, affecting
+compression efficiency and speed. Both the keys and the values can be accessed
+as properties of the <code>zlib.constants</code> object.</p><p>The most important options are:</p><ul>
+<li><code>BROTLI_PARAM_MODE</code>
+<ul>
+<li><code>BROTLI_MODE_GENERIC</code> (default)</li>
+<li><code>BROTLI_MODE_TEXT</code>, adjusted for UTF-8 text</li>
+<li><code>BROTLI_MODE_FONT</code>, adjusted for WOFF 2.0 fonts</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_QUALITY</code>
+<ul>
+<li>Ranges from <code>BROTLI_MIN_QUALITY</code> to <code>BROTLI_MAX_QUALITY</code>,
+with a default of <code>BROTLI_DEFAULT_QUALITY</code>.</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_SIZE_HINT</code>
+<ul>
+<li>Integer value representing the expected input size;
+defaults to <code>0</code> for an unknown input size.</li>
+</ul>
+</li>
+</ul><p>The following flags can be set for advanced control over the compression
+algorithm and memory usage tuning:</p><ul>
+<li><code>BROTLI_PARAM_LGWIN</code>
+<ul>
+<li>Ranges from <code>BROTLI_MIN_WINDOW_BITS</code> to <code>BROTLI_MAX_WINDOW_BITS</code>,
+with a default of <code>BROTLI_DEFAULT_WINDOW</code>, or up to
+<code>BROTLI_LARGE_MAX_WINDOW_BITS</code> if the <code>BROTLI_PARAM_LARGE_WINDOW</code> flag
+is set.</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_LGBLOCK</code>
+<ul>
+<li>Ranges from <code>BROTLI_MIN_INPUT_BLOCK_BITS</code> to <code>BROTLI_MAX_INPUT_BLOCK_BITS</code>.</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_DISABLE_LITERAL_CONTEXT_MODELING</code>
+<ul>
+<li>Boolean flag that decreases compression ratio in favour of
+decompression speed.</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_LARGE_WINDOW</code>
+<ul>
+<li>Boolean flag enabling “Large Window Brotli” mode (not compatible with the
+Brotli format as standardized in <a href="https://www.rfc-editor.org/rfc/rfc7932.txt" rel="nofollow">RFC 7932</a>).</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_NPOSTFIX</code>
+<ul>
+<li>Ranges from <code>0</code> to <code>BROTLI_MAX_NPOSTFIX</code>.</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_NDIRECT</code>
+<ul>
+<li>Ranges from <code>0</code> to <code>15 &lt;&lt; NPOSTFIX</code> in steps of <code>1 &lt;&lt; NPOSTFIX</code>.</li>
+</ul>
+</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>url.pathToFileURL(path) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-url">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>url.pathToFileURL(path)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../url.html#url_url_pathtofileurl_path" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/url/url_pathtofileurl_path.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/url/url_pathtofileurl_path.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/url/#urlpathtofileurlpath.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v10.12.0</span>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要转换为文件网址的路径。</li>
+<li>返回: <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 文件网址对象。</li>
+</ul><p>该函数确保 <code>path</code> 被绝对解析，并且在转换为文件网址时正确编码网址控制字符。</p><pre class="with-57-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { pathToFileURL } <span class="hljs-keyword">from</span> <span class="hljs-string">'url'</span>;
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/foo#1'</span>, <span class="hljs-string">'file:'</span>);           <span class="hljs-comment">// 错误: file:///foo#1</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/foo#1'</span>);              <span class="hljs-comment">// 正确: file:///foo%231 (POSIX)</span>
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/some/path%.c'</span>, <span class="hljs-string">'file:'</span>);    <span class="hljs-comment">// 错误: file:///some/path%.c</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/some/path%.c'</span>);       <span class="hljs-comment">// 正确: file:///some/path%25.c (POSIX)</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { pathToFileURL } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(__filename);                  <span class="hljs-comment">// 错误: 抛出错误 (POSIX)</span>
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(__filename);                  <span class="hljs-comment">// 错误: C:\... (Windows)</span>
+<span class="hljs-title function_">pathToFileURL</span>(__filename);            <span class="hljs-comment">// 正确: file:///... (POSIX)</span>
+<span class="hljs-title function_">pathToFileURL</span>(__filename);            <span class="hljs-comment">// 正确: file:///C:/... (Windows)</span>
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/foo#1'</span>, <span class="hljs-string">'file:'</span>);           <span class="hljs-comment">// 错误: file:///foo#1</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/foo#1'</span>);              <span class="hljs-comment">// 正确: file:///foo%231 (POSIX)</span>
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/some/path%.c'</span>, <span class="hljs-string">'file:'</span>);    <span class="hljs-comment">// 错误: file:///some/path%.c</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/some/path%.c'</span>);       <span class="hljs-comment">// 正确: file:///some/path%25.c (POSIX)</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v10.12.0</span>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The path to convert to a File URL.</li>
+<li>Returns: <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> The file URL object.</li>
+</ul><p>This function ensures that <code>path</code> is resolved absolutely, and that the URL
+control characters are correctly encoded when converting into a File URL.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { pathToFileURL } <span class="hljs-keyword">from</span> <span class="hljs-string">'url'</span>;
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/foo#1'</span>, <span class="hljs-string">'file:'</span>);           <span class="hljs-comment">// Incorrect: file:///foo#1</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/foo#1'</span>);              <span class="hljs-comment">// Correct:   file:///foo%231 (POSIX)</span>
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/some/path%.c'</span>, <span class="hljs-string">'file:'</span>);    <span class="hljs-comment">// Incorrect: file:///some/path%.c</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/some/path%.c'</span>);       <span class="hljs-comment">// Correct:   file:///some/path%25.c (POSIX)</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { pathToFileURL } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(__filename);                  <span class="hljs-comment">// Incorrect: throws (POSIX)</span>
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(__filename);                  <span class="hljs-comment">// Incorrect: C:\... (Windows)</span>
+<span class="hljs-title function_">pathToFileURL</span>(__filename);            <span class="hljs-comment">// Correct:   file:///... (POSIX)</span>
+<span class="hljs-title function_">pathToFileURL</span>(__filename);            <span class="hljs-comment">// Correct:   file:///C:/... (Windows)</span>
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/foo#1'</span>, <span class="hljs-string">'file:'</span>);           <span class="hljs-comment">// Incorrect: file:///foo#1</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/foo#1'</span>);              <span class="hljs-comment">// Correct:   file:///foo%231 (POSIX)</span>
+
+<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'/some/path%.c'</span>, <span class="hljs-string">'file:'</span>);    <span class="hljs-comment">// Incorrect: file:///some/path%.c</span>
+<span class="hljs-title function_">pathToFileURL</span>(<span class="hljs-string">'/some/path%.c'</span>);       <span class="hljs-comment">// Correct:   file:///some/path%25.c (POSIX)</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>console.table(tabularData[, properties]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-console">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>console.table(tabularData[, properties])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../console.html#console_console_table_tabulardata_properties" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/console/console_table_tabulardata_properties.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/console/console_table_tabulardata_properties.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/console/#consoletabletabulardata-properties.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div><ul class="">
+<li><code>tabularData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>properties</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 用于构造表格的替代属性。</li>
+</ul><p>尝试用 <code>tabularData</code> 的属性的列（或使用 <code>properties</code>）和 <code>tabularData</code> 的行构建表格并记录它。
+如果无法将其解析为表格，则回退到仅记录参数。</p><pre class=""><code class="language-js"><span class="hljs-comment">// 这些无法解析为表格数据</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>(<span class="hljs-title class_">Symbol</span>());
+<span class="hljs-comment">// Symbol()</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>(<span class="hljs-literal">undefined</span>);
+<span class="hljs-comment">// undefined</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>([{ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">'Y'</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'Z'</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }]);
+<span class="hljs-comment">// ┌─────────┬─────┬─────┐</span>
+<span class="hljs-comment">// │ (index) │  a  │  b  │</span>
+<span class="hljs-comment">// ├─────────┼─────┼─────┤</span>
+<span class="hljs-comment">// │    0    │  1  │ 'Y' │</span>
+<span class="hljs-comment">// │    1    │ 'Z' │  2  │</span>
+<span class="hljs-comment">// └─────────┴─────┴─────┘</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>([{ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">'Y'</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'Z'</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }], [<span class="hljs-string">'a'</span>]);
+<span class="hljs-comment">// ┌─────────┬─────┐</span>
+<span class="hljs-comment">// │ (index) │  a  │</span>
+<span class="hljs-comment">// ├─────────┼─────┤</span>
+<span class="hljs-comment">// │    0    │  1  │</span>
+<span class="hljs-comment">// │    1    │ 'Z' │</span>
+<span class="hljs-comment">// └─────────┴─────┘</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v10.0.0</span>
+</div><ul>
+<li><code>tabularData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li><code>properties</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> Alternate properties for constructing the table.</li>
+</ul><p>Try to construct a table with the columns of the properties of <code>tabularData</code>
+(or use <code>properties</code>) and rows of <code>tabularData</code> and log it. Falls back to just
+logging the argument if it can’t be parsed as tabular.</p><pre><code class="language-js"><span class="hljs-comment">// These can't be parsed as tabular data</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>(<span class="hljs-title class_">Symbol</span>());
+<span class="hljs-comment">// Symbol()</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>(<span class="hljs-literal">undefined</span>);
+<span class="hljs-comment">// undefined</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>([{ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">'Y'</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'Z'</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }]);
+<span class="hljs-comment">// ┌─────────┬─────┬─────┐</span>
+<span class="hljs-comment">// │ (index) │  a  │  b  │</span>
+<span class="hljs-comment">// ├─────────┼─────┼─────┤</span>
+<span class="hljs-comment">// │    0    │  1  │ 'Y' │</span>
+<span class="hljs-comment">// │    1    │ 'Z' │  2  │</span>
+<span class="hljs-comment">// └─────────┴─────┴─────┘</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>([{ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">'Y'</span> }, { <span class="hljs-attr">a</span>: <span class="hljs-string">'Z'</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }], [<span class="hljs-string">'a'</span>]);
+<span class="hljs-comment">// ┌─────────┬─────┐</span>
+<span class="hljs-comment">// │ (index) │  a  │</span>
+<span class="hljs-comment">// ├─────────┼─────┤</span>
+<span class="hljs-comment">// │    0    │  1  │</span>
+<span class="hljs-comment">// │    1    │ 'Z' │</span>
+<span class="hljs-comment">// └─────────┴─────┘</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

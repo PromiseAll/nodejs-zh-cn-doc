@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>perf_hooks.monitorEventLoopDelay([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-perf_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>perf_hooks.monitorEventLoopDelay([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../perf_hooks.html#perf_hooks_perf_hooks_monitoreventloopdelay_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/perf_hooks/perf_hooks_monitoreventloopdelay_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/perf_hooks/perf_hooks_monitoreventloopdelay_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/perf_hooks/#perf_hooksmonitoreventloopdelayoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v11.10.0</span>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>resolution</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 以毫秒为单位的采样率。
+必须大于零。 <strong>默认值:</strong> <code>10</code>。</li>
+</ul>
+</li>
+<li>返回: <a href="../perf_hooks.html#class-intervalhistogram-extends-histogram" rel="nofollow" class="type">&lt;IntervalHistogram&gt;</a></li>
+</ul><p><em>此属性是 Node.js 的扩展。
+它在 Web 浏览器中不可用。</em></p><p class="">创建可随时间采样并报告事件循环延迟的 <code>IntervalHistogram</code> 对象。
+延迟将以纳秒为单位报告。</p><p class="">使用计时器来检测近似的事件循环延迟是有效的，因为计时器的执行与 libuv 事件循环的生命周期特别相关。
+也就是说，循环中的延迟会导致计时器执行的延迟，而这些延迟正是此 API 旨在检测的。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { monitorEventLoopDelay } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'perf_hooks'</span>);
+<span class="hljs-keyword">const</span> h = <span class="hljs-title function_">monitorEventLoopDelay</span>({ <span class="hljs-attr">resolution</span>: <span class="hljs-number">20</span> });
+h.<span class="hljs-title function_">enable</span>();
+<span class="hljs-comment">// 做点什么。</span>
+h.<span class="hljs-title function_">disable</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">min</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">max</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">mean</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">stddev</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">percentiles</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-title function_">percentile</span>(<span class="hljs-number">50</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-title function_">percentile</span>(<span class="hljs-number">99</span>));</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v11.10.0</span>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>resolution</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The sampling rate in milliseconds. Must be greater
+than zero. <strong>Default:</strong> <code>10</code>.</li>
+</ul>
+</li>
+<li>Returns: <a href="../perf_hooks.html#class-intervalhistogram-extends-histogram" rel="nofollow" class="type">&lt;IntervalHistogram&gt;</a></li>
+</ul><p><em>This property is an extension by Node.js. It is not available in Web browsers.</em></p><p>Creates an <code>IntervalHistogram</code> object that samples and reports the event loop
+delay over time. The delays will be reported in nanoseconds.</p><p>Using a timer to detect approximate event loop delay works because the
+execution of timers is tied specifically to the lifecycle of the libuv
+event loop. That is, a delay in the loop will cause a delay in the execution
+of the timer, and those delays are specifically what this API is intended to
+detect.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { monitorEventLoopDelay } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'perf_hooks'</span>);
+<span class="hljs-keyword">const</span> h = <span class="hljs-title function_">monitorEventLoopDelay</span>({ <span class="hljs-attr">resolution</span>: <span class="hljs-number">20</span> });
+h.<span class="hljs-title function_">enable</span>();
+<span class="hljs-comment">// Do something.</span>
+h.<span class="hljs-title function_">disable</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">min</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">max</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">mean</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">stddev</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">percentiles</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-title function_">percentile</span>(<span class="hljs-number">50</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-title function_">percentile</span>(<span class="hljs-number">99</span>));</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

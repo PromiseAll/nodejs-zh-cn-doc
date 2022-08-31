@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>debugger 调试器 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-debugger">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>debugger 调试器</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../debugger.html#debugger_debugger" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/debugger/debugger.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/debugger/debugger.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/debugger/.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p><p>Node.js 包含了一个命令行的调试实用工具。
+Node.js 调试器客户端不是功能齐全的调试器，但可以进行简单的步进和检查。</p><p class="">要使用它，则使用 <code>inspect</code> 参数启动 Node.js，后跟要调试的脚本的路径。</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node inspect myscript.js</span>
+&lt; Debugger listening on ws://127.0.0.1:9229/621111f9-ffcb-4e82-b718-48a145fa5db8
+&lt; For help, see: https://nodejs.org/en/docs/inspector
+&lt;
+&lt; Debugger attached.
+&lt;
+ ok
+Break on start in myscript.js:2
+  1 // myscript.js
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">2 global.x = 5;</span>
+  3 setTimeout(() =&gt; {
+  4   debugger;
+<span class="hljs-meta prompt_">debug&gt;</span></code></pre><p class="">调试器自动在第一个可执行行中断。
+要改为运行到第一个断点（由 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger"><code>debugger</code></a> 语句指定），则将 <code>NODE_INSPECT_RESUME_ON_START</code> 环境变量设置为 <code>1</code>。</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> myscript.js</span>
+// myscript.js
+global.x = 5;
+setTimeout(() =&gt; {
+  debugger;
+  console.log('world');
+}, 1000);
+console.log('hello');
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">NODE_INSPECT_RESUME_ON_START=1 node inspect myscript.js</span>
+&lt; Debugger listening on ws://127.0.0.1:9229/f1ed133e-7876-495b-83ae-c32c6fc319c2
+&lt; For help, see: https://nodejs.org/en/docs/inspector
+&lt;
+connecting to 127.0.0.1:9229 ... ok
+&lt; Debugger attached.
+&lt;
+&lt; hello
+&lt;
+break in myscript.js:4
+  2 global.x = 5;
+  3 setTimeout(() =&gt; {
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">4   debugger;</span>
+  5   console.log('world');
+  6 }, 1000);
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">next</span>
+break in myscript.js:5
+  3 setTimeout(() =&gt; {
+  4   debugger;
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">5   console.log(<span class="hljs-string">'world'</span>);</span>
+  6 }, 1000);
+  7 console.log('hello');
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">repl</span>
+Press Ctrl+C to leave debug repl
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">x</span>
+5
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">2 + 2</span>
+4
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">next</span>
+&lt; world
+&lt;
+break in myscript.js:6
+  4   debugger;
+  5   console.log('world');
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">6 }, 1000);</span>
+  7 console.log('hello');
+  8
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">.<span class="hljs-built_in">exit</span></span>
+<span class="hljs-meta prompt_">$</span></code></pre><p class=""><code>repl</code> 命令允许远程评估代码。
+<code>next</code> 命令步进下一行。
+键入 <code>help</code> 以查看可用的其他命令。</p><p class="">在不输入命令的情况下按 <code>enter</code> 将重复之前的调试器命令。</p></div>
+          <div id="content_right"><p></p><div class="api_stability api_stability_2"><a href="../documentation.html#stability-index">Stability: 2</a> - Stable</div><p></p><p>Node.js includes a command-line debugging utility. The Node.js debugger client
+is not a full-featured debugger, but simple stepping and inspection are
+possible.</p><p>To use it, start Node.js with the <code>inspect</code> argument followed by the path to the
+script to debug.</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node inspect myscript.js</span>
+&lt; Debugger listening on ws://127.0.0.1:9229/621111f9-ffcb-4e82-b718-48a145fa5db8
+&lt; For help, see: https://nodejs.org/en/docs/inspector
+&lt;
+&lt; Debugger attached.
+&lt;
+ ok
+Break on start in myscript.js:2
+  1 // myscript.js
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">2 global.x = 5;</span>
+  3 setTimeout(() =&gt; {
+  4   debugger;
+<span class="hljs-meta prompt_">debug&gt;</span></code></pre><p>The debugger automatically breaks on the first executable line. To instead
+run until the first breakpoint (specified by a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger"><code>debugger</code></a> statement), set
+the <code>NODE_INSPECT_RESUME_ON_START</code> environment variable to <code>1</code>.</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> myscript.js</span>
+// myscript.js
+global.x = 5;
+setTimeout(() =&gt; {
+  debugger;
+  console.log('world');
+}, 1000);
+console.log('hello');
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">NODE_INSPECT_RESUME_ON_START=1 node inspect myscript.js</span>
+&lt; Debugger listening on ws://127.0.0.1:9229/f1ed133e-7876-495b-83ae-c32c6fc319c2
+&lt; For help, see: https://nodejs.org/en/docs/inspector
+&lt;
+connecting to 127.0.0.1:9229 ... ok
+&lt; Debugger attached.
+&lt;
+&lt; hello
+&lt;
+break in myscript.js:4
+  2 global.x = 5;
+  3 setTimeout(() =&gt; {
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">4   debugger;</span>
+  5   console.log('world');
+  6 }, 1000);
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">next</span>
+break in myscript.js:5
+  3 setTimeout(() =&gt; {
+  4   debugger;
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">5   console.log(<span class="hljs-string">'world'</span>);</span>
+  6 }, 1000);
+  7 console.log('hello');
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">repl</span>
+Press Ctrl+C to leave debug repl
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">x</span>
+5
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">2 + 2</span>
+4
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">next</span>
+&lt; world
+&lt;
+break in myscript.js:6
+  4   debugger;
+  5   console.log('world');
+<span class="hljs-meta prompt_">&gt; </span><span class="language-bash">6 }, 1000);</span>
+  7 console.log('hello');
+  8
+<span class="hljs-meta prompt_">debug&gt; </span><span class="language-bash">.<span class="hljs-built_in">exit</span></span>
+<span class="hljs-meta prompt_">$</span></code></pre><p>The <code>repl</code> command allows code to be evaluated remotely. The <code>next</code> command
+steps to the next line. Type <code>help</code> to see what other commands are available.</p><p>Pressing <code>enter</code> without typing a command will repeat the previous debugger
+command.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

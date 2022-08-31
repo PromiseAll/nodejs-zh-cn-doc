@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>cluster.settings | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cluster">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>cluster.settings</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cluster.html#cluster_cluster_settings" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cluster/cluster_settings.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/cluster/cluster_settings.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cluster/#clustersettings.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>现在支持 <code>serialization</code> 选项。</p></td></tr>
+<tr><td>v9.5.0</td>
+<td><p>现在支持 <code>cwd</code> 选项。</p></td></tr>
+<tr><td>v9.4.0</td>
+<td><p>现在支持 <code>windowsHide</code> 选项。</p></td></tr>
+<tr><td>v8.2.0</td>
+<td><p>现在支持 <code>inspectPort</code> 选项。</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>现在支持 <code>stdio</code> 选项。</p></td></tr>
+<tr><td>v0.7.1</td>
+<td><p><span>新增于: v0.7.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>execArgv</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 传给 Node.js 可执行文件的字符串参数列表。 <strong>默认值:</strong> <code>process.execArgv</code>。</li>
+<li><code>exec</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 工作进程文件的文件路径。 <strong>默认值:</strong> <code>process.argv[1]</code>。</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 传给工作进程的字符串参数。
+<strong>默认值:</strong> <code>process.argv.slice(2)</code>。</li>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 工作进程的当前工作目录。 <strong>默认值:</strong>
+<code>undefined</code> （从父进程继承）。</li>
+<li><code>serialization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指定用于在进程之间发送消息的序列化类型。
+可能的值为 <code>'json'</code> 和 <code>'advanced'</code>。
+有关更多详细信息，请参阅<a href="../child_process.html#advanced-serialization">子进程的高级序列化</a>。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>silent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 是否将输出发送到父进程的标准输入输出。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> 配置衍生进程的标准输入输出。
+由于集群模块依赖 IPC 来运行，因此此配置必须包含 <code>'ipc'</code> 条目。
+提供此选项时，它会覆盖 <code>silent</code>。</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的用户标识。
+（见 <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>。）</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 设置进程的群组标识。
+（见 <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>。）</li>
+<li><code>inspectPort</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 设置工作进程的检查器端口。
+这可以是数字，也可以是不带参数并返回数字的函数。
+默认情况下，每个工作进程都有自己的端口，从主进程的 <code>process.debugPort</code> 开始递增。</li>
+<li><code>windowsHide</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 隐藏通常在 Windows 系统上创建的衍生进程控制台窗口。 <strong>默认值:</strong> <code>false</code>。</li>
+</ul>
+</li>
+</ul><p>调用 <a href="../cluster.html#clustersetupprimarysettings"><code>.setupPrimary()</code></a>（或 <a href="../cluster.html#clusterforkenv"><code>.fork()</code></a>）之后，此设置对象将包含设置，包括默认值。</p><p class="">此对象不应手动更改或设置。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v13.2.0, v12.16.0</td>
+<td><p>The <code>serialization</code> option is supported now.</p></td></tr>
+<tr><td>v9.5.0</td>
+<td><p>The <code>cwd</code> option is supported now.</p></td></tr>
+<tr><td>v9.4.0</td>
+<td><p>The <code>windowsHide</code> option is supported now.</p></td></tr>
+<tr><td>v8.2.0</td>
+<td><p>The <code>inspectPort</code> option is supported now.</p></td></tr>
+<tr><td>v6.4.0</td>
+<td><p>The <code>stdio</code> option is supported now.</p></td></tr>
+<tr><td>v0.7.1</td>
+<td><p><span>Added in: v0.7.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>execArgv</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> List of string arguments passed to the Node.js
+executable. <strong>Default:</strong> <code>process.execArgv</code>.</li>
+<li><code>exec</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> File path to worker file. <strong>Default:</strong> <code>process.argv[1]</code>.</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> String arguments passed to worker.
+<strong>Default:</strong> <code>process.argv.slice(2)</code>.</li>
+<li><code>cwd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Current working directory of the worker process. <strong>Default:</strong>
+<code>undefined</code> (inherits from parent process).</li>
+<li><code>serialization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Specify the kind of serialization used for sending
+messages between processes. Possible values are <code>'json'</code> and <code>'advanced'</code>.
+See <a href="../child_process.html#advanced-serialization">Advanced serialization for <code>child_process</code></a> for more details.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>silent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether or not to send output to parent's stdio.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>stdio</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> Configures the stdio of forked processes. Because the
+cluster module relies on IPC to function, this configuration must contain an
+<code>'ipc'</code> entry. When this option is provided, it overrides <code>silent</code>.</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the user identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setuid.2.html" rel="nofollow"><code>setuid(2)</code></a>.)</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Sets the group identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setgid.2.html" rel="nofollow"><code>setgid(2)</code></a>.)</li>
+<li><code>inspectPort</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Sets inspector port of worker.
+This can be a number, or a function that takes no arguments and returns a
+number. By default each worker gets its own port, incremented from the
+primary's <code>process.debugPort</code>.</li>
+<li><code>windowsHide</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Hide the forked processes console window that would
+normally be created on Windows systems. <strong>Default:</strong> <code>false</code>.</li>
+</ul>
+</li>
+</ul><p>After calling <a href="../cluster.html#clustersetupprimarysettings"><code>.setupPrimary()</code></a> (or <a href="../cluster.html#clusterforkenv"><code>.fork()</code></a>) this settings object will
+contain the settings, including the default values.</p><p>This object is not intended to be changed or set manually.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

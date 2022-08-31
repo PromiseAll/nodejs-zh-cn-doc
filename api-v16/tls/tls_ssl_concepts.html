@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>TLS/SSL 概念 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>TLS/SSL 概念</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_tls_ssl_concepts" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/tls_ssl_concepts.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/tls_ssl_concepts.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#tlsssl-concepts.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>TLS/SSL 是一组协议，它依赖于公钥基础设施 (PKI) 来实现客户端和服务器之间的安全通信。
+对于最常见的情况，每个服务器都必须有私钥。</p><p class="">可以通过多种方式生成私钥。
+以下示例说明了使用 OpenSSL 命令行界面生成 2048 位 RSA 私钥：</p><pre class=""><code class="language-bash">openssl genrsa -out ryans-key.pem 2048</code></pre><p class="">使用 TLS/SSL，所有服务器（和一些客户端）都必须有证书。
+证书是与私钥相对应的公钥，并且由证书颁发机构或私钥的所有者进行数字签名（此类证书称为“自签名”）。
+获取证书的第一步是创建证书签名请求（CSR）文件。</p><p class="">OpenSSL 命令行界面可用于为私钥生成 CSR：</p><pre class=""><code class="language-bash">openssl req -new -sha256 -key ryans-key.pem -out ryans-csr.pem</code></pre><p class="">一旦生成 CSR 文件，则它可以发送到证书颁发机构进行签名或用于生成自签名证书。</p><p class="">使用 OpenSSL 命令行界面创建自签名证书如以下示例所示：</p><pre class=""><code class="language-bash">openssl x509 -req -<span class="hljs-keyword">in</span> ryans-csr.pem -signkey ryans-key.pem -out ryans-cert.pem</code></pre><p class="">生成证书后，可用于生成 <code>.pfx</code> 或 <code>.p12</code> 文件：</p><pre class=""><code class="language-bash">openssl pkcs12 -<span class="hljs-built_in">export</span> -<span class="hljs-keyword">in</span> ryans-cert.pem -inkey ryans-key.pem \
+      -certfile ca-cert.pem -out ryans.pfx</code></pre><p class="">在哪里：</p><ul class="">
+<li><code>in</code>: 是签名的证书</li>
+<li><code>inkey</code>: 是关联的私钥</li>
+<li><code>certfile</code>: 是将所有证书颁发机构 (CA) 证书串联到一个文件中，例如 <code>cat ca1-cert.pem ca2-cert.pem &gt; ca-cert.pem</code></li>
+</ul></div>
+          <div id="content_right"><p>TLS/SSL is a set of protocols that rely on a public key infrastructure (PKI) to
+enable secure communication between a client and a server. For most common
+cases, each server must have a private key.</p><p>Private keys can be generated in multiple ways. The example below illustrates
+use of the OpenSSL command-line interface to generate a 2048-bit RSA private
+key:</p><pre><code class="language-bash">openssl genrsa -out ryans-key.pem 2048</code></pre><p>With TLS/SSL, all servers (and some clients) must have a <em>certificate</em>.
+Certificates are <em>public keys</em> that correspond to a private key, and that are
+digitally signed either by a Certificate Authority or by the owner of the
+private key (such certificates are referred to as "self-signed"). The first
+step to obtaining a certificate is to create a <em>Certificate Signing Request</em>
+(CSR) file.</p><p>The OpenSSL command-line interface can be used to generate a CSR for a private
+key:</p><pre><code class="language-bash">openssl req -new -sha256 -key ryans-key.pem -out ryans-csr.pem</code></pre><p>Once the CSR file is generated, it can either be sent to a Certificate
+Authority for signing or used to generate a self-signed certificate.</p><p>Creating a self-signed certificate using the OpenSSL command-line interface
+is illustrated in the example below:</p><pre><code class="language-bash">openssl x509 -req -<span class="hljs-keyword">in</span> ryans-csr.pem -signkey ryans-key.pem -out ryans-cert.pem</code></pre><p>Once the certificate is generated, it can be used to generate a <code>.pfx</code> or
+<code>.p12</code> file:</p><pre><code class="language-bash">openssl pkcs12 -<span class="hljs-built_in">export</span> -<span class="hljs-keyword">in</span> ryans-cert.pem -inkey ryans-key.pem \
+      -certfile ca-cert.pem -out ryans.pfx</code></pre><p>Where:</p><ul>
+<li><code>in</code>: is the signed certificate</li>
+<li><code>inkey</code>: is the associated private key</li>
+<li><code>certfile</code>: is a concatenation of all Certificate Authority (CA) certs into
+a single file, e.g. <code>cat ca1-cert.pem ca2-cert.pem &gt; ca-cert.pem</code></li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

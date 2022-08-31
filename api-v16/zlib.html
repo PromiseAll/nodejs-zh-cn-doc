@@ -1,0 +1,1543 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>zlib 压缩 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_zlib" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="cli.html" class="nav-cli" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="" class="nav-zlib active" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="zlib" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><span class="stability_2"><a href="#zlib">zlib 压缩</a></span>
+<ul>
+<li><a href="#threadpool-usage-and-performance-considerations">线程池的使用与性能的考虑</a></li>
+<li><a href="#compressing-http-requests-and-responses">压缩 HTTP 的请求和响应</a></li>
+<li><a href="#memory-usage-tuning">内存使用的调整</a>
+<ul>
+<li><a href="#for-zlib-based-streams">对于基于 zlib 的流</a></li>
+<li><a href="#for-brotli-based-streams">对于基于 Brotli 的流</a></li>
+</ul>
+</li>
+<li><a href="#flushing">刷新</a></li>
+<li><a href="#constants">常量</a>
+<ul>
+<li><a href="#zlib-constants">zlib 常量</a></li>
+<li><a href="#brotli-constants">Brotli 常量</a>
+<ul>
+<li><a href="#flush-operations">刷新操作</a></li>
+<li><a href="#compressor-options">压缩器选项</a></li>
+<li><a href="#decompressor-options">解压器选项</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#class-options"><code>Options</code> 类</a></li>
+<li><a href="#class-brotlioptions"><code>BrotliOptions</code> 类</a></li>
+<li><a href="#class-zlibbrotlicompress"><code>zlib.BrotliCompress</code> 类</a></li>
+<li><a href="#class-zlibbrotlidecompress"><code>zlib.BrotliDecompress</code> 类</a></li>
+<li><a href="#class-zlibdeflate"><code>zlib.Deflate</code> 类</a></li>
+<li><a href="#class-zlibdeflateraw"><code>zlib.DeflateRaw</code> 类</a></li>
+<li><a href="#class-zlibgunzip"><code>zlib.Gunzip</code> 类</a></li>
+<li><a href="#class-zlibgzip"><code>zlib.Gzip</code> 类</a></li>
+<li><a href="#class-zlibinflate"><code>zlib.Inflate</code> 类</a></li>
+<li><a href="#class-zlibinflateraw"><code>zlib.InflateRaw</code> 类</a></li>
+<li><a href="#class-zlibunzip"><code>zlib.Unzip</code> 类</a></li>
+<li><a href="#class-zlibzlibbase"><code>zlib.ZlibBase</code> 类</a>
+<ul>
+<li><span class="stability_0"><a href="#zlibbytesread"><code>zlib.bytesRead</code></a></span></li>
+<li><a href="#zlibbyteswritten"><code>zlib.bytesWritten</code></a></li>
+<li><a href="#zlibclosecallback"><code>zlib.close([callback])</code></a></li>
+<li><a href="#zlibflushkind-callback"><code>zlib.flush([kind, ]callback)</code></a></li>
+<li><a href="#zlibparamslevel-strategy-callback"><code>zlib.params(level, strategy, callback)</code></a></li>
+<li><a href="#zlibreset"><code>zlib.reset()</code></a></li>
+</ul>
+</li>
+<li><a href="#zlibconstants"><code>zlib.constants</code></a></li>
+<li><a href="#zlibcreatebrotlicompressoptions"><code>zlib.createBrotliCompress([options])</code></a></li>
+<li><a href="#zlibcreatebrotlidecompressoptions"><code>zlib.createBrotliDecompress([options])</code></a></li>
+<li><a href="#zlibcreatedeflateoptions"><code>zlib.createDeflate([options])</code></a></li>
+<li><a href="#zlibcreatedeflaterawoptions"><code>zlib.createDeflateRaw([options])</code></a></li>
+<li><a href="#zlibcreategunzipoptions"><code>zlib.createGunzip([options])</code></a></li>
+<li><a href="#zlibcreategzipoptions"><code>zlib.createGzip([options])</code></a></li>
+<li><a href="#zlibcreateinflateoptions"><code>zlib.createInflate([options])</code></a></li>
+<li><a href="#zlibcreateinflaterawoptions"><code>zlib.createInflateRaw([options])</code></a></li>
+<li><a href="#zlibcreateunzipoptions"><code>zlib.createUnzip([options])</code></a></li>
+<li><a href="#convenience-methods">便捷方法</a>
+<ul>
+<li><a href="#zlibbrotlicompressbuffer-options-callback"><code>zlib.brotliCompress(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibbrotlicompresssyncbuffer-options"><code>zlib.brotliCompressSync(buffer[, options])</code></a></li>
+<li><a href="#zlibbrotlidecompressbuffer-options-callback"><code>zlib.brotliDecompress(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibbrotlidecompresssyncbuffer-options"><code>zlib.brotliDecompressSync(buffer[, options])</code></a></li>
+<li><a href="#zlibdeflatebuffer-options-callback"><code>zlib.deflate(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibdeflatesyncbuffer-options"><code>zlib.deflateSync(buffer[, options])</code></a></li>
+<li><a href="#zlibdeflaterawbuffer-options-callback"><code>zlib.deflateRaw(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibdeflaterawsyncbuffer-options"><code>zlib.deflateRawSync(buffer[, options])</code></a></li>
+<li><a href="#zlibgunzipbuffer-options-callback"><code>zlib.gunzip(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibgunzipsyncbuffer-options"><code>zlib.gunzipSync(buffer[, options])</code></a></li>
+<li><a href="#zlibgzipbuffer-options-callback"><code>zlib.gzip(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibgzipsyncbuffer-options"><code>zlib.gzipSync(buffer[, options])</code></a></li>
+<li><a href="#zlibinflatebuffer-options-callback"><code>zlib.inflate(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibinflatesyncbuffer-options"><code>zlib.inflateSync(buffer[, options])</code></a></li>
+<li><a href="#zlibinflaterawbuffer-options-callback"><code>zlib.inflateRaw(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibinflaterawsyncbuffer-options"><code>zlib.inflateRawSync(buffer[, options])</code></a></li>
+<li><a href="#zlibunzipbuffer-options-callback"><code>zlib.unzip(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibunzipsyncbuffer-options"><code>zlib.unzipSync(buffer[, options])</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="cli.html" class="nav-cli">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="" class="nav-zlib active">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/zlib.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/zlib.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><span class="stability_2"><a href="#zlib">zlib 压缩</a></span>
+<ul>
+<li><a href="#threadpool-usage-and-performance-considerations">线程池的使用与性能的考虑</a></li>
+<li><a href="#compressing-http-requests-and-responses">压缩 HTTP 的请求和响应</a></li>
+<li><a href="#memory-usage-tuning">内存使用的调整</a>
+<ul>
+<li><a href="#for-zlib-based-streams">对于基于 zlib 的流</a></li>
+<li><a href="#for-brotli-based-streams">对于基于 Brotli 的流</a></li>
+</ul>
+</li>
+<li><a href="#flushing">刷新</a></li>
+<li><a href="#constants">常量</a>
+<ul>
+<li><a href="#zlib-constants">zlib 常量</a></li>
+<li><a href="#brotli-constants">Brotli 常量</a>
+<ul>
+<li><a href="#flush-operations">刷新操作</a></li>
+<li><a href="#compressor-options">压缩器选项</a></li>
+<li><a href="#decompressor-options">解压器选项</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#class-options"><code>Options</code> 类</a></li>
+<li><a href="#class-brotlioptions"><code>BrotliOptions</code> 类</a></li>
+<li><a href="#class-zlibbrotlicompress"><code>zlib.BrotliCompress</code> 类</a></li>
+<li><a href="#class-zlibbrotlidecompress"><code>zlib.BrotliDecompress</code> 类</a></li>
+<li><a href="#class-zlibdeflate"><code>zlib.Deflate</code> 类</a></li>
+<li><a href="#class-zlibdeflateraw"><code>zlib.DeflateRaw</code> 类</a></li>
+<li><a href="#class-zlibgunzip"><code>zlib.Gunzip</code> 类</a></li>
+<li><a href="#class-zlibgzip"><code>zlib.Gzip</code> 类</a></li>
+<li><a href="#class-zlibinflate"><code>zlib.Inflate</code> 类</a></li>
+<li><a href="#class-zlibinflateraw"><code>zlib.InflateRaw</code> 类</a></li>
+<li><a href="#class-zlibunzip"><code>zlib.Unzip</code> 类</a></li>
+<li><a href="#class-zlibzlibbase"><code>zlib.ZlibBase</code> 类</a>
+<ul>
+<li><span class="stability_0"><a href="#zlibbytesread"><code>zlib.bytesRead</code></a></span></li>
+<li><a href="#zlibbyteswritten"><code>zlib.bytesWritten</code></a></li>
+<li><a href="#zlibclosecallback"><code>zlib.close([callback])</code></a></li>
+<li><a href="#zlibflushkind-callback"><code>zlib.flush([kind, ]callback)</code></a></li>
+<li><a href="#zlibparamslevel-strategy-callback"><code>zlib.params(level, strategy, callback)</code></a></li>
+<li><a href="#zlibreset"><code>zlib.reset()</code></a></li>
+</ul>
+</li>
+<li><a href="#zlibconstants"><code>zlib.constants</code></a></li>
+<li><a href="#zlibcreatebrotlicompressoptions"><code>zlib.createBrotliCompress([options])</code></a></li>
+<li><a href="#zlibcreatebrotlidecompressoptions"><code>zlib.createBrotliDecompress([options])</code></a></li>
+<li><a href="#zlibcreatedeflateoptions"><code>zlib.createDeflate([options])</code></a></li>
+<li><a href="#zlibcreatedeflaterawoptions"><code>zlib.createDeflateRaw([options])</code></a></li>
+<li><a href="#zlibcreategunzipoptions"><code>zlib.createGunzip([options])</code></a></li>
+<li><a href="#zlibcreategzipoptions"><code>zlib.createGzip([options])</code></a></li>
+<li><a href="#zlibcreateinflateoptions"><code>zlib.createInflate([options])</code></a></li>
+<li><a href="#zlibcreateinflaterawoptions"><code>zlib.createInflateRaw([options])</code></a></li>
+<li><a href="#zlibcreateunzipoptions"><code>zlib.createUnzip([options])</code></a></li>
+<li><a href="#convenience-methods">便捷方法</a>
+<ul>
+<li><a href="#zlibbrotlicompressbuffer-options-callback"><code>zlib.brotliCompress(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibbrotlicompresssyncbuffer-options"><code>zlib.brotliCompressSync(buffer[, options])</code></a></li>
+<li><a href="#zlibbrotlidecompressbuffer-options-callback"><code>zlib.brotliDecompress(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibbrotlidecompresssyncbuffer-options"><code>zlib.brotliDecompressSync(buffer[, options])</code></a></li>
+<li><a href="#zlibdeflatebuffer-options-callback"><code>zlib.deflate(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibdeflatesyncbuffer-options"><code>zlib.deflateSync(buffer[, options])</code></a></li>
+<li><a href="#zlibdeflaterawbuffer-options-callback"><code>zlib.deflateRaw(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibdeflaterawsyncbuffer-options"><code>zlib.deflateRawSync(buffer[, options])</code></a></li>
+<li><a href="#zlibgunzipbuffer-options-callback"><code>zlib.gunzip(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibgunzipsyncbuffer-options"><code>zlib.gunzipSync(buffer[, options])</code></a></li>
+<li><a href="#zlibgzipbuffer-options-callback"><code>zlib.gzip(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibgzipsyncbuffer-options"><code>zlib.gzipSync(buffer[, options])</code></a></li>
+<li><a href="#zlibinflatebuffer-options-callback"><code>zlib.inflate(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibinflatesyncbuffer-options"><code>zlib.inflateSync(buffer[, options])</code></a></li>
+<li><a href="#zlibinflaterawbuffer-options-callback"><code>zlib.inflateRaw(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibinflaterawsyncbuffer-options"><code>zlib.inflateRawSync(buffer[, options])</code></a></li>
+<li><a href="#zlibunzipbuffer-options-callback"><code>zlib.unzip(buffer[, options], callback)</code></a></li>
+<li><a href="#zlibunzipsyncbuffer-options"><code>zlib.unzipSync(buffer[, options])</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>zlib 压缩<span><a class="mark" href="#zlib" id="zlib">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="">
+                <a href="zlib/zlib.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v0.10.0-->
+<p></p><div class="api_stability api_stability_2"><a href="documentation.html#stability-index">稳定性: 2</a> - 稳定</div><p></p>
+<p class=""><strong>源代码:</strong> <a rel="nofollow" href="https://github.com/nodejs/node/blob/v16.16.0/lib/zlib.js">lib/zlib.js</a></p>
+<p><code>zlib</code> 模块提供了使用 Gzip、Deflate/Inflate、以及 Brotli 实现的压缩功能。</p>
+<p class="">要访问它：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);</code></pre>
+<p class="">压缩和解压缩是围绕 Node.js <a href="stream.html">流 API</a> 构建的。</p>
+<p class="">压缩或解压缩流（例如文件）可以通过将源流通过 <code>zlib</code> <code>Transform</code> 流管道传输到目标流来完成：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { createGzip } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+<span class="hljs-keyword">const</span> {
+  createReadStream,
+  createWriteStream
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+<span class="hljs-keyword">const</span> gzip = <span class="hljs-title function_">createGzip</span>();
+<span class="hljs-keyword">const</span> source = <span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'input.txt'</span>);
+<span class="hljs-keyword">const</span> destination = <span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'input.txt.gz'</span>);
+
+<span class="hljs-title function_">pipeline</span>(source, gzip, destination, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+  }
+});
+
+<span class="hljs-comment">// 或者，promise 化</span>
+
+<span class="hljs-keyword">const</span> { promisify } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> pipe = <span class="hljs-title function_">promisify</span>(pipeline);
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">do_gzip</span>(<span class="hljs-params">input, output</span>) {
+  <span class="hljs-keyword">const</span> gzip = <span class="hljs-title function_">createGzip</span>();
+  <span class="hljs-keyword">const</span> source = <span class="hljs-title function_">createReadStream</span>(input);
+  <span class="hljs-keyword">const</span> destination = <span class="hljs-title function_">createWriteStream</span>(output);
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">pipe</span>(source, gzip, destination);
+}
+
+<span class="hljs-title function_">do_gzip</span>(<span class="hljs-string">'input.txt'</span>, <span class="hljs-string">'input.txt.gz'</span>)
+  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+  });</code></pre>
+<p class="">也可以一步压缩或解压缩数据：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { deflate, unzip } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+
+<span class="hljs-keyword">const</span> input = <span class="hljs-string">'.................................'</span>;
+<span class="hljs-title function_">deflate</span>(input, <span class="hljs-function">(<span class="hljs-params">err, buffer</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+  }
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buffer.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'base64'</span>));
+});
+
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'eJzT0yMAAGTvBe8='</span>, <span class="hljs-string">'base64'</span>);
+<span class="hljs-title function_">unzip</span>(buffer, <span class="hljs-function">(<span class="hljs-params">err, buffer</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+  }
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buffer.<span class="hljs-title function_">toString</span>());
+});
+
+<span class="hljs-comment">// 或者，promise 化</span>
+
+<span class="hljs-keyword">const</span> { promisify } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> do_unzip = <span class="hljs-title function_">promisify</span>(unzip);
+
+<span class="hljs-title function_">do_unzip</span>(buffer)
+  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">buf</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf.<span class="hljs-title function_">toString</span>()))
+  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+  });</code></pre>
+<section><h3>线程池的使用与性能的考虑<span><a class="mark" href="#threadpool-usage-and-performance-considerations" id="threadpool-usage-and-performance-considerations">#</a></span><a aria-hidden="true" class="legacy" id="zlib_threadpool_usage_and_performance_considerations"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#threadpool-usage-and-performance-considerations">
+                <a href="zlib/threadpool_usage_and_performance_considerations.html" class="tip_trans">中英对照</a>
+                </p>
+<p>所有 <code>zlib</code> API，除了那些显式同步的 API，都使用 Node.js 内部线程池。
+这可能会在某些应用程序中导致令人惊讶的效果和性能限制。</p>
+<p class="">同时创建和使用大量压缩对象会导致显着的内存碎片。</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+
+<span class="hljs-keyword">const</span> payload = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'This is some data'</span>);
+
+<span class="hljs-comment">// 警告：不要这样做！</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">30000</span>; ++i) {
+  zlib.<span class="hljs-title function_">deflate</span>(payload, <span class="hljs-function">(<span class="hljs-params">err, buffer</span>) =&gt;</span> {});
+}</code></pre>
+<p class="">在前面的示例中，同时创建了 30,000 个 deflate 实例。
+由于某些操作系统如何处理内存分配和释放，这可能会导致严重的内存碎片。</p>
+<p class="">强烈建议缓存压缩操作的结果以避免重复工作。</p>
+</section><section><h3>压缩 HTTP 的请求和响应<span><a class="mark" href="#compressing-http-requests-and-responses" id="compressing-http-requests-and-responses">#</a></span><a aria-hidden="true" class="legacy" id="zlib_compressing_http_requests_and_responses"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#compressing-http-requests-and-responses">
+                <a href="zlib/compressing_http_requests_and_responses.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>zlib</code> 模块可用于实现对 <a href="https://tools.ietf.org/html/rfc7230#section-4.2" rel="nofollow">HTTP</a> 定义的 <code>gzip</code>、<code>deflate</code> 和 <code>br</code> 内容编码机制的支持。</p>
+<p class="">HTTP <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3" rel="nofollow"><code>Accept-Encoding</code></a> 标头在 HTTP 请求中用于识别客户端接受的压缩编码。
+<a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11" rel="nofollow"><code>Content-Encoding</code></a> 标头用于标识实际应用于消息的压缩编码。</p>
+<p class="">下面给出的示例经过彻底简化以显示基本概念。
+使用 <code>zlib</code> 编码可能很昂贵，结果应该被缓存。
+有关 <code>zlib</code> 使用中涉及的速度/内存/压缩权衡的更多信息，请参阅<a href="#memory-usage-tuning">内存使用调整</a>。</p>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 客户端请求示例</span>
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+<span class="hljs-keyword">const</span> request = http.<span class="hljs-title function_">get</span>({ <span class="hljs-attr">host</span>: <span class="hljs-string">'example.com'</span>,
+                           <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+                           <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+                           <span class="hljs-attr">headers</span>: { <span class="hljs-string">'Accept-Encoding'</span>: <span class="hljs-string">'br,gzip,deflate'</span> } });
+request.<span class="hljs-title function_">on</span>(<span class="hljs-string">'response'</span>, <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> output = fs.<span class="hljs-title function_">createWriteStream</span>(<span class="hljs-string">'example.com_index.html'</span>);
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onError</span> = (<span class="hljs-params">err</span>) =&gt; {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+      process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+    }
+  };
+
+  <span class="hljs-keyword">switch</span> (response.<span class="hljs-property">headers</span>[<span class="hljs-string">'content-encoding'</span>]) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'br'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createBrotliDecompress</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-comment">// 或者，只需使用 zlib.createUnzip() 来处理以下两种情况：</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'gzip'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createGunzip</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'deflate'</span>:
+      <span class="hljs-title function_">pipeline</span>(response, zlib.<span class="hljs-title function_">createInflate</span>(), output, onError);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-attr">default</span>:
+      <span class="hljs-title function_">pipeline</span>(response, output, onError);
+      <span class="hljs-keyword">break</span>;
+  }
+});</code></pre>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 服务器示例</span>
+<span class="hljs-comment">// 对每个请求运行 gzip 操作是非常昂贵的。</span>
+<span class="hljs-comment">// 缓存压缩的缓冲区会更有效率。</span>
+<span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> raw = fs.<span class="hljs-title function_">createReadStream</span>(<span class="hljs-string">'index.html'</span>);
+  <span class="hljs-comment">// 存储资源的压缩版本和未压缩版本。</span>
+  response.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Vary'</span>, <span class="hljs-string">'Accept-Encoding'</span>);
+  <span class="hljs-keyword">let</span> acceptEncoding = request.<span class="hljs-property">headers</span>[<span class="hljs-string">'accept-encoding'</span>];
+  <span class="hljs-keyword">if</span> (!acceptEncoding) {
+    acceptEncoding = <span class="hljs-string">''</span>;
+  }
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onError</span> = (<span class="hljs-params">err</span>) =&gt; {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-comment">// 如果发生错误，则无能为力，</span>
+      <span class="hljs-comment">// 因为服务器已经发送了 200 响应代码，</span>
+      <span class="hljs-comment">// 并且已经向客户端发送了一些数据。</span>
+      <span class="hljs-comment">// 能做的最好的事情</span>
+      <span class="hljs-comment">// 就是立即终止响应并记录错误。</span>
+      response.<span class="hljs-title function_">end</span>();
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    }
+  };
+
+  <span class="hljs-comment">// 注意：这不是一个符合标准的接受编码解析器。</span>
+  <span class="hljs-comment">// 参见 https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bdeflate\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'deflate'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createDeflate</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bgzip\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'gzip'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createGzip</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\bbr\b/</span>.<span class="hljs-title function_">test</span>(acceptEncoding)) {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Encoding'</span>: <span class="hljs-string">'br'</span> });
+    <span class="hljs-title function_">pipeline</span>(raw, zlib.<span class="hljs-title function_">createBrotliCompress</span>(), response, onError);
+  } <span class="hljs-keyword">else</span> {
+    response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, {});
+    <span class="hljs-title function_">pipeline</span>(raw, response, onError);
+  }
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre>
+<p class="">默认情况下，<code>zlib</code> 方法在解压缩截断数据时会抛出错误。
+但是，如果已知数据不完整，或者希望仅检查压缩文件的开头，则可以通过更改用于解压缩输入的最后一个块的刷新方法来抑制默认错误处理数据：</p>
+<pre class=""><code class="language-js"><span class="hljs-comment">// 这是上述示例中缓冲区的截断版本</span>
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'eJzT0yMA'</span>, <span class="hljs-string">'base64'</span>);
+
+zlib.<span class="hljs-title function_">unzip</span>(
+  buffer,
+  <span class="hljs-comment">// 对于 Brotli，相当于 zlib.constants.BROTLI_OPERATION_FLUSH</span>
+  { <span class="hljs-attr">finishFlush</span>: zlib.<span class="hljs-property">constants</span>.<span class="hljs-property">Z_SYNC_FLUSH</span> },
+  <span class="hljs-function">(<span class="hljs-params">err, buffer</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+      process.<span class="hljs-property">exitCode</span> = <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buffer.<span class="hljs-title function_">toString</span>());
+  });</code></pre>
+<p class="">这不会改变其他错误抛出情况下的行为，例如当输入数据的格式无效时。
+使用此方法，将无法确定输入是否提前结束或缺少完整性检查，因此需要手动检查解压结果是否有效。</p>
+</section><section><h3>内存使用的调整<span><a class="mark" href="#memory-usage-tuning" id="memory-usage-tuning">#</a></span><a aria-hidden="true" class="legacy" id="zlib_memory_usage_tuning"></a></h3>
+<!--type=misc-->
+<h4>对于基于 zlib 的流<span><a class="mark" href="#for-zlib-based-streams" id="for-zlib-based-streams">#</a></span><a aria-hidden="true" class="legacy" id="zlib_for_zlib_based_streams"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#for-zlib-based-streams">
+                <a href="zlib/for_zlib_based_streams.html" class="tip_trans">中英对照</a>
+                </p>
+<p>从 <code>zlib/zconf.h</code> 开始，针对 Node.js 使用进行了修改：</p>
+<p class="">deflate 的内存要求是（以字节为单位）：</p>
+<!-- eslint-disable semi -->
+<pre class=""><code class="language-js">(<span class="hljs-number">1</span> &lt;&lt; (windowBits + <span class="hljs-number">2</span>)) + (<span class="hljs-number">1</span> &lt;&lt; (memLevel + <span class="hljs-number">9</span>))</code></pre>
+<p class="">即：<code>windowBits</code> 的 128K = 15 + <code>memLevel</code> 的 128K = 8（默认值）加上小对象的几千字节。</p>
+<p class="">例如，要将默认内存要求从 256K 减少到 128K，应将选项设置为：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> options = { <span class="hljs-attr">windowBits</span>: <span class="hljs-number">14</span>, <span class="hljs-attr">memLevel</span>: <span class="hljs-number">7</span> };</code></pre>
+<p class="">然而，这通常会降低压缩性能。</p>
+<p class="">inflate 的内存要求是（以字节为单位）<code>1 &lt;&lt; windowBits</code>。
+也就是说，<code>windowBits</code> 的 32K = 15（默认值）加上小对象的几千字节。</p>
+<p class="">这是对大小为 <code>chunkSize</code> 的单个内部输出平板缓冲区的补充，默认为 16K。</p>
+<p class=""><code>zlib</code> 压缩的速度受 <code>level</code> 设置的影响最大。
+更高的级别将导致更好的压缩，但需要更长的时间才能完成。
+较低的级别将导致较少的压缩，但会更快。</p>
+<p class="">一般来说，更大的内存使用选项意味着 Node.js 必须对 <code>zlib</code> 进行更少的调用，因为它能够在每个 <code>write</code> 操作上处理更多的数据。
+所以，这是影响速度的另一个因素，以内存使用为代价。</p>
+<h4>对于基于 Brotli 的流<span><a class="mark" href="#for-brotli-based-streams" id="for-brotli-based-streams">#</a></span><a aria-hidden="true" class="legacy" id="zlib_for_brotli_based_streams"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#for-brotli-based-streams">
+                <a href="zlib/for_brotli_based_streams.html" class="tip_trans">中英对照</a>
+                </p>
+<p>有与基于 Brotli 的流的 zlib 选项等效的选项，尽管这些选项的范围与 zlib 的范围不同：</p>
+<ul class="">
+<li>zlib 的 <code>level</code> 选项匹配 Brotli 的 <code>BROTLI_PARAM_QUALITY</code> 选项。</li>
+<li>zlib 的 <code>windowBits</code> 选项匹配 Brotli 的 <code>BROTLI_PARAM_LGWIN</code> 选项。</li>
+</ul>
+<p class="">有关 Brotli 特定选项的更多详细信息，请参见<a href="#brotli-constants">下文</a>。</p>
+</section><section><h3>刷新<span><a class="mark" href="#flushing" id="flushing">#</a></span><a aria-hidden="true" class="legacy" id="zlib_flushing"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#flushing">
+                <a href="zlib/flushing.html" class="tip_trans">中英对照</a>
+                </p>
+<p>在压缩流上调用 <a href="#zlibflushkind-callback"><code>.flush()</code></a> 将使 <code>zlib</code> 返回尽可能多的当前输出。
+这可能以降低压缩质量为代价，但在需要尽快提供数据时非常有用。</p>
+<p class="">在以下示例中，<code>flush()</code> 用于将压缩的部分 HTTP 响应写入客户端：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'zlib'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> { pipeline } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream'</span>);
+
+http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+  <span class="hljs-comment">// 为了简单起见，省略了接受编码检查。</span>
+  response.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'content-encoding'</span>: <span class="hljs-string">'gzip'</span> });
+  <span class="hljs-keyword">const</span> output = zlib.<span class="hljs-title function_">createGzip</span>();
+  <span class="hljs-keyword">let</span> i;
+
+  <span class="hljs-title function_">pipeline</span>(output, response, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-comment">// 如果发生错误，则无能为力，</span>
+      <span class="hljs-comment">// 因为服务器已经发送了 200 响应代码，</span>
+      <span class="hljs-comment">// 并且已经向客户端发送了一些数据。</span>
+      <span class="hljs-comment">// 能做的最好的事情</span>
+      <span class="hljs-comment">// 就是立即终止响应并记录错误。</span>
+      <span class="hljs-built_in">clearInterval</span>(i);
+      response.<span class="hljs-title function_">end</span>();
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">'An error occurred:'</span>, err);
+    }
+  });
+
+  i = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+    output.<span class="hljs-title function_">write</span>(<span class="hljs-string">`The current time is <span class="hljs-subst">${<span class="hljs-built_in">Date</span>()}</span>\n`</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-comment">// 数据已传给 zlib，</span>
+      <span class="hljs-comment">// 但压缩算法可能已决定缓冲数据以进行更有效的压缩。</span>
+      <span class="hljs-comment">// 一旦客户端准备好接收数据，</span>
+      <span class="hljs-comment">// 调用 .flush() 将使数据可用。</span>
+      output.<span class="hljs-title function_">flush</span>();
+    });
+  }, <span class="hljs-number">1000</span>);
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre>
+</section><section><h3>常量<span><a class="mark" href="#constants" id="constants">#</a></span><a aria-hidden="true" class="legacy" id="zlib_constants"></a></h3><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<!--type=misc-->
+<h4>zlib 常量<span><a class="mark" href="#zlib-constants" id="zlib-constants">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_constants"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlib-constants">
+                <a href="zlib/zlib_constants.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>zlib.h</code> 中定义的所有常量也在 <code>require('zlib').constants</code> 上定义。
+在正常的操作过程中，没有必要使用这些常量。
+它们被记录在案，因此它们的存在不足为奇。
+本章节几乎直接取自 <a href="https://zlib.net/manual.html#Constants" rel="nofollow">zlib 文档</a>。</p>
+<p class="">以前，常量可直接从 <code>require('zlib')</code> 获得，例如 <code>zlib.Z_NO_FLUSH</code>。
+目前仍然可以直接从模块访问常量，但已弃用。</p>
+<p class="">允许的刷新值。</p>
+<ul class="">
+<li><code>zlib.constants.Z_NO_FLUSH</code></li>
+<li><code>zlib.constants.Z_PARTIAL_FLUSH</code></li>
+<li><code>zlib.constants.Z_SYNC_FLUSH</code></li>
+<li><code>zlib.constants.Z_FULL_FLUSH</code></li>
+<li><code>zlib.constants.Z_FINISH</code></li>
+<li><code>zlib.constants.Z_BLOCK</code></li>
+<li><code>zlib.constants.Z_TREES</code></li>
+</ul>
+<p class="">压缩/解压缩函数的返回代码。
+负值是错误，正值用于特殊但正常的事件。</p>
+<ul class="">
+<li><code>zlib.constants.Z_OK</code></li>
+<li><code>zlib.constants.Z_STREAM_END</code></li>
+<li><code>zlib.constants.Z_NEED_DICT</code></li>
+<li><code>zlib.constants.Z_ERRNO</code></li>
+<li><code>zlib.constants.Z_STREAM_ERROR</code></li>
+<li><code>zlib.constants.Z_DATA_ERROR</code></li>
+<li><code>zlib.constants.Z_MEM_ERROR</code></li>
+<li><code>zlib.constants.Z_BUF_ERROR</code></li>
+<li><code>zlib.constants.Z_VERSION_ERROR</code></li>
+</ul>
+<p class="">压缩级别。</p>
+<ul class="">
+<li><code>zlib.constants.Z_NO_COMPRESSION</code></li>
+<li><code>zlib.constants.Z_BEST_SPEED</code></li>
+<li><code>zlib.constants.Z_BEST_COMPRESSION</code></li>
+<li><code>zlib.constants.Z_DEFAULT_COMPRESSION</code></li>
+</ul>
+<p class="">压缩策略。</p>
+<ul class="">
+<li><code>zlib.constants.Z_FILTERED</code></li>
+<li><code>zlib.constants.Z_HUFFMAN_ONLY</code></li>
+<li><code>zlib.constants.Z_RLE</code></li>
+<li><code>zlib.constants.Z_FIXED</code></li>
+<li><code>zlib.constants.Z_DEFAULT_STRATEGY</code></li>
+</ul>
+<h4>Brotli 常量<span><a class="mark" href="#brotli-constants" id="brotli-constants">#</a></span><a aria-hidden="true" class="legacy" id="zlib_brotli_constants"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#brotli-constants">
+                <a href="zlib/brotli_constants.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<p>有几个选项和其他常量可用于基于 Brotli 的流：</p>
+<h5>刷新操作<span><a class="mark" href="#flush-operations" id="flush-operations">#</a></span><a aria-hidden="true" class="legacy" id="zlib_flush_operations"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#flush-operations">
+                <a href="zlib/flush_operations.html" class="tip_trans">中英对照</a>
+                </p>
+<p>以下值是基于 Brotli 的流的有效刷新操作：</p>
+<ul class="">
+<li><code>zlib.constants.BROTLI_OPERATION_PROCESS</code>（所有操作的默认值）</li>
+<li><code>zlib.constants.BROTLI_OPERATION_FLUSH</code>（调用 <code>.flush()</code> 时的默认值）</li>
+<li><code>zlib.constants.BROTLI_OPERATION_FINISH</code>（最后一个块的默认值）</li>
+<li><code>zlib.constants.BROTLI_OPERATION_EMIT_METADATA</code>
+<ul>
+<li>这个特定的操作可能很难在 Node.js 上下文中使用，因为流层很难知道哪些数据会在这个帧中结束。
+此外，目前无法通过 Node.js API 使用这些数据。</li>
+</ul>
+</li>
+</ul>
+<h5>压缩器选项<span><a class="mark" href="#compressor-options" id="compressor-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_compressor_options"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#compressor-options">
+                <a href="zlib/compressor_options.html" class="tip_trans">中英对照</a>
+                </p>
+<p>可以在 Brotli 编码器上设置几个选项，影响压缩效率和速度。
+键和值都可以作为 <code>zlib.constants</code> 对象的属性访问。</p>
+<p class="">最重要的选项是：</p>
+<ul class="">
+<li><code>BROTLI_PARAM_MODE</code>
+<ul>
+<li><code>BROTLI_MODE_GENERIC</code>（默认）</li>
+<li><code>BROTLI_MODE_TEXT</code>，针对 UTF-8 文本进行了调整</li>
+<li><code>BROTLI_MODE_FONT</code>，针对 WOFF 2.0 字体进行了调整</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_QUALITY</code>
+<ul>
+<li>范围从 <code>BROTLI_MIN_QUALITY</code> 到 <code>BROTLI_MAX_QUALITY</code>，默认为 <code>BROTLI_DEFAULT_QUALITY</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_SIZE_HINT</code>
+<ul>
+<li>表示预期输入大小的整数值；对于未知的输入大小，默认为 <code>0</code>。</li>
+</ul>
+</li>
+</ul>
+<p class="">可以设置以下标志以对压缩算法和内存使用调整进行高级控制：</p>
+<ul class="">
+<li><code>BROTLI_PARAM_LGWIN</code>
+<ul>
+<li>范围从 <code>BROTLI_MIN_WINDOW_BITS</code> 到 <code>BROTLI_MAX_WINDOW_BITS</code>，默认为 <code>BROTLI_DEFAULT_WINDOW</code>，如果设置了 <code>BROTLI_PARAM_LARGE_WINDOW</code> 标志，则最高可达 <code>BROTLI_LARGE_MAX_WINDOW_BITS</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_LGBLOCK</code>
+<ul>
+<li>范围从 <code>BROTLI_MIN_INPUT_BLOCK_BITS</code> 到 <code>BROTLI_MAX_INPUT_BLOCK_BITS</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_DISABLE_LITERAL_CONTEXT_MODELING</code>
+<ul>
+<li>降低压缩率以提高解压速度的布尔标志。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_LARGE_WINDOW</code>
+<ul>
+<li>启用“大窗口 Brotli”模式的布尔标志（与 <a href="https://www.rfc-editor.org/rfc/rfc7932.txt" rel="nofollow">RFC 7932</a> 中标准化的 Brotli 格式不兼容）。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_NPOSTFIX</code>
+<ul>
+<li>范围从 <code>0</code> 到 <code>BROTLI_MAX_NPOSTFIX</code>。</li>
+</ul>
+</li>
+<li><code>BROTLI_PARAM_NDIRECT</code>
+<ul>
+<li>范围从 <code>0</code> 到 <code>15 &lt;&lt; NPOSTFIX</code>，步长为 <code>1 &lt;&lt; NPOSTFIX</code>。</li>
+</ul>
+</li>
+</ul>
+<h5>解压器选项<span><a class="mark" href="#decompressor-options" id="decompressor-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_decompressor_options"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#decompressor-options">
+                <a href="zlib/decompressor_options.html" class="tip_trans">中英对照</a>
+                </p>
+<p>这些高级选项可用于控制减压：</p>
+<ul class="">
+<li><code>BROTLI_DECODER_PARAM_DISABLE_RING_BUFFER_REALLOCATION</code>
+<ul>
+<li>影响内部内存分配模式的布尔标志。</li>
+</ul>
+</li>
+<li><code>BROTLI_DECODER_PARAM_LARGE_WINDOW</code>
+<ul>
+<li>启用“大窗口 Brotli”模式的布尔标志（与 <a href="https://www.rfc-editor.org/rfc/rfc7932.txt" rel="nofollow">RFC 7932</a> 中标准化的 Brotli 格式不兼容）。</li>
+</ul>
+</li>
+</ul>
+</section><section><h3><code>Options</code> 类<span><a class="mark" href="#class-options" id="class-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-options">
+                <a href="zlib/class_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>现在支持 <code>maxOutputLength</code> 选项。</p></td></tr>
+<tr><td>v9.4.0</td>
+<td><p>选项 <code>dictionary</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>选项 <code>dictionary</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v5.11.0</td>
+<td><p>现在支持 <code>finishFlush</code> 选项。</p></td></tr>
+<tr><td>v0.11.1</td>
+<td><p><span>新增于: v0.11.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<!--type=misc-->
+<p>每个基于 zlib 的类都有一个 <code>options</code> 对象。
+不需要任何选项。</p>
+<p class="">某些选项仅在压缩时相关，而被解压缩类忽略。</p>
+<ul class="">
+<li><code>flush</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>zlib.constants.Z_NO_FLUSH</code></li>
+<li><code>finishFlush</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>zlib.constants.Z_FINISH</code></li>
+<li><code>chunkSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>16 * 1024</code></li>
+<li><code>windowBits</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>level</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> （仅压缩）</li>
+<li><code>memLevel</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> （仅压缩）</li>
+<li><code>strategy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> （仅压缩）</li>
+<li><code>dictionary</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> （仅 deflate/inflate，默认情况下为空字典）</li>
+<li><code>info</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> （如果是 <code>true</code>，则返回具有 <code>buffer</code> 和 <code>engine</code> 的对象。）</li>
+<li><code>maxOutputLength</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 使用<a href="#convenience-methods">便捷方法</a>时限制输出大小。 <strong>默认值:</strong> <a href="buffer.html#bufferkmaxlength"><code>buffer.kMaxLength</code></a></li>
+</ul>
+<p class="">有关更多信息，请参阅 <a href="https://zlib.net/manual.html#Advanced" rel="nofollow"><code>deflateInit2</code> 和 <code>inflateInit2</code></a> 文档。</p>
+</section><section><h3><code>BrotliOptions</code> 类<span><a class="mark" href="#class-brotlioptions" id="class-brotlioptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_brotlioptions"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-brotlioptions">
+                <a href="zlib/class_brotlioptions.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.5.0, v12.19.0</td>
+<td><p>现在支持 <code>maxOutputLength</code> 选项。</p></td></tr>
+<tr><td>v11.7.0</td>
+<td><p><span>新增于: v11.7.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<!--type=misc-->
+<p>每个基于 Brotli 的类都有一个 <code>options</code> 对象。
+所有选项都是可选的。</p>
+<ul class="">
+<li><code>flush</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>zlib.constants.BROTLI_OPERATION_PROCESS</code></li>
+<li><code>finishFlush</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>zlib.constants.BROTLI_OPERATION_FINISH</code></li>
+<li><code>chunkSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>16 * 1024</code></li>
+<li><code>params</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 包含索引 <a href="#brotli-constants">Brotli 参数</a>的键值对象。</li>
+<li><code>maxOutputLength</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 使用<a href="#convenience-methods">便捷方法</a>时限制输出大小。 <strong>默认值:</strong> <a href="buffer.html#bufferkmaxlength"><code>buffer.kMaxLength</code></a></li>
+</ul>
+<p class="">例如：</p>
+<pre class=""><code class="language-js"><span class="hljs-keyword">const</span> stream = zlib.<span class="hljs-title function_">createBrotliCompress</span>({
+  <span class="hljs-attr">chunkSize</span>: <span class="hljs-number">32</span> * <span class="hljs-number">1024</span>,
+  <span class="hljs-attr">params</span>: {
+    [zlib.<span class="hljs-property">constants</span>.<span class="hljs-property">BROTLI_PARAM_MODE</span>]: zlib.<span class="hljs-property">constants</span>.<span class="hljs-property">BROTLI_MODE_TEXT</span>,
+    [zlib.<span class="hljs-property">constants</span>.<span class="hljs-property">BROTLI_PARAM_QUALITY</span>]: <span class="hljs-number">4</span>,
+    [zlib.<span class="hljs-property">constants</span>.<span class="hljs-property">BROTLI_PARAM_SIZE_HINT</span>]: fs.<span class="hljs-title function_">statSync</span>(inputFile).<span class="hljs-property">size</span>
+  }
+});</code></pre>
+</section><section><h3><code>zlib.BrotliCompress</code> 类<span><a class="mark" href="#class-zlibbrotlicompress" id="class-zlibbrotlicompress">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_brotlicompress"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibbrotlicompress">
+                <a href="zlib/class_zlib_brotlicompress.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<p>使用 Brotli 算法压缩数据。</p>
+</section><section><h3><code>zlib.BrotliDecompress</code> 类<span><a class="mark" href="#class-zlibbrotlidecompress" id="class-zlibbrotlidecompress">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_brotlidecompress"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibbrotlidecompress">
+                <a href="zlib/class_zlib_brotlidecompress.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<p>使用 Brotli 算法解压缩数据。</p>
+</section><section><h3><code>zlib.Deflate</code> 类<span><a class="mark" href="#class-zlibdeflate" id="class-zlibdeflate">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_deflate"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibdeflate">
+                <a href="zlib/class_zlib_deflate.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<p>使用 deflate 压缩数据。</p>
+</section><section><h3><code>zlib.DeflateRaw</code> 类<span><a class="mark" href="#class-zlibdeflateraw" id="class-zlibdeflateraw">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_deflateraw"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibdeflateraw">
+                <a href="zlib/class_zlib_deflateraw.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<p>使用 deflate 压缩数据，并且不附加 <code>zlib</code> 标头。</p>
+</section><section><h3><code>zlib.Gunzip</code> 类<span><a class="mark" href="#class-zlibgunzip" id="class-zlibgunzip">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_gunzip"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibgunzip">
+                <a href="zlib/class_zlib_gunzip.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v6.0.0</td>
+<td><p>输入流末尾的尾随垃圾现在将导致 <code>'error'</code> 事件。</p></td></tr>
+<tr><td>v5.9.0</td>
+<td><p>现在支持多个连接的 gzip 文件成员。</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>截断的输入流现在将导致 <code>'error'</code> 事件。</p></td></tr>
+<tr><td>v0.5.8</td>
+<td><p><span>新增于: v0.5.8</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>解压缩 gzip 流。</p>
+</section><section><h3><code>zlib.Gzip</code> 类<span><a class="mark" href="#class-zlibgzip" id="class-zlibgzip">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_gzip"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibgzip">
+                <a href="zlib/class_zlib_gzip.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<p>使用 gzip 压缩数据。</p>
+</section><section><h3><code>zlib.Inflate</code> 类<span><a class="mark" href="#class-zlibinflate" id="class-zlibinflate">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_inflate"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibinflate">
+                <a href="zlib/class_zlib_inflate.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v5.0.0</td>
+<td><p>截断的输入流现在将导致 <code>'error'</code> 事件。</p></td></tr>
+<tr><td>v0.5.8</td>
+<td><p><span>新增于: v0.5.8</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>解压缩 deflate 流。</p>
+</section><section><h3><code>zlib.InflateRaw</code> 类<span><a class="mark" href="#class-zlibinflateraw" id="class-zlibinflateraw">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_inflateraw"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibinflateraw">
+                <a href="zlib/class_zlib_inflateraw.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v6.8.0</td>
+<td><p><code>InflateRaw</code> 现在支持自定义的词典。</p></td></tr>
+<tr><td>v5.0.0</td>
+<td><p>截断的输入流现在将导致 <code>'error'</code> 事件。</p></td></tr>
+<tr><td>v0.5.8</td>
+<td><p><span>新增于: v0.5.8</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>解压缩原始的 deflate 流。</p>
+</section><section><h3><code>zlib.Unzip</code> 类<span><a class="mark" href="#class-zlibunzip" id="class-zlibunzip">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_unzip"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibunzip">
+                <a href="zlib/class_zlib_unzip.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<p>通过自动检测标头来解压缩 Gzip 或 Deflate 压缩的流。</p>
+</section><section><h3><code>zlib.ZlibBase</code> 类<span><a class="mark" href="#class-zlibzlibbase" id="class-zlibzlibbase">#</a></span><a aria-hidden="true" class="legacy" id="zlib_class_zlib_zlibbase"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#class-zlibzlibbase">
+                <a href="zlib/class_zlib_zlibbase.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v11.7.0, v10.16.0</td>
+<td><p>此类从 <code>Zlib</code> 重命名为 <code>ZlibBase</code>。</p></td></tr>
+<tr><td>v0.5.8</td>
+<td><p><span>新增于: v0.5.8</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>不是由 <code>zlib</code> 模块导出的。
+它记录在此处，因为它是压缩器/解压缩器类的基类。</p>
+<p class="">这个类继承自 <a href="stream.html#class-streamtransform"><code>stream.Transform</code></a>，允许在管道和类似的流操作中使用 <code>zlib</code> 对象。</p>
+<h4><code>zlib.bytesRead</code><span><a class="mark" href="#zlibbytesread" id="zlibbytesread">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_bytesread"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibbytesread">
+                <a href="zlib/zlib_bytesread.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.1.0</span><span>弃用于: v10.0.0</span>
+</div>
+<p></p><div class="api_stability api_stability_0"><a href="documentation.html#stability-index">稳定性: 0</a> - 弃用: 改为使用 <a href="#zlibbyteswritten"><code>zlib.bytesWritten</code></a> 。</div><p></p>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p>弃用的 <a href="#zlibbyteswritten"><code>zlib.bytesWritten</code></a> 别名。
+选择这个原始名称是因为将值解释为引擎读取的字节数也是有意义的，但与 Node.js 中以这些名称公开值的其他流不一致。</p>
+<h4><code>zlib.bytesWritten</code><span><a class="mark" href="#zlibbyteswritten" id="zlibbyteswritten">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_byteswritten"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibbyteswritten">
+                <a href="zlib/zlib_byteswritten.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.0.0</span>
+</div>
+<ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+<p><code>zlib.bytesWritten</code> 属性指定在处理字节（压缩或解压缩，视派生类而定）之前写入引擎的字节数。</p>
+<h4><code>zlib.close([callback])</code><span><a class="mark" href="#zlibclosecallback" id="zlibclosecallback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_close_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibclosecallback">
+                <a href="zlib/zlib_close_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.9.4</span>
+</div>
+<ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<p>关闭底层句柄。</p>
+<h4><code>zlib.flush([kind, ]callback)</code><span><a class="mark" href="#zlibflushkind-callback" id="zlibflushkind-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_flush_kind_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibflushkind-callback">
+                <a href="zlib/zlib_flush_kind_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>kind</code> <strong>默认值:</strong> <code>zlib.constants.Z_FULL_FLUSH</code> 用于基于 zlib 的流，<code>zlib.constants.BROTLI_OPERATION_FLUSH</code> 用于基于 Brotli 的流。</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<p>刷新挂起的数据。
+不要轻率地称之为，过早刷新会对压缩算法的有效性产生负面影响。</p>
+<p class="">调用它只会从内部 <code>zlib</code> 状态刷新数据，并且不会在流级别执行任何类型的刷新。
+相反，它的行为类似于对 <code>.write()</code> 的正常调用，即它将排队等待其他未决写入，并且仅在从流中读取数据时才产生输出。</p>
+<h4><code>zlib.params(level, strategy, callback)</code><span><a class="mark" href="#zlibparamslevel-strategy-callback" id="zlibparamslevel-strategy-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_params_level_strategy_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibparamslevel-strategy-callback">
+                <a href="zlib/zlib_params_level_strategy_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.11.4</span>
+</div>
+<ul class="">
+<li><code>level</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>strategy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<p>此函数仅适用于基于 zlib 的流，即不适用于 Brotli。</p>
+<p class="">动态更新压缩级别和压缩策略。
+仅适用于 deflate 算法。</p>
+<h4><code>zlib.reset()</code><span><a class="mark" href="#zlibreset" id="zlibreset">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_reset"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibreset">
+                <a href="zlib/zlib_reset.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.7.0</span>
+</div>
+<p>将压缩器/解压缩器重置为出厂默认设置。
+仅适用于 inflate 和 deflate 算法。</p>
+</section><section><h3><code>zlib.constants</code><span><a class="mark" href="#zlibconstants" id="zlibconstants">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_constants_1"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibconstants">
+                <a href="zlib/zlib_constants_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.0.0</span>
+</div>
+<p>提供枚举 Zlib 相关常量的对象。</p>
+</section><section><h3><code>zlib.createBrotliCompress([options])</code><span><a class="mark" href="#zlibcreatebrotlicompressoptions" id="zlibcreatebrotlicompressoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_createbrotlicompress_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreatebrotlicompressoptions">
+                <a href="zlib/zlib_createbrotlicompress_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-brotlioptions" rel="nofollow" class="type">&lt;brotli options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibbrotlicompress"><code>BrotliCompress</code></a> 对象。</p>
+</section><section><h3><code>zlib.createBrotliDecompress([options])</code><span><a class="mark" href="#zlibcreatebrotlidecompressoptions" id="zlibcreatebrotlidecompressoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_createbrotlidecompress_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreatebrotlidecompressoptions">
+                <a href="zlib/zlib_createbrotlidecompress_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-brotlioptions" rel="nofollow" class="type">&lt;brotli options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibbrotlidecompress"><code>BrotliDecompress</code></a> 对象。</p>
+</section><section><h3><code>zlib.createDeflate([options])</code><span><a class="mark" href="#zlibcreatedeflateoptions" id="zlibcreatedeflateoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_createdeflate_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreatedeflateoptions">
+                <a href="zlib/zlib_createdeflate_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibdeflate"><code>Deflate</code></a> 对象。</p>
+</section><section><h3><code>zlib.createDeflateRaw([options])</code><span><a class="mark" href="#zlibcreatedeflaterawoptions" id="zlibcreatedeflaterawoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_createdeflateraw_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreatedeflaterawoptions">
+                <a href="zlib/zlib_createdeflateraw_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibdeflateraw"><code>DeflateRaw</code></a> 对象。</p>
+<p class="">当原始 deflate 流的 <code>windowBits</code> 设置为 8 时，zlib 从 1.2.8 到 1.2.11 的升级改变了行为。
+如果最初设置为 8，则 zlib 会自动将 <code>windowBits</code> 设置为 9。
+较新版本的 zlib 会抛出异常，因此 Node.js 恢复了将值从 8 升级到 9 的原始行为，因为将 <code>windowBits = 9</code> 传给 zlib 实际上会产生一个仅有效使用 8 位窗口的压缩流。</p>
+</section><section><h3><code>zlib.createGunzip([options])</code><span><a class="mark" href="#zlibcreategunzipoptions" id="zlibcreategunzipoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_creategunzip_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreategunzipoptions">
+                <a href="zlib/zlib_creategunzip_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibgunzip"><code>Gunzip</code></a> 对象。</p>
+</section><section><h3><code>zlib.createGzip([options])</code><span><a class="mark" href="#zlibcreategzipoptions" id="zlibcreategzipoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_creategzip_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreategzipoptions">
+                <a href="zlib/zlib_creategzip_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibgzip"><code>Gzip</code></a> 对象。
+查看<a href="#zlib">示例</a>。</p>
+</section><section><h3><code>zlib.createInflate([options])</code><span><a class="mark" href="#zlibcreateinflateoptions" id="zlibcreateinflateoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_createinflate_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreateinflateoptions">
+                <a href="zlib/zlib_createinflate_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibinflate"><code>Inflate</code></a> 对象。</p>
+</section><section><h3><code>zlib.createInflateRaw([options])</code><span><a class="mark" href="#zlibcreateinflaterawoptions" id="zlibcreateinflaterawoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_createinflateraw_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreateinflaterawoptions">
+                <a href="zlib/zlib_createinflateraw_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibinflateraw"><code>InflateRaw</code></a> 对象。</p>
+</section><section><h3><code>zlib.createUnzip([options])</code><span><a class="mark" href="#zlibcreateunzipoptions" id="zlibcreateunzipoptions">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_createunzip_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibcreateunzipoptions">
+                <a href="zlib/zlib_createunzip_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.5.8</span>
+</div>
+<ul class="">
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>创建并返回新的 <a href="#class-zlibunzip"><code>Unzip</code></a> 对象。</p>
+</section><section><h3>便捷方法<span><a class="mark" href="#convenience-methods" id="convenience-methods">#</a></span><a aria-hidden="true" class="legacy" id="zlib_convenience_methods"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#convenience-methods">
+                <a href="zlib/convenience_methods.html" class="tip_trans">中英对照</a>
+                </p>
+<!--type=misc-->
+<p>所有这些都将 <a href="buffer.html#class-buffer"><code>Buffer</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow"><code>DataView</code></a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a> 或字符串作为第一个参数，可选的第二个参数为 <code>zlib</code> 类提供选项，并将使用 <code>callback(error, result)</code> 调用提供的回调。</p>
+<p class="">每个方法都有一个对应的 <code>*Sync</code> 方法，它们接受相同的参数，但没有回调。</p>
+<h4><code>zlib.brotliCompress(buffer[, options], callback)</code><span><a class="mark" href="#zlibbrotlicompressbuffer-options-callback" id="zlibbrotlicompressbuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_brotlicompress_buffer_options_callback"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<ul>
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-brotlioptions" rel="nofollow" class="type">&lt;brotli options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.brotliCompressSync(buffer[, options])</code><span><a class="mark" href="#zlibbrotlicompresssyncbuffer-options" id="zlibbrotlicompresssyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_brotlicompresssync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibbrotlicompresssyncbuffer-options">
+                <a href="zlib/zlib_brotlicompresssync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-brotlioptions" rel="nofollow" class="type">&lt;brotli options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibbrotlicompress"><code>BrotliCompress</code></a> 压缩数据块。</p>
+<h4><code>zlib.brotliDecompress(buffer[, options], callback)</code><span><a class="mark" href="#zlibbrotlidecompressbuffer-options-callback" id="zlibbrotlidecompressbuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_brotlidecompress_buffer_options_callback"></a></h4><p class="tip_wrap"></p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<ul>
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-brotlioptions" rel="nofollow" class="type">&lt;brotli options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.brotliDecompressSync(buffer[, options])</code><span><a class="mark" href="#zlibbrotlidecompresssyncbuffer-options" id="zlibbrotlidecompresssyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_brotlidecompresssync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibbrotlidecompresssyncbuffer-options">
+                <a href="zlib/zlib_brotlidecompresssync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.7.0, v10.16.0</span>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-brotlioptions" rel="nofollow" class="type">&lt;brotli options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibbrotlidecompress"><code>BrotliDecompress</code></a> 解压缩数据块。</p>
+<h4><code>zlib.deflate(buffer[, options], callback)</code><span><a class="mark" href="#zlibdeflatebuffer-options-callback" id="zlibdeflatebuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_deflate_buffer_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibdeflatebuffer-options-callback">
+                <a href="zlib/zlib_deflate_buffer_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.6.0</td>
+<td><p><span>新增于: v0.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.deflateSync(buffer[, options])</code><span><a class="mark" href="#zlibdeflatesyncbuffer-options" id="zlibdeflatesyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_deflatesync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibdeflatesyncbuffer-options">
+                <a href="zlib/zlib_deflatesync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibdeflate"><code>Deflate</code></a> 压缩数据块。</p>
+<h4><code>zlib.deflateRaw(buffer[, options], callback)</code><span><a class="mark" href="#zlibdeflaterawbuffer-options-callback" id="zlibdeflaterawbuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_deflateraw_buffer_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibdeflaterawbuffer-options-callback">
+                <a href="zlib/zlib_deflateraw_buffer_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.6.0</td>
+<td><p><span>新增于: v0.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.deflateRawSync(buffer[, options])</code><span><a class="mark" href="#zlibdeflaterawsyncbuffer-options" id="zlibdeflaterawsyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_deflaterawsync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibdeflaterawsyncbuffer-options">
+                <a href="zlib/zlib_deflaterawsync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibdeflateraw"><code>DeflateRaw</code></a> 压缩数据块。</p>
+<h4><code>zlib.gunzip(buffer[, options], callback)</code><span><a class="mark" href="#zlibgunzipbuffer-options-callback" id="zlibgunzipbuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_gunzip_buffer_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibgunzipbuffer-options-callback">
+                <a href="zlib/zlib_gunzip_buffer_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.6.0</td>
+<td><p><span>新增于: v0.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.gunzipSync(buffer[, options])</code><span><a class="mark" href="#zlibgunzipsyncbuffer-options" id="zlibgunzipsyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_gunzipsync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibgunzipsyncbuffer-options">
+                <a href="zlib/zlib_gunzipsync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibgunzip"><code>Gunzip</code></a> 解压缩数据块。</p>
+<h4><code>zlib.gzip(buffer[, options], callback)</code><span><a class="mark" href="#zlibgzipbuffer-options-callback" id="zlibgzipbuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_gzip_buffer_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibgzipbuffer-options-callback">
+                <a href="zlib/zlib_gzip_buffer_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.6.0</td>
+<td><p><span>新增于: v0.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.gzipSync(buffer[, options])</code><span><a class="mark" href="#zlibgzipsyncbuffer-options" id="zlibgzipsyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_gzipsync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibgzipsyncbuffer-options">
+                <a href="zlib/zlib_gzipsync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibgzip"><code>Gzip</code></a> 压缩数据块。</p>
+<h4><code>zlib.inflate(buffer[, options], callback)</code><span><a class="mark" href="#zlibinflatebuffer-options-callback" id="zlibinflatebuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_inflate_buffer_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibinflatebuffer-options-callback">
+                <a href="zlib/zlib_inflate_buffer_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.6.0</td>
+<td><p><span>新增于: v0.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.inflateSync(buffer[, options])</code><span><a class="mark" href="#zlibinflatesyncbuffer-options" id="zlibinflatesyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_inflatesync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibinflatesyncbuffer-options">
+                <a href="zlib/zlib_inflatesync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibinflate"><code>Inflate</code></a> 解压缩数据块。</p>
+<h4><code>zlib.inflateRaw(buffer[, options], callback)</code><span><a class="mark" href="#zlibinflaterawbuffer-options-callback" id="zlibinflaterawbuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_inflateraw_buffer_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibinflaterawbuffer-options-callback">
+                <a href="zlib/zlib_inflateraw_buffer_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.6.0</td>
+<td><p><span>新增于: v0.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.inflateRawSync(buffer[, options])</code><span><a class="mark" href="#zlibinflaterawsyncbuffer-options" id="zlibinflaterawsyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_inflaterawsync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibinflaterawsyncbuffer-options">
+                <a href="zlib/zlib_inflaterawsync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibinflateraw"><code>InflateRaw</code></a> 解压缩数据块。</p>
+<h4><code>zlib.unzip(buffer[, options], callback)</code><span><a class="mark" href="#zlibunzipbuffer-options-callback" id="zlibunzipbuffer-options-callback">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_unzip_buffer_options_callback"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibunzipbuffer-options-callback">
+                <a href="zlib/zlib_unzip_buffer_options_callback.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.6.0</td>
+<td><p><span>新增于: v0.6.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul>
+<h4><code>zlib.unzipSync(buffer[, options])</code><span><a class="mark" href="#zlibunzipsyncbuffer-options" id="zlibunzipsyncbuffer-options">#</a></span><a aria-hidden="true" class="legacy" id="zlib_zlib_unzipsync_buffer_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#zlibunzipsyncbuffer-options">
+                <a href="zlib/zlib_unzipsync_buffer_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v9.4.0</td>
+<td><p>参数 <code>buffer</code> 可以是 <code>ArrayBuffer</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 可以是任何 <code>TypedArray</code> 或 <code>DataView</code>。</p></td></tr>
+<tr><td>v8.0.0</td>
+<td><p>参数 <code>buffer</code> 现在可以是 <code>Uint8Array</code>。</p></td></tr>
+<tr><td>v0.11.12</td>
+<td><p><span>新增于: v0.11.12</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<ul class="">
+<li><code>buffer</code> <a href="buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>options</code> <a href="#class-options" rel="nofollow" class="type">&lt;zlib options&gt;</a></li>
+</ul>
+<p>使用 <a href="#class-zlibunzip"><code>Unzip</code></a> 解压缩数据块。</p></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

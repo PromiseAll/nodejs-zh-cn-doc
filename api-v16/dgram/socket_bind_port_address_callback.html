@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>socket.bind([port][, address][, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-dgram">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>socket.bind([port][, address][, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../dgram.html#dgram_socket_bind_port_address_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/dgram/socket_bind_port_address_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/dgram/socket_bind_port_address_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/dgram/#socketbindport-address-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v0.9.1</td>
+<td><p>该方法已更改为异步执行模型。 需要更改旧代码才能将回调函数传给方法调用。</p></td></tr>
+<tr><td>v0.1.99</td>
+<td><p><span>新增于: v0.1.99</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 没有参数。
+当绑定完成时调用。</li>
+</ul><p>对于 UDP 套接字，使 <code>dgram.Socket</code> 在命名的 <code>port</code> 和可选的 <code>address</code> 上监听数据报消息。
+如果未指定 <code>port</code> 或 <code>0</code>，则操作系统将尝试绑定到随机端口。
+如果未指定 <code>address</code>，则操作系统将尝试监听所有地址。
+一旦绑定完成，则会触发 <code>'listening'</code> 事件并调用可选的 <code>callback</code> 函数。</p><p class="">同时指定 <code>'listening'</code> 事件监听器并将 <code>callback</code> 传给 <code>socket.bind()</code> 方法无害但不是很有用。</p><p class="">绑定的数据报套接字使 Node.js 进程保持运行以接收数据报消息。</p><p class="">如果绑定失败，则生成 <code>'error'</code> 事件。
+在极少数情况下（例如，尝试与关闭的套接字绑定），可能会抛出 <a href="../errors.html#class-error"><code>Error</code></a>。</p><p class="">UDP 服务器监听端口 41234 的示例：</p><pre class="with-42-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// 打印: server listening 0.0.0.0:41234</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// 打印: server listening 0.0.0.0:41234</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v0.9.1</td>
+<td><p>The method was changed to an asynchronous execution model. Legacy code would need to be changed to pass a callback function to the method call.</p></td></tr>
+<tr><td>v0.1.99</td>
+<td><p><span>Added in: v0.1.99</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> with no parameters. Called when binding is complete.</li>
+</ul><p>For UDP sockets, causes the <code>dgram.Socket</code> to listen for datagram
+messages on a named <code>port</code> and optional <code>address</code>. If <code>port</code> is not
+specified or is <code>0</code>, the operating system will attempt to bind to a
+random port. If <code>address</code> is not specified, the operating system will
+attempt to listen on all addresses. Once binding is complete, a
+<code>'listening'</code> event is emitted and the optional <code>callback</code> function is
+called.</p><p>Specifying both a <code>'listening'</code> event listener and passing a
+<code>callback</code> to the <code>socket.bind()</code> method is not harmful but not very
+useful.</p><p>A bound datagram socket keeps the Node.js process running to receive
+datagram messages.</p><p>If binding fails, an <code>'error'</code> event is generated. In rare case (e.g.
+attempting to bind with a closed socket), an <a href="../errors.html#class-error"><code>Error</code></a> may be thrown.</p><p>Example of a UDP server listening on port 41234:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> dgram <span class="hljs-keyword">from</span> <span class="hljs-string">'dgram'</span>;
+
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// Prints: server listening 0.0.0.0:41234</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> dgram = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dgram'</span>);
+<span class="hljs-keyword">const</span> server = dgram.<span class="hljs-title function_">createSocket</span>(<span class="hljs-string">'udp4'</span>);
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server error:\n<span class="hljs-subst">${err.stack}</span>`</span>);
+  server.<span class="hljs-title function_">close</span>();
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">msg, rinfo</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server got: <span class="hljs-subst">${msg}</span> from <span class="hljs-subst">${rinfo.address}</span>:<span class="hljs-subst">${rinfo.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> address = server.<span class="hljs-title function_">address</span>();
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`server listening <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});
+
+server.<span class="hljs-title function_">bind</span>(<span class="hljs-number">41234</span>);
+<span class="hljs-comment">// Prints: server listening 0.0.0.0:41234</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

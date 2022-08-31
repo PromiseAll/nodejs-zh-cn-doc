@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http.createServer([options][, requestListener]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http.createServer([options][, requestListener])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_http_createserver_options_requestlistener" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/http_createserver_options_requestlistener.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/http_createserver_options_requestlistener.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#httpcreateserveroptions-requestlistener.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.15.0</td>
+<td><p>现在支持 <code>noDelay</code>、<code>keepAlive</code> 和 <code>keepAliveInitialDelay</code> 选项。</p></td></tr>
+<tr><td>v13.3.0</td>
+<td><p>现在支持 <code>maxHeaderSize</code> 选项。</p></td></tr>
+<tr><td>v13.8.0, v12.15.0, v10.19.0</td>
+<td><p>现在支持 <code>insecureHTTPParser</code> 选项。</p></td></tr>
+<tr><td>v9.6.0, v8.12.0</td>
+<td><p>现在支持 <code>options</code> 参数。</p></td></tr>
+<tr><td>v0.1.13</td>
+<td><p><span>新增于: v0.1.13</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>IncomingMessage</code> <a href="../http.html#class-httpincomingmessage" rel="nofollow" class="type">&lt;http.IncomingMessage&gt;</a> 指定要使用的 <code>IncomingMessage</code> 类。
+用于扩展原始的 <code>IncomingMessage</code>。
+<strong>默认值:</strong> <code>IncomingMessage</code>。</li>
+<li><code>ServerResponse</code> <a href="../http.html#class-httpserverresponse" rel="nofollow" class="type">&lt;http.ServerResponse&gt;</a> 指定要使用的 <code>ServerResponse</code> 类。
+用于扩展原始的 <code>ServerResponse</code>。 <strong>默认值:</strong> <code>ServerResponse</code>。</li>
+<li><code>insecureHTTPParser</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 使用不安全的 HTTP 解析器，当为 <code>true</code> 时接受无效的 HTTP 标头。
+应避免使用不安全的解析器。
+有关详细信息，请参阅 <a href="../cli.html#--insecure-http-parser"><code>--insecure-http-parser</code></a>。
+<strong>默认值:</strong> <code>false</code></li>
+<li><code>maxHeaderSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 可选地覆盖此服务器接收到的请求的 <a href="../cli.html#--max-http-header-sizesize"><code>--max-http-header-size</code></a> 值，即请求头的最大长度（以字节为单位）。
+<strong>默认值:</strong> 16384 (16 KB).</li>
+<li><code>noDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在收到新的传入连接后立即禁用 Nagle 算法。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAlive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果设置为 <code>true</code>，则它会在收到新的传入连接后立即在套接字上启用保持活动功能，类似于在 [<code>socket.setKeepAlive([enable][, initialDelay])</code>][<code>socket.setKeepAlive(enable, initialDelay)</code>] 中所做的事情。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>keepAliveInitialDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 如果设置为正数，则它会设置在空闲套接字上发送第一个保持活跃探测之前的初始延迟。
+<strong>默认值:</strong> <code>0</code>。</li>
+</ul>
+</li>
+<li>
+<p><code>requestListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></p>
+</li>
+<li>
+<p>返回: <a href="../http.html#class-httpserver" rel="nofollow" class="type">&lt;http.Server&gt;</a></p>
+</li>
+</ul><p>返回 <a href="../http.html#class-httpserver"><code>http.Server</code></a> 的新实例。</p><p class=""><code>requestListener</code> 是自动添加到 <a href="../http.html#event-request"><code>'request'</code></a> 事件的函数。</p><pre class=""><code class="language-js cjs"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-comment">// 创建本地服务器来从其接收数据</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    <span class="hljs-attr">data</span>: <span class="hljs-string">'Hello World!'</span>
+  }));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre><pre class=""><code class="language-js cjs"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-comment">// 创建本地服务器来从其接收数据</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>();
+
+<span class="hljs-comment">// 监听请求事件</span>
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'request'</span>, <span class="hljs-function">(<span class="hljs-params">request, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    <span class="hljs-attr">data</span>: <span class="hljs-string">'Hello World!'</span>
+  }));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.15.0</td>
+<td><p>The <code>noDelay</code>, <code>keepAlive</code>&nbsp;and <code>keepAliveInitialDelay</code> options are supported now.</p></td></tr>
+<tr><td>v13.3.0</td>
+<td><p>The <code>maxHeaderSize</code> option is supported now.</p></td></tr>
+<tr><td>v13.8.0, v12.15.0, v10.19.0</td>
+<td><p>The <code>insecureHTTPParser</code> option is supported now.</p></td></tr>
+<tr><td>v9.6.0, v8.12.0</td>
+<td><p>The <code>options</code> argument is supported now.</p></td></tr>
+<tr><td>v0.1.13</td>
+<td><p><span>Added in: v0.1.13</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li>
+<p><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>IncomingMessage</code> <a href="../http.html#class-httpincomingmessage" rel="nofollow" class="type">&lt;http.IncomingMessage&gt;</a> Specifies the <code>IncomingMessage</code>
+class to be used. Useful for extending the original <code>IncomingMessage</code>.
+<strong>Default:</strong> <code>IncomingMessage</code>.</li>
+<li><code>ServerResponse</code> <a href="../http.html#class-httpserverresponse" rel="nofollow" class="type">&lt;http.ServerResponse&gt;</a> Specifies the <code>ServerResponse</code> class
+to be used. Useful for extending the original <code>ServerResponse</code>. <strong>Default:</strong>
+<code>ServerResponse</code>.</li>
+<li><code>insecureHTTPParser</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Use an insecure HTTP parser that accepts
+invalid HTTP headers when <code>true</code>. Using the insecure parser should be
+avoided. See <a href="../cli.html#--insecure-http-parser"><code>--insecure-http-parser</code></a> for more information.
+<strong>Default:</strong> <code>false</code></li>
+<li><code>maxHeaderSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Optionally overrides the value of
+<a href="../cli.html#--max-http-header-sizesize"><code>--max-http-header-size</code></a> for requests received by this server, i.e.
+the maximum length of request headers in bytes.
+<strong>Default:</strong> 16384 (16 KB).</li>
+<li><code>noDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to <code>true</code>, it disables the use of Nagle's
+algorithm immediately after a new incoming connection is received.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>keepAlive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If set to <code>true</code>, it enables keep-alive functionality
+on the socket immediately after a new incoming connection is received,
+similarly on what is done in [<code>socket.setKeepAlive([enable][, initialDelay])</code>][<code>socket.setKeepAlive(enable, initialDelay)</code>].
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>keepAliveInitialDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> If set to a positive number, it sets the
+initial delay before the first keepalive probe is sent on an idle socket.
+<strong>Default:</strong> <code>0</code>.</li>
+</ul>
+</li>
+<li>
+<p><code>requestListener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></p>
+</li>
+<li>
+<p>Returns: <a href="../http.html#class-httpserver" rel="nofollow" class="type">&lt;http.Server&gt;</a></p>
+</li>
+</ul><p>Returns a new instance of <a href="../http.html#class-httpserver"><code>http.Server</code></a>.</p><p>The <code>requestListener</code> is a function which is automatically
+added to the <a href="../http.html#event-request"><code>'request'</code></a> event.</p><pre><code class="language-js cjs"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-comment">// Create a local server to receive data from</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    <span class="hljs-attr">data</span>: <span class="hljs-string">'Hello World!'</span>
+  }));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre><pre><code class="language-js cjs"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-comment">// Create a local server to receive data from</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>();
+
+<span class="hljs-comment">// Listen to the request event</span>
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'request'</span>, <span class="hljs-function">(<span class="hljs-params">request, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({
+    <span class="hljs-attr">data</span>: <span class="hljs-string">'Hello World!'</span>
+  }));
+});
+
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

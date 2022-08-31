@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>http.Agent 类 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>http.Agent 类</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_class_http_agent" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/class_http_agent.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/class_http_agent.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#class-httpagent.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.3.4</span>
+</div><p><code>Agent</code> 负责管理 HTTP 客户端连接的持久性和重用。
+它维护一个给定主机和端口的待处理请求队列，为每个请求重用单个套接字连接，直到队列为空，此时套接字要么被销毁，要么放入池中，在那里它会被再次用于请求到相同的主机和端口。
+是销毁还是池化取决于 <code>keepAlive</code> <a href="../http.html#new-agentoptions">选项</a>。</p><p class="">池化的连接会为其启用 TCP Keep-Alive，但服务器可能仍会关闭空闲连接，在这种情况下，它们将从池中删除，并在为该主机和端口发出新的 HTTP 请求时建立新连接。
+服务器也可能拒绝允许通过同一个连接的多个请求，在这种情况下，必须为每个请求重新建立连接，并且不能池化。
+<code>Agent</code> 仍将向该服务器发出请求，但每个请求都将通过新连接发生。</p><p class="">当客户端或服务器关闭连接时，它会从池中删除。
+池中任何未使用的套接字都将被取消引用，以免在没有未完成请求时保持 Node.js 进程运行。
+（见 <a href="../net.html#socketunref"><code>socket.unref()</code></a>）。</p><p class="">一个很好的做法是，当不再使用时则 <a href="../http.html#agentdestroy"><code>destroy()</code></a> <code>Agent</code> 实例，因为未使用的套接字会消耗操作系统资源。</p><p class="">当套接字触发 <code>'close'</code> 事件或 <code>'agentRemove'</code> 事件时，则套接字将从代理中删除。
+当打算让 HTTP 请求长时间打开而不将其保留在代理中时，可以执行类似以下的操作：</p><pre class=""><code class="language-js">http.<span class="hljs-title function_">get</span>(options, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-comment">// 做些事情</span>
+}).<span class="hljs-title function_">on</span>(<span class="hljs-string">'socket'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'agentRemove'</span>);
+});</code></pre><p class="">代理也可用于单个请求。
+通过提供 <code>{agent: false}</code> 作为 <code>http.get()</code> 或 <code>http.request()</code> 函数的选项，则单次使用的具有默认选项的 <code>Agent</code> 将用于客户端连接。</p><p class=""><code>agent:false</code>:</p><pre class=""><code class="language-js">http.<span class="hljs-title function_">get</span>({
+  <span class="hljs-attr">hostname</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">agent</span>: <span class="hljs-literal">false</span>  <span class="hljs-comment">// 仅为这个请求创建新代理</span>
+}, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-comment">// 使用响应做些事情</span>
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.3.4</span>
+</div><p>An <code>Agent</code> is responsible for managing connection persistence
+and reuse for HTTP clients. It maintains a queue of pending requests
+for a given host and port, reusing a single socket connection for each
+until the queue is empty, at which time the socket is either destroyed
+or put into a pool where it is kept to be used again for requests to the
+same host and port. Whether it is destroyed or pooled depends on the
+<code>keepAlive</code> <a href="../http.html#new-agentoptions">option</a>.</p><p>Pooled connections have TCP Keep-Alive enabled for them, but servers may
+still close idle connections, in which case they will be removed from the
+pool and a new connection will be made when a new HTTP request is made for
+that host and port. Servers may also refuse to allow multiple requests
+over the same connection, in which case the connection will have to be
+remade for every request and cannot be pooled. The <code>Agent</code> will still make
+the requests to that server, but each one will occur over a new connection.</p><p>When a connection is closed by the client or the server, it is removed
+from the pool. Any unused sockets in the pool will be unrefed so as not
+to keep the Node.js process running when there are no outstanding requests.
+(see <a href="../net.html#socketunref"><code>socket.unref()</code></a>).</p><p>It is good practice, to <a href="../http.html#agentdestroy"><code>destroy()</code></a> an <code>Agent</code> instance when it is no
+longer in use, because unused sockets consume OS resources.</p><p>Sockets are removed from an agent when the socket emits either
+a <code>'close'</code> event or an <code>'agentRemove'</code> event. When intending to keep one
+HTTP request open for a long time without keeping it in the agent, something
+like the following may be done:</p><pre><code class="language-js">http.<span class="hljs-title function_">get</span>(options, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-comment">// Do stuff</span>
+}).<span class="hljs-title function_">on</span>(<span class="hljs-string">'socket'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'agentRemove'</span>);
+});</code></pre><p>An agent may also be used for an individual request. By providing
+<code>{agent: false}</code> as an option to the <code>http.get()</code> or <code>http.request()</code>
+functions, a one-time use <code>Agent</code> with default options will be used
+for the client connection.</p><p><code>agent:false</code>:</p><pre><code class="language-js">http.<span class="hljs-title function_">get</span>({
+  <span class="hljs-attr">hostname</span>: <span class="hljs-string">'localhost'</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">agent</span>: <span class="hljs-literal">false</span>  <span class="hljs-comment">// Create a new agent just for this one request</span>
+}, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-comment">// Do stuff with response</span>
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

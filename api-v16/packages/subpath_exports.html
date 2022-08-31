@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>子路径的导出 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-packages">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>子路径的导出</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../packages.html#packages_subpath_exports" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/packages/subpath_exports.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/packages/subpath_exports.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/packages/#subpath-exports.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v12.7.0</span>
+</div><p>当使用 <a href="../packages.html#exports"><code>"exports"</code></a> 字段时，可以通过将主入口点视为 <code>"."</code> 子路径来定义自定义子路径以及主入口点：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./submodule"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./src/submodule.js"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">现在消费者只能导入 <a href="../packages.html#exports"><code>"exports"</code></a> 中定义的子路径：</p><pre class=""><code class="language-js"><span class="hljs-keyword">import</span> submodule <span class="hljs-keyword">from</span> <span class="hljs-string">'es-module-package/submodule'</span>;
+<span class="hljs-comment">// 加载 ./node_modules/es-module-package/src/submodule.js</span></code></pre><p class="">而其他子路径会出错：</p><pre class=""><code class="language-js"><span class="hljs-keyword">import</span> submodule <span class="hljs-keyword">from</span> <span class="hljs-string">'es-module-package/private-module.js'</span>;
+<span class="hljs-comment">// 抛出 ERR_PACKAGE_PATH_NOT_EXPORTED</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v12.7.0</span>
+</div><p>When using the <a href="../packages.html#exports"><code>"exports"</code></a> field, custom subpaths can be defined along
+with the main entry point by treating the main entry point as the
+<code>"."</code> subpath:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"exports"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"."</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./main.js"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"./submodule"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./src/submodule.js"</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Now only the defined subpath in <a href="../packages.html#exports"><code>"exports"</code></a> can be imported by a consumer:</p><pre><code class="language-js"><span class="hljs-keyword">import</span> submodule <span class="hljs-keyword">from</span> <span class="hljs-string">'es-module-package/submodule'</span>;
+<span class="hljs-comment">// Loads ./node_modules/es-module-package/src/submodule.js</span></code></pre><p>While other subpaths will error:</p><pre><code class="language-js"><span class="hljs-keyword">import</span> submodule <span class="hljs-keyword">from</span> <span class="hljs-string">'es-module-package/private-module.js'</span>;
+<span class="hljs-comment">// Throws ERR_PACKAGE_PATH_NOT_EXPORTED</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>util.inherits(constructor, superConstructor) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-util">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>util.inherits(constructor, superConstructor)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../util.html#util_util_inherits_constructor_superconstructor" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/util/util_inherits_constructor_superconstructor.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/util/util_inherits_constructor_superconstructor.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/util/#utilinheritsconstructor-superconstructor.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v5.0.0</td>
+<td><p>参数 <code>constructor</code> 现在可以引用 ES6 类。</p></td></tr>
+<tr><td>v0.3.0</td>
+<td><p><span>新增于: v0.3.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">稳定性: 3</a> - 旧版: 改为使用 ES2015 类语法和 <code>extends</code> 关键字。</div><p></p><ul class="">
+<li><code>constructor</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>superConstructor</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul><p>不鼓励使用 <code>util.inherits()</code>。
+请使用 ES6 <code>class</code> 和 <code>extends</code> 关键字来获得语言级别的继承支持。
+另请注意，这两种风格在<a href="https://github.com/nodejs/node/issues/4179" rel="nofollow">语义上不兼容</a>。</p><p class="">将原型方法从一个<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor" rel="nofollow">构造函数</a>继承到另一个构造函数。
+<code>constructor</code> 的原型将被设置为从 <code>superConstructor</code> 创建的新对象。</p><p class="">这主要是在 <code>Object.setPrototypeOf(constructor.prototype, superConstructor.prototype)</code> 之上添加了一些输入验证。
+作为额外的便利，<code>superConstructor</code> 将可通过 <code>constructor.super_</code> 属性访问。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyStream</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-title class_">EventEmitter</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>);
+}
+
+util.<span class="hljs-title function_">inherits</span>(<span class="hljs-title class_">MyStream</span>, <span class="hljs-title class_">EventEmitter</span>);
+
+<span class="hljs-title class_">MyStream</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">write</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'data'</span>, data);
+};
+
+<span class="hljs-keyword">const</span> stream = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyStream</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stream <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">EventEmitter</span>); <span class="hljs-comment">// true</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">MyStream</span>.<span class="hljs-property">super_</span> === <span class="hljs-title class_">EventEmitter</span>); <span class="hljs-comment">// true</span>
+
+stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received data: "<span class="hljs-subst">${data}</span>"`</span>);
+});
+stream.<span class="hljs-title function_">write</span>(<span class="hljs-string">'It works!'</span>); <span class="hljs-comment">// 接收到的数据："It works!"</span></code></pre><p class="">使用 <code>class</code> 和 <code>extends</code> 的 ES6 示例：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyStream</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">data</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'data'</span>, data);
+  }
+}
+
+<span class="hljs-keyword">const</span> stream = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyStream</span>();
+
+stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received data: "<span class="hljs-subst">${data}</span>"`</span>);
+});
+stream.<span class="hljs-title function_">write</span>(<span class="hljs-string">'With ES6'</span>);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v5.0.0</td>
+<td><p>The <code>constructor</code> parameter can refer to an ES6 class now.</p></td></tr>
+<tr><td>v0.3.0</td>
+<td><p><span>Added in: v0.3.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><p></p><div class="api_stability api_stability_3"><a href="../documentation.html#stability-index">Stability: 3</a> - Legacy: Use ES2015 class syntax and <code>extends</code> keyword instead.</div><p></p><ul>
+<li><code>constructor</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>superConstructor</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul><p>Usage of <code>util.inherits()</code> is discouraged. Please use the ES6 <code>class</code> and
+<code>extends</code> keywords to get language level inheritance support. Also note
+that the two styles are <a href="https://github.com/nodejs/node/issues/4179" rel="nofollow">semantically incompatible</a>.</p><p>Inherit the prototype methods from one <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor" rel="nofollow">constructor</a> into another. The
+prototype of <code>constructor</code> will be set to a new object created from
+<code>superConstructor</code>.</p><p>This mainly adds some input validation on top of
+<code>Object.setPrototypeOf(constructor.prototype, superConstructor.prototype)</code>.
+As an additional convenience, <code>superConstructor</code> will be accessible
+through the <code>constructor.super_</code> property.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyStream</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-title class_">EventEmitter</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>);
+}
+
+util.<span class="hljs-title function_">inherits</span>(<span class="hljs-title class_">MyStream</span>, <span class="hljs-title class_">EventEmitter</span>);
+
+<span class="hljs-title class_">MyStream</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">write</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'data'</span>, data);
+};
+
+<span class="hljs-keyword">const</span> stream = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyStream</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stream <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">EventEmitter</span>); <span class="hljs-comment">// true</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">MyStream</span>.<span class="hljs-property">super_</span> === <span class="hljs-title class_">EventEmitter</span>); <span class="hljs-comment">// true</span>
+
+stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received data: "<span class="hljs-subst">${data}</span>"`</span>);
+});
+stream.<span class="hljs-title function_">write</span>(<span class="hljs-string">'It works!'</span>); <span class="hljs-comment">// Received data: "It works!"</span></code></pre><p>ES6 example using <code>class</code> and <code>extends</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">EventEmitter</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyStream</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">EventEmitter</span> {
+  <span class="hljs-title function_">write</span>(<span class="hljs-params">data</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'data'</span>, data);
+  }
+}
+
+<span class="hljs-keyword">const</span> stream = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyStream</span>();
+
+stream.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received data: "<span class="hljs-subst">${data}</span>"`</span>);
+});
+stream.<span class="hljs-title function_">write</span>(<span class="hljs-string">'With ES6'</span>);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

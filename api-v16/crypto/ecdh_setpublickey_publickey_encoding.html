@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>ecdh.setPublicKey(publicKey[, encoding]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>ecdh.setPublicKey(publicKey[, encoding])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_ecdh_setpublickey_publickey_encoding" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/ecdh_setpublickey_publickey_encoding.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/crypto/ecdh_setpublickey_publickey_encoding.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#ecdhsetpublickeypublickey-encoding.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.11.14</span><span>弃用于: v5.2.0</span>
+</div><p></p><div class="api_stability api_stability_0"><a href="../documentation.html#stability-index">稳定性: 0</a> - 弃用</div><p></p><ul class="">
+<li><code>publicKey</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <code>publicKey</code> 字符串的<a href="../buffer.html#buffers-and-character-encodings">编码</a>。</li>
+</ul><p>设置 EC Diffie-Hellman 公钥。
+如果提供了 <code>encoding</code>，则 <code>publicKey</code> 应该是字符串；否则应为 <a href="../buffer.html"><code>Buffer</code></a>、<code>TypedArray</code> 或 <code>DataView</code>。</p><p class="">通常没有理由调用这个方法，因为 <code>ECDH</code> 只需要一个私钥和对方的公钥来计算共享秘密。
+通常会调用 <a href="../crypto.html#ecdhgeneratekeysencoding-format"><code>ecdh.generateKeys()</code></a> 或 <a href="../crypto.html#ecdhsetprivatekeyprivatekey-encoding"><code>ecdh.setPrivateKey()</code></a>。
+<a href="../crypto.html#ecdhsetprivatekeyprivatekey-encoding"><code>ecdh.setPrivateKey()</code></a> 方法尝试生成与正在设置的私钥相关联的公共点/密钥。</p><p class="">示例（获取共享密钥）：</p><pre class="with-13-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">const</span> {
+  createECDH,
+  createHash
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> alice = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+<span class="hljs-keyword">const</span> bob = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+
+<span class="hljs-comment">// 这是指定 Alice 以前的私钥之一的快捷方式。</span>
+<span class="hljs-comment">// 在实际应用中使用这种可预测的私钥是不明智的。</span>
+alice.<span class="hljs-title function_">setPrivateKey</span>(
+  <span class="hljs-title function_">createHash</span>(<span class="hljs-string">'sha256'</span>).<span class="hljs-title function_">update</span>(<span class="hljs-string">'alice'</span>, <span class="hljs-string">'utf8'</span>).<span class="hljs-title function_">digest</span>()
+);
+
+<span class="hljs-comment">// Bob 使用新生成的加密强伪随机密钥对</span>
+bob.<span class="hljs-title function_">generateKeys</span>();
+
+<span class="hljs-keyword">const</span> aliceSecret = alice.<span class="hljs-title function_">computeSecret</span>(bob.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-keyword">const</span> bobSecret = bob.<span class="hljs-title function_">computeSecret</span>(alice.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-comment">// aliceSecret 和 bobSecret 应该是相同的共享秘密值</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(aliceSecret === bobSecret);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  createECDH,
+  createHash,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> alice = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+<span class="hljs-keyword">const</span> bob = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+
+<span class="hljs-comment">// 这是指定 Alice 以前的私钥之一的快捷方式。</span>
+<span class="hljs-comment">// 在实际应用中使用这种可预测的私钥是不明智的。</span>
+alice.<span class="hljs-title function_">setPrivateKey</span>(
+  <span class="hljs-title function_">createHash</span>(<span class="hljs-string">'sha256'</span>).<span class="hljs-title function_">update</span>(<span class="hljs-string">'alice'</span>, <span class="hljs-string">'utf8'</span>).<span class="hljs-title function_">digest</span>()
+);
+
+<span class="hljs-comment">// Bob 使用新生成的加密强伪随机密钥对</span>
+bob.<span class="hljs-title function_">generateKeys</span>();
+
+<span class="hljs-keyword">const</span> aliceSecret = alice.<span class="hljs-title function_">computeSecret</span>(bob.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-keyword">const</span> bobSecret = bob.<span class="hljs-title function_">computeSecret</span>(alice.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-comment">// aliceSecret 和 bobSecret 应该是相同的共享秘密值</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(aliceSecret === bobSecret);</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.11.14</span><span>Deprecated since: v5.2.0</span>
+</div><p></p><div class="api_stability api_stability_0"><a href="../documentation.html#stability-index">Stability: 0</a> - Deprecated</div><p></p><ul>
+<li><code>publicKey</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow" class="type">&lt;ArrayBuffer&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a></li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The <a href="../buffer.html#buffers-and-character-encodings">encoding</a> of the <code>publicKey</code> string.</li>
+</ul><p>Sets the EC Diffie-Hellman public key.
+If <code>encoding</code> is provided <code>publicKey</code> is expected to
+be a string; otherwise a <a href="../buffer.html"><code>Buffer</code></a>, <code>TypedArray</code>, or <code>DataView</code> is expected.</p><p>There is not normally a reason to call this method because <code>ECDH</code>
+only requires a private key and the other party's public key to compute the
+shared secret. Typically either <a href="../crypto.html#ecdhgeneratekeysencoding-format"><code>ecdh.generateKeys()</code></a> or
+<a href="../crypto.html#ecdhsetprivatekeyprivatekey-encoding"><code>ecdh.setPrivateKey()</code></a> will be called. The <a href="../crypto.html#ecdhsetprivatekeyprivatekey-encoding"><code>ecdh.setPrivateKey()</code></a> method
+attempts to generate the public point/key associated with the private key being
+set.</p><p>Example (obtaining a shared secret):</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">const</span> {
+  createECDH,
+  createHash
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> alice = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+<span class="hljs-keyword">const</span> bob = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+
+<span class="hljs-comment">// This is a shortcut way of specifying one of Alice's previous private</span>
+<span class="hljs-comment">// keys. It would be unwise to use such a predictable private key in a real</span>
+<span class="hljs-comment">// application.</span>
+alice.<span class="hljs-title function_">setPrivateKey</span>(
+  <span class="hljs-title function_">createHash</span>(<span class="hljs-string">'sha256'</span>).<span class="hljs-title function_">update</span>(<span class="hljs-string">'alice'</span>, <span class="hljs-string">'utf8'</span>).<span class="hljs-title function_">digest</span>()
+);
+
+<span class="hljs-comment">// Bob uses a newly generated cryptographically strong</span>
+<span class="hljs-comment">// pseudorandom key pair</span>
+bob.<span class="hljs-title function_">generateKeys</span>();
+
+<span class="hljs-keyword">const</span> aliceSecret = alice.<span class="hljs-title function_">computeSecret</span>(bob.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-keyword">const</span> bobSecret = bob.<span class="hljs-title function_">computeSecret</span>(alice.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-comment">// aliceSecret and bobSecret should be the same shared secret value</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(aliceSecret === bobSecret);</code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  createECDH,
+  createHash,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> alice = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+<span class="hljs-keyword">const</span> bob = <span class="hljs-title function_">createECDH</span>(<span class="hljs-string">'secp256k1'</span>);
+
+<span class="hljs-comment">// This is a shortcut way of specifying one of Alice's previous private</span>
+<span class="hljs-comment">// keys. It would be unwise to use such a predictable private key in a real</span>
+<span class="hljs-comment">// application.</span>
+alice.<span class="hljs-title function_">setPrivateKey</span>(
+  <span class="hljs-title function_">createHash</span>(<span class="hljs-string">'sha256'</span>).<span class="hljs-title function_">update</span>(<span class="hljs-string">'alice'</span>, <span class="hljs-string">'utf8'</span>).<span class="hljs-title function_">digest</span>()
+);
+
+<span class="hljs-comment">// Bob uses a newly generated cryptographically strong</span>
+<span class="hljs-comment">// pseudorandom key pair</span>
+bob.<span class="hljs-title function_">generateKeys</span>();
+
+<span class="hljs-keyword">const</span> aliceSecret = alice.<span class="hljs-title function_">computeSecret</span>(bob.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+<span class="hljs-keyword">const</span> bobSecret = bob.<span class="hljs-title function_">computeSecret</span>(alice.<span class="hljs-title function_">getPublicKey</span>(), <span class="hljs-literal">null</span>, <span class="hljs-string">'hex'</span>);
+
+<span class="hljs-comment">// aliceSecret and bobSecret should be the same shared secret value</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(aliceSecret === bobSecret);</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

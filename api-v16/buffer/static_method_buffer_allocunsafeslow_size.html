@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Buffer.allocUnsafeSlow(size) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Buffer.allocUnsafeSlow(size)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_static_method_buffer_allocunsafeslow_size" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/static_method_buffer_allocunsafeslow_size.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/static_method_buffer_allocunsafeslow_size.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#static-method-bufferallocunsafeslowsize.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>对于无效的输入参数，抛出 ERR_INVALID_ARG_VALUE 而不是 ERR_INVALID_OPT_VALUE。</p></td></tr>
+<tr><td>v5.12.0</td>
+<td><p><span>新增于: v5.12.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 新的 <code>Buffer</code> 所需的长度。</li>
+</ul><p>分配 <code>size</code> 个字节的新 <code>Buffer</code>。
+如果 <code>size</code> 大于 <a href="../buffer.html#bufferconstantsmax_length"><code>buffer.constants.MAX_LENGTH</code></a> 或小于 0，则抛出 <a href="../errors.html#err_invalid_arg_value"><code>ERR_INVALID_ARG_VALUE</code></a>。
+如果 <code>size</code> 为 0，则创建零长度 <code>Buffer</code>。</p><p class="">以这种方式创建的 <code>Buffer</code> 实例的底层内存不会被初始化。
+新创建的 <code>Buffer</code> 的内容是未知的，可能包含敏感的数据。
+使用 <a href="../buffer.html#buffillvalue-offset-end-encoding"><code>buf.fill(0)</code></a> 用零初始化此类 <code>Buffer</code> 实例。</p><p class="">当使用 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> 分配新的 <code>Buffer</code> 实例时，4 KB 以下的分配将从单个预先分配的 <code>Buffer</code> 中切分。
+这允许应用程序避免创建许多单独分配的 <code>Buffer</code> 实例的垃圾收集开销。
+这种方法无需跟踪和清理尽可能多的单个 <code>ArrayBuffer</code> 对象，从而提高了性能和内存使用率。</p><p class="">但是，在开发人员可能需要在不确定的时间内从池中保留一小块内存的情况下，使用 <code>Buffer.allocUnsafeSlow()</code> 创建未池化的 <code>Buffer</code> 实例然后复制出相关位可能是合适的。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// 需要保留一些小块内存。</span>
+<span class="hljs-keyword">const</span> store = [];
+
+socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> data;
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (data = readable.<span class="hljs-title function_">read</span>())) {
+    <span class="hljs-comment">// 为保留的数据分配。</span>
+    <span class="hljs-keyword">const</span> sb = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafeSlow</span>(<span class="hljs-number">10</span>);
+
+    <span class="hljs-comment">// 将数据复制到新分配中。</span>
+    data.<span class="hljs-title function_">copy</span>(sb, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>);
+
+    store.<span class="hljs-title function_">push</span>(sb);
+  }
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// 需要保留一些小块内存。</span>
+<span class="hljs-keyword">const</span> store = [];
+
+socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> data;
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (data = readable.<span class="hljs-title function_">read</span>())) {
+    <span class="hljs-comment">// 为保留的数据分配。</span>
+    <span class="hljs-keyword">const</span> sb = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafeSlow</span>(<span class="hljs-number">10</span>);
+
+    <span class="hljs-comment">// 将数据复制到新分配中。</span>
+    data.<span class="hljs-title function_">copy</span>(sb, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>);
+
+    store.<span class="hljs-title function_">push</span>(sb);
+  }
+});</code></pre><p class="">如果 <code>size</code> 不是数值，则会抛出 <code>TypeError</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>Throw ERR_INVALID_ARG_VALUE instead of ERR_INVALID_OPT_VALUE for invalid input arguments.</p></td></tr>
+<tr><td>v5.12.0</td>
+<td><p><span>Added in: v5.12.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The desired length of the new <code>Buffer</code>.</li>
+</ul><p>Allocates a new <code>Buffer</code> of <code>size</code> bytes. If <code>size</code> is larger than
+<a href="../buffer.html#bufferconstantsmax_length"><code>buffer.constants.MAX_LENGTH</code></a> or smaller than 0, <a href="../errors.html#err_invalid_arg_value"><code>ERR_INVALID_ARG_VALUE</code></a>
+is thrown. A zero-length <code>Buffer</code> is created if <code>size</code> is 0.</p><p>The underlying memory for <code>Buffer</code> instances created in this way is <em>not
+initialized</em>. The contents of the newly created <code>Buffer</code> are unknown and
+<em>may contain sensitive data</em>. Use <a href="../buffer.html#buffillvalue-offset-end-encoding"><code>buf.fill(0)</code></a> to initialize
+such <code>Buffer</code> instances with zeroes.</p><p>When using <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> to allocate new <code>Buffer</code> instances,
+allocations under 4 KB are sliced from a single pre-allocated <code>Buffer</code>. This
+allows applications to avoid the garbage collection overhead of creating many
+individually allocated <code>Buffer</code> instances. This approach improves both
+performance and memory usage by eliminating the need to track and clean up as
+many individual <code>ArrayBuffer</code> objects.</p><p>However, in the case where a developer may need to retain a small chunk of
+memory from a pool for an indeterminate amount of time, it may be appropriate
+to create an un-pooled <code>Buffer</code> instance using <code>Buffer.allocUnsafeSlow()</code> and
+then copying out the relevant bits.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-comment">// Need to keep around a few small chunks of memory.</span>
+<span class="hljs-keyword">const</span> store = [];
+
+socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> data;
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (data = readable.<span class="hljs-title function_">read</span>())) {
+    <span class="hljs-comment">// Allocate for retained data.</span>
+    <span class="hljs-keyword">const</span> sb = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafeSlow</span>(<span class="hljs-number">10</span>);
+
+    <span class="hljs-comment">// Copy the data into the new allocation.</span>
+    data.<span class="hljs-title function_">copy</span>(sb, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>);
+
+    store.<span class="hljs-title function_">push</span>(sb);
+  }
+});</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-comment">// Need to keep around a few small chunks of memory.</span>
+<span class="hljs-keyword">const</span> store = [];
+
+socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'readable'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">let</span> data;
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">null</span> !== (data = readable.<span class="hljs-title function_">read</span>())) {
+    <span class="hljs-comment">// Allocate for retained data.</span>
+    <span class="hljs-keyword">const</span> sb = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">allocUnsafeSlow</span>(<span class="hljs-number">10</span>);
+
+    <span class="hljs-comment">// Copy the data into the new allocation.</span>
+    data.<span class="hljs-title function_">copy</span>(sb, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>);
+
+    store.<span class="hljs-title function_">push</span>(sb);
+  }
+});</code></pre><p>A <code>TypeError</code> will be thrown if <code>size</code> is not a number.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

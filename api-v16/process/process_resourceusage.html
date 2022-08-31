@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.resourceUsage() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.resourceUsage()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_resourceusage" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_resourceusage.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_resourceusage.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processresourceusage.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v12.6.0</span>
+</div><ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 当前进程的资源使用情况。
+所有这些值都来自返回 <a href="https://docs.libuv.org/en/v1.x/misc.html#c.uv_rusage_t" rel="nofollow"><code>uv_rusage_t</code> struct</a> 的 <code>uv_getrusage</code> 调用。
+<ul>
+<li><code>userCPUTime</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到以微秒计算的 <code>ru_utime</code>。
+它与 <a href="../process.html#processcpuusagepreviousvalue"><code>process.cpuUsage().user</code></a> 的值相同。</li>
+<li><code>systemCPUTime</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到以微秒计算的 <code>ru_stime</code>。
+它与 <a href="../process.html#processcpuusagepreviousvalue"><code>process.cpuUsage().system</code></a> 的值相同。</li>
+<li><code>maxRSS</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_maxrss</code>，其以千字节为单位使用的最大驻留集大小。</li>
+<li><code>sharedMemorySize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_ixrss</code> 但不受任何平台支持。</li>
+<li><code>unsharedDataSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_idrss</code> 但不受任何平台支持。</li>
+<li><code>unsharedStackSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_isrss</code> 但不受任何平台支持。</li>
+<li><code>minorPageFault</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_minflt</code>，这是进程的次要页面错误的数量，请参阅<a href="https://en.wikipedia.org/wiki/Page_fault#Minor" rel="nofollow">这篇文章了解更多详情</a>。</li>
+<li><code>majorPageFault</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_majflt</code>，这是进程的主要页面错误的数量，请参阅<a href="https://en.wikipedia.org/wiki/Page_fault#Major" rel="nofollow">这篇文章了解更多详情</a>。
+Windows 不支持此字段。</li>
+<li><code>swappedOut</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_nswap</code> 但不受任何平台支持。</li>
+<li><code>fsRead</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_inblock</code>，这是文件系统必须执行输入的次数。</li>
+<li><code>fsWrite</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_oublock</code>，这是文件系统必须执行输出的次数。</li>
+<li><code>ipcSent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_msgsnd</code> 但不受任何平台支持。</li>
+<li><code>ipcReceived</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_msgrcv</code> 但不受任何平台支持。</li>
+<li><code>signalsCount</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_nsignals</code> 但不受任何平台支持。</li>
+<li><code>voluntaryContextSwitches</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_nvcsw</code>，这是由于进程在其时间片完成之前自愿放弃处理器而导致 CPU 上下文切换的次数（通常是为了等待资源的可用性）。
+Windows 不支持此字段。</li>
+<li><code>involuntaryContextSwitches</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 映射到 <code>ru_nivcsw</code>，这是由于更高优先级的进程变得可运行或当前进程超过其时间片而导致 CPU 上下文切换的次数。
+Windows 不支持此字段。</li>
+</ul>
+</li>
+</ul><pre class="with-45-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { resourceUsage } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">resourceUsage</span>());
+<span class="hljs-comment">/*
+  Will output:
+  {
+    userCPUTime: 82872,
+    systemCPUTime: 4143,
+    maxRSS: 33164,
+    sharedMemorySize: 0,
+    unsharedDataSize: 0,
+    unsharedStackSize: 0,
+    minorPageFault: 2469,
+    majorPageFault: 0,
+    swappedOut: 0,
+    fsRead: 0,
+    fsWrite: 8,
+    ipcSent: 0,
+    ipcReceived: 0,
+    signalsCount: 0,
+    voluntaryContextSwitches: 79,
+    involuntaryContextSwitches: 1
+  }
+*/</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { resourceUsage } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">resourceUsage</span>());
+<span class="hljs-comment">/*
+  Will output:
+  {
+    userCPUTime: 82872,
+    systemCPUTime: 4143,
+    maxRSS: 33164,
+    sharedMemorySize: 0,
+    unsharedDataSize: 0,
+    unsharedStackSize: 0,
+    minorPageFault: 2469,
+    majorPageFault: 0,
+    swappedOut: 0,
+    fsRead: 0,
+    fsWrite: 8,
+    ipcSent: 0,
+    ipcReceived: 0,
+    signalsCount: 0,
+    voluntaryContextSwitches: 79,
+    involuntaryContextSwitches: 1
+  }
+*/</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v12.6.0</span>
+</div><ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> the resource usage for the current process. All of these
+values come from the <code>uv_getrusage</code> call which returns
+a <a href="https://docs.libuv.org/en/v1.x/misc.html#c.uv_rusage_t" rel="nofollow"><code>uv_rusage_t</code> struct</a>.
+<ul>
+<li><code>userCPUTime</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_utime</code> computed in microseconds.
+It is the same value as <a href="../process.html#processcpuusagepreviousvalue"><code>process.cpuUsage().user</code></a>.</li>
+<li><code>systemCPUTime</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_stime</code> computed in microseconds.
+It is the same value as <a href="../process.html#processcpuusagepreviousvalue"><code>process.cpuUsage().system</code></a>.</li>
+<li><code>maxRSS</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_maxrss</code> which is the maximum resident set
+size used in kilobytes.</li>
+<li><code>sharedMemorySize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_ixrss</code> but is not supported by
+any platform.</li>
+<li><code>unsharedDataSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_idrss</code> but is not supported by
+any platform.</li>
+<li><code>unsharedStackSize</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_isrss</code> but is not supported by
+any platform.</li>
+<li><code>minorPageFault</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_minflt</code> which is the number of
+minor page faults for the process, see
+<a href="https://en.wikipedia.org/wiki/Page_fault#Minor" rel="nofollow">this article for more details</a>.</li>
+<li><code>majorPageFault</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_majflt</code> which is the number of
+major page faults for the process, see
+<a href="https://en.wikipedia.org/wiki/Page_fault#Major" rel="nofollow">this article for more details</a>. This field is not
+supported on Windows.</li>
+<li><code>swappedOut</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_nswap</code> but is not supported by any
+platform.</li>
+<li><code>fsRead</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_inblock</code> which is the number of times the
+file system had to perform input.</li>
+<li><code>fsWrite</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_oublock</code> which is the number of times the
+file system had to perform output.</li>
+<li><code>ipcSent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_msgsnd</code> but is not supported by any
+platform.</li>
+<li><code>ipcReceived</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_msgrcv</code> but is not supported by any
+platform.</li>
+<li><code>signalsCount</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_nsignals</code> but is not supported by any
+platform.</li>
+<li><code>voluntaryContextSwitches</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_nvcsw</code> which is the
+number of times a CPU context switch resulted due to a process voluntarily
+giving up the processor before its time slice was completed (usually to
+await availability of a resource). This field is not supported on Windows.</li>
+<li><code>involuntaryContextSwitches</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> maps to <code>ru_nivcsw</code> which is the
+number of times a CPU context switch resulted due to a higher priority
+process becoming runnable or because the current process exceeded its
+time slice. This field is not supported on Windows.</li>
+</ul>
+</li>
+</ul><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { resourceUsage } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">resourceUsage</span>());
+<span class="hljs-comment">/*
+  Will output:
+  {
+    userCPUTime: 82872,
+    systemCPUTime: 4143,
+    maxRSS: 33164,
+    sharedMemorySize: 0,
+    unsharedDataSize: 0,
+    unsharedStackSize: 0,
+    minorPageFault: 2469,
+    majorPageFault: 0,
+    swappedOut: 0,
+    fsRead: 0,
+    fsWrite: 8,
+    ipcSent: 0,
+    ipcReceived: 0,
+    signalsCount: 0,
+    voluntaryContextSwitches: 79,
+    involuntaryContextSwitches: 1
+  }
+*/</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { resourceUsage } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">resourceUsage</span>());
+<span class="hljs-comment">/*
+  Will output:
+  {
+    userCPUTime: 82872,
+    systemCPUTime: 4143,
+    maxRSS: 33164,
+    sharedMemorySize: 0,
+    unsharedDataSize: 0,
+    unsharedStackSize: 0,
+    minorPageFault: 2469,
+    majorPageFault: 0,
+    swappedOut: 0,
+    fsRead: 0,
+    fsWrite: 8,
+    ipcSent: 0,
+    ipcReceived: 0,
+    signalsCount: 0,
+    voluntaryContextSwitches: 79,
+    involuntaryContextSwitches: 1
+  }
+*/</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

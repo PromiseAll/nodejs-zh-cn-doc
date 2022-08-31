@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>socket.setTimeout(timeout[, callback]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-net">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>socket.setTimeout(timeout[, callback])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../net.html#net_socket_settimeout_timeout_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/net/socket_settimeout_timeout_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/net/socket_settimeout_timeout_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/net/#socketsettimeouttimeout-callback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.90</span>
+</div><ul class="">
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> 套接字自身</li>
+</ul><p>将套接字设置为在套接字上 <code>timeout</code> 毫秒不活动后超时。
+默认情况下 <code>net.Socket</code> 没有超时。</p><p class="">当空闲超时被触发时，套接字将收到 <a href="../net.html#event-timeout"><code>'timeout'</code></a> 事件，但连接不会被切断。
+用户必须手动调用 <a href="../net.html#socketenddata-encoding-callback"><code>socket.end()</code></a> 或 <a href="../net.html#socketdestroyerror"><code>socket.destroy()</code></a> 才能结束连接。</p><pre class=""><code class="language-js">socket.<span class="hljs-built_in">setTimeout</span>(<span class="hljs-number">3000</span>);
+socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'timeout'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'socket timeout'</span>);
+  socket.<span class="hljs-title function_">end</span>();
+});</code></pre><p class="">如果 <code>timeout</code> 为 0，则禁用现有空闲超时。</p><p class="">可选的 <code>callback</code> 参数将被添加为 <a href="../net.html#event-timeout"><code>'timeout'</code></a> 事件的单次监听器。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.90</span>
+</div><ul>
+<li><code>timeout</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>Returns: <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a> The socket itself.</li>
+</ul><p>Sets the socket to timeout after <code>timeout</code> milliseconds of inactivity on
+the socket. By default <code>net.Socket</code> do not have a timeout.</p><p>When an idle timeout is triggered the socket will receive a <a href="../net.html#event-timeout"><code>'timeout'</code></a>
+event but the connection will not be severed. The user must manually call
+<a href="../net.html#socketenddata-encoding-callback"><code>socket.end()</code></a> or <a href="../net.html#socketdestroyerror"><code>socket.destroy()</code></a> to end the connection.</p><pre><code class="language-js">socket.<span class="hljs-built_in">setTimeout</span>(<span class="hljs-number">3000</span>);
+socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'timeout'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'socket timeout'</span>);
+  socket.<span class="hljs-title function_">end</span>();
+});</code></pre><p>If <code>timeout</code> is 0, then the existing idle timeout is disabled.</p><p>The optional <code>callback</code> parameter will be added as a one-time listener for the
+<a href="../net.html#event-timeout"><code>'timeout'</code></a> event.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

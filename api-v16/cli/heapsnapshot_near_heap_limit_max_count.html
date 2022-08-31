@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>--heapsnapshot-near-heap-limit=max_count | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cli">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>--heapsnapshot-near-heap-limit=max_count</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cli.html#cli_heapsnapshot_near_heap_limit_max_count" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cli/heapsnapshot_near_heap_limit_max_count.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/cli/heapsnapshot_near_heap_limit_max_count.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cli/#--heapsnapshot-near-heap-limitmax_count.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v15.1.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><p>当 V8 堆使用量接近堆限制时，将 V8 堆快照写入磁盘。
+<code>count</code> 应该是非负整数（在这种情况下，Node.js 将不超过 <code>max_count</code> 的快照写入磁盘）。</p><p class="">当生成快照时，可能会触发垃圾回收并降低堆使用率，因此可能会在 Node.js 实例最终耗尽内存之前将多个快照写入磁盘。
+可以比较这些堆快照以确定在拍摄连续快照期间正在分配哪些对象。
+不能保证 Node.js 会准确地将 <code>max_count</code> 个快照写入磁盘，但是当 <code>max_count</code> 大于 <code>0</code> 时，它会尽量在 Node.js 实例耗尽内存之前生成至少一个和最多 <code>max_count</code> 个快照。</p><p class="">生成 V8 快照需要时间和内存（由 V8 堆管理的内存和 V8 堆外的原生内存）。
+堆越大，需要的资源越多。
+Node.js 会调整 V8 堆以适应额外的 V8 堆内存开销，并尽量避免耗尽进程可用的所有内存。
+当进程使用的内存超过系统认为合适的内存时，该进程可能会被系统突然终止，具体取决于系统配置。</p><pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --max-old-space-size=100 --heapsnapshot-near-heap-limit=3 index.js</span>
+Wrote snapshot to Heap.20200430.100036.49580.0.001.heapsnapshot
+Wrote snapshot to Heap.20200430.100037.49580.0.002.heapsnapshot
+Wrote snapshot to Heap.20200430.100038.49580.0.003.heapsnapshot
+
+&lt;--- Last few GCs ---&gt;
+
+[49580:0x110000000]     4826 ms: Mark-sweep 130.6 (147.8) -&gt; 130.5 (147.8) MB, 27.4 / 0.0 ms  (average mu = 0.126, current mu = 0.034) allocation failure scavenge might not succeed
+[49580:0x110000000]     4845 ms: Mark-sweep 130.6 (147.8) -&gt; 130.6 (147.8) MB, 18.8 / 0.0 ms  (average mu = 0.088, current mu = 0.031) allocation failure scavenge might not succeed
+
+
+&lt;--- JS stacktrace ---&gt;
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+....</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v15.1.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><p>Writes a V8 heap snapshot to disk when the V8 heap usage is approaching the
+heap limit. <code>count</code> should be a non-negative integer (in which case
+Node.js will write no more than <code>max_count</code> snapshots to disk).</p><p>When generating snapshots, garbage collection may be triggered and bring
+the heap usage down, therefore multiple snapshots may be written to disk
+before the Node.js instance finally runs out of memory. These heap snapshots
+can be compared to determine what objects are being allocated during the
+time consecutive snapshots are taken. It's not guaranteed that Node.js will
+write exactly <code>max_count</code> snapshots to disk, but it will try
+its best to generate at least one and up to <code>max_count</code> snapshots before the
+Node.js instance runs out of memory when <code>max_count</code> is greater than <code>0</code>.</p><p>Generating V8 snapshots takes time and memory (both memory managed by the
+V8 heap and native memory outside the V8 heap). The bigger the heap is,
+the more resources it needs. Node.js will adjust the V8 heap to accommodate
+the additional V8 heap memory overhead, and try its best to avoid using up
+all the memory available to the process. When the process uses
+more memory than the system deems appropriate, the process may be terminated
+abruptly by the system, depending on the system configuration.</p><pre><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --max-old-space-size=100 --heapsnapshot-near-heap-limit=3 index.js</span>
+Wrote snapshot to Heap.20200430.100036.49580.0.001.heapsnapshot
+Wrote snapshot to Heap.20200430.100037.49580.0.002.heapsnapshot
+Wrote snapshot to Heap.20200430.100038.49580.0.003.heapsnapshot
+
+&lt;--- Last few GCs ---&gt;
+
+[49580:0x110000000]     4826 ms: Mark-sweep 130.6 (147.8) -&gt; 130.5 (147.8) MB, 27.4 / 0.0 ms  (average mu = 0.126, current mu = 0.034) allocation failure scavenge might not succeed
+[49580:0x110000000]     4845 ms: Mark-sweep 130.6 (147.8) -&gt; 130.6 (147.8) MB, 18.8 / 0.0 ms  (average mu = 0.088, current mu = 0.031) allocation failure scavenge might not succeed
+
+
+&lt;--- JS stacktrace ---&gt;
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+....</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

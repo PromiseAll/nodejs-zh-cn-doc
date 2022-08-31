@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>实现转换流 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>实现转换流</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_implementing_a_transform_stream" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/implementing_a_transform_stream.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/implementing_a_transform_stream.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#implementing-a-transform-stream.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><a href="../stream.html#class-streamtransform"><code>Transform</code></a> 流是 <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> 流，其中输出以某种方式从输入计算。
+示例包括压缩、加密、或解密数据的<a href="../zlib.html">压缩</a>流或<a href="../crypto.html">加密</a>流。</p><p class="">不要求输出与输入大小相同、块数相同或同时到达。
+例如，<code>Hash</code> 流只会有一个单一的输出块，它在输入结束时提供。
+<code>zlib</code> 流将产生比其输入小得多或大得多的输出。</p><p class=""><code>stream.Transform</code> 类被扩展以实现 <a href="../stream.html#class-streamtransform"><code>Transform</code></a> 流。</p><p class=""><code>stream.Transform</code> 类原型上继承自 <code>stream.Duplex</code> 并实现其自己版本的 <code>writable._write()</code> 和 <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 方法。
+自定义的 <code>Transform</code> 实现必须实现 <a href="../stream.html#transform_transformchunk-encoding-callback"><code>transform._transform()</code></a> 方法，也可以实现 <a href="../stream.html#transform_flushcallback"><code>transform._flush()</code></a> 方法。</p><p class="">使用 <code>Transform</code> 流时必须小心，因为如果不消耗 <code>Readable</code> 端的输出，写入流的数据可能导致流的 <code>Writable</code> 端暂停。</p></div>
+          <div id="content_right"><p>A <a href="../stream.html#class-streamtransform"><code>Transform</code></a> stream is a <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> stream where the output is computed
+in some way from the input. Examples include <a href="../zlib.html">zlib</a> streams or <a href="../crypto.html">crypto</a>
+streams that compress, encrypt, or decrypt data.</p><p>There is no requirement that the output be the same size as the input, the same
+number of chunks, or arrive at the same time. For example, a <code>Hash</code> stream will
+only ever have a single chunk of output which is provided when the input is
+ended. A <code>zlib</code> stream will produce output that is either much smaller or much
+larger than its input.</p><p>The <code>stream.Transform</code> class is extended to implement a <a href="../stream.html#class-streamtransform"><code>Transform</code></a> stream.</p><p>The <code>stream.Transform</code> class prototypically inherits from <code>stream.Duplex</code> and
+implements its own versions of the <code>writable._write()</code> and
+<a href="../stream.html#readable_readsize"><code>readable._read()</code></a> methods. Custom <code>Transform</code> implementations <em>must</em>
+implement the <a href="../stream.html#transform_transformchunk-encoding-callback"><code>transform._transform()</code></a> method and <em>may</em>
+also implement the <a href="../stream.html#transform_flushcallback"><code>transform._flush()</code></a> method.</p><p>Care must be taken when using <code>Transform</code> streams in that data written to the
+stream can cause the <code>Writable</code> side of the stream to become paused if the
+output on the <code>Readable</code> side is not consumed.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

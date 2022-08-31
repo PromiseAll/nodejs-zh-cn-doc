@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>概述 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-async_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>概述</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../async_hooks.html#async_hooks_overview" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/async_hooks/overview.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/async_hooks/overview.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/async_hooks/#overview.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>以下是公共 API 的简单概述。</p><pre class="with-43-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> async_hooks <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-comment">// 返回当前执行上下文的 ID。</span>
+<span class="hljs-keyword">const</span> eid = async_hooks.<span class="hljs-title function_">executionAsyncId</span>();
+
+<span class="hljs-comment">// 返回负责触发当前</span>
+<span class="hljs-comment">// 执行范围回调的句柄ID。</span>
+<span class="hljs-keyword">const</span> tid = async_hooks.<span class="hljs-title function_">triggerAsyncId</span>();
+
+<span class="hljs-comment">// 创建新的 AsyncHook 实例。所有这些回调都是可选的。</span>
+<span class="hljs-keyword">const</span> asyncHook =
+    async_hooks.<span class="hljs-title function_">createHook</span>({ init, before, after, destroy, promiseResolve });
+
+<span class="hljs-comment">// 允许调用此 AsyncHook 实例的回调。</span>
+<span class="hljs-comment">// 这不是运行构造函数后的隐式操作，</span>
+<span class="hljs-comment">// 必须显式运行才能开始执行回调。</span>
+asyncHook.<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-comment">// 禁用监听新的异步事件。</span>
+asyncHook.<span class="hljs-title function_">disable</span>();
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 以下是可以传给 createHook() 的回调。</span>
+<span class="hljs-comment">//</span>
+
+<span class="hljs-comment">// init 在对象构造过程中被调用。</span>
+<span class="hljs-comment">// 当此回调运行时，资源可能尚未完成构造，</span>
+<span class="hljs-comment">// 因此 "asyncId" 引用的资源的所有字段可能尚未填充。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { }
+
+<span class="hljs-comment">// Before 在调用资源的回调之前调用。</span>
+<span class="hljs-comment">// 对于句柄（例如 TCPWrap）可以调用 0-N 次，</span>
+<span class="hljs-comment">// 而对于请求（例如 FSReqCallback）将恰好调用 1 次。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// After 在资源的回调完成后被调用。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// 资源销毁时调用销毁。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// promiseResolve 仅在调用传给 `Promise` 构造函数的 `resolve` 函数时</span>
+<span class="hljs-comment">// （直接或通过其他解决 promise）</span>
+<span class="hljs-comment">// 时调用 promise 资源。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">promiseResolve</span>(<span class="hljs-params">asyncId</span>) { }</code><code class="language-js cjs"><span class="hljs-keyword">const</span> async_hooks = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-comment">// 返回当前执行上下文的 ID。</span>
+<span class="hljs-keyword">const</span> eid = async_hooks.<span class="hljs-title function_">executionAsyncId</span>();
+
+<span class="hljs-comment">// 返回负责触发当前</span>
+<span class="hljs-comment">// 执行范围回调的句柄ID。</span>
+<span class="hljs-keyword">const</span> tid = async_hooks.<span class="hljs-title function_">triggerAsyncId</span>();
+
+<span class="hljs-comment">// 创建新的 AsyncHook 实例。所有这些回调都是可选的。</span>
+<span class="hljs-keyword">const</span> asyncHook =
+    async_hooks.<span class="hljs-title function_">createHook</span>({ init, before, after, destroy, promiseResolve });
+
+<span class="hljs-comment">// 允许调用此 AsyncHook 实例的回调。</span>
+<span class="hljs-comment">// 这不是运行构造函数后的隐式操作，</span>
+<span class="hljs-comment">// 必须显式运行才能开始执行回调。</span>
+asyncHook.<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-comment">// 禁用监听新的异步事件。</span>
+asyncHook.<span class="hljs-title function_">disable</span>();
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 以下是可以传给 createHook() 的回调。</span>
+<span class="hljs-comment">//</span>
+
+<span class="hljs-comment">// init 在对象构造过程中被调用。</span>
+<span class="hljs-comment">// 当此回调运行时，资源可能尚未完成构造，</span>
+<span class="hljs-comment">// 因此 "asyncId" 引用的资源的所有字段可能尚未填充。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { }
+
+<span class="hljs-comment">// Before 在调用资源的回调之前调用。</span>
+<span class="hljs-comment">// 对于句柄（例如 TCPWrap）可以调用 0-N 次，</span>
+<span class="hljs-comment">// 而对于请求（例如 FSReqCallback）将恰好调用 1 次。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// After 在资源的回调完成后被调用。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// 资源销毁时调用销毁。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// promiseResolve 仅在调用传给 `Promise` 构造函数的 `resolve` 函数时</span>
+<span class="hljs-comment">// （直接或通过其他解决 promise）</span>
+<span class="hljs-comment">// 时调用 promise 资源。</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">promiseResolve</span>(<span class="hljs-params">asyncId</span>) { }</code></pre></div>
+          <div id="content_right"><p>Following is a simple overview of the public API.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> async_hooks <span class="hljs-keyword">from</span> <span class="hljs-string">'async_hooks'</span>;
+
+<span class="hljs-comment">// Return the ID of the current execution context.</span>
+<span class="hljs-keyword">const</span> eid = async_hooks.<span class="hljs-title function_">executionAsyncId</span>();
+
+<span class="hljs-comment">// Return the ID of the handle responsible for triggering the callback of the</span>
+<span class="hljs-comment">// current execution scope to call.</span>
+<span class="hljs-keyword">const</span> tid = async_hooks.<span class="hljs-title function_">triggerAsyncId</span>();
+
+<span class="hljs-comment">// Create a new AsyncHook instance. All of these callbacks are optional.</span>
+<span class="hljs-keyword">const</span> asyncHook =
+    async_hooks.<span class="hljs-title function_">createHook</span>({ init, before, after, destroy, promiseResolve });
+
+<span class="hljs-comment">// Allow callbacks of this AsyncHook instance to call. This is not an implicit</span>
+<span class="hljs-comment">// action after running the constructor, and must be explicitly run to begin</span>
+<span class="hljs-comment">// executing callbacks.</span>
+asyncHook.<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-comment">// Disable listening for new asynchronous events.</span>
+asyncHook.<span class="hljs-title function_">disable</span>();
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// The following are the callbacks that can be passed to createHook().</span>
+<span class="hljs-comment">//</span>
+
+<span class="hljs-comment">// init is called during object construction. The resource may not have</span>
+<span class="hljs-comment">// completed construction when this callback runs, therefore all fields of the</span>
+<span class="hljs-comment">// resource referenced by "asyncId" may not have been populated.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { }
+
+<span class="hljs-comment">// Before is called just before the resource's callback is called. It can be</span>
+<span class="hljs-comment">// called 0-N times for handles (such as TCPWrap), and will be called exactly 1</span>
+<span class="hljs-comment">// time for requests (such as FSReqCallback).</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// After is called just after the resource's callback has finished.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// Destroy is called when the resource is destroyed.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// promiseResolve is called only for promise resources, when the</span>
+<span class="hljs-comment">// `resolve` function passed to the `Promise` constructor is invoked</span>
+<span class="hljs-comment">// (either directly or through other means of resolving a promise).</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">promiseResolve</span>(<span class="hljs-params">asyncId</span>) { }</code><code class="language-js cjs"><span class="hljs-keyword">const</span> async_hooks = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async_hooks'</span>);
+
+<span class="hljs-comment">// Return the ID of the current execution context.</span>
+<span class="hljs-keyword">const</span> eid = async_hooks.<span class="hljs-title function_">executionAsyncId</span>();
+
+<span class="hljs-comment">// Return the ID of the handle responsible for triggering the callback of the</span>
+<span class="hljs-comment">// current execution scope to call.</span>
+<span class="hljs-keyword">const</span> tid = async_hooks.<span class="hljs-title function_">triggerAsyncId</span>();
+
+<span class="hljs-comment">// Create a new AsyncHook instance. All of these callbacks are optional.</span>
+<span class="hljs-keyword">const</span> asyncHook =
+    async_hooks.<span class="hljs-title function_">createHook</span>({ init, before, after, destroy, promiseResolve });
+
+<span class="hljs-comment">// Allow callbacks of this AsyncHook instance to call. This is not an implicit</span>
+<span class="hljs-comment">// action after running the constructor, and must be explicitly run to begin</span>
+<span class="hljs-comment">// executing callbacks.</span>
+asyncHook.<span class="hljs-title function_">enable</span>();
+
+<span class="hljs-comment">// Disable listening for new asynchronous events.</span>
+asyncHook.<span class="hljs-title function_">disable</span>();
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// The following are the callbacks that can be passed to createHook().</span>
+<span class="hljs-comment">//</span>
+
+<span class="hljs-comment">// init is called during object construction. The resource may not have</span>
+<span class="hljs-comment">// completed construction when this callback runs, therefore all fields of the</span>
+<span class="hljs-comment">// resource referenced by "asyncId" may not have been populated.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">init</span>(<span class="hljs-params">asyncId, type, triggerAsyncId, resource</span>) { }
+
+<span class="hljs-comment">// Before is called just before the resource's callback is called. It can be</span>
+<span class="hljs-comment">// called 0-N times for handles (such as TCPWrap), and will be called exactly 1</span>
+<span class="hljs-comment">// time for requests (such as FSReqCallback).</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">before</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// After is called just after the resource's callback has finished.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">after</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// Destroy is called when the resource is destroyed.</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">destroy</span>(<span class="hljs-params">asyncId</span>) { }
+
+<span class="hljs-comment">// promiseResolve is called only for promise resources, when the</span>
+<span class="hljs-comment">// `resolve` function passed to the `Promise` constructor is invoked</span>
+<span class="hljs-comment">// (either directly or through other means of resolving a promise).</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">promiseResolve</span>(<span class="hljs-params">asyncId</span>) { }</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

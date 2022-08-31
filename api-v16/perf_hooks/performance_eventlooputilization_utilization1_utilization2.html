@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>performance.eventLoopUtilization([utilization1[, utilization2]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-perf_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>performance.eventLoopUtilization([utilization1[, utilization2]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../perf_hooks.html#perf_hooks_performance_eventlooputilization_utilization1_utilization2" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/perf_hooks/performance_eventlooputilization_utilization1_utilization2.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/perf_hooks/performance_eventlooputilization_utilization1_utilization2.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/perf_hooks/#performanceeventlooputilizationutilization1-utilization2.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v14.10.0, v12.19.0</span>
+</div><ul class="">
+<li><code>utilization1</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 上一次调用 <code>eventLoopUtilization()</code> 的结果。</li>
+<li><code>utilization2</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 在 <code>utilization1</code> 之前调用 <code>eventLoopUtilization()</code> 的结果。</li>
+<li>返回 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>idle</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>active</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>utilization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+</li>
+</ul><p><code>eventLoopUtilization()</code> 方法返回包含事件循环作为高解析度毫秒计时器的既空闲又活动的累积持续时间的对象。
+<code>utilization</code> 值是计算的事件循环利用率 (ELU)。</p><p class="">如果主线程上的引导尚未完成，则属性的值为 <code>0</code>。
+由于引导发生在事件循环内，所以 ELU 立即在<a href="../worker_threads.html#worker-threads">工作线程</a>上可用。</p><p class=""><code>utilization1</code> 和 <code>utilization2</code> 都是可选参数。</p><p class="">如果传入了 <code>utilization1</code>，则计算当前调用的 <code>active</code> 和 <code>idle</code> 之间的差值，以及对应的 <code>utilization</code> 值(类似于 <a href="../process.html#processhrtimetime"><code>process.hrtime()</code></a>)。</p><p class="">如果传入了 <code>utilization1</code> 和 <code>utilization2</code>，则计算两个参数之间的增量。
+这是便捷的选项，因为与 <a href="../process.html#processhrtimetime"><code>process.hrtime()</code></a> 不同，计算 ELU 比单个减法更复杂。</p><p class="">ELU 类似于 CPU 使用率，不同之处在于它只测量事件循环统计信息而不是 CPU 使用率。
+它表示事件循环在事件循环的事件提供者（例如 <code>epoll_wait</code>）之外花费的时间百分比。
+不考虑其他 CPU 空闲时间。
+以下是主要空闲进程如何具有高 ELU 的示例。</p><pre class=""><code class="language-js"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> { eventLoopUtilization } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'perf_hooks'</span>).<span class="hljs-property">performance</span>;
+<span class="hljs-keyword">const</span> { spawnSync } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> elu = <span class="hljs-title function_">eventLoopUtilization</span>();
+  <span class="hljs-title function_">spawnSync</span>(<span class="hljs-string">'sleep'</span>, [<span class="hljs-string">'5'</span>]);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">eventLoopUtilization</span>(elu).<span class="hljs-property">utilization</span>);
+});</code></pre><p class="">虽然运行这个脚本时 CPU 大部分是空闲的，但 <code>utilization</code> 的值为 <code>1</code>。
+这是因为对 <a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a> 的调用阻止了事件循环的进行。</p><p class="">传入用户定义的对象而不是先前调用 <code>eventLoopUtilization()</code> 的结果将导致未定义的行为。
+不保证返回值反映事件循环的任何正确状态。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v14.10.0, v12.19.0</span>
+</div><ul>
+<li><code>utilization1</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The result of a previous call to
+<code>eventLoopUtilization()</code>.</li>
+<li><code>utilization2</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The result of a previous call to
+<code>eventLoopUtilization()</code> prior to <code>utilization1</code>.</li>
+<li>Returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>idle</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>active</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>utilization</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul>
+</li>
+</ul><p>The <code>eventLoopUtilization()</code> method returns an object that contains the
+cumulative duration of time the event loop has been both idle and active as a
+high resolution milliseconds timer. The <code>utilization</code> value is the calculated
+Event Loop Utilization (ELU).</p><p>If bootstrapping has not yet finished on the main thread the properties have
+the value of <code>0</code>. The ELU is immediately available on <a href="../worker_threads.html#worker-threads">Worker threads</a> since
+bootstrap happens within the event loop.</p><p>Both <code>utilization1</code> and <code>utilization2</code> are optional parameters.</p><p>If <code>utilization1</code> is passed, then the delta between the current call's <code>active</code>
+and <code>idle</code> times, as well as the corresponding <code>utilization</code> value are
+calculated and returned (similar to <a href="../process.html#processhrtimetime"><code>process.hrtime()</code></a>).</p><p>If <code>utilization1</code> and <code>utilization2</code> are both passed, then the delta is
+calculated between the two arguments. This is a convenience option because,
+unlike <a href="../process.html#processhrtimetime"><code>process.hrtime()</code></a>, calculating the ELU is more complex than a
+single subtraction.</p><p>ELU is similar to CPU utilization, except that it only measures event loop
+statistics and not CPU usage. It represents the percentage of time the event
+loop has spent outside the event loop's event provider (e.g. <code>epoll_wait</code>).
+No other CPU idle time is taken into consideration. The following is an example
+of how a mostly idle process will have a high ELU.</p><pre><code class="language-js"><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> { eventLoopUtilization } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'perf_hooks'</span>).<span class="hljs-property">performance</span>;
+<span class="hljs-keyword">const</span> { spawnSync } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+
+<span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> elu = <span class="hljs-title function_">eventLoopUtilization</span>();
+  <span class="hljs-title function_">spawnSync</span>(<span class="hljs-string">'sleep'</span>, [<span class="hljs-string">'5'</span>]);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">eventLoopUtilization</span>(elu).<span class="hljs-property">utilization</span>);
+});</code></pre><p>Although the CPU is mostly idle while running this script, the value of
+<code>utilization</code> is <code>1</code>. This is because the call to
+<a href="../child_process.html#child_processspawnsynccommand-args-options"><code>child_process.spawnSync()</code></a> blocks the event loop from proceeding.</p><p>Passing in a user-defined object instead of the result of a previous call to
+<code>eventLoopUtilization()</code> will lead to undefined behavior. The return values
+are not guaranteed to reflect any correct state of the event loop.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

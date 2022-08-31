@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>getFormat(url, context, defaultGetFormat) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-esm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>getFormat(url, context, defaultGetFormat)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v14.20.0</li>
+              <li>
+                <a href="../esm.html#esm_getformat_url_context_defaultgetformat" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/esm/#getformaturl-context-defaultgetformat.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><blockquote class="">
+<p>注意：加载器 API 正在重新设计。 这个钩子可能会消失，或者它的签名可能会改变。 不要依赖下面描述的 API。</p>
+</blockquote><ul class="">
+<li><code>url</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>context</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>defaultGetFormat</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>format</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+</li>
+</ul><p><code>getFormat</code> 钩子提供了一种方式来定义确定网址应如何解释的自定义方法。
+返回的 <code>format</code> 也会影响解析时模块的可接受的源值形式。
+这可以是以下之一：</p><table class=""><thead><tr><th><code>format</code></th><th>描述</th><th><code>getSource</code> 或 <code>transformSource</code> 返回的 <code>source</code> 的可接受类型</th></tr></thead><tbody><tr><td><code>'builtin'</code></td><td>加载 Node.js 内置模块</td><td>不适用</td></tr><tr><td><code>'commonjs'</code></td><td>加载 Node.js CommonJS 模块</td><td>不适用</td></tr><tr><td><code>'json'</code></td><td>加载 JSON 文件</td><td>{ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" rel="nofollow"><code>string</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> }</td></tr><tr><td><code>'module'</code></td><td>加载 ES 模块</td><td>{ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" rel="nofollow"><code>string</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> }</td></tr><tr><td><code>'wasm'</code></td><td>加载 WebAssembly 模块</td><td>{ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> }</td></tr></tbody></table><p class="">注意：这些类型都对应于 ECMAScript 中定义的类。</p><ul class="">
+<li>特定的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a> 对象是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a>。</li>
+<li>特定的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> 对象是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow"><code>Uint8Array</code></a>。</li>
+</ul><p class="">注意：如果基于文本的格式（即 <code>'json'</code>、<code>'module'</code>）的源值不是字符串，则使用 <a href="../util.html#util_class_util_textdecoder"><code>util.TextDecoder</code></a> 将其转换为字符串。</p><pre class=""><code class="language-js"><span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} <span class="hljs-variable">url</span>
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">Object</span>} context (currently empty)
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">Function</span>} <span class="hljs-variable">defaultGetFormat</span>
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">Promise&lt;{ format: string </span>}&gt;}
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getFormat</span>(<span class="hljs-params">url, context, defaultGetFormat</span>) {
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &gt; <span class="hljs-number">0.5</span>) { <span class="hljs-comment">// 一些条件。</span>
+    <span class="hljs-comment">// 对于部分或所有 URL，执行一些自定义逻辑来确定格式。</span>
+    <span class="hljs-comment">// 始终返回 {format: &lt;string&gt;} 形式的对象，</span>
+    <span class="hljs-comment">// 其中格式是上表中的字符串之一。</span>
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">format</span>: <span class="hljs-string">'module'</span>,
+    };
+  }
+  <span class="hljs-comment">// 所有其他 URL 都遵循 Node.js。</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultGetFormat</span>(url, context, defaultGetFormat);
+}</code></pre></div>
+          <div id="content_right"><blockquote>
+<p>Note: The loaders API is being redesigned. This hook may disappear or its
+signature may change. Do not rely on the API described below.</p>
+</blockquote><ul>
+<li><code>url</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>context</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+<li><code>defaultGetFormat</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>format</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+</ul>
+</li>
+</ul><p>The <code>getFormat</code> hook provides a way to define a custom method of determining how
+a URL should be interpreted. The <code>format</code> returned also affects what the
+acceptable forms of source values are for a module when parsing. This can be one
+of the following:</p><table><thead><tr><th><code>format</code></th><th>Description</th><th>Acceptable Types For <code>source</code> Returned by <code>getSource</code> or <code>transformSource</code></th></tr></thead><tbody><tr><td><code>'builtin'</code></td><td>Load a Node.js builtin module</td><td>Not applicable</td></tr><tr><td><code>'commonjs'</code></td><td>Load a Node.js CommonJS module</td><td>Not applicable</td></tr><tr><td><code>'json'</code></td><td>Load a JSON file</td><td>{ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" rel="nofollow"><code>string</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> }</td></tr><tr><td><code>'module'</code></td><td>Load an ES module</td><td>{ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" rel="nofollow"><code>string</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> }</td></tr><tr><td><code>'wasm'</code></td><td>Load a WebAssembly module</td><td>{ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> }</td></tr></tbody></table><p>Note: These types all correspond to classes defined in ECMAScript.</p><ul>
+<li>The specific <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" rel="nofollow"><code>ArrayBuffer</code></a> object is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" rel="nofollow"><code>SharedArrayBuffer</code></a>.</li>
+<li>The specific <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow"><code>TypedArray</code></a> object is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array" rel="nofollow"><code>Uint8Array</code></a>.</li>
+</ul><p>Note: If the source value of a text-based format (i.e., <code>'json'</code>, <code>'module'</code>) is
+not a string, it is converted to a string using <a href="../util.html#util_class_util_textdecoder"><code>util.TextDecoder</code></a>.</p><pre><code class="language-js"><span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} <span class="hljs-variable">url</span>
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">Object</span>} context (currently empty)
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">Function</span>} <span class="hljs-variable">defaultGetFormat</span>
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">Promise&lt;{ format: string </span>}&gt;}
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getFormat</span>(<span class="hljs-params">url, context, defaultGetFormat</span>) {
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &gt; <span class="hljs-number">0.5</span>) { <span class="hljs-comment">// Some condition.</span>
+    <span class="hljs-comment">// For some or all URLs, do some custom logic for determining format.</span>
+    <span class="hljs-comment">// Always return an object of the form {format: &lt;string&gt;}, where the</span>
+    <span class="hljs-comment">// format is one of the strings in the preceding table.</span>
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">format</span>: <span class="hljs-string">'module'</span>,
+    };
+  }
+  <span class="hljs-comment">// Defer to Node.js for all other URLs.</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">defaultGetFormat</span>(url, context, defaultGetFormat);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>process.nextTick(callback[, ...args]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>process.nextTick(callback[, ...args])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../process.html#process_process_nexttick_callback_args" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/process/process_nexttick_callback_args.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/process/process_nexttick_callback_args.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/process/#processnexttickcallback-args.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v1.8.1</td>
+<td><p>现在支持 <code>callback</code> 之后的额外参数。</p></td></tr>
+<tr><td>v0.1.26</td>
+<td><p><span>新增于: v0.1.26</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> 当调用 <code>callback</code> 时要传入的额外参数</li>
+</ul><p><code>process.nextTick()</code> 将 <code>callback</code> 添加到"下一个滴答队列"。
+在 JavaScript 堆栈上的当前操作运行完成之后，且在允许事件循环继续之前，此队列将被完全排空。
+如果递归地调用 <code>process.nextTick()</code>，则可能会创建无限的循环。
+有关更多背景信息，请参阅<a href="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#process-nexttick" rel="nofollow">事件循环</a>指南。</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'nextTick callback'</span>);
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// 输出：</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// nextTick callback</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'nextTick callback'</span>);
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// 输出：</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// nextTick callback</span></code></pre><p class="">这在开发 API 时很重要，以便让用户有机会在对象构建之后但在任何 I/O 发生之前分配事件句柄：</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyThing</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setupOptions</span>(options);
+
+  <span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">startDoingStuff</span>();
+  });
+}
+
+<span class="hljs-keyword">const</span> thing = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyThing</span>();
+thing.<span class="hljs-title function_">getReadyForStuff</span>();
+
+<span class="hljs-comment">// thing.startDoingStuff() 现在被调用，而不是之前。</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyThing</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setupOptions</span>(options);
+
+  <span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">startDoingStuff</span>();
+  });
+}
+
+<span class="hljs-keyword">const</span> thing = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyThing</span>();
+thing.<span class="hljs-title function_">getReadyForStuff</span>();
+
+<span class="hljs-comment">// thing.startDoingStuff() 现在被调用，而不是之前。</span></code></pre><p class="">这对于要 100% 同步或 100% 异步的 API 非常重要。
+设想这个示例：</p><pre class=""><code class="language-js"><span class="hljs-comment">// 警告！不要使用！不安全的危险！</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">maybeSync</span>(<span class="hljs-params">arg, cb</span>) {
+  <span class="hljs-keyword">if</span> (arg) {
+    <span class="hljs-title function_">cb</span>();
+    <span class="hljs-keyword">return</span>;
+  }
+
+  fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'file'</span>, cb);
+}</code></pre><p class="">此 API 是危险的，因为在以下情况下：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> maybeTrue = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &gt; <span class="hljs-number">0.5</span>;
+
+<span class="hljs-title function_">maybeSync</span>(maybeTrue, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">foo</span>();
+});
+
+<span class="hljs-title function_">bar</span>();</code></pre><p class="">并不清楚是先调用 <code>foo()</code> 还是 <code>bar()</code>。</p><p class="">以下方法要好得多：</p><pre class="with-40-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">definitelyAsync</span>(<span class="hljs-params">arg, cb</span>) {
+  <span class="hljs-keyword">if</span> (arg) {
+    <span class="hljs-title function_">nextTick</span>(cb);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'file'</span>, cb);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">definitelyAsync</span>(<span class="hljs-params">arg, cb</span>) {
+  <span class="hljs-keyword">if</span> (arg) {
+    <span class="hljs-title function_">nextTick</span>(cb);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'file'</span>, cb);
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v1.8.1</td>
+<td><p>Additional arguments after <code>callback</code> are now supported.</p></td></tr>
+<tr><td>v0.1.26</td>
+<td><p><span>Added in: v0.1.26</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>...args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a> Additional arguments to pass when invoking the <code>callback</code></li>
+</ul><p><code>process.nextTick()</code> adds <code>callback</code> to the "next tick queue". This queue is
+fully drained after the current operation on the JavaScript stack runs to
+completion and before the event loop is allowed to continue. It's possible to
+create an infinite loop if one were to recursively call <code>process.nextTick()</code>.
+See the <a href="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#process-nexttick" rel="nofollow">Event Loop</a> guide for more background.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'nextTick callback'</span>);
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// nextTick callback</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'start'</span>);
+<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'nextTick callback'</span>);
+});
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'scheduled'</span>);
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// start</span>
+<span class="hljs-comment">// scheduled</span>
+<span class="hljs-comment">// nextTick callback</span></code></pre><p>This is important when developing APIs in order to give users the opportunity
+to assign event handlers <em>after</em> an object has been constructed but before any
+I/O has occurred:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyThing</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setupOptions</span>(options);
+
+  <span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">startDoingStuff</span>();
+  });
+}
+
+<span class="hljs-keyword">const</span> thing = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyThing</span>();
+thing.<span class="hljs-title function_">getReadyForStuff</span>();
+
+<span class="hljs-comment">// thing.startDoingStuff() gets called now, not before.</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">MyThing</span>(<span class="hljs-params">options</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setupOptions</span>(options);
+
+  <span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">startDoingStuff</span>();
+  });
+}
+
+<span class="hljs-keyword">const</span> thing = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyThing</span>();
+thing.<span class="hljs-title function_">getReadyForStuff</span>();
+
+<span class="hljs-comment">// thing.startDoingStuff() gets called now, not before.</span></code></pre><p>It is very important for APIs to be either 100% synchronous or 100%
+asynchronous. Consider this example:</p><pre><code class="language-js"><span class="hljs-comment">// WARNING!  DO NOT USE!  BAD UNSAFE HAZARD!</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">maybeSync</span>(<span class="hljs-params">arg, cb</span>) {
+  <span class="hljs-keyword">if</span> (arg) {
+    <span class="hljs-title function_">cb</span>();
+    <span class="hljs-keyword">return</span>;
+  }
+
+  fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'file'</span>, cb);
+}</code></pre><p>This API is hazardous because in the following case:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> maybeTrue = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() &gt; <span class="hljs-number">0.5</span>;
+
+<span class="hljs-title function_">maybeSync</span>(maybeTrue, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-title function_">foo</span>();
+});
+
+<span class="hljs-title function_">bar</span>();</code></pre><p>It is not clear whether <code>foo()</code> or <code>bar()</code> will be called first.</p><p>The following approach is much better:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { nextTick } <span class="hljs-keyword">from</span> <span class="hljs-string">'process'</span>;
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">definitelyAsync</span>(<span class="hljs-params">arg, cb</span>) {
+  <span class="hljs-keyword">if</span> (arg) {
+    <span class="hljs-title function_">nextTick</span>(cb);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'file'</span>, cb);
+}</code><code class="language-js cjs"><span class="hljs-keyword">const</span> { nextTick } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'process'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">definitelyAsync</span>(<span class="hljs-params">arg, cb</span>) {
+  <span class="hljs-keyword">if</span> (arg) {
+    <span class="hljs-title function_">nextTick</span>(cb);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  fs.<span class="hljs-title function_">stat</span>(<span class="hljs-string">'file'</span>, cb);
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

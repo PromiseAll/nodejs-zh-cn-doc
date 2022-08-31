@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>request.reusedSocket | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>request.reusedSocket</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_request_reusedsocket" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/request_reusedsocket.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/request_reusedsocket.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#requestreusedsocket.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v13.0.0, v12.16.0</span>
+</div><ul class="">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 请求是否通过重用的套接字发送。</li>
+</ul><p>当通过启用保持活动的代理发送请求时，可能会重用底层套接字。
+但是如果服务器在不幸的时间关闭连接，客户端可能会遇到 'ECONNRESET' 错误。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-comment">// 服务器默认有 5 秒保持活动超时</span>
+http
+  .<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    res.<span class="hljs-title function_">write</span>(<span class="hljs-string">'hello\n'</span>);
+    res.<span class="hljs-title function_">end</span>();
+  })
+  .<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>);
+
+<span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 调整保持活动代理</span>
+  http.<span class="hljs-title function_">get</span>(<span class="hljs-string">'http://localhost:3000'</span>, { agent }, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+    res.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+      <span class="hljs-comment">// 什么都不做</span>
+    });
+  });
+}, <span class="hljs-number">5000</span>); <span class="hljs-comment">// 以 5 秒的间隔发送请求，因此很容易达到空闲超时</span></code></pre><p class="">通过标记请求是否重用套接字，可以基于它进行自动错误重试。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> agent = <span class="hljs-keyword">new</span> http.<span class="hljs-title class_">Agent</span>({ <span class="hljs-attr">keepAlive</span>: <span class="hljs-literal">true</span> });
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">retriableRequest</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> req = http
+    .<span class="hljs-title function_">get</span>(<span class="hljs-string">'http://localhost:3000'</span>, { agent }, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+      <span class="hljs-comment">// ...</span>
+    })
+    .<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      <span class="hljs-comment">// 检查是否需要重试</span>
+      <span class="hljs-keyword">if</span> (req.<span class="hljs-property">reusedSocket</span> &amp;&amp; err.<span class="hljs-property">code</span> === <span class="hljs-string">'ECONNRESET'</span>) {
+        <span class="hljs-title function_">retriableRequest</span>();
+      }
+    });
+}
+
+<span class="hljs-title function_">retriableRequest</span>();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v13.0.0, v12.16.0</span>
+</div><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Whether the request is send through a reused socket.</li>
+</ul><p>When sending request through a keep-alive enabled agent, the underlying socket
+might be reused. But if server closes connection at unfortunate time, client
+may run into a 'ECONNRESET' error.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-comment">// Server has a 5 seconds keep-alive timeout by default</span>
+http
+  .<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    res.<span class="hljs-title function_">write</span>(<span class="hljs-string">'hello\n'</span>);
+    res.<span class="hljs-title function_">end</span>();
+  })
+  .<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>);
+
+<span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// Adapting a keep-alive agent</span>
+  http.<span class="hljs-title function_">get</span>(<span class="hljs-string">'http://localhost:3000'</span>, { agent }, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+    res.<span class="hljs-title function_">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+      <span class="hljs-comment">// Do nothing</span>
+    });
+  });
+}, <span class="hljs-number">5000</span>); <span class="hljs-comment">// Sending request on 5s interval so it's easy to hit idle timeout</span></code></pre><p>By marking a request whether it reused socket or not, we can do
+automatic error retry base on it.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> agent = <span class="hljs-keyword">new</span> http.<span class="hljs-title class_">Agent</span>({ <span class="hljs-attr">keepAlive</span>: <span class="hljs-literal">true</span> });
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">retriableRequest</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> req = http
+    .<span class="hljs-title function_">get</span>(<span class="hljs-string">'http://localhost:3000'</span>, { agent }, <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+      <span class="hljs-comment">// ...</span>
+    })
+    .<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      <span class="hljs-comment">// Check if retry is needed</span>
+      <span class="hljs-keyword">if</span> (req.<span class="hljs-property">reusedSocket</span> &amp;&amp; err.<span class="hljs-property">code</span> === <span class="hljs-string">'ECONNRESET'</span>) {
+        <span class="hljs-title function_">retriableRequest</span>();
+      }
+    });
+}
+
+<span class="hljs-title function_">retriableRequest</span>();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

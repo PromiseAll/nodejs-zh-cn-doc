@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>vm.compileFunction(code[, params[, options]]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>vm.compileFunction(code[, params[, options]])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_vm_compilefunction_code_params_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/vm_compilefunction_code_params_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/vm_compilefunction_code_params_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#vmcompilefunctioncode-params-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>添加了对 <code>importModuleDynamically</code> 参数的导入断言的支持。</p></td></tr>
+<tr><td>v15.9.0</td>
+<td><p>再次添加 <code>importModuleDynamically</code> 选项。</p></td></tr>
+<tr><td>v14.3.0</td>
+<td><p>由于兼容性问题删除 <code>importModuleDynamically</code>。</p></td></tr>
+<tr><td>v14.1.0, v13.14.0</td>
+<td><p>现在支持 <code>importModuleDynamically</code> 选项。</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p><span>新增于: v10.10.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要编译的函数体。</li>
+<li><code>params</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> 包含函数所有参数的字符串数组。</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指定此脚本生成的堆栈跟踪中使用的文件名。 <strong>默认值:</strong> <code>''</code>。</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定在此脚本生成的堆栈跟踪中显示的行号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 指定在此脚本生成的堆栈跟踪中显示的第一行列号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> 为所提供的源提供可选的 <code>Buffer</code> 或 <code>TypedArray</code> 或 <code>DataView</code>，其中包含 V8 的代码缓存数据。</li>
+<li><code>produceCachedData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指定是否产生新的缓存数据。
+<strong>默认值:</strong> <code>false</code>。</li>
+<li><code>parsingContext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 应在其中编译所述函数的<a href="../vm.html#what-does-it-mean-to-contextify-an-object">上下文隔离化的</a>对象。</li>
+<li><code>contextExtensions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> 包含要在编译时应用的上下文扩展集合（包含当前作用域的对象）的数组。 <strong>默认值:</strong> <code>[]</code>。</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在调用 <code>import()</code> 时在评估此模块期间调用。
+如果未指定此选项，则调用 <code>import()</code> 将使用 <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a> 拒绝。
+此选项是实验模块 API 的一部分，不应被视为稳定的。
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 传给 <code>import()</code> 的说明符</li>
+<li><code>function</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 传给 <a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> 可选参数的 <code>"assert"</code> 值，如果没有提供值，则为空对象。</li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> 建议返回 <code>vm.Module</code> 以利用错误跟踪，并避免包含 <code>then</code> 函数导出的命名空间出现问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul><p>将给定的代码编译到提供的上下文中（如果没有提供上下文，则使用当前上下文），并返回它包装在具有给定 <code>params</code> 的函数中。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>Added support for import assertions to the <code>importModuleDynamically</code> parameter.</p></td></tr>
+<tr><td>v15.9.0</td>
+<td><p>Added <code>importModuleDynamically</code> option again.</p></td></tr>
+<tr><td>v14.3.0</td>
+<td><p>Removal of <code>importModuleDynamically</code> due to compatibility issues.</p></td></tr>
+<tr><td>v14.1.0, v13.14.0</td>
+<td><p>The <code>importModuleDynamically</code> option is now supported.</p></td></tr>
+<tr><td>v10.10.0</td>
+<td><p><span>Added in: v10.10.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The body of the function to compile.</li>
+<li><code>params</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string[]&gt;</a> An array of strings containing all parameters for the
+function.</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Specifies the filename used in stack traces produced
+by this script. <strong>Default:</strong> <code>''</code>.</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the line number offset that is displayed
+in stack traces produced by this script. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> Specifies the first-line column number offset that
+is displayed in stack traces produced by this script. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> Provides an optional <code>Buffer</code> or
+<code>TypedArray</code>, or <code>DataView</code> with V8's code cache data for the supplied
+source.</li>
+<li><code>produceCachedData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Specifies whether to produce new cache data.
+<strong>Default:</strong> <code>false</code>.</li>
+<li><code>parsingContext</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The <a href="../vm.html#what-does-it-mean-to-contextify-an-object">contextified</a> object in which the said
+function should be compiled in.</li>
+<li><code>contextExtensions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object[]&gt;</a> An array containing a collection of context
+extensions (objects wrapping the current scope) to be applied while
+compiling. <strong>Default:</strong> <code>[]</code>.</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Called during evaluation of this module
+when <code>import()</code> is called. If this option is not specified, calls to
+<code>import()</code> will reject with <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a>.
+This option is part of the experimental modules API, and should not be
+considered stable.
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> specifier passed to <code>import()</code></li>
+<li><code>function</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The <code>"assert"</code> value passed to the
+<a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> optional parameter, or an empty object if no value
+was provided.</li>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> Returning a <code>vm.Module</code> is
+recommended in order to take advantage of error tracking, and to avoid
+issues with namespaces that contain <code>then</code> function exports.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+</ul><p>Compiles the given code into the provided context (if no context is
+supplied, the current context is used), and returns it wrapped inside a
+function with the given <code>params</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

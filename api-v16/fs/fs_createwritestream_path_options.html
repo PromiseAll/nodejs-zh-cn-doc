@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.createWriteStream(path[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.createWriteStream(path[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_createwritestream_path_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_createwritestream_path_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_createwritestream_path_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fscreatewritestreampath-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.10.0</td>
+<td><p>如果提供了 <code>fd</code>，则 <code>fs</code> 选项不需要 <code>open</code> 方法。</p></td></tr>
+<tr><td>v16.10.0</td>
+<td><p>如果 <code>autoClose</code> 为 <code>false</code>，则 <code>fs</code> 选项不需要 <code>close</code> 方法。</p></td></tr>
+<tr><td>v15.4.0</td>
+<td><p>选项 <code>fd</code> 接受 FileHandle 参数。</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>将 <code>emitClose</code> 默认更改为 <code>true</code>。</p></td></tr>
+<tr><td>v13.6.0, v12.17.0</td>
+<td><p>选项 <code>fs</code> 允许覆盖使用的 <code>fs</code> 实现。</p></td></tr>
+<tr><td>v12.10.0</td>
+<td><p>启用 <code>emitClose</code> 选项。</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>参数 <code>path</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>传入的 <code>options</code> 对象永远不会被修改。</p></td></tr>
+<tr><td>v5.5.0</td>
+<td><p>现在支持 <code>autoClose</code> 选项。</p></td></tr>
+<tr><td>v2.3.0</td>
+<td><p>传入的 <code>options</code> 对象现在可以是字符串。</p></td></tr>
+<tr><td>v0.1.31</td>
+<td><p><span>新增于: v0.1.31</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>flags</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 请参阅<a href="../fs.html#file-system-flags">对文件系统 <code>flags</code> 的支持</a>。 <strong>默认值:</strong> <code>'w'</code>。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>'utf8'</code></li>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> | <a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a> <strong>默认值:</strong> <code>null</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>0o666</code></li>
+<li><code>autoClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>true</code></li>
+<li><code>emitClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>true</code></li>
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>fs</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> <strong>默认值:</strong> <code>null</code></li>
+</ul>
+</li>
+<li>返回: <a href="../fs.html#class-fswritestream" rel="nofollow" class="type">&lt;fs.WriteStream&gt;</a></li>
+</ul><p><code>options</code> 还可以包括 <code>start</code> 选项，以允许在文件开头的某个位置写入数据，允许的值在 [0, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER" rel="nofollow"><code>Number.MAX_SAFE_INTEGER</code></a>] 范围内。
+修改文件而不是替换它可能需要将 <code>flags</code> 选项设置为 <code>r+</code> 而不是默认的 <code>w</code>。
+<code>encoding</code> 可以是 <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 接受的任何一种。</p><p class="">如果将 <code>autoClose</code> 设置为 true（默认行为），则在 <code>'error'</code> 或 <code>'finish'</code> 时文件描述符将自动关闭。
+如果 <code>autoClose</code> 为 false，则即使出现错误，文件描述符也不会关闭。
+关闭它并确保没有文件描述符泄漏是应用程序的责任。</p><p class="">默认情况下，流将在销毁后触发 <code>'close'</code> 事件。
+将 <code>emitClose</code> 选项设置为 <code>false</code> 以更改此行为。</p><p class="">通过提供 <code>fs</code> 选项，可以覆盖 <code>open</code>、<code>write</code>、<code>writev</code> 和 <code>close</code> 的相应 <code>fs</code> 实现。
+在没有 <code>writev()</code> 的情况下覆盖 <code>write()</code> 会降低性能，因为某些优化 (<code>_writev()</code>) 将被禁用。
+当提供了 <code>fs</code> 选项时，则至少需要覆盖 <code>write</code> 和 <code>writev</code> 之一。
+如果没有提供 <code>fd</code> 选项，则还需要覆盖 <code>open</code>。
+如果 <code>autoClose</code> 是 <code>true</code>，则还需要覆盖 <code>close</code>。</p><p class="">与 <a href="../fs.html#class-fsreadstream" rel="nofollow" class="type">&lt;fs.ReadStream&gt;</a> 一样，如果指定了 <code>fd</code>，则 <a href="../fs.html#class-fswritestream" rel="nofollow" class="type">&lt;fs.WriteStream&gt;</a> 将忽略 <code>path</code> 参数并使用指定的文件描述符。
+这意味着不会触发 <code>'open'</code> 事件。
+<code>fd</code> 应该是阻塞的；非阻塞 <code>fd</code> 应该传给 <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a>。</p><p class="">如果 <code>options</code> 是字符串，则它指定编码。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.10.0</td>
+<td><p>The <code>fs</code> option does not need <code>open</code> method if an <code>fd</code> was provided.</p></td></tr>
+<tr><td>v16.10.0</td>
+<td><p>The <code>fs</code> option does not need <code>close</code> method if <code>autoClose</code> is <code>false</code>.</p></td></tr>
+<tr><td>v15.4.0</td>
+<td><p>The <code>fd</code> option accepts FileHandle arguments.</p></td></tr>
+<tr><td>v14.0.0</td>
+<td><p>Change <code>emitClose</code> default to <code>true</code>.</p></td></tr>
+<tr><td>v13.6.0, v12.17.0</td>
+<td><p>The <code>fs</code> options allow overriding the used <code>fs</code> implementation.</p></td></tr>
+<tr><td>v12.10.0</td>
+<td><p>Enable <code>emitClose</code> option.</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>The <code>path</code> parameter can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v7.0.0</td>
+<td><p>The passed <code>options</code> object will never be modified.</p></td></tr>
+<tr><td>v5.5.0</td>
+<td><p>The <code>autoClose</code> option is supported now.</p></td></tr>
+<tr><td>v2.3.0</td>
+<td><p>The passed <code>options</code> object can be a string now.</p></td></tr>
+<tr><td>v0.1.31</td>
+<td><p><span>Added in: v0.1.31</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>flags</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> See <a href="../fs.html#file-system-flags">support of file system <code>flags</code></a>. <strong>Default:</strong>
+<code>'w'</code>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>Default:</strong> <code>'utf8'</code></li>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> | <a href="../fs.html#class-filehandle" rel="nofollow" class="type">&lt;FileHandle&gt;</a> <strong>Default:</strong> <code>null</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>Default:</strong> <code>0o666</code></li>
+<li><code>autoClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>Default:</strong> <code>true</code></li>
+<li><code>emitClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>Default:</strong> <code>true</code></li>
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>fs</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" rel="nofollow" class="type">&lt;null&gt;</a> <strong>Default:</strong> <code>null</code></li>
+</ul>
+</li>
+<li>Returns: <a href="../fs.html#class-fswritestream" rel="nofollow" class="type">&lt;fs.WriteStream&gt;</a></li>
+</ul><p><code>options</code> may also include a <code>start</code> option to allow writing data at some
+position past the beginning of the file, allowed values are in the
+[0, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER" rel="nofollow"><code>Number.MAX_SAFE_INTEGER</code></a>] range. Modifying a file rather than
+replacing it may require the <code>flags</code> option to be set to <code>r+</code> rather than the
+default <code>w</code>. The <code>encoding</code> can be any one of those accepted by <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a>.</p><p>If <code>autoClose</code> is set to true (default behavior) on <code>'error'</code> or <code>'finish'</code>
+the file descriptor will be closed automatically. If <code>autoClose</code> is false,
+then the file descriptor won't be closed, even if there's an error.
+It is the application's responsibility to close it and make sure there's no
+file descriptor leak.</p><p>By default, the stream will emit a <code>'close'</code> event after it has been
+destroyed.  Set the <code>emitClose</code> option to <code>false</code> to change this behavior.</p><p>By providing the <code>fs</code> option it is possible to override the corresponding <code>fs</code>
+implementations for <code>open</code>, <code>write</code>, <code>writev</code> and <code>close</code>. Overriding <code>write()</code>
+without <code>writev()</code> can reduce performance as some optimizations (<code>_writev()</code>)
+will be disabled. When providing the <code>fs</code> option, overrides for at least one of
+<code>write</code> and <code>writev</code> are required. If no <code>fd</code> option is supplied, an override
+for <code>open</code> is also required. If <code>autoClose</code> is <code>true</code>, an override for <code>close</code>
+is also required.</p><p>Like <a href="../fs.html#class-fsreadstream" rel="nofollow" class="type">&lt;fs.ReadStream&gt;</a>, if <code>fd</code> is specified, <a href="../fs.html#class-fswritestream" rel="nofollow" class="type">&lt;fs.WriteStream&gt;</a> will ignore the
+<code>path</code> argument and will use the specified file descriptor. This means that no
+<code>'open'</code> event will be emitted. <code>fd</code> should be blocking; non-blocking <code>fd</code>s
+should be passed to <a href="../net.html#class-netsocket" rel="nofollow" class="type">&lt;net.Socket&gt;</a>.</p><p>If <code>options</code> is a string, then it specifies the encoding.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>标头对象 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http2">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>标头对象</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http2.html#http2_headers_object" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http2/headers_object.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http2/headers_object.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http2/#headers-object.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>标头在 JavaScript 对象上表示为自身的属性。
+属性键将被序列化为小写。
+属性值应该是字符串（如果不是，它们将被强制转换为字符串）或 <code>Array</code> 个字符串（以便为每个标头字段发送一个以上的值）。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> headers = {
+  <span class="hljs-string">':status'</span>: <span class="hljs-string">'200'</span>,
+  <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'text-plain'</span>,
+  <span class="hljs-string">'ABC'</span>: [<span class="hljs-string">'has'</span>, <span class="hljs-string">'more'</span>, <span class="hljs-string">'than'</span>, <span class="hljs-string">'one'</span>, <span class="hljs-string">'value'</span>]
+};
+
+stream.<span class="hljs-title function_">respond</span>(headers);</code></pre><p class="">传给回调函数的标头对象将有一个 <code>null</code> 原型。
+这意味着 <code>Object.prototype.toString()</code> 和 <code>Object.prototype.hasOwnProperty()</code> 等普通 JavaScript 对象方法将不起作用。</p><p class="">对于传入的标头：</p><ul class="">
+<li><code>:status</code> 标头转换为 <code>number</code>。</li>
+<li>重复的 <code>:status</code>, <code>:method</code>, <code>:authority</code>, <code>:scheme</code>, <code>:path</code>,
+<code>:protocol</code>, <code>age</code>, <code>authorization</code>, <code>access-control-allow-credentials</code>,
+<code>access-control-max-age</code>, <code>access-control-request-method</code>, <code>content-encoding</code>,
+<code>content-language</code>, <code>content-length</code>, <code>content-location</code>, <code>content-md5</code>,
+<code>content-range</code>, <code>content-type</code>, <code>date</code>, <code>dnt</code>, <code>etag</code>, <code>expires</code>, <code>from</code>,
+<code>host</code>, <code>if-match</code>, <code>if-modified-since</code>, <code>if-none-match</code>, <code>if-range</code>,
+<code>if-unmodified-since</code>, <code>last-modified</code>, <code>location</code>, <code>max-forwards</code>,
+<code>proxy-authorization</code>, <code>range</code>, <code>referer</code>,<code>retry-after</code>, <code>tk</code>,
+<code>upgrade-insecure-requests</code>, <code>user-agent</code> 或 <code>x-content-type-options</code> 被丢弃。</li>
+<li><code>set-cookie</code> 始终是数组。
+重复项被添加到数组中。</li>
+<li>对于重复的 <code>cookie</code> 标头，其值使用 '; ' 连接。</li>
+<li>对于所有其他标头，其值使用 ', ' 连接。</li>
+</ul><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream, headers</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers[<span class="hljs-string">':path'</span>]);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers.<span class="hljs-property">ABC</span>);
+});</code></pre></div>
+          <div id="content_right"><p>Headers are represented as own-properties on JavaScript objects. The property
+keys will be serialized to lower-case. Property values should be strings (if
+they are not they will be coerced to strings) or an <code>Array</code> of strings (in order
+to send more than one value per header field).</p><pre><code class="language-js"><span class="hljs-keyword">const</span> headers = {
+  <span class="hljs-string">':status'</span>: <span class="hljs-string">'200'</span>,
+  <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'text-plain'</span>,
+  <span class="hljs-string">'ABC'</span>: [<span class="hljs-string">'has'</span>, <span class="hljs-string">'more'</span>, <span class="hljs-string">'than'</span>, <span class="hljs-string">'one'</span>, <span class="hljs-string">'value'</span>]
+};
+
+stream.<span class="hljs-title function_">respond</span>(headers);</code></pre><p>Header objects passed to callback functions will have a <code>null</code> prototype. This
+means that normal JavaScript object methods such as
+<code>Object.prototype.toString()</code> and <code>Object.prototype.hasOwnProperty()</code> will
+not work.</p><p>For incoming headers:</p><ul>
+<li>The <code>:status</code> header is converted to <code>number</code>.</li>
+<li>Duplicates of <code>:status</code>, <code>:method</code>, <code>:authority</code>, <code>:scheme</code>, <code>:path</code>,
+<code>:protocol</code>, <code>age</code>, <code>authorization</code>, <code>access-control-allow-credentials</code>,
+<code>access-control-max-age</code>, <code>access-control-request-method</code>, <code>content-encoding</code>,
+<code>content-language</code>, <code>content-length</code>, <code>content-location</code>, <code>content-md5</code>,
+<code>content-range</code>, <code>content-type</code>, <code>date</code>, <code>dnt</code>, <code>etag</code>, <code>expires</code>, <code>from</code>,
+<code>host</code>, <code>if-match</code>, <code>if-modified-since</code>, <code>if-none-match</code>, <code>if-range</code>,
+<code>if-unmodified-since</code>, <code>last-modified</code>, <code>location</code>, <code>max-forwards</code>,
+<code>proxy-authorization</code>, <code>range</code>, <code>referer</code>,<code>retry-after</code>, <code>tk</code>,
+<code>upgrade-insecure-requests</code>, <code>user-agent</code> or <code>x-content-type-options</code> are
+discarded.</li>
+<li><code>set-cookie</code> is always an array. Duplicates are added to the array.</li>
+<li>For duplicate <code>cookie</code> headers, the values are joined together with '; '.</li>
+<li>For all other headers, the values are joined together with ', '.</li>
+</ul><pre><code class="language-js"><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http2'</span>);
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'stream'</span>, <span class="hljs-function">(<span class="hljs-params">stream, headers</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers[<span class="hljs-string">':path'</span>]);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(headers.<span class="hljs-property">ABC</span>);
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

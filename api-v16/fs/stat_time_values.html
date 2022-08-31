@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>统计的时间值 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>统计的时间值</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_stat_time_values" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/stat_time_values.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/stat_time_values.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#stat-time-values.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><code>atimeMs</code>、<code>mtimeMs</code>、<code>ctimeMs</code>、<code>birthtimeMs</code> 属性是数值，以毫秒为单位保存相应的时间。
+它们的精度是特定于平台的。
+当 <code>bigint: true</code> 传给生成对象的方法时，属性将是<a href="https://tc39.github.io/proposal-bigint" rel="nofollow">长整数</a>，否则它们将是<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow">数字</a>。</p><p class=""><code>atimeNs</code>、<code>mtimeNs</code>、<code>ctimeNs</code>、<code>birthtimeNs</code> 属性是以纳秒为单位保存相应时间的<a href="https://tc39.github.io/proposal-bigint" rel="nofollow">长整数</a>。
+它们仅在 <code>bigint: true</code> 传入到生成对象的方法中时出现。
+它们的精度是特定于平台的。</p><p class=""><code>atime</code>、<code>mtime</code>、<code>ctime</code> 和 <code>birthtime</code> 是不同时间的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" rel="nofollow"><code>Date</code></a> 对象替代表示。
+<code>Date</code> 和数字值是不关联的。
+分配新的数值或改变 <code>Date</code> 值不会反映在相应的替代表示中。</p><p class="">统计对象中的时间具有以下语义：</p><ul class="">
+<li><code>atime</code> "访问时间": 上次访问文件数据的时间。
+由 <a href="http://man7.org/linux/man-pages/man2/mknod.2.html" rel="nofollow"><code>mknod(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a> 和 <a href="http://man7.org/linux/man-pages/man2/read.2.html" rel="nofollow"><code>read(2)</code></a> 系统调用更改。</li>
+<li><code>mtime</code> "修改时间": 上次修改文件数据的时间。
+由 <a href="http://man7.org/linux/man-pages/man2/mknod.2.html" rel="nofollow"><code>mknod(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a> 和 <a href="http://man7.org/linux/man-pages/man2/write.2.html" rel="nofollow"><code>write(2)</code></a> 系统调用更改。</li>
+<li><code>ctime</code> "更改时间": 上次更改文件状态（修改索引节点数据）的时间。
+由 <a href="http://man7.org/linux/man-pages/man2/chmod.2.html" rel="nofollow"><code>chmod(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/chown.2.html" rel="nofollow"><code>chown(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/link.2.html" rel="nofollow"><code>link(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/mknod.2.html" rel="nofollow"><code>mknod(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/rename.2.html" rel="nofollow"><code>rename(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/unlink.2.html" rel="nofollow"><code>unlink(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a>、 <a href="http://man7.org/linux/man-pages/man2/read.2.html" rel="nofollow"><code>read(2)</code></a> 和 <a href="http://man7.org/linux/man-pages/man2/write.2.html" rel="nofollow"><code>write(2)</code></a> 系统调用更改。</li>
+<li><code>birthtime</code> "创建时间": 文件创建时间。
+创建文件时设置一次。
+在创建时间不可用的文件系统上，该字段可能改为保存 <code>ctime</code> 或 <code>1970-01-01T00:00Z</code>（即 Unix 纪元时间戳 <code>0</code>）。
+在这种情况下，该值可能大于 <code>atime</code> 或 <code>mtime</code>。
+在 Darwin 和其他 FreeBSD 变体上，如果使用 <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a> 系统调用将 <code>atime</code> 显式设置为比当前 <code>birthtime</code> 更早的值，也会被设置。</li>
+</ul><p class="">在 Node.js 0.12 之前，<code>ctime</code> 是 Windows 系统上的 <code>birthtime</code>。
+从 0.12 开始，<code>ctime</code> 不是“创建时间”，在 Unix 系统上，它从来都不是。</p></div>
+          <div id="content_right"><p>The <code>atimeMs</code>, <code>mtimeMs</code>, <code>ctimeMs</code>, <code>birthtimeMs</code> properties are
+numeric values that hold the corresponding times in milliseconds. Their
+precision is platform specific. When <code>bigint: true</code> is passed into the
+method that generates the object, the properties will be <a href="https://tc39.github.io/proposal-bigint" rel="nofollow">bigints</a>,
+otherwise they will be <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow">numbers</a>.</p><p>The <code>atimeNs</code>, <code>mtimeNs</code>, <code>ctimeNs</code>, <code>birthtimeNs</code> properties are
+<a href="https://tc39.github.io/proposal-bigint" rel="nofollow">bigints</a> that hold the corresponding times in nanoseconds. They are
+only present when <code>bigint: true</code> is passed into the method that generates
+the object. Their precision is platform specific.</p><p><code>atime</code>, <code>mtime</code>, <code>ctime</code>, and <code>birthtime</code> are
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" rel="nofollow"><code>Date</code></a> object alternate representations of the various times. The
+<code>Date</code> and number values are not connected. Assigning a new number value, or
+mutating the <code>Date</code> value, will not be reflected in the corresponding alternate
+representation.</p><p>The times in the stat object have the following semantics:</p><ul>
+<li><code>atime</code> "Access Time": Time when file data last accessed. Changed
+by the <a href="http://man7.org/linux/man-pages/man2/mknod.2.html" rel="nofollow"><code>mknod(2)</code></a>, <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a>, and <a href="http://man7.org/linux/man-pages/man2/read.2.html" rel="nofollow"><code>read(2)</code></a> system calls.</li>
+<li><code>mtime</code> "Modified Time": Time when file data last modified.
+Changed by the <a href="http://man7.org/linux/man-pages/man2/mknod.2.html" rel="nofollow"><code>mknod(2)</code></a>, <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a>, and <a href="http://man7.org/linux/man-pages/man2/write.2.html" rel="nofollow"><code>write(2)</code></a> system calls.</li>
+<li><code>ctime</code> "Change Time": Time when file status was last changed
+(inode data modification). Changed by the <a href="http://man7.org/linux/man-pages/man2/chmod.2.html" rel="nofollow"><code>chmod(2)</code></a>, <a href="http://man7.org/linux/man-pages/man2/chown.2.html" rel="nofollow"><code>chown(2)</code></a>,
+<a href="http://man7.org/linux/man-pages/man2/link.2.html" rel="nofollow"><code>link(2)</code></a>, <a href="http://man7.org/linux/man-pages/man2/mknod.2.html" rel="nofollow"><code>mknod(2)</code></a>, <a href="http://man7.org/linux/man-pages/man2/rename.2.html" rel="nofollow"><code>rename(2)</code></a>, <a href="http://man7.org/linux/man-pages/man2/unlink.2.html" rel="nofollow"><code>unlink(2)</code></a>, <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a>,
+<a href="http://man7.org/linux/man-pages/man2/read.2.html" rel="nofollow"><code>read(2)</code></a>, and <a href="http://man7.org/linux/man-pages/man2/write.2.html" rel="nofollow"><code>write(2)</code></a> system calls.</li>
+<li><code>birthtime</code> "Birth Time": Time of file creation. Set once when the
+file is created. On filesystems where birthtime is not available,
+this field may instead hold either the <code>ctime</code> or
+<code>1970-01-01T00:00Z</code> (ie, Unix epoch timestamp <code>0</code>). This value may be greater
+than <code>atime</code> or <code>mtime</code> in this case. On Darwin and other FreeBSD variants,
+also set if the <code>atime</code> is explicitly set to an earlier value than the current
+<code>birthtime</code> using the <a href="http://man7.org/linux/man-pages/man2/utimes.2.html" rel="nofollow"><code>utimes(2)</code></a> system call.</li>
+</ul><p>Prior to Node.js 0.12, the <code>ctime</code> held the <code>birthtime</code> on Windows systems. As
+of 0.12, <code>ctime</code> is not "creation time", and on Unix systems, it never was.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

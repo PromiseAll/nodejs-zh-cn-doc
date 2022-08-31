@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>修改默认的 TLS 加密组件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>修改默认的 TLS 加密组件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_modifying_the_default_tls_cipher_suite" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/modifying_the_default_tls_cipher_suite.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/modifying_the_default_tls_cipher_suite.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#modifying-the-default-tls-cipher-suite.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>Node.js 是使用默认的启用和禁用 TLS 密码套件构建的。
+这个默认密码列表可以在构建 Node.js 时配置，以允许发行版提供自己的默认列表。</p><p class="">以下命令可用于显示默认密码套件：</p><pre class=""><code class="language-console">node -p crypto.constants.defaultCoreCipherList | tr ':' '\n'
+TLS_AES_256_GCM_SHA384
+TLS_CHACHA20_POLY1305_SHA256
+TLS_AES_128_GCM_SHA256
+ECDHE-RSA-AES128-GCM-SHA256
+ECDHE-ECDSA-AES128-GCM-SHA256
+ECDHE-RSA-AES256-GCM-SHA384
+ECDHE-ECDSA-AES256-GCM-SHA384
+DHE-RSA-AES128-GCM-SHA256
+ECDHE-RSA-AES128-SHA256
+DHE-RSA-AES128-SHA256
+ECDHE-RSA-AES256-SHA384
+DHE-RSA-AES256-SHA384
+ECDHE-RSA-AES256-SHA256
+DHE-RSA-AES256-SHA256
+HIGH
+!aNULL
+!eNULL
+!EXPORT
+!DES
+!RC4
+!MD5
+!PSK
+!SRP
+!CAMELLIA</code></pre><p class="">可以使用 <a href="../cli.html#--tls-cipher-listlist"><code>--tls-cipher-list</code></a> 命令行开关（直接或通过 <a href="../cli.html#node_optionsoptions"><code>NODE_OPTIONS</code></a> 环境变量）完全替换此默认值。
+例如，以下使 <code>ECDHE-RSA-AES128-GCM-SHA256:!RC4</code> 成为默认的 TLS 密码套件：</p><pre class=""><code class="language-bash">node --tls-cipher-list=<span class="hljs-string">'ECDHE-RSA-AES128-GCM-SHA256:!RC4'</span> server.js
+
+<span class="hljs-built_in">export</span> NODE_OPTIONS=--tls-cipher-list=<span class="hljs-string">'ECDHE-RSA-AES128-GCM-SHA256:!RC4'</span>
+node server.js</code></pre><p class="">也可以使用 <a href="../tls.html#tlscreatesecurecontextoptions"><code>tls.createSecureContext()</code></a> 中的 <code>ciphers</code> 选项在每个客户端或服务器的基础上替换默认值，该选项在 <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a>、<a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a> 和创建新的 <a href="../tls.html#class-tlstlssocket"><code>tls.TLSSocket</code></a> 时也可用。</p><p class="">密码列表可以包含 TLSv1.3 密码套件名称、以 <code>'TLS_'</code> 开头的名称以及 TLSv1.2 及以下密码套件的规范的混合。
+TLSv1.2 密码支持旧规范格式，有关详细信息，请参阅 OpenSSL <a href="https://www.openssl.org/docs/man1.1.1/man1/ciphers.html#CIPHER-LIST-FORMAT" rel="nofollow">密码列表格式</a>文档，但这些规范不适用于 TLSv1.3 密码。
+TLSv1.3 套件只能通过在密码列表中包含其全名来启用。
+例如，不能使用旧版 TLSv1.2 <code>'EECDH'</code> 或 <code>'!EECDH'</code> 规范启用或禁用它们。</p><p class="">尽管 TLSv1.3 和 TLSv1.2 密码套件的相对顺序不同，但 TLSv1.3 协议比 TLSv1.2 安全得多，如果握手表明它受支持，并且如果有的话，总是会被选择而不是 TLSv1.2 TLSv1.3 密码套件已启用。</p><p class="">Node.js 中包含的默认密码套件经过精心挑选，以反映当前的安全最佳实践和风险缓解。
+更改默认密码套件会对应用程序的安全性产生重大影响。
+只有在绝对必要时才应使用 <code>--tls-cipher-list</code> 开关和 <code>ciphers</code> 选项。</p><p class="">默认密码套件更喜欢 <a href="https://www.chromium.org/Home/chromium-security/education/tls#TOC-Cipher-Suites" rel="nofollow">Chrome 的‘现代密码学’设置</a>的 GCM 密码，并且还更喜欢 ECDHE 和 DHE 密码以实现完美的前向保密，同时提供一些向后兼容性。</p><p class="">鉴于<a href="https://www.schneier.com/blog/archives/2009/07/another_new_aes.html" rel="nofollow">影响更大 AES 密钥大小的特定攻击</a>，128 位 AES 优于 192 位和 256 位 AES。</p><p class="">依赖不安全且不推荐使用的 RC4 或基于 DES 的密码（如 Internet Explorer 6）的旧客户端无法使用默认配置完成握手过程。
+如果必须支持这些客户端，则 <a href="https://wiki.mozilla.org/Security/Server_Side_TLS" rel="nofollow">TLS 建议</a>可能会提供兼容的密码套件。
+有关格式的更多详细信息，请参阅 OpenSSL <a href="https://www.openssl.org/docs/man1.1.1/man1/ciphers.html#CIPHER-LIST-FORMAT" rel="nofollow">密码列表格式</a>文档。</p><p class="">只有五个 TLSv1.3 密码套件：</p><ul class="">
+<li><code>'TLS_AES_256_GCM_SHA384'</code></li>
+<li><code>'TLS_CHACHA20_POLY1305_SHA256'</code></li>
+<li><code>'TLS_AES_128_GCM_SHA256'</code></li>
+<li><code>'TLS_AES_128_CCM_SHA256'</code></li>
+<li><code>'TLS_AES_128_CCM_8_SHA256'</code></li>
+</ul><p class="">默认启用前三个。
+TLSv1.3 支持这两个基于 <code>CCM</code> 的套件，因为它们在受限系统上的性能可能更高，但默认情况下未启用它们，因为它们提供的安全性较低。</p></div>
+          <div id="content_right"><p>Node.js is built with a default suite of enabled and disabled TLS ciphers. This
+default cipher list can be configured when building Node.js to allow
+distributions to provide their own default list.</p><p>The following command can be used to show the default cipher suite:</p><pre><code class="language-console">node -p crypto.constants.defaultCoreCipherList | tr ':' '\n'
+TLS_AES_256_GCM_SHA384
+TLS_CHACHA20_POLY1305_SHA256
+TLS_AES_128_GCM_SHA256
+ECDHE-RSA-AES128-GCM-SHA256
+ECDHE-ECDSA-AES128-GCM-SHA256
+ECDHE-RSA-AES256-GCM-SHA384
+ECDHE-ECDSA-AES256-GCM-SHA384
+DHE-RSA-AES128-GCM-SHA256
+ECDHE-RSA-AES128-SHA256
+DHE-RSA-AES128-SHA256
+ECDHE-RSA-AES256-SHA384
+DHE-RSA-AES256-SHA384
+ECDHE-RSA-AES256-SHA256
+DHE-RSA-AES256-SHA256
+HIGH
+!aNULL
+!eNULL
+!EXPORT
+!DES
+!RC4
+!MD5
+!PSK
+!SRP
+!CAMELLIA</code></pre><p>This default can be replaced entirely using the <a href="../cli.html#--tls-cipher-listlist"><code>--tls-cipher-list</code></a>
+command-line switch (directly, or via the <a href="../cli.html#node_optionsoptions"><code>NODE_OPTIONS</code></a> environment
+variable). For instance, the following makes <code>ECDHE-RSA-AES128-GCM-SHA256:!RC4</code>
+the default TLS cipher suite:</p><pre><code class="language-bash">node --tls-cipher-list=<span class="hljs-string">'ECDHE-RSA-AES128-GCM-SHA256:!RC4'</span> server.js
+
+<span class="hljs-built_in">export</span> NODE_OPTIONS=--tls-cipher-list=<span class="hljs-string">'ECDHE-RSA-AES128-GCM-SHA256:!RC4'</span>
+node server.js</code></pre><p>The default can also be replaced on a per client or server basis using the
+<code>ciphers</code> option from <a href="../tls.html#tlscreatesecurecontextoptions"><code>tls.createSecureContext()</code></a>, which is also available
+in <a href="../tls.html#tlscreateserveroptions-secureconnectionlistener"><code>tls.createServer()</code></a>, <a href="../tls.html#tlsconnectoptions-callback"><code>tls.connect()</code></a>, and when creating new
+<a href="../tls.html#class-tlstlssocket"><code>tls.TLSSocket</code></a>s.</p><p>The ciphers list can contain a mixture of TLSv1.3 cipher suite names, the ones
+that start with <code>'TLS_'</code>, and specifications for TLSv1.2 and below cipher
+suites. The TLSv1.2 ciphers support a legacy specification format, consult
+the OpenSSL <a href="https://www.openssl.org/docs/man1.1.1/man1/ciphers.html#CIPHER-LIST-FORMAT" rel="nofollow">cipher list format</a> documentation for details, but those
+specifications do <em>not</em> apply to TLSv1.3 ciphers. The TLSv1.3 suites can only
+be enabled by including their full name in the cipher list. They cannot, for
+example, be enabled or disabled by using the legacy TLSv1.2 <code>'EECDH'</code> or
+<code>'!EECDH'</code> specification.</p><p>Despite the relative order of TLSv1.3 and TLSv1.2 cipher suites, the TLSv1.3
+protocol is significantly more secure than TLSv1.2, and will always be chosen
+over TLSv1.2 if the handshake indicates it is supported, and if any TLSv1.3
+cipher suites are enabled.</p><p>The default cipher suite included within Node.js has been carefully
+selected to reflect current security best practices and risk mitigation.
+Changing the default cipher suite can have a significant impact on the security
+of an application. The <code>--tls-cipher-list</code> switch and <code>ciphers</code> option should by
+used only if absolutely necessary.</p><p>The default cipher suite prefers GCM ciphers for <a href="https://www.chromium.org/Home/chromium-security/education/tls#TOC-Cipher-Suites" rel="nofollow">Chrome's 'modern
+cryptography' setting</a> and also prefers ECDHE and DHE ciphers for perfect
+forward secrecy, while offering <em>some</em> backward compatibility.</p><p>128 bit AES is preferred over 192 and 256 bit AES in light of <a href="https://www.schneier.com/blog/archives/2009/07/another_new_aes.html" rel="nofollow">specific
+attacks affecting larger AES key sizes</a>.</p><p>Old clients that rely on insecure and deprecated RC4 or DES-based ciphers
+(like Internet Explorer 6) cannot complete the handshaking process with
+the default configuration. If these clients <em>must</em> be supported, the
+<a href="https://wiki.mozilla.org/Security/Server_Side_TLS" rel="nofollow">TLS recommendations</a> may offer a compatible cipher suite. For more details
+on the format, see the OpenSSL <a href="https://www.openssl.org/docs/man1.1.1/man1/ciphers.html#CIPHER-LIST-FORMAT" rel="nofollow">cipher list format</a> documentation.</p><p>There are only five TLSv1.3 cipher suites:</p><ul>
+<li><code>'TLS_AES_256_GCM_SHA384'</code></li>
+<li><code>'TLS_CHACHA20_POLY1305_SHA256'</code></li>
+<li><code>'TLS_AES_128_GCM_SHA256'</code></li>
+<li><code>'TLS_AES_128_CCM_SHA256'</code></li>
+<li><code>'TLS_AES_128_CCM_8_SHA256'</code></li>
+</ul><p>The first three are enabled by default. The two <code>CCM</code>-based suites are supported
+by TLSv1.3 because they may be more performant on constrained systems, but they
+are not enabled by default since they offer less security.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

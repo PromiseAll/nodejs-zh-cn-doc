@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'listening' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cluster">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'listening' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../cluster.html#cluster_event_listening_1" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/cluster/event_listening_1.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/cluster/event_listening_1.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cluster/#event-listening_1.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.7.0</span>
+</div><ul class="">
+<li><code>worker</code> <a href="../cluster.html#class-worker" rel="nofollow" class="type">&lt;cluster.Worker&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>从工作进程调用 <code>listen()</code> 后，当服务器上触发 <code>'listening'</code> 事件时，则主进程中的 <code>cluster</code> 也将触发 <code>'listening'</code> 事件。</p><p class="">事件句柄使用两个参数执行，<code>worker</code> 包含工作进程对象，<code>address</code> 对象包含以下连接属性：<code>address</code>、<code>port</code> 和 <code>addressType</code>。
+如果工作进程正在监听多个地址，则这将非常有用。</p><pre class=""><code class="language-js">cluster.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">(<span class="hljs-params">worker, address</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(
+    <span class="hljs-string">`A worker is now connected to <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});</code></pre><p class=""><code>addressType</code> 是以下之一：</p><ul class="">
+<li><code>4</code> (TCPv4)</li>
+<li><code>6</code> (TCPv6)</li>
+<li><code>-1</code> (Unix 域套接字)</li>
+<li><code>'udp4'</code> 或 <code>'udp6'</code>（UDPv4 或 UDPv6）</li>
+</ul></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.7.0</span>
+</div><ul>
+<li><code>worker</code> <a href="../cluster.html#class-worker" rel="nofollow" class="type">&lt;cluster.Worker&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>After calling <code>listen()</code> from a worker, when the <code>'listening'</code> event is emitted
+on the server, a <code>'listening'</code> event will also be emitted on <code>cluster</code> in the
+primary.</p><p>The event handler is executed with two arguments, the <code>worker</code> contains the
+worker object and the <code>address</code> object contains the following connection
+properties: <code>address</code>, <code>port</code> and <code>addressType</code>. This is very useful if the
+worker is listening on more than one address.</p><pre><code class="language-js">cluster.<span class="hljs-title function_">on</span>(<span class="hljs-string">'listening'</span>, <span class="hljs-function">(<span class="hljs-params">worker, address</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(
+    <span class="hljs-string">`A worker is now connected to <span class="hljs-subst">${address.address}</span>:<span class="hljs-subst">${address.port}</span>`</span>);
+});</code></pre><p>The <code>addressType</code> is one of:</p><ul>
+<li><code>4</code> (TCPv4)</li>
+<li><code>6</code> (TCPv6)</li>
+<li><code>-1</code> (Unix domain socket)</li>
+<li><code>'udp4'</code> or <code>'udp6'</code> (UDPv4 or UDPv6)</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

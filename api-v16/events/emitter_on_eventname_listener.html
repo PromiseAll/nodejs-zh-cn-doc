@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>emitter.on(eventName, listener) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>emitter.on(eventName, listener)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_emitter_on_eventname_listener" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/emitter_on_eventname_listener.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/emitter_on_eventname_listener.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#emitteroneventname-listener.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.1.101</span>
+</div><ul class="">
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> 事件的名称。</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 回调函数</li>
+<li>返回: <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul><p>将 <code>listener</code> 函数添加到名为 <code>eventName</code> 的事件的监听器数组的末尾。
+不检查是否已添加 <code>listener</code>。
+多次调用传入相同的 <code>eventName</code> 和 <code>listener</code> 组合将导致多次添加和调用 <code>listener</code>。</p><pre class=""><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+});</code></pre><p class="">返回对 <code>EventEmitter</code> 的引用，以便可以链式调用。</p><p class="">默认情况下，事件监听器按添加顺序调用。
+<code>emitter.prependListener()</code> 方法可用作将事件监听器添加到监听器数组开头的替代方法。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+myEE.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a'</span>));
+myEE.<span class="hljs-title function_">prependListener</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'b'</span>));
+myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// 打印:</span>
+<span class="hljs-comment">//   b</span>
+<span class="hljs-comment">//   a</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.1.101</span>
+</div><ul>
+<li><code>eventName</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Symbol_type" rel="nofollow" class="type">&lt;symbol&gt;</a> The name of the event.</li>
+<li><code>listener</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> The callback function</li>
+<li>Returns: <a href="../events.html#class-eventemitter" rel="nofollow" class="type">&lt;EventEmitter&gt;</a></li>
+</ul><p>Adds the <code>listener</code> function to the end of the listeners array for the
+event named <code>eventName</code>. No checks are made to see if the <code>listener</code> has
+already been added. Multiple calls passing the same combination of <code>eventName</code>
+and <code>listener</code> will result in the <code>listener</code> being added, and called, multiple
+times.</p><pre><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">stream</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'someone connected!'</span>);
+});</code></pre><p>Returns a reference to the <code>EventEmitter</code>, so that calls can be chained.</p><p>By default, event listeners are invoked in the order they are added. The
+<code>emitter.prependListener()</code> method can be used as an alternative to add the
+event listener to the beginning of the listeners array.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+myEE.<span class="hljs-title function_">on</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'a'</span>));
+myEE.<span class="hljs-title function_">prependListener</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'b'</span>));
+myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// Prints:</span>
+<span class="hljs-comment">//   b</span>
+<span class="hljs-comment">//   a</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

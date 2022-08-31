@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fsPromises.watch(filename[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fsPromises.watch(filename[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fspromises_watch_filename_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fspromises_watch_filename_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fspromises_watch_filename_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fspromiseswatchfilename-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v15.9.0</span>
+</div><ul class="">
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>persistent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示只要正在监视文件，进程是否应继续运行。 <strong>默认值:</strong> <code>true</code>。</li>
+<li><code>recursive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 指示是应监视所有子目录，还是仅监视当前目录。
+这在指定目录时适用，并且仅在受支持的平台上有效（请参见<a href="../fs.html#caveats">注意事项</a>）。 <strong>默认值:</strong> <code>false</code>。</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 指定用于传给监听器的文件名的字符编码。 <strong>默认值:</strong> <code>'utf8'</code>。</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 用于指示监视器何时应停止的 <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a>。</li>
+</ul>
+</li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-asynciterator-interface" rel="nofollow" class="type">&lt;AsyncIterator&gt;</a> 具有以下属性的对象：
+<ul>
+<li><code>eventType</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 变更类型</li>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 变更的文件的名称。</li>
+</ul>
+</li>
+</ul><p>返回异步迭代器，其监视 <code>filename</code> 上的更改，其中 <code>filename</code> 是文件或目录。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { watch } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+
+<span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> { signal } = ac;
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> ac.<span class="hljs-title function_">abort</span>(), <span class="hljs-number">10000</span>);
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> watcher = <span class="hljs-title function_">watch</span>(__filename, { signal });
+    <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> event <span class="hljs-keyword">of</span> watcher)
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event);
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-keyword">if</span> (err.<span class="hljs-property">name</span> === <span class="hljs-string">'AbortError'</span>)
+      <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">throw</span> err;
+  }
+})();</code></pre><p class="">在大多数平台上，只要目录中文件名出现或消失，就会触发 <code>'rename'</code>。</p><p class=""><code>fs.watch()</code> 的所有<a href="../fs.html#caveats">注意事项</a>也适用于 <code>fsPromises.watch()</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v15.9.0</span>
+</div><ul>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>persistent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Indicates whether the process should continue to run
+as long as files are being watched. <strong>Default:</strong> <code>true</code>.</li>
+<li><code>recursive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> Indicates whether all subdirectories should be
+watched, or only the current directory. This applies when a directory is
+specified, and only on supported platforms (See <a href="../fs.html#caveats">caveats</a>). <strong>Default:</strong>
+<code>false</code>.</li>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> Specifies the character encoding to be used for the
+filename passed to the listener. <strong>Default:</strong> <code>'utf8'</code>.</li>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> An <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> used to signal when the watcher
+should stop.</li>
+</ul>
+</li>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-asynciterator-interface" rel="nofollow" class="type">&lt;AsyncIterator&gt;</a> of objects with the properties:
+<ul>
+<li><code>eventType</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The type of change</li>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The name of the file changed.</li>
+</ul>
+</li>
+</ul><p>Returns an async iterator that watches for changes on <code>filename</code>, where <code>filename</code>
+is either a file or a directory.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { watch } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs/promises'</span>);
+
+<span class="hljs-keyword">const</span> ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AbortController</span>();
+<span class="hljs-keyword">const</span> { signal } = ac;
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> ac.<span class="hljs-title function_">abort</span>(), <span class="hljs-number">10000</span>);
+
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> watcher = <span class="hljs-title function_">watch</span>(__filename, { signal });
+    <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> event <span class="hljs-keyword">of</span> watcher)
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event);
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-keyword">if</span> (err.<span class="hljs-property">name</span> === <span class="hljs-string">'AbortError'</span>)
+      <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">throw</span> err;
+  }
+})();</code></pre><p>On most platforms, <code>'rename'</code> is emitted whenever a filename appears or
+disappears in the directory.</p><p>All the <a href="../fs.html#caveats">caveats</a> for <code>fs.watch()</code> also apply to <code>fsPromises.watch()</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

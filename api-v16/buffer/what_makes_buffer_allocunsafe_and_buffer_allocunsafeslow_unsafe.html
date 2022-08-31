@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Buffer.allocUnsafe() 与 Buffer.allocUnsafeSlow() 不安全的原因 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>Buffer.allocUnsafe() 与 Buffer.allocUnsafeSlow() 不安全的原因</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_what_makes_buffer_allocunsafe_and_buffer_allocunsafeslow_unsafe" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/what_makes_buffer_allocunsafe_and_buffer_allocunsafeslow_unsafe.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/what_makes_buffer_allocunsafe_and_buffer_allocunsafeslow_unsafe.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#what-makes-bufferallocunsafe-and-bufferallocunsafeslow-unsafe.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当调用 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> 和 <a href="../buffer.html#static-method-bufferallocunsafeslowsize"><code>Buffer.allocUnsafeSlow()</code></a> 时，分配的内存段未初始化（未清零）。
+虽然这种设计使内存分配非常快，但分配的内存段可能包含潜在敏感的旧数据。
+使用 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> 创建的 <code>Buffer</code> 而不完全覆盖内存可以使此旧数据在读取 <code>Buffer</code> 内存时泄露。</p><p class="">虽然使用 <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> 有明显的性能优势，但必须格外小心，以避免将安全漏洞引入应用程序中。</p></div>
+          <div id="content_right"><p>When calling <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> and <a href="../buffer.html#static-method-bufferallocunsafeslowsize"><code>Buffer.allocUnsafeSlow()</code></a>, the
+segment of allocated memory is <em>uninitialized</em> (it is not zeroed-out). While
+this design makes the allocation of memory quite fast, the allocated segment of
+memory might contain old data that is potentially sensitive. Using a <code>Buffer</code>
+created by <a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a> without <em>completely</em> overwriting the
+memory can allow this old data to be leaked when the <code>Buffer</code> memory is read.</p><p>While there are clear performance advantages to using
+<a href="../buffer.html#static-method-bufferallocunsafesize"><code>Buffer.allocUnsafe()</code></a>, extra care <em>must</em> be taken in order to avoid
+introducing security vulnerabilities into an application.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

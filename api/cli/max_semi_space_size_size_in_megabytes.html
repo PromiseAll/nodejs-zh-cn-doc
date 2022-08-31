@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>--max-semi-space-size=SIZE（以兆字节为单位） | Node.js API 文档</title>
+  
+  
+
+    <link href="../static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-cli">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>--max-semi-space-size=SIZE（以兆字节为单位）</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v18.6.0</li>
+              <li>
+                <a href="../cli.html#cli_max_semi_space_size_size_in_megabytes" name="toc">返回上层文档</a>
+              </li>
+
+              
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/cli/#--max-semi-space-sizesize-in-megabytes.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>为 V8 的<a href="https://v8.dev/blog/orinoco-parallel-scavenger">清除垃圾收集器</a>设置最大的<a href="https://www.memorymanagement.org/glossary/s.html#semi.space">半空间</a>大小，以 MiB（兆字节）为单位。
+增加半空间的最大尺寸可能会提高 Node.js 的吞吐量，但会消耗更多内存。</p><p class="">由于 V8 堆的年轻代大小是半空间大小的三倍（参见 V8 中的 <a href="https://chromium.googlesource.com/v8/v8.git/+/refs/tags/10.3.129/src/heap/heap.cc#328"><code>YoungGenerationSizeFromSemiSpaceSize</code></a>），因此半空间增加 1 MiB 适用于三个单独的半空间中的每一个，并导致堆大小增加 3 MiB。
+吞吐量的提高取决于您的工作负荷（参见 <a href="https://github.com/nodejs/node/issues/42511">#42511</a>）。</p><p class="">64 位系统的默认值为 16 MiB，32 位系统的默认值为 8 MiB。
+要为您的应用程序获得最佳配置，您应该在为您的应用程序运行基准测试时尝试不同的 max-semi-space-size 值。</p><p class="">例如，在 64 位系统上进行基准测试：</p><pre class=""><code class="language-bash"><span class="hljs-keyword">for</span> MiB <span class="hljs-keyword">in</span> 16 32 64 128; <span class="hljs-keyword">do</span>
+    node --max-semi-space-size=<span class="hljs-variable">$MiB</span> index.js
+<span class="hljs-keyword">done</span></code></pre></div>
+          <div id="content_right"><p>Sets the maximum <a href="https://www.memorymanagement.org/glossary/s.html#semi.space">semi-space</a> size for V8's <a href="https://v8.dev/blog/orinoco-parallel-scavenger">scavenge garbage collector</a> in
+MiB (megabytes).
+Increasing the max size of a semi-space may improve throughput for Node.js at
+the cost of more memory consumption.</p><p>Since the young generation size of the V8 heap is three times (see
+<a href="https://chromium.googlesource.com/v8/v8.git/+/refs/tags/10.3.129/src/heap/heap.cc#328"><code>YoungGenerationSizeFromSemiSpaceSize</code></a> in V8) the size of the semi-space,
+an increase of 1 MiB to semi-space applies to each of the three individual
+semi-spaces and causes the heap size to increase by 3 MiB. The throughput
+improvement depends on your workload (see <a href="https://github.com/nodejs/node/issues/42511">#42511</a>).</p><p>The default value is 16 MiB for 64-bit systems and 8 MiB for 32-bit systems. To
+get the best configuration for your application, you should try different
+max-semi-space-size values when running benchmarks for your application.</p><p>For example, benchmark on a 64-bit systems:</p><pre><code class="language-bash"><span class="hljs-keyword">for</span> MiB <span class="hljs-keyword">in</span> 16 32 64 128; <span class="hljs-keyword">do</span>
+    node --max-semi-space-size=<span class="hljs-variable">$MiB</span> index.js
+<span class="hljs-keyword">done</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../static/inject.js" defer=""></script></body></html>

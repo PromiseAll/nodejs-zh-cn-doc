@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>示例：发送服务器对象 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-child_process">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>示例：发送服务器对象</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../child_process.html#child_process_example_sending_a_server_object" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/child_process/example_sending_a_server_object.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/child_process/example_sending_a_server_object.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/child_process/#example-sending-a-server-object.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>例如，可以使用 <code>sendHandle</code> 参数将 TCP 服务器对象的句柄传给子进程，如下例所示：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> subprocess = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>).<span class="hljs-title function_">fork</span>(<span class="hljs-string">'subprocess.js'</span>);
+
+<span class="hljs-comment">// 打开服务器对象并发送句柄。</span>
+<span class="hljs-keyword">const</span> server = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>).<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'handled by parent'</span>);
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>, <span class="hljs-function">() =&gt;</span> {
+  subprocess.<span class="hljs-title function_">send</span>(<span class="hljs-string">'server'</span>, server);
+});</code></pre><p class="">然后子进程将收到服务器对象：</p><pre class=""><code class="language-js">process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">m, server</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (m === <span class="hljs-string">'server'</span>) {
+    server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+      socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'handled by child'</span>);
+    });
+  }
+});</code></pre><p class="">一旦服务器现在在父进程和子进程之间共享，则一些连接可以由父进程处理，一些连接由子进程处理。</p><p class="">虽然上面的示例使用使用 <code>net</code> 模块创建的服务器，但 <code>dgram</code> 模块服务器使用完全相同的工作流程，除了监听 <code>'message'</code> 事件而不是 <code>'connection'</code> 和使用 <code>server.bind()</code> 而不是 <code>server.listen()</code>。
+但是，目前仅在 Unix 平台上支持。</p></div>
+          <div id="content_right"><p>The <code>sendHandle</code> argument can be used, for instance, to pass the handle of
+a TCP server object to the child process as illustrated in the example below:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> subprocess = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>).<span class="hljs-title function_">fork</span>(<span class="hljs-string">'subprocess.js'</span>);
+
+<span class="hljs-comment">// Open up the server object and send the handle.</span>
+<span class="hljs-keyword">const</span> server = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>).<span class="hljs-title function_">createServer</span>();
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'handled by parent'</span>);
+});
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>, <span class="hljs-function">() =&gt;</span> {
+  subprocess.<span class="hljs-title function_">send</span>(<span class="hljs-string">'server'</span>, server);
+});</code></pre><p>The child would then receive the server object as:</p><pre><code class="language-js">process.<span class="hljs-title function_">on</span>(<span class="hljs-string">'message'</span>, <span class="hljs-function">(<span class="hljs-params">m, server</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (m === <span class="hljs-string">'server'</span>) {
+    server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+      socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'handled by child'</span>);
+    });
+  }
+});</code></pre><p>Once the server is now shared between the parent and child, some connections
+can be handled by the parent and some by the child.</p><p>While the example above uses a server created using the <code>net</code> module, <code>dgram</code>
+module servers use exactly the same workflow with the exceptions of listening on
+a <code>'message'</code> event instead of <code>'connection'</code> and using <code>server.bind()</code> instead
+of <code>server.listen()</code>. This is, however, currently only supported on Unix
+platforms.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

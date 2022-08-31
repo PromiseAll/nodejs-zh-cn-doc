@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>缓冲 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>缓冲</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_buffering" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/buffering.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/buffering.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#buffering.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p><a href="../stream.html#class-streamwritable"><code>Writable</code></a> 和 <a href="../stream.html#class-streamreadable"><code>Readable</code></a> 流都将数据存储在内部缓冲区中。</p><p class="">可能缓冲的数据量取决于传给流的构造函数的 <code>highWaterMark</code> 选项。
+对于普通的流，<code>highWaterMark</code> 选项指定<a href="../stream.html#highwatermark-discrepancy-after-calling-readablesetencoding">字节的总数</a>。
+对于在对象模式下操作的流，<code>highWaterMark</code> 指定对象的总数。</p><p class="">当实现调用 <a href="../stream.html#readablepushchunk-encoding"><code>stream.push(chunk)</code></a> 时，数据缓存在 <code>Readable</code> 流中。
+如果流的消费者没有调用 <a href="../stream.html#readablereadsize"><code>stream.read()</code></a>，则数据会一直驻留在内部队列中，直到被消费。</p><p class="">一旦内部读取缓冲区的总大小达到 <code>highWaterMark</code> 指定的阈值，则流将暂时停止从底层资源读取数据，直到可以消费当前缓冲的数据（也就是，流将停止调用内部的用于填充读取缓冲区 <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> 方法）。</p><p class="">当重复调用 <a href="../stream.html#writablewritechunk-encoding-callback"><code>writable.write(chunk)</code></a> 方法时，数据会缓存在 <code>Writable</code> 流中。
+虽然内部的写入缓冲区的总大小低于 <code>highWaterMark</code> 设置的阈值，但对 <code>writable.write()</code> 的调用将返回 <code>true</code>。
+一旦内部缓冲区的大小达到或超过 <code>highWaterMark</code>，则将返回 <code>false</code>。</p><p class=""><code>stream</code> API 的一个关键目标，尤其是 <a href="../stream.html#readablepipedestination-options"><code>stream.pipe()</code></a> 方法，是将数据缓冲限制在可接受的水平，以便不同速度的来源和目标不会压倒可用内存。</p><p class=""><code>highWaterMark</code> 选项是阈值，而不是限制：它规定了流在停止请求更多数据之前缓冲的数据量。
+它通常不强制执行严格的内存限制。
+特定的流实现可能会选择实施更严格的限制，但这样做是可选的。</p><p class="">由于 <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> 和 <a href="../stream.html#class-streamtransform"><code>Transform</code></a> 流都是 <code>Readable</code> 和 <code>Writable</code>，因此每个流都维护两个独立的内部缓冲区，用于读取和写入，允许每一端独立操作，同时保持适当且高效的数据流。
+例如，<a href="../net.html#class-netsocket"><code>net.Socket</code></a> 实例是 <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> 流，其 <code>Readable</code> 端允许消费从套接字接收的数据，其 <code>Writable</code> 端允许将数据写入套接字。
+因为数据可能以比接收数据更快或更慢的速度写入套接字，所以每一端都应该独立于另一端进行操作（和缓冲）。</p><p class="">内部缓冲的机制是内部的实现细节，可能随时更改。
+但是，对于某些高级实现，可以使用 <code>writable.writableBuffer</code> 或 <code>readable.readableBuffer</code> 检索内部的缓冲区。
+不鼓励使用这些未记录的属性。</p></div>
+          <div id="content_right"><p>Both <a href="../stream.html#class-streamwritable"><code>Writable</code></a> and <a href="../stream.html#class-streamreadable"><code>Readable</code></a> streams will store data in an internal
+buffer.</p><p>The amount of data potentially buffered depends on the <code>highWaterMark</code> option
+passed into the stream's constructor. For normal streams, the <code>highWaterMark</code>
+option specifies a <a href="../stream.html#highwatermark-discrepancy-after-calling-readablesetencoding">total number of bytes</a>. For streams operating
+in object mode, the <code>highWaterMark</code> specifies a total number of objects.</p><p>Data is buffered in <code>Readable</code> streams when the implementation calls
+<a href="../stream.html#readablepushchunk-encoding"><code>stream.push(chunk)</code></a>. If the consumer of the Stream does not
+call <a href="../stream.html#readablereadsize"><code>stream.read()</code></a>, the data will sit in the internal
+queue until it is consumed.</p><p>Once the total size of the internal read buffer reaches the threshold specified
+by <code>highWaterMark</code>, the stream will temporarily stop reading data from the
+underlying resource until the data currently buffered can be consumed (that is,
+the stream will stop calling the internal <a href="../stream.html#readable_readsize"><code>readable._read()</code></a> method that is
+used to fill the read buffer).</p><p>Data is buffered in <code>Writable</code> streams when the
+<a href="../stream.html#writablewritechunk-encoding-callback"><code>writable.write(chunk)</code></a> method is called repeatedly. While the
+total size of the internal write buffer is below the threshold set by
+<code>highWaterMark</code>, calls to <code>writable.write()</code> will return <code>true</code>. Once
+the size of the internal buffer reaches or exceeds the <code>highWaterMark</code>, <code>false</code>
+will be returned.</p><p>A key goal of the <code>stream</code> API, particularly the <a href="../stream.html#readablepipedestination-options"><code>stream.pipe()</code></a> method,
+is to limit the buffering of data to acceptable levels such that sources and
+destinations of differing speeds will not overwhelm the available memory.</p><p>The <code>highWaterMark</code> option is a threshold, not a limit: it dictates the amount
+of data that a stream buffers before it stops asking for more data. It does not
+enforce a strict memory limitation in general. Specific stream implementations
+may choose to enforce stricter limits but doing so is optional.</p><p>Because <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> and <a href="../stream.html#class-streamtransform"><code>Transform</code></a> streams are both <code>Readable</code> and
+<code>Writable</code>, each maintains <em>two</em> separate internal buffers used for reading and
+writing, allowing each side to operate independently of the other while
+maintaining an appropriate and efficient flow of data. For example,
+<a href="../net.html#class-netsocket"><code>net.Socket</code></a> instances are <a href="../stream.html#class-streamduplex"><code>Duplex</code></a> streams whose <code>Readable</code> side allows
+consumption of data received <em>from</em> the socket and whose <code>Writable</code> side allows
+writing data <em>to</em> the socket. Because data may be written to the socket at a
+faster or slower rate than data is received, each side should
+operate (and buffer) independently of the other.</p><p>The mechanics of the internal buffering are an internal implementation detail
+and may be changed at any time. However, for certain advanced implementations,
+the internal buffers can be retrieved using <code>writable.writableBuffer</code> or
+<code>readable.readableBuffer</code>. Use of these undocumented properties is discouraged.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

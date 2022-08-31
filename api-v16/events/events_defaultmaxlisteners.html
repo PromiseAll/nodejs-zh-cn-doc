@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>events.defaultMaxListeners | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>events.defaultMaxListeners</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_events_defaultmaxlisteners" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/events_defaultmaxlisteners.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/events_defaultmaxlisteners.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#eventsdefaultmaxlisteners.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.11.2</span>
+</div><p>默认情况下，最多可为任何单个事件注册 <code>10</code> 个监听器。
+可以使用 <a href="../events.html#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a> 方法为单个 <code>EventEmitter</code> 实例更改此限制。
+要更改所有 <code>EventEmitter</code> 实例的默认值，则可以使用 <code>events.defaultMaxListeners</code> 属性。
+如果该值不是正数，则抛出 <code>RangeError</code>。</p><p class="">设置 <code>events.defaultMaxListeners</code> 时要小心，因为更改会影响所有 <code>EventEmitter</code> 实例，包括在进行更改之前创建的实例。
+但是，调用 <a href="../events.html#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a> 仍然优先于 <code>events.defaultMaxListeners</code>。</p><p class="">这不是硬性限制。
+<code>EventEmitter</code> 实例将允许添加更多监听器，但会向标准错误输出跟踪警告，指示已检测到"可能的 EventEmitter 内存泄漏"。
+对于任何单个 <code>EventEmitter</code>，可以使用 <code>emitter.getMaxListeners()</code> 和 <code>emitter.setMaxListeners()</code> 方法来暂时避免此警告：</p><pre class=""><code class="language-js">emitter.<span class="hljs-title function_">setMaxListeners</span>(emitter.<span class="hljs-title function_">getMaxListeners</span>() + <span class="hljs-number">1</span>);
+emitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// 做些事情</span>
+  emitter.<span class="hljs-title function_">setMaxListeners</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(emitter.<span class="hljs-title function_">getMaxListeners</span>() - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+});</code></pre><p class=""><a href="../cli.html#--trace-warnings"><code>--trace-warnings</code></a> 命令行标志可用于显示此类警告的堆栈跟踪。</p><p class="">触发的警告可以使用 <a href="../process.html#event-warning"><code>process.on('warning')</code></a> 进行检查，并将具有额外的 <code>emitter</code>、<code>type</code> 和 <code>count</code> 属性，分别是指事件触发器实例、事件名称和绑定监听器的数量。
+其 <code>name</code> 属性设置为 <code>'MaxListenersExceededWarning'</code>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.11.2</span>
+</div><p>By default, a maximum of <code>10</code> listeners can be registered for any single
+event. This limit can be changed for individual <code>EventEmitter</code> instances
+using the <a href="../events.html#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a> method. To change the default
+for <em>all</em> <code>EventEmitter</code> instances, the <code>events.defaultMaxListeners</code>
+property can be used. If this value is not a positive number, a <code>RangeError</code>
+is thrown.</p><p>Take caution when setting the <code>events.defaultMaxListeners</code> because the
+change affects <em>all</em> <code>EventEmitter</code> instances, including those created before
+the change is made. However, calling <a href="../events.html#emittersetmaxlistenersn"><code>emitter.setMaxListeners(n)</code></a> still has
+precedence over <code>events.defaultMaxListeners</code>.</p><p>This is not a hard limit. The <code>EventEmitter</code> instance will allow
+more listeners to be added but will output a trace warning to stderr indicating
+that a "possible EventEmitter memory leak" has been detected. For any single
+<code>EventEmitter</code>, the <code>emitter.getMaxListeners()</code> and <code>emitter.setMaxListeners()</code>
+methods can be used to temporarily avoid this warning:</p><pre><code class="language-js">emitter.<span class="hljs-title function_">setMaxListeners</span>(emitter.<span class="hljs-title function_">getMaxListeners</span>() + <span class="hljs-number">1</span>);
+emitter.<span class="hljs-title function_">once</span>(<span class="hljs-string">'event'</span>, <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">// do stuff</span>
+  emitter.<span class="hljs-title function_">setMaxListeners</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(emitter.<span class="hljs-title function_">getMaxListeners</span>() - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+});</code></pre><p>The <a href="../cli.html#--trace-warnings"><code>--trace-warnings</code></a> command-line flag can be used to display the
+stack trace for such warnings.</p><p>The emitted warning can be inspected with <a href="../process.html#event-warning"><code>process.on('warning')</code></a> and will
+have the additional <code>emitter</code>, <code>type</code> and <code>count</code> properties, referring to
+the event emitter instance, the event’s name and the number of attached
+listeners, respectively.
+Its <code>name</code> property is set to <code>'MaxListenersExceededWarning'</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

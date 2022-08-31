@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>domain 与 Promise | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-domain">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>domain 与 Promise</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../domain.html#domain_domains_and_promises" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/domain/domains_and_promises.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/domain/domains_and_promises.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/domain/#domains-and-promises.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>从 Node.js 8.0.0 开始，promise 的句柄在调用 <code>.then()</code> 或 <code>.catch()</code> 本身的域内运行：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> d1 = domain.<span class="hljs-title function_">create</span>();
+<span class="hljs-keyword">const</span> d2 = domain.<span class="hljs-title function_">create</span>();
+
+<span class="hljs-keyword">let</span> p;
+d1.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">42</span>);
+});
+
+d2.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> {
+    <span class="hljs-comment">// 在 d2 中运行</span>
+  });
+});</code></pre><p class="">可以使用 <a href="../domain.html#domainbindcallback"><code>domain.bind(callback)</code></a> 将回调绑定到特定域：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> d1 = domain.<span class="hljs-title function_">create</span>();
+<span class="hljs-keyword">const</span> d2 = domain.<span class="hljs-title function_">create</span>();
+
+<span class="hljs-keyword">let</span> p;
+d1.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">42</span>);
+});
+
+d2.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p.<span class="hljs-title function_">then</span>(p.<span class="hljs-property">domain</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> {
+    <span class="hljs-comment">// 在 d1 中运行</span>
+  }));
+});</code></pre><p class="">域不会干扰 promise 的错误处理机制。
+换句话说，对于未处理的 <code>Promise</code> 拒绝，不会触发 <code>'error'</code> 事件。</p></div>
+          <div id="content_right"><p>As of Node.js 8.0.0, the handlers of promises are run inside the domain in
+which the call to <code>.then()</code> or <code>.catch()</code> itself was made:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> d1 = domain.<span class="hljs-title function_">create</span>();
+<span class="hljs-keyword">const</span> d2 = domain.<span class="hljs-title function_">create</span>();
+
+<span class="hljs-keyword">let</span> p;
+d1.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">42</span>);
+});
+
+d2.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> {
+    <span class="hljs-comment">// running in d2</span>
+  });
+});</code></pre><p>A callback may be bound to a specific domain using <a href="../domain.html#domainbindcallback"><code>domain.bind(callback)</code></a>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> d1 = domain.<span class="hljs-title function_">create</span>();
+<span class="hljs-keyword">const</span> d2 = domain.<span class="hljs-title function_">create</span>();
+
+<span class="hljs-keyword">let</span> p;
+d1.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">42</span>);
+});
+
+d2.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> {
+  p.<span class="hljs-title function_">then</span>(p.<span class="hljs-property">domain</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> {
+    <span class="hljs-comment">// running in d1</span>
+  }));
+});</code></pre><p>Domains will not interfere with the error handling mechanisms for
+promises. In other words, no <code>'error'</code> event will be emitted for unhandled
+<code>Promise</code> rejections.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

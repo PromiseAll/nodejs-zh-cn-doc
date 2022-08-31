@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>new vm.SourceTextModule(code[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>new vm.SourceTextModule(code[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_new_vm_sourcetextmodule_code_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/new_vm_sourcetextmodule_code_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/new_vm_sourcetextmodule_code_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#new-vmsourcetextmodulecode-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>添加了对 <code>importModuleDynamically</code> 参数的导入断言的支持。</p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 要解析的 JavaScript 模块代码</li>
+<li><code>options</code>
+<ul>
+<li><code>identifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 用于堆栈跟踪的字符串。
+<strong>默认值:</strong> <code>'vm:module(i)'</code> 其中 <code>i</code> 是上下文特定的升序索引。</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> 为所提供的源提供可选的 <code>Buffer</code> 或 <code>TypedArray</code> 或 <code>DataView</code>，其中包含 V8 的代码缓存数据。
+<code>code</code> 必须与创建此 <code>cachedData</code> 的模块相同。</li>
+<li><code>context</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> <code>vm.createContext()</code> 方法返回的<a href="../vm.html#what-does-it-mean-to-contextify-an-object">上下文隔离化的</a>对象，用于编译和评估此 <code>Module</code>。</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 指定在此 <code>Module</code> 产生的堆栈跟踪中显示的行号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 指定在此 <code>Module</code> 生成的堆栈跟踪中显示的第一行列号偏移量。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>initializeImportMeta</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在评估此 <code>Module</code> 期间调用以初始化 <code>import.meta</code>。
+<ul>
+<li><code>meta</code> <a href="../esm.html#importmeta" rel="nofollow" class="type">&lt;import.meta&gt;</a></li>
+<li><code>module</code> <a href="../vm.html#class-vmsourcetextmodule" rel="nofollow" class="type">&lt;vm.SourceTextModule&gt;</a></li>
+</ul>
+</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在调用 <code>import()</code> 时在评估此模块期间调用。
+如果未指定此选项，则调用 <code>import()</code> 将使用 <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a> 拒绝。
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 传给 <code>import()</code> 的说明符</li>
+<li><code>module</code> <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 传给 <a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> 可选参数的 <code>"assert"</code> 值，如果没有提供值，则为空对象。</li>
+<li>返回: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> 建议返回 <code>vm.Module</code> 以利用错误跟踪，并避免包含 <code>then</code> 函数导出的命名空间出现问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>创建新的 <code>SourceTextModule</code> 实例。</p><p class="">分配给作为对象的 <code>import.meta</code> 对象的属性可能允许模块访问指定 <code>context</code> 之外的信息。
+使用 <code>vm.runInContext()</code> 在特定上下文中创建对象。</p><pre class="with-60-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> vm <span class="hljs-keyword">from</span> <span class="hljs-string">'vm'</span>;
+
+<span class="hljs-keyword">const</span> contextifiedObject = vm.<span class="hljs-title function_">createContext</span>({ <span class="hljs-attr">secret</span>: <span class="hljs-number">42</span> });
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = <span class="hljs-keyword">new</span> vm.<span class="hljs-title class_">SourceTextModule</span>(
+  <span class="hljs-string">'Object.getPrototypeOf(import.meta.prop).secret = secret;'</span>,
+  {
+    <span class="hljs-title function_">initializeImportMeta</span>(<span class="hljs-params">meta</span>) {
+      <span class="hljs-comment">// 注意：这个对象是在顶层上下文中创建的。因此，</span>
+      <span class="hljs-comment">// Object.getPrototypeOf(import.meta.prop) 指向</span>
+      <span class="hljs-comment">// 顶层上下文中的 Object.prototype，</span>
+      <span class="hljs-comment">// 而不是在上下文对象中。</span>
+      meta.<span class="hljs-property">prop</span> = {};
+    }
+  });
+<span class="hljs-comment">// 由于模块没有依赖关系，链接器函数永远不会被调用。</span>
+<span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.<span class="hljs-title function_">link</span>(<span class="hljs-function">() =&gt;</span> {});
+<span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.evaluate();
+
+<span class="hljs-comment">// 现在，Object.prototype.secret 将等于 42。</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 要解决这个问题，则将上面的</span>
+<span class="hljs-comment">//     meta.prop = {};</span>
+<span class="hljs-comment">// 替换为</span>
+<span class="hljs-comment">//     meta.prop = vm.runInContext('{}', contextifiedObject);</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+<span class="hljs-keyword">const</span> contextifiedObject = vm.<span class="hljs-title function_">createContext</span>({ <span class="hljs-attr">secret</span>: <span class="hljs-number">42</span> });
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = <span class="hljs-keyword">new</span> vm.<span class="hljs-title class_">SourceTextModule</span>(
+    <span class="hljs-string">'Object.getPrototypeOf(import.meta.prop).secret = secret;'</span>,
+    {
+      <span class="hljs-title function_">initializeImportMeta</span>(<span class="hljs-params">meta</span>) {
+        <span class="hljs-comment">// 注意：这个对象是在顶层上下文中创建的。因此，</span>
+        <span class="hljs-comment">// Object.getPrototypeOf(import.meta.prop) 指向</span>
+        <span class="hljs-comment">// 顶层上下文中的 Object.prototype，</span>
+        <span class="hljs-comment">// 而不是在上下文对象中。</span>
+        meta.<span class="hljs-property">prop</span> = {};
+      }
+    });
+  <span class="hljs-comment">// 由于模块没有依赖关系，链接器函数永远不会被调用。</span>
+  <span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.<span class="hljs-title function_">link</span>(<span class="hljs-function">() =&gt;</span> {});
+  <span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.evaluate();
+  <span class="hljs-comment">// 现在，Object.prototype.secret 将等于 42。</span>
+  <span class="hljs-comment">//</span>
+  <span class="hljs-comment">// 要解决这个问题，则将上面的</span>
+  <span class="hljs-comment">//     meta.prop = {};</span>
+  <span class="hljs-comment">// 替换为</span>
+  <span class="hljs-comment">//     meta.prop = vm.runInContext('{}', contextifiedObject);</span>
+})();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.12.0</td>
+<td><p>Added support for import assertions to the <code>importModuleDynamically</code> parameter.</p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> JavaScript Module code to parse</li>
+<li><code>options</code>
+<ul>
+<li><code>identifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> String used in stack traces.
+<strong>Default:</strong> <code>'vm:module(i)'</code> where <code>i</code> is a context-specific ascending
+index.</li>
+<li><code>cachedData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" rel="nofollow" class="type">&lt;TypedArray&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" rel="nofollow" class="type">&lt;DataView&gt;</a> Provides an optional <code>Buffer</code> or
+<code>TypedArray</code>, or <code>DataView</code> with V8's code cache data for the supplied
+source. The <code>code</code> must be the same as the module from which this
+<code>cachedData</code> was created.</li>
+<li><code>context</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The <a href="../vm.html#what-does-it-mean-to-contextify-an-object">contextified</a> object as returned by the
+<code>vm.createContext()</code> method, to compile and evaluate this <code>Module</code> in.</li>
+<li><code>lineOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Specifies the line number offset that is displayed
+in stack traces produced by this <code>Module</code>. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>columnOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> Specifies the first-line column number offset that
+is displayed in stack traces produced by this <code>Module</code>. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>initializeImportMeta</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Called during evaluation of this <code>Module</code>
+to initialize the <code>import.meta</code>.
+<ul>
+<li><code>meta</code> <a href="../esm.html#importmeta" rel="nofollow" class="type">&lt;import.meta&gt;</a></li>
+<li><code>module</code> <a href="../vm.html#class-vmsourcetextmodule" rel="nofollow" class="type">&lt;vm.SourceTextModule&gt;</a></li>
+</ul>
+</li>
+<li><code>importModuleDynamically</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> Called during evaluation of this module
+when <code>import()</code> is called. If this option is not specified, calls to
+<code>import()</code> will reject with <a href="../errors.html#err_vm_dynamic_import_callback_missing"><code>ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING</code></a>.
+<ul>
+<li><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> specifier passed to <code>import()</code></li>
+<li><code>module</code> <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a></li>
+<li><code>importAssertions</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The <code>"assert"</code> value passed to the
+<a href="https://tc39.es/proposal-import-assertions/#sec-evaluate-import-call"><code>optionsExpression</code></a> optional parameter, or an empty object if no value
+was provided.</li>
+<li>Returns: <a href="https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects" rel="nofollow" class="type">&lt;Module Namespace Object&gt;</a> | <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> Returning a <code>vm.Module</code> is
+recommended in order to take advantage of error tracking, and to avoid
+issues with namespaces that contain <code>then</code> function exports.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>Creates a new <code>SourceTextModule</code> instance.</p><p>Properties assigned to the <code>import.meta</code> object that are objects may
+allow the module to access information outside the specified <code>context</code>. Use
+<code>vm.runInContext()</code> to create objects in a specific context.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> vm <span class="hljs-keyword">from</span> <span class="hljs-string">'vm'</span>;
+
+<span class="hljs-keyword">const</span> contextifiedObject = vm.<span class="hljs-title function_">createContext</span>({ <span class="hljs-attr">secret</span>: <span class="hljs-number">42</span> });
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = <span class="hljs-keyword">new</span> vm.<span class="hljs-title class_">SourceTextModule</span>(
+  <span class="hljs-string">'Object.getPrototypeOf(import.meta.prop).secret = secret;'</span>,
+  {
+    <span class="hljs-title function_">initializeImportMeta</span>(<span class="hljs-params">meta</span>) {
+      <span class="hljs-comment">// Note: this object is created in the top context. As such,</span>
+      <span class="hljs-comment">// Object.getPrototypeOf(import.meta.prop) points to the</span>
+      <span class="hljs-comment">// Object.prototype in the top context rather than that in</span>
+      <span class="hljs-comment">// the contextified object.</span>
+      meta.<span class="hljs-property">prop</span> = {};
+    }
+  });
+<span class="hljs-comment">// Since module has no dependencies, the linker function will never be called.</span>
+<span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.<span class="hljs-title function_">link</span>(<span class="hljs-function">() =&gt;</span> {});
+<span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.evaluate();
+
+<span class="hljs-comment">// Now, Object.prototype.secret will be equal to 42.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// To fix this problem, replace</span>
+<span class="hljs-comment">//     meta.prop = {};</span>
+<span class="hljs-comment">// above with</span>
+<span class="hljs-comment">//     meta.prop = vm.runInContext('{}', contextifiedObject);</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>);
+<span class="hljs-keyword">const</span> contextifiedObject = vm.<span class="hljs-title function_">createContext</span>({ <span class="hljs-attr">secret</span>: <span class="hljs-number">42</span> });
+(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = <span class="hljs-keyword">new</span> vm.<span class="hljs-title class_">SourceTextModule</span>(
+    <span class="hljs-string">'Object.getPrototypeOf(import.meta.prop).secret = secret;'</span>,
+    {
+      <span class="hljs-title function_">initializeImportMeta</span>(<span class="hljs-params">meta</span>) {
+        <span class="hljs-comment">// Note: this object is created in the top context. As such,</span>
+        <span class="hljs-comment">// Object.getPrototypeOf(import.meta.prop) points to the</span>
+        <span class="hljs-comment">// Object.prototype in the top context rather than that in</span>
+        <span class="hljs-comment">// the contextified object.</span>
+        meta.<span class="hljs-property">prop</span> = {};
+      }
+    });
+  <span class="hljs-comment">// Since module has no dependencies, the linker function will never be called.</span>
+  <span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.<span class="hljs-title function_">link</span>(<span class="hljs-function">() =&gt;</span> {});
+  <span class="hljs-keyword">await</span> <span class="hljs-variable language_">module</span>.evaluate();
+  <span class="hljs-comment">// Now, Object.prototype.secret will be equal to 42.</span>
+  <span class="hljs-comment">//</span>
+  <span class="hljs-comment">// To fix this problem, replace</span>
+  <span class="hljs-comment">//     meta.prop = {};</span>
+  <span class="hljs-comment">// above with</span>
+  <span class="hljs-comment">//     meta.prop = vm.runInContext('{}', contextifiedObject);</span>
+})();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>transform._flush(callback) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>transform._flush(callback)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_transform_flush_callback" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/transform_flush_callback.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/transform_flush_callback.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#transform_flushcallback.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 在刷新剩余数据时调用的回调函数（可选地带有错误参数和数据）。</li>
+</ul><p>此函数不得由应用程序代码直接调用。
+它应该由子类实现，并且只能由内部 <code>Readable</code> 类方法调用。</p><p class="">在某些情况下，转换操作可能需要在流的末尾触发额外的数据位。
+例如，<code>zlib</code> 压缩流将存储用于优化压缩输出的内部状态量。
+但是，当流结束时，需要刷新额外的数据，以便完成压缩数据。</p><p class="">自定义的 <a href="../stream.html#class-streamtransform"><code>Transform</code></a> 实现可以实现 <code>transform._flush()</code> 方法。
+当没有更多的写入数据被消耗时，但在触发 <a href="../stream.html#event-end"><code>'end'</code></a> 事件以表示 <a href="../stream.html#class-streamreadable"><code>Readable</code></a> 流结束之前，将调用此方法。</p><p class="">在 <code>transform._flush()</code> 实现中，<code>transform.push()</code> 方法可以被调用零次或多次，视情况而定。
+必须在刷新操作完成时调用 <code>callback</code> 函数。</p><p class=""><code>transform._flush()</code> 方法以下划线为前缀，因为它是定义它的类的内部方法，不应由用户程序直接调用。</p></div>
+          <div id="content_right"><ul>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> A callback function (optionally with an error
+argument and data) to be called when remaining data has been flushed.</li>
+</ul><p>This function MUST NOT be called by application code directly. It should be
+implemented by child classes, and called by the internal <code>Readable</code> class
+methods only.</p><p>In some cases, a transform operation may need to emit an additional bit of
+data at the end of the stream. For example, a <code>zlib</code> compression stream will
+store an amount of internal state used to optimally compress the output. When
+the stream ends, however, that additional data needs to be flushed so that the
+compressed data will be complete.</p><p>Custom <a href="../stream.html#class-streamtransform"><code>Transform</code></a> implementations <em>may</em> implement the <code>transform._flush()</code>
+method. This will be called when there is no more written data to be consumed,
+but before the <a href="../stream.html#event-end"><code>'end'</code></a> event is emitted signaling the end of the
+<a href="../stream.html#class-streamreadable"><code>Readable</code></a> stream.</p><p>Within the <code>transform._flush()</code> implementation, the <code>transform.push()</code> method
+may be called zero or more times, as appropriate. The <code>callback</code> function must
+be called when the flush operation is complete.</p><p>The <code>transform._flush()</code> method is prefixed with an underscore because it is
+internal to the class that defines it, and should never be called directly by
+user programs.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

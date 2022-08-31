@@ -1,0 +1,2097 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>CLI 命令行 | Node.js API 文档</title>
+  
+  
+  
+
+    <link href="../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../api/static/favicon.png"></head>
+
+<body class="alt apidoc api_page_cli" id="page_api">
+  <div id="content" class="clearfix">
+    <div id="column2" class="interior">
+      <div id="intro" class="interior">
+        
+
+      </div>
+      <!-- <ul>
+          <li><a href="./" class="nav-documentation">v16.16.0</a></li>
+        </ul> -->
+      <!-- <div id="biz_nav" class="biz_wrap" data-biz="api_nav"><a target="_blank" class="biz_link"><img
+            class="biz_img"></a>
+      </div> -->
+      <div class="line"></div>
+      <ul>
+<li><a href="documentation.html" class="nav-documentation" rel="nofollow">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis" rel="nofollow">用法与示例</a></li>
+</ul>
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert" rel="nofollow">assert<span class="api_nav_cn_name">断言</span></a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks" rel="nofollow">async_hooks<span class="api_nav_cn_name">异步钩子</span></a></li>
+<li><a href="async_context.html" class="nav-async_context" rel="nofollow"><span style="font-size:11px;">async_hooks/context</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:1px;">异步上下文</span></a></li>
+<li><a href="buffer.html" class="nav-buffer" rel="nofollow">buffer<span class="api_nav_cn_name">缓冲区</span></a></li>
+<li><a href="addons.html" class="nav-addons" rel="nofollow">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api" rel="nofollow"><span style="font-size:14px;">C/C++插件(使用Node-API)</span></a></li>
+<li><a href="embedding.html" class="nav-embedding" rel="nofollow">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process" rel="nofollow">child_process<span class="api_nav_cn_name">子进程</span></a></li>
+<li><a href="cluster.html" class="nav-cluster" rel="nofollow">cluster<span class="api_nav_cn_name">集群</span></a></li>
+<li><a href="" class="nav-cli active" rel="nofollow">CLI<span class="api_nav_cn_name">命令行</span></a></li>
+<li><a href="console.html" class="nav-console" rel="nofollow">console<span class="api_nav_cn_name">控制台</span></a></li>
+<li><a href="corepack.html" class="nav-corepack" rel="nofollow">Corepack<span class="api_nav_cn_name">核心包</span></a></li>
+<li><a href="crypto.html" class="nav-crypto" rel="nofollow">crypto<span class="api_nav_cn_name">加密</span></a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto" rel="nofollow"><span style="font-size:14px;">crypto/webcrypto</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">网络加密</span></a></li>
+<li><a href="debugger.html" class="nav-debugger" rel="nofollow">debugger<span class="api_nav_cn_name">调试器</span></a></li>
+<li><a href="deprecations.html" class="nav-deprecations" rel="nofollow">deprecation<span class="api_nav_cn_name">弃用</span></a></li>
+<li><a href="dgram.html" class="nav-dgram" rel="nofollow">dgram<span class="api_nav_cn_name">数据报</span></a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel" rel="nofollow"><span style="font-size:14px;">diagnostics_channel</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">诊断通道</span></a></li>
+<li><a href="dns.html" class="nav-dns" rel="nofollow">dns<span class="api_nav_cn_name">域名服务器</span></a></li>
+<li><a href="domain.html" class="nav-domain" rel="nofollow">domain<span class="api_nav_cn_name">域</span></a></li>
+<li><a href="errors.html" class="nav-errors" rel="nofollow">Error<span class="api_nav_cn_name">错误</span></a></li>
+<li><a href="events.html" class="nav-events" rel="nofollow">events<span class="api_nav_cn_name">事件触发器</span></a></li>
+<li><a href="fs.html" class="nav-fs" rel="nofollow">fs<span class="api_nav_cn_name">文件系统</span></a></li>
+<li><a href="globals.html" class="nav-globals" rel="nofollow">global<span class="api_nav_cn_name">全局变量</span></a></li>
+<li><a href="http.html" class="nav-http" rel="nofollow">http<span class="api_nav_cn_name">超文本传输协议</span></a></li>
+<li><a href="http2.html" class="nav-http2" rel="nofollow">http2<span class="api_nav_cn_name">超文本传输协议2.0</span></a></li>
+<li><a href="https.html" class="nav-https" rel="nofollow">https<span class="api_nav_cn_name">安全超文本传输协议</span></a></li>
+<li><a href="inspector.html" class="nav-inspector" rel="nofollow">inspector<span class="api_nav_cn_name">检查器</span></a></li>
+<li><a href="intl.html" class="nav-intl" rel="nofollow">Intl<span class="api_nav_cn_name">国际化</span></a></li>
+<li><a href="module.html" class="nav-module" rel="nofollow">module<span class="api_nav_cn_name">模块</span></a></li>
+<li><a href="modules.html" class="nav-modules" rel="nofollow"><span style="font-size:14px;">module/cjs</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">CommonJS模块</span></a></li>
+<li><a href="esm.html" class="nav-esm" rel="nofollow"><span style="font-size:14px;">module/esm</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">ECMAScript模块</span></a></li>
+<li><a href="packages.html" class="nav-packages" rel="nofollow"><span style="font-size:14px;">module/package</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:2px;">包模块</span></a></li>
+<li><a href="net.html" class="nav-net" rel="nofollow">net<span class="api_nav_cn_name">网络</span></a></li>
+<li><a href="os.html" class="nav-os" rel="nofollow">os<span class="api_nav_cn_name">操作系统</span></a></li>
+<li><a href="path.html" class="nav-path" rel="nofollow">path<span class="api_nav_cn_name">路径</span></a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks" rel="nofollow">perf_hooks<span class="api_nav_cn_name">性能钩子</span></a></li>
+<li><a href="policy.html" class="nav-policy" rel="nofollow">policy<span class="api_nav_cn_name">安全策略</span></a></li>
+<li><a href="process.html" class="nav-process" rel="nofollow">process<span class="api_nav_cn_name">进程</span></a></li>
+<li><a href="punycode.html" class="nav-punycode" rel="nofollow">punycode<span class="api_nav_cn_name">域名代码</span></a></li>
+<li><a href="querystring.html" class="nav-querystring" rel="nofollow">querystring<span class="api_nav_cn_name">查询字符串</span></a></li>
+<li><a href="readline.html" class="nav-readline" rel="nofollow">readline<span class="api_nav_cn_name">逐行读取</span></a></li>
+<li><a href="repl.html" class="nav-repl" rel="nofollow">repl<span class="api_nav_cn_name">交互式解释器</span></a></li>
+<li><a href="report.html" class="nav-report" rel="nofollow">report<span class="api_nav_cn_name">诊断报告</span></a></li>
+<li><a href="stream.html" class="nav-stream" rel="nofollow">stream<span class="api_nav_cn_name">流</span></a></li>
+<li><a href="webstreams.html" class="nav-webstreams" rel="nofollow">stream/web<span class="api_nav_cn_name">网络流</span></a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder" rel="nofollow"><span style="font-size:15px;">string_decoder</span><span class="api_nav_cn_name" style="font-size:12px;padding-left:6px;">字符串解码器</span></a></li>
+<li><a href="timers.html" class="nav-timers" rel="nofollow">timers<span class="api_nav_cn_name">定时器</span></a></li>
+<li><a href="tls.html" class="nav-tls" rel="nofollow">tls<span class="api_nav_cn_name">安全传输层</span></a></li>
+<li><a href="tracing.html" class="nav-tracing" rel="nofollow">trace_events<span class="api_nav_cn_name">跟踪事件</span></a></li>
+<li><a href="tty.html" class="nav-tty" rel="nofollow">tty<span class="api_nav_cn_name">终端</span></a></li>
+<li><a href="url.html" class="nav-url" rel="nofollow">url<span class="api_nav_cn_name">网址</span></a></li>
+<li><a href="util.html" class="nav-util" rel="nofollow">util<span class="api_nav_cn_name">实用工具</span></a></li>
+<li><a href="v8.html" class="nav-v8" rel="nofollow">v8<span class="api_nav_cn_name">引擎</span></a></li>
+<li><a href="vm.html" class="nav-vm" rel="nofollow">vm<span class="api_nav_cn_name">虚拟机</span></a></li>
+<li><a href="wasi.html" class="nav-wasi" rel="nofollow">wasi<span class="api_nav_cn_name">网络汇编系统接口</span></a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads" rel="nofollow">worker_threads<span class="api_nav_cn_name">工作线程</span></a></li>
+<li><a href="zlib.html" class="nav-zlib" rel="nofollow">zlib<span class="api_nav_cn_name">压缩</span></a></li>
+</ul>
+
+    </div>
+
+    <div id="column1" data-id="cli" class="interior">
+      <header class="header">
+        <div class="header-container">
+          <h1>Node.js v16.16.0 文档</h1>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle dark mode/light mode" aria-label="Toggle dark mode/light mode" hidden="">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dark-icon" height="24" width="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path d="M11.1 12.08c-2.33-4.51-.5-8.48.53-10.07C6.27 2.2 1.98 6.59 1.98 12c0 .14.02.28.02.42.62-.27 1.29-.42 2-.42 1.66 0 3.18.83 4.1 2.15A4.01 4.01 0 0111 18c0 1.52-.87 2.83-2.12 3.51.98.32 2.03.5 3.11.5 3.5 0 6.58-1.8 8.37-4.52-2.36.23-6.98-.97-9.26-5.41z"></path>
+              <path d="M7 16h-.18C6.4 14.84 5.3 14 4 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon light-icon" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="gtoc">
+          <ul>
+            <li class="pinned-header">Node.js 16.16.0</li>
+            <!-- <li>
+              <a href="./">返回文档首页</a>
+            </li> -->
+            
+    <li class="picker-header" id="header_toc">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        目录
+      </a>
+
+      <div class="picker"><div class="toc"><ul>
+<li><a href="#command-line-api">CLI 命令行</a>
+<ul>
+<li><a href="#synopsis">概要</a></li>
+<li><a href="#program-entry-point">程序入口点</a>
+<ul>
+<li><a href="#ecmascript-modules-loader-entry-point-caveat">ECMAScript 模块加载器入口点警告</a></li>
+</ul>
+</li>
+<li><a href="#options">选项</a>
+<ul>
+<li><a href="#-"><code>-</code></a></li>
+<li><a href="#--"><code>--</code></a></li>
+<li><a href="#--abort-on-uncaught-exception"><code>--abort-on-uncaught-exception</code></a></li>
+<li><a href="#--completion-bash"><code>--completion-bash</code></a></li>
+<li><span class="stability_1"><a href="#-ccondition---conditionscondition"><code>-C=condition</code>, <code>--conditions=condition</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof"><code>--cpu-prof</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof-dir"><code>--cpu-prof-dir</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof-interval"><code>--cpu-prof-interval</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof-name"><code>--cpu-prof-name</code></a></span></li>
+<li><a href="#--diagnostic-dirdirectory"><code>--diagnostic-dir=directory</code></a></li>
+<li><a href="#--disable-protomode"><code>--disable-proto=mode</code></a></li>
+<li><a href="#--disallow-code-generation-from-strings"><code>--disallow-code-generation-from-strings</code></a></li>
+<li><a href="#--dns-result-orderorder"><code>--dns-result-order=order</code></a></li>
+<li><a href="#--enable-fips"><code>--enable-fips</code></a></li>
+<li><a href="#--enable-source-maps"><code>--enable-source-maps</code></a></li>
+<li><a href="#--experimental-fetch"><code>--experimental-fetch</code></a></li>
+<li><a href="#--experimental-global-webcrypto"><code>--experimental-global-webcrypto</code></a></li>
+<li><a href="#--experimental-import-meta-resolve"><code>--experimental-import-meta-resolve</code></a></li>
+<li><a href="#--experimental-loadermodule"><code>--experimental-loader=module</code></a></li>
+<li><span class="stability_1"><a href="#--experimental-network-imports"><code>--experimental-network-imports</code></a></span></li>
+<li><a href="#--experimental-policy"><code>--experimental-policy</code></a></li>
+<li><a href="#--no-experimental-repl-await"><code>--no-experimental-repl-await</code></a></li>
+<li><a href="#--experimental-specifier-resolutionmode"><code>--experimental-specifier-resolution=mode</code></a></li>
+<li><a href="#--experimental-vm-modules"><code>--experimental-vm-modules</code></a></li>
+<li><a href="#--experimental-wasi-unstable-preview1"><code>--experimental-wasi-unstable-preview1</code></a></li>
+<li><a href="#--experimental-wasm-modules"><code>--experimental-wasm-modules</code></a></li>
+<li><a href="#--force-context-aware"><code>--force-context-aware</code></a></li>
+<li><a href="#--force-fips"><code>--force-fips</code></a></li>
+<li><span class="stability_1"><a href="#--frozen-intrinsics"><code>--frozen-intrinsics</code></a></span></li>
+<li><span class="stability_1"><a href="#--heapsnapshot-near-heap-limitmax_count"><code>--heapsnapshot-near-heap-limit=max_count</code></a></span></li>
+<li><a href="#--heapsnapshot-signalsignal"><code>--heapsnapshot-signal=signal</code></a></li>
+<li><span class="stability_1"><a href="#--heap-prof"><code>--heap-prof</code></a></span></li>
+<li><span class="stability_1"><a href="#--heap-prof-dir"><code>--heap-prof-dir</code></a></span></li>
+<li><span class="stability_1"><a href="#--heap-prof-interval"><code>--heap-prof-interval</code></a></span></li>
+<li><span class="stability_1"><a href="#--heap-prof-name"><code>--heap-prof-name</code></a></span></li>
+<li><a href="#--icu-data-dirfile"><code>--icu-data-dir=file</code></a></li>
+<li><a href="#--input-typetype"><code>--input-type=type</code></a></li>
+<li><a href="#--inspect-brkhostport"><code>--inspect-brk[=[host:]port]</code></a></li>
+<li><a href="#--inspect-porthostport"><code>--inspect-port=[host:]port</code></a></li>
+<li><a href="#--inspecthostport"><code>--inspect[=[host:]port]</code></a>
+<ul>
+<li><a href="#warning-binding-inspector-to-a-public-ipport-combination-is-insecure">注意：绑定检查器到公共的“IP:端口”组合是不安全的</a></li>
+</ul>
+</li>
+<li><a href="#--inspect-publish-uidstderrhttp"><code>--inspect-publish-uid=stderr,http</code></a></li>
+<li><a href="#--insecure-http-parser"><code>--insecure-http-parser</code></a></li>
+<li><a href="#--jitless"><code>--jitless</code></a></li>
+<li><a href="#--max-http-header-sizesize"><code>--max-http-header-size=size</code></a></li>
+<li><a href="#--napi-modules"><code>--napi-modules</code></a></li>
+<li><a href="#--no-addons"><code>--no-addons</code></a></li>
+<li><a href="#--no-deprecation"><code>--no-deprecation</code></a></li>
+<li><a href="#--no-force-async-hooks-checks"><code>--no-force-async-hooks-checks</code></a></li>
+<li><a href="#--no-global-search-paths"><code>--no-global-search-paths</code></a></li>
+<li><a href="#--no-warnings"><code>--no-warnings</code></a></li>
+<li><a href="#--node-memory-debug"><code>--node-memory-debug</code></a></li>
+<li><a href="#--openssl-configfile"><code>--openssl-config=file</code></a></li>
+<li><a href="#--pending-deprecation"><code>--pending-deprecation</code></a></li>
+<li><span class="stability_1"><a href="#--policy-integritysri"><code>--policy-integrity=sri</code></a></span></li>
+<li><a href="#--preserve-symlinks"><code>--preserve-symlinks</code></a></li>
+<li><a href="#--preserve-symlinks-main"><code>--preserve-symlinks-main</code></a></li>
+<li><a href="#--prof"><code>--prof</code></a></li>
+<li><a href="#--prof-process"><code>--prof-process</code></a></li>
+<li><a href="#--redirect-warningsfile"><code>--redirect-warnings=file</code></a></li>
+<li><a href="#--report-compact"><code>--report-compact</code></a></li>
+<li><a href="#--report-dirdirectory-report-directorydirectory"><code>--report-dir=directory</code>, <code>report-directory=directory</code></a></li>
+<li><a href="#--report-filenamefilename"><code>--report-filename=filename</code></a></li>
+<li><a href="#--report-on-fatalerror"><code>--report-on-fatalerror</code></a></li>
+<li><a href="#--report-on-signal"><code>--report-on-signal</code></a></li>
+<li><a href="#--report-signalsignal"><code>--report-signal=signal</code></a></li>
+<li><a href="#--report-uncaught-exception"><code>--report-uncaught-exception</code></a></li>
+<li><a href="#--secure-heapn"><code>--secure-heap=n</code></a></li>
+<li><a href="#--secure-heap-minn"><code>--secure-heap-min=n</code></a></li>
+<li><a href="#--throw-deprecation"><code>--throw-deprecation</code></a></li>
+<li><a href="#--titletitle"><code>--title=title</code></a></li>
+<li><a href="#--tls-cipher-listlist"><code>--tls-cipher-list=list</code></a></li>
+<li><a href="#--tls-keylogfile"><code>--tls-keylog=file</code></a></li>
+<li><a href="#--tls-max-v12"><code>--tls-max-v1.2</code></a></li>
+<li><a href="#--tls-max-v13"><code>--tls-max-v1.3</code></a></li>
+<li><a href="#--tls-min-v10"><code>--tls-min-v1.0</code></a></li>
+<li><a href="#--tls-min-v11"><code>--tls-min-v1.1</code></a></li>
+<li><a href="#--tls-min-v12"><code>--tls-min-v1.2</code></a></li>
+<li><a href="#--tls-min-v13"><code>--tls-min-v1.3</code></a></li>
+<li><a href="#--trace-atomics-wait"><code>--trace-atomics-wait</code></a></li>
+<li><a href="#--trace-deprecation"><code>--trace-deprecation</code></a></li>
+<li><a href="#--trace-event-categories"><code>--trace-event-categories</code></a></li>
+<li><a href="#--trace-event-file-pattern"><code>--trace-event-file-pattern</code></a></li>
+<li><a href="#--trace-events-enabled"><code>--trace-events-enabled</code></a></li>
+<li><a href="#--trace-exit"><code>--trace-exit</code></a></li>
+<li><a href="#--trace-sigint"><code>--trace-sigint</code></a></li>
+<li><a href="#--trace-sync-io"><code>--trace-sync-io</code></a></li>
+<li><a href="#--trace-tls"><code>--trace-tls</code></a></li>
+<li><a href="#--trace-uncaught"><code>--trace-uncaught</code></a></li>
+<li><a href="#--trace-warnings"><code>--trace-warnings</code></a></li>
+<li><a href="#--track-heap-objects"><code>--track-heap-objects</code></a></li>
+<li><a href="#--unhandled-rejectionsmode"><code>--unhandled-rejections=mode</code></a></li>
+<li><a href="#--use-bundled-ca---use-openssl-ca"><code>--use-bundled-ca</code>, <code>--use-openssl-ca</code></a></li>
+<li><a href="#--use-largepagesmode"><code>--use-largepages=mode</code></a></li>
+<li><a href="#--v8-options"><code>--v8-options</code></a></li>
+<li><a href="#--v8-pool-sizenum"><code>--v8-pool-size=num</code></a></li>
+<li><a href="#--zero-fill-buffers"><code>--zero-fill-buffers</code></a></li>
+<li><a href="#-c---check"><code>-c</code>, <code>--check</code></a></li>
+<li><a href="#-e---eval-script"><code>-e</code>, <code>--eval "script"</code></a></li>
+<li><a href="#-h---help"><code>-h</code>, <code>--help</code></a></li>
+<li><a href="#-i---interactive"><code>-i</code>, <code>--interactive</code></a></li>
+<li><a href="#-p---print-script"><code>-p</code>, <code>--print "script"</code></a></li>
+<li><a href="#-r---require-module"><code>-r</code>, <code>--require module</code></a></li>
+<li><a href="#-v---version"><code>-v</code>, <code>--version</code></a></li>
+</ul>
+</li>
+<li><a href="#environment-variables">环境变量</a>
+<ul>
+<li><a href="#force_color1-2-3"><code>FORCE_COLOR=[1, 2, 3]</code></a></li>
+<li><a href="#node_debugmodule"><code>NODE_DEBUG=module[,…]</code></a></li>
+<li><a href="#node_debug_nativemodule"><code>NODE_DEBUG_NATIVE=module[,…]</code></a></li>
+<li><a href="#node_disable_colors1"><code>NODE_DISABLE_COLORS=1</code></a></li>
+<li><a href="#node_extra_ca_certsfile"><code>NODE_EXTRA_CA_CERTS=file</code></a></li>
+<li><a href="#node_icu_datafile"><code>NODE_ICU_DATA=file</code></a></li>
+<li><a href="#node_no_warnings1"><code>NODE_NO_WARNINGS=1</code></a></li>
+<li><a href="#node_optionsoptions"><code>NODE_OPTIONS=options...</code></a></li>
+<li><a href="#node_pathpath"><code>NODE_PATH=path[:…]</code></a></li>
+<li><a href="#node_pending_deprecation1"><code>NODE_PENDING_DEPRECATION=1</code></a></li>
+<li><a href="#node_pending_pipe_instancesinstances"><code>NODE_PENDING_PIPE_INSTANCES=instances</code></a></li>
+<li><a href="#node_preserve_symlinks1"><code>NODE_PRESERVE_SYMLINKS=1</code></a></li>
+<li><a href="#node_redirect_warningsfile"><code>NODE_REDIRECT_WARNINGS=file</code></a></li>
+<li><a href="#node_repl_historyfile"><code>NODE_REPL_HISTORY=file</code></a></li>
+<li><a href="#node_repl_external_modulefile"><code>NODE_REPL_EXTERNAL_MODULE=file</code></a></li>
+<li><a href="#node_skip_platform_checkvalue"><code>NODE_SKIP_PLATFORM_CHECK=value</code></a></li>
+<li><a href="#node_tls_reject_unauthorizedvalue"><code>NODE_TLS_REJECT_UNAUTHORIZED=value</code></a></li>
+<li><a href="#node_v8_coveragedir"><code>NODE_V8_COVERAGE=dir</code></a>
+<ul>
+<li><a href="#coverage-output">覆盖范围的输出</a></li>
+<li><span class="stability_1"><a href="#source-map-cache">源码映射的缓存</a></span></li>
+</ul>
+</li>
+<li><a href="#no_colorany"><code>NO_COLOR=&lt;any&gt;</code></a></li>
+<li><a href="#openssl_conffile"><code>OPENSSL_CONF=file</code></a></li>
+<li><a href="#ssl_cert_dirdir"><code>SSL_CERT_DIR=dir</code></a></li>
+<li><a href="#ssl_cert_filefile"><code>SSL_CERT_FILE=file</code></a></li>
+<li><a href="#tz"><code>TZ</code></a></li>
+<li><a href="#uv_threadpool_sizesize"><code>UV_THREADPOOL_SIZE=size</code></a></li>
+</ul>
+</li>
+<li><a href="#useful-v8-options">有用的 V8 选项</a>
+<ul>
+<li><a href="#--max-old-space-sizesize-in-megabytes">--max-old-space-size=SIZE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div>
+    </li>
+  
+            
+    <li class="picker-header">
+      <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        索引
+      </a>
+
+      <div class="picker"><ul>
+<li><a href="documentation.html" class="nav-documentation">关于本文档</a></li>
+<li><a href="synopsis.html" class="nav-synopsis">用法与示例</a></li>
+
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+    </ul>
+  
+<hr class="line">
+<ul>
+<li><a href="assert.html" class="nav-assert">assert 断言</a></li>
+<li><a href="async_hooks.html" class="nav-async_hooks">async_hooks 异步钩子</a></li>
+<li><a href="async_context.html" class="nav-async_context">async_hooks/context 异步上下文</a></li>
+<li><a href="buffer.html" class="nav-buffer">buffer 缓冲区</a></li>
+<li><a href="addons.html" class="nav-addons">C++插件</a></li>
+<li><a href="n-api.html" class="nav-n-api">C/C++插件(使用Node-API)</a></li>
+<li><a href="embedding.html" class="nav-embedding">C++嵌入器</a></li>
+<li><a href="child_process.html" class="nav-child_process">child_process 子进程</a></li>
+<li><a href="cluster.html" class="nav-cluster">cluster 集群</a></li>
+<li><a href="" class="nav-cli active">CLI 命令行</a></li>
+<li><a href="console.html" class="nav-console">console 控制台</a></li>
+<li><a href="corepack.html" class="nav-corepack">Corepack 核心包</a></li>
+<li><a href="crypto.html" class="nav-crypto">crypto 加密</a></li>
+<li><a href="webcrypto.html" class="nav-webcrypto">crypto/webcrypto 网络加密</a></li>
+<li><a href="debugger.html" class="nav-debugger">debugger 调试器</a></li>
+<li><a href="deprecations.html" class="nav-deprecations">deprecation 弃用</a></li>
+<li><a href="dgram.html" class="nav-dgram">dgram 数据报</a></li>
+<li><a href="diagnostics_channel.html" class="nav-diagnostics_channel">diagnostics_channel 诊断通道</a></li>
+<li><a href="dns.html" class="nav-dns">dns 域名服务器</a></li>
+<li><a href="domain.html" class="nav-domain">domain 域</a></li>
+<li><a href="errors.html" class="nav-errors">Error 错误</a></li>
+<li><a href="events.html" class="nav-events">events 事件触发器</a></li>
+<li><a href="fs.html" class="nav-fs">fs 文件系统</a></li>
+<li><a href="globals.html" class="nav-globals">global 全局变量</a></li>
+<li><a href="http.html" class="nav-http">http 超文本传输协议</a></li>
+<li><a href="http2.html" class="nav-http2">http2 超文本传输协议2.0</a></li>
+<li><a href="https.html" class="nav-https">https 安全超文本传输协议</a></li>
+<li><a href="inspector.html" class="nav-inspector">inspector 检查器</a></li>
+<li><a href="intl.html" class="nav-intl">Intl 国际化</a></li>
+<li><a href="module.html" class="nav-module">module 模块</a></li>
+<li><a href="modules.html" class="nav-modules">module/cjs CommonJS模块</a></li>
+<li><a href="esm.html" class="nav-esm">module/esm ECMAScript模块</a></li>
+<li><a href="packages.html" class="nav-packages">module/package 包模块</a></li>
+<li><a href="net.html" class="nav-net">net 网络</a></li>
+<li><a href="os.html" class="nav-os">os 操作系统</a></li>
+<li><a href="path.html" class="nav-path">path 路径</a></li>
+<li><a href="perf_hooks.html" class="nav-perf_hooks">perf_hooks 性能钩子</a></li>
+<li><a href="policy.html" class="nav-policy">policy 安全策略</a></li>
+<li><a href="process.html" class="nav-process">process 进程</a></li>
+<li><a href="punycode.html" class="nav-punycode">punycode 域名代码</a></li>
+<li><a href="querystring.html" class="nav-querystring">querystring 查询字符串</a></li>
+<li><a href="readline.html" class="nav-readline">readline 逐行读取</a></li>
+<li><a href="repl.html" class="nav-repl">repl 交互式解释器</a></li>
+<li><a href="report.html" class="nav-report">report 诊断报告</a></li>
+<li><a href="stream.html" class="nav-stream">stream 流</a></li>
+<li><a href="webstreams.html" class="nav-webstreams">stream/web 网络流</a></li>
+<li><a href="string_decoder.html" class="nav-string_decoder">string_decoder 字符串解码器</a></li>
+<li><a href="timers.html" class="nav-timers">timers 定时器</a></li>
+<li><a href="tls.html" class="nav-tls">tls 安全传输层</a></li>
+<li><a href="tracing.html" class="nav-tracing">trace_events 跟踪事件</a></li>
+<li><a href="tty.html" class="nav-tty">tty 终端</a></li>
+<li><a href="url.html" class="nav-url">url 网址</a></li>
+<li><a href="util.html" class="nav-util">util 实用工具</a></li>
+<li><a href="v8.html" class="nav-v8">v8 引擎</a></li>
+<li><a href="vm.html" class="nav-vm">vm 虚拟机</a></li>
+<li><a href="wasi.html" class="nav-wasi">wasi 网络汇编系统接口</a></li>
+<li><a href="worker_threads.html" class="nav-worker_threads">worker_threads 工作线程</a></li>
+<li><a href="zlib.html" class="nav-zlib">zlib 压缩</a></li>
+</ul></div>
+    </li>
+  
+            <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../api/cli.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../api-v14/cli.html">14.20.0</a></li>
+</ol></div>
+  </li>
+            <li>
+              <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+            </li>
+            <li>
+              
+              
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </header>
+
+      <details id="toc" open=""><summary>目录</summary><ul>
+<li><a href="#command-line-api">CLI 命令行</a>
+<ul>
+<li><a href="#synopsis">概要</a></li>
+<li><a href="#program-entry-point">程序入口点</a>
+<ul>
+<li><a href="#ecmascript-modules-loader-entry-point-caveat">ECMAScript 模块加载器入口点警告</a></li>
+</ul>
+</li>
+<li><a href="#options">选项</a>
+<ul>
+<li><a href="#-"><code>-</code></a></li>
+<li><a href="#--"><code>--</code></a></li>
+<li><a href="#--abort-on-uncaught-exception"><code>--abort-on-uncaught-exception</code></a></li>
+<li><a href="#--completion-bash"><code>--completion-bash</code></a></li>
+<li><span class="stability_1"><a href="#-ccondition---conditionscondition"><code>-C=condition</code>, <code>--conditions=condition</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof"><code>--cpu-prof</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof-dir"><code>--cpu-prof-dir</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof-interval"><code>--cpu-prof-interval</code></a></span></li>
+<li><span class="stability_1"><a href="#--cpu-prof-name"><code>--cpu-prof-name</code></a></span></li>
+<li><a href="#--diagnostic-dirdirectory"><code>--diagnostic-dir=directory</code></a></li>
+<li><a href="#--disable-protomode"><code>--disable-proto=mode</code></a></li>
+<li><a href="#--disallow-code-generation-from-strings"><code>--disallow-code-generation-from-strings</code></a></li>
+<li><a href="#--dns-result-orderorder"><code>--dns-result-order=order</code></a></li>
+<li><a href="#--enable-fips"><code>--enable-fips</code></a></li>
+<li><a href="#--enable-source-maps"><code>--enable-source-maps</code></a></li>
+<li><a href="#--experimental-fetch"><code>--experimental-fetch</code></a></li>
+<li><a href="#--experimental-global-webcrypto"><code>--experimental-global-webcrypto</code></a></li>
+<li><a href="#--experimental-import-meta-resolve"><code>--experimental-import-meta-resolve</code></a></li>
+<li><a href="#--experimental-loadermodule"><code>--experimental-loader=module</code></a></li>
+<li><span class="stability_1"><a href="#--experimental-network-imports"><code>--experimental-network-imports</code></a></span></li>
+<li><a href="#--experimental-policy"><code>--experimental-policy</code></a></li>
+<li><a href="#--no-experimental-repl-await"><code>--no-experimental-repl-await</code></a></li>
+<li><a href="#--experimental-specifier-resolutionmode"><code>--experimental-specifier-resolution=mode</code></a></li>
+<li><a href="#--experimental-vm-modules"><code>--experimental-vm-modules</code></a></li>
+<li><a href="#--experimental-wasi-unstable-preview1"><code>--experimental-wasi-unstable-preview1</code></a></li>
+<li><a href="#--experimental-wasm-modules"><code>--experimental-wasm-modules</code></a></li>
+<li><a href="#--force-context-aware"><code>--force-context-aware</code></a></li>
+<li><a href="#--force-fips"><code>--force-fips</code></a></li>
+<li><span class="stability_1"><a href="#--frozen-intrinsics"><code>--frozen-intrinsics</code></a></span></li>
+<li><span class="stability_1"><a href="#--heapsnapshot-near-heap-limitmax_count"><code>--heapsnapshot-near-heap-limit=max_count</code></a></span></li>
+<li><a href="#--heapsnapshot-signalsignal"><code>--heapsnapshot-signal=signal</code></a></li>
+<li><span class="stability_1"><a href="#--heap-prof"><code>--heap-prof</code></a></span></li>
+<li><span class="stability_1"><a href="#--heap-prof-dir"><code>--heap-prof-dir</code></a></span></li>
+<li><span class="stability_1"><a href="#--heap-prof-interval"><code>--heap-prof-interval</code></a></span></li>
+<li><span class="stability_1"><a href="#--heap-prof-name"><code>--heap-prof-name</code></a></span></li>
+<li><a href="#--icu-data-dirfile"><code>--icu-data-dir=file</code></a></li>
+<li><a href="#--input-typetype"><code>--input-type=type</code></a></li>
+<li><a href="#--inspect-brkhostport"><code>--inspect-brk[=[host:]port]</code></a></li>
+<li><a href="#--inspect-porthostport"><code>--inspect-port=[host:]port</code></a></li>
+<li><a href="#--inspecthostport"><code>--inspect[=[host:]port]</code></a>
+<ul>
+<li><a href="#warning-binding-inspector-to-a-public-ipport-combination-is-insecure">注意：绑定检查器到公共的“IP:端口”组合是不安全的</a></li>
+</ul>
+</li>
+<li><a href="#--inspect-publish-uidstderrhttp"><code>--inspect-publish-uid=stderr,http</code></a></li>
+<li><a href="#--insecure-http-parser"><code>--insecure-http-parser</code></a></li>
+<li><a href="#--jitless"><code>--jitless</code></a></li>
+<li><a href="#--max-http-header-sizesize"><code>--max-http-header-size=size</code></a></li>
+<li><a href="#--napi-modules"><code>--napi-modules</code></a></li>
+<li><a href="#--no-addons"><code>--no-addons</code></a></li>
+<li><a href="#--no-deprecation"><code>--no-deprecation</code></a></li>
+<li><a href="#--no-force-async-hooks-checks"><code>--no-force-async-hooks-checks</code></a></li>
+<li><a href="#--no-global-search-paths"><code>--no-global-search-paths</code></a></li>
+<li><a href="#--no-warnings"><code>--no-warnings</code></a></li>
+<li><a href="#--node-memory-debug"><code>--node-memory-debug</code></a></li>
+<li><a href="#--openssl-configfile"><code>--openssl-config=file</code></a></li>
+<li><a href="#--pending-deprecation"><code>--pending-deprecation</code></a></li>
+<li><span class="stability_1"><a href="#--policy-integritysri"><code>--policy-integrity=sri</code></a></span></li>
+<li><a href="#--preserve-symlinks"><code>--preserve-symlinks</code></a></li>
+<li><a href="#--preserve-symlinks-main"><code>--preserve-symlinks-main</code></a></li>
+<li><a href="#--prof"><code>--prof</code></a></li>
+<li><a href="#--prof-process"><code>--prof-process</code></a></li>
+<li><a href="#--redirect-warningsfile"><code>--redirect-warnings=file</code></a></li>
+<li><a href="#--report-compact"><code>--report-compact</code></a></li>
+<li><a href="#--report-dirdirectory-report-directorydirectory"><code>--report-dir=directory</code>, <code>report-directory=directory</code></a></li>
+<li><a href="#--report-filenamefilename"><code>--report-filename=filename</code></a></li>
+<li><a href="#--report-on-fatalerror"><code>--report-on-fatalerror</code></a></li>
+<li><a href="#--report-on-signal"><code>--report-on-signal</code></a></li>
+<li><a href="#--report-signalsignal"><code>--report-signal=signal</code></a></li>
+<li><a href="#--report-uncaught-exception"><code>--report-uncaught-exception</code></a></li>
+<li><a href="#--secure-heapn"><code>--secure-heap=n</code></a></li>
+<li><a href="#--secure-heap-minn"><code>--secure-heap-min=n</code></a></li>
+<li><a href="#--throw-deprecation"><code>--throw-deprecation</code></a></li>
+<li><a href="#--titletitle"><code>--title=title</code></a></li>
+<li><a href="#--tls-cipher-listlist"><code>--tls-cipher-list=list</code></a></li>
+<li><a href="#--tls-keylogfile"><code>--tls-keylog=file</code></a></li>
+<li><a href="#--tls-max-v12"><code>--tls-max-v1.2</code></a></li>
+<li><a href="#--tls-max-v13"><code>--tls-max-v1.3</code></a></li>
+<li><a href="#--tls-min-v10"><code>--tls-min-v1.0</code></a></li>
+<li><a href="#--tls-min-v11"><code>--tls-min-v1.1</code></a></li>
+<li><a href="#--tls-min-v12"><code>--tls-min-v1.2</code></a></li>
+<li><a href="#--tls-min-v13"><code>--tls-min-v1.3</code></a></li>
+<li><a href="#--trace-atomics-wait"><code>--trace-atomics-wait</code></a></li>
+<li><a href="#--trace-deprecation"><code>--trace-deprecation</code></a></li>
+<li><a href="#--trace-event-categories"><code>--trace-event-categories</code></a></li>
+<li><a href="#--trace-event-file-pattern"><code>--trace-event-file-pattern</code></a></li>
+<li><a href="#--trace-events-enabled"><code>--trace-events-enabled</code></a></li>
+<li><a href="#--trace-exit"><code>--trace-exit</code></a></li>
+<li><a href="#--trace-sigint"><code>--trace-sigint</code></a></li>
+<li><a href="#--trace-sync-io"><code>--trace-sync-io</code></a></li>
+<li><a href="#--trace-tls"><code>--trace-tls</code></a></li>
+<li><a href="#--trace-uncaught"><code>--trace-uncaught</code></a></li>
+<li><a href="#--trace-warnings"><code>--trace-warnings</code></a></li>
+<li><a href="#--track-heap-objects"><code>--track-heap-objects</code></a></li>
+<li><a href="#--unhandled-rejectionsmode"><code>--unhandled-rejections=mode</code></a></li>
+<li><a href="#--use-bundled-ca---use-openssl-ca"><code>--use-bundled-ca</code>, <code>--use-openssl-ca</code></a></li>
+<li><a href="#--use-largepagesmode"><code>--use-largepages=mode</code></a></li>
+<li><a href="#--v8-options"><code>--v8-options</code></a></li>
+<li><a href="#--v8-pool-sizenum"><code>--v8-pool-size=num</code></a></li>
+<li><a href="#--zero-fill-buffers"><code>--zero-fill-buffers</code></a></li>
+<li><a href="#-c---check"><code>-c</code>, <code>--check</code></a></li>
+<li><a href="#-e---eval-script"><code>-e</code>, <code>--eval "script"</code></a></li>
+<li><a href="#-h---help"><code>-h</code>, <code>--help</code></a></li>
+<li><a href="#-i---interactive"><code>-i</code>, <code>--interactive</code></a></li>
+<li><a href="#-p---print-script"><code>-p</code>, <code>--print "script"</code></a></li>
+<li><a href="#-r---require-module"><code>-r</code>, <code>--require module</code></a></li>
+<li><a href="#-v---version"><code>-v</code>, <code>--version</code></a></li>
+</ul>
+</li>
+<li><a href="#environment-variables">环境变量</a>
+<ul>
+<li><a href="#force_color1-2-3"><code>FORCE_COLOR=[1, 2, 3]</code></a></li>
+<li><a href="#node_debugmodule"><code>NODE_DEBUG=module[,…]</code></a></li>
+<li><a href="#node_debug_nativemodule"><code>NODE_DEBUG_NATIVE=module[,…]</code></a></li>
+<li><a href="#node_disable_colors1"><code>NODE_DISABLE_COLORS=1</code></a></li>
+<li><a href="#node_extra_ca_certsfile"><code>NODE_EXTRA_CA_CERTS=file</code></a></li>
+<li><a href="#node_icu_datafile"><code>NODE_ICU_DATA=file</code></a></li>
+<li><a href="#node_no_warnings1"><code>NODE_NO_WARNINGS=1</code></a></li>
+<li><a href="#node_optionsoptions"><code>NODE_OPTIONS=options...</code></a></li>
+<li><a href="#node_pathpath"><code>NODE_PATH=path[:…]</code></a></li>
+<li><a href="#node_pending_deprecation1"><code>NODE_PENDING_DEPRECATION=1</code></a></li>
+<li><a href="#node_pending_pipe_instancesinstances"><code>NODE_PENDING_PIPE_INSTANCES=instances</code></a></li>
+<li><a href="#node_preserve_symlinks1"><code>NODE_PRESERVE_SYMLINKS=1</code></a></li>
+<li><a href="#node_redirect_warningsfile"><code>NODE_REDIRECT_WARNINGS=file</code></a></li>
+<li><a href="#node_repl_historyfile"><code>NODE_REPL_HISTORY=file</code></a></li>
+<li><a href="#node_repl_external_modulefile"><code>NODE_REPL_EXTERNAL_MODULE=file</code></a></li>
+<li><a href="#node_skip_platform_checkvalue"><code>NODE_SKIP_PLATFORM_CHECK=value</code></a></li>
+<li><a href="#node_tls_reject_unauthorizedvalue"><code>NODE_TLS_REJECT_UNAUTHORIZED=value</code></a></li>
+<li><a href="#node_v8_coveragedir"><code>NODE_V8_COVERAGE=dir</code></a>
+<ul>
+<li><a href="#coverage-output">覆盖范围的输出</a></li>
+<li><span class="stability_1"><a href="#source-map-cache">源码映射的缓存</a></span></li>
+</ul>
+</li>
+<li><a href="#no_colorany"><code>NO_COLOR=&lt;any&gt;</code></a></li>
+<li><a href="#openssl_conffile"><code>OPENSSL_CONF=file</code></a></li>
+<li><a href="#ssl_cert_dirdir"><code>SSL_CERT_DIR=dir</code></a></li>
+<li><a href="#ssl_cert_filefile"><code>SSL_CERT_FILE=file</code></a></li>
+<li><a href="#tz"><code>TZ</code></a></li>
+<li><a href="#uv_threadpool_sizesize"><code>UV_THREADPOOL_SIZE=size</code></a></li>
+</ul>
+</li>
+<li><a href="#useful-v8-options">有用的 V8 选项</a>
+<ul>
+<li><a href="#--max-old-space-sizesize-in-megabytes">--max-old-space-size=SIZE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></details>
+
+      <div id="apicontent">
+        <h2>CLI 命令行<span><a class="mark" href="#command-line-api" id="command-line-api">#</a></span><a aria-hidden="true" class="legacy" id="cli_command_line_api"></a></h2><p class="tip_wrap" data-show_trans="1" data-item_id="#command-line-api">
+                <a href="cli/command_line_api.html" class="tip_trans">中英对照</a>
+                </p>
+<!--introduced_in=v5.9.1-->
+<!--type=misc-->
+<p>Node.js 具有各种各样的命令行选项。
+这些选项暴露了内置调试、多种执行脚本的方式、以及其他有用的运行时选项。</p>
+<p class="">要在终端中将本文档作为手册页查看，则运行 <code>man node</code>。</p>
+<section><h3>概要<span><a class="mark" href="#synopsis" id="synopsis">#</a></span><a aria-hidden="true" class="legacy" id="cli_synopsis"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#synopsis">
+                <a href="cli/synopsis.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>node [options] [V8 options] [&lt;program-entry-point&gt; | -e "script" | -] [--] [arguments]</code></p>
+<p class=""><code>node inspect [&lt;program-entry-point&gt; | -e "script" | &lt;host&gt;:&lt;port&gt;] …</code></p>
+<p class=""><code>node --v8-options</code></p>
+<p class="">不带参数执行以启动<a href="repl.html">交互式解释器</a>。</p>
+<p class="">有关 <code>node inspect</code> 的更多信息，请参阅<a href="debugger.html">调试器</a>文档。</p>
+</section><section><h3>程序入口点<span><a class="mark" href="#program-entry-point" id="program-entry-point">#</a></span><a aria-hidden="true" class="legacy" id="cli_program_entry_point"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#program-entry-point">
+                <a href="cli/program_entry_point.html" class="tip_trans">中英对照</a>
+                </p>
+<p>程序入口点是类似说明符的字符串。
+如果字符串不是绝对路径，则解析为当前工作目录的相对路径。
+然后由 <a href="modules.html">CommonJS</a> 模块加载器解析该路径。
+如果没有找到对应的文件，则抛出错误。</p>
+<p class="">如果找到文件，则其路径将在以下任一条件下传给 <a href="esm.html#loaders">ECMAScript 模块加载器</a>：</p>
+<ul class="">
+<li>该程序以命令行标志启动，该标志强制使用 ECMAScript 模块加载器加载入口点。</li>
+<li>该文件的扩展名为 <code>.mjs</code>。</li>
+<li>该文件没有 <code>.cjs</code> 扩展名，并且最近的父 <code>package.json</code> 文件包含值为 <code>"module"</code> 的顶层 <a href="packages.html#type"><code>"type"</code></a> 字段。</li>
+</ul>
+<p class="">否则，使用 CommonJS 模块加载器加载文件。
+参阅<a href="packages.html#modules-loaders">模块加载器</a>了解更多详细信息。</p>
+<h4>ECMAScript 模块加载器入口点警告<span><a class="mark" href="#ecmascript-modules-loader-entry-point-caveat" id="ecmascript-modules-loader-entry-point-caveat">#</a></span><a aria-hidden="true" class="legacy" id="cli_ecmascript_modules_loader_entry_point_caveat"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#ecmascript-modules-loader-entry-point-caveat">
+                <a href="cli/ecmascript_modules_loader_entry_point_caveat.html" class="tip_trans">中英对照</a>
+                </p>
+<p>当加载 <a href="esm.html#loaders">ECMAScript 模块加载器</a>加载程序入口点时，<code>node</code> 命令将仅接受使用 <code>.js</code>、<code>.mjs</code>、或 <code>.cjs</code> 扩展名的文件作为输入；当启用 <a href="#--experimental-wasm-modules"><code>--experimental-wasm-modules</code></a> 时，则使用 <code>.wasm</code> 扩展名。</p>
+</section><section><h3>选项<span><a class="mark" href="#options" id="options">#</a></span><a aria-hidden="true" class="legacy" id="cli_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#options">
+                <a href="cli/options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.12.0</td>
+<td><p>除了 V8 选项之外，Node.js 选项现在也允许使用下划线而不是破折号。</p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>所有选项，包括 V8 选项，都允许用破折号 (<code>-</code>) 或下划线 (<code>_</code>) 分隔单词。
+例如，<code>--pending-deprecation</code> 等价于 <code>--pending_deprecation</code>。</p>
+<p class="">如果接受单个值的选项（例如 <code>--max-http-header-size</code>）被多次传入，则使用最后传入的值。
+来自命令行的选项优先于通过 <a href="#node_optionsoptions"><code>NODE_OPTIONS</code></a> 环境变量传入的选项。</p>
+<h4><code>-</code><span><a class="mark" href="#-" id="-">#</a></span><a aria-hidden="true" class="legacy" id="cli"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-">
+                <a href="cli/_.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p>标准输入的别名。
+类似于在其他命令行工具中使用 <code>-</code>，这意味着脚本是从标准输入读取的，其余的选项将传给该脚本。</p>
+<h4><code>--</code><span><a class="mark" href="#--" id="--">#</a></span><a aria-hidden="true" class="legacy" id="cli_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--">
+                <a href="cli/1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.11.0</span>
+</div>
+<p>指示 node 选项的结束。
+将其余参数传给脚本。
+如果在此之前没有提供脚本文件名或评估/打印脚本，则下一个参数用作脚本文件名。</p>
+<h4><code>--abort-on-uncaught-exception</code><span><a class="mark" href="#--abort-on-uncaught-exception" id="--abort-on-uncaught-exception">#</a></span><a aria-hidden="true" class="legacy" id="cli_abort_on_uncaught_exception"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--abort-on-uncaught-exception">
+                <a href="cli/abort_on_uncaught_exception.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.10.8</span>
+</div>
+<p>中止而不是退出会导致使用调试器（例如 <code>lldb</code>、<code>gdb</code> 和 <code>mdb</code>）生成用于事后分析的核心文件。</p>
+<p class="">如果传入了此标志，则该行为仍然可以设置为不通过 <a href="process.html#processsetuncaughtexceptioncapturecallbackfn"><code>process.setUncaughtExceptionCaptureCallback()</code></a> 中止（以及通过使用使用它的 <code>domain</code> 模块）</p>
+<h4><code>--completion-bash</code><span><a class="mark" href="#--completion-bash" id="--completion-bash">#</a></span><a aria-hidden="true" class="legacy" id="cli_completion_bash"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--completion-bash">
+                <a href="cli/completion_bash.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.12.0</span>
+</div>
+<p>为 Node.js 打印可源代码的 bash 完成脚本。</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --completion-bash &gt; node_bash_completion</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> node_bash_completion</span></code></pre>
+<h4><code>-C=condition</code>, <code>--conditions=condition</code><span><a class="mark" href="#-ccondition---conditionscondition" id="-ccondition---conditionscondition">#</a></span><a aria-hidden="true" class="legacy" id="cli_c_condition_conditions_condition"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-ccondition---conditionscondition">
+                <a href="cli/c_condition_conditions_condition.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.9.0, v12.19.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>启用对自定义的<a href="packages.html#conditional-exports">条件导出</a>解析条件的实验性支持。</p>
+<p class="">允许任意数量的自定义字符串条件名称。</p>
+<p class=""><code>"node"</code>、<code>"default"</code>、<code>"import"</code> 和 <code>"require"</code> 的默认 Node.js 条件将始终按照定义应用。</p>
+<p class="">例如，要运行具有 "development" 解析的模块：</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node -C=development app.js</span></code></pre>
+<h4><code>--cpu-prof</code><span><a class="mark" href="#--cpu-prof" id="--cpu-prof">#</a></span><a aria-hidden="true" class="legacy" id="cli_cpu_prof"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--cpu-prof">
+                <a href="cli/cpu_prof.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>启动时开始 V8 CPU 分析器，并且在退出前将 CPU 分析文件写入磁盘。</p>
+<p class="">如果未指定<code>--cpu-prof-dir</code>，则生成的分析文件放在当前工作目录中。</p>
+<p class="">如果未指定 <code>--cpu-prof-name</code>，则生成的分析文件名为 <code>CPU.${yyyymmdd}.${hhmmss}.${pid}.${tid}.${seq}.cpuprofile</code>。</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --cpu-prof index.js</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">ls</span> *.cpuprofile</span>
+CPU.20190409.202950.15293.0.0.cpuprofile</code></pre>
+<h4><code>--cpu-prof-dir</code><span><a class="mark" href="#--cpu-prof-dir" id="--cpu-prof-dir">#</a></span><a aria-hidden="true" class="legacy" id="cli_cpu_prof_dir"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--cpu-prof-dir">
+                <a href="cli/cpu_prof_dir.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>指定放置 <code>--cpu-prof</code> 生成的 CPU 分析文件的目录</p>
+<p class="">默认值由 <a href="#--diagnostic-dirdirectory"><code>--diagnostic-dir</code></a> 命令行选项控制。</p>
+<h4><code>--cpu-prof-interval</code><span><a class="mark" href="#--cpu-prof-interval" id="--cpu-prof-interval">#</a></span><a aria-hidden="true" class="legacy" id="cli_cpu_prof_interval"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--cpu-prof-interval">
+                <a href="cli/cpu_prof_interval.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.2.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>为 <code>--cpu-prof</code> 生成的 CPU 分析文件指定以微秒为单位的采样间隔。
+默认为 1000 微秒。</p>
+<h4><code>--cpu-prof-name</code><span><a class="mark" href="#--cpu-prof-name" id="--cpu-prof-name">#</a></span><a aria-hidden="true" class="legacy" id="cli_cpu_prof_name"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--cpu-prof-name">
+                <a href="cli/cpu_prof_name.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>指定 <code>--cpu-prof</code> 生成的 CPU 分析文件的文件名。</p>
+<h4><code>--diagnostic-dir=directory</code><span><a class="mark" href="#--diagnostic-dirdirectory" id="--diagnostic-dirdirectory">#</a></span><a aria-hidden="true" class="legacy" id="cli_diagnostic_dir_directory"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--diagnostic-dirdirectory">
+                <a href="cli/diagnostic_dir_directory.html" class="tip_trans">中英对照</a>
+                </p>
+<p>设置写入所有诊断输出文件的目录。
+默认为当前工作目录。</p>
+<p class="">影响默认输出目录：</p>
+<ul class="">
+<li><a href="#--cpu-prof-dir"><code>--cpu-prof-dir</code></a></li>
+<li><a href="#--heap-prof-dir"><code>--heap-prof-dir</code></a></li>
+<li><a href="#--redirect-warningsfile"><code>--redirect-warnings</code></a></li>
+</ul>
+<h4><code>--disable-proto=mode</code><span><a class="mark" href="#--disable-protomode" id="--disable-protomode">#</a></span><a aria-hidden="true" class="legacy" id="cli_disable_proto_mode"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--disable-protomode">
+                <a href="cli/disable_proto_mode.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.12.0, v12.17.0</span>
+</div>
+<p>禁用 <code>Object.prototype.__proto__</code> 属性。
+如果 <code>mode</code> 是 <code>delete</code>，则该属性将被完全删除。
+如果 <code>mode</code> 是 <code>throw</code>，则访问该属性会使用代码 <code>ERR_PROTO_ACCESS</code> 抛出异常。</p>
+<h4><code>--disallow-code-generation-from-strings</code><span><a class="mark" href="#--disallow-code-generation-from-strings" id="--disallow-code-generation-from-strings">#</a></span><a aria-hidden="true" class="legacy" id="cli_disallow_code_generation_from_strings"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--disallow-code-generation-from-strings">
+                <a href="cli/disallow_code_generation_from_strings.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v9.8.0</span>
+</div>
+<p>使从字符串生成代码的 <code>eval</code> 和 <code>new Function</code> 等内置语言功能抛出异常。
+这不会影响 Node.js <code>vm</code> 模块。</p>
+<h4><code>--dns-result-order=order</code><span><a class="mark" href="#--dns-result-orderorder" id="--dns-result-orderorder">#</a></span><a aria-hidden="true" class="legacy" id="cli_dns_result_order_order"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--dns-result-orderorder">
+                <a href="cli/dns_result_order_order.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.4.0</span>
+</div>
+<p>在 <a href="dns.html#dnslookuphostname-options-callback"><code>dns.lookup()</code></a> 和 <a href="dns.html#dnspromiseslookuphostname-options"><code>dnsPromises.lookup()</code></a> 中设置 <code>verbatim</code> 的默认值。
+该值可能是：</p>
+<ul class="">
+<li><code>ipv4first</code>: 设置默认的 <code>verbatim</code> 为 <code>false</code>。</li>
+<li><code>verbatim</code>: 设置默认的 <code>verbatim</code> 为 <code>true</code>。</li>
+</ul>
+<p class="">默认为 <code>ipv4first</code>，并且 <a href="dns.html#dnssetdefaultresultorderorder"><code>dns.setDefaultResultOrder()</code></a> 的优先级高于 <code>--dns-result-order</code>。</p>
+<h4><code>--enable-fips</code><span><a class="mark" href="#--enable-fips" id="--enable-fips">#</a></span><a aria-hidden="true" class="legacy" id="cli_enable_fips"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--enable-fips">
+                <a href="cli/enable_fips.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<p>在启动时启用符合 FIPS 的加密。
+（需要针对兼容 FIPS 的 OpenSSL 构建 Node.js。）</p>
+<h4><code>--enable-source-maps</code><span><a class="mark" href="#--enable-source-maps" id="--enable-source-maps">#</a></span><a aria-hidden="true" class="legacy" id="cli_enable_source_maps"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--enable-source-maps">
+                <a href="cli/enable_source_maps.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.11.0</td>
+<td><p>此 API 不再是实验的。</p></td></tr>
+<tr><td>v12.12.0</td>
+<td><p><span>新增于: v12.12.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>启用 <a href="https://sourcemaps.info/spec.html" rel="nofollow">Source Map v3</a> 对堆栈跟踪的支持。</p>
+<p class="">当使用转译器（例如 TypeScript）时，应用程序抛出的堆栈跟踪会引用转译后的代码，而不是原始的源位置。
+<code>--enable-source-maps</code> 启用源映射缓存并尽最大努力报告相对于原始源文件的堆栈跟踪。</p>
+<p class="">覆盖 <code>Error.prepareStackTrace</code> 可防止 <code>--enable-source-maps</code> 修改堆栈跟踪。</p>
+<h4><code>--experimental-fetch</code><span><a class="mark" href="#--experimental-fetch" id="--experimental-fetch">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_fetch"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-fetch">
+                <a href="cli/experimental_fetch.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p>启用对 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a> 的实验性支持。</p>
+<h4><code>--experimental-global-webcrypto</code><span><a class="mark" href="#--experimental-global-webcrypto" id="--experimental-global-webcrypto">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_global_webcrypto"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-global-webcrypto">
+                <a href="cli/experimental_global_webcrypto.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p>在全局作用域内公开 <a href="webcrypto.html">Web 加密 API</a>。</p>
+<h4><code>--experimental-import-meta-resolve</code><span><a class="mark" href="#--experimental-import-meta-resolve" id="--experimental-import-meta-resolve">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_import_meta_resolve"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-import-meta-resolve">
+                <a href="cli/experimental_import_meta_resolve.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.9.0, v12.16.2</span>
+</div>
+<p>启用实验性 <code>import.meta.resolve()</code> 支持。</p>
+<h4><code>--experimental-loader=module</code><span><a class="mark" href="#--experimental-loadermodule" id="--experimental-loadermodule">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_loader_module"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-loadermodule">
+                <a href="cli/experimental_loader_module.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v9.0.0</span>
+</div>
+<p>指定自定义的实验的 <a href="esm.html#loaders">ECMAScript 模块加载器</a>的 <code>module</code>。
+<code>module</code> 可以是任何作为 <a href="esm.html#import-specifiers"><code>import</code> 说明符</a>接受的字符串。</p>
+<h4><code>--experimental-network-imports</code><span><a class="mark" href="#--experimental-network-imports" id="--experimental-network-imports">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_network_imports"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-network-imports">
+                <a href="cli/experimental_network_imports.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>在 <code>import</code> 说明符中启用对 <code>https:</code> 协议的实验性支持。</p>
+<h4><code>--experimental-policy</code><span><a class="mark" href="#--experimental-policy" id="--experimental-policy">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_policy"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-policy">
+                <a href="cli/experimental_policy.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.8.0</span>
+</div>
+<p>使用指定的文件作为安全策略。</p>
+<h4><code>--no-experimental-repl-await</code><span><a class="mark" href="#--no-experimental-repl-await" id="--no-experimental-repl-await">#</a></span><a aria-hidden="true" class="legacy" id="cli_no_experimental_repl_await"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--no-experimental-repl-await">
+                <a href="cli/no_experimental_repl_await.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.6.0</span>
+</div>
+<p>使用此标志在交互式解释器中禁用顶层等待。</p>
+<h4><code>--experimental-specifier-resolution=mode</code><span><a class="mark" href="#--experimental-specifier-resolutionmode" id="--experimental-specifier-resolutionmode">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_specifier_resolution_mode"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-specifier-resolutionmode">
+                <a href="cli/experimental_specifier_resolution_mode.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.4.0, v12.16.0</span>
+</div>
+<p>设置解析 ES 模块说明符的解析算法。
+有效选项为 <code>explicit</code> 和 <code>node</code>。</p>
+<p class="">默认为 <code>explicit</code>，需要提供模块的完整路径。
+<code>node</code> 模式支持可选文件扩展名和导入具有索引文件的目录的能力。</p>
+<p class="">请参阅<a href="esm.html#customizing-esm-specifier-resolution-algorithm">自定义的 ESM 说明符解析</a>以获取示例用法。</p>
+<h4><code>--experimental-vm-modules</code><span><a class="mark" href="#--experimental-vm-modules" id="--experimental-vm-modules">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_vm_modules"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-vm-modules">
+                <a href="cli/experimental_vm_modules.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v9.6.0</span>
+</div>
+<p>在 <code>vm</code> 模块中启用实验性 ES 模块支持。</p>
+<h4><code>--experimental-wasi-unstable-preview1</code><span><a class="mark" href="#--experimental-wasi-unstable-preview1" id="--experimental-wasi-unstable-preview1">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_wasi_unstable_preview1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-wasi-unstable-preview1">
+                <a href="cli/experimental_wasi_unstable_preview1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.6.0</td>
+<td><p>已从 <code>--experimental-wasi-unstable-preview0</code> 更改为 <code>--experimental-wasi-unstable-preview1</code></p></td></tr>
+<tr><td>v13.3.0, v12.16.0</td>
+<td><p><span>新增于: v13.3.0, v12.16.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>启用实验性 WebAssembly 系统接口 (WASI) 支持。</p>
+<h4><code>--experimental-wasm-modules</code><span><a class="mark" href="#--experimental-wasm-modules" id="--experimental-wasm-modules">#</a></span><a aria-hidden="true" class="legacy" id="cli_experimental_wasm_modules"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--experimental-wasm-modules">
+                <a href="cli/experimental_wasm_modules.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.3.0</span>
+</div>
+<p>启用实验性 WebAssembly 模块支持。</p>
+<h4><code>--force-context-aware</code><span><a class="mark" href="#--force-context-aware" id="--force-context-aware">#</a></span><a aria-hidden="true" class="legacy" id="cli_force_context_aware"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--force-context-aware">
+                <a href="cli/force_context_aware.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.12.0</span>
+</div>
+<p>禁用加载不是<a href="addons.html#context-aware-addons">上下文感知</a>的原生插件。</p>
+<h4><code>--force-fips</code><span><a class="mark" href="#--force-fips" id="--force-fips">#</a></span><a aria-hidden="true" class="legacy" id="cli_force_fips"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--force-fips">
+                <a href="cli/force_fips.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<p>在启动时强制执行符合 FIPS 的加密。
+（不能从脚本代码中禁用。）（与 <code>--enable-fips</code> 要求相同。）</p>
+<h4><code>--frozen-intrinsics</code><span><a class="mark" href="#--frozen-intrinsics" id="--frozen-intrinsics">#</a></span><a aria-hidden="true" class="legacy" id="cli_frozen_intrinsics"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--frozen-intrinsics">
+                <a href="cli/frozen_intrinsics.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v11.12.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>启用像 <code>Array</code> 和 <code>Object</code> 这样的实验性冻结内在函数。</p>
+<p class="">仅支持根上下文。
+不能保证 <code>globalThis.Array</code> 确实是默认的内在引用。
+代码可能会在此标志下被破坏。</p>
+<p class="">为了允许添加 polyfill，<code>--require</code> 在冻结内在函数之前运行。</p>
+<h4><code>--heapsnapshot-near-heap-limit=max_count</code><span><a class="mark" href="#--heapsnapshot-near-heap-limitmax_count" id="--heapsnapshot-near-heap-limitmax_count">#</a></span><a aria-hidden="true" class="legacy" id="cli_heapsnapshot_near_heap_limit_max_count"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--heapsnapshot-near-heap-limitmax_count">
+                <a href="cli/heapsnapshot_near_heap_limit_max_count.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.1.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>当 V8 堆使用量接近堆限制时，将 V8 堆快照写入磁盘。
+<code>count</code> 应该是非负整数（在这种情况下，Node.js 将不超过 <code>max_count</code> 的快照写入磁盘）。</p>
+<p class="">当生成快照时，可能会触发垃圾回收并降低堆使用率，因此可能会在 Node.js 实例最终耗尽内存之前将多个快照写入磁盘。
+可以比较这些堆快照以确定在拍摄连续快照期间正在分配哪些对象。
+不能保证 Node.js 会准确地将 <code>max_count</code> 个快照写入磁盘，但是当 <code>max_count</code> 大于 <code>0</code> 时，它会尽量在 Node.js 实例耗尽内存之前生成至少一个和最多 <code>max_count</code> 个快照。</p>
+<p class="">生成 V8 快照需要时间和内存（由 V8 堆管理的内存和 V8 堆外的原生内存）。
+堆越大，需要的资源越多。
+Node.js 会调整 V8 堆以适应额外的 V8 堆内存开销，并尽量避免耗尽进程可用的所有内存。
+当进程使用的内存超过系统认为合适的内存时，该进程可能会被系统突然终止，具体取决于系统配置。</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --max-old-space-size=100 --heapsnapshot-near-heap-limit=3 index.js</span>
+Wrote snapshot to Heap.20200430.100036.49580.0.001.heapsnapshot
+Wrote snapshot to Heap.20200430.100037.49580.0.002.heapsnapshot
+Wrote snapshot to Heap.20200430.100038.49580.0.003.heapsnapshot
+
+&lt;--- Last few GCs ---&gt;
+
+[49580:0x110000000]     4826 ms: Mark-sweep 130.6 (147.8) -&gt; 130.5 (147.8) MB, 27.4 / 0.0 ms  (average mu = 0.126, current mu = 0.034) allocation failure scavenge might not succeed
+[49580:0x110000000]     4845 ms: Mark-sweep 130.6 (147.8) -&gt; 130.6 (147.8) MB, 18.8 / 0.0 ms  (average mu = 0.088, current mu = 0.031) allocation failure scavenge might not succeed
+
+
+&lt;--- JS stacktrace ---&gt;
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+....</code></pre>
+<h4><code>--heapsnapshot-signal=signal</code><span><a class="mark" href="#--heapsnapshot-signalsignal" id="--heapsnapshot-signalsignal">#</a></span><a aria-hidden="true" class="legacy" id="cli_heapsnapshot_signal_signal"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--heapsnapshot-signalsignal">
+                <a href="cli/heapsnapshot_signal_signal.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p>启用信号句柄，当接收到指定的信号时，它会导致 Node.js 进程写入堆转储。
+<code>signal</code> 必须是有效的信号名称。
+默认禁用。</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --heapsnapshot-signal=SIGUSR2 index.js &amp;</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">ps aux</span>
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+node         1  5.5  6.1 787252 247004 ?       Ssl  16:43   0:02 node --heapsnapshot-signal=SIGUSR2 index.js
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">kill</span> -USR2 1</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">ls</span></span>
+Heap.20190718.133405.15554.0.001.heapsnapshot</code></pre>
+<h4><code>--heap-prof</code><span><a class="mark" href="#--heap-prof" id="--heap-prof">#</a></span><a aria-hidden="true" class="legacy" id="cli_heap_prof"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--heap-prof">
+                <a href="cli/heap_prof.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.4.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>在启动时开始 V8 堆分析器，并在退出前将堆分析器写入磁盘。</p>
+<p class="">如果未指定<code>--heap-prof-dir</code>，则生成的分析文件放在当前工作目录中。</p>
+<p class="">如果未指定 <code>--heap-prof-name</code>，则生成的分析文件名为 <code>Heap.${yyyymmdd}.${hhmmss}.${pid}.${tid}.${seq}.heapprofile</code>。</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --heap-prof index.js</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">ls</span> *.heapprofile</span>
+Heap.20190409.202950.15293.0.001.heapprofile</code></pre>
+<h4><code>--heap-prof-dir</code><span><a class="mark" href="#--heap-prof-dir" id="--heap-prof-dir">#</a></span><a aria-hidden="true" class="legacy" id="cli_heap_prof_dir"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--heap-prof-dir">
+                <a href="cli/heap_prof_dir.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.4.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>指定 <code>--heap-prof</code> 生成的堆分析文件将被放置的目录。</p>
+<p class="">默认值由 <a href="#--diagnostic-dirdirectory"><code>--diagnostic-dir</code></a> 命令行选项控制。</p>
+<h4><code>--heap-prof-interval</code><span><a class="mark" href="#--heap-prof-interval" id="--heap-prof-interval">#</a></span><a aria-hidden="true" class="legacy" id="cli_heap_prof_interval"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--heap-prof-interval">
+                <a href="cli/heap_prof_interval.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.4.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>指定 <code>--heap-prof</code> 生成的堆分析文件的平均采样间隔（以字节为单位）。
+默认为 512 * 1024 字节。</p>
+<h4><code>--heap-prof-name</code><span><a class="mark" href="#--heap-prof-name" id="--heap-prof-name">#</a></span><a aria-hidden="true" class="legacy" id="cli_heap_prof_name"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--heap-prof-name">
+                <a href="cli/heap_prof_name.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.4.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>指定 <code>--heap-prof</code> 生成的堆分析文件的文件名。</p>
+<h4><code>--icu-data-dir=file</code><span><a class="mark" href="#--icu-data-dirfile" id="--icu-data-dirfile">#</a></span><a aria-hidden="true" class="legacy" id="cli_icu_data_dir_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--icu-data-dirfile">
+                <a href="cli/icu_data_dir_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.11.15</span>
+</div>
+<p>指定 ICU 数据加载路径。
+（覆盖 <code>NODE_ICU_DATA</code>。）</p>
+<h4><code>--input-type=type</code><span><a class="mark" href="#--input-typetype" id="--input-typetype">#</a></span><a aria-hidden="true" class="legacy" id="cli_input_type_type"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--input-typetype">
+                <a href="cli/input_type_type.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p>这将 Node.js 配置为将字符串输入解释为 CommonJS 或 ES 模块。
+字符串输入是通过 <code>--eval</code>、<code>--print</code> 或 <code>STDIN</code> 输入的。</p>
+<p class="">有效值为 <code>"commonjs"</code> 和 <code>"module"</code>。
+默认为 <code>"commonjs"</code>。</p>
+<h4><code>--inspect-brk[=[host:]port]</code><span><a class="mark" href="#--inspect-brkhostport" id="--inspect-brkhostport">#</a></span><a aria-hidden="true" class="legacy" id="cli_inspect_brk_host_port"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--inspect-brkhostport">
+                <a href="cli/inspect_brk_host_port.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.6.0</span>
+</div>
+<p>在 <code>host:port</code> 上激活检查器并在用户脚本开始时中断。
+默认 <code>host:port</code> 为 <code>127.0.0.1:9229</code>。</p>
+<h4><code>--inspect-port=[host:]port</code><span><a class="mark" href="#--inspect-porthostport" id="--inspect-porthostport">#</a></span><a aria-hidden="true" class="legacy" id="cli_inspect_port_host_port"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--inspect-porthostport">
+                <a href="cli/inspect_port_host_port.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.6.0</span>
+</div>
+<p>设置检查器激活时使用的 <code>host:port</code>。
+在通过发送 <code>SIGUSR1</code> 信号激活检查器时很有用。</p>
+<p class="">默认主机是 <code>127.0.0.1</code>。</p>
+<p class="">请参阅下面有关 <code>host</code> 参数用法的<a href="#warning-binding-inspector-to-a-public-ipport-combination-is-insecure">安全警告</a>。</p>
+<h4><code>--inspect[=[host:]port]</code><span><a class="mark" href="#--inspecthostport" id="--inspecthostport">#</a></span><a aria-hidden="true" class="legacy" id="cli_inspect_host_port"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--inspecthostport">
+                <a href="cli/inspect_host_port.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.3.0</span>
+</div>
+<p>在 <code>host:port</code> 上激活检查器。
+默认为 <code>127.0.0.1:9229</code>。</p>
+<p class="">V8 检查器集成允许 Chrome 开发者工具和 IDE 等工具调试和分析 Node.js 实例。
+该工具通过 tcp 端口连接到 Node.js 实例，并使用 <a href="https://chromedevtools.github.io/devtools-protocol/" rel="nofollow">Chrome 开发者工具协议</a>进行通信。</p>
+<!-- Anchor to make sure old links find a target -->
+<p class=""><a id="inspector_security"></a></p>
+<h5>注意：绑定检查器到公共的“IP:端口”组合是不安全的<span><a class="mark" href="#warning-binding-inspector-to-a-public-ipport-combination-is-insecure" id="warning-binding-inspector-to-a-public-ipport-combination-is-insecure">#</a></span><a aria-hidden="true" class="legacy" id="cli_warning_binding_inspector_to_a_public_ip_port_combination_is_insecure"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#warning-binding-inspector-to-a-public-ipport-combination-is-insecure">
+                <a href="cli/warning_binding_inspector_to_a_public_ip_port_combination_is_insecure.html" class="tip_trans">中英对照</a>
+                </p>
+<p>将检查器绑定到具有开放端口的公共 IP（包括 <code>0.0.0.0</code>）是不安全的，因为它允许外部主机连接到检查器并执行<a href="https://www.owasp.org/index.php/Code_Injection" rel="nofollow">远程代码执行</a>攻击。</p>
+<p class="">如果指定主机，请确保：</p>
+<ul class="">
+<li>无法从公共网络访问该主机。</li>
+<li>防火墙不允许端口上不需要的连接。
+<strong>更具体地说，如果端口（默认情况下为 <code>9229</code>）不受防火墙保护，则 <code>--inspect=0.0.0.0</code> 是不安全的。</strong></li>
+</ul>
+<p class="">有关详细信息，请参阅<a href="https://nodejs.org/en/docs/guides/debugging-getting-started/#security-implications" rel="nofollow">调试安全隐患</a>章节。</p>
+<h4><code>--inspect-publish-uid=stderr,http</code><span><a class="mark" href="#--inspect-publish-uidstderrhttp" id="--inspect-publish-uidstderrhttp">#</a></span><a aria-hidden="true" class="legacy" id="cli_inspect_publish_uid_stderr_http"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--inspect-publish-uidstderrhttp">
+                <a href="cli/inspect_publish_uid_stderr_http.html" class="tip_trans">中英对照</a>
+                </p>
+<p>指定检查器网络套接字网址的暴露方式。</p>
+<p class="">默认情况下，检查器网络套接字网址在标准错误和 <code>http://host:port/json/list</code> 上的 <code>/json/list</code> 端点下可用。</p>
+<h4><code>--insecure-http-parser</code><span><a class="mark" href="#--insecure-http-parser" id="--insecure-http-parser">#</a></span><a aria-hidden="true" class="legacy" id="cli_insecure_http_parser"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--insecure-http-parser">
+                <a href="cli/insecure_http_parser.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.4.0, v12.15.0, v10.19.0</span>
+</div>
+<p>使用接受无效 HTTP 标头的不安全 HTTP 解析器。
+这可能允许与不一致的 HTTP 实现的互操作性。
+它还可能允许请求走私和其他依赖于接受无效标头的 HTTP 攻击。
+避免使用此选项。</p>
+<h4><code>--jitless</code><span><a class="mark" href="#--jitless" id="--jitless">#</a></span><a aria-hidden="true" class="legacy" id="cli_jitless"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--jitless">
+                <a href="cli/jitless.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p>禁用<a href="https://v8.dev/blog/jitless" rel="nofollow">可执行内存的运行时分配</a>。
+出于安全原因，某些平台可能需要这样做。
+在其他平台上也可以减少攻击面，但性能影响可能比较严重。</p>
+<p class="">此标志是从 V8 继承的，可能会在上游发生变化。
+它可能会在非语义化主版本中消失。</p>
+<h4><code>--max-http-header-size=size</code><span><a class="mark" href="#--max-http-header-sizesize" id="--max-http-header-sizesize">#</a></span><a aria-hidden="true" class="legacy" id="cli_max_http_header_size_size"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--max-http-header-sizesize">
+                <a href="cli/max_http_header_size_size.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.13.0</td>
+<td><p>将 HTTP 标头的最大默认大小从 8 KB 更改为 16 KB。</p></td></tr>
+<tr><td>v11.6.0, v10.15.0</td>
+<td><p><span>新增于: v11.6.0, v10.15.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>指定 HTTP 标头的最大大小（以字节为单位）。
+默认为 16 KB。</p>
+<h4><code>--napi-modules</code><span><a class="mark" href="#--napi-modules" id="--napi-modules">#</a></span><a aria-hidden="true" class="legacy" id="cli_napi_modules"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--napi-modules">
+                <a href="cli/napi_modules.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.10.0</span>
+</div>
+<p>此选项为空操作。
+它是为了兼容性而保留的。</p>
+<h4><code>--no-addons</code><span><a class="mark" href="#--no-addons" id="--no-addons">#</a></span><a aria-hidden="true" class="legacy" id="cli_no_addons"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--no-addons">
+                <a href="cli/no_addons.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.10.0</span>
+</div>
+<p>禁用 <code>node-addons</code> 导出条件以及禁用加载原生插件。
+当指定 <code>--no-addons</code> 时，调用 <code>process.dlopen</code> 或加载原生 C++ 插件将失败并抛出异常。</p>
+<h4><code>--no-deprecation</code><span><a class="mark" href="#--no-deprecation" id="--no-deprecation">#</a></span><a aria-hidden="true" class="legacy" id="cli_no_deprecation"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--no-deprecation">
+                <a href="cli/no_deprecation.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.8.0</span>
+</div>
+<p>静默弃用警告。</p>
+<h4><code>--no-force-async-hooks-checks</code><span><a class="mark" href="#--no-force-async-hooks-checks" id="--no-force-async-hooks-checks">#</a></span><a aria-hidden="true" class="legacy" id="cli_no_force_async_hooks_checks"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--no-force-async-hooks-checks">
+                <a href="cli/no_force_async_hooks_checks.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v9.0.0</span>
+</div>
+<p>禁用 <code>async_hooks</code> 的运行时检查。
+当启用 <code>async_hooks</code> 时，这些仍然会动态启用。</p>
+<h4><code>--no-global-search-paths</code><span><a class="mark" href="#--no-global-search-paths" id="--no-global-search-paths">#</a></span><a aria-hidden="true" class="legacy" id="cli_no_global_search_paths"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--no-global-search-paths">
+                <a href="cli/no_global_search_paths.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v16.10.0</span>
+</div>
+<p>不从全局路径（如 <code>$HOME/.node_modules</code> 和 <code>$NODE_PATH</code>）中搜索模块。</p>
+<h4><code>--no-warnings</code><span><a class="mark" href="#--no-warnings" id="--no-warnings">#</a></span><a aria-hidden="true" class="legacy" id="cli_no_warnings"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--no-warnings">
+                <a href="cli/no_warnings.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<p>静默所有进程警告（包括弃用的）。</p>
+<h4><code>--node-memory-debug</code><span><a class="mark" href="#--node-memory-debug" id="--node-memory-debug">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_memory_debug"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--node-memory-debug">
+                <a href="cli/node_memory_debug.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div>
+<p>为 Node.js 内部的内存泄漏启用额外的调试检查。
+这通常只用于开发者调试 Node.js 本身。</p>
+<h4><code>--openssl-config=file</code><span><a class="mark" href="#--openssl-configfile" id="--openssl-configfile">#</a></span><a aria-hidden="true" class="legacy" id="cli_openssl_config_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--openssl-configfile">
+                <a href="cli/openssl_config_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.9.0</span>
+</div>
+<p>在启动时加载 OpenSSL 配置文件。
+除其他用途外，如果 Node.js 是针对支持 FIPS 的 OpenSSL 构建的，则可用于启用符合 FIPS 的加密。</p>
+<h4><code>--pending-deprecation</code><span><a class="mark" href="#--pending-deprecation" id="--pending-deprecation">#</a></span><a aria-hidden="true" class="legacy" id="cli_pending_deprecation"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--pending-deprecation">
+                <a href="cli/pending_deprecation.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p>触发挂起的弃用警告。</p>
+<p class="">挂起的弃用通常与运行时弃用相同，但值得注意的是，它们默认关闭关闭，除非设置了 <code>--pending-deprecation</code> 命令行标志或 <code>NODE_PENDING_DEPRECATION=1</code> 环境变量，否则不会触发。
+待弃用用于提供一种选择性的"早期警告"机制，开发者可以利用该机制来检测弃用的 API 的使用情况。</p>
+<h4><code>--policy-integrity=sri</code><span><a class="mark" href="#--policy-integritysri" id="--policy-integritysri">#</a></span><a aria-hidden="true" class="legacy" id="cli_policy_integrity_sri"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--policy-integritysri">
+                <a href="cli/policy_integrity_sri.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.7.0</span>
+</div>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>如果策略不具有指定的完整性，则指示 Node.js 在运行任何代码之前出错。
+它需要<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity" rel="nofollow">子资源完整性</a>字符串作为参数。</p>
+<h4><code>--preserve-symlinks</code><span><a class="mark" href="#--preserve-symlinks" id="--preserve-symlinks">#</a></span><a aria-hidden="true" class="legacy" id="cli_preserve_symlinks"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--preserve-symlinks">
+                <a href="cli/preserve_symlinks.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.3.0</span>
+</div>
+<p>指示模块加载器在解析和缓存模块时保留符号链接。</p>
+<p class="">默认情况下，当 Node.js 从符号链接到不同磁盘位置的路径加载模块时，Node.js 将取消引用该链接并使用模块的实际磁盘“真实路径”作为既是标识符又是定位其他依赖模块的根路径。
+在大多数情况下，这种默认行为是可以接受的。
+但是，当使用符号链接的对等依赖项时，如下例所示，如果 <code>moduleA</code> 尝试要求 <code>moduleB</code> 作为对等依赖项，则默认行为会引发异常：</p>
+<pre class=""><code class="language-text">{appDir}
+ ├── app
+ │   ├── index.js
+ │   └── node_modules
+ │       ├── moduleA -&gt; {appDir}/moduleA
+ │       └── moduleB
+ │           ├── index.js
+ │           └── package.json
+ └── moduleA
+     ├── index.js
+     └── package.json</code></pre>
+<p class=""><code>--preserve-symlinks</code> 命令行标志指示 Node.js 使用模块的符号链接路径而不是实际路径，从而允许找到符号链接的对等依赖项。</p>
+<p class="">但是请注意，使用 <code>--preserve-symlinks</code> 会产生其他副作用。
+具体来说，如果这些模块是从依赖树中的多个位置链接的，那么符号链接的原生模块可能无法加载（Node.js 会将它们视为两个单独的模块，并会尝试多次加载该模块，从而导致异常被抛出）。</p>
+<p class=""><code>--preserve-symlinks</code> 标志不适用于允许 <code>node --preserve-symlinks node_module/.bin/&lt;foo&gt;</code> 工作的主模块。
+要对主模块应用相同的行为，也请使用 <code>--preserve-symlinks-main</code>。</p>
+<h4><code>--preserve-symlinks-main</code><span><a class="mark" href="#--preserve-symlinks-main" id="--preserve-symlinks-main">#</a></span><a aria-hidden="true" class="legacy" id="cli_preserve_symlinks_main"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--preserve-symlinks-main">
+                <a href="cli/preserve_symlinks_main.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.2.0</span>
+</div>
+<p>指示模块加载器在解析和缓存主模块 (<code>require.main</code>) 时保留符号链接。</p>
+<p class="">此标志的存在是为了让主模块可以选择加入 <code>--preserve-symlinks</code> 为所有其他导入提供的相同行为；但是，它们是单独的标志，以便与旧的 Node.js 版本向后兼容。</p>
+<p class=""><code>--preserve-symlinks-main</code> 并不意味着 <code>--preserve-symlinks</code>；当在解析相对路径之前不希望遵循符号链接时，除了 <code>--preserve-symlinks</code> 之外，还使用 ​​<code>--preserve-symlinks-main</code>。</p>
+<p class="">有关详细信息，请参阅 <code>--preserve-symlinks</code>。</p>
+<h4><code>--prof</code><span><a class="mark" href="#--prof" id="--prof">#</a></span><a aria-hidden="true" class="legacy" id="cli_prof"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--prof">
+                <a href="cli/prof.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v2.0.0</span>
+</div>
+<p>生成 V8 分析器输出。</p>
+<h4><code>--prof-process</code><span><a class="mark" href="#--prof-process" id="--prof-process">#</a></span><a aria-hidden="true" class="legacy" id="cli_prof_process"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--prof-process">
+                <a href="cli/prof_process.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v5.2.0</span>
+</div>
+<p>处理使用 V8 选项 <code>--prof</code> 生成的 V8 分析器输出。</p>
+<h4><code>--redirect-warnings=file</code><span><a class="mark" href="#--redirect-warningsfile" id="--redirect-warningsfile">#</a></span><a aria-hidden="true" class="legacy" id="cli_redirect_warnings_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--redirect-warningsfile">
+                <a href="cli/redirect_warnings_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p>将进程警告写入给定文件而不是打印到标准错误。
+如果文件不存在则创建，如果存在则追加。
+如果在尝试将警告写入文件时发生错误，则警告将改为写入标准错误。</p>
+<p class=""><code>file</code> 名称可以是绝对路径。
+如果不是，则它将被写入的默认目录由 <a href="#--diagnostic-dirdirectory"><code>--diagnostic-dir</code></a> 命令行选项控制。</p>
+<h4><code>--report-compact</code><span><a class="mark" href="#--report-compact" id="--report-compact">#</a></span><a aria-hidden="true" class="legacy" id="cli_report_compact"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--report-compact">
+                <a href="cli/report_compact.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.12.0, v12.17.0</span>
+</div>
+<p>以紧凑的单行 JSON 格式编写报告，与专为人类使用而设计的默认多行格式相比，日志处理系统更易于使用。</p>
+<h4><code>--report-dir=directory</code>, <code>report-directory=directory</code><span><a class="mark" href="#--report-dirdirectory-report-directorydirectory" id="--report-dirdirectory-report-directorydirectory">#</a></span><a aria-hidden="true" class="legacy" id="cli_report_dir_directory_report_directory_directory"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--report-dirdirectory-report-directorydirectory">
+                <a href="cli/report_dir_directory_report_directory_directory.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>此选项不再是实验性的。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>已从 <code>--diagnostic-report-directory</code> 更改为 <code>--report-directory</code>。</p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>新增于: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>生成报告的位置。</p>
+<h4><code>--report-filename=filename</code><span><a class="mark" href="#--report-filenamefilename" id="--report-filenamefilename">#</a></span><a aria-hidden="true" class="legacy" id="cli_report_filename_filename"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--report-filenamefilename">
+                <a href="cli/report_filename_filename.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>此选项不再是实验性的。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>已从 <code>--diagnostic-report-filename</code> 更改为 <code>--report-filename</code></p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>新增于: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>将写入报告的文件的名称。</p>
+<h4><code>--report-on-fatalerror</code><span><a class="mark" href="#--report-on-fatalerror" id="--report-on-fatalerror">#</a></span><a aria-hidden="true" class="legacy" id="cli_report_on_fatalerror"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--report-on-fatalerror">
+                <a href="cli/report_on_fatalerror.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v14.0.0, v13.14.0, v12.17.0</td>
+<td><p>此选项不再是实验性的。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>已从 <code>--diagnostic-report-on-fatalerror</code> 更改为 <code>--report-on-fatalerror</code></p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>新增于: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>使报告能够在导致应用程序终止的致命错误（Node.js 运行时中的内部错误，例如内存不足）时触发。
+用于检查各种诊断数据元素，例如堆、堆栈、事件循环状态、资源消耗等
+推断致命错误。</p>
+<h4><code>--report-on-signal</code><span><a class="mark" href="#--report-on-signal" id="--report-on-signal">#</a></span><a aria-hidden="true" class="legacy" id="cli_report_on_signal"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--report-on-signal">
+                <a href="cli/report_on_signal.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>此选项不再是实验性的。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>已从 <code>--diagnostic-report-on-signal</code> 更改为 <code>--report-on-signal</code></p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>新增于: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>在接收到正在运行的 Node.js 进程的指定（或预定义）信号时生成报告。
+触发报告的信号通过 <code>--report-signal</code> 指定。</p>
+<h4><code>--report-signal=signal</code><span><a class="mark" href="#--report-signalsignal" id="--report-signalsignal">#</a></span><a aria-hidden="true" class="legacy" id="cli_report_signal_signal"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--report-signalsignal">
+                <a href="cli/report_signal_signal.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>此选项不再是实验性的。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>已从 <code>--diagnostic-report-signal</code> 更改为 <code>--report-signal</code></p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>新增于: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>设置或重置报告生成信号（Windows 不支持）。
+默认信号为 <code>SIGUSR2</code>。</p>
+<h4><code>--report-uncaught-exception</code><span><a class="mark" href="#--report-uncaught-exception" id="--report-uncaught-exception">#</a></span><a aria-hidden="true" class="legacy" id="cli_report_uncaught_exception"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--report-uncaught-exception">
+                <a href="cli/report_uncaught_exception.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v13.12.0, v12.17.0</td>
+<td><p>此选项不再是实验性的。</p></td></tr>
+<tr><td>v12.0.0</td>
+<td><p>已从 <code>--diagnostic-report-uncaught-exception</code> 更改为 <code>--report-uncaught-exception</code></p></td></tr>
+<tr><td>v11.8.0</td>
+<td><p><span>新增于: v11.8.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>启用对未捕获的异常生成报告。
+在结合原生堆栈和其他运行时环境数据检查 JavaScript 堆栈时很有用。</p>
+<h4><code>--secure-heap=n</code><span><a class="mark" href="#--secure-heapn" id="--secure-heapn">#</a></span><a aria-hidden="true" class="legacy" id="cli_secure_heap_n"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--secure-heapn">
+                <a href="cli/secure_heap_n.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.6.0</span>
+</div>
+<p>初始化 <code>n</code> 个字节的 OpenSSL 安全堆。
+当初始化时，安全堆用于密钥生成和其他操作期间 OpenSSL 中选定类型的分配。
+这很有用，例如，防止敏感信息因指针溢出或不足而泄漏。</p>
+<p class="">安全堆的大小是固定的，不能在运行时调整大小，因此，如果使用，选择足够大的堆来覆盖所有应用程序使用是很重要的。</p>
+<p class="">给定的堆大小必须是 2 的幂。
+任何小于 2 的值都将禁用安全堆。</p>
+<p class="">默认情况下禁用安全堆。</p>
+<p class="">安全堆在 Windows 上不可用。</p>
+<p class="">有关详细信息，请参阅 <a href="https://www.openssl.org/docs/man1.1.0/man3/CRYPTO_secure_malloc_init.html" rel="nofollow"><code>CRYPTO_secure_malloc_init</code></a>。</p>
+<h4><code>--secure-heap-min=n</code><span><a class="mark" href="#--secure-heap-minn" id="--secure-heap-minn">#</a></span><a aria-hidden="true" class="legacy" id="cli_secure_heap_min_n"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--secure-heap-minn">
+                <a href="cli/secure_heap_min_n.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v15.6.0</span>
+</div>
+<p>当使用 <code>--secure-heap</code> 时，<code>--secure-heap-min</code> 标志指定安全堆的最小分配。
+最小值为 <code>2</code>。
+最大值是 <code>--secure-heap</code> 或 <code>2147483647</code> 中的较小者。
+给定的值必须是 2 的幂。</p>
+<h4><code>--throw-deprecation</code><span><a class="mark" href="#--throw-deprecation" id="--throw-deprecation">#</a></span><a aria-hidden="true" class="legacy" id="cli_throw_deprecation"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--throw-deprecation">
+                <a href="cli/throw_deprecation.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.11.14</span>
+</div>
+<p>为弃用抛出错误。</p>
+<h4><code>--title=title</code><span><a class="mark" href="#--titletitle" id="--titletitle">#</a></span><a aria-hidden="true" class="legacy" id="cli_title_title"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--titletitle">
+                <a href="cli/title_title.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v10.7.0</span>
+</div>
+<p>在启动时设置 <code>process.title</code>。</p>
+<h4><code>--tls-cipher-list=list</code><span><a class="mark" href="#--tls-cipher-listlist" id="--tls-cipher-listlist">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_cipher_list_list"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-cipher-listlist">
+                <a href="cli/tls_cipher_list_list.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v4.0.0</span>
+</div>
+<p>指定替代的默认 TLS 密码列表。
+需要使用加密支持构建 Node.js（默认）。</p>
+<h4><code>--tls-keylog=file</code><span><a class="mark" href="#--tls-keylogfile" id="--tls-keylogfile">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_keylog_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-keylogfile">
+                <a href="cli/tls_keylog_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.2.0, v12.16.0</span>
+</div>
+<p>将 TLS 密钥材料记录到文件中。
+密钥材料为 NSS <code>SSLKEYLOGFILE</code> 格式，可被软件（如 Wireshark）用于解密 TLS 流量。</p>
+<h4><code>--tls-max-v1.2</code><span><a class="mark" href="#--tls-max-v12" id="--tls-max-v12">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_max_v1_2"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-max-v12">
+                <a href="cli/tls_max_v1_2.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0, v10.20.0</span>
+</div>
+<p>将 <a href="tls.html#tlsdefault_max_version"><code>tls.DEFAULT_MAX_VERSION</code></a> 设置为 'TLSv1.2'。
+用于禁用对 TLSv1.3 的支持。</p>
+<h4><code>--tls-max-v1.3</code><span><a class="mark" href="#--tls-max-v13" id="--tls-max-v13">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_max_v1_3"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-max-v13">
+                <a href="cli/tls_max_v1_3.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p>将默认的 <a href="tls.html#tlsdefault_max_version"><code>tls.DEFAULT_MAX_VERSION</code></a> 设置为 'TLSv1.3'。
+用于启用对 TLSv1.3 的支持。</p>
+<h4><code>--tls-min-v1.0</code><span><a class="mark" href="#--tls-min-v10" id="--tls-min-v10">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_min_v1_0"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-min-v10">
+                <a href="cli/tls_min_v1_0.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0, v10.20.0</span>
+</div>
+<p>将默认的 <a href="tls.html#tlsdefault_min_version"><code>tls.DEFAULT_MIN_VERSION</code></a> 设置为 'TLSv1'。
+用于与旧的 TLS 客户端或服务器兼容。</p>
+<h4><code>--tls-min-v1.1</code><span><a class="mark" href="#--tls-min-v11" id="--tls-min-v11">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_min_v1_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-min-v11">
+                <a href="cli/tls_min_v1_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0, v10.20.0</span>
+</div>
+<p>将默认的 <a href="tls.html#tlsdefault_min_version"><code>tls.DEFAULT_MIN_VERSION</code></a> 设置为 'TLSv1.1'。
+用于与旧的 TLS 客户端或服务器兼容。</p>
+<h4><code>--tls-min-v1.2</code><span><a class="mark" href="#--tls-min-v12" id="--tls-min-v12">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_min_v1_2"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-min-v12">
+                <a href="cli/tls_min_v1_2.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.2.0, v10.20.0</span>
+</div>
+<p>将默认的 <a href="tls.html#tlsdefault_min_version"><code>tls.DEFAULT_MIN_VERSION</code></a> 设置为 'TLSv1.2'。
+这是 12.x 及更高版本的默认设置，但支持该选项是为了与较旧的 Node.js 版本兼容。</p>
+<h4><code>--tls-min-v1.3</code><span><a class="mark" href="#--tls-min-v13" id="--tls-min-v13">#</a></span><a aria-hidden="true" class="legacy" id="cli_tls_min_v1_3"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--tls-min-v13">
+                <a href="cli/tls_min_v1_3.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.0.0</span>
+</div>
+<p>将默认的 <a href="tls.html#tlsdefault_min_version"><code>tls.DEFAULT_MIN_VERSION</code></a> 设置为 'TLSv1.3'。
+用于禁用对 TLSv1.2 的支持，它不如 TLSv1.3 安全。</p>
+<h4><code>--trace-atomics-wait</code><span><a class="mark" href="#--trace-atomics-wait" id="--trace-atomics-wait">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_atomics_wait"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-atomics-wait">
+                <a href="cli/trace_atomics_wait.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.3.0</span>
+</div>
+<p>将 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/wait" rel="nofollow"><code>Atomics.wait()</code></a> 调用的简短摘要打印到标准错误。
+输出可能如下所示：</p>
+<pre class=""><code class="language-text">(node:15701) [Thread 0] Atomics.wait(&amp;lt;address&gt; + 0, 1, inf) started
+(node:15701) [Thread 0] Atomics.wait(&amp;lt;address&gt; + 0, 1, inf) did not wait because the values mismatched
+(node:15701) [Thread 0] Atomics.wait(&amp;lt;address&gt; + 0, 0, 10) started
+(node:15701) [Thread 0] Atomics.wait(&amp;lt;address&gt; + 0, 0, 10) timed out
+(node:15701) [Thread 0] Atomics.wait(&amp;lt;address&gt; + 4, 0, inf) started
+(node:15701) [Thread 1] Atomics.wait(&amp;lt;address&gt; + 4, -1, inf) started
+(node:15701) [Thread 0] Atomics.wait(&amp;lt;address&gt; + 4, 0, inf) was woken up by another thread
+(node:15701) [Thread 1] Atomics.wait(&amp;lt;address&gt; + 4, -1, inf) was woken up by another thread</code></pre>
+<p class="">这里的字段对应于：</p>
+<ul class="">
+<li><a href="worker_threads.html#workerthreadid"><code>worker_threads.threadId</code></a> 给定的线程标识</li>
+<li>有问题的 <code>SharedArrayBuffer</code> 的基地址，以及传给 <code>Atomics.wait()</code> 的索引对应的字节偏移量</li>
+<li>传给 <code>Atomics.wait()</code> 的期望值</li>
+<li>传给 <code>Atomics.wait</code> 的超时</li>
+</ul>
+<h4><code>--trace-deprecation</code><span><a class="mark" href="#--trace-deprecation" id="--trace-deprecation">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_deprecation"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-deprecation">
+                <a href="cli/trace_deprecation.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.8.0</span>
+</div>
+<p>打印弃用的堆栈跟踪。</p>
+<h4><code>--trace-event-categories</code><span><a class="mark" href="#--trace-event-categories" id="--trace-event-categories">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_event_categories"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-event-categories">
+                <a href="cli/trace_event_categories.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.7.0</span>
+</div>
+<p>使用 <code>--trace-events-enabled</code> 启用跟踪事件跟踪时应跟踪的逗号分隔的类别列表。</p>
+<h4><code>--trace-event-file-pattern</code><span><a class="mark" href="#--trace-event-file-pattern" id="--trace-event-file-pattern">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_event_file_pattern"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-event-file-pattern">
+                <a href="cli/trace_event_file_pattern.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v9.8.0</span>
+</div>
+<p>指定跟踪事件数据文件路径的模板字符串，它支持 <code>${rotation}</code> 和 <code>${pid}</code>。</p>
+<h4><code>--trace-events-enabled</code><span><a class="mark" href="#--trace-events-enabled" id="--trace-events-enabled">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_events_enabled"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-events-enabled">
+                <a href="cli/trace_events_enabled.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.7.0</span>
+</div>
+<p>启用跟踪事件跟踪信息的收集。</p>
+<h4><code>--trace-exit</code><span><a class="mark" href="#--trace-exit" id="--trace-exit">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_exit"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-exit">
+                <a href="cli/trace_exit.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.5.0, v12.16.0</span>
+</div>
+<p>每当主动退出环境时打印堆栈跟踪，即调用 <code>process.exit()</code>。</p>
+<h4><code>--trace-sigint</code><span><a class="mark" href="#--trace-sigint" id="--trace-sigint">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_sigint"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-sigint">
+                <a href="cli/trace_sigint.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.9.0, v12.17.0</span>
+</div>
+<p>在 SIGINT 上打印堆栈跟踪。</p>
+<h4><code>--trace-sync-io</code><span><a class="mark" href="#--trace-sync-io" id="--trace-sync-io">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_sync_io"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-sync-io">
+                <a href="cli/trace_sync_io.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v2.1.0</span>
+</div>
+<p>在第一轮事件循环后检测到同步 I/O 时打印堆栈跟踪。</p>
+<h4><code>--trace-tls</code><span><a class="mark" href="#--trace-tls" id="--trace-tls">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_tls"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-tls">
+                <a href="cli/trace_tls.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v12.2.0</span>
+</div>
+<p>将 TLS 数据包跟踪信息打印到 <code>stderr</code>。
+这可用于调试 TLS 连接问题。</p>
+<h4><code>--trace-uncaught</code><span><a class="mark" href="#--trace-uncaught" id="--trace-uncaught">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_uncaught"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-uncaught">
+                <a href="cli/trace_uncaught.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.1.0</span>
+</div>
+<p>打印未捕获异常的堆栈跟踪；通常，打印与创建 <code>Error</code> 相关的堆栈跟踪，而这使得 Node.js 也打印与抛出值相关的堆栈跟踪（不需要是 <code>Error</code> 实例）</p>
+<p class="">启用此选项可能会对垃圾回收行为产生负面影响。</p>
+<h4><code>--trace-warnings</code><span><a class="mark" href="#--trace-warnings" id="--trace-warnings">#</a></span><a aria-hidden="true" class="legacy" id="cli_trace_warnings"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--trace-warnings">
+                <a href="cli/trace_warnings.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<p>打印进程警告的堆栈跟踪（包括弃用）。</p>
+<h4><code>--track-heap-objects</code><span><a class="mark" href="#--track-heap-objects" id="--track-heap-objects">#</a></span><a aria-hidden="true" class="legacy" id="cli_track_heap_objects"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--track-heap-objects">
+                <a href="cli/track_heap_objects.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v2.4.0</span>
+</div>
+<p>跟踪堆快照的堆对象分配。</p>
+<h4><code>--unhandled-rejections=mode</code><span><a class="mark" href="#--unhandled-rejectionsmode" id="--unhandled-rejectionsmode">#</a></span><a aria-hidden="true" class="legacy" id="cli_unhandled_rejections_mode"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--unhandled-rejectionsmode">
+                <a href="cli/unhandled_rejections_mode.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v15.0.0</td>
+<td><p>将默认模式更改为 <code>throw</code>。 预先触发了警告。</p></td></tr>
+<tr><td>v12.0.0, v10.17.0</td>
+<td><p><span>新增于: v12.0.0, v10.17.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>使用此标志可以改变发生未经处理的拒绝时应该发生的事情。
+可以选择以下模式之一</p>
+<ul class="">
+<li><code>throw</code>: 触发 <a href="process.html#event-unhandledrejection"><code>unhandledRejection</code></a>。
+如果未设置此钩子，则将未处理的拒绝上升为未捕获的异常。
+这是默认值。</li>
+<li><code>strict</code>: 上升未处理的拒绝作为未捕获的异常。
+如果处理了异常，则触发 <a href="process.html#event-unhandledrejection"><code>unhandledRejection</code></a>。</li>
+<li><code>warn</code>: 始终触发警告，无论是否设置了 <a href="process.html#event-unhandledrejection"><code>unhandledRejection</code></a> 钩子，但不打印弃用警告。</li>
+<li><code>warn-with-error-code</code>: 触发 <a href="process.html#event-unhandledrejection"><code>unhandledRejection</code></a>。
+如果未设置此钩子，则触发警告，并将进程退出码设置为 1。</li>
+<li><code>none</code>: 静默所有警告。</li>
+</ul>
+<p class="">如果在命令行入口点的 ES 模块静态加载阶段发生拒绝，则它将始终将其作为未捕获的异常引发。</p>
+<h4><code>--use-bundled-ca</code>, <code>--use-openssl-ca</code><span><a class="mark" href="#--use-bundled-ca---use-openssl-ca" id="--use-bundled-ca---use-openssl-ca">#</a></span><a aria-hidden="true" class="legacy" id="cli_use_bundled_ca_use_openssl_ca"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--use-bundled-ca---use-openssl-ca">
+                <a href="cli/use_bundled_ca_use_openssl_ca.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.11.0</span>
+</div>
+<p>使用当前 Node.js 版本提供的捆绑 Mozilla CA 存储或使用 OpenSSL 的默认 CA 存储。
+在构建时可以选择默认存储。</p>
+<p class="">Node.js 提供的捆绑 CA 存储是 Mozilla CA 存储的快照，在发布时已修复。
+它在所有支持的平台上都是相同的。</p>
+<p class="">使用 OpenSSL 存储允许对存储进行外部修改。
+对于大多数 Linux 和 BSD 发行版，这个存储是由发行版维护者和系统管理员维护的。
+OpenSSL CA 存储位置取决于 OpenSSL 库的配置，但这可以在运行时使用环境变量进行更改。</p>
+<p class="">参见 <code>SSL_CERT_DIR</code> 和 <code>SSL_CERT_FILE</code>。</p>
+<h4><code>--use-largepages=mode</code><span><a class="mark" href="#--use-largepagesmode" id="--use-largepagesmode">#</a></span><a aria-hidden="true" class="legacy" id="cli_use_largepages_mode"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--use-largepagesmode">
+                <a href="cli/use_largepages_mode.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.6.0, v12.17.0</span>
+</div>
+<p>在启动时将 Node.js 静态代码重新映射到大内存页面。
+如果目标系统支持，则将导致 Node.js 静态代码移动到 2 MiB 页而不是 4 KiB 页。</p>
+<p class="">以下值对 <code>mode</code> 有效：</p>
+<ul class="">
+<li><code>off</code>: 不会尝试映射。
+这是默认值。</li>
+<li><code>on</code>: 如果操作系统支持，则将尝试映射。
+映射失败将被忽略，并且将向标准错误打印消息。</li>
+<li><code>silent</code>: 如果操作系统支持，则将尝试映射。
+映射失败将被忽略，并且不会被报告。</li>
+</ul>
+<h4><code>--v8-options</code><span><a class="mark" href="#--v8-options" id="--v8-options">#</a></span><a aria-hidden="true" class="legacy" id="cli_v8_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--v8-options">
+                <a href="cli/v8_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.3</span>
+</div>
+<p>打印 V8 命令行选项。</p>
+<h4><code>--v8-pool-size=num</code><span><a class="mark" href="#--v8-pool-sizenum" id="--v8-pool-sizenum">#</a></span><a aria-hidden="true" class="legacy" id="cli_v8_pool_size_num"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--v8-pool-sizenum">
+                <a href="cli/v8_pool_size_num.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v5.10.0</span>
+</div>
+<p>设置 V8 的线程池大小，用于分配后台作业。</p>
+<p class="">如果设置为 <code>0</code>，则 V8 将根据在线处理器的数量选择合适大小的线程池。</p>
+<p class="">如果提供的值大于 V8 的最大值，则选择最大值。</p>
+<h4><code>--zero-fill-buffers</code><span><a class="mark" href="#--zero-fill-buffers" id="--zero-fill-buffers">#</a></span><a aria-hidden="true" class="legacy" id="cli_zero_fill_buffers"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--zero-fill-buffers">
+                <a href="cli/zero_fill_buffers.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.0.0</span>
+</div>
+<p>自动零填充所有新分配的 <a href="buffer.html#class-buffer"><code>Buffer</code></a> 和 <a href="buffer.html#class-slowbuffer"><code>SlowBuffer</code></a> 实例。</p>
+<h4><code>-c</code>, <code>--check</code><span><a class="mark" href="#-c---check" id="-c---check">#</a></span><a aria-hidden="true" class="legacy" id="cli_c_check"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-c---check">
+                <a href="cli/c_check.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v10.0.0</td>
+<td><p>现在检查文件时支持 <code>--require</code> 选项。</p></td></tr>
+<tr><td>v5.0.0, v4.2.0</td>
+<td><p><span>新增于: v5.0.0, v4.2.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>语法检查脚本而不执行。</p>
+<h4><code>-e</code>, <code>--eval "script"</code><span><a class="mark" href="#-e---eval-script" id="-e---eval-script">#</a></span><a aria-hidden="true" class="legacy" id="cli_e_eval_script"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-e---eval-script">
+                <a href="cli/e_eval_script.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v5.11.0</td>
+<td><p>内置库现在可用作预定义变量。</p></td></tr>
+<tr><td>v0.5.2</td>
+<td><p><span>新增于: v0.5.2</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>将以下参数作为 JavaScript 评估。
+交互式解释器中预定义的模块也可以在 <code>script</code> 中使用。</p>
+<p class="">在 Windows 上，使用 <code>cmd.exe</code> 单引号将无法正常工作，因为它只能识别双 <code>"</code> 进行引用。
+在 Powershell 或 Git bash 中，<code>'</code> 和 <code>"</code> 都可用。</p>
+<h4><code>-h</code>, <code>--help</code><span><a class="mark" href="#-h---help" id="-h---help">#</a></span><a aria-hidden="true" class="legacy" id="cli_h_help"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-h---help">
+                <a href="cli/h_help.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.3</span>
+</div>
+<p>打印 node 命令行选项。
+此选项的输出不如本文档详细。</p>
+<h4><code>-i</code>, <code>--interactive</code><span><a class="mark" href="#-i---interactive" id="-i---interactive">#</a></span><a aria-hidden="true" class="legacy" id="cli_i_interactive"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-i---interactive">
+                <a href="cli/i_interactive.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.7.7</span>
+</div>
+<p>即使标准输入似乎不是终端，也会打开交互式解释器。</p>
+<h4><code>-p</code>, <code>--print "script"</code><span><a class="mark" href="#-p---print-script" id="-p---print-script">#</a></span><a aria-hidden="true" class="legacy" id="cli_p_print_script"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-p---print-script">
+                <a href="cli/p_print_script.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v5.11.0</td>
+<td><p>内置库现在可用作预定义变量。</p></td></tr>
+<tr><td>v0.6.4</td>
+<td><p><span>新增于: v0.6.4</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p>与 <code>-e</code> 相同，但打印结果。</p>
+<h4><code>-r</code>, <code>--require module</code><span><a class="mark" href="#-r---require-module" id="-r---require-module">#</a></span><a aria-hidden="true" class="legacy" id="cli_r_require_module"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-r---require-module">
+                <a href="cli/r_require_module.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v1.6.0</span>
+</div>
+<p>在启动时预加载指定的模块。</p>
+<p class="">遵循 <code>require()</code> 的模块解析规则。
+<code>module</code> 可以是文件路径，也可以是 node 模块名称。</p>
+<p class="">仅支持 CommonJS 模块。
+尝试使用 <code>--require</code> 预加载 ES6 模块，则将失败并显示错误。</p>
+<h4><code>-v</code>, <code>--version</code><span><a class="mark" href="#-v---version" id="-v---version">#</a></span><a aria-hidden="true" class="legacy" id="cli_v_version"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#-v---version">
+                <a href="cli/v_version.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.3</span>
+</div>
+<p>打印 node 的版本。</p>
+</section><section><h3>环境变量<span><a class="mark" href="#environment-variables" id="environment-variables">#</a></span><a aria-hidden="true" class="legacy" id="cli_environment_variables"></a></h3>
+<h4><code>FORCE_COLOR=[1, 2, 3]</code><span><a class="mark" href="#force_color1-2-3" id="force_color1-2-3">#</a></span><a aria-hidden="true" class="legacy" id="cli_force_color_1_2_3"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#force_color1-2-3">
+                <a href="cli/force_color_1_2_3.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>FORCE_COLOR</code> 环境变量用于启用 ANSI 彩色输出。
+值可能是：</p>
+<ul class="">
+<li><code>1</code>、<code>true</code>、或空字符串 <code>''</code> 表示支持 16 色，</li>
+<li><code>2</code> 表示支持 256 色，或</li>
+<li><code>3</code> 表示支持 1600 万色。</li>
+</ul>
+<p class="">当使用 <code>FORCE_COLOR</code> 并设置为支持的值时，<code>NO_COLOR</code> 和 <code>NODE_DISABLE_COLORS</code> 环境变量都将被忽略。</p>
+<p class="">任何其他值都会导致彩色输出被禁用。</p>
+<h4><code>NODE_DEBUG=module[,…]</code><span><a class="mark" href="#node_debugmodule" id="node_debugmodule">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_debug_module"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_debugmodule">
+                <a href="cli/node_debug_module.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.32</span>
+</div>
+<p><code>','</code> 分隔的应该打印调试信息的核心模块的列表。</p>
+<h4><code>NODE_DEBUG_NATIVE=module[,…]</code><span><a class="mark" href="#node_debug_nativemodule" id="node_debug_nativemodule">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_debug_native_module"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_debug_nativemodule">
+                <a href="cli/node_debug_native_module.html" class="tip_trans">中英对照</a>
+                </p>
+<p><code>','</code> 分隔的应打印调试信息的核心 C++ 模块的列表。</p>
+<h4><code>NODE_DISABLE_COLORS=1</code><span><a class="mark" href="#node_disable_colors1" id="node_disable_colors1">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_disable_colors_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_disable_colors1">
+                <a href="cli/node_disable_colors_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.3.0</span>
+</div>
+<p>当设置时，颜色将不会在交互式解释器中使用。</p>
+<h4><code>NODE_EXTRA_CA_CERTS=file</code><span><a class="mark" href="#node_extra_ca_certsfile" id="node_extra_ca_certsfile">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_extra_ca_certs_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_extra_ca_certsfile">
+                <a href="cli/node_extra_ca_certs_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.3.0</span>
+</div>
+<p>当设置时，众所周知的 "root" CA（如 VeriSign）将使用 <code>file</code> 中的额外证书进行扩展。
+该文件应包含一个或多个 PEM 格式的可信证书。
+如果文件丢失或格式不正确，则将使用 <a href="process.html#processemitwarningwarning-options"><code>process.emitWarning()</code></a> 触发消息消息（一次），否则将忽略任何错误。</p>
+<p class="">当为 TLS 或 HTTPS 客户端或服务器显式指定 <code>ca</code> 选项属性时，则既不会使用众所周知的证书，也不会使用额外的证书。</p>
+<p class="">当 <code>node</code> 作为 setuid root 运行或设置了 Linux 文件功能时，则将忽略此环境变量。</p>
+<p class=""><code>NODE_EXTRA_CA_CERTS</code> 环境变量仅在 Node.js 进程第一次启动时读取。
+在运行时使用 <code>process.env.NODE_EXTRA_CA_CERTS</code> 更改值对当前进程没有影响。</p>
+<h4><code>NODE_ICU_DATA=file</code><span><a class="mark" href="#node_icu_datafile" id="node_icu_datafile">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_icu_data_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_icu_datafile">
+                <a href="cli/node_icu_data_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.11.15</span>
+</div>
+<p>ICU (<code>Intl</code> 对象) 数据的数据路径。
+在使用 small-icu 支持编译时将扩展链接数据。</p>
+<h4><code>NODE_NO_WARNINGS=1</code><span><a class="mark" href="#node_no_warnings1" id="node_no_warnings1">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_no_warnings_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_no_warnings1">
+                <a href="cli/node_no_warnings_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.11.0</span>
+</div>
+<p>当设置为 <code>1</code> 时，则静默进程警告。</p>
+<h4><code>NODE_OPTIONS=options...</code><span><a class="mark" href="#node_optionsoptions" id="node_optionsoptions">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_options_options"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_optionsoptions">
+                <a href="cli/node_options_options.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p>以空格分隔的命令行选项列表
+<code>options...</code> 在命令行选项之前被解释，因此命令行选项将在 <code>options...</code> 中的任何内容之后覆盖或复合。如果使用了环境中不允许的选项，例如 <code>-p</code> 或脚本文件。</p>
+<p class="">如果选项值包含空格，则可以使用双引号转义：</p>
+<pre class=""><code class="language-bash">NODE_OPTIONS=<span class="hljs-string">'--require "./my path/file.js"'</span></code></pre>
+<p class="">作为命令行选项传入的单例标志将覆盖传给 <code>NODE_OPTIONS</code> 的相同标志：</p>
+<pre class=""><code class="language-bash"><span class="hljs-comment"># 检查器将在端口 5555 上可用</span>
+NODE_OPTIONS=<span class="hljs-string">'--inspect=localhost:4444'</span> node --inspect=localhost:5555</code></pre>
+<p class="">可以多次传入的标志将被视为首先传入其 <code>NODE_OPTIONS</code> 实例，然后是其命令行实例：</p>
+<pre class=""><code class="language-bash">NODE_OPTIONS=<span class="hljs-string">'--require "./a.js"'</span> node --require <span class="hljs-string">"./b.js"</span>
+<span class="hljs-comment"># 相当于：</span>
+node --require <span class="hljs-string">"./a.js"</span> --require <span class="hljs-string">"./b.js"</span></code></pre>
+<p class="">允许的 Node.js 选项是：</p>
+<!-- node-options-node start -->
+<ul class="">
+<li><code>--conditions</code>、<code>-C</code></li>
+<li><code>--diagnostic-dir</code></li>
+<li><code>--disable-proto</code></li>
+<li><code>--dns-result-order</code></li>
+<li><code>--enable-fips</code></li>
+<li><code>--enable-source-maps</code></li>
+<li><code>--experimental-abortcontroller</code></li>
+<li><code>--experimental-fetch</code></li>
+<li><code>--experimental-global-webcrypto</code></li>
+<li><code>--experimental-import-meta-resolve</code></li>
+<li><code>--experimental-json-modules</code></li>
+<li><code>--experimental-loader</code></li>
+<li><code>--experimental-modules</code></li>
+<li><code>--experimental-network-imports</code></li>
+<li><code>--experimental-policy</code></li>
+<li><code>--experimental-specifier-resolution</code></li>
+<li><code>--experimental-top-level-await</code></li>
+<li><code>--experimental-vm-modules</code></li>
+<li><code>--experimental-wasi-unstable-preview1</code></li>
+<li><code>--experimental-wasm-modules</code></li>
+<li><code>--force-context-aware</code></li>
+<li><code>--force-fips</code></li>
+<li><code>--frozen-intrinsics</code></li>
+<li><code>--heapsnapshot-near-heap-limit</code></li>
+<li><code>--heapsnapshot-signal</code></li>
+<li><code>--http-parser</code></li>
+<li><code>--icu-data-dir</code></li>
+<li><code>--input-type</code></li>
+<li><code>--insecure-http-parser</code></li>
+<li><code>--inspect-brk</code></li>
+<li><code>--inspect-port</code>、<code>--debug-port</code></li>
+<li><code>--inspect-publish-uid</code></li>
+<li><code>--inspect</code></li>
+<li><code>--max-http-header-size</code></li>
+<li><code>--napi-modules</code></li>
+<li><code>--no-addons</code></li>
+<li><code>--no-deprecation</code></li>
+<li><code>--no-experimental-repl-await</code></li>
+<li><code>--no-force-async-hooks-checks</code></li>
+<li><code>--no-global-search-paths</code></li>
+<li><code>--no-warnings</code></li>
+<li><code>--node-memory-debug</code></li>
+<li><code>--openssl-config</code></li>
+<li><code>--pending-deprecation</code></li>
+<li><code>--policy-integrity</code></li>
+<li><code>--preserve-symlinks-main</code></li>
+<li><code>--preserve-symlinks</code></li>
+<li><code>--prof-process</code></li>
+<li><code>--redirect-warnings</code></li>
+<li><code>--report-compact</code></li>
+<li><code>--report-dir</code>、<code>--report-directory</code></li>
+<li><code>--report-filename</code></li>
+<li><code>--report-on-fatalerror</code></li>
+<li><code>--report-on-signal</code></li>
+<li><code>--report-signal</code></li>
+<li><code>--report-uncaught-exception</code></li>
+<li><code>--require</code>、<code>-r</code></li>
+<li><code>--secure-heap-min</code></li>
+<li><code>--secure-heap</code></li>
+<li><code>--throw-deprecation</code></li>
+<li><code>--title</code></li>
+<li><code>--tls-cipher-list</code></li>
+<li><code>--tls-keylog</code></li>
+<li><code>--tls-max-v1.2</code></li>
+<li><code>--tls-max-v1.3</code></li>
+<li><code>--tls-min-v1.0</code></li>
+<li><code>--tls-min-v1.1</code></li>
+<li><code>--tls-min-v1.2</code></li>
+<li><code>--tls-min-v1.3</code></li>
+<li><code>--trace-atomics-wait</code></li>
+<li><code>--trace-deprecation</code></li>
+<li><code>--trace-event-categories</code></li>
+<li><code>--trace-event-file-pattern</code></li>
+<li><code>--trace-events-enabled</code></li>
+<li><code>--trace-exit</code></li>
+<li><code>--trace-sigint</code></li>
+<li><code>--trace-sync-io</code></li>
+<li><code>--trace-tls</code></li>
+<li><code>--trace-uncaught</code></li>
+<li><code>--trace-warnings</code></li>
+<li><code>--track-heap-objects</code></li>
+<li><code>--unhandled-rejections</code></li>
+<li><code>--use-bundled-ca</code></li>
+<li><code>--use-largepages</code></li>
+<li><code>--use-openssl-ca</code></li>
+<li><code>--v8-pool-size</code></li>
+<li><code>--zero-fill-buffers</code></li>
+</ul>
+<!-- node-options-node end -->
+<p class="">允许的 V8 选项是：</p>
+<!-- node-options-v8 start -->
+<ul class="">
+<li><code>--abort-on-uncaught-exception</code></li>
+<li><code>--disallow-code-generation-from-strings</code></li>
+<li><code>--huge-max-old-generation-size</code></li>
+<li><code>--interpreted-frames-native-stack</code></li>
+<li><code>--jitless</code></li>
+<li><code>--max-old-space-size</code></li>
+<li><code>--perf-basic-prof-only-functions</code></li>
+<li><code>--perf-basic-prof</code></li>
+<li><code>--perf-prof-unwinding-info</code></li>
+<li><code>--perf-prof</code></li>
+<li><code>--stack-trace-limit</code></li>
+</ul>
+<!-- node-options-v8 end -->
+<p class=""><code>--perf-basic-prof-only-functions</code>、<code>--perf-basic-prof</code>、<code>--perf-prof-unwinding-info</code> 和 <code>--perf-prof</code> 仅在 Linux 上可用。</p>
+<h4><code>NODE_PATH=path[:…]</code><span><a class="mark" href="#node_pathpath" id="node_pathpath">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_path_path"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_pathpath">
+                <a href="cli/node_path_path.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v0.1.32</span>
+</div>
+<p><code>':'</code> 分隔的目录列表，以模块搜索路径为前缀。</p>
+<p class="">在 Windows 上，这是 <code>';'</code> 分隔的列表。</p>
+<h4><code>NODE_PENDING_DEPRECATION=1</code><span><a class="mark" href="#node_pending_deprecation1" id="node_pending_deprecation1">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_pending_deprecation_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_pending_deprecation1">
+                <a href="cli/node_pending_deprecation_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p>当设置为 <code>1</code> 时，触发挂起的弃用警告。</p>
+<p class="">挂起的弃用通常与运行时弃用相同，但值得注意的是，它们默认关闭关闭，除非设置了 <code>--pending-deprecation</code> 命令行标志或 <code>NODE_PENDING_DEPRECATION=1</code> 环境变量，否则不会触发。
+待弃用用于提供一种选择性的"早期警告"机制，开发者可以利用该机制来检测弃用的 API 的使用情况。</p>
+<h4><code>NODE_PENDING_PIPE_INSTANCES=instances</code><span><a class="mark" href="#node_pending_pipe_instancesinstances" id="node_pending_pipe_instancesinstances">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_pending_pipe_instances_instances"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_pending_pipe_instancesinstances">
+                <a href="cli/node_pending_pipe_instances_instances.html" class="tip_trans">中英对照</a>
+                </p>
+<p>设置管道服务器等待连接时挂起的管道实例句柄数。
+此设置仅适用于 Windows。</p>
+<h4><code>NODE_PRESERVE_SYMLINKS=1</code><span><a class="mark" href="#node_preserve_symlinks1" id="node_preserve_symlinks1">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_preserve_symlinks_1"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_preserve_symlinks1">
+                <a href="cli/node_preserve_symlinks_1.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.1.0</span>
+</div>
+<p>当设置为 <code>1</code> 时，指示模块加载器在解析和缓存模块时保留符号链接。</p>
+<h4><code>NODE_REDIRECT_WARNINGS=file</code><span><a class="mark" href="#node_redirect_warningsfile" id="node_redirect_warningsfile">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_redirect_warnings_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_redirect_warningsfile">
+                <a href="cli/node_redirect_warnings_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v8.0.0</span>
+</div>
+<p>当设置时，进程警告将触发到给定文件而不是打印到标准错误
+如果文件不存在则创建，如果存在则追加。
+如果在尝试将警告写入文件时发生错误，则警告将改为写入标准错误。
+这相当于使用 <code>--redirect-warnings=file</code> 命令行标志。</p>
+<h4><code>NODE_REPL_HISTORY=file</code><span><a class="mark" href="#node_repl_historyfile" id="node_repl_historyfile">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_repl_history_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_repl_historyfile">
+                <a href="cli/node_repl_history_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v3.0.0</span>
+</div>
+<p>用于存储持久的交互式解释器历史的文件路径。
+默认路径是 <code>~/.node_repl_history</code>，会被此变量覆盖。
+将值设置为空字符串（<code>''</code> 或 <code>' '</code>）会禁用持久的交互式解释器历史记录。</p>
+<h4><code>NODE_REPL_EXTERNAL_MODULE=file</code><span><a class="mark" href="#node_repl_external_modulefile" id="node_repl_external_modulefile">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_repl_external_module_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_repl_external_modulefile">
+                <a href="cli/node_repl_external_module_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v13.0.0, v12.16.0</span>
+</div>
+<p>Node.js 模块的路径，该模块将代替内置交互式解释器加载。
+将此值覆盖为空字符串 (<code>''</code>) ，则将使用内置的交互式解释器。</p>
+<h4><code>NODE_SKIP_PLATFORM_CHECK=value</code><span><a class="mark" href="#node_skip_platform_checkvalue" id="node_skip_platform_checkvalue">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_skip_platform_check_value"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_skip_platform_checkvalue">
+                <a href="cli/node_skip_platform_check_value.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v14.5.0</span>
+</div>
+<p>如果 <code>value</code> 等于 <code>'1'</code>，则在 Node.js 启动期间跳过对支持平台的检查。
+Node.js 可能无法正确地执行。
+在不受支持的平台上遇到的任何问题都不会得到修复。</p>
+<h4><code>NODE_TLS_REJECT_UNAUTHORIZED=value</code><span><a class="mark" href="#node_tls_reject_unauthorizedvalue" id="node_tls_reject_unauthorizedvalue">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_tls_reject_unauthorized_value"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_tls_reject_unauthorizedvalue">
+                <a href="cli/node_tls_reject_unauthorized_value.html" class="tip_trans">中英对照</a>
+                </p>
+<p>如果 <code>value</code> 等于 <code>'0'</code>，则对 TLS 连接禁用证书验证。
+这使得 TLS 和 HTTPS 不安全。
+强烈建议不要使用此环境变量。</p>
+<h4><code>NODE_V8_COVERAGE=dir</code><span><a class="mark" href="#node_v8_coveragedir" id="node_v8_coveragedir">#</a></span><a aria-hidden="true" class="legacy" id="cli_node_v8_coverage_dir"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#node_v8_coveragedir">
+                <a href="cli/node_v8_coverage_dir.html" class="tip_trans">中英对照</a>
+                </p>
+<p>当设置时，Node.js 将开始将 <a href="https://v8project.blogspot.com/2017/12/javascript-code-coverage.html" rel="nofollow">V8 JavaScript 代码覆盖</a>和<a href="https://sourcemaps.info/spec.html" rel="nofollow">源映射</a>数据输出到作为参数提供的目录（覆盖信息以 JSON 格式写入带有 <code>coverage</code> 前缀的文件）。</p>
+<p class=""><code>NODE_V8_COVERAGE</code> 将自动传播到子进程，从而更容易检测调用 <code>child_process.spawn()</code> 系列函数的应用程序。
+<code>NODE_V8_COVERAGE</code> 可以设置为空字符串，防止传播。</p>
+<h5>覆盖范围的输出<span><a class="mark" href="#coverage-output" id="coverage-output">#</a></span><a aria-hidden="true" class="legacy" id="cli_coverage_output"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#coverage-output">
+                <a href="cli/coverage_output.html" class="tip_trans">中英对照</a>
+                </p>
+<p>覆盖输出为顶层键 <code>result</code> 上的 <a href="https://chromedevtools.github.io/devtools-protocol/tot/Profiler#type-ScriptCoverage" rel="nofollow">ScriptCoverage</a> 对象数组：</p>
+<pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"result"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"scriptId"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"67"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"internal/tty.js"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"functions"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span></code></pre>
+<h5>源码映射的缓存<span><a class="mark" href="#source-map-cache" id="source-map-cache">#</a></span><a aria-hidden="true" class="legacy" id="cli_source_map_cache"></a></h5><p class="tip_wrap" data-show_trans="1" data-item_id="#source-map-cache">
+                <a href="cli/source_map_cache.html" class="tip_trans">中英对照</a>
+                </p>
+<p></p><div class="api_stability api_stability_1"><a href="documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p>
+<p>如果找到，则源映射数据将附加到 JSON 覆盖对象上的顶层键 <code>source-map-cache</code>。</p>
+<p class=""><code>source-map-cache</code> 是一个对象，其中的键代表从中提取源映射的文件，其值包括原始源映射网址（在键 <code>url</code> 中）、解析的 Source Map v3 信息（在键 <code>data</code> 中）和行长度源文件（在键 <code>lineLengths</code> 中）。</p>
+<pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"result"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"scriptId"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"68"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"file:///absolute/path/to/source.js"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"functions"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"source-map-cache"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"file:///absolute/path/to/source.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./path-to-map.json"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"version"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"sources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-string">"file:///absolute/path/to/original.js"</span>
+        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"names"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-string">"Foo"</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-string">"console"</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-string">"info"</span>
+        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"mappings"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"MAAMA,IACJC,YAAaC"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"sourceRoot"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./"</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"lineLengths"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-number">13</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-number">62</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-number">38</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-number">27</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre>
+<h4><code>NO_COLOR=&lt;any&gt;</code><span><a class="mark" href="#no_colorany" id="no_colorany">#</a></span><a aria-hidden="true" class="legacy" id="cli_no_color_any"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#no_colorany">
+                <a href="cli/no_color_any.html" class="tip_trans">中英对照</a>
+                </p>
+<p><a href="https://no-color.org/" rel="nofollow"><code>NO_COLOR</code></a> 是 <code>NODE_DISABLE_COLORS</code> 的别名。
+环境变量的值是任意的。</p>
+<h4><code>OPENSSL_CONF=file</code><span><a class="mark" href="#openssl_conffile" id="openssl_conffile">#</a></span><a aria-hidden="true" class="legacy" id="cli_openssl_conf_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#openssl_conffile">
+                <a href="cli/openssl_conf_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v6.11.0</span>
+</div>
+<p>在启动时加载 OpenSSL 配置文件。
+除其他用途外，如果 Node.js 是使用 <code>./configure --openssl-fips</code> 构建的，则可用于启用符合 FIPS 的加密。</p>
+<p class="">如果使用 <a href="#--openssl-configfile"><code>--openssl-config</code></a> 命令行选项，则环境变量将被忽略。</p>
+<h4><code>SSL_CERT_DIR=dir</code><span><a class="mark" href="#ssl_cert_dirdir" id="ssl_cert_dirdir">#</a></span><a aria-hidden="true" class="legacy" id="cli_ssl_cert_dir_dir"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#ssl_cert_dirdir">
+                <a href="cli/ssl_cert_dir_dir.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.7.0</span>
+</div>
+<p>如果启用了 <code>--use-openssl-ca</code>，则将覆盖并设置包含受信任证书的 OpenSSL 目录。</p>
+<p class="">注意，除非显式设置子环境，否则任何子进程都会继承此环境变量，如果它们使用 OpenSSL，可能会导致它们信任与节点相同的 CA。</p>
+<h4><code>SSL_CERT_FILE=file</code><span><a class="mark" href="#ssl_cert_filefile" id="ssl_cert_filefile">#</a></span><a aria-hidden="true" class="legacy" id="cli_ssl_cert_file_file"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#ssl_cert_filefile">
+                <a href="cli/ssl_cert_file_file.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<span>新增于: v7.7.0</span>
+</div>
+<p>如果启用了 <code>--use-openssl-ca</code>，则将覆盖并设置包含受信任证书的 OpenSSL 文件。</p>
+<p class="">注意，除非显式设置子环境，否则任何子进程都会继承此环境变量，如果它们使用 OpenSSL，可能会导致它们信任与节点相同的 CA。</p>
+<h4><code>TZ</code><span><a class="mark" href="#tz" id="tz">#</a></span><a aria-hidden="true" class="legacy" id="cli_tz"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#tz">
+                <a href="cli/tz.html" class="tip_trans">中英对照</a>
+                </p>
+<div class="api_metadata">
+<details class="changelog"><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.2.0</td>
+<td><p>使用 process.env.TZ = 更改 TZ 变量也相当于更改 Windows 上的时区。</p></td></tr>
+<tr><td>v13.0.0</td>
+<td><p>使用 process.env.TZ 更改 TZ 变量相当于更改 POSIX 系统上的时区。</p></td></tr>
+<tr><td>v0.0.1</td>
+<td><p><span>新增于: v0.0.1</span></p></td></tr>
+</tbody></table>
+</details>
+</div>
+<p><code>TZ</code> 环境变量用于指定时区配置。</p>
+<p class="">虽然 Node.js 对 <code>TZ</code> 的支持不会处理所有 <a href="https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html" rel="nofollow"><code>TZ</code> 在其他环境中处理的方式</a>，但它将支持基本的<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" rel="nofollow">时区 ID</a>（例如 <code>'Etc/UTC'</code>、<code>'Europe/Paris'</code> 或 <code>'America/New_York'</code>）。
+它可能支持其他一些缩写或别名，但强烈建议不要使用这些缩写或别名，并且不能保证。</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">TZ=Europe/Dublin node -pe <span class="hljs-string">"new Date().toString()"</span></span>
+Wed May 12 2021 20:30:48 GMT+0100 (Irish Standard Time)</code></pre>
+<h4><code>UV_THREADPOOL_SIZE=size</code><span><a class="mark" href="#uv_threadpool_sizesize" id="uv_threadpool_sizesize">#</a></span><a aria-hidden="true" class="legacy" id="cli_uv_threadpool_size_size"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#uv_threadpool_sizesize">
+                <a href="cli/uv_threadpool_size_size.html" class="tip_trans">中英对照</a>
+                </p>
+<p>将 libuv 的线程池中使用的线程数设置为 <code>size</code> 个线程。</p>
+<p class="">Node.js 尽可能使用异步的系统 API，但在它们不存在的情况下，libuv 的线程池用于基于同步的系统 API 创建异步的 node API。
+使用线程池的 Node.js API 有：</p>
+<ul class="">
+<li>所有 <code>fs</code> API，除了文件监视器 API 和那些显式同步的</li>
+<li>异步加密 API，例如 <code>crypto.pbkdf2()</code>、<code>crypto.scrypt()</code>、<code>crypto.randomBytes()</code>、<code>crypto.randomFill()</code>、<code>crypto.generateKeyPair()</code></li>
+<li><code>dns.lookup()</code></li>
+<li>所有 <code>zlib</code> API，除了那些显式同步的</li>
+</ul>
+<p class="">因为 libuv 的线程池有固定的大小，这意味着如果这些 API 中的任何一个由于某种原因需要很长时间，则在 libuv 的线程池中运行的其他（看似无关的）API 的性能将会下降。
+为了缓解此问题，潜在的解决方案是通过将 <code>'UV_THREADPOOL_SIZE'</code> 环境变量设置为大于 <code>4</code>（其当前默认值）的值来增加 libuv 线程池的大小。
+有关更多信息，请参阅 <a href="https://docs.libuv.org/en/latest/threadpool.html" rel="nofollow">libuv 线程池文档</a>。</p>
+</section><section><h3>有用的 V8 选项<span><a class="mark" href="#useful-v8-options" id="useful-v8-options">#</a></span><a aria-hidden="true" class="legacy" id="cli_useful_v8_options"></a></h3><p class="tip_wrap" data-show_trans="1" data-item_id="#useful-v8-options">
+                <a href="cli/useful_v8_options.html" class="tip_trans">中英对照</a>
+                </p>
+<p>V8 有自己的一组命令行选项。
+任何提供给 <code>node</code> 的 V8 命令行选项都将传给 V8 来处理。
+V8 的选项没有稳定性保证。
+V8 团队本身并不认为它们是其正式 API 的一部分，并保留随时更改它们的权利。
+同样，它们也不在 Node.js 稳定性保证范围内。
+许多 V8 选项只对 V8 开发者有用。
+尽管如此，有一小组 V8 选项广泛适用于 Node.js，它们记录在此处：</p>
+<h4>--max-old-space-size=SIZE<span><a class="mark" href="#--max-old-space-sizesize-in-megabytes" id="--max-old-space-sizesize-in-megabytes">#</a></span><a aria-hidden="true" class="legacy" id="cli_max_old_space_size_size_in_megabytes"></a></h4><p class="tip_wrap" data-show_trans="1" data-item_id="#--max-old-space-sizesize-in-megabytes">
+                <a href="cli/max_old_space_size_size_in_megabytes.html" class="tip_trans">中英对照</a>
+                </p>
+<p>设置 V8 旧内存部分的最大内存大小。
+随着内存消耗接近极限，V8 会花更多的时间在垃圾回收上，以释放未使用的内存。</p>
+<p class="">在具有 2 GB 内存的机器上，考虑将其设置为 1536 (1.5 GB)，以便为其他用途留出一些内存并避免交换。</p>
+<pre class=""><code class="language-console"><span class="hljs-meta prompt_">$ </span><span class="language-bash">node --max-old-space-size=1536 index.js</span></code></pre></section>
+        <!-- API END -->
+      </div>
+    </div>
+  </div>
+  <div id="scroll_top" onclick="window.scrollTo(0,0);">返回顶部</div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+
+
+
+    <script src="../api/static/inject.js" defer=""></script></body></html>

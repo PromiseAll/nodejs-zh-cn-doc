@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>'resumeSession' 事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>'resumeSession' 事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_event_resumesession" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/event_resumesession.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/event_resumesession.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#event-resumesession.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.9.2</span>
+</div><p>当客户端请求恢复之前的 TLS 会话时，则会触发 <code>'resumeSession'</code> 事件。
+监听器回调在调用时传入两个参数：</p><ul class="">
+<li><code>sessionId</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> TLS 会话标识符</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> 恢复前一个会话时要调用的回调函数：<code>callback([err[, sessionData]])</code>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>sessionData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+</li>
+</ul><p class="">事件监听器应该使用给定的 <code>sessionId</code> 在外部存储中为 <a href="../tls.html#event-newsession"><code>'newSession'</code></a> 事件处理程序保存的 <code>sessionData</code> 执行查找。
+如果找到，则调用 <code>callback(null, sessionData)</code> 恢复会话。
+如果没有找到，则会话将无法恢复。
+<code>callback()</code> 必须在没有 <code>sessionData</code> 的情况下被调用，以便握手可以继续并可以创建新的会话。
+可以调用 <code>callback(err)</code> 来终止传入的连接并销毁套接字。</p><p class="">监听此事件只会对添加事件监听器后建立的连接有影响。</p><p class="">以下说明恢复 TLS 会话：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> tlsSessionStore = {};
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'newSession'</span>, <span class="hljs-function">(<span class="hljs-params">id, data, cb</span>) =&gt;</span> {
+  tlsSessionStore[id.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>)] = data;
+  <span class="hljs-title function_">cb</span>();
+});
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'resumeSession'</span>, <span class="hljs-function">(<span class="hljs-params">id, cb</span>) =&gt;</span> {
+  <span class="hljs-title function_">cb</span>(<span class="hljs-literal">null</span>, tlsSessionStore[id.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>)] || <span class="hljs-literal">null</span>);
+});</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.9.2</span>
+</div><p>The <code>'resumeSession'</code> event is emitted when the client requests to resume a
+previous TLS session. The listener callback is passed two arguments when
+called:</p><ul>
+<li><code>sessionId</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The TLS session identifier</li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a> A callback function to be called when the prior session
+has been recovered: <code>callback([err[, sessionData]])</code>
+<ul>
+<li><code>err</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" rel="nofollow" class="type">&lt;Error&gt;</a></li>
+<li><code>sessionData</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a></li>
+</ul>
+</li>
+</ul><p>The event listener should perform a lookup in external storage for the
+<code>sessionData</code> saved by the <a href="../tls.html#event-newsession"><code>'newSession'</code></a> event handler using the given
+<code>sessionId</code>. If found, call <code>callback(null, sessionData)</code> to resume the session.
+If not found, the session cannot be resumed. <code>callback()</code> must be called
+without <code>sessionData</code> so that the handshake can continue and a new session can
+be created. It is possible to call <code>callback(err)</code> to terminate the incoming
+connection and destroy the socket.</p><p>Listening for this event will have an effect only on connections established
+after the addition of the event listener.</p><p>The following illustrates resuming a TLS session:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> tlsSessionStore = {};
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'newSession'</span>, <span class="hljs-function">(<span class="hljs-params">id, data, cb</span>) =&gt;</span> {
+  tlsSessionStore[id.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>)] = data;
+  <span class="hljs-title function_">cb</span>();
+});
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'resumeSession'</span>, <span class="hljs-function">(<span class="hljs-params">id, cb</span>) =&gt;</span> {
+  <span class="hljs-title function_">cb</span>(<span class="hljs-literal">null</span>, tlsSessionStore[id.<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>)] || <span class="hljs-literal">null</span>);
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

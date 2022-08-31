@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>等待 process.nextTick() 上触发的多个事件 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-events">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>等待 process.nextTick() 上触发的多个事件</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../events.html#events_awaiting_multiple_events_emitted_on_process_nexttick" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/events/awaiting_multiple_events_emitted_on_process_nexttick.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/events/awaiting_multiple_events_emitted_on_process_nexttick.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/events/#awaiting-multiple-events-emitted-on-processnexttick.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>当使用 <code>events.once()</code> 函数等待在同一批 <code>process.nextTick()</code> 操作中触发的多个事件时，或者同步触发多个事件时，有一个边缘情况值得注意。
+具体来说，因为 <code>process.nextTick()</code> 队列在 <code>Promise</code> 微任务队列之前被排空，并且因为 <code>EventEmitter</code> 同步触发所有事件，所以 <code>events.once()</code> 有可能错过事件。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'bar'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'bar'</span>);
+
+  <span class="hljs-comment">// 此 Promise 永远不会被解决，</span>
+  <span class="hljs-comment">// 因为 'foo' 事件在 Promise 被创建之前就已经触发了。</span>
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'foo'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'foo'</span>);
+}
+
+process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'bar'</span>);
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});
+
+<span class="hljs-title function_">foo</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>));</code></pre><p class="">要捕获这两个事件，则在等待其中一个之前创建每个 Promise，然后可以使用 <code>Promise.all()</code>、<code>Promise.race()</code> 或 <code>Promise.allSettled()</code>：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([<span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'bar'</span>), <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'foo'</span>)]);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>);
+}
+
+process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'bar'</span>);
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});
+
+<span class="hljs-title function_">foo</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>));</code></pre></div>
+          <div id="content_right"><p>There is an edge case worth noting when using the <code>events.once()</code> function
+to await multiple events emitted on in the same batch of <code>process.nextTick()</code>
+operations, or whenever multiple events are emitted synchronously. Specifically,
+because the <code>process.nextTick()</code> queue is drained before the <code>Promise</code> microtask
+queue, and because <code>EventEmitter</code> emits all events synchronously, it is possible
+for <code>events.once()</code> to miss an event.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'bar'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'bar'</span>);
+
+  <span class="hljs-comment">// This Promise will never resolve because the 'foo' event will</span>
+  <span class="hljs-comment">// have already been emitted before the Promise is created.</span>
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'foo'</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'foo'</span>);
+}
+
+process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'bar'</span>);
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});
+
+<span class="hljs-title function_">foo</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>));</code></pre><p>To catch both events, create each of the Promises <em>before</em> awaiting either
+of them, then it becomes possible to use <code>Promise.all()</code>, <code>Promise.race()</code>,
+or <code>Promise.allSettled()</code>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">EventEmitter</span>, once } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+
+<span class="hljs-keyword">const</span> myEE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([<span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'bar'</span>), <span class="hljs-title function_">once</span>(myEE, <span class="hljs-string">'foo'</span>)]);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>);
+}
+
+process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> {
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'bar'</span>);
+  myEE.<span class="hljs-title function_">emit</span>(<span class="hljs-string">'foo'</span>);
+});
+
+<span class="hljs-title function_">foo</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'done'</span>));</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

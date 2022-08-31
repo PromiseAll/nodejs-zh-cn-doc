@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>包管理器的提示 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-modules">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>包管理器的提示</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../modules.html#modules_package_manager_tips" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/modules/package_manager_tips.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/modules/package_manager_tips.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/modules/#package-manager-tips.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>Node.js <code>require()</code> 函数的语义被设计为足够通用以支持合理的目录结构。
+诸如 <code>dpkg</code>、<code>rpm</code> 和 <code>npm</code> 之类的包管理器程序有望发现无需修改即可从 Node.js 模块构建本机包。</p><p class="">下面给出了一个可行的建议目录结构：</p><p class="">假设想让位于 <code>/usr/lib/node/&lt;some-package&gt;/&lt;some-version&gt;</code> 的文件夹保存特定版本包的内容。</p><p class="">包可以相互依赖。
+为了安装包 <code>foo</code>，可能需要安装包 <code>bar</code> 的特定版本。
+<code>bar</code> 包本身可能存在依赖关系，在某些情况下，这些甚至可能发生冲突或形成循环依赖关系。</p><p class="">因为 Node.js 会查找其加载的任何模块的 <code>realpath</code>（即，其解析符号链接），然后<a href="../modules.html#loading-from-node_modules-folders">在 <code>node_modules</code> 文件夹中查找其依赖项</a>，这种情况可以使用以下架构解决：</p><ul class="">
+<li><code>/usr/lib/node/foo/1.2.3/</code>: <code>foo</code> 包的内容，版本 1.2.3。</li>
+<li><code>/usr/lib/node/bar/4.3.2/</code>: <code>foo</code> 依赖的 <code>bar</code> 包的内容。</li>
+<li><code>/usr/lib/node/foo/1.2.3/node_modules/bar</code>: <code>/usr/lib/node/bar/4.3.2/</code> 的符号链接。</li>
+<li><code>/usr/lib/node/bar/4.3.2/node_modules/*</code>: <code>bar</code> 依赖的包的符号链接。</li>
+</ul><p class="">因此，即使遇到循环，或者如果存在依赖冲突，每个模块都将能够获得它可以使用的依赖版本。</p><p class="">当 <code>foo</code> 包中的代码执行 <code>require('bar')</code> 时，它将获得符号链接到 <code>/usr/lib/node/foo/1.2.3/node_modules/bar</code> 的版本。
+然后，当 <code>bar</code> 包中的代码调用 <code>require('quux')</code> 时，它将获得符号链接到 <code>/usr/lib/node/bar/4.3.2/node_modules/quux</code> 的版本。</p><p class="">此外，为了使模块查找过程更加优化，与其将包直接放在 <code>/usr/lib/node</code> 中，还可以将它们放在 <code>/usr/lib/node_modules/&lt;name&gt;/&lt;version&gt;</code> 中。
+这样 Node.js 就不会费心寻找 <code>/usr/node_modules</code> 或 <code>/node_modules</code> 中缺失的依赖项了。</p><p class="">为了使模块可用于 Node.js 交互式解释器，将 <code>/usr/lib/node_modules</code> 文件夹添加到 <code>$NODE_PATH</code> 环境变量可能会很有用。
+由于使用 <code>node_modules</code> 文件夹的模块查找都是相对的，并且基于调用 <code>require()</code> 的文件的真实路径，因此包本身可以位于任何位置。</p></div>
+          <div id="content_right"><p>The semantics of the Node.js <code>require()</code> function were designed to be general
+enough to support reasonable directory structures. Package manager programs
+such as <code>dpkg</code>, <code>rpm</code>, and <code>npm</code> will hopefully find it possible to build
+native packages from Node.js modules without modification.</p><p>Below we give a suggested directory structure that could work:</p><p>Let's say that we wanted to have the folder at
+<code>/usr/lib/node/&lt;some-package&gt;/&lt;some-version&gt;</code> hold the contents of a
+specific version of a package.</p><p>Packages can depend on one another. In order to install package <code>foo</code>, it
+may be necessary to install a specific version of package <code>bar</code>. The <code>bar</code>
+package may itself have dependencies, and in some cases, these may even collide
+or form cyclic dependencies.</p><p>Because Node.js looks up the <code>realpath</code> of any modules it loads (that is, it
+resolves symlinks) and then <a href="../modules.html#loading-from-node_modules-folders">looks for their dependencies in <code>node_modules</code> folders</a>,
+this situation can be resolved with the following architecture:</p><ul>
+<li><code>/usr/lib/node/foo/1.2.3/</code>: Contents of the <code>foo</code> package, version 1.2.3.</li>
+<li><code>/usr/lib/node/bar/4.3.2/</code>: Contents of the <code>bar</code> package that <code>foo</code> depends
+on.</li>
+<li><code>/usr/lib/node/foo/1.2.3/node_modules/bar</code>: Symbolic link to
+<code>/usr/lib/node/bar/4.3.2/</code>.</li>
+<li><code>/usr/lib/node/bar/4.3.2/node_modules/*</code>: Symbolic links to the packages that
+<code>bar</code> depends on.</li>
+</ul><p>Thus, even if a cycle is encountered, or if there are dependency
+conflicts, every module will be able to get a version of its dependency
+that it can use.</p><p>When the code in the <code>foo</code> package does <code>require('bar')</code>, it will get the
+version that is symlinked into <code>/usr/lib/node/foo/1.2.3/node_modules/bar</code>.
+Then, when the code in the <code>bar</code> package calls <code>require('quux')</code>, it'll get
+the version that is symlinked into
+<code>/usr/lib/node/bar/4.3.2/node_modules/quux</code>.</p><p>Furthermore, to make the module lookup process even more optimal, rather
+than putting packages directly in <code>/usr/lib/node</code>, we could put them in
+<code>/usr/lib/node_modules/&lt;name&gt;/&lt;version&gt;</code>. Then Node.js will not bother
+looking for missing dependencies in <code>/usr/node_modules</code> or <code>/node_modules</code>.</p><p>In order to make modules available to the Node.js REPL, it might be useful to
+also add the <code>/usr/lib/node_modules</code> folder to the <code>$NODE_PATH</code> environment
+variable. Since the module lookups using <code>node_modules</code> folders are all
+relative, and based on the real path of the files making the calls to
+<code>require()</code>, the packages themselves can be anywhere.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>filehandle.createReadStream([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>filehandle.createReadStream([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_filehandle_createreadstream_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/filehandle_createreadstream_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#filehandlecreatereadstreamoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v16.11.0</span>
+</div><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>默认值:</strong> <code>null</code></li>
+<li><code>autoClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>true</code></li>
+<li><code>emitClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>默认值:</strong> <code>true</code></li>
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>Infinity</code></li>
+<li><code>highWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>默认值:</strong> <code>64 * 1024</code></li>
+</ul>
+</li>
+<li>返回: <a href="../fs.html#class-fsreadstream" rel="nofollow" class="type">&lt;fs.ReadStream&gt;</a></li>
+</ul><p>与 <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;stream.Readable&gt;</a> 的 16 kb 默认 <code>highWaterMark</code> 不同，此方法返回的流的默认 <code>highWaterMark</code> 为 64 kb。</p><p class=""><code>options</code> 可以包括 <code>start</code> 和 <code>end</code> 值，以从文件中读取一定范围的字节，而不是整个文件。
+<code>start</code> 和 <code>end</code> 都包含在内并且从 0 开始计数，允许的值在 [0, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER" rel="nofollow"><code>Number.MAX_SAFE_INTEGER</code></a>] 范围内。
+如果省略 <code>start</code> 或为 <code>undefined</code>，则 <code>filehandle.createReadStream()</code> 从当前的文件位置开始依次读取。
+<code>encoding</code> 可以是 <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 接受的任何一种。</p><p class="">如果 <code>FileHandle</code> 指向只支持阻塞读取的字符设备（如键盘或声卡），则读取操作在数据可用之前不会完成。
+这可以防止进程退出和流自然关闭。</p><p class="">默认情况下，流将在销毁后触发 <code>'close'</code> 事件。
+将 <code>emitClose</code> 选项设置为 <code>false</code> 以更改此行为。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">const</span> fd = <span class="hljs-keyword">await</span> <span class="hljs-title function_">open</span>(<span class="hljs-string">'/dev/input/event0'</span>);
+<span class="hljs-comment">// 从某个字符设备创建流。</span>
+<span class="hljs-keyword">const</span> stream = fd.<span class="hljs-title function_">createReadStream</span>();
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  stream.<span class="hljs-title function_">close</span>(); <span class="hljs-comment">// 这可能不会关闭流。</span>
+  <span class="hljs-comment">// 人为地标记流结束，就好像底层资源自己指示了文件结束一样，允许流关闭。</span>
+  <span class="hljs-comment">// 这不会取消挂起的读操作，如果有这样的操作，进程可能仍然无法成功退出，直到它完成。</span>
+  stream.<span class="hljs-title function_">push</span>(<span class="hljs-literal">null</span>);
+  stream.<span class="hljs-title function_">read</span>(<span class="hljs-number">0</span>);
+}, <span class="hljs-number">100</span>);</code></pre><p class="">如果 <code>autoClose</code> 为 false，则即使出现错误，文件描述符也不会关闭。
+关闭它并确保没有文件描述符泄漏是应用程序的责任。
+如果 <code>autoClose</code> 设置为 true（默认行为），则在 <code>'error'</code> 或 <code>'end'</code> 时，文件描述符将自动关闭。</p><p class="">读取 100 个字节长的文件的最后 10 个字节的示例：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">const</span> fd = <span class="hljs-keyword">await</span> <span class="hljs-title function_">open</span>(<span class="hljs-string">'sample.txt'</span>);
+fd.<span class="hljs-title function_">createReadStream</span>({ <span class="hljs-attr">start</span>: <span class="hljs-number">90</span>, <span class="hljs-attr">end</span>: <span class="hljs-number">99</span> });</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v16.11.0</span>
+</div><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> <strong>Default:</strong> <code>null</code></li>
+<li><code>autoClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>Default:</strong> <code>true</code></li>
+<li><code>emitClose</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> <strong>Default:</strong> <code>true</code></li>
+<li><code>start</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a></li>
+<li><code>end</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>Default:</strong> <code>Infinity</code></li>
+<li><code>highWaterMark</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> <strong>Default:</strong> <code>64 * 1024</code></li>
+</ul>
+</li>
+<li>Returns: <a href="../fs.html#class-fsreadstream" rel="nofollow" class="type">&lt;fs.ReadStream&gt;</a></li>
+</ul><p>Unlike the 16 kb default <code>highWaterMark</code> for a <a href="../stream.html#class-streamreadable" rel="nofollow" class="type">&lt;stream.Readable&gt;</a>, the stream
+returned by this method has a default <code>highWaterMark</code> of 64 kb.</p><p><code>options</code> can include <code>start</code> and <code>end</code> values to read a range of bytes from
+the file instead of the entire file. Both <code>start</code> and <code>end</code> are inclusive and
+start counting at 0, allowed values are in the
+[0, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER" rel="nofollow"><code>Number.MAX_SAFE_INTEGER</code></a>] range. If <code>start</code> is
+omitted or <code>undefined</code>, <code>filehandle.createReadStream()</code> reads sequentially from
+the current file position. The <code>encoding</code> can be any one of those accepted by
+<a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a>.</p><p>If the <code>FileHandle</code> points to a character device that only supports blocking
+reads (such as keyboard or sound card), read operations do not finish until data
+is available. This can prevent the process from exiting and the stream from
+closing naturally.</p><p>By default, the stream will emit a <code>'close'</code> event after it has been
+destroyed.  Set the <code>emitClose</code> option to <code>false</code> to change this behavior.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">const</span> fd = <span class="hljs-keyword">await</span> <span class="hljs-title function_">open</span>(<span class="hljs-string">'/dev/input/event0'</span>);
+<span class="hljs-comment">// Create a stream from some character device.</span>
+<span class="hljs-keyword">const</span> stream = fd.<span class="hljs-title function_">createReadStream</span>();
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+  stream.<span class="hljs-title function_">close</span>(); <span class="hljs-comment">// This may not close the stream.</span>
+  <span class="hljs-comment">// Artificially marking end-of-stream, as if the underlying resource had</span>
+  <span class="hljs-comment">// indicated end-of-file by itself, allows the stream to close.</span>
+  <span class="hljs-comment">// This does not cancel pending read operations, and if there is such an</span>
+  <span class="hljs-comment">// operation, the process may still not be able to exit successfully</span>
+  <span class="hljs-comment">// until it finishes.</span>
+  stream.<span class="hljs-title function_">push</span>(<span class="hljs-literal">null</span>);
+  stream.<span class="hljs-title function_">read</span>(<span class="hljs-number">0</span>);
+}, <span class="hljs-number">100</span>);</code></pre><p>If <code>autoClose</code> is false, then the file descriptor won't be closed, even if
+there's an error. It is the application's responsibility to close it and make
+sure there's no file descriptor leak. If <code>autoClose</code> is set to true (default
+behavior), on <code>'error'</code> or <code>'end'</code> the file descriptor will be closed
+automatically.</p><p>An example to read the last 10 bytes of a file which is 100 bytes long:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { open } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs/promises'</span>;
+
+<span class="hljs-keyword">const</span> fd = <span class="hljs-keyword">await</span> <span class="hljs-title function_">open</span>(<span class="hljs-string">'sample.txt'</span>);
+fd.<span class="hljs-title function_">createReadStream</span>({ <span class="hljs-attr">start</span>: <span class="hljs-number">90</span>, <span class="hljs-attr">end</span>: <span class="hljs-number">99</span> });</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

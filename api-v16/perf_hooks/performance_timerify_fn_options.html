@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>performance.timerify(fn[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-perf_hooks">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>performance.timerify(fn[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../perf_hooks.html#perf_hooks_performance_timerify_fn_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/perf_hooks/performance_timerify_fn_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/perf_hooks/#performancetimerifyfn-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>添加了直方图选项。</p></td></tr>
+<tr><td>v16.0.0</td>
+<td><p>重新实现以使用纯 JavaScript 和对异步函数计时的能力。</p></td></tr>
+<tr><td>v8.5.0</td>
+<td><p><span>新增于: v8.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>histogram</code> <a href="../perf_hooks.html#class-recordablehistogram-extends-histogram" rel="nofollow" class="type">&lt;RecordableHistogram&gt;</a> 使用 <code>perf_hooks.createHistogram()</code> 创建的直方图对象，以纳秒为单位记录运行时间。</li>
+</ul>
+</li>
+</ul><p><em>此属性是 Node.js 的扩展。
+它在 Web 浏览器中不可用。</em></p><p class="">将函数封装在测量被封装函数运行时间的新函数中。
+<code>PerformanceObserver</code> 必须订阅 <code>'function'</code> 事件类型才能访问时间细节。</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> {
+  performance,
+  <span class="hljs-title class_">PerformanceObserver</span>
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'perf_hooks'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">someFunction</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'hello world'</span>);
+}
+
+<span class="hljs-keyword">const</span> wrapped = performance.<span class="hljs-title function_">timerify</span>(someFunction);
+
+<span class="hljs-keyword">const</span> obs = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PerformanceObserver</span>(<span class="hljs-function">(<span class="hljs-params">list</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(list.<span class="hljs-title function_">getEntries</span>()[<span class="hljs-number">0</span>].<span class="hljs-property">duration</span>);
+
+  performance.<span class="hljs-title function_">clearMarks</span>();
+  performance.<span class="hljs-title function_">clearMeasures</span>();
+  obs.<span class="hljs-title function_">disconnect</span>();
+});
+obs.<span class="hljs-title function_">observe</span>({ <span class="hljs-attr">entryTypes</span>: [<span class="hljs-string">'function'</span>] });
+
+<span class="hljs-comment">// 将创建性能时间轴条目</span>
+<span class="hljs-title function_">wrapped</span>();</code></pre><p class="">如果封装的函数返回 promise，则 finally 句柄将绑定到该 promise 上，并且一旦调用 finally 句柄就会报告持续时间。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>Added the histogram option.</p></td></tr>
+<tr><td>v16.0.0</td>
+<td><p>Re-implemented to use pure-JavaScript and the ability to time async functions.</p></td></tr>
+<tr><td>v8.5.0</td>
+<td><p><span>Added in: v8.5.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>fn</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>histogram</code> <a href="../perf_hooks.html#class-recordablehistogram-extends-histogram" rel="nofollow" class="type">&lt;RecordableHistogram&gt;</a> A histogram object created using
+<code>perf_hooks.createHistogram()</code> that will record runtime durations in
+nanoseconds.</li>
+</ul>
+</li>
+</ul><p><em>This property is an extension by Node.js. It is not available in Web browsers.</em></p><p>Wraps a function within a new function that measures the running time of the
+wrapped function. A <code>PerformanceObserver</code> must be subscribed to the <code>'function'</code>
+event type in order for the timing details to be accessed.</p><pre><code class="language-js"><span class="hljs-keyword">const</span> {
+  performance,
+  <span class="hljs-title class_">PerformanceObserver</span>
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'perf_hooks'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">someFunction</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'hello world'</span>);
+}
+
+<span class="hljs-keyword">const</span> wrapped = performance.<span class="hljs-title function_">timerify</span>(someFunction);
+
+<span class="hljs-keyword">const</span> obs = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PerformanceObserver</span>(<span class="hljs-function">(<span class="hljs-params">list</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(list.<span class="hljs-title function_">getEntries</span>()[<span class="hljs-number">0</span>].<span class="hljs-property">duration</span>);
+
+  performance.<span class="hljs-title function_">clearMarks</span>();
+  performance.<span class="hljs-title function_">clearMeasures</span>();
+  obs.<span class="hljs-title function_">disconnect</span>();
+});
+obs.<span class="hljs-title function_">observe</span>({ <span class="hljs-attr">entryTypes</span>: [<span class="hljs-string">'function'</span>] });
+
+<span class="hljs-comment">// A performance timeline entry will be created</span>
+<span class="hljs-title function_">wrapped</span>();</code></pre><p>If the wrapped function returns a promise, a finally handler will be attached
+to the promise and the duration will be reported once the finally handler is
+invoked.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

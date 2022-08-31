@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>自定义的 promise 化函数 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-util">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>自定义的 promise 化函数</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../util.html#util_custom_promisified_functions" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/util/custom_promisified_functions.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/util/custom_promisified_functions.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/util/#custom-promisified-functions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>使用 <code>util.promisify.custom</code> 符号可以覆盖 <a href="../util.html#utilpromisifyoriginal"><code>util.promisify()</code></a> 的返回值：</p><pre class=""><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">doSomething</span>(<span class="hljs-params">foo, callback</span>) {
+  <span class="hljs-comment">// ...</span>
+}
+
+doSomething[util.<span class="hljs-property">promisify</span>.<span class="hljs-property">custom</span>] = <span class="hljs-function">(<span class="hljs-params">foo</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">getPromiseSomehow</span>();
+};
+
+<span class="hljs-keyword">const</span> promisified = util.<span class="hljs-title function_">promisify</span>(doSomething);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(promisified === doSomething[util.<span class="hljs-property">promisify</span>.<span class="hljs-property">custom</span>]);
+<span class="hljs-comment">// 打印 'true'</span></code></pre><p class="">这对于原始函数不遵循将错误优先的回调作为最后一个参数的标准格式的情况很有用。</p><p class="">例如，对于接受 <code>(foo, onSuccessCallback, onErrorCallback)</code> 的函数：</p><pre class=""><code class="language-js">doSomething[util.<span class="hljs-property">promisify</span>.<span class="hljs-property">custom</span>] = <span class="hljs-function">(<span class="hljs-params">foo</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-title function_">doSomething</span>(foo, resolve, reject);
+  });
+};</code></pre><p class="">如果 <code>promisify.custom</code> 已定义但不是函数，则 <code>promisify()</code> 将抛出错误。</p></div>
+          <div id="content_right"><p>Using the <code>util.promisify.custom</code> symbol one can override the return value of
+<a href="../util.html#utilpromisifyoriginal"><code>util.promisify()</code></a>:</p><pre><code class="language-js"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">doSomething</span>(<span class="hljs-params">foo, callback</span>) {
+  <span class="hljs-comment">// ...</span>
+}
+
+doSomething[util.<span class="hljs-property">promisify</span>.<span class="hljs-property">custom</span>] = <span class="hljs-function">(<span class="hljs-params">foo</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">getPromiseSomehow</span>();
+};
+
+<span class="hljs-keyword">const</span> promisified = util.<span class="hljs-title function_">promisify</span>(doSomething);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(promisified === doSomething[util.<span class="hljs-property">promisify</span>.<span class="hljs-property">custom</span>]);
+<span class="hljs-comment">// prints 'true'</span></code></pre><p>This can be useful for cases where the original function does not follow the
+standard format of taking an error-first callback as the last argument.</p><p>For example, with a function that takes in
+<code>(foo, onSuccessCallback, onErrorCallback)</code>:</p><pre><code class="language-js">doSomething[util.<span class="hljs-property">promisify</span>.<span class="hljs-property">custom</span>] = <span class="hljs-function">(<span class="hljs-params">foo</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-title function_">doSomething</span>(foo, resolve, reject);
+  });
+};</code></pre><p>If <code>promisify.custom</code> is defined but is not a function, <code>promisify()</code> will
+throw an error.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

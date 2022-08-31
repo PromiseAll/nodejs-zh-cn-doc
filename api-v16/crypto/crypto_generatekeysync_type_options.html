@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>crypto.generateKeySync(type, options) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>crypto.generateKeySync(type, options)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_crypto_generatekeysync_type_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/crypto_generatekeysync_type_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#cryptogeneratekeysynctype-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v15.0.0</span>
+</div><ul class="">
+<li><code>type</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 生成的密钥的预期用途。
+当前接受的值为 <code>'hmac'</code> 和 <code>'aes'</code>。</li>
+<li><code>options</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>length</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 要生成的密钥的位长。
+<ul>
+<li>如果 <code>type</code> 为 <code>'hmac'</code>，则最小为 1，最大长度为 2<sup>31</sup>-1。
+如果该值不是 8 的倍数，则生成的密钥将被截断为 <code>Math.floor(length / 8)</code>。</li>
+<li>如果 <code>type</code> 是 <code>'aes'</code>，则长度必须是 <code>128</code>、<code>192</code> 或 <code>256</code> 之一。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回: <a href="../crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a></li>
+</ul><p>同步生成给定 <code>length</code> 的新随机密钥。
+<code>type</code> 将确定将在 <code>length</code> 上执行哪些验证。</p><pre class="with-18-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">const</span> {
+  generateKeySync
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-title function_">generateKeySync</span>(<span class="hljs-string">'hmac'</span>, { <span class="hljs-attr">length</span>: <span class="hljs-number">64</span> });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(key.<span class="hljs-title function_">export</span>().<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));  <span class="hljs-comment">// e89..........41e</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  generateKeySync,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-title function_">generateKeySync</span>(<span class="hljs-string">'hmac'</span>, { <span class="hljs-attr">length</span>: <span class="hljs-number">64</span> });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(key.<span class="hljs-title function_">export</span>().<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));  <span class="hljs-comment">// e89..........41e</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v15.0.0</span>
+</div><ul>
+<li><code>type</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The intended use of the generated secret key. Currently
+accepted values are <code>'hmac'</code> and <code>'aes'</code>.</li>
+<li><code>options</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>length</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The bit length of the key to generate.
+<ul>
+<li>If <code>type</code> is <code>'hmac'</code>, the minimum is 1, and the maximum length is
+2<sup>31</sup>-1. If the value is not a multiple of 8, the generated
+key will be truncated to <code>Math.floor(length / 8)</code>.</li>
+<li>If <code>type</code> is <code>'aes'</code>, the length must be one of <code>128</code>, <code>192</code>, or <code>256</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Returns: <a href="../crypto.html#class-keyobject" rel="nofollow" class="type">&lt;KeyObject&gt;</a></li>
+</ul><p>Synchronously generates a new random secret key of the given <code>length</code>. The
+<code>type</code> will determine which validations will be performed on the <code>length</code>.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">const</span> {
+  generateKeySync
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-title function_">generateKeySync</span>(<span class="hljs-string">'hmac'</span>, { <span class="hljs-attr">length</span>: <span class="hljs-number">64</span> });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(key.<span class="hljs-title function_">export</span>().<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));  <span class="hljs-comment">// e89..........41e</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> {
+  generateKeySync,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> key = <span class="hljs-title function_">generateKeySync</span>(<span class="hljs-string">'hmac'</span>, { <span class="hljs-attr">length</span>: <span class="hljs-number">64</span> });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(key.<span class="hljs-title function_">export</span>().<span class="hljs-title function_">toString</span>(<span class="hljs-string">'hex'</span>));  <span class="hljs-comment">// e89..........41e</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

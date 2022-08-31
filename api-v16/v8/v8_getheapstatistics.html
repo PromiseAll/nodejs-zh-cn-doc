@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>v8.getHeapStatistics() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-v8">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>v8.getHeapStatistics()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../v8.html#v8_v8_getheapstatistics" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/v8/v8_getheapstatistics.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/v8/v8_getheapstatistics.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/v8/#v8getheapstatistics.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v7.5.0</td>
+<td><p>支持超过 32 位无符号整数范围的值。</p></td></tr>
+<tr><td>v7.2.0</td>
+<td><p>添加了 <code>malloced_memory</code>、<code>peak_malloced_memory</code> 和 <code>does_zap_garbage</code>。</p></td></tr>
+<tr><td>v1.0.0</td>
+<td><p><span>新增于: v1.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>返回具有以下属性的对象：</p><ul class="">
+<li><code>total_heap_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_heap_size_executable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_physical_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_available_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>used_heap_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>heap_size_limit</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>malloced_memory</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>peak_malloced_memory</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>does_zap_garbage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>number_of_native_contexts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>number_of_detached_contexts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul><p class=""><code>does_zap_garbage</code> 是 0/​​1 布尔值，表示是否启用了 <code>--zap_code_space</code> 选项。
+这使得 V8 使用位模式覆盖堆垃圾。
+RSS 占用空间（常驻集大小）变得更大，因为它不断接触所有堆页面，这使得它们不太可能被操作系统换出。</p><p class=""><code>number_of_native_contexts</code> native_context 的值是当前活动的顶层上下文的数量。
+随着时间的推移此数字的增加表示内存泄漏。</p><p class=""><code>number_of_detached_contexts</code> detached_context 的值是已分离但尚未垃圾回收的上下文数。
+此数字非零表示潜在的内存泄漏。</p><pre class=""><code class="language-js">{
+  <span class="hljs-attr">total_heap_size</span>: <span class="hljs-number">7326976</span>,
+  <span class="hljs-attr">total_heap_size_executable</span>: <span class="hljs-number">4194304</span>,
+  <span class="hljs-attr">total_physical_size</span>: <span class="hljs-number">7326976</span>,
+  <span class="hljs-attr">total_available_size</span>: <span class="hljs-number">1152656</span>,
+  <span class="hljs-attr">used_heap_size</span>: <span class="hljs-number">3476208</span>,
+  <span class="hljs-attr">heap_size_limit</span>: <span class="hljs-number">1535115264</span>,
+  <span class="hljs-attr">malloced_memory</span>: <span class="hljs-number">16384</span>,
+  <span class="hljs-attr">peak_malloced_memory</span>: <span class="hljs-number">1127496</span>,
+  <span class="hljs-attr">does_zap_garbage</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">number_of_native_contexts</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">number_of_detached_contexts</span>: <span class="hljs-number">0</span>
+}</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v7.5.0</td>
+<td><p>Support values exceeding the 32-bit unsigned integer range.</p></td></tr>
+<tr><td>v7.2.0</td>
+<td><p>Added <code>malloced_memory</code>, <code>peak_malloced_memory</code>, and <code>does_zap_garbage</code>.</p></td></tr>
+<tr><td>v1.0.0</td>
+<td><p><span>Added in: v1.0.0</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></li>
+</ul><p>Returns an object with the following properties:</p><ul>
+<li><code>total_heap_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_heap_size_executable</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_physical_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>total_available_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>used_heap_size</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>heap_size_limit</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>malloced_memory</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>peak_malloced_memory</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>does_zap_garbage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>number_of_native_contexts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+<li><code>number_of_detached_contexts</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a></li>
+</ul><p><code>does_zap_garbage</code> is a 0/1 boolean, which signifies whether the
+<code>--zap_code_space</code> option is enabled or not. This makes V8 overwrite heap
+garbage with a bit pattern. The RSS footprint (resident set size) gets bigger
+because it continuously touches all heap pages and that makes them less likely
+to get swapped out by the operating system.</p><p><code>number_of_native_contexts</code> The value of native_context is the number of the
+top-level contexts currently active. Increase of this number over time indicates
+a memory leak.</p><p><code>number_of_detached_contexts</code> The value of detached_context is the number
+of contexts that were detached and not yet garbage collected. This number
+being non-zero indicates a potential memory leak.</p><pre><code class="language-js">{
+  <span class="hljs-attr">total_heap_size</span>: <span class="hljs-number">7326976</span>,
+  <span class="hljs-attr">total_heap_size_executable</span>: <span class="hljs-number">4194304</span>,
+  <span class="hljs-attr">total_physical_size</span>: <span class="hljs-number">7326976</span>,
+  <span class="hljs-attr">total_available_size</span>: <span class="hljs-number">1152656</span>,
+  <span class="hljs-attr">used_heap_size</span>: <span class="hljs-number">3476208</span>,
+  <span class="hljs-attr">heap_size_limit</span>: <span class="hljs-number">1535115264</span>,
+  <span class="hljs-attr">malloced_memory</span>: <span class="hljs-number">16384</span>,
+  <span class="hljs-attr">peak_malloced_memory</span>: <span class="hljs-number">1127496</span>,
+  <span class="hljs-attr">does_zap_garbage</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">number_of_native_contexts</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">number_of_detached_contexts</span>: <span class="hljs-number">0</span>
+}</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

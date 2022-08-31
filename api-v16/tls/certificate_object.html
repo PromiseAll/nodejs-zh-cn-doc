@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>证书对象 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-tls">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>证书对象</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../tls.html#tls_certificate_object" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/tls/certificate_object.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/tls/certificate_object.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/tls/#certificate-object.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>添加 fingerprint512。</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>支持椭圆曲线公钥信息。</p></td></tr>
+</tbody></table>
+</details>
+</div><p>证书对象具有与证书字段对应的属性。</p><ul class="">
+<li><code>raw</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> DER 编码的 X.509 证书数据。</li>
+<li><code>subject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 证书主题，按照国家 (<code>C</code>)、州或省 (<code>ST</code>)、地区 (<code>L</code>)、组织 (<code>O</code>)、组织单位 (<code>OU</code>) 和通用名称 (<code>CN</code>) 进行描述。
+CommonName 通常是带有 TLS 证书的 DNS 名称。
+示例：<code>{C: 'UK', ST: 'BC', L: 'Metro', O: 'Node Fans', OU: 'Docs', CN: 'example.com'}</code>。</li>
+<li><code>issuer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 证书颁发者，使用与 <code>subject</code> 相同的术语描述。</li>
+<li><code>valid_from</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 证书有效的开始日期时间。</li>
+<li><code>valid_to</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 证书有效的结束日期时间。</li>
+<li><code>serialNumber</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 证书序列号，以十六进制字符串表示。
+示例：<code>'B9B0D332A1AA5635'</code>。</li>
+<li><code>fingerprint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> DER 编码证书的 SHA-1 摘要。
+它作为 <code>:</code> 分隔的十六进制字符串返回。
+示例：<code>'2A:7A:C2:DD:...'</code>。</li>
+<li><code>fingerprint256</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> DER 编码证书的 SHA-256 摘要。
+它作为 <code>:</code> 分隔的十六进制字符串返回。
+示例：<code>'2A:7A:C2:DD:...'</code>。</li>
+<li><code>fingerprint512</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> DER 编码证书的 SHA-512 摘要。
+它作为 <code>:</code> 分隔的十六进制字符串返回。
+示例：<code>'2A:7A:C2:DD:...'</code>。</li>
+<li><code>ext_key_usage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> （可选的）扩展的密钥用法，一组 OID。</li>
+<li><code>subjectaltname</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> （可选的）包含主题的连接名称的字符串，<code>subject</code> 名称的替代。</li>
+<li><code>infoAccess</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> （可选的）描述 AuthorityInfoAccess 的数组，与OCSP 一起使用。</li>
+<li><code>issuerCertificate</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> （可选的）颁发者证书对象。
+对于自签名证书，这可能是一个循环引用。</li>
+</ul><p class="">证书可能包含有关公钥的信息，具体取决于密钥类型。</p><p class="">对于 RSA 密钥，可以定义以下属性：</p><ul class="">
+<li><code>bits</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> RSA 位大小。
+示例：<code>1024</code>。</li>
+<li><code>exponent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> RSA 指数，作为十六进制数字表示法的字符串。
+示例：<code>'0x010001'</code>。</li>
+<li><code>modulus</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> RSA 模数，作为十六进制字符串。
+示例：<code>'B56CE45CB7...'</code>。</li>
+<li><code>pubkey</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 公钥。</li>
+</ul><p class="">对于 EC 密钥，可以定义以下属性：</p><ul class="">
+<li><code>pubkey</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> 公钥。</li>
+<li><code>bits</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> 密钥大小（以位为单位）。
+示例：<code>256</code>。</li>
+<li><code>asn1Curve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> （可选的）椭圆曲线的 OID 的 ASN.1 名称。
+知名曲线由 OID 标识。
+虽然这很不寻常，但曲线可能是由其数学属性标识的，在这种情况下，它不会有 OID。
+示例：<code>'prime256v1'</code>。</li>
+<li><code>nistCurve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> （可选的）椭圆曲线的 NIST 名称，如果有的话（并非所有知名曲线都由 NIST 指定名称）。
+示例：<code>'P-256'</code>。</li>
+</ul><p class="">示例证书：</p><pre class=""><code class="language-js">{ <span class="hljs-attr">subject</span>:
+   { <span class="hljs-attr">OU</span>: [ <span class="hljs-string">'Domain Control Validated'</span>, <span class="hljs-string">'PositiveSSL Wildcard'</span> ],
+     <span class="hljs-attr">CN</span>: <span class="hljs-string">'*.nodejs.org'</span> },
+  <span class="hljs-attr">issuer</span>:
+   { <span class="hljs-attr">C</span>: <span class="hljs-string">'GB'</span>,
+     <span class="hljs-attr">ST</span>: <span class="hljs-string">'Greater Manchester'</span>,
+     <span class="hljs-attr">L</span>: <span class="hljs-string">'Salford'</span>,
+     <span class="hljs-attr">O</span>: <span class="hljs-string">'COMODO CA Limited'</span>,
+     <span class="hljs-attr">CN</span>: <span class="hljs-string">'COMODO RSA Domain Validation Secure Server CA'</span> },
+  <span class="hljs-attr">subjectaltname</span>: <span class="hljs-string">'DNS:*.nodejs.org, DNS:nodejs.org'</span>,
+  <span class="hljs-attr">infoAccess</span>:
+   { <span class="hljs-string">'CA Issuers - URI'</span>:
+      [ <span class="hljs-string">'http://crt.comodoca.com/COMODORSADomainValidationSecureServerCA.crt'</span> ],
+     <span class="hljs-string">'OCSP - URI'</span>: [ <span class="hljs-string">'http://ocsp.comodoca.com'</span> ] },
+  <span class="hljs-attr">modulus</span>: <span class="hljs-string">'B56CE45CB740B09A13F64AC543B712FF9EE8E4C284B542A1708A27E82A8D151CA178153E12E6DDA15BF70FFD96CB8A88618641BDFCCA03527E665B70D779C8A349A6F88FD4EF6557180BD4C98192872BCFE3AF56E863C09DDD8BC1EC58DF9D94F914F0369102B2870BECFA1348A0838C9C49BD1C20124B442477572347047506B1FCD658A80D0C44BCC16BC5C5496CFE6E4A8428EF654CD3D8972BF6E5BFAD59C93006830B5EB1056BBB38B53D1464FA6E02BFDF2FF66CD949486F0775EC43034EC2602AEFBF1703AD221DAA2A88353C3B6A688EFE8387811F645CEED7B3FE46E1F8B9F59FAD028F349B9BC14211D5830994D055EEA3D547911E07A0ADDEB8A82B9188E58720D95CD478EEC9AF1F17BE8141BE80906F1A339445A7EB5B285F68039B0F294598A7D1C0005FC22B5271B0752F58CCDEF8C8FD856FB7AE21C80B8A2CE983AE94046E53EDE4CB89F42502D31B5360771C01C80155918637490550E3F555E2EE75CC8C636DDE3633CFEDD62E91BF0F7688273694EEEBA20C2FC9F14A2A435517BC1D7373922463409AB603295CEB0BB53787A334C9CA3CA8B30005C5A62FC0715083462E00719A8FA3ED0A9828C3871360A73F8B04A4FC1E71302844E9BB9940B77E745C9D91F226D71AFCAD4B113AAF68D92B24DDB4A2136B55A1CD1ADF39605B63CB639038ED0F4C987689866743A68769CC55847E4A06D6E2E3F1'</span>,
+  <span class="hljs-attr">exponent</span>: <span class="hljs-string">'0x10001'</span>,
+  <span class="hljs-attr">pubkey</span>: &lt;Buffer ... &gt;,
+  valid_from: 'Aug 14 00:00:00 2017 GMT',
+  valid_to: 'Nov 20 23:59:59 2019 GMT',
+  fingerprint: '01:02:59:D9:C3:D2:0D:08:F7:82:4E:44:A4:B4:53:C5:E2:3A:87:4D',
+  fingerprint256: '69:AE:1A:6A:D4:3D:C6:C1:1B:EA:C6:23:DE:BA:2A:14:62:62:93:5C:7A:EA:06:41:9B:0B:BC:87:CE:48:4E:02',
+  fingerprint512: '19:2B:3E:C3:B3:5B:32:E8:AE:BB:78:97:27:E4:BA:6C:39:C9:92:79:4F:31:46:39:E2:70:E5:5F:89:42:17:C9:E8:64:CA:FF:BB:72:56:73:6E:28:8A:92:7E:A3:2A:15:8B:C2:E0:45:CA:C3:BC:EA:40:52:EC:CA:A2:68:CB:32',
+  ext_key_usage: [ '1.3.6.1.5.5.7.3.1', '1.3.6.1.5.5.7.3.2' ],
+  serialNumber: '66593D57F20CBC573E433381B5FEC280',
+  raw: &lt;Buffer ... &gt; }</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.14.0</td>
+<td><p>Add fingerprint512.</p></td></tr>
+<tr><td>v11.4.0</td>
+<td><p>Support Elliptic Curve public key info.</p></td></tr>
+</tbody></table>
+</details>
+</div><p>A certificate object has properties corresponding to the fields of the
+certificate.</p><ul>
+<li><code>raw</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The DER encoded X.509 certificate data.</li>
+<li><code>subject</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The certificate subject, described in terms of
+Country (<code>C</code>), StateOrProvince (<code>ST</code>), Locality (<code>L</code>), Organization (<code>O</code>),
+OrganizationalUnit (<code>OU</code>), and CommonName (<code>CN</code>). The CommonName is typically
+a DNS name with TLS certificates. Example:
+<code>{C: 'UK', ST: 'BC', L: 'Metro', O: 'Node Fans', OU: 'Docs', CN: 'example.com'}</code>.</li>
+<li><code>issuer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The certificate issuer, described in the same terms as the
+<code>subject</code>.</li>
+<li><code>valid_from</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The date-time the certificate is valid from.</li>
+<li><code>valid_to</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The date-time the certificate is valid to.</li>
+<li><code>serialNumber</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The certificate serial number, as a hex string.
+Example: <code>'B9B0D332A1AA5635'</code>.</li>
+<li><code>fingerprint</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The SHA-1 digest of the DER encoded certificate. It is
+returned as a <code>:</code> separated hexadecimal string. Example: <code>'2A:7A:C2:DD:...'</code>.</li>
+<li><code>fingerprint256</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The SHA-256 digest of the DER encoded certificate.
+It is returned as a <code>:</code> separated hexadecimal string. Example:
+<code>'2A:7A:C2:DD:...'</code>.</li>
+<li><code>fingerprint512</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The SHA-512 digest of the DER encoded certificate.
+It is returned as a <code>:</code> separated hexadecimal string. Example:
+<code>'2A:7A:C2:DD:...'</code>.</li>
+<li><code>ext_key_usage</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> (Optional) The extended key usage, a set of OIDs.</li>
+<li><code>subjectaltname</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> (Optional) A string containing concatenated names
+for the subject, an alternative to the <code>subject</code> names.</li>
+<li><code>infoAccess</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" rel="nofollow" class="type">&lt;Array&gt;</a> (Optional) An array describing the AuthorityInfoAccess,
+used with OCSP.</li>
+<li><code>issuerCertificate</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> (Optional) The issuer certificate object. For
+self-signed certificates, this may be a circular reference.</li>
+</ul><p>The certificate may contain information about the public key, depending on
+the key type.</p><p>For RSA keys, the following properties may be defined:</p><ul>
+<li><code>bits</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The RSA bit size. Example: <code>1024</code>.</li>
+<li><code>exponent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The RSA exponent, as a string in hexadecimal number
+notation. Example: <code>'0x010001'</code>.</li>
+<li><code>modulus</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The RSA modulus, as a hexadecimal string. Example:
+<code>'B56CE45CB7...'</code>.</li>
+<li><code>pubkey</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The public key.</li>
+</ul><p>For EC keys, the following properties may be defined:</p><ul>
+<li><code>pubkey</code> <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> The public key.</li>
+<li><code>bits</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;number&gt;</a> The key size in bits. Example: <code>256</code>.</li>
+<li><code>asn1Curve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> (Optional) The ASN.1 name of the OID of the elliptic
+curve. Well-known curves are identified by an OID. While it is unusual, it is
+possible that the curve is identified by its mathematical properties, in which
+case it will not have an OID. Example: <code>'prime256v1'</code>.</li>
+<li><code>nistCurve</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> (Optional) The NIST name for the elliptic curve, if it
+has one (not all well-known curves have been assigned names by NIST). Example:
+<code>'P-256'</code>.</li>
+</ul><p>Example certificate:</p><pre><code class="language-js">{ <span class="hljs-attr">subject</span>:
+   { <span class="hljs-attr">OU</span>: [ <span class="hljs-string">'Domain Control Validated'</span>, <span class="hljs-string">'PositiveSSL Wildcard'</span> ],
+     <span class="hljs-attr">CN</span>: <span class="hljs-string">'*.nodejs.org'</span> },
+  <span class="hljs-attr">issuer</span>:
+   { <span class="hljs-attr">C</span>: <span class="hljs-string">'GB'</span>,
+     <span class="hljs-attr">ST</span>: <span class="hljs-string">'Greater Manchester'</span>,
+     <span class="hljs-attr">L</span>: <span class="hljs-string">'Salford'</span>,
+     <span class="hljs-attr">O</span>: <span class="hljs-string">'COMODO CA Limited'</span>,
+     <span class="hljs-attr">CN</span>: <span class="hljs-string">'COMODO RSA Domain Validation Secure Server CA'</span> },
+  <span class="hljs-attr">subjectaltname</span>: <span class="hljs-string">'DNS:*.nodejs.org, DNS:nodejs.org'</span>,
+  <span class="hljs-attr">infoAccess</span>:
+   { <span class="hljs-string">'CA Issuers - URI'</span>:
+      [ <span class="hljs-string">'http://crt.comodoca.com/COMODORSADomainValidationSecureServerCA.crt'</span> ],
+     <span class="hljs-string">'OCSP - URI'</span>: [ <span class="hljs-string">'http://ocsp.comodoca.com'</span> ] },
+  <span class="hljs-attr">modulus</span>: <span class="hljs-string">'B56CE45CB740B09A13F64AC543B712FF9EE8E4C284B542A1708A27E82A8D151CA178153E12E6DDA15BF70FFD96CB8A88618641BDFCCA03527E665B70D779C8A349A6F88FD4EF6557180BD4C98192872BCFE3AF56E863C09DDD8BC1EC58DF9D94F914F0369102B2870BECFA1348A0838C9C49BD1C20124B442477572347047506B1FCD658A80D0C44BCC16BC5C5496CFE6E4A8428EF654CD3D8972BF6E5BFAD59C93006830B5EB1056BBB38B53D1464FA6E02BFDF2FF66CD949486F0775EC43034EC2602AEFBF1703AD221DAA2A88353C3B6A688EFE8387811F645CEED7B3FE46E1F8B9F59FAD028F349B9BC14211D5830994D055EEA3D547911E07A0ADDEB8A82B9188E58720D95CD478EEC9AF1F17BE8141BE80906F1A339445A7EB5B285F68039B0F294598A7D1C0005FC22B5271B0752F58CCDEF8C8FD856FB7AE21C80B8A2CE983AE94046E53EDE4CB89F42502D31B5360771C01C80155918637490550E3F555E2EE75CC8C636DDE3633CFEDD62E91BF0F7688273694EEEBA20C2FC9F14A2A435517BC1D7373922463409AB603295CEB0BB53787A334C9CA3CA8B30005C5A62FC0715083462E00719A8FA3ED0A9828C3871360A73F8B04A4FC1E71302844E9BB9940B77E745C9D91F226D71AFCAD4B113AAF68D92B24DDB4A2136B55A1CD1ADF39605B63CB639038ED0F4C987689866743A68769CC55847E4A06D6E2E3F1'</span>,
+  <span class="hljs-attr">exponent</span>: <span class="hljs-string">'0x10001'</span>,
+  <span class="hljs-attr">pubkey</span>: &lt;Buffer ... &gt;,
+  valid_from: 'Aug 14 00:00:00 2017 GMT',
+  valid_to: 'Nov 20 23:59:59 2019 GMT',
+  fingerprint: '01:02:59:D9:C3:D2:0D:08:F7:82:4E:44:A4:B4:53:C5:E2:3A:87:4D',
+  fingerprint256: '69:AE:1A:6A:D4:3D:C6:C1:1B:EA:C6:23:DE:BA:2A:14:62:62:93:5C:7A:EA:06:41:9B:0B:BC:87:CE:48:4E:02',
+  fingerprint512: '19:2B:3E:C3:B3:5B:32:E8:AE:BB:78:97:27:E4:BA:6C:39:C9:92:79:4F:31:46:39:E2:70:E5:5F:89:42:17:C9:E8:64:CA:FF:BB:72:56:73:6E:28:8A:92:7E:A3:2A:15:8B:C2:E0:45:CA:C3:BC:EA:40:52:EC:CA:A2:68:CB:32',
+  ext_key_usage: [ '1.3.6.1.5.5.7.3.1', '1.3.6.1.5.5.7.3.2' ],
+  serialNumber: '66593D57F20CBC573E433381B5FEC280',
+  raw: &lt;Buffer ... &gt; }</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

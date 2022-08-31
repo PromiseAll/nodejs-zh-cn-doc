@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>server.listen() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-net">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>server.listen()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../net.html#net_server_listen" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/net/server_listen.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/net/server_listen.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/net/#serverlisten.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>启动监听连接的服务器。
+<code>net.Server</code> 可以是 TCP 或 <a href="../net.html#ipc-support">IPC</a> 服务器，这取决于它监听什么。</p><p class="">可能的语法有：</p><ul class="">
+<li><a href="../net.html#serverlistenhandle-backlog-callback"><code>server.listen(handle[, backlog][, callback])</code></a></li>
+<li><a href="../net.html#serverlistenoptions-callback"><code>server.listen(options[, callback])</code></a></li>
+<li><a href="../net.html#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a> 用于 <a href="../net.html#ipc-support">IPC</a> 服务器</li>
+<li><a href="../net.html#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a> 用于 TCP 服务器</li>
+</ul><p class="">此函数是异步的。
+当服务器开始监听时，将触发 <a href="../net.html#event-listening"><code>'listening'</code></a> 事件。
+最后一个参数 <code>callback</code> 将被添加为 <a href="../net.html#event-listening"><code>'listening'</code></a> 事件的监听器。</p><p class="">所有 <code>listen()</code> 方法都可以采用 <code>backlog</code> 参数来指定待处理连接队列的最大长度。
+实际长度将由操作系统通过 sysctl 设置确定，例如 Linux 上的 <code>tcp_max_syn_backlog</code> 和 <code>somaxconn</code>。
+此参数的默认值为 511（不是 512）。</p><p class="">所有 <a href="../net.html#class-netsocket"><code>net.Socket</code></a> 都设置为 <code>SO_REUSEADDR</code>（详见 <a href="https://man7.org/linux/man-pages/man7/socket.7.html" rel="nofollow"><code>socket(7)</code></a>）。</p><p class="">当且仅当在第一次调用 <code>server.listen()</code> 期间出现错误或调用 <code>server.close()</code> 时，才能再次调用 <code>server.listen()</code> 方法。
+否则，将抛出 <code>ERR_SERVER_ALREADY_LISTEN</code> 错误。</p><p class="">监听时最常见的错误之一是 <code>EADDRINUSE</code>。
+当另一个服务器已经在监听请求的 <code>port</code>/<code>path</code>/<code>handle</code> 时会发生这种情况。
+处理此问题的方法之一是在一定时间后重试：</p><pre class=""><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">code</span> === <span class="hljs-string">'EADDRINUSE'</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Address in use, retrying...'</span>);
+    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+      server.<span class="hljs-title function_">close</span>();
+      server.<span class="hljs-title function_">listen</span>(<span class="hljs-variable constant_">PORT</span>, <span class="hljs-variable constant_">HOST</span>);
+    }, <span class="hljs-number">1000</span>);
+  }
+});</code></pre></div>
+          <div id="content_right"><p>Start a server listening for connections. A <code>net.Server</code> can be a TCP or
+an <a href="../net.html#ipc-support">IPC</a> server depending on what it listens to.</p><p>Possible signatures:</p><ul>
+<li><a href="../net.html#serverlistenhandle-backlog-callback"><code>server.listen(handle[, backlog][, callback])</code></a></li>
+<li><a href="../net.html#serverlistenoptions-callback"><code>server.listen(options[, callback])</code></a></li>
+<li><a href="../net.html#serverlistenpath-backlog-callback"><code>server.listen(path[, backlog][, callback])</code></a>
+for <a href="../net.html#ipc-support">IPC</a> servers</li>
+<li><a href="../net.html#serverlistenport-host-backlog-callback"><code>server.listen([port[, host[, backlog]]][, callback])</code></a>
+for TCP servers</li>
+</ul><p>This function is asynchronous. When the server starts listening, the
+<a href="../net.html#event-listening"><code>'listening'</code></a> event will be emitted. The last parameter <code>callback</code>
+will be added as a listener for the <a href="../net.html#event-listening"><code>'listening'</code></a> event.</p><p>All <code>listen()</code> methods can take a <code>backlog</code> parameter to specify the maximum
+length of the queue of pending connections. The actual length will be determined
+by the OS through sysctl settings such as <code>tcp_max_syn_backlog</code> and <code>somaxconn</code>
+on Linux. The default value of this parameter is 511 (not 512).</p><p>All <a href="../net.html#class-netsocket"><code>net.Socket</code></a> are set to <code>SO_REUSEADDR</code> (see <a href="https://man7.org/linux/man-pages/man7/socket.7.html" rel="nofollow"><code>socket(7)</code></a> for
+details).</p><p>The <code>server.listen()</code> method can be called again if and only if there was an
+error during the first <code>server.listen()</code> call or <code>server.close()</code> has been
+called. Otherwise, an <code>ERR_SERVER_ALREADY_LISTEN</code> error will be thrown.</p><p>One of the most common errors raised when listening is <code>EADDRINUSE</code>.
+This happens when another server is already listening on the requested
+<code>port</code>/<code>path</code>/<code>handle</code>. One way to handle this would be to retry
+after a certain amount of time:</p><pre><code class="language-js">server.<span class="hljs-title function_">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">code</span> === <span class="hljs-string">'EADDRINUSE'</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Address in use, retrying...'</span>);
+    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+      server.<span class="hljs-title function_">close</span>();
+      server.<span class="hljs-title function_">listen</span>(<span class="hljs-variable constant_">PORT</span>, <span class="hljs-variable constant_">HOST</span>);
+    }, <span class="hljs-number">1000</span>);
+  }
+});</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>response.setHeader(name, value) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-http">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>response.setHeader(name, value)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../http.html#http_response_setheader_name_value" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/http/response_setheader_name_value.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/http/response_setheader_name_value.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/http/#responsesetheadername-value.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v0.4.0</span>
+</div><ul class="">
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li>返回: <a href="../http.html#class-httpserverresponse" rel="nofollow" class="type">&lt;http.ServerResponse&gt;</a></li>
+</ul><p>返回响应对象。</p><p class="">为隐式标头设置单个标头值。
+如果该标头已经存在于待发送的标头中，则其值将被替换。
+在此处使用字符串数组发送具有相同名称的多个标头。
+非字符串值将不加修改地存储。
+因此，<a href="../http.html#responsegetheadername"><code>response.getHeader()</code></a> 可能返回非字符串值。
+但是，非字符串值将转换为字符串以进行网络传输。
+相同的响应对象返回给调用者，以启用调用链。</p><pre class=""><code class="language-js">response.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/html'</span>);</code></pre><p class="">或者</p><pre class=""><code class="language-js">response.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Set-Cookie'</span>, [<span class="hljs-string">'type=ninja'</span>, <span class="hljs-string">'language=javascript'</span>]);</code></pre><p class="">尝试设置包含无效字符的标头字段名称或值将导致抛出 <a href="../errors.html#class-typeerror"><code>TypeError</code></a>。</p><p class="">当标头已使用 <a href="../http.html#responsesetheadername-value"><code>response.setHeader()</code></a> 设置时，则它们将与任何传给 <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a> 的标头合并，其中传给 <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a> 的标头优先。</p><pre class=""><code class="language-js"><span class="hljs-comment">// 返回 content-type = text/plain</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/html'</span>);
+  res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'X-Foo'</span>, <span class="hljs-string">'bar'</span>);
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'ok'</span>);
+});</code></pre><p class="">如果调用了 <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a> 方法而该方法没有被调用，则会直接将提供的标头值写入网络通道，而不进行内部缓存，标头的 <a href="../http.html#responsegetheadername"><code>response.getHeader()</code></a> 不会产生预期的结果。
+如果希望在将来可能进行检索和修改时逐步填充标头，则使用 <a href="../http.html#responsesetheadername-value"><code>response.setHeader()</code></a> 而不是 <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v0.4.0</span>
+</div><ul>
+<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a></li>
+<li><code>value</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types" rel="nofollow" class="type">&lt;any&gt;</a></li>
+<li>Returns: <a href="../http.html#class-httpserverresponse" rel="nofollow" class="type">&lt;http.ServerResponse&gt;</a></li>
+</ul><p>Returns the response object.</p><p>Sets a single header value for implicit headers. If this header already exists
+in the to-be-sent headers, its value will be replaced. Use an array of strings
+here to send multiple headers with the same name. Non-string values will be
+stored without modification. Therefore, <a href="../http.html#responsegetheadername"><code>response.getHeader()</code></a> may return
+non-string values. However, the non-string values will be converted to strings
+for network transmission. The same response object is returned to the caller,
+to enable call chaining.</p><pre><code class="language-js">response.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/html'</span>);</code></pre><p>or</p><pre><code class="language-js">response.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Set-Cookie'</span>, [<span class="hljs-string">'type=ninja'</span>, <span class="hljs-string">'language=javascript'</span>]);</code></pre><p>Attempting to set a header field name or value that contains invalid characters
+will result in a <a href="../errors.html#class-typeerror"><code>TypeError</code></a> being thrown.</p><p>When headers have been set with <a href="../http.html#responsesetheadername-value"><code>response.setHeader()</code></a>, they will be merged
+with any headers passed to <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a>, with the headers passed
+to <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a> given precedence.</p><pre><code class="language-js"><span class="hljs-comment">// Returns content-type = text/plain</span>
+<span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/html'</span>);
+  res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">'X-Foo'</span>, <span class="hljs-string">'bar'</span>);
+  res.<span class="hljs-title function_">writeHead</span>(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span> });
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-string">'ok'</span>);
+});</code></pre><p>If <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a> method is called and this method has not been
+called, it will directly write the supplied header values onto the network
+channel without caching internally, and the <a href="../http.html#responsegetheadername"><code>response.getHeader()</code></a> on the
+header will not yield the expected result. If progressive population of headers
+is desired with potential future retrieval and modification, use
+<a href="../http.html#responsesetheadername-value"><code>response.setHeader()</code></a> instead of <a href="../http.html#responsewriteheadstatuscode-statusmessage-headers"><code>response.writeHead()</code></a>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

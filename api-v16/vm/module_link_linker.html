@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>module.link(linker) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-vm">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>module.link(linker)</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../vm.html#vm_module_link_linker" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/vm/module_link_linker.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/vm/module_link_linker.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/vm/#modulelinklinker.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><ul class="">
+<li><code>linker</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li>
+<p><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> 请求模块的说明符：</p>
+<pre><code class="language-js mjs"><span class="hljs-keyword">import</span> foo <span class="hljs-keyword">from</span> <span class="hljs-string">'foo'</span>;
+<span class="hljs-comment">//              ^^^^^ 模块说明符</span></code></pre>
+</li>
+<li>
+<p><code>extra</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>assert</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> 来自断言的数据：
+<!-- eslint-skip -->
+<pre><code class="language-js"><span class="hljs-keyword">import</span> foo <span class="hljs-keyword">from</span> <span class="hljs-string">'foo'</span> assert { <span class="hljs-attr">name</span>: <span class="hljs-string">'value'</span> };
+<span class="hljs-comment">//                           ^^^^^^^^^^^^^^^^^ 断言</span></code></pre>
+根据 ECMA-262，主机应该忽略他们不支持的断言，而不是，例如，如果存在不受支持的断言则触发错误。</li>
+</ul>
+</li>
+<li>
+<p><code>referencingModule</code> <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> <code>Module</code> 对象 <code>link()</code> 被调用。</p>
+</li>
+<li>
+<p>返回: <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></p>
+</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul><p>链接模块依赖项。
+此方法必须在求值前调用，并且每个模块只能调用一次。</p><p class="">该函数应返回 <code>Module</code> 对象或最终解析为 <code>Module</code> 对象的 <code>Promise</code>。
+返回的 <code>Module</code> 必须满足以下两个不变量：</p><ul class="">
+<li>它必须与父 <code>Module</code> 属于相同的上下文。</li>
+<li>它的 <code>status</code> 不能是 <code>'errored'</code>。</li>
+</ul><p class="">如果返回的 <code>Module</code> 的 <code>status</code> 是 <code>'unlinked'</code>，则将在返回的 <code>Module</code> 上递归调用此方法，并使用相同提供的 <code>linker</code> 函数。</p><p class=""><code>link()</code> 返回 <code>Promise</code>，当所有链接实例都解析为有效的 <code>Module</code> 时，它将被解析，或者如果链接器函数抛出异常或返回无效的 <code>Module</code>，则被拒绝。</p><p class="">链接器函数大致对应于 ECMAScript 规范中实现定义的 <a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> 抽象操作，有几个关键区别：</p><ul class="">
+<li>当 <a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> 是同步的时，允许链接器函数是异步的。</li>
+</ul><p class="">在模块链接期间使用的实际 <a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> 实现是一种返回链接期间链接的模块的实现。
+因为那时所有模块都已经完全链接了，<a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> 实现是完全同步的每个规范。</p><p class="">对应 ECMAScript 规范中<a href="https://tc39.es/ecma262/#sec-cyclic-module-records" rel="nofollow">循环模块记录</a>的 <a href="https://tc39.es/ecma262/#sec-moduledeclarationlinking" rel="nofollow">Link() 具体方法</a>字段。</p></div>
+          <div id="content_right"><ul>
+<li><code>linker</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="nofollow" class="type">&lt;Function&gt;</a>
+<ul>
+<li>
+<p><code>specifier</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> The specifier of the requested module:</p>
+<pre><code class="language-js mjs"><span class="hljs-keyword">import</span> foo <span class="hljs-keyword">from</span> <span class="hljs-string">'foo'</span>;
+<span class="hljs-comment">//              ^^^^^ the module specifier</span></code></pre>
+</li>
+<li>
+<p><code>extra</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a></p>
+<ul>
+<li><code>assert</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a> The data from the assertion:
+<!-- eslint-skip -->
+<pre><code class="language-js"><span class="hljs-keyword">import</span> foo <span class="hljs-keyword">from</span> <span class="hljs-string">'foo'</span> assert { <span class="hljs-attr">name</span>: <span class="hljs-string">'value'</span> };
+<span class="hljs-comment">//                           ^^^^^^^^^^^^^^^^^ the assertion</span></code></pre>
+Per ECMA-262, hosts are expected to ignore assertions that they do not
+support, as opposed to, for example, triggering an error if an
+unsupported assertion is present.</li>
+</ul>
+</li>
+<li>
+<p><code>referencingModule</code> <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> The <code>Module</code> object <code>link()</code> is called on.</p>
+</li>
+<li>
+<p>Returns: <a href="../vm.html#class-vmmodule" rel="nofollow" class="type">&lt;vm.Module&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></p>
+</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a></li>
+</ul><p>Link module dependencies. This method must be called before evaluation, and
+can only be called once per module.</p><p>The function is expected to return a <code>Module</code> object or a <code>Promise</code> that
+eventually resolves to a <code>Module</code> object. The returned <code>Module</code> must satisfy the
+following two invariants:</p><ul>
+<li>It must belong to the same context as the parent <code>Module</code>.</li>
+<li>Its <code>status</code> must not be <code>'errored'</code>.</li>
+</ul><p>If the returned <code>Module</code>'s <code>status</code> is <code>'unlinked'</code>, this method will be
+recursively called on the returned <code>Module</code> with the same provided <code>linker</code>
+function.</p><p><code>link()</code> returns a <code>Promise</code> that will either get resolved when all linking
+instances resolve to a valid <code>Module</code>, or rejected if the linker function either
+throws an exception or returns an invalid <code>Module</code>.</p><p>The linker function roughly corresponds to the implementation-defined
+<a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> abstract operation in the ECMAScript
+specification, with a few key differences:</p><ul>
+<li>The linker function is allowed to be asynchronous while
+<a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> is synchronous.</li>
+</ul><p>The actual <a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> implementation used during module
+linking is one that returns the modules linked during linking. Since at
+that point all modules would have been fully linked already, the
+<a href="https://tc39.es/ecma262/#sec-hostresolveimportedmodule" rel="nofollow">HostResolveImportedModule</a> implementation is fully synchronous per
+specification.</p><p>Corresponds to the <a href="https://tc39.es/ecma262/#sec-moduledeclarationlinking" rel="nofollow">Link() concrete method</a> field of <a href="https://tc39.es/ecma262/#sec-cyclic-module-records" rel="nofollow">Cyclic Module
+Record</a>s in the ECMAScript specification.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

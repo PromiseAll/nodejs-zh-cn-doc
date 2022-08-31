@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>平台特定的注意事项 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>平台特定的注意事项</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_platform_specific_considerations" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/platform_specific_considerations.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/platform_specific_considerations.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#platform-specific-considerations.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在 Windows 上，带有主机名的 <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 转换为 UNC 路径，而带有驱动器号的 <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 则转换为本地绝对路径。
+没有主机名和驱动器号的 <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 将导致错误：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-comment">// 在 Windows 上：</span>
+
+<span class="hljs-comment">// - 带有主机名的 WHATWG 文件 URL 转换为 UNC 路径</span>
+<span class="hljs-comment">// file://hostname/p/a/t/h/file =&gt; \\hostname\p\a\t\h\file</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file://hostname/p/a/t/h/file'</span>));
+
+<span class="hljs-comment">// - 带有驱动器号的 WHATWG 文件 URL 转换为绝对路径</span>
+<span class="hljs-comment">// file:///C:/tmp/hello =&gt; C:\tmp\hello</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/tmp/hello'</span>));
+
+<span class="hljs-comment">// - 没有主机名的 WHATWG 文件 URL 必须有驱动器号</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///notdriveletter/p/a/t/h/file'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///c/p/a/t/h/file'</span>));
+<span class="hljs-comment">// TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must be absolute</span></code></pre><p class="">带有驱动器号的 <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 必须在驱动器号之后使用 <code>:</code> 作为分隔符。
+使用其他分隔符会导致错误。</p><p class="">在所有其他平台上，不支持带有主机名的 <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 并且会导致错误：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-comment">// 在其他平台上：</span>
+
+<span class="hljs-comment">// - 不支持带有主机名的 WHATWG 文件 URL</span>
+<span class="hljs-comment">// file://hostname/p/a/t/h/file =&gt; throw!</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file://hostname/p/a/t/h/file'</span>));
+<span class="hljs-comment">// TypeError [ERR_INVALID_FILE_URL_PATH]: must be absolute</span>
+
+<span class="hljs-comment">// - WHATWG 文件 URL 转换为绝对路径</span>
+<span class="hljs-comment">// file:///tmp/hello =&gt; /tmp/hello</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///tmp/hello'</span>));</code></pre><p class="">具有编码斜杠字符的 <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 在所有平台上都将导致错误：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-comment">// 在 Windows 上</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/p/a/t/h/%2F'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/p/a/t/h/%2f'</span>));
+<span class="hljs-comment">/* TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must not include encoded
+\ or / characters */</span>
+
+<span class="hljs-comment">// 在 POSIX 上</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///p/a/t/h/%2F'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///p/a/t/h/%2f'</span>));
+<span class="hljs-comment">/* TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must not include encoded
+/ characters */</span></code></pre><p class="">在 Windows 上，带有编码反斜杠的 <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> 将导致错误：</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-comment">// 在 Windows 上</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/path/%5C'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/path/%5c'</span>));
+<span class="hljs-comment">/* TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must not include encoded
+\ or / characters */</span></code></pre></div>
+          <div id="content_right"><p>On Windows, <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a>s with a host name convert to UNC paths, while <code>file:</code>
+<a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a>s with drive letters convert to local absolute paths. <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a>s
+with no host name and no drive letter will result in an error:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-comment">// On Windows :</span>
+
+<span class="hljs-comment">// - WHATWG file URLs with hostname convert to UNC path</span>
+<span class="hljs-comment">// file://hostname/p/a/t/h/file =&gt; \\hostname\p\a\t\h\file</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file://hostname/p/a/t/h/file'</span>));
+
+<span class="hljs-comment">// - WHATWG file URLs with drive letters convert to absolute path</span>
+<span class="hljs-comment">// file:///C:/tmp/hello =&gt; C:\tmp\hello</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/tmp/hello'</span>));
+
+<span class="hljs-comment">// - WHATWG file URLs without hostname must have a drive letters</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///notdriveletter/p/a/t/h/file'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///c/p/a/t/h/file'</span>));
+<span class="hljs-comment">// TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must be absolute</span></code></pre><p><code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a>s with drive letters must use <code>:</code> as a separator just after
+the drive letter. Using another separator will result in an error.</p><p>On all other platforms, <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a>s with a host name are unsupported and
+will result in an error:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-comment">// On other platforms:</span>
+
+<span class="hljs-comment">// - WHATWG file URLs with hostname are unsupported</span>
+<span class="hljs-comment">// file://hostname/p/a/t/h/file =&gt; throw!</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file://hostname/p/a/t/h/file'</span>));
+<span class="hljs-comment">// TypeError [ERR_INVALID_FILE_URL_PATH]: must be absolute</span>
+
+<span class="hljs-comment">// - WHATWG file URLs convert to absolute path</span>
+<span class="hljs-comment">// file:///tmp/hello =&gt; /tmp/hello</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///tmp/hello'</span>));</code></pre><p>A <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a> having encoded slash characters will result in an error on all
+platforms:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-comment">// On Windows</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/p/a/t/h/%2F'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/p/a/t/h/%2f'</span>));
+<span class="hljs-comment">/* TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must not include encoded
+\ or / characters */</span>
+
+<span class="hljs-comment">// On POSIX</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///p/a/t/h/%2F'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///p/a/t/h/%2f'</span>));
+<span class="hljs-comment">/* TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must not include encoded
+/ characters */</span></code></pre><p>On Windows, <code>file:</code> <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a>s having encoded backslash will result in an error:</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { readFileSync } <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-comment">// On Windows</span>
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/path/%5C'</span>));
+<span class="hljs-title function_">readFileSync</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">'file:///C:/path/%5c'</span>));
+<span class="hljs-comment">/* TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must not include encoded
+\ or / characters */</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>使用字符串作为加密 API 的输入 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-crypto">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>使用字符串作为加密 API 的输入</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../crypto.html#crypto_using_strings_as_inputs_to_cryptographic_apis" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/crypto/using_strings_as_inputs_to_cryptographic_apis.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/crypto/#using-strings-as-inputs-to-cryptographic-apis.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>由于历史原因，Node.js 提供的许多加密 API 都接受字符串作为输入，其中底层加密算法处理字节序列。
+这些实例包括明文、密文、对称密钥、初始化向量、密码、盐、认证标签和额外的认证数据。</p><p class="">将字符串传给加密 API 时，请考虑以下因素。</p><ul class="">
+<li>
+<p>并非所有字节序列都是有效的 UTF-8 字符串。
+因此，当从字符串中导出长度为 <code>n</code> 的字节序列时，其熵通常低于随机或伪随机 <code>n</code> 字节序列的熵。
+例如，没有 UTF-8 字符串将导致字节序列 <code>c0 af</code>。
+秘密密钥应该几乎完全是随机或伪随机字节序列。</p>
+</li>
+<li>
+<p>同样，在将随机或伪随机字节序列转换为 UTF-8 字符串时，不代表有效代码点的子序列可能会被 Unicode 替换字符 (<code>U+FFFD</code>) 替换。
+因此，生成的 Unicode 字符串的字节表示可能不等于创建字符串的字节序列。</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> original = [<span class="hljs-number">0xc0</span>, <span class="hljs-number">0xaf</span>];
+<span class="hljs-keyword">const</span> bytesAsString = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(original).<span class="hljs-title function_">toString</span>(<span class="hljs-string">'utf8'</span>);
+<span class="hljs-keyword">const</span> stringAsBytes = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(bytesAsString, <span class="hljs-string">'utf8'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stringAsBytes);
+<span class="hljs-comment">// 打印 '&lt;Buffer ef bf bd ef bf bd&gt;'</span></code></pre>
+<p>密码、散列函数、签名算法和密钥派生函数的输出是伪随机字节序列，不应用作 Unicode 字符串。</p>
+</li>
+<li>
+<p>从用户输入中获取字符串时，某些 Unicode 字符可以用多种等效方式表示，从而产生不同的字节序列。
+例如，将用户密码传递给密钥派生函数（例如 PBKDF2 或 scrypt）时，密钥派生函数的结果取决于字符串是使用组合字符还是分解字符。
+Node.js 不会规范化字符表示。
+在将用户输入传给加密 API 之前，开发人员应考虑在用户输入上使用 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" rel="nofollow"><code>String.prototype.normalize()</code></a>。</p>
+</li>
+</ul></div>
+          <div id="content_right"><p>For historical reasons, many cryptographic APIs provided by Node.js accept
+strings as inputs where the underlying cryptographic algorithm works on byte
+sequences. These instances include plaintexts, ciphertexts, symmetric keys,
+initialization vectors, passphrases, salts, authentication tags,
+and additional authenticated data.</p><p>When passing strings to cryptographic APIs, consider the following factors.</p><ul>
+<li>
+<p>Not all byte sequences are valid UTF-8 strings. Therefore, when a byte
+sequence of length <code>n</code> is derived from a string, its entropy is generally
+lower than the entropy of a random or pseudorandom <code>n</code> byte sequence.
+For example, no UTF-8 string will result in the byte sequence <code>c0 af</code>. Secret
+keys should almost exclusively be random or pseudorandom byte sequences.</p>
+</li>
+<li>
+<p>Similarly, when converting random or pseudorandom byte sequences to UTF-8
+strings, subsequences that do not represent valid code points may be replaced
+by the Unicode replacement character (<code>U+FFFD</code>). The byte representation of
+the resulting Unicode string may, therefore, not be equal to the byte sequence
+that the string was created from.</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> original = [<span class="hljs-number">0xc0</span>, <span class="hljs-number">0xaf</span>];
+<span class="hljs-keyword">const</span> bytesAsString = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(original).<span class="hljs-title function_">toString</span>(<span class="hljs-string">'utf8'</span>);
+<span class="hljs-keyword">const</span> stringAsBytes = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(bytesAsString, <span class="hljs-string">'utf8'</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(stringAsBytes);
+<span class="hljs-comment">// Prints '&lt;Buffer ef bf bd ef bf bd&gt;'.</span></code></pre>
+<p>The outputs of ciphers, hash functions, signature algorithms, and key
+derivation functions are pseudorandom byte sequences and should not be
+used as Unicode strings.</p>
+</li>
+<li>
+<p>When strings are obtained from user input, some Unicode characters can be
+represented in multiple equivalent ways that result in different byte
+sequences. For example, when passing a user passphrase to a key derivation
+function, such as PBKDF2 or scrypt, the result of the key derivation function
+depends on whether the string uses composed or decomposed characters. Node.js
+does not normalize character representations. Developers should consider using
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize" rel="nofollow"><code>String.prototype.normalize()</code></a> on user inputs before passing them to
+cryptographic APIs.</p>
+</li>
+</ul></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

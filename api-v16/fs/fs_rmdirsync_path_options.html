@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>fs.rmdirSync(path[, options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-fs">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>fs.rmdirSync(path[, options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../fs.html#fs_fs_rmdirsync_path_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/fs/fs_rmdirsync_path_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/fs/fs_rmdirsync_path_options.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/fs/#fsrmdirsyncpath-options.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<details class="changelog" open=""><summary>版本历史</summary>
+<table>
+<tbody><tr><th>版本</th><th>变更</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>不再允许在文件 <code>path</code> 上使用 <code>fs.rmdirSync(path, { recursive: true })</code>，在 Windows 上导致 <code>ENOENT</code> 错误，在 POSIX 上导致 <code>ENOTDIR</code> 错误。</p></td></tr>
+<tr><td>v16.0.0</td>
+<td><p>不再允许在不存在的 <code>path</code> 上使用 <code>fs.rmdirSync(path, { recursive: true })</code>，会导致 <code>ENOENT</code> 错误。</p></td></tr>
+<tr><td>v16.0.0</td>
+<td><p>选项 <code>recursive</code> 已弃用，使用它会触发弃用警告。</p></td></tr>
+<tr><td>v14.14.0</td>
+<td><p>不推荐使用 <code>recursive</code> 选项，请改用 <code>fs.rmSync</code>。</p></td></tr>
+<tr><td>v13.3.0, v12.16.0</td>
+<td><p>选项 <code>maxBusyTries</code> 重命名为 <code>maxRetries</code>，默认值为 0。 选项 <code>emfileWait</code> 已删除，并且 <code>EMFILE</code> 错误使用与其他错误相同的重试逻辑。 现在支持 <code>retryDelay</code> 选项。 现在重试 <code>ENFILE</code> 错误。</p></td></tr>
+<tr><td>v12.10.0</td>
+<td><p>现在支持 <code>recursive</code>、<code>maxBusyTries</code> 和 <code>emfileWait</code> 选项。</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>参数 <code>path</code> 可以是使用 <code>file:</code> 协议的 WHATWG <code>URL</code> 对象。</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>新增于: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul class="">
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>maxRetries</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 如果遇到 <code>EBUSY</code>、<code>EMFILE</code>、<code>ENFILE</code>、<code>ENOTEMPTY</code> 或 <code>EPERM</code> 错误，Node.js 将在每次尝试时以 <code>retryDelay</code> 毫秒的线性退避等待时间重试该操作。
+此选项表示重试次数。
+如果 <code>recursive</code> 选项不为 <code>true</code>，则忽略此选项。 <strong>默认值:</strong> <code>0</code>。</li>
+<li><code>recursive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> 如果为 <code>true</code>，则执行递归目录删除。
+在递归模式下，操作将在失败时重试。 <strong>默认值:</strong> <code>false</code>。
+<strong>已弃用。</strong></li>
+<li><code>retryDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> 重试之间等待的时间（以毫秒为单位）。
+如果 <code>recursive</code> 选项不为 <code>true</code>，则忽略此选项。
+<strong>默认值:</strong> <code>100</code>。</li>
+</ul>
+</li>
+</ul><p>同步的 <a href="http://man7.org/linux/man-pages/man2/rmdir.2.html" rel="nofollow"><code>rmdir(2)</code></a>。
+返回 <code>undefined</code>。</p><p class="">在文件（而不是目录）上使用 <code>fs.rmdirSync()</code>，则在 Windows 上会导致 <code>ENOENT</code> 错误，在 POSIX 上会导致 <code>ENOTDIR</code> 错误。</p><p class="">要获得类似于 <code>rm -rf</code> Unix 命令的行为，则使用具有选项 <code>{ recursive: true, force: true }</code> 的 <a href="../fs.html#fsrmsyncpath-options"><code>fs.rmSync()</code></a>。</p></div>
+          <div id="content_right"><div class="api_metadata">
+<details class="changelog" open=""><summary>History</summary>
+<table>
+<tbody><tr><th>Version</th><th>Changes</th></tr>
+<tr><td>v16.0.0</td>
+<td><p>Using <code>fs.rmdirSync(path, { recursive: true })</code> on a <code>path</code> that is a file is no longer permitted and results in an <code>ENOENT</code> error on Windows and an <code>ENOTDIR</code> error on POSIX.</p></td></tr>
+<tr><td>v16.0.0</td>
+<td><p>Using <code>fs.rmdirSync(path, { recursive: true })</code> on a <code>path</code> that does not exist is no longer permitted and results in a <code>ENOENT</code> error.</p></td></tr>
+<tr><td>v16.0.0</td>
+<td><p>The <code>recursive</code> option is deprecated, using it triggers a deprecation warning.</p></td></tr>
+<tr><td>v14.14.0</td>
+<td><p>The <code>recursive</code> option is deprecated, use <code>fs.rmSync</code> instead.</p></td></tr>
+<tr><td>v13.3.0, v12.16.0</td>
+<td><p>The <code>maxBusyTries</code> option is renamed to <code>maxRetries</code>, and its default is 0. The <code>emfileWait</code> option has been removed, and <code>EMFILE</code> errors use the same retry logic as other errors. The <code>retryDelay</code> option is now supported. <code>ENFILE</code> errors are now retried.</p></td></tr>
+<tr><td>v12.10.0</td>
+<td><p>The <code>recursive</code>, <code>maxBusyTries</code>, and <code>emfileWait</code> options are now supported.</p></td></tr>
+<tr><td>v7.6.0</td>
+<td><p>The <code>path</code> parameters can be a WHATWG <code>URL</code> object using <code>file:</code> protocol.</p></td></tr>
+<tr><td>v0.1.21</td>
+<td><p><span>Added in: v0.1.21</span></p></td></tr>
+</tbody></table>
+</details>
+</div><ul>
+<li><code>path</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" rel="nofollow" class="type">&lt;string&gt;</a> | <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> | <a href="../url.html#the-whatwg-url-api" rel="nofollow" class="type">&lt;URL&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>maxRetries</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> If an <code>EBUSY</code>, <code>EMFILE</code>, <code>ENFILE</code>, <code>ENOTEMPTY</code>, or
+<code>EPERM</code> error is encountered, Node.js retries the operation with a linear
+backoff wait of <code>retryDelay</code> milliseconds longer on each try. This option
+represents the number of retries. This option is ignored if the <code>recursive</code>
+option is not <code>true</code>. <strong>Default:</strong> <code>0</code>.</li>
+<li><code>recursive</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" rel="nofollow" class="type">&lt;boolean&gt;</a> If <code>true</code>, perform a recursive directory removal. In
+recursive mode, operations are retried on failure. <strong>Default:</strong> <code>false</code>.
+<strong>Deprecated.</strong></li>
+<li><code>retryDelay</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" rel="nofollow" class="type">&lt;integer&gt;</a> The amount of time in milliseconds to wait between
+retries. This option is ignored if the <code>recursive</code> option is not <code>true</code>.
+<strong>Default:</strong> <code>100</code>.</li>
+</ul>
+</li>
+</ul><p>Synchronous <a href="http://man7.org/linux/man-pages/man2/rmdir.2.html" rel="nofollow"><code>rmdir(2)</code></a>. Returns <code>undefined</code>.</p><p>Using <code>fs.rmdirSync()</code> on a file (not a directory) results in an <code>ENOENT</code> error
+on Windows and an <code>ENOTDIR</code> error on POSIX.</p><p>To get a behavior similar to the <code>rm -rf</code> Unix command, use <a href="../fs.html#fsrmsyncpath-options"><code>fs.rmSync()</code></a>
+with options <code>{ recursive: true, force: true }</code>.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

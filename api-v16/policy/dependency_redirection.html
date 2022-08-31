@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>依赖项重定向 | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-policy">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>依赖项重定向</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../policy.html#policy_dependency_redirection" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/policy/dependency_redirection.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/policy/dependency_redirection.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/policy/#dependency-redirection.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>应用程序可能需要发布模块的补丁版本或阻止模块允许所有模块访问所有其他模块。
+可以通过拦截加载希望被替换的模块的尝试来使用重定向。</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"resources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"./app/checked.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"fs"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"os"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/alt-os"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"http"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span> <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">依赖项由请求的说明符字符串作为键，并且具有 <code>true</code>、<code>null</code>、指向要解析的模块的字符串或条件对象的值。</p><p class="">说明符字符串不执行任何搜索，并且必须与提供给 <code>require()</code> 或 <code>import</code> 的内容完全匹配，但规范化步骤除外。
+因此，如果策略使用多个不同的字符串指向同一个模块（例如排除扩展名），则可能需要多个说明符。</p><p class="">说明符字符串已规范化，但在用于匹配之前未解析，以便与导入映射具有某种兼容性，例如，如果资源 <code>file:///C:/app/server.js</code> 从位于 <code>file:///C:/app/policy.json</code> 的策略中获得以下重定向：</p><pre class=""><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"resources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"file:///C:/app/utils.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"./utils.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./utils-v2.js"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p class="">任何用于加载 <code>file:///C:/app/utils.js</code> 的说明符将被拦截并重定向到 <code>file:///C:/app/utils-v2.js</code>，而不考虑使用绝对或相对说明符。
+但是，如果使用的说明符不是绝对或相对 URL 字符串，则不会被截取。
+所以，如果使用了 <code>import('#utils')</code> 之类的导入，则不会被拦截。</p><p class="">如果重定向的值为 <code>true</code>，将使用策略文件顶部的 "dependencies" 字段。
+如果策略文件顶部的字段是 <code>true</code>，则使用默认节点搜索算法来查找模块。</p><p class="">如果重定向的值是字符串，则相对于清单进行解析，然后立即使用而无需搜索。</p><p class="">根据策略，任何尝试解析且未在依赖项中列出的说明符字符串都会导致错误。</p><p class="">重定向不会阻止通过直接访问 <code>require.cache</code> 或通过允许访问加载模块的 <code>module.constructor</code> 等方式访问 API。
+策略重定向只影响到 <code>require()</code> 和 <code>import</code> 的说明符。
+其他方法，例如防止通过变量对 API 的非期望访问，对于锁定加载模块的路径是必要的。</p><p class="">可以指定依赖项映射的布尔值 <code>true</code> 以允许模块加载任何说明符而无需重定向。
+这对本地开发很有用，并且在生产中可能有一些有效的用途，但只有在审核模块以确保其行为有效后才应谨慎使用。</p><p class="">与 <code>package.json</code> 中的 <code>"exports"</code> 类似，依赖项也可以指定为包含条件的对象，这些条件分支如何加载依赖关系。
+在前面的示例中，当 <code>"import"</code> 条件是加载它的一部分时，允许 <code>"http"</code>。</p><p class="">解析值的值 <code>null</code> 会导致解析失败。
+这可用于确保明确阻止某些类型的动态访问。</p><p class="">已解析模块位置的未知值会导致失败，但不能保证向前兼容。</p></div>
+          <div id="content_right"><p>An application may need to ship patched versions of modules or to prevent
+modules from allowing all modules access to all other modules. Redirection
+can be used by intercepting attempts to load the modules wishing to be
+replaced.</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"resources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"./app/checked.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"fs"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"os"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./app/node_modules/alt-os"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"http"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">"import"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span> <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>The dependencies are keyed by the requested specifier string and have values
+of either <code>true</code>, <code>null</code>, a string pointing to a module to be resolved,
+or a conditions object.</p><p>The specifier string does not perform any searching and must match exactly what
+is provided to the <code>require()</code> or <code>import</code> except for a canonicalization step.
+Therefore, multiple specifiers may be needed in the policy if it uses multiple
+different strings to point to the same module (such as excluding the extension).</p><p>Specifier strings are canonicalized but not resolved prior to be used for
+matching in order to have some compatibility with import maps, for example if a
+resource <code>file:///C:/app/server.js</code> was given the following redirection from a
+policy located at <code>file:///C:/app/policy.json</code>:</p><pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"resources"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"file:///C:/app/utils.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"dependencies"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"./utils.js"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"./utils-v2.js"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Any specifier used to load <code>file:///C:/app/utils.js</code> would then be intercepted
+and redirected to <code>file:///C:/app/utils-v2.js</code> instead regardless of using an
+absolute or relative specifier. However, if a specifier that is not an absolute
+or relative URL string is used, it would not be intercepted. So, if an import
+such as <code>import('#utils')</code> was used, it would not be intercepted.</p><p>If the value of the redirection is <code>true</code>, a "dependencies" field at the top of
+the policy file will be used. If that field at the top of the policy file is
+<code>true</code> the default node searching algorithms are used to find the module.</p><p>If the value of the redirection is a string, it is resolved relative to
+the manifest and then immediately used without searching.</p><p>Any specifier string for which resolution is attempted and that is not listed in
+the dependencies results in an error according to the policy.</p><p>Redirection does not prevent access to APIs through means such as direct access
+to <code>require.cache</code> or through <code>module.constructor</code> which allow access to
+loading modules. Policy redirection only affects specifiers to <code>require()</code> and
+<code>import</code>. Other means, such as to prevent undesired access to APIs through
+variables, are necessary to lock down that path of loading modules.</p><p>A boolean value of <code>true</code> for the dependencies map can be specified to allow a
+module to load any specifier without redirection. This can be useful for local
+development and may have some valid usage in production, but should be used
+only with care after auditing a module to ensure its behavior is valid.</p><p>Similar to <code>"exports"</code> in <code>package.json</code>, dependencies can also be specified to
+be objects containing conditions which branch how dependencies are loaded. In
+the preceding example, <code>"http"</code> is allowed when the <code>"import"</code> condition is
+part of loading it.</p><p>A value of <code>null</code> for the resolved value causes the resolution to fail. This
+can be used to ensure some kinds of dynamic access are explicitly prevented.</p><p>Unknown values for the resolved module location cause failures but are
+not guaranteed to be forward compatible.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

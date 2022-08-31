@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>buf.swap16() | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-buffer">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>buf.swap16()</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../buffer.html#buffer_buf_swap16" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/buffer/buf_swap16.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/buffer/buf_swap16.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/buffer/#bufswap16.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v5.10.0</span>
+</div><ul class="">
+<li>返回: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> <code>buf</code> 的引用。</li>
+</ul><p>将 <code>buf</code> 解释为无符号的 16 位整数数组，并就地交换字节顺序。
+如果 <a href="../buffer.html#buflength"><code>buf.length</code></a> 不是 2 的倍数，则抛出 <a href="../errors.html#err_invalid_buffer_size"><code>ERR_INVALID_BUFFER_SIZE</code></a>。</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0x5</span>, <span class="hljs-number">0x6</span>, <span class="hljs-number">0x7</span>, <span class="hljs-number">0x8</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// 打印: &lt;Buffer 01 02 03 04 05 06 07 08&gt;</span>
+
+buf1.<span class="hljs-title function_">swap16</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// 打印: &lt;Buffer 02 01 04 03 06 05 08 07&gt;</span>
+
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>]);
+
+buf2.<span class="hljs-title function_">swap16</span>();
+<span class="hljs-comment">// 抛出 ERR_INVALID_BUFFER_SIZE。</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0x5</span>, <span class="hljs-number">0x6</span>, <span class="hljs-number">0x7</span>, <span class="hljs-number">0x8</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// 打印: &lt;Buffer 01 02 03 04 05 06 07 08&gt;</span>
+
+buf1.<span class="hljs-title function_">swap16</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// 打印: &lt;Buffer 02 01 04 03 06 05 08 07&gt;</span>
+
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>]);
+
+buf2.<span class="hljs-title function_">swap16</span>();
+<span class="hljs-comment">// 抛出 ERR_INVALID_BUFFER_SIZE。</span></code></pre><p class=""><code>buf.swap16()</code> 的一种方便用法是在 UTF-16 小端序和 UTF-16 大端序之间执行快速就地转换：</p><pre class="with-37-chars"><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'This is little-endian UTF-16'</span>, <span class="hljs-string">'utf16le'</span>);
+buf.<span class="hljs-title function_">swap16</span>(); <span class="hljs-comment">// 转换为大端序 UTF-16 文本。</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'This is little-endian UTF-16'</span>, <span class="hljs-string">'utf16le'</span>);
+buf.<span class="hljs-title function_">swap16</span>(); <span class="hljs-comment">// 转换为大端序 UTF-16 文本。</span></code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v5.10.0</span>
+</div><ul>
+<li>Returns: <a href="../buffer.html#class-buffer" rel="nofollow" class="type">&lt;Buffer&gt;</a> A reference to <code>buf</code>.</li>
+</ul><p>Interprets <code>buf</code> as an array of unsigned 16-bit integers and swaps the
+byte order <em>in-place</em>. Throws <a href="../errors.html#err_invalid_buffer_size"><code>ERR_INVALID_BUFFER_SIZE</code></a> if <a href="../buffer.html#buflength"><code>buf.length</code></a>
+is not a multiple of 2.</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0x5</span>, <span class="hljs-number">0x6</span>, <span class="hljs-number">0x7</span>, <span class="hljs-number">0x8</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// Prints: &lt;Buffer 01 02 03 04 05 06 07 08&gt;</span>
+
+buf1.<span class="hljs-title function_">swap16</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// Prints: &lt;Buffer 02 01 04 03 06 05 08 07&gt;</span>
+
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>]);
+
+buf2.<span class="hljs-title function_">swap16</span>();
+<span class="hljs-comment">// Throws ERR_INVALID_BUFFER_SIZE.</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf1 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>, <span class="hljs-number">0x4</span>, <span class="hljs-number">0x5</span>, <span class="hljs-number">0x6</span>, <span class="hljs-number">0x7</span>, <span class="hljs-number">0x8</span>]);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// Prints: &lt;Buffer 01 02 03 04 05 06 07 08&gt;</span>
+
+buf1.<span class="hljs-title function_">swap16</span>();
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(buf1);
+<span class="hljs-comment">// Prints: &lt;Buffer 02 01 04 03 06 05 08 07&gt;</span>
+
+<span class="hljs-keyword">const</span> buf2 = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">0x1</span>, <span class="hljs-number">0x2</span>, <span class="hljs-number">0x3</span>]);
+
+buf2.<span class="hljs-title function_">swap16</span>();
+<span class="hljs-comment">// Throws ERR_INVALID_BUFFER_SIZE.</span></code></pre><p>One convenient use of <code>buf.swap16()</code> is to perform a fast in-place conversion
+between UTF-16 little-endian and UTF-16 big-endian:</p><pre><input class="js-flavor-selector" type="checkbox" checked="" aria-label="Show modern ES modules syntax"><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Buffer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>;
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'This is little-endian UTF-16'</span>, <span class="hljs-string">'utf16le'</span>);
+buf.<span class="hljs-title function_">swap16</span>(); <span class="hljs-comment">// Convert to big-endian UTF-16 text.</span></code><code class="language-js cjs"><span class="hljs-keyword">const</span> { <span class="hljs-title class_">Buffer</span> } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'buffer'</span>);
+
+<span class="hljs-keyword">const</span> buf = <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">'This is little-endian UTF-16'</span>, <span class="hljs-string">'utf16le'</span>);
+buf.<span class="hljs-title function_">swap16</span>(); <span class="hljs-comment">// Convert to big-endian UTF-16 text.</span></code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

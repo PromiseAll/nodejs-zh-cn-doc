@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>readable.toArray([options]) | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>readable.toArray([options])</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_readable_toarray_options" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/readable_toarray_options.html">18.6.0</a></li><li><a href="">16.16.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#readabletoarrayoptions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><div class="api_metadata">
+<span>新增于: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">稳定性: 1</a> - 实验</div><p></p><ul class="">
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> 如果信号被中止，则允许取消 toArray 操作。</li>
+</ul>
+</li>
+<li>返回: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> 包含数组（如果流处于对象模式）或具有流内容的缓冲区的 promise。</li>
+</ul><p>此方法可以轻松获取流的内容。
+如果流处于<a href="../stream.html#object-mode">对象模式</a>，则返回其内容的数组。
+如果流不处于对象模式，则返回包含其数据的缓冲区。</p><p class="">由于此方法将整个流读入内存，它否定了流的好处。
+它旨在实现互操作性和便利性，而不是作为消费流的主要方式。</p><pre class=""><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Resolver</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'dns/promises'</span>;
+
+<span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">toArray</span>(); <span class="hljs-comment">// [1, 2, 3, 4]</span>
+
+<span class="hljs-comment">// 使用 .map 同时进行 dns 查询</span>
+<span class="hljs-comment">// 并使用 toArray 将结果收集到一个数组中</span>
+<span class="hljs-keyword">const</span> dnsResults = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([
+  <span class="hljs-string">'nodejs.org'</span>,
+  <span class="hljs-string">'openjsf.org'</span>,
+  <span class="hljs-string">'www.linuxfoundation.org'</span>,
+]).<span class="hljs-title function_">map</span>(<span class="hljs-keyword">async</span> (domain) =&gt; {
+  <span class="hljs-keyword">const</span> { address } = <span class="hljs-keyword">await</span> resolver.<span class="hljs-title function_">resolve4</span>(domain, { <span class="hljs-attr">ttl</span>: <span class="hljs-literal">true</span> });
+  <span class="hljs-keyword">return</span> address;
+}, { <span class="hljs-attr">concurrency</span>: <span class="hljs-number">2</span> }).<span class="hljs-title function_">toArray</span>();</code></pre></div>
+          <div id="content_right"><div class="api_metadata">
+<span>Added in: v16.15.0</span>
+</div><p></p><div class="api_stability api_stability_1"><a href="../documentation.html#stability-index">Stability: 1</a> - Experimental</div><p></p><ul>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" rel="nofollow" class="type">&lt;Object&gt;</a>
+<ul>
+<li><code>signal</code> <a href="../globals.html#class-abortsignal" rel="nofollow" class="type">&lt;AbortSignal&gt;</a> allows cancelling the toArray operation if the
+signal is aborted.</li>
+</ul>
+</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="nofollow" class="type">&lt;Promise&gt;</a> a promise containing an array (if the stream is in
+object mode) or Buffer with the contents of the stream.</li>
+</ul><p>This method allows easily obtaining the contents of a stream. If the
+stream is in <a href="../stream.html#object-mode">object mode</a> an array of its contents is returned.
+If the stream is not in object mode a Buffer containing its data is returned.</p><p>As this method reads the entire stream into memory, it negates the benefits of
+streams. It's intended for interoperability and convenience, not as the primary
+way to consume streams.</p><pre><code class="language-js mjs"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Readable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'stream'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Resolver</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'dns/promises'</span>;
+
+<span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]).<span class="hljs-title function_">toArray</span>(); <span class="hljs-comment">// [1, 2, 3, 4]</span>
+
+<span class="hljs-comment">// Make dns queries concurrently using .map and collect</span>
+<span class="hljs-comment">// the results into an array using toArray</span>
+<span class="hljs-keyword">const</span> dnsResults = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Readable</span>.<span class="hljs-title function_">from</span>([
+  <span class="hljs-string">'nodejs.org'</span>,
+  <span class="hljs-string">'openjsf.org'</span>,
+  <span class="hljs-string">'www.linuxfoundation.org'</span>,
+]).<span class="hljs-title function_">map</span>(<span class="hljs-keyword">async</span> (domain) =&gt; {
+  <span class="hljs-keyword">const</span> { address } = <span class="hljs-keyword">await</span> resolver.<span class="hljs-title function_">resolve4</span>(domain, { <span class="hljs-attr">ttl</span>: <span class="hljs-literal">true</span> });
+  <span class="hljs-keyword">return</span> address;
+}, { <span class="hljs-attr">concurrency</span>: <span class="hljs-number">2</span> }).<span class="hljs-title function_">toArray</span>();</code></pre></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>

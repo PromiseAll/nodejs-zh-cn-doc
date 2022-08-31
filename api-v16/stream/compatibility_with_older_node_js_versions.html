@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>兼容旧版本的 Node.js | Node.js API 文档</title>
+  
+  
+
+    <link href="../../api/static/inject.css" rel="stylesheet"><link rel="icon" sizes="32x32" type="image/png" href="../../api/static/favicon.png"></head>
+
+<body class="alt apidoc" id="page_api_item">
+  <div id="api-section-stream">
+    <div id="content" class="clearfix">
+
+      <div id="column1" data-id="__ID__" class="interior">
+        <header>
+          <h1>兼容旧版本的 Node.js</h1>
+          <div id="gtoc">
+            <ul>
+              <li>v16.16.0</li>
+              <li>
+                <a href="../stream.html#stream_compatibility_with_older_node_js_versions" name="toc">返回上层文档</a>
+              </li>
+
+              <li class="picker-header">
+    <a href="#">
+        <span class="collapsed-arrow">►</span><span class="expanded-arrow">▼</span>
+        其他版本
+      </a>
+    <div class="picker"><ol id="alt-docs">
+    <li><a href="../../api/stream/compatibility_with_older_node_js_versions.html">18.6.0</a></li><li><a href="">16.16.0</a></li><li><a href="../../api-v14/stream/compatibility_with_older_node_js_versions.html">14.20.0</a></li>
+</ol></div>
+  </li>
+
+              <li>
+                <a href="http://api.nodejs.cn/" class="link-to-search">搜索</a>
+              </li>
+              <li>
+                
+                
+              </li>
+
+              <!-- <li>
+                <a href="https://github.com/nodejscn/node-api-cn/edit/master/stream/#compatibility-with-older-nodejs-versions.md" rel="nofollow">提交修改</a>
+              </li> -->
+              <!-- <li>
+                <a href="/gzh/">公众号</a>
+              </li> -->
+              <!-- <li class="biz_wrap" data-biz="api_item_nav">
+                <a target="_blank" class="biz_title biz_link"></a>
+              </li> -->
+            </ul>
+          </div>
+          <hr>
+        </header>
+
+        <div id="apicontent">
+          <div id="content_left"><p>在 Node.js 0.10 之前，<code>Readable</code> 流接口更简单，但功能更弱，实用性也更低。</p><ul class="">
+<li><a href="../stream.html#event-data"><code>'data'</code></a> 事件将立即开始触发，而不是等待对 <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> 方法的调用。
+需要执行一些工作来决定如何处理数据的应用程序需要将读取数据存储到缓冲区中，这样数据就不会丢失。</li>
+<li><a href="../stream.html#readablepause"><code>stream.pause()</code></a> 方法是建议性的，而不是保证性的。
+这意味着即使流处于暂停状态，仍然需要准备接收 <a href="../stream.html#event-data"><code>'data'</code></a> 事件。</li>
+</ul><p class="">在 Node.js 0.10 中，添加了 <a href="../stream.html#class-streamreadable"><code>Readable</code></a> 类。
+为了与旧的 Node.js 程序向后兼容，当添加 <a href="../stream.html#event-data"><code>'data'</code></a> 事件处理程序或调用 <a href="../stream.html#readableresume"><code>stream.resume()</code></a> 方法时，<code>Readable</code> 流会切换到“流动模式”。
+效果是，即使不使用新的 <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> 方法和 <a href="../stream.html#event-readable"><code>'readable'</code></a> 事件，也不再需要担心丢失 <a href="../stream.html#event-data"><code>'data'</code></a> 块。</p><p class="">虽然大多数应用程序将继续正常运行，但这会在以下情况下引入边缘情况：</p><ul class="">
+<li>未添加 <a href="../stream.html#event-data"><code>'data'</code></a> 事件监听器。</li>
+<li>永远不会调用 <a href="../stream.html#readableresume"><code>stream.resume()</code></a> 方法。</li>
+<li>流不会通过管道传输到任何可写目的地。</li>
+</ul><p class="">例如，考虑以下代码：</p><pre class=""><code class="language-js"><span class="hljs-comment">// 警告！破碎的！</span>
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+
+  <span class="hljs-comment">// 添加了 'end' 监听器，但从不使用数据。</span>
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-comment">// 它永远不会到达这里。</span>
+    socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'The message was received but was not processed.\n'</span>);
+  });
+
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p class="">在 Node.js 0.10 之前，传入的消息数据将被简单地丢弃。
+但是，在 Node.js 0.10 及更高版本中，套接字永远处于暂停状态。</p><p class="">这种情况下的解决方法是调用 <a href="../stream.html#readableresume"><code>stream.resume()</code></a> 方法开始数据流：</p><pre class=""><code class="language-js"><span class="hljs-comment">// 解决方法。</span>
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'The message was received but was not processed.\n'</span>);
+  });
+
+  <span class="hljs-comment">// 启动数据流，丢弃它。</span>
+  socket.<span class="hljs-title function_">resume</span>();
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p class="">除了新的 <code>Readable</code> 流切换到流动模式之外，0.10 之前的样式流可以使用 <a href="../stream.html#readablewrapstream"><code>readable.wrap()</code></a> 方法封装在 <code>Readable</code> 类中。</p></div>
+          <div id="content_right"><p>Prior to Node.js 0.10, the <code>Readable</code> stream interface was simpler, but also
+less powerful and less useful.</p><ul>
+<li>Rather than waiting for calls to the <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> method,
+<a href="../stream.html#event-data"><code>'data'</code></a> events would begin emitting immediately. Applications that
+would need to perform some amount of work to decide how to handle data
+were required to store read data into buffers so the data would not be lost.</li>
+<li>The <a href="../stream.html#readablepause"><code>stream.pause()</code></a> method was advisory, rather than
+guaranteed. This meant that it was still necessary to be prepared to receive
+<a href="../stream.html#event-data"><code>'data'</code></a> events <em>even when the stream was in a paused state</em>.</li>
+</ul><p>In Node.js 0.10, the <a href="../stream.html#class-streamreadable"><code>Readable</code></a> class was added. For backward
+compatibility with older Node.js programs, <code>Readable</code> streams switch into
+"flowing mode" when a <a href="../stream.html#event-data"><code>'data'</code></a> event handler is added, or when the
+<a href="../stream.html#readableresume"><code>stream.resume()</code></a> method is called. The effect is that, even
+when not using the new <a href="../stream.html#readablereadsize"><code>stream.read()</code></a> method and
+<a href="../stream.html#event-readable"><code>'readable'</code></a> event, it is no longer necessary to worry about losing
+<a href="../stream.html#event-data"><code>'data'</code></a> chunks.</p><p>While most applications will continue to function normally, this introduces an
+edge case in the following conditions:</p><ul>
+<li>No <a href="../stream.html#event-data"><code>'data'</code></a> event listener is added.</li>
+<li>The <a href="../stream.html#readableresume"><code>stream.resume()</code></a> method is never called.</li>
+<li>The stream is not piped to any writable destination.</li>
+</ul><p>For example, consider the following code:</p><pre><code class="language-js"><span class="hljs-comment">// WARNING!  BROKEN!</span>
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+
+  <span class="hljs-comment">// We add an 'end' listener, but never consume the data.</span>
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-comment">// It will never get here.</span>
+    socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'The message was received but was not processed.\n'</span>);
+  });
+
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p>Prior to Node.js 0.10, the incoming message data would be simply discarded.
+However, in Node.js 0.10 and beyond, the socket remains paused forever.</p><p>The workaround in this situation is to call the
+<a href="../stream.html#readableresume"><code>stream.resume()</code></a> method to begin the flow of data:</p><pre><code class="language-js"><span class="hljs-comment">// Workaround.</span>
+net.<span class="hljs-title function_">createServer</span>(<span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> {
+  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">'end'</span>, <span class="hljs-function">() =&gt;</span> {
+    socket.<span class="hljs-title function_">end</span>(<span class="hljs-string">'The message was received but was not processed.\n'</span>);
+  });
+
+  <span class="hljs-comment">// Start the flow of data, discarding it.</span>
+  socket.<span class="hljs-title function_">resume</span>();
+}).<span class="hljs-title function_">listen</span>(<span class="hljs-number">1337</span>);</code></pre><p>In addition to new <code>Readable</code> streams switching into flowing mode,
+pre-0.10 style streams can be wrapped in a <code>Readable</code> class using the
+<a href="../stream.html#readablewrapstream"><code>readable.wrap()</code></a> method.</p></div>
+          <div></div>
+        </div>
+
+        <!-- <div id="biz_item" class="biz_wrap" data-biz="api_item">
+          <a target="_blank" class="biz_link">
+            <img class="biz_img" />
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <div id="wxpaycode_box" style="display: none;">
+    <div id="wxpaycode_img_box">
+      <div id="wxpaycode_vip_tips">
+        因经营维护成本巨大，
+        <br>为了能提供更高质量的中文文档，
+        <br>即日起将只对VIP会员开放。
+        <br>扫码成为VIP会员，会员费用为<span id="wxpaycode_vip_money">199</span>元/年
+      </div>
+      <img id="wxpaycode_img">
+    </div>
+  </div>
+  
+  
+  
+
+
+
+    <script src="../../api/static/inject.js" defer=""></script></body></html>
